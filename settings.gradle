@@ -1,2 +1,3 @@
-rootProject.name = 'admin'
+rootProject.name = 'yunxin'
 
+include 'admin'
