@@ -1,0 +1,13 @@
+apply plugin: 'war'
+
+dependencies {
+    compile project(":cb-core")
+    compile(fileTree(dir: 'libs', include: '*.jar'))
+    // 测试依赖
+    testCompile(
+            "org.springframework:spring-test:$springVersion",
+            "org.jboss.spec.javax.el:jboss-el-api_3.0_spec:1.0.0.Final",
+            "junit:junit:4.11"
+    )
+}
+

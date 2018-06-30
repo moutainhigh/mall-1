@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css" media="screen"> 
+	.formTable{
+		border:1;border-collapse:collapse;  
+		borderColor:#C6C6C6;
+		font-family: 微软雅黑,Arial, Helvetica, sans-serif;
+		font-size: 12px;
+	}
+    .formTable td{padding:2px 4px 2px 4px;	line-height:20px;}
+</style>
+</head>
+<body>
+<div>${project.projectName}存在多盏灯 不亮，请尽快进行处理</div>
+<div>
+	<table class="formTable">
+		<tr>
+			<td>道路名称</td>
+			<td>灯总数量</td>
+			<td>灯不亮数量</td>
+			<td>所占百分比</td>
+		</tr>
+		#foreach($unworkRoadLamp in $unworkRoadLamps) 
+			<tr>
+				<td>${unworkRoadLamp.roadName}</td>
+				<td>${unworkRoadLamp.count}</td>
+				<td>${unworkRoadLamp.unworkCount}</td>
+				<td>$!numberFormat.format($!unworkRoadLamp.percent)</td>
+			</tr>
+		#end
+	</table>
+</div>
+<div>
+	<table class="formTable">
+		<tr>
+			<td>道路等级</td>
+			<td>灯总数量</td>
+			<td>灯不亮数量</td>
+			<td>所占百分比</td>
+		</tr>
+		#foreach($unworkRoadGradeLamp in $unworkRoadGradeLamps) 
+			<tr>
+				<td>${unworkRoadGradeLamp.roadGrade}</td>
+				<td>${unworkRoadGradeLamp.count}</td>
+				<td>${unworkRoadGradeLamp.unworkCount}</td>
+				<td>$!numberFormat.format($!unworkRoadGradeLamp.percent)</td>
+			</tr>
+		#end
+	</table>
+</div>
+</body>
+</html>

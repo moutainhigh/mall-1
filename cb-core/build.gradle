@@ -1,0 +1,35 @@
+ext {
+    generatedSourcesDir = file("src/main/generated")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            srcDir generatedSourcesDir
+        }
+    }
+}
+
+dependencies {
+    compile project(":cb-common")
+
+    // 测试依赖
+    testCompile(
+            "org.springframework:spring-test:$springVersion",
+            "org.jboss.spec.javax.el:jboss-el-api_3.0_spec:1.0.0.Final",
+            "junit:junit:4.11"
+    )
+}
+
+compileJava {
+    dependsOn clean
+    doFirst {
+        generatedSourcesDir.mkdirs()
+    }
+    options.compilerArgs += ['-s', generatedSourcesDir]
+}
+
+clean {
+    delete generatedSourcesDir
+}

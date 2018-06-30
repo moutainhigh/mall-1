@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns="http://www.springframework.org/schema/security"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+    <global-method-security pre-post-annotations="enabled"/>
+
+    <!-- 页面标签权限功能依赖 -->
+    <beans:bean id="webInvocationFilter"
+                class="org.springframework.security.web.access.DefaultWebInvocationPrivilegeEvaluator">
+        <beans:constructor-arg ref="securityInterceptorFilter" />
+    </beans:bean>
+
+    <http pattern="/index.do*" security="none" />
+    <http pattern="/highcharts/**" security="none" />
+    <http pattern="/js/**" security="none" />
+    <http pattern="/images/**" security="none" />
+    <http pattern="/kendo/**" security="none" />
+    <http pattern="/index.do" security="none" />
+    <http pattern="/common/*" security="none" />
+    <http pattern="/servlet/ImageValidate" security="none" />
+
+    <http use-expressions="true" auto-config="true" authentication-manager-ref="authenticationManager" access-decision-manager-ref="securityAccessDecisionManager">
+        <csrf disabled="true"/>
+
+        <form-login login-page="/index.do" authentication-failure-url="/index.do?error=1" default-target-url="/console/dashboard.do"  login-processing-url="/j_spring_security_check" password-parameter="j_password"
+                    username-parameter="j_username" authentication-success-handler-ref="loginSuccessHandler" authentication-failure-handler-ref="loginFailureHandler"/>
+        <logout logout-url="/j_spring_security_logout"  invalidate-session="true" success-handler-ref="logoutHandler" delete-cookies="userName"/>
+        <remember-me />
+        <anonymous enabled="false"/>
+        <session-management invalid-session-url="/index.do" session-fixation-protection="migrateSession">
+            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+        </session-management>
+
+        <custom-filter ref="securityInterceptorFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+        <custom-filter ref="authenticationProcessingFilter" before="FORM_LOGIN_FILTER" />
+        <access-denied-handler error-page="/common/denial.do" />
+        <headers>
+            <frame-options policy="SAMEORIGIN"/>
+        </headers>
+    </http>
+
+    <beans:bean id="securityInterceptorFilter" class="com.yunxin.cb.security.SecurityInterceptorFilter">
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+        <beans:property name="accessDecisionManager" ref="securityAccessDecisionManager"/>
+        <beans:property name="securityMetadataSource" ref="invocationSecurityMetadataSource"/>
+    </beans:bean>
+
+    <beans:bean id="securityAccessDecisionManager" class="com.yunxin.cb.security.SecurityAccessDecisionManager"/>
+    <beans:bean id="invocationSecurityMetadataSource" class="com.yunxin.cb.security.InvocationSecurityMetadataSource">
+        <beans:property name="securityHolder" ref="securityService"/>
+    </beans:bean>
+    <beans:bean id="userDetailsServiceImpl" class="com.yunxin.cb.security.UserDetailsServiceImpl">
+        <beans:property name="securityHolder" ref="securityService"/>
+    </beans:bean>
+
+    <!-- <beans:bean id="loginSuccessHandler" class="com.itee.security.LoginSuccessHandler"> -->
+    <!-- <beans:property name="defaultTargetUrl" value="/console/dashboard.do"></beans:property> -->
+    <!-- </beans:bean> -->
+    <beans:bean id="loginSuccessHandler" class="com.yunxin.cb.security.LoginSuccessHandler"/>
+    <beans:bean id="loginFailureHandler" class="com.yunxin.cb.security.LoginFailureHandler"/>
+    <beans:bean id="logoutHandler" class="com.yunxin.cb.security.LogoutHandler"/>
+    <!-- <beans:bean id="authenticationFailureHandler" -->
+    <!-- class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"> -->
+    <!-- <beans:property name="defaultFailureUrl"> -->
+    <!-- <beans:value>/index.do?error=true</beans:value> -->
+    <!-- </beans:property> -->
+    <!-- </beans:bean> -->
+
+    <beans:bean id="authenticationProcessingFilter" class="com.yunxin.cb.security.CustomAuthenticationFilter">
+        <beans:property name="authenticationSuccessHandler" ref="loginSuccessHandler"/>
+        <beans:property name="authenticationFailureHandler" ref="loginFailureHandler"/>
+        <!-- <beans:property name="authenticationFailureHandler" -->
+        <!-- ref="authenticationFailureHandler"></beans:property> -->
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+        <beans:property name="securityHolder" ref="securityService"/>
+    </beans:bean>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsServiceImpl"/>
+    </authentication-manager>
+
+</beans:beans>

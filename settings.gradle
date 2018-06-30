@@ -1,3 +1,6 @@
-rootProject.name = 'yunxin'
+rootProject.name = 'crystal-ball'
 
-include 'admin'
+include 'cb-common'
+include 'cb-core'
+include 'cb-admin'
+include 'cb-api'
