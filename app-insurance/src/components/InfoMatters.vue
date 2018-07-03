@@ -4,8 +4,8 @@
     <div class="content">
       <p>1.您是否已经拥有或正在申请其他保险公司的保险合同？</p>
         <span>被保人</span>
-      <img v-if="!state" @click="check" src="../assets/img/switch-off.png">
-      <img v-if="!state" @click="check" src="../assets/img/switch-on.png">
+      <img v-if="!state" src="../assets/img/switch-off.png" @click="changeState">
+      <img v-if="state" @click="changeState" src="../assets/img/switch-on.png" @click="changeState">
     </div>
 
     <div class="content">
@@ -51,7 +51,17 @@
 
 <script>
     export default {
-        name: "InfoMatters"
+        name: "InfoMatters",
+      data() {
+        return {
+          state: false
+        }
+      },
+      methods: {
+        changeState (){
+          this.state = !this.state;
+        }
+      }
     }
 </script>
 
