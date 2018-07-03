@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="title">
+      被保人信息：
+    </div>
     <group label-width="6em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
       <x-input title="姓名" placeholder="请输入姓名" v-model="form.name"></x-input>
       <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
@@ -67,5 +70,11 @@
 </script>
 
 <style scoped>
-
+ .title {
+   margin-bottom: 10px;
+   background-color: #ffffff;
+   padding: 15px;
+   font-size: 13px;
+   color: #e1bb3a;
+ }
 </style>
