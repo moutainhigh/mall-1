@@ -8,6 +8,7 @@ import Signature from '../components/Signature'
 import Autograph from '../components/Autograph'
 import UploadData from '../components/UploadData'
 import InfoMatters from '../components/InfoMatters'
+import Payment from '../components/Payment'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -19,39 +20,38 @@ export default new Router({
       path: '/',
       name: 'index',
       component: Index
-    },
-    {
+    }, {
       path: '/pro-detail',
       name: 'pro-detail',
       component: ProDetail
-    },
-    {
+    }, {
       path: '/holder-basic',
       name: 'holder-basic',
       component: HolderBasic
-    },{
+    }, {
       path: '/holder-detail',
       name: 'holder-detail',
       component: HolderDetail
-    },{
+    }, {
       path: '/signature',
       name: 'signature',
       component: Signature
-    },
-    {
+    }, {
       path: '/autograph',
       name: 'autograph',
       component: Autograph
-    },
-    {
+    }, {
       path: '/upload-data',
       name: 'upload-data',
       component: UploadData
-    },
-    {
+    }, {
       path: '/infoMatters',
       name: 'infoMatters',
       component: InfoMatters
+    }, {
+      path: '/payment',
+      name: 'payment',
+      component: Payment
     }
   ]
 })
