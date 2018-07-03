@@ -1,0 +1,11 @@
+server:
+  port: 8000
+  context-path: api
+  session-timeout: 30
+  tomcat.max-threads: 0
+  tomcat.uri-encoding: UTF-8
+
+
+spring:
+  profiles:
+    active: dev

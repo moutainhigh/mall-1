@@ -3,6 +3,7 @@
  */
 package com.yunxin.core.orm;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +21,7 @@ public class HibernateAwareObjectMapper extends ObjectMapper {
      */
     public HibernateAwareObjectMapper() {
         this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        this.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         Hibernate5Module module = new Hibernate5Module();
         module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
         registerModule(module);
