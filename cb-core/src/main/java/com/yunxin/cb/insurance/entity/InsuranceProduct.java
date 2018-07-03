@@ -97,6 +97,9 @@ public class InsuranceProduct implements Serializable {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
+
+
+    private Set<InsuranceInformedMatter> insuranceInformedMatters = new HashSet(0);
     //columns END
 
 
@@ -205,17 +208,6 @@ public class InsuranceProduct implements Serializable {
     }
 
 
-    private Set insuranceProductInformedMatters = new HashSet(0);
-
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProduct")
-    public Set<InsuranceProductInformedMatter> getInsuranceProductInformedMatters() {
-        return insuranceProductInformedMatters;
-    }
-
-    public void setInsuranceProductInformedMatters(Set<InsuranceProductInformedMatter> insuranceProductInformedMatter) {
-        this.insuranceProductInformedMatters = insuranceProductInformedMatter;
-    }
-
     private Set insuranceOrders = new HashSet(0);
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProduct")
@@ -238,5 +230,13 @@ public class InsuranceProduct implements Serializable {
         this.insuranceProductPrices = insuranceProductPrice;
     }
 
+    @ManyToMany(targetEntity = InsuranceInformedMatter.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinTable(name = "insurance_product_informed_matter", joinColumns = {@JoinColumn(name = "PROD_ID", nullable = false, updatable = false)}, inverseJoinColumns = {@JoinColumn(name = "MATTER_ID", nullable = false, updatable = false)})
+    public Set<InsuranceInformedMatter> getInsuranceInformedMatters() {
+        return insuranceInformedMatters;
+    }
 
+    public void setInsuranceInformedMatters(Set<InsuranceInformedMatter> insuranceInformedMatters) {
+        this.insuranceInformedMatters = insuranceInformedMatters;
+    }
 }

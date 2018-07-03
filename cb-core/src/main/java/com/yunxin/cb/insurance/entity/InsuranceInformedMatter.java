@@ -67,6 +67,9 @@ public class InsuranceInformedMatter implements Serializable {
      */
     @Max(9999999999L)
     private int enabled;
+
+
+    private Set<InsuranceProduct> insuranceProducts = new HashSet(0);
     //columns END
 
 
@@ -141,16 +144,14 @@ public class InsuranceInformedMatter implements Serializable {
         this.insuranceOrderInformedMatters = insuranceOrderInformedMatter;
     }
 
-    private Set insuranceProductInformedMatters = new HashSet(0);
-
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceInformedMatter")
-    public Set<InsuranceProductInformedMatter> getInsuranceProductInformedMatters() {
-        return insuranceProductInformedMatters;
+    @ManyToMany(targetEntity = InsuranceProduct.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinTable(name = "insurance_product_informed_matter", joinColumns = {@JoinColumn(name = "MATTER_ID", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "PROD_ID", nullable = false, updatable = false)})
+    public Set<InsuranceProduct> getInsuranceProducts() {
+        return insuranceProducts;
     }
 
-    public void setInsuranceProductInformedMatters(Set<InsuranceProductInformedMatter> insuranceProductInformedMatter) {
-        this.insuranceProductInformedMatters = insuranceProductInformedMatter;
+    public void setInsuranceProducts(Set<InsuranceProduct> insuranceProducts) {
+        this.insuranceProducts = insuranceProducts;
     }
-
-
 }
