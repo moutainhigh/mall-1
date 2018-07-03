@@ -1,0 +1,39 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import Index from '../components/Index'
+import ProDetail from '../components/ProDetail'
+import HolderBasic from '../components/HolderBasic'
+import HolderDetail from '../components/HolderDetail'
+import Signature from '../components/Signature'
+import Vuex from 'vuex'
+
+Vue.use(Router)
+Vue.use(Vuex)
+
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'index',
+      component: Index
+    },
+    {
+      path: '/pro-detail',
+      name: 'pro-detail',
+      component: ProDetail
+    },
+    {
+      path: '/holder-basic',
+      name: 'holder-basic',
+      component: HolderBasic
+    },{
+      path: '/holder-detail',
+      name: 'holder-detail',
+      component: HolderDetail
+    },{
+      path: '/signature',
+      name: 'signature',
+      component: Signature
+    }
+  ]
+})
