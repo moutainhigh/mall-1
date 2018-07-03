@@ -1,0 +1,230 @@
+body {
+  background-color: #EEEEEE85;
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+}
+
+.i-banner {
+  width: 100%;
+}
+
+.i-banner img {
+  padding: 12px;
+  /*width: 700pt;*/
+  width: 94%;
+}
+
+.i-list {
+  /*height: 246pt;*/
+  width: 100%;
+  margin: 14px 0;
+  background-color: #ffffff;
+  border-bottom: #BBBBBB solid 1px;
+  border-top: #BBBBBB solid 1px;
+}
+
+.i-list img {
+  padding: 14px 9px 14px 12px;
+  width: 132px
+}
+
+.i-list-detail {
+  text-align: left;
+  /*width: 420pt;*/
+  display: inline-block;
+  position: relative;
+  top: -18px;
+}
+
+.i-list-detail .dt-title {
+  font-size: 14px;
+  color: #333333;
+  width: 210px;
+}
+
+.i-list-detail .dt-intro {
+  font-size: 13px;
+  color: #999999;
+  margin: 4px 0;
+}
+
+.i-list-detail .dt-content {
+  font-size: 13px;
+  color: #e1bb3a;
+  margin: 4px 0;
+}
+
+.i-list-detail .dt-price {
+  /*height: 88pt;*/
+  color: red;
+  font-size: 15px;
+}
+
+.i-list-detail .dt-price .dt-price-pro {
+  display: inline-block;
+  margin-top: 5px;
+  /*width: 280px;*/
+}
+
+.i-list-detail .dt-price button {
+  height: 24px;
+  background-color: #e1bb3a;
+  float: right;
+  font-size: 15px;
+  color: #ffffff;
+  font-weight: normal;
+  border: unset;
+  position: relative;
+  top: 5px;
+  margin-right: 12px;
+}
+
+button a{
+  color: unset;
+  text-decoration: unset;
+}
+
+.i-footer {
+  position: fixed;
+  bottom: 0;
+  height: 48px;
+  width: 100%;
+  text-align: center;
+  background-color: #e1bb3a;
+  font-size: 18px;
+  color: #ffffff;
+  border: unset;
+}
+
+.i-card {
+  background-color: #ffffff;
+  padding: 14px 12px;
+  margin-bottom: 7px;
+}
+
+.i-card .i-card-tip {
+  font-size: 13px;
+  color: #333333;
+}
+
+.i-card-tip .i-list-right {
+  float: right;
+}
+
+.i-card-tip .i-list-right span {
+  position: relative;
+  top: -5px;
+}
+
+
+
+.i-input {
+  padding-top: 8px;
+}
+
+.i-input .i-input-form {
+  border-bottom: #999999 solid 1px;
+}
+
+.i-input .i-input-form input {
+  border: unset;
+  font-size: 13px;
+  width: 70%;
+  height: 48px;
+}
+
+.i-input .i-input-item {
+  font-size: 13px;
+  color: #666666;
+  display: inline-block;
+  margin: 13px 0;
+  width: 25%;
+}
+
+.i-input .i-input-val {
+  font-size: 13px;
+  color: #999999;
+  display: inline-block;
+}
+
+.i-input .i-input-radio {
+  margin-left: 25%;
+}
+
+.i-input .i-input-radio .radio-div {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.i-input .i-input-radio .radio-div img {
+  height: 35px;
+}
+
+.i-input .i-input-radio span {
+  position: absolute;
+  font-size: 16px;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  margin-top: 7px;
+}
+
+.i-input .i-input-select {
+  display: inline-block;
+  border: #999999 solid 1px;
+  border-radius: 8px;
+  width: 70%;
+}
+
+.i-input .i-input-select div {
+  font-size: 13px;
+  color: #999999;
+  padding: 5px 5px 5px 10px;
+  display: inline-block;
+}
+
+.i-input .i-input-select img {
+  float: right;
+  margin: 12px 12px;
+  width: 14px;
+}
+
+.i-message {
+  margin-top: 24px;
+}
+
+.i-message div {
+  display: inline-block;
+  width: 100%;
+  font-size: 12px;
+  color: #999999;
+  margin: 5px 0;
+}
+
+.r-frame {
+  position: absolute;
+  top: 300px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.r-tip {
+  font-size: 26pt;
+  color: #c01212;
+  display: inline-block;
+  width: 640px;
+  margin-top: 40px;
+  text-align: left;
+}
+
+.weui-cells {
+  margin-top: 0 !important;
+  font-size: 14px !important;
+}
+
+p {
+  -webkit-margin-before: unset !important;
+  -webkit-margin-after: unset !important;
+}
