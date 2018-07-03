@@ -112,7 +112,7 @@
         })
       },
       submit(){
-        // this.$router.push('/holder-detail');
+        this.$router.push('/holder-detail');
         // this.$http.get("127.0.0.1:8080/index").then(response => {
         //   console.log("test")
         // }, response => {

@@ -92,7 +92,7 @@ button a{
   width: 100%;
   text-align: center;
   background-color: #e1bb3a;
-  font-size: 20px;
+  font-size: 18px;
   color: #ffffff;
   border: unset;
 }
@@ -221,7 +221,10 @@ button a{
 
 .weui-cells {
   margin-top: 0 !important;
-  font-size: 15px !important;
+  font-size: 14px !important;
 }
 
-
+p {
+  -webkit-margin-before: unset !important;
+  -webkit-margin-after: unset !important;
+}
