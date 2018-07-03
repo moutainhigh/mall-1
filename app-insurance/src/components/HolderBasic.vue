@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="i-card">
-      <div class="i-card-tip">
-        请填写被保人信息，用于保费计算
-      </div>
+      <!--<div class="i-card-tip">-->
+        <!--请填写被保人信息，用于保费计算-->
+      <!--</div>-->
       <div class="i-input">
         <div class="i-input-item">出生日期：</div>
         <div class="i-input-select" @click="showPlugin">
@@ -113,11 +113,11 @@
       },
       submit(){
         // this.$router.push('/holder-detail');
-        this.$http.get("127.0.0.1:8080/index").then(response => {
-          console.log("test")
-        }, response => {
-
-        });
+        // this.$http.get("127.0.0.1:8080/index").then(response => {
+        //   console.log("test")
+        // }, response => {
+        //
+        // });
       }
     }
   }

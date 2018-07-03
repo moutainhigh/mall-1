@@ -8,7 +8,9 @@ import Vuex from 'vuex'
 import AlertPlugin from 'vux/src/plugins/Alert'
 import ToastPlugin from 'vux/src/plugins/Toast'
 import datetime from 'vux/src/plugins/datetime'
+import { Group } from 'vux'
 
+Vue.component('group', Group)
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
 Vue.use(datetime)
