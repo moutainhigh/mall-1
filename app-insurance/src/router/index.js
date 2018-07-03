@@ -5,6 +5,7 @@ import ProDetail from '../components/ProDetail'
 import HolderBasic from '../components/HolderBasic'
 import HolderDetail from '../components/HolderDetail'
 import Signature from '../components/Signature'
+import Autograph from '../components/Autograph'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -34,6 +35,11 @@ export default new Router({
       path: '/signature',
       name: 'signature',
       component: Signature
+    },
+    {
+      path: '/autograph',
+      name: 'autograph',
+      component: Autograph
     }
   ]
 })
