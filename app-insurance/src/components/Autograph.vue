@@ -2,11 +2,11 @@
   <div>
     <div class="title">投保单资料签署</div>
     <div @click="check">
-    <img v-if="!state" class="checkIcon" src="../assets/img/checkoff.png">
-    <img v-if="state" class="checkIcon" src="../assets/img/checkon.png">
-    <div class="tip">
-      <p>本人已阅读并理解<span>《投保须知》、《保险条款》、《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
-    </div>
+      <img v-if="!state" class="checkIcon" src="../assets/img/checkoff.png">
+      <img v-if="state" class="checkIcon" src="../assets/img/checkon.png">
+      <div class="tip">
+        <p>本人已阅读并理解<span>《投保须知》、《保险条款》、《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
+      </div>
     </div>
     <div class="title" style="color: #e1bb3a">投保提示书签名</div>
     <div class="title-sign">投保人签名</div>
@@ -27,7 +27,7 @@
     <div style="height: 48px;">
       <button class="i-footer">
         <router-link to="upload-data">
-        <div>下一步</div>
+          <div>下一步</div>
         </router-link>
       </button>
     </div>
@@ -43,7 +43,7 @@
       }
     },
     methods: {
-      check (){
+      check() {
         this.state = !this.state;
       }
     }

@@ -50,7 +50,7 @@ export default new Router({
     },
     {
       path: '/infoMatters',
-      name: 'infoMatters',
+      name: 'info-matters',
       component: InfoMatters
     }
   ]
