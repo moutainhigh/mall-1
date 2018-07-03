@@ -6,6 +6,7 @@ import HolderBasic from '../components/HolderBasic'
 import HolderDetail from '../components/HolderDetail'
 import Signature from '../components/Signature'
 import Autograph from '../components/Autograph'
+import UploadData from '../components/UploadData'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -40,6 +41,11 @@ export default new Router({
       path: '/autograph',
       name: 'autograph',
       component: Autograph
+    },
+    {
+      path: '/upload-data',
+      name: 'upload-data',
+      component: UploadData
     }
   ]
 })
