@@ -9,9 +9,10 @@
       <x-input title="交易金额(元)" placeholder="200000" v-model="name" readonly></x-input>
       <x-input title="手机号码" placeholder="13666666666" v-model="name" readonly></x-input>
       <popup-picker title="开户行" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
-      <popup-picker title="开户行" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
-      <popup-picker title="开户行" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
-      <x-input title="手机号码" placeholder="13666666666" v-model="name" readonly></x-input>
+      <popup-picker title="开户行省份" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
+      <popup-picker title="开户城市" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
+      <popup-picker title="账户类型" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
+      <x-input title="账户号码" placeholder="13666666666" v-model="name" readonly></x-input>
       <div class="i-input">
         <div class="i-input-item">实时转账</div>
         <div  style="float: right;margin: 8px;">
