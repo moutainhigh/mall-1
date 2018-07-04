@@ -2,82 +2,98 @@
   <div>
     <div class="title">投保资料上传</div>
     <p class="uploadTitle">投保人银行卡正面上传（必传）
-      <button @click='delImage(1)'>清除</button>
+      <button v-if="!isPhoto1" @click='delImage(1)'>清除</button>
     </p>
     <div class="card">
-      <img v-if="isPhoto1" @click.stop="addPic1" src="../assets/img/upload.png">
+      <div @click.stop="addPic1">
+        <img v-if="isPhoto1" src="../assets/img/upload.png">
+      </div>
       <input id="image1" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto1">
         <img
           style="padding: 0; transform:rotate(7deg);-ms-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);  -webkit-transform:rotate(-90deg);"
           :src="imgUrls.image1">
-        <!--<button @click='delImage(1)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">投保人身份证正面上传（必传）<button @click='delImage(2)'>清除</button></p>
+    <p class="uploadTitle">投保人身份证正面上传（必传）
+      <button v-if="!isPhoto2" @click='delImage(2)'>清除</button>
+    </p>
     <div class="card">
-      <img v-if="isPhoto2" @click.stop="addPic2" src="../assets/img/takeIdCard.png">
+      <div @click.stop="addPic2">
+        <img v-if="isPhoto2" src="../assets/img/takeIdCard.png">
+      </div>
       <input id="image2" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto2">
         <img
           style="padding: 0; transform:rotate(7deg);-ms-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);  -webkit-transform:rotate(-90deg);"
           :src="imgUrls.image2">
-        <!--<button @click='delImage(2)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">投保人身份证背面上传（必传）<button @click='delImage(3)'>清除</button></p>
+    <p class="uploadTitle">投保人身份证背面上传（必传）
+      <button v-if="!isPhoto3" @click='delImage(3)'>清除</button>
+    </p>
     <div class="card">
-      <img v-if="isPhoto3" @click.stop="addPic3" src="../assets/img/takeEmblem.png">
+      <div @click.stop="addPic3">
+        <img v-if="isPhoto3" src="../assets/img/takeEmblem.png">
+      </div>
       <input id="image3" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto3">
         <img
           style="padding: 0; transform:rotate(7deg);-ms-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);  -webkit-transform:rotate(-90deg);"
           :src="imgUrls.image3">
-        <!--<button @click='delImage(3)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">其它资料（资料）<button @click='delImage(4)'>清除</button></p>
+    <p class="uploadTitle">其它资料（资料）
+      <button v-if="!isPhoto4" @click='delImage(4)'>清除</button>
+    </p>
     <div class="card">
-      <img v-if="isPhoto4" @click.stop="addPic4" src="../assets/img/upload.png">
+      <div @click.stop="addPic4">
+        <img v-if="isPhoto4" src="../assets/img/upload.png">
+      </div>
       <input id="image4" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto4">
         <img
           style="padding: 0;"
           :src="imgUrls.image4">
-        <!--<button @click='delImage(4)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">其它资料（资料）<button @click='delImage(5)'>清除</button></p>
+    <p class="uploadTitle">其它资料（资料）
+      <button v-if="!isPhoto5" @click='delImage(5)'>清除</button>
+    </p>
     <div class="card">
-      <img v-if="isPhoto5" @click.stop="addPic5" src="../assets/img/upload.png">
+      <div @click.stop="addPic5">
+        <img v-if="isPhoto5" src="../assets/img/upload.png">
+      </div>
       <input id="image5" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto5">
         <img
           style="padding: 0;"
           :src="imgUrls.image5">
-        <!--<button @click='delImage(5)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">其它资料（资料）<button @click='delImage(6)'>清除</button></p>
+    <p class="uploadTitle">其它资料（资料）
+      <button v-if="!isPhoto6" @click='delImage(6)'>清除</button>
+    </p>
     <div class="card">
-      <img v-if="isPhoto6" @click.stop="addPic6" src="../assets/img/upload.png">
+      <div @click.stop="addPic6">
+        <img v-if="isPhoto6" src="../assets/img/upload.png">
+      </div>
       <input id="image6" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto6">
         <img
           style="padding: 0;"
           :src="imgUrls.image6">
-        <!--<button @click='delImage(6)'>删除图片</button>-->
       </div>
     </div>
 

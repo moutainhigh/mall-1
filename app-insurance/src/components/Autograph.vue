@@ -17,7 +17,9 @@
       </div>
     </div>
     <div class="title" style="color: #e1bb3a">投保提示书签名</div>
-    <div class="title-sign">投保人签名</div>
+    <div class="title-sign">投保人签名
+      <button>清除</button>
+    </div>
     <div class="canvas">
       <canvas id="myCanvas1"></canvas>
       <span>点击签名</span>
@@ -27,7 +29,9 @@
       <img src="../assets/img/headPhotograph.png"/>
       <p style="font-size: 13px">请点击此处，拍摄投保人正面头像</p>
     </div>
-    <div class="title-sign">投保人签名</div>
+    <div class="title-sign">投保人签名
+      <button>清除</button>
+    </div>
     <div class="canvas">
       <canvas id="myCanvas2"></canvas>
       <span>点击签名</span>
@@ -44,7 +48,10 @@
 
 <script>
   var draw;
-  var preHandler = function(e){e.preventDefault();}
+  var preHandler = function (e) {
+    e.preventDefault();
+  }
+
   class Draw {
     constructor(el) {
       this.el = el
@@ -58,20 +65,22 @@
         endY: 0
       }
     }
+
     init(btn) {
       var that = this;
 
-      this.canvas.addEventListener('touchstart', function(event) {
+      this.canvas.addEventListener('touchstart', function (event) {
         document.addEventListener('touchstart', preHandler, false);
         that.drawBegin(event)
       })
-      this.canvas.addEventListener('touchend', function(event) {
+      this.canvas.addEventListener('touchend', function (event) {
         document.addEventListener('touchend', preHandler, false);
         that.drawEnd()
 
       })
       this.clear(btn)
     }
+
     drawBegin(e) {
       var that = this;
       window.getSelection() ? window.getSelection().removeAllRanges() : document.selection.empty()
@@ -83,10 +92,11 @@
       )
       this.path.beginX = e.changedTouches[0].clientX - this.stage_info.left
       this.path.beginY = e.changedTouches[0].clientY - this.stage_info.top
-      canvas.addEventListener("touchmove",function(){
+      canvas.addEventListener("touchmove", function () {
         that.drawing(event)
       })
     }
+
     drawing(e) {
       this.cxt.lineTo(
         e.changedTouches[0].clientX - this.stage_info.left,
@@ -96,16 +106,19 @@
       this.path.endY = e.changedTouches[0].clientY - this.stage_info.top
       this.cxt.stroke()
     }
+
     drawEnd() {
       document.removeEventListener('touchstart', preHandler, false);
       document.removeEventListener('touchend', preHandler, false);
       document.removeEventListener('touchmove', preHandler, false);
       //canvas.ontouchmove = canvas.ontouchend = null
     }
+
     clear(btn) {
       this.cxt.clearRect(0, 0, 300, 600)
     }
-    save(){
+
+    save() {
       return canvas.toDataURL("image/png")
     }
   }
@@ -116,23 +129,23 @@
       return {
         state: false,
         msg: 'Welcome to Your Vue.js App',
-        val:true,
-        url:""
+        val: true,
+        url: ""
       }
     },
     mounted() {
-      draw=new Draw('canvas');
+      draw = new Draw('canvas');
       draw.init();
     },
     methods: {
       check() {
         this.state = !this.state;
       },
-      clear:function(){
+      clear: function () {
         draw.clear();
       },
-      save:function(){
-        var data=draw.save();
+      save: function () {
+        var data = draw.save();
         this.url = data;
         console.log(data)
       },
@@ -156,6 +169,15 @@
     background-color: #ffffff;
     padding: 15px 15px 0 15px;
     font-size: 13px;
+  }
+
+  .title-sign button {
+    float: right;
+    color: #999;
+    border-radius: 5px;
+    border: 1px solid #dcdcdc;
+    background: #EDEDED;
+    margin-top: -2px
   }
 
   .checkIcon {
