@@ -5,25 +5,25 @@
     </div>
     <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
       <x-input title="姓名" placeholder="请输入姓名" v-model="form.name"></x-input>
-      <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
-      <x-input title="证件号码" placeholder="请输入证件号" v-model="form.documentNum"></x-input>
-      <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="form.documentNum"></x-input>
-      <popup-picker title="国籍" placeholder="请选择国籍" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
-      <x-input title="身高(cm)" placeholder="请输入身高"  v-model="form.documentNum"></x-input>
-      <x-input title="体重(kg)" placeholder="请输入体重"  v-model="form.documentNum"></x-input>
-      <x-input title="年收入(万元)" placeholder="请输入年收入"  v-model="form.documentNum"></x-input>
-      <popup-picker title="婚姻状况" placeholder="请选择婚姻状况" :data="maritalStatus" v-model="form.marital" value-text-align="left"></popup-picker>
+      <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" value-text-align="left"></popup-picker>
+      <x-input title="证件号码" placeholder="请输入证件号" ></x-input>
+      <x-input title="证件有效期" placeholder="请选择证件有效期" ></x-input>
+      <popup-picker title="国籍" placeholder="请选择国籍" :data="list" value-text-align="left"></popup-picker>
+      <x-input title="身高(cm)" placeholder="请输入身高"  ></x-input>
+      <x-input title="体重(kg)" placeholder="请输入体重"  ></x-input>
+      <x-input title="年收入(万元)" placeholder="请输入年收入"  ></x-input>
+      <popup-picker title="婚姻状况" placeholder="请选择婚姻状况" :data="maritalStatus"  value-text-align="left"></popup-picker>
       <div>
         <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
-      <x-input title="固定电话" placeholder="请输入固定电话" v-model="form.documentNum"></x-input>
-      <x-input title="移动电话" placeholder="请输入移动电话" v-model="form.documentNum"></x-input>
-      <x-input title="E-mail" placeholder="请输入E-mail" v-model="form.documentNum"></x-input>
+      <x-input title="固定电话" placeholder="请输入固定电话" ></x-input>
+      <x-input title="移动电话" placeholder="请输入移动电话" ></x-input>
+      <x-input title="E-mail" placeholder="请输入E-mail" ></x-input>
       <x-address title="家庭住址" v-model="addressValue" raw-value :list="addressData" value-text-align="left"></x-address>
-      <x-input title="详细地址" placeholder="请输入详细地址" v-model="form.documentNum"></x-input>
-      <popup-picker title="投保人是被保人的" placeholder="请选择投被保人的关系" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
+      <x-input title="详细地址" placeholder="请输入详细地址" ></x-input>
+      <popup-picker title="投保人是被保人的" placeholder="请选择投被保人的关系" :data="list" value-text-align="left"></popup-picker>
     </group>
 
     <div class="title">
@@ -44,27 +44,27 @@
           </div>
         </div>
       </div>
-      <popup-picker title="投保人职业" placeholder="请选择职业" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
-      <datetime title="出生日期" minYear="1956" :endDate="endDate" v-model="time1" value-text-align="left"></datetime>
-      <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
-      <x-input title="证件号码" placeholder="请输入证件号" v-model="form.documentNum"></x-input>
-      <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="form.documentNum"></x-input>
-      <popup-picker title="国籍" placeholder="请选择国籍" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
-      <x-input title="身高(cm)" placeholder="请输入身高"  v-model="form.documentNum"></x-input>
-      <x-input title="体重(kg)" placeholder="请输入体重"  v-model="form.documentNum"></x-input>
-      <x-input title="年收入(万元)" placeholder="请输入年收入"  v-model="form.documentNum"></x-input>
-      <popup-picker title="婚姻状况" placeholder="请选择婚姻状况" :data="maritalStatus" v-model="form.marital" value-text-align="left"></popup-picker>
+      <popup-picker title="投保人职业" placeholder="请选择职业" :data="list" value-text-align="left"></popup-picker>
+      <datetime title="出生日期" minYear="1956" :endDate="endDate"  value-text-align="left"></datetime>
+      <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" value-text-align="left"></popup-picker>
+      <x-input title="证件号码" placeholder="请输入证件号" ></x-input>
+      <x-input title="证件有效期" placeholder="请选择证件有效期" ></x-input>
+      <popup-picker title="国籍" placeholder="请选择国籍" :data="list" value-text-align="left"></popup-picker>
+      <x-input title="身高(cm)" placeholder="请输入身高"  ></x-input>
+      <x-input title="体重(kg)" placeholder="请输入体重"  ></x-input>
+      <x-input title="年收入(万元)" placeholder="请输入年收入"  ></x-input>
+      <popup-picker title="婚姻状况" placeholder="请选择婚姻状况" :data="maritalStatus"  value-text-align="left"></popup-picker>
       <div>
         <div style="    border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
-      <x-input title="固定电话" placeholder="请输入固定电话" v-model="form.documentNum"></x-input>
-      <x-input title="移动电话" placeholder="请输入移动电话" v-model="form.documentNum"></x-input>
-      <x-input title="E-mail" placeholder="请输入E-mail" v-model="form.documentNum"></x-input>
+      <x-input title="固定电话" placeholder="请输入固定电话" ></x-input>
+      <x-input title="移动电话" placeholder="请输入移动电话" ></x-input>
+      <x-input title="E-mail" placeholder="请输入E-mail" ></x-input>
       <x-address title="家庭住址" v-model="addressValue" raw-value :list="addressData" value-text-align="left"></x-address>
-      <x-input title="详细地址" placeholder="请输入详细地址" v-model="form.documentNum"></x-input>
-      <popup-picker title="涉税人身份信息" placeholder="请选择婚姻状况" :data="maritalStatus" v-model="form.marital" value-text-align="left"></popup-picker>
+      <x-input title="详细地址" placeholder="请输入详细地址" ></x-input>
+      <popup-picker title="涉税人身份信息" placeholder="请选择婚姻状况" :data="maritalStatus"  value-text-align="left"></popup-picker>
     </group>
 
     <div class="title" style="color: #2c3e50;">
@@ -91,23 +91,21 @@
           </div>
         </div>
       </div>
-      <popup-picker title="国籍" placeholder="" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
-      <popup-picker title="受益顺序" placeholder="" :data="maritalStatus" v-model="form.marital" value-text-align="left"></popup-picker>
+      <popup-picker title="国籍" placeholder="" :data="list" value-text-align="left"></popup-picker>
+      <popup-picker title="受益顺序" placeholder="" :data="maritalStatus"  value-text-align="left"></popup-picker>
       <x-input title="姓名" placeholder="请输入姓名" v-model="form.name"></x-input>
-      <datetime title="出生日期" minYear="1956" :endDate="endDate" v-model="time1" value-text-align="left"></datetime>
-      <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
-      <x-input title="证件号码" placeholder="请输入证件号" v-model="form.documentNum"></x-input>
-      <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="form.documentNum"></x-input>
-      <popup-picker title="是被保人的" placeholder="请选择关系" :data="list" v-model="form.documentType" value-text-align="left"></popup-picker>
+      <datetime title="出生日期" minYear="1956" :endDate="endDate"  value-text-align="left"></datetime>
+      <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" value-text-align="left"></popup-picker>
+      <x-input title="证件号码" placeholder="请输入证件号" ></x-input>
+      <x-input title="证件有效期" placeholder="请选择证件有效期" ></x-input>
+      <popup-picker title="是被保人的" placeholder="请选择关系" :data="list" value-text-align="left"></popup-picker>
     </group>
     <div style="height: 50px;">
       <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;" @click="comeBack">
         <div>上一步</div>
       </button>
-      <button class="i-footer" style="width: 50%;right: 0">
-        <router-link to="infoMatters">
+      <button class="i-footer" style="width: 50%;right: 0" @click="next">
         <div>下一步</div>
-        </router-link>
       </button>
     </div>
   </div>
@@ -150,6 +148,9 @@
     methods: {
       comeBack(){
         this.$router.back();
+      },
+      next() {
+        this.$router.push("infoMatters")
       }
     }
   }

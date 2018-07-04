@@ -12,7 +12,7 @@ body {
 .i-banner img {
   padding: 12px;
   /*width: 700pt;*/
-  width: 94%;
+  width: 93.5%;
 }
 
 .i-list {
@@ -204,18 +204,17 @@ button a{
 
 .r-frame {
   position: absolute;
-  top: 300px;
+  top: 100px;
   left: 0;
   right: 0;
   text-align: center;
 }
 
 .r-tip {
-  font-size: 26pt;
+  font-size: 13px;
   color: #c01212;
   display: inline-block;
-  width: 640px;
-  margin-top: 40px;
+  margin-top: 20px;
   text-align: left;
 }
 

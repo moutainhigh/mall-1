@@ -27,7 +27,7 @@
     </div>
     <div style="height: 48px;">
       <button class="i-footer">
-        <router-link to="infoMatters">
+        <router-link to="policy">
           <div>下一步</div>
         </router-link>
       </button>
