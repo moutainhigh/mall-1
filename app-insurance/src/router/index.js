@@ -46,7 +46,7 @@ export default new Router({
       component: UploadData
     }, {
       path: '/infoMatters',
-      name: 'infoMatters',
+      name: 'info-matters',
       component: InfoMatters
     }, {
       path: '/payment',
