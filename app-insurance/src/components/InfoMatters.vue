@@ -178,7 +178,7 @@
     </div>
 
     <div style="height: 50px;">
-      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;" @click="comeBack">
+      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
         <div>上一步</div>
       </button>
       <button class="i-footer" style="width: 50%;right: 0">

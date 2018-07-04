@@ -4,15 +4,15 @@
       扣款
     </div>
     <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="投保单号" placeholder="13132156132165" v-model="name" readonly></x-input>
-      <x-input title="账户姓名" placeholder="小妮" v-model="name" readonly></x-input>
-      <x-input title="交易金额(元)" placeholder="200000" v-model="name" readonly></x-input>
-      <x-input title="手机号码" placeholder="13666666666" v-model="name" readonly></x-input>
-      <popup-picker title="开户行" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
-      <popup-picker title="开户行省份" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
-      <popup-picker title="开户城市" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
-      <popup-picker title="账户类型" :data="list" v-model="documentType" value-text-align="left"></popup-picker>
-      <x-input title="账户号码" placeholder="13666666666" v-model="name" readonly></x-input>
+      <x-input title="投保单号" placeholder="13132156132165" readonly></x-input>
+      <x-input title="账户姓名" placeholder="小妮"  readonly></x-input>
+      <x-input title="交易金额(元)" placeholder="200000"  readonly></x-input>
+      <x-input title="手机号码" placeholder="13666666666" readonly></x-input>
+      <popup-picker title="开户行" :data="list"  value-text-align="left"></popup-picker>
+      <popup-picker title="开户行省份" :data="list"  value-text-align="left"></popup-picker>
+      <popup-picker title="开户城市" :data="list" value-text-align="left"></popup-picker>
+      <popup-picker title="账户类型" :data="list" value-text-align="left"></popup-picker>
+      <x-input title="账户号码" placeholder="13666666666"  readonly></x-input>
       <div class="i-input">
         <div class="i-input-item">实时转账</div>
         <div  style="float: right;margin: 8px;">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="input-ver">
-        <x-input title="验证码" placeholder="请输入验证码" v-model="name" max="6"></x-input>
+        <x-input title="验证码" placeholder="请输入验证码" max="6" style="width: 65%;"></x-input>
         <div class="input-vile">获取验证码</div>
       </div>
     </group>
@@ -56,6 +56,16 @@
       XTextarea,
       XSwitch
     },
+    data (){
+      return {
+        list: [['居民身份证', '驾驶证', '护照']]
+      }
+    },
+    methods:{
+      submit(){
+        this.$router.push('policy')
+      }
+    }
   }
 </script>
 
