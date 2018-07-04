@@ -105,7 +105,9 @@
         <div>上一步</div>
       </button>
       <button class="i-footer" style="width: 50%;right: 0">
+        <router-link to="infoMatters">
         <div>下一步</div>
+        </router-link>
       </button>
     </div>
   </div>

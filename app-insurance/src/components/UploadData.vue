@@ -52,7 +52,8 @@
   .uploadTitle {
     background: #ffffff;
     margin: 0;
-    color: red;
+    color: #c01212;
+    font-size: 13px;
     text-align: center;
     padding: 10px;
     border-bottom: 1px solid #f3f3f3;
