@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="title">投保资料上传</div>
-    <p class="uploadTitle">投保人银行卡正面上传（必传）</p>
+    <p class="uploadTitle">投保人银行卡正面上传（必传）
+      <button @click='delImage(1)'>清除</button>
+    </p>
     <div class="card">
       <img v-if="isPhoto1" @click.stop="addPic1" src="../assets/img/upload.png">
       <input id="image1" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
@@ -10,11 +12,11 @@
         <img
           style="padding: 0; transform:rotate(7deg);-ms-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);  -webkit-transform:rotate(-90deg);"
           :src="imgUrls.image1">
-        <button @click='delImage(1)'>删除图片</button>
+        <!--<button @click='delImage(1)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">投保人身份证正面上传（必传）</p>
+    <p class="uploadTitle">投保人身份证正面上传（必传）<button @click='delImage(2)'>清除</button></p>
     <div class="card">
       <img v-if="isPhoto2" @click.stop="addPic2" src="../assets/img/takeIdCard.png">
       <input id="image2" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
@@ -23,11 +25,11 @@
         <img
           style="padding: 0; transform:rotate(7deg);-ms-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);  -webkit-transform:rotate(-90deg);"
           :src="imgUrls.image2">
-        <button @click='delImage(2)'>删除图片</button>
+        <!--<button @click='delImage(2)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">投保人身份证背面上传（必传）</p>
+    <p class="uploadTitle">投保人身份证背面上传（必传）<button @click='delImage(3)'>清除</button></p>
     <div class="card">
       <img v-if="isPhoto3" @click.stop="addPic3" src="../assets/img/takeEmblem.png">
       <input id="image3" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
@@ -36,11 +38,11 @@
         <img
           style="padding: 0; transform:rotate(7deg);-ms-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);  -webkit-transform:rotate(-90deg);"
           :src="imgUrls.image3">
-        <button @click='delImage(3)'>删除图片</button>
+        <!--<button @click='delImage(3)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">其它资料（资料）</p>
+    <p class="uploadTitle">其它资料（资料）<button @click='delImage(4)'>清除</button></p>
     <div class="card">
       <img v-if="isPhoto4" @click.stop="addPic4" src="../assets/img/upload.png">
       <input id="image4" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
@@ -49,11 +51,11 @@
         <img
           style="padding: 0;"
           :src="imgUrls.image4">
-        <button @click='delImage(4)'>删除图片</button>
+        <!--<button @click='delImage(4)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">其它资料（资料）</p>
+    <p class="uploadTitle">其它资料（资料）<button @click='delImage(5)'>清除</button></p>
     <div class="card">
       <img v-if="isPhoto5" @click.stop="addPic5" src="../assets/img/upload.png">
       <input id="image5" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
@@ -62,11 +64,11 @@
         <img
           style="padding: 0;"
           :src="imgUrls.image5">
-        <button @click='delImage(5)'>删除图片</button>
+        <!--<button @click='delImage(5)'>删除图片</button>-->
       </div>
     </div>
 
-    <p class="uploadTitle">其它资料（资料）</p>
+    <p class="uploadTitle">其它资料（资料）<button @click='delImage(6)'>清除</button></p>
     <div class="card">
       <img v-if="isPhoto6" @click.stop="addPic6" src="../assets/img/upload.png">
       <input id="image6" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
@@ -75,7 +77,7 @@
         <img
           style="padding: 0;"
           :src="imgUrls.image6">
-        <button @click='delImage(6)'>删除图片</button>
+        <!--<button @click='delImage(6)'>删除图片</button>-->
       </div>
     </div>
 
@@ -282,6 +284,15 @@
     text-align: center;
     padding: 10px;
     border-bottom: 1px solid #f3f3f3;
+  }
+
+  .uploadTitle button {
+    float: right;
+    color: #999;
+    border-radius: 5px;
+    border: 1px solid #dcdcdc;
+    background: #EDEDED;
+    margin-top: -2px
   }
 
   .card {
