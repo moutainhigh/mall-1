@@ -17,8 +17,8 @@
             <div class="dt-price-pro">
               2万/5万/10万
             </div>
-            <button>
-              <router-link to="/pro-detail">立即投保</router-link>
+            <button @click="goToPro(1)">
+             立即投保
             </button>
           </div>
         </div>
@@ -37,8 +37,8 @@
             <div class="dt-price-pro">
               ￥20000.00元
             </div>
-            <button>
-              <router-link to="/pro-detail">立即投保</router-link>
+            <button @click="goToPro(2)">
+              立即投保
             </button>
           </div>
         </div>
@@ -48,8 +48,21 @@
 </template>
 
 <script>
+  // import {testGet,sendMobile} from "../service/getData";
+  import storage from '../store/storage'
+
   export default {
-    name: "index"
+    name: "index",
+    methods: {
+      goToPro(val){
+        this.$router.push({
+          path:'pro-detail',
+          data: {
+            id:val
+          }
+        });
+      }
+    }
   }
 </script>
 

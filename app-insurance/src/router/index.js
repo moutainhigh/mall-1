@@ -4,7 +4,6 @@ import Index from '../components/Index'
 import ProDetail from '../components/ProDetail'
 import HolderBasic from '../components/HolderBasic'
 import HolderDetail from '../components/HolderDetail'
-import Signature from '../components/Signature'
 import Autograph from '../components/Autograph'
 import UploadData from '../components/UploadData'
 import InfoMatters from '../components/InfoMatters'
@@ -33,10 +32,6 @@ export default new Router({
       path: '/holder-detail',
       name: 'holder-detail',
       component: HolderDetail
-    }, {
-      path: '/signature',
-      name: 'signature',
-      component: Signature
     }, {
       path: '/autograph',
       name: 'autograph',
