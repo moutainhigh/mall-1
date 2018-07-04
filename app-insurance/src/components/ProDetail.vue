@@ -2,9 +2,11 @@
   <div>
     <img src="../assets/img/detail.png" width="100%"/>
     <div style="height: 48px;">
-      <button class="i-footer">
-        <router-link to="holder-basic">立即投保</router-link>
-      </button>
+      <router-link to="holder-basic">
+        <button class="i-footer">
+          立即投保
+        </button>
+      </router-link>
     </div>
   </div>
 </template>

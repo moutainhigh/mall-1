@@ -7,26 +7,32 @@
       <div class="i-input">
         <div class="i-input-item">出生日期：</div>
         <div class="i-input-select" @click="showPlugin">
-          <div>请选择出生日期</div>
+          <div v-if="holder.policyholderBirthday === ''">请选择出生日期</div>
+          <div v-if="holder.policyholderBirthday !== ''">{{holder.policyholderBirthday}}</div>
           <img src="../assets/img/drop-down.png"/>
         </div>
       </div>
       <div class="i-input">
         <div class="i-input-item">性别：</div>
         <div class="i-input-radio">
-          <div class="radio-div">
+          <div class="radio-div" @click="holder.policyholderGender = true">
             <span>男</span>
-            <img src="../assets/img/case-on.png"/>
+            <img v-if="holder.policyholderGender" src="../assets/img/case-on.png"/>
+            <img v-if="!holder.policyholderGender" src="../assets/img/case-off.png"/>
           </div>
-          <div class="radio-div">
+          <div class="radio-div" @click="holder.policyholderGender = false">
             <span>女</span>
-            <img src="../assets/img/case-off.png"/>
+            <img v-if="!holder.policyholderGender" src="../assets/img/case-on.png"/>
+            <img v-if="holder.policyholderGender" src="../assets/img/case-off.png"/>
           </div>
         </div>
       </div>
       <div class="i-input">
         <div class="i-input-item">被保人职业：</div>
-        <div class="i-input-select">
+        <!--<group>-->
+          <!--<popup-picker title="受益顺序" placeholder="" :data="list" v-model="test"  value-text-align="left"></popup-picker>-->
+        <!--</group>-->
+        <div class="i-input-select" @click="showJob">
           <div>请选择职业</div>
           <img src="../assets/img/drop-down.png"/>
         </div>
@@ -51,17 +57,20 @@
       <div class="i-input">
         <div class="i-input-item">基本保额：</div>
         <div class="i-input-radio">
-          <div class="radio-div">
+          <div class="radio-div" @click="money = 0">
             <span>2万</span>
-            <img src="../assets/img/case-on.png" height="100"/>
+            <img v-if="money ===0" src="../assets/img/case-on.png" height="100"/>
+            <img v-if="money !==0" src="../assets/img/case-off.png" height="100"/>
           </div>
-          <div class="radio-div">
+          <div class="radio-div" @click="money = 1">
             <span>5万</span>
-            <img src="../assets/img/case-off.png" height="100"/>
+            <img v-if="money ===1" src="../assets/img/case-on.png" height="100"/>
+            <img v-if="money !==1" src="../assets/img/case-off.png" height="100"/>
           </div>
-          <div class="radio-div">
+          <div class="radio-div" @click="money = 2">
             <span>10万</span>
-            <img src="../assets/img/case-off.png" height="100"/>
+            <img v-if="money ===2" src="../assets/img/case-on.png" height="100"/>
+            <img v-if="money !==2" src="../assets/img/case-off.png" height="100"/>
           </div>
         </div>
       </div>
@@ -87,12 +96,26 @@
 </template>
 
 <script>
-
+  import storage from "../store/storage"
+  import {PopupPicker} from 'vux'
   export default {
     name: "holder-basic",
+    components: {
+      PopupPicker
+    },
+    data(){
+      return {
+        holder : storage.fetch('holder'),
+        birthday: '',
+        gender: true,
+        money: 0,
+        test:[],
+        list: [['居民身份证', '驾驶证', '护照']]
+      }
+    },
     methods: {
       showPlugin () {
-        console.log('plugin confirm', "test")
+        let _this = this;
         this.$vux.datetime.show({
           cancelText: '取消',
           confirmText: '确定',
@@ -101,7 +124,7 @@
           minYear: '1956',
           endDate: new Date(),
           onConfirm (val) {
-            console.log('plugin confirm', val)
+            _this.holder.policyholderBirthday = val;
           },
           onShow () {
             console.log('plugin show')
@@ -113,11 +136,20 @@
       },
       submit(){
         this.$router.push('/holder-detail');
-        // this.$http.get("127.0.0.1:8080/index").then(response => {
-        //   console.log("test")
-        // }, response => {
-        //
-        // });
+      },
+      showJob(){
+      }
+    },
+    watch:{
+      holder: {
+        handler(newVal, oldVal) {
+          if (oldVal != null || oldVal !== undefined){
+            storage.save('holder',oldVal);
+
+          }
+        },
+        immediate: true,
+        deep: true
       }
     }
   }

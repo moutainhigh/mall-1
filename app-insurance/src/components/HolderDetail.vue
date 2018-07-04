@@ -3,12 +3,12 @@
     <div class="title" style="margin-top: 0;">
       被保人信息
     </div>
-    <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="姓名" placeholder="请输入姓名" v-model="form.name"></x-input>
-      <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" value-text-align="left"></popup-picker>
+    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
+      <x-input title="姓名" placeholder="请输入姓名"></x-input>
+      <popup-picker title="证件类型" placeholder="请选择证件类型" :data="cardTypes" value-text-align="left"></popup-picker>
       <x-input title="证件号码" placeholder="请输入证件号" ></x-input>
       <x-input title="证件有效期" placeholder="请选择证件有效期" ></x-input>
-      <popup-picker title="国籍" placeholder="请选择国籍" :data="list" value-text-align="left"></popup-picker>
+      <popup-picker title="国籍" placeholder="请选择国籍" :data="countries" value-text-align="left"></popup-picker>
       <x-input title="身高(cm)" placeholder="请输入身高"  ></x-input>
       <x-input title="体重(kg)" placeholder="请输入体重"  ></x-input>
       <x-input title="年收入(万元)" placeholder="请输入年收入"  ></x-input>
@@ -20,51 +20,53 @@
       </div>
       <x-input title="固定电话" placeholder="请输入固定电话" ></x-input>
       <x-input title="移动电话" placeholder="请输入移动电话" ></x-input>
-      <x-input title="E-mail" placeholder="请输入E-mail" ></x-input>
-      <x-address title="家庭住址" v-model="addressValue" raw-value :list="addressData" value-text-align="left"></x-address>
+      <x-input title="E-mail" placeholder="非必填项" ></x-input>
+      <x-address title="家庭住址"  placeholder="请选择地址"  raw-value :list="addressData" value-text-align="left"></x-address>
       <x-input title="详细地址" placeholder="请输入详细地址" ></x-input>
-      <popup-picker title="投保人是被保人的" placeholder="请选择投被保人的关系" :data="list" value-text-align="left"></popup-picker>
+      <popup-picker title="投保人是被保人的" placeholder="请选择投被保人的关系" :data="relates" value-text-align="left"></popup-picker>
     </group>
 
     <div class="title">
       投保人信息
     </div>
-    <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="姓名" placeholder="请输入姓名" v-model="form.name"></x-input>
+    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
+      <x-input title="姓名" placeholder="请输入姓名"  v-model="holder.policyholderName"></x-input>
       <div class="i-input">
         <div class="i-input-item">性别</div>
         <div class="i-input-radio">
-          <div class="radio-div">
+          <div class="radio-div" @click="holder.policyholderGender = true">
             <span>男</span>
-            <img src="../assets/img/case-on.png"/>
+            <img v-if="holder.policyholderGender" src="../assets/img/case-on.png"/>
+            <img v-if="!holder.policyholderGender" src="../assets/img/case-off.png"/>
           </div>
-          <div class="radio-div">
+          <div class="radio-div" @click="holder.policyholderGender = false">
             <span>女</span>
-            <img src="../assets/img/case-off.png"/>
+            <img v-if="!holder.policyholderGender" src="../assets/img/case-on.png"/>
+            <img v-if="holder.policyholderGender" src="../assets/img/case-off.png"/>
           </div>
         </div>
       </div>
       <popup-picker title="投保人职业" placeholder="请选择职业" :data="list" value-text-align="left"></popup-picker>
-      <datetime title="出生日期" minYear="1956" :endDate="endDate"  value-text-align="left"></datetime>
-      <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" value-text-align="left"></popup-picker>
-      <x-input title="证件号码" placeholder="请输入证件号" ></x-input>
+      <datetime title="出生日期" v-model="holder.policyholderBirthday" placeholder="请输入生日日期" value-text-align="left"></datetime>
+      <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType" :data="cardTypes" value-text-align="left"></popup-picker>
+      <x-input title="证件号码"  v-model="holder.policyholderCardNo" placeholder="请输入证件号" ></x-input>
       <x-input title="证件有效期" placeholder="请选择证件有效期" ></x-input>
-      <popup-picker title="国籍" placeholder="请选择国籍" :data="list" value-text-align="left"></popup-picker>
-      <x-input title="身高(cm)" placeholder="请输入身高"  ></x-input>
-      <x-input title="体重(kg)" placeholder="请输入体重"  ></x-input>
-      <x-input title="年收入(万元)" placeholder="请输入年收入"  ></x-input>
-      <popup-picker title="婚姻状况" placeholder="请选择婚姻状况" :data="maritalStatus"  value-text-align="left"></popup-picker>
+      <popup-picker title="国籍" placeholder="请选择国籍" :data="countries" value-text-align="left"></popup-picker>
+      <x-input title="身高(cm)"  v-model="holder.policyholderHeight" placeholder="请输入身高"  ></x-input>
+      <x-input title="体重(kg)" v-model="holder.policyholderBodyWeight"  placeholder="请输入体重"  ></x-input>
+      <x-input title="年收入(万元)" v-model="holder.policyholderIncome"  placeholder="请输入年收入"  ></x-input>
+      <popup-picker title="婚姻状况"  v-model="holder.policyholderMarriage" placeholder="请选择婚姻状况" :data="maritalStatus"  value-text-align="left"></popup-picker>
       <div>
-        <div style="    border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
+        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
-      <x-input title="固定电话" placeholder="请输入固定电话" ></x-input>
-      <x-input title="移动电话" placeholder="请输入移动电话" ></x-input>
-      <x-input title="E-mail" placeholder="请输入E-mail" ></x-input>
-      <x-address title="家庭住址" v-model="addressValue" raw-value :list="addressData" value-text-align="left"></x-address>
-      <x-input title="详细地址" placeholder="请输入详细地址" ></x-input>
-      <popup-picker title="涉税人身份信息" placeholder="请选择婚姻状况" :data="maritalStatus"  value-text-align="left"></popup-picker>
+      <x-input title="固定电话" v-model="holder.policyholderTel" placeholder="请输入固定电话" ></x-input>
+      <x-input title="移动电话" v-model="holder.policyholderMobile" placeholder="请输入移动电话" ></x-input>
+      <x-input title="E-mail" v-model="holder.policyholderEmail" placeholder="非必填项" ></x-input>
+      <x-address title="家庭住址"  v-model="addressValue" placeholder="请选择地址" raw-value :list="addressData" value-text-align="left"></x-address>
+      <x-input title="详细地址" v-model="holder.policyholderAddress"  placeholder="请输入详细地址" ></x-input>
+      <popup-picker title="涉税人身份信息" v-model="holder.policyholderTaxRelated" placeholder="请选择涉税人信息" :data="taxRelates"  value-text-align="left"></popup-picker>
     </group>
 
     <div class="title" style="color: #2c3e50;">
@@ -76,8 +78,8 @@
       </div>
     </div>
     <div class="add">受益人信息 <span style="float: right;">删除</span></div>
-    <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="姓名" placeholder="请输入姓名" v-model="form.name"></x-input>
+    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
+      <x-input title="姓名" placeholder="请输入姓名" v-model="holder.name"></x-input>
       <div class="i-input">
         <div class="i-input-item">性别</div>
         <div class="i-input-radio">
@@ -93,15 +95,15 @@
       </div>
       <popup-picker title="国籍" placeholder="" :data="list" value-text-align="left"></popup-picker>
       <popup-picker title="受益顺序" placeholder="" :data="maritalStatus"  value-text-align="left"></popup-picker>
-      <x-input title="姓名" placeholder="请输入姓名" v-model="form.name"></x-input>
-      <datetime title="出生日期" minYear="1956" :endDate="endDate"  value-text-align="left"></datetime>
+      <x-input title="姓名" placeholder="请输入姓名" v-model="holder.name"></x-input>
+      <datetime title="出生日期"  value-text-align="left"></datetime>
       <popup-picker title="证件类型" placeholder="请选择证件类型" :data="list" value-text-align="left"></popup-picker>
       <x-input title="证件号码" placeholder="请输入证件号" ></x-input>
       <x-input title="证件有效期" placeholder="请选择证件有效期" ></x-input>
       <popup-picker title="是被保人的" placeholder="请选择关系" :data="list" value-text-align="left"></popup-picker>
     </group>
     <div style="height: 50px;">
-      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;" @click="comeBack">
+      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
         <div>上一步</div>
       </button>
       <button class="i-footer" style="width: 50%;right: 0" @click="next">
@@ -113,10 +115,13 @@
 </template>
 
 <script>
-  import { GroupTitle, Group, Cell, XInput, Selector, PopupPicker, Datetime, XNumber, ChinaAddressData, XAddress, XTextarea, XSwitch } from 'vux'
+
+  import {PopupRadio, GroupTitle, Group, Cell, XInput, Selector, PopupPicker, Datetime, XNumber, ChinaAddressData, XAddress, XTextarea, XSwitch } from 'vux'
+  import storage from "../store/storage";
 
   export default {
     components: {
+      PopupRadio,
       Group,
       GroupTitle,
       Cell,
@@ -132,15 +137,16 @@
     name: "holder-detail",
     data() {
       return {
-        form: {
-          name: '',
-          documentType: ['身份证'],
-          documentNum:'',
-          marital:['未婚']
+        addressValue: [],
+        holder: storage.fetch('holder'),
+        Beneficiaries:[{
 
-        },
-        list: [['身份证', '驾驶证', '护照']],
-        maritalStatus:[['未婚','已婚']],
+        }],
+        cardTypes: [['居民身份证','居民户口簿','军人身份证','港澳居民往来内地通行证','出生证','台湾居民往来内地通行证','外国护照','外国人永久居留身份证','武警身份证','其他证件']],
+        maritalStatus:[['未婚','已婚','丧偶','离婚']],
+        countries:[['中国', '美国', '日本']],
+        relates:[["本人","配偶","父母","子女","兄弟姐妹","祖父母","外祖父母","祖孙","外祖孙","其他"]],
+        taxRelates:[["仅为中国税收居民","仅为非居民","既是中国税收居民又是其他国家（地区）税收居民"]],
         addressData: ChinaAddressData,
         endDate: new Date()
       }
@@ -151,6 +157,21 @@
       },
       next() {
         this.$router.push("infoMatters")
+      }
+    },
+    watch: {
+      addressValue: function (val, oldVal) {
+        console.log(oldVal)
+      },
+      holder: {
+        handler(newVal, oldVal) {
+          if (oldVal != null || oldVal !== undefined){
+            storage.save('holder',oldVal);
+
+          }
+        },
+        immediate: true,
+        deep: true
       }
     }
   }
@@ -163,6 +184,10 @@
    padding: 15px;
    font-size: 13px;
    color: #e1bb3a;
+ }
+
+ .i-input .i-input-radio {
+   margin-left: 1rem;
  }
 
   .i-input-radio {

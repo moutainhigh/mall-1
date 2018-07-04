@@ -80,8 +80,8 @@
     </div>
 
     <div style="height: 48px;">
-      <button class="i-footer"> <!--@click='saveImage()'-->
-        <router-link to="policy">
+      <button class="i-footer">
+        <router-link to="payment">
           <div>下一步</div>
         </router-link>
       </button>
@@ -265,6 +265,7 @@
     }
   }
 </script>
+
 <style scoped>
   .title {
     margin-bottom: 10px;

@@ -9,6 +9,8 @@ import AlertPlugin from 'vux/src/plugins/Alert'
 import ToastPlugin from 'vux/src/plugins/Toast'
 import datetime from 'vux/src/plugins/datetime'
 import { Group } from 'vux'
+import Dev from '../config/dev.env'
+
 
 Vue.component('group', Group)
 Vue.use(AlertPlugin)
@@ -17,6 +19,11 @@ Vue.use(datetime)
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
+Vue.use(Dev)
+
+router.afterEach((to,from,next) => {
+  window.scrollTo(0,0);
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

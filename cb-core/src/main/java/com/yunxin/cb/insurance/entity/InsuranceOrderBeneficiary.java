@@ -23,6 +23,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * *
+ * 保险订单受益人
  *
  * @author tanggangyi
  * @version 1.0
@@ -44,11 +45,10 @@ public class InsuranceOrderBeneficiary implements Serializable {
     @Max(9999999999L)
     private int beneficiaryId;
     /**
-     * 订单ID
+     * 订单
      */
     @NotNull
-    @Max(9999999999L)
-    private int orderId;
+    private InsuranceOrder insuranceOrder;
     /**
      * 受益人姓名
      */
@@ -189,14 +189,7 @@ public class InsuranceOrderBeneficiary implements Serializable {
         this.beneficiaryId = beneficiaryId;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getOrderId() {
-        return this.orderId;
-    }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
 
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
     public String getBeneficiaryName() {
@@ -382,8 +375,6 @@ public class InsuranceOrderBeneficiary implements Serializable {
         this.insuredRelation = insuredRelation;
     }
 
-
-    private InsuranceOrder insuranceOrder;
 
     public void setInsuranceOrder(InsuranceOrder insuranceOrder) {
         this.insuranceOrder = insuranceOrder;

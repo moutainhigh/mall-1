@@ -25,7 +25,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * *
- * 告知事项
+ * 告知事项组
  *
  * @author tanggangyi
  * @version 1.0
@@ -35,23 +35,23 @@ import static javax.persistence.GenerationType.IDENTITY;
 @DynamicInsert
 @DynamicUpdate
 @Table
-public class InsuranceInformedMatter implements Serializable {
+public class InsuranceInformedMatterGroup implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
 
     //columns START
     /**
-     * 事项ID
+     * 事项组ID
      */
     @Max(9999999999L)
-    private int matterId;
+    private int groupId;
     /**
-     * 事项描述
+     * 事项组描述
      */
     @NotBlank
     @Length(max = 512)
-    private String matterDescription;
+    private String description;
     /**
      * 创建时间
      */
@@ -68,43 +68,41 @@ public class InsuranceInformedMatter implements Serializable {
      */
     @Max(9999999999L)
     private int enabled;
-    /**
-     * 所属组
-     */
-    private InsuranceInformedMatterGroup matterGroup;
 
-    private Set<InsuranceProduct> insuranceProducts = new HashSet(0);
+
+
+    private Set<InsuranceInformedMatter> insuranceInformedMatters = new HashSet(0);
     //columns END
 
 
-    public InsuranceInformedMatter() {
+    public InsuranceInformedMatterGroup() {
     }
 
-    public InsuranceInformedMatter(
-            int matterId
+    public InsuranceInformedMatterGroup(
+            int groupId
     ) {
-        this.matterId = matterId;
+        this.groupId = groupId;
     }
 
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getMatterId() {
-        return this.matterId;
+    public int getGroupId() {
+        return this.groupId;
     }
 
-    public void setMatterId(int matterId) {
-        this.matterId = matterId;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 512)
-    public String getMatterDescription() {
-        return this.matterDescription;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setMatterDescription(String matterDescription) {
-        this.matterDescription = matterDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -136,35 +134,16 @@ public class InsuranceInformedMatter implements Serializable {
         this.enabled = enabled;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "GROUP_ID")
-    public InsuranceInformedMatterGroup getMatterGroup() {
-        return matterGroup;
+
+
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "matterGroup")
+    public Set<InsuranceInformedMatter> getInsuranceInformedMatters() {
+        return insuranceInformedMatters;
     }
 
-    public void setMatterGroup(InsuranceInformedMatterGroup matterGroup) {
-        this.matterGroup = matterGroup;
+    public void setInsuranceInformedMatters(Set<InsuranceInformedMatter> insuranceOrderInformedMatter) {
+        this.insuranceInformedMatters = insuranceOrderInformedMatter;
     }
 
-    private Set insuranceOrderInformedMatters = new HashSet(0);
 
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceInformedMatter")
-    public Set<InsuranceOrderInformedMatter> getInsuranceOrderInformedMatters() {
-        return insuranceOrderInformedMatters;
-    }
-
-    public void setInsuranceOrderInformedMatters(Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatter) {
-        this.insuranceOrderInformedMatters = insuranceOrderInformedMatter;
-    }
-
-    @ManyToMany(targetEntity = InsuranceProduct.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinTable(name = "insurance_product_informed_matter", joinColumns = {@JoinColumn(name = "MATTER_ID", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "PROD_ID", nullable = false, updatable = false)})
-    public Set<InsuranceProduct> getInsuranceProducts() {
-        return insuranceProducts;
-    }
-
-    public void setInsuranceProducts(Set<InsuranceProduct> insuranceProducts) {
-        this.insuranceProducts = insuranceProducts;
-    }
 }

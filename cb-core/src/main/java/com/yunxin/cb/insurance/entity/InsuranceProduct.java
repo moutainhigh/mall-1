@@ -25,8 +25,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * *
+ * 保险产品
  *
- * @author aidy www.microlinktech.net
+ * @author tanggangyi
  * @version 1.0
  * @since 1.0
  */
@@ -98,6 +99,9 @@ public class InsuranceProduct implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
 
+    private Set insuranceOrders = new HashSet(0);
+
+    private Set insuranceProductPrices = new HashSet(0);
 
     private Set<InsuranceInformedMatter> insuranceInformedMatters = new HashSet(0);
     //columns END
@@ -208,7 +212,6 @@ public class InsuranceProduct implements Serializable {
     }
 
 
-    private Set insuranceOrders = new HashSet(0);
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProduct")
     public Set<InsuranceOrder> getInsuranceOrders() {
@@ -219,7 +222,7 @@ public class InsuranceProduct implements Serializable {
         this.insuranceOrders = insuranceOrder;
     }
 
-    private Set insuranceProductPrices = new HashSet(0);
+
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProduct")
     public Set<InsuranceProductPrice> getInsuranceProductPrices() {

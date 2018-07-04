@@ -24,163 +24,158 @@ import java.util.Set;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
-*  *
+ * *
+ * 保险产品价格
+ *
  * @author tanggangyi
  * @version 1.0
  * @since 1.0
- *
-*/
+ */
 @Entity
 @DynamicInsert
 @DynamicUpdate
 @Table
 public class InsuranceProductPrice implements Serializable {
 
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 
     //columns START
-        /**
-        * 产品价格ID
-        */
-        @Max(9999999999L)
-        private int priceId;
-        /**
-        * 产品ID
-        */
-        @NotNull @Max(9999999999L)
-        private int prodId;
-        /**
-        * 产品价格
-        */
-        @NotNull @Max(9999999999L)
-        private int price;
-        /**
-        * 价格单位
-        */
-        @NotBlank @Length(max=32)
-        private String unit;
-        /**
-        * 描述
-        */
-        @Length(max=65535)
-        private String description;
-        /**
-        * 创建时间
-        */
-        @NotNull 
-            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-        private Date createTime;
-        /**
-        * 备注
-        */
-        @Length(max=512)
-        private String remark;
+    /**
+     * 产品价格ID
+     */
+    @Max(9999999999L)
+    private int priceId;
+    /**
+     * 产品
+     */
+    @NotNull
+    private InsuranceProduct insuranceProduct;
+    /**
+     * 产品价格
+     */
+    @NotNull
+    @Max(9999999999L)
+    private int price;
+    /**
+     * 价格单位
+     */
+    @NotBlank
+    @Length(max = 32)
+    private String unit;
+    /**
+     * 描述
+     */
+    @Length(max = 65535)
+    private String description;
+    /**
+     * 创建时间
+     */
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private Date createTime;
+    /**
+     * 备注
+     */
+    @Length(max = 512)
+    private String remark;
+
+    private Set insuranceOrders = new HashSet(0);
     //columns END
 
 
-	public InsuranceProductPrice(){
-	}
+    public InsuranceProductPrice() {
+    }
 
-	public InsuranceProductPrice(
-		int priceId
-	){
-		this.priceId = priceId;
-	}
+    public InsuranceProductPrice(
+            int priceId
+    ) {
+        this.priceId = priceId;
+    }
 
 
-            @Id
-            @GeneratedValue(strategy = IDENTITY)
-            @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
-            public int getPriceId() {
-            return this.priceId;
-            }
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
+    public int getPriceId() {
+        return this.priceId;
+    }
 
-            public void setPriceId(int priceId) {
-            this.priceId = priceId;
-            }
+    public void setPriceId(int priceId) {
+        this.priceId = priceId;
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-        public int getProdId() {
-        return this.prodId;
-        }
-
-        public void setProdId(int prodId) {
-        this.prodId = prodId;
-        }
-
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-        public int getPrice() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
+    public int getPrice() {
         return this.price;
-        }
+    }
 
-        public void setPrice(int price) {
+    public void setPrice(int price) {
         this.price = price;
-        }
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
-        public String getUnit() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
+    public String getUnit() {
         return this.unit;
-        }
+    }
 
-        public void setUnit(String unit) {
+    public void setUnit(String unit) {
         this.unit = unit;
-        }
+    }
 
-        @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 65535)
-        public String getDescription() {
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 65535)
+    public String getDescription() {
         return this.description;
-        }
+    }
 
-        public void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
-        }
+    }
 
-            @Temporal(TemporalType.TIMESTAMP)
-            @JsonSerialize(using = JsonTimestampSerializer.class)
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 19)
-        public Date getCreateTime() {
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 19)
+    public Date getCreateTime() {
         return this.createTime;
-        }
+    }
 
-        public void setCreateTime(Date createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-        }
+    }
 
-        @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 512)
-        public String getRemark() {
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 512)
+    public String getRemark() {
         return this.remark;
-        }
+    }
 
-        public void setRemark(String remark) {
+    public void setRemark(String remark) {
         this.remark = remark;
-        }
+    }
 
 
-    private Set insuranceOrders = new HashSet(0);
 
-    @OneToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY, mappedBy = "insuranceProductPrice")
+
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProductPrice")
     public Set<InsuranceOrder> getInsuranceOrders() {
-    return insuranceOrders;
+        return insuranceOrders;
     }
 
-    public void setInsuranceOrders(Set<InsuranceOrder> insuranceOrder){
-    this.insuranceOrders = insuranceOrder;
+    public void setInsuranceOrders(Set<InsuranceOrder> insuranceOrder) {
+        this.insuranceOrders = insuranceOrder;
     }
 
-    private InsuranceProduct insuranceProduct;
-    public void setInsuranceProduct(InsuranceProduct insuranceProduct){
-    this.insuranceProduct = insuranceProduct;
+
+    public void setInsuranceProduct(InsuranceProduct insuranceProduct) {
+        this.insuranceProduct = insuranceProduct;
     }
 
     @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
     @JoinColumns({
-        @JoinColumn(name = "PROD_ID",nullable = false, insertable = true, updatable = true) 
+            @JoinColumn(name = "PROD_ID", nullable = false, insertable = true, updatable = true)
     })
     public InsuranceProduct getInsuranceProduct() {
-    return insuranceProduct;
+        return insuranceProduct;
     }
-
 
 
 }
