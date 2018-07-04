@@ -53,40 +53,34 @@ public class InsuranceOrder implements Serializable {
     @Length(max = 32)
     private String orderCode;
     /**
-     * 产品ID
+     * 产品
      */
     @NotNull
-    @Max(9999999999L)
-    private int prodId;
+    private InsuranceProduct insuranceProduct;
     /**
      * 保额
      */
-    @Max(9999999999L)
-    private int priceId;
+    private InsuranceProductPrice insuranceProductPrice;
     /**
-     * 客户ID
+     * 客户
      */
     @NotNull
-    @Max(9999999999L)
-    private int customerId;
+    private Customer customer;
     /**
      * 被保人ID
      */
     @NotNull
-    @Max(9999999999L)
-    private int insuredId;
+    private InsuranceOrderInsured insuranceOrderInsured;
     /**
      * 投保人ID
      */
     @NotNull
-    @Max(9999999999L)
-    private int policyholderId;
+    private InsuranceOrderPolicyholder insuranceOrderPolicyholder;
     /**
-     * 投保人银行ID
+     * 投保人银行
      */
     @NotNull
-    @Max(9999999999L)
-    private int bankId;
+    private InsuranceOrderPolicyholderBank insuranceOrderPolicyholderBank;
     /**
      * 是否法定收益人
      */
@@ -98,6 +92,9 @@ public class InsuranceOrder implements Serializable {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
+
+
+    private Set insuranceOrderBeneficiarys = new HashSet(0);
     //columns END
 
 
@@ -131,60 +128,6 @@ public class InsuranceOrder implements Serializable {
         this.orderCode = orderCode;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getProdId() {
-        return this.prodId;
-    }
-
-    public void setProdId(int prodId) {
-        this.prodId = prodId;
-    }
-
-    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 10)
-    public int getPriceId() {
-        return this.priceId;
-    }
-
-    public void setPriceId(int priceId) {
-        this.priceId = priceId;
-    }
-
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getCustomerId() {
-        return this.customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getInsuredId() {
-        return this.insuredId;
-    }
-
-    public void setInsuredId(int insuredId) {
-        this.insuredId = insuredId;
-    }
-
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getPolicyholderId() {
-        return this.policyholderId;
-    }
-
-    public void setPolicyholderId(int policyholderId) {
-        this.policyholderId = policyholderId;
-    }
-
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getBankId() {
-        return this.bankId;
-    }
-
-    public void setBankId(int bankId) {
-        this.bankId = bankId;
-    }
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonSerialize(using = JsonTimestampSerializer.class)
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 19)
@@ -196,8 +139,6 @@ public class InsuranceOrder implements Serializable {
         this.createTime = createTime;
     }
 
-
-    private Set insuranceOrderBeneficiarys = new HashSet(0);
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceOrder")
     public Set<InsuranceOrderBeneficiary> getInsuranceOrderBeneficiarys() {
@@ -219,7 +160,6 @@ public class InsuranceOrder implements Serializable {
         this.insuranceOrderInformedMatters = insuranceOrderInformedMatter;
     }
 
-    private InsuranceProduct insuranceProduct;
 
     public void setInsuranceProduct(InsuranceProduct insuranceProduct) {
         this.insuranceProduct = insuranceProduct;
@@ -233,7 +173,7 @@ public class InsuranceOrder implements Serializable {
         return insuranceProduct;
     }
 
-    private InsuranceOrderPolicyholder insuranceOrderPolicyholder;
+
 
     public void setInsuranceOrderPolicyholder(InsuranceOrderPolicyholder insuranceOrderPolicyholder) {
         this.insuranceOrderPolicyholder = insuranceOrderPolicyholder;
@@ -247,7 +187,7 @@ public class InsuranceOrder implements Serializable {
         return insuranceOrderPolicyholder;
     }
 
-    private InsuranceOrderPolicyholderBank insuranceOrderPolicyholderBank;
+
 
     public void setInsuranceOrderPolicyholderBank(InsuranceOrderPolicyholderBank insuranceOrderPolicyholderBank) {
         this.insuranceOrderPolicyholderBank = insuranceOrderPolicyholderBank;
@@ -261,7 +201,6 @@ public class InsuranceOrder implements Serializable {
         return insuranceOrderPolicyholderBank;
     }
 
-    private InsuranceProductPrice insuranceProductPrice;
 
     public void setInsuranceProductPrice(InsuranceProductPrice insuranceProductPrice) {
         this.insuranceProductPrice = insuranceProductPrice;
@@ -275,7 +214,7 @@ public class InsuranceOrder implements Serializable {
         return insuranceProductPrice;
     }
 
-    private InsuranceOrderInsured insuranceOrderInsured;
+
 
     public void setInsuranceOrderInsured(InsuranceOrderInsured insuranceOrderInsured) {
         this.insuranceOrderInsured = insuranceOrderInsured;
@@ -288,8 +227,6 @@ public class InsuranceOrder implements Serializable {
     public InsuranceOrderInsured getInsuranceOrderInsured() {
         return insuranceOrderInsured;
     }
-
-    private Customer customer;
 
     public void setCustomer(Customer customer) {
         this.customer = customer;

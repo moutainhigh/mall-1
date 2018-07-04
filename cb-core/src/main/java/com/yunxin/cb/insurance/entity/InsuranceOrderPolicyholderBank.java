@@ -96,6 +96,8 @@ public class InsuranceOrderPolicyholderBank implements Serializable {
     @NotBlank
     @Length(max = 255)
     private String bankCardImg;
+
+    private Set insuranceOrders = new HashSet(0);
     //columns END
 
 
@@ -202,7 +204,6 @@ public class InsuranceOrderPolicyholderBank implements Serializable {
     }
 
 
-    private Set insuranceOrders = new HashSet(0);
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceOrderPolicyholderBank")
     public Set<InsuranceOrder> getInsuranceOrders() {

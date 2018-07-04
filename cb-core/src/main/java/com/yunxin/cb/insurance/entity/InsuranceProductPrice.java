@@ -47,11 +47,10 @@ public class InsuranceProductPrice implements Serializable {
     @Max(9999999999L)
     private int priceId;
     /**
-     * 产品ID
+     * 产品
      */
     @NotNull
-    @Max(9999999999L)
-    private int prodId;
+    private InsuranceProduct insuranceProduct;
     /**
      * 产品价格
      */
@@ -80,6 +79,8 @@ public class InsuranceProductPrice implements Serializable {
      */
     @Length(max = 512)
     private String remark;
+
+    private Set insuranceOrders = new HashSet(0);
     //columns END
 
 
@@ -102,15 +103,6 @@ public class InsuranceProductPrice implements Serializable {
 
     public void setPriceId(int priceId) {
         this.priceId = priceId;
-    }
-
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getProdId() {
-        return this.prodId;
-    }
-
-    public void setProdId(int prodId) {
-        this.prodId = prodId;
     }
 
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
@@ -161,7 +153,7 @@ public class InsuranceProductPrice implements Serializable {
     }
 
 
-    private Set insuranceOrders = new HashSet(0);
+
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProductPrice")
     public Set<InsuranceOrder> getInsuranceOrders() {
@@ -172,7 +164,6 @@ public class InsuranceProductPrice implements Serializable {
         this.insuranceOrders = insuranceOrder;
     }
 
-    private InsuranceProduct insuranceProduct;
 
     public void setInsuranceProduct(InsuranceProduct insuranceProduct) {
         this.insuranceProduct = insuranceProduct;

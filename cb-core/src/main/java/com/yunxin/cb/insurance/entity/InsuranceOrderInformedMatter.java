@@ -39,23 +39,40 @@ public class InsuranceOrderInformedMatter implements Serializable {
     @Max(9999999999L)
     private int collectId;
     /**
-     * 订单ID
+     * 订单
      */
     @NotNull
-    @Max(9999999999L)
-    private int orderId;
+    private InsuranceOrder insuranceOrder;
     /**
-     * 告知事项ID
+     * 告知事项
      */
     @NotNull
-    @Max(9999999999L)
-    private int matterId;
+    private InsuranceInformedMatter insuranceInformedMatter;
     /**
-     * 采集结果
+     * 被保人采集结果
      */
     @NotNull
     @Max(9999999999L)
-    private int result;
+    private int insuredResult;
+    /**
+     * 投保人采集结果
+     */
+    private int policyholderResult;
+    /**
+     * 选项值，可以为多个，以json方式存储
+     */
+    private String values;
+    /**
+     * 被保人备注
+     */
+    private String insuredRemark;
+    /**
+     * 投保人备注
+     */
+    private String policyholderRemark;
+
+
+
     //columns END
 
 
@@ -81,34 +98,51 @@ public class InsuranceOrderInformedMatter implements Serializable {
     }
 
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getOrderId() {
-        return this.orderId;
+    public int getInsuredResult() {
+        return insuredResult;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getMatterId() {
-        return this.matterId;
-    }
-
-    public void setMatterId(int matterId) {
-        this.matterId = matterId;
+    public void setInsuredResult(int insuredResult) {
+        this.insuredResult = insuredResult;
     }
 
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getResult() {
-        return this.result;
+    public int getPolicyholderResult() {
+        return policyholderResult;
     }
 
-    public void setResult(int result) {
-        this.result = result;
+    public void setPolicyholderResult(int policyholderResult) {
+        this.policyholderResult = policyholderResult;
+    }
+
+    @Column(length = 255)
+    public String getValues() {
+        return values;
+    }
+
+    public void setValues(String values) {
+        this.values = values;
+    }
+
+    @Column(length = 255)
+    public String getInsuredRemark() {
+        return insuredRemark;
+    }
+
+    public void setInsuredRemark(String insuredRemark) {
+        this.insuredRemark = insuredRemark;
+    }
+
+    @Column(length = 255)
+    public String getPolicyholderRemark() {
+        return policyholderRemark;
+    }
+
+    public void setPolicyholderRemark(String policyholderRemark) {
+        this.policyholderRemark = policyholderRemark;
     }
 
 
-    private InsuranceInformedMatter insuranceInformedMatter;
 
     public void setInsuranceInformedMatter(InsuranceInformedMatter insuranceInformedMatter) {
         this.insuranceInformedMatter = insuranceInformedMatter;
@@ -122,7 +156,7 @@ public class InsuranceOrderInformedMatter implements Serializable {
         return insuranceInformedMatter;
     }
 
-    private InsuranceOrder insuranceOrder;
+
 
     public void setInsuranceOrder(InsuranceOrder insuranceOrder) {
         this.insuranceOrder = insuranceOrder;

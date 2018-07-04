@@ -158,6 +158,9 @@ public class InsuranceOrderInsured implements Serializable {
     @NotBlank
     @Length(max = 32)
     private String insuredRelation;
+
+
+    private Set insuranceOrders = new HashSet(0);
     //columns END
 
 
@@ -367,7 +370,6 @@ public class InsuranceOrderInsured implements Serializable {
     }
 
 
-    private Set insuranceOrders = new HashSet(0);
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceOrderInsured")
     public Set<InsuranceOrder> getInsuranceOrders() {
