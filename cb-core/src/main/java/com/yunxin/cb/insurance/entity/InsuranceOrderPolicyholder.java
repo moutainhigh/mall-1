@@ -25,6 +25,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * *
+ * 保险订单投保人
  *
  * @author tanggangyi
  * @version 1.0
@@ -166,6 +167,12 @@ public class InsuranceOrderPolicyholder implements Serializable {
     @Length(max = 255)
     private String policyholderSign;
     /**
+     * 投保人头像
+     */
+    @NotBlank
+    @Length(max = 255)
+    private String policyholderAvatar;
+    /**
      * 投保人身份证正面照片
      */
     @NotBlank
@@ -177,6 +184,23 @@ public class InsuranceOrderPolicyholder implements Serializable {
     @NotBlank
     @Length(max = 255)
     private String cardNegativeImg;
+    /**
+     * 其他资料1
+     */
+    @Length(max = 255)
+    private String otherImg1;
+    /**
+     * 其他资料2
+     */
+    @Length(max = 255)
+    private String otherImg2;
+    /**
+     * 其他资料3
+     */
+    @Length(max = 255)
+    private String otherImg3;
+
+    private Set insuranceOrders = new HashSet(0);
     //columns END
 
 
@@ -395,6 +419,15 @@ public class InsuranceOrderPolicyholder implements Serializable {
     }
 
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 255)
+    public String getPolicyholderAvatar() {
+        return policyholderAvatar;
+    }
+
+    public void setPolicyholderAvatar(String policyholderAvatar) {
+        this.policyholderAvatar = policyholderAvatar;
+    }
+
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 255)
     public String getCardPositiveImg() {
         return this.cardPositiveImg;
     }
@@ -412,8 +445,33 @@ public class InsuranceOrderPolicyholder implements Serializable {
         this.cardNegativeImg = cardNegativeImg;
     }
 
+    @Column(length = 255)
+    public String getOtherImg1() {
+        return otherImg1;
+    }
 
-    private Set insuranceOrders = new HashSet(0);
+    public void setOtherImg1(String otherImg1) {
+        this.otherImg1 = otherImg1;
+    }
+
+    @Column(length = 255)
+    public String getOtherImg2() {
+        return otherImg2;
+    }
+
+    public void setOtherImg2(String otherImg2) {
+        this.otherImg2 = otherImg2;
+    }
+
+    @Column(length = 255)
+    public String getOtherImg3() {
+        return otherImg3;
+    }
+
+    public void setOtherImg3(String otherImg3) {
+        this.otherImg3 = otherImg3;
+    }
+
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceOrderPolicyholder")
     public Set<InsuranceOrder> getInsuranceOrders() {

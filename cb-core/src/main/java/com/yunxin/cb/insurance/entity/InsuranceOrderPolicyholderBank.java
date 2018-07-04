@@ -20,189 +20,198 @@ import java.util.Set;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
-*  *
+ * *
+ * 保险订单投保人银行卡信息
+ *
  * @author tanggangyi
  * @version 1.0
  * @since 1.0
- *
-*/
+ */
 @Entity
 @DynamicInsert
 @DynamicUpdate
 @Table
 public class InsuranceOrderPolicyholderBank implements Serializable {
 
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 
     //columns START
-        /**
-        * 投保人银行ID
-        */
-        @Max(9999999999L)
-        private int bankId;
-        /**
-        * 持卡人姓名
-        */
-        @NotBlank @Length(max=32)
-        private String bankName;
-        /**
-        * 交易金额
-        */
-        @NotNull @Max(9999999999L)
-        private int amount;
-        /**
-        * 手机号
-        */
-        @NotBlank @Length(max=11)
-        private String bankMobile;
-        /**
-        * 开户行
-        */
-        @NotBlank @Length(max=32)
-        private String accountBank;
-        /**
-        * 开户行省
-        */
-        @NotBlank @Length(max=6)
-        private String bankProvince;
-        /**
-        * 开户行市
-        */
-        @NotBlank @Length(max=6)
-        private String bankCity;
-        /**
-        * 账户类型
-        */
-        @NotBlank @Length(max=32)
-        private String accountType;
-        /**
-        * 账户号
-        */
-        @NotBlank @Length(max=32)
-        private String accountNo;
-        /**
-        * 银行卡照片
-        */
-        @NotBlank @Length(max=255)
-        private String bankCardImg;
+    /**
+     * 投保人银行ID
+     */
+    @Max(9999999999L)
+    private int bankId;
+    /**
+     * 持卡人姓名
+     */
+    @NotBlank
+    @Length(max = 32)
+    private String bankName;
+    /**
+     * 交易金额
+     */
+    @NotNull
+    @Max(9999999999L)
+    private int amount;
+    /**
+     * 手机号
+     */
+    @NotBlank
+    @Length(max = 11)
+    private String bankMobile;
+    /**
+     * 开户行
+     */
+    @NotBlank
+    @Length(max = 32)
+    private String accountBank;
+    /**
+     * 开户行省
+     */
+    @NotBlank
+    @Length(max = 6)
+    private String bankProvince;
+    /**
+     * 开户行市
+     */
+    @NotBlank
+    @Length(max = 6)
+    private String bankCity;
+    /**
+     * 账户类型
+     */
+    @NotBlank
+    @Length(max = 32)
+    private String accountType;
+    /**
+     * 账户号
+     */
+    @NotBlank
+    @Length(max = 32)
+    private String accountNo;
+    /**
+     * 银行卡照片
+     */
+    @NotBlank
+    @Length(max = 255)
+    private String bankCardImg;
     //columns END
 
 
-	public InsuranceOrderPolicyholderBank(){
-	}
+    public InsuranceOrderPolicyholderBank() {
+    }
 
-	public InsuranceOrderPolicyholderBank(
-		int bankId
-	){
-		this.bankId = bankId;
-	}
+    public InsuranceOrderPolicyholderBank(
+            int bankId
+    ) {
+        this.bankId = bankId;
+    }
 
 
-            @Id
-            @GeneratedValue(strategy = IDENTITY)
-            @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
-            public int getBankId() {
-            return this.bankId;
-            }
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
+    public int getBankId() {
+        return this.bankId;
+    }
 
-            public void setBankId(int bankId) {
-            this.bankId = bankId;
-            }
+    public void setBankId(int bankId) {
+        this.bankId = bankId;
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
-        public String getBankName() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
+    public String getBankName() {
         return this.bankName;
-        }
+    }
 
-        public void setBankName(String bankName) {
+    public void setBankName(String bankName) {
         this.bankName = bankName;
-        }
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-        public int getAmount() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
+    public int getAmount() {
         return this.amount;
-        }
+    }
 
-        public void setAmount(int amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
-        }
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 11)
-        public String getBankMobile() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 11)
+    public String getBankMobile() {
         return this.bankMobile;
-        }
+    }
 
-        public void setBankMobile(String bankMobile) {
+    public void setBankMobile(String bankMobile) {
         this.bankMobile = bankMobile;
-        }
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
-        public String getAccountBank() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
+    public String getAccountBank() {
         return this.accountBank;
-        }
+    }
 
-        public void setAccountBank(String accountBank) {
+    public void setAccountBank(String accountBank) {
         this.accountBank = accountBank;
-        }
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 6)
-        public String getBankProvince() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 6)
+    public String getBankProvince() {
         return this.bankProvince;
-        }
+    }
 
-        public void setBankProvince(String bankProvince) {
+    public void setBankProvince(String bankProvince) {
         this.bankProvince = bankProvince;
-        }
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 6)
-        public String getBankCity() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 6)
+    public String getBankCity() {
         return this.bankCity;
-        }
+    }
 
-        public void setBankCity(String bankCity) {
+    public void setBankCity(String bankCity) {
         this.bankCity = bankCity;
-        }
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
-        public String getAccountType() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
+    public String getAccountType() {
         return this.accountType;
-        }
+    }
 
-        public void setAccountType(String accountType) {
+    public void setAccountType(String accountType) {
         this.accountType = accountType;
-        }
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
-        public String getAccountNo() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
+    public String getAccountNo() {
         return this.accountNo;
-        }
+    }
 
-        public void setAccountNo(String accountNo) {
+    public void setAccountNo(String accountNo) {
         this.accountNo = accountNo;
-        }
+    }
 
-        @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 255)
-        public String getBankCardImg() {
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 255)
+    public String getBankCardImg() {
         return this.bankCardImg;
-        }
+    }
 
-        public void setBankCardImg(String bankCardImg) {
+    public void setBankCardImg(String bankCardImg) {
         this.bankCardImg = bankCardImg;
-        }
+    }
 
 
     private Set insuranceOrders = new HashSet(0);
 
-    @OneToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY, mappedBy = "insuranceOrderPolicyholderBank")
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceOrderPolicyholderBank")
     public Set<InsuranceOrder> getInsuranceOrders() {
-    return insuranceOrders;
+        return insuranceOrders;
     }
 
-    public void setInsuranceOrders(Set<InsuranceOrder> insuranceOrder){
-    this.insuranceOrders = insuranceOrder;
+    public void setInsuranceOrders(Set<InsuranceOrder> insuranceOrder) {
+        this.insuranceOrders = insuranceOrder;
     }
-
 
 
 }

@@ -25,8 +25,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * *
+ * 保险产品
  *
- * @author aidy www.microlinktech.net
+ * @author tanggangyi
  * @version 1.0
  * @since 1.0
  */

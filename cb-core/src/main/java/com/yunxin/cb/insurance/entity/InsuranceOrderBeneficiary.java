@@ -23,6 +23,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * *
+ * 保险订单受益人
  *
  * @author tanggangyi
  * @version 1.0

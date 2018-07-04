@@ -17,6 +17,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * *
+ * 保险订单采集事项
  *
  * @author tanggangyi
  * @version 1.0
