@@ -17,7 +17,7 @@
     <div class="title" style="color: #e1bb3a">投保单签名</div>
     <div class="headPhoto">
       <img src="../assets/img/headPhotograph.png"/>
-      <p>请点击此处，拍摄投保人正面头像</p>
+      <p style="font-size: 13px">请点击此处，拍摄投保人正面头像</p>
     </div>
     <div class="title-sign">投保人签名</div>
     <div class="canvas">
@@ -90,7 +90,7 @@
   }
 
   .tip span {
-    color: red;
+    color: #c01212;
   }
 
   .headPhoto {
@@ -103,6 +103,7 @@
     width: 23vw;
     padding-top: 4vh;
     margin-left: 38%;
+    margin-bottom: 10px;
   }
 
   .headPhoto p {

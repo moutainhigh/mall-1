@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div style="width: 100%">
     <div class="i-banner">
       <img src="../assets/img/banner.png">
     </div>
 
-    <div class="i-list">
+    <div class="i-list" style="margin-top: 0">
       <div style="display: inline-block;">
         <img src="../assets/img/product1.png">
       </div>
@@ -17,7 +17,9 @@
             <div class="dt-price-pro">
               2万/5万/10万
             </div>
-            <button><router-link to="/pro-detail">立即投保</router-link></button>
+            <button>
+              <router-link to="/pro-detail">立即投保</router-link>
+            </button>
           </div>
         </div>
       </div>
@@ -35,7 +37,9 @@
             <div class="dt-price-pro">
               ￥20000.00元
             </div>
-            <button><router-link to="/pro-detail">立即投保</router-link></button>
+            <button>
+              <router-link to="/pro-detail">立即投保</router-link>
+            </button>
           </div>
         </div>
       </div>
@@ -50,5 +54,15 @@
 </script>
 
 <style scoped>
-
+  button {
+    height: 24px;
+    background-color: #e1bb3a;
+    float: right;
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: normal;
+    border: unset;
+    position: relative;
+    top: 5px;
+  }
 </style>
