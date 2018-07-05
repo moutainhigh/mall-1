@@ -55,12 +55,25 @@
     name: "index",
     methods: {
       goToPro(val){
-        this.$router.push({
-          path:'pro-detail',
-          data: {
-            id:val
-          }
-        });
+        if (val === 1){
+          this.$router.push({
+            path:'pro-detail',
+            query: {
+              id:val,
+              title:"生命福星高照终身寿险（分红型）",
+            }
+          });
+        }
+
+        if (val === 2){
+          this.$router.push({
+            path:'/pro-detail',
+            query:{
+              id:val,
+              title:"生命尊养无忧老年防癌疾病保险"
+            }
+          });
+        }
       }
     }
   }
