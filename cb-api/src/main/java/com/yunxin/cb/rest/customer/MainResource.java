@@ -9,6 +9,8 @@ import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import com.yunxin.core.util.CommonUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,10 @@ public class MainResource {
     }
 
     @ApiOperation(value ="用户名密码登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "accountName", value = "账号(可以为账号名称和手机号)", required = true, paramType = "form", dataType = "String"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, paramType = "form", dataType = "String")
+    })
     @PostMapping(value = "loginByPwd")
     public ResponseResult loginByPwd(@RequestParam String accountName, @RequestParam String password) {
         return new ResponseResult(Result.SUCCESS);
