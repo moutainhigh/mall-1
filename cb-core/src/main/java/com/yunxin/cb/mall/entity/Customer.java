@@ -38,24 +38,6 @@ public class Customer implements java.io.Serializable {
      * id
      */
     private int customerId;
-
-
-    /**
-     * 优惠券
-     */
-    private Set<Coupon> coupons = new HashSet<>();
-
-    /**
-     * 我的食谱
-     */
-    private Set<Recipe> recipes = new HashSet<>();
-
-    /**
-     * 我的厨房
-     */
-    private Set<Kitchen> kitchens = new HashSet<>();
-
-
     /**
      * 账户名
      */
@@ -175,6 +157,23 @@ public class Customer implements java.io.Serializable {
      * 用户账号类型
      */
     private CustomerType customerType;
+
+
+
+    /**
+     * 优惠券
+     */
+    private Set<Coupon> coupons = new HashSet<>();
+
+    /**
+     * 我的食谱
+     */
+    private Set<Recipe> recipes = new HashSet<>();
+
+    /**
+     * 我的厨房
+     */
+    private Set<Kitchen> kitchens = new HashSet<>();
 
 
     @Id
