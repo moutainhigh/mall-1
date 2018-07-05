@@ -34,7 +34,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table
+@org.hibernate.annotations.Table(appliesTo = "insurance_product", comment = "保险产品")
 public class InsuranceProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -137,6 +137,7 @@ public class InsuranceProduct implements Serializable {
         this.prodName = prodName;
     }
 
+    @Lob
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 65535)
     public String getDescription() {
         return this.description;
@@ -212,7 +213,6 @@ public class InsuranceProduct implements Serializable {
     }
 
 
-
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProduct")
     public Set<InsuranceOrder> getInsuranceOrders() {
         return insuranceOrders;
@@ -221,7 +221,6 @@ public class InsuranceProduct implements Serializable {
     public void setInsuranceOrders(Set<InsuranceOrder> insuranceOrder) {
         this.insuranceOrders = insuranceOrder;
     }
-
 
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProduct")
