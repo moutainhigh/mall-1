@@ -70,6 +70,7 @@
         <property name="packagesToScan">
             <list>
                 <value>com.yunxin.cb.*.entity</value>
+                <value>com.yunxin.cb.*.view</value>
             </list>
         </property>
         <property name="jpaProperties">
