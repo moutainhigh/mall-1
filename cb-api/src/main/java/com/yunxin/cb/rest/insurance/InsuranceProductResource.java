@@ -20,4 +20,5 @@ public class InsuranceProductResource {
         return new ResponseResult(insuranceProductService.getInsuranceProducts());
     }
 
+
 }

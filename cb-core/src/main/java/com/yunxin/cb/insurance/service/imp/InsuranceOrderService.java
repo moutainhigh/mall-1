@@ -2,9 +2,10 @@ package com.yunxin.cb.insurance.service.imp;
 
 import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
+import com.yunxin.cb.insurance.entity.InsuranceOrderBeneficiary;
+import com.yunxin.cb.insurance.entity.InsuranceOrderInformedMatter;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import org.springframework.stereotype.Service;
-
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -47,6 +48,28 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Transactional
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
 
-        return insuranceOrderDao.save(insuranceOrder);
+        //InsuranceOrderInsured insuranceOrderInsured =
+
+        insuranceOrderInsuredDao.save(insuranceOrder.getInsuranceOrderInsured());
+        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
+        insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
+        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
+        insuranceOrder = insuranceOrderDao.save(insuranceOrder);
+
+        Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
+        for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
+        {
+            insuranceOrderInformedMatter.setInsuranceOrder(insuranceOrder);
+        }
+        insuranceOrderInformedMatterDao.save(insuranceOrderInformedMatters);
+
+        Set<InsuranceOrderBeneficiary> insuranceOrderBeneficiarys = insuranceOrder.getInsuranceOrderBeneficiarys();
+        for(InsuranceOrderBeneficiary insuranceOrderBeneficiary: insuranceOrderBeneficiarys)
+        {
+            insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
+        }
+        insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
+
+        return insuranceOrder;
     }
 }
