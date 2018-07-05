@@ -122,8 +122,6 @@ button a{
   top: -5px;
 }
 
-
-
 .i-input {
   padding-top: 8px;
 }
@@ -141,7 +139,6 @@ button a{
 
 .i-input .i-input-item {
   font-size: 13px;
-  color: #666666;
   display: inline-block;
   margin: 13px 0;
   width: 25%;
@@ -238,4 +235,8 @@ p {
 
 .vux-popup-dialog {
   max-height: 50% !important;
+}
+
+.vux-cell-value {
+  color: #888888 !important;
 }

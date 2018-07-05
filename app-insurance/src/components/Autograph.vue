@@ -56,7 +56,6 @@
 
 <script>
   import Signature from './Signature.vue'
-
   export default {
     name: 'Autograph',
     data() {
@@ -156,6 +155,18 @@
         _this.$refs.signature.fromDataURL("data:image/png;base64,iVBORw0K...");
       },
       next() {
+        if (this.state !== true){
+          alert('请勾选同意条款');
+          return false;
+        }
+        if (this.clickSign === false) {
+          alert('请签署投保提示书签名');
+          return false;
+        }
+        if (this.clickSign1 === false) {
+          alert('请签署投保单签名');
+          return false;
+        }
         // this.save();
         this.$router.push("upload-data")
       }
