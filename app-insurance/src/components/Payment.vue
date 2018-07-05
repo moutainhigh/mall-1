@@ -9,8 +9,7 @@
       <x-input title="交易金额(元)" placeholder="200000"  readonly></x-input>
       <x-input title="手机号码" placeholder="13666666666" readonly></x-input>
       <popup-picker title="开户行" placeholder="请选择开户行"  value-text-align="left"></popup-picker>
-      <popup-picker title="开户行省份" placeholder="请选择开户行省份"   value-text-align="left"></popup-picker>
-      <popup-picker title="开户城市" placeholder="请选择开户行城市" value-text-align="left"></popup-picker>
+      <popup-picker title="开户行位置" placeholder="请选择开户行位置"  :list="cities" value-text-align="left"></popup-picker>
       <popup-picker title="账户类型" placeholder="请选择账户类型" value-text-align="left"></popup-picker>
       <x-input title="账户号码" placeholder="5661465748651316"  readonly></x-input>
       <div class="i-input">
