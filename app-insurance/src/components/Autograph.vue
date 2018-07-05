@@ -24,12 +24,19 @@
       </div>
     </div>
 
-
     <div class="title" style="color: #e1bb3a">投保单签名</div>
-    <div class="headPhoto">
+    <div class="headPhoto" v-if="isPhoto" @click.stop="addPic">
+      <div style="position: absolute; width: 100%; height: 120px"></div>
       <img src="../assets/img/headPhotograph.png"/>
       <p style="font-size: 13px">请点击此处，拍摄投保人正面头像</p>
     </div>
+    <button class="clearButton" v-if="!isPhoto" @click='delImage'>清除</button>
+    <input id="image" type="file" accept="image/*" capture="camera" @change="onFileChange"
+           style="display: none;">
+    <div v-if="!isPhoto">
+      <img class="headPhoto-img" :src="imgUrl">
+    </div>
+
     <div class="title-sign">投保人签名
       <button v-if="clickSign1" @click="clear1">清除</button>
     </div>
@@ -40,10 +47,8 @@
       </div>
     </div>
     <div style="height: 48px;">
-      <button class="i-footer">
-        <router-link to="upload-data">
-          <div>下一步</div>
-        </router-link>
+      <button class="i-footer" @click="next">
+        <div>下一步</div>
       </button>
     </div>
   </div>
@@ -59,6 +64,8 @@
         state: false,
         clickSign: false,
         clickSign1: false,
+        imgUrl: '',
+        isPhoto: true,
         option: {
           penColor: "rgb(0, 0, 0)",
           backgroundColor: "#dcdcdc",
@@ -67,7 +74,59 @@
       }
     },
     components: {Signature},
+    watch: {
+      'imgUrl': {
+        handler(newurl, oldurl) {
+          this.toggleAddPic();
+        },
+        deep: true
+      }
+    },
     methods: {
+      toggleAddPic: function () {
+        let vm = this;
+        if (vm.imgUrl !== '') {
+          vm.isPhoto = false;
+        }
+      },
+      //添加图片
+      addPic: function () {
+        document.getElementById("image").click();
+        return false;
+      },
+      onFileChange: function (e) {
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length) return;
+        this.createImage(files, e);
+      },
+      createImage: function (file, e) {
+        let vm = this;
+        lrz(file[0], {width: 480}).then(function (rst) {
+          vm.imgUrl = rst.base64;
+          return rst;
+        }).always(function () {
+          // 清空文件上传控件的值
+          e.target.value = null;
+        });
+      },
+      //删除图片
+      delImage: function () {
+        let vm = this;
+        vm.imgUrl = '';
+        vm.isPhoto = true;
+      },
+      saveImage: function () {
+        let vm = this;
+        let urlArr = [],
+          imgUrl = this.imgUrl;
+        if (imgUrl.indexOf('file') == -1) {
+          urlArr.push(imgUrl.split(',')[1]);
+        } else {
+          urlArr.push(imgUrl);
+        }
+        //数据传输操作
+      },
+
       check() {
         this.state = !this.state;
       },
@@ -79,12 +138,10 @@
       },
       save() {
         var _this = this;
-        var png = _this.$refs.signature.save()
         var jpeg = _this.$refs.signature.save('image/jpeg')
-        var svg = _this.$refs.signature.save('image/svg+xml');
-        console.log(png);
-        console.log(jpeg)
-        console.log(svg)
+        var jpeg1 = _this.$refs.signature1.save('image/jpeg')
+        console.log(jpeg);
+        console.log(jpeg1);
       },
       clear() {
         var _this = this;
@@ -97,6 +154,10 @@
       fromDataURL(url) {
         var _this = this;
         _this.$refs.signature.fromDataURL("data:image/png;base64,iVBORw0K...");
+      },
+      next() {
+        // this.save();
+        this.$router.push("upload-data")
       }
     }
   }
@@ -170,6 +231,22 @@
   .headPhoto p {
     padding-bottom: 2vh;
     text-align: center;
+  }
+
+  .headPhoto-img {
+    width: 50vw;
+    margin-left: 25vw;
+    padding: 10px 0;
+  }
+
+  .clearButton {
+    float: right;
+    color: #999;
+    border-radius: 5px;
+    border: 1px solid #dcdcdc;
+    background: #EDEDED;
+    margin-right: 10px;
+    margin-top: 10px;
   }
 
   .canvas {

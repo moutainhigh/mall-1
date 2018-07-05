@@ -5,15 +5,14 @@
       <button v-if="!isPhoto1" @click='delImage(1)'>清除</button>
     </p>
     <div class="card">
-      <div @click.stop="addPic1">
-        <img v-if="isPhoto1" src="../assets/img/upload.png">
+      <div v-if="isPhoto1" @click.stop="addPic1">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/upload.png">
       </div>
-      <input id="image1" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
+      <input id="image1" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto1">
-        <img
-          style="padding: 0; transform:rotate(7deg);-ms-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);  -webkit-transform:rotate(-90deg);"
-          :src="imgUrls.image1">
+        <img style="padding: 0;" :src="imgUrls.image1">
       </div>
     </div>
 
@@ -21,15 +20,14 @@
       <button v-if="!isPhoto2" @click='delImage(2)'>清除</button>
     </p>
     <div class="card">
-      <div @click.stop="addPic2">
-        <img v-if="isPhoto2" src="../assets/img/takeIdCard.png">
+      <div v-if="isPhoto2" @click.stop="addPic2">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/takeIdCard.png">
       </div>
-      <input id="image2" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
+      <input id="image2" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto2">
-        <img
-          style="padding: 0; transform:rotate(7deg);-ms-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);  -webkit-transform:rotate(-90deg);"
-          :src="imgUrls.image2">
+        <img style="padding: 0;" :src="imgUrls.image2">
       </div>
     </div>
 
@@ -37,15 +35,14 @@
       <button v-if="!isPhoto3" @click='delImage(3)'>清除</button>
     </p>
     <div class="card">
-      <div @click.stop="addPic3">
-        <img v-if="isPhoto3" src="../assets/img/takeEmblem.png">
+      <div v-if="isPhoto3" @click.stop="addPic3">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/takeEmblem.png">
       </div>
-      <input id="image3" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
+      <input id="image3" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto3">
-        <img
-          style="padding: 0; transform:rotate(7deg);-ms-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);  -webkit-transform:rotate(-90deg);"
-          :src="imgUrls.image3">
+        <img style="padding: 0;" :src="imgUrls.image3">
       </div>
     </div>
 
@@ -53,15 +50,14 @@
       <button v-if="!isPhoto4" @click='delImage(4)'>清除</button>
     </p>
     <div class="card">
-      <div @click.stop="addPic4">
-        <img v-if="isPhoto4" src="../assets/img/upload.png">
+      <div v-if="isPhoto4" @click.stop="addPic4">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/upload.png">
       </div>
-      <input id="image4" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
+      <input id="image4" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto4">
-        <img
-          style="padding: 0;"
-          :src="imgUrls.image4">
+        <img style="padding: 0;" :src="imgUrls.image4">
       </div>
     </div>
 
@@ -69,10 +65,11 @@
       <button v-if="!isPhoto5" @click='delImage(5)'>清除</button>
     </p>
     <div class="card">
-      <div @click.stop="addPic5">
-        <img v-if="isPhoto5" src="../assets/img/upload.png">
+      <div v-if="isPhoto5" @click.stop="addPic5">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/upload.png">
       </div>
-      <input id="image5" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
+      <input id="image5" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto5">
         <img
@@ -85,10 +82,11 @@
       <button v-if="!isPhoto6" @click='delImage(6)'>清除</button>
     </p>
     <div class="card">
-      <div @click.stop="addPic6">
-        <img v-if="isPhoto6" src="../assets/img/upload.png">
+      <div v-if="isPhoto6" @click.stop="addPic6">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/upload.png">
       </div>
-      <input id="image6" type="file" accept="image/jpeg,image/jpg,image/png" capture="camera" @change="onFileChange"
+      <input id="image6" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
       <div v-if="!isPhoto6">
         <img
