@@ -11,6 +11,7 @@ import datetime from 'vux/src/plugins/datetime'
 import { Group } from 'vux'
 import Dev from '../config/dev.env'
 import Admin from './admin/Admin'
+import Vuelidate from 'vuelidate'
 
 
 Vue.component('group', Group);
@@ -21,6 +22,7 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuex);
 Vue.use(Dev);
+Vue.use(Vuelidate)
 Vue.prototype.Admin = Admin;
 
 router.afterEach((to,from,next) => {
