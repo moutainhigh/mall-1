@@ -99,13 +99,13 @@
           </div>
         </div>
         <popup-picker title="国籍" placeholder="请选择国籍" value-text-align="left"></popup-picker>
-        <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="maritalStatus" value-text-align="left"></popup-picker>
+        <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="maritalStatus" v-model="beneficiary.beneficiaryOrder" value-text-align="left"></popup-picker>
         <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary.beneficiaryProportion"></x-input>
         <datetime title="出生日期" placeholder="请选择出生日期" v-model="beneficiary.beneficiaryBirthday" value-text-align="left"></datetime>
         <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="beneficiary.beneficiaryCardType"  value-text-align="left"></popup-picker>
         <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary.beneficiaryCardNo" ></x-input>
         <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary.beneficiaryCardPeroid" ></x-input>
-        <popup-picker title="是被保人的" placeholder="请选择关系" value-text-align="left"></popup-picker>
+        <popup-picker title="是被保人的" placeholder="请选择关系" v-model="beneficiary.insuredRelation" value-text-align="left" :data="relates"></popup-picker>
       </group>
     </div>
     <div style="height: 50px;">
@@ -176,7 +176,7 @@
             beneficiaryCardNo: '',
             beneficiaryCardPeroid: '',
             insuredRelation: '',
-            beneficiaryOrder: '',
+            beneficiaryOrder: [],
             beneficiaryProportion: ''
           };
           this.beneficiaries.push(beneficiary);
