@@ -86,6 +86,14 @@ public class InsuranceOrderBeneficiary implements Serializable {
     @Length(max = 18)
     private String beneficiaryCardNo;
     /**
+     * 收益顺序
+     */
+    private int beneficiaryOrder;
+    /**
+     * 收益份额
+     */
+    private int beneficiaryProportion;
+    /**
      * 受益人国籍
      */
     @NotBlank
@@ -375,6 +383,23 @@ public class InsuranceOrderBeneficiary implements Serializable {
         this.insuredRelation = insuredRelation;
     }
 
+    @Column
+    public int getBeneficiaryOrder() {
+        return beneficiaryOrder;
+    }
+
+    public void setBeneficiaryOrder(int beneficiaryOrder) {
+        this.beneficiaryOrder = beneficiaryOrder;
+    }
+
+    @Column
+    public int getBeneficiaryProportion() {
+        return beneficiaryProportion;
+    }
+
+    public void setBeneficiaryProportion(int beneficiaryProportion) {
+        this.beneficiaryProportion = beneficiaryProportion;
+    }
 
     public void setInsuranceOrder(InsuranceOrder insuranceOrder) {
         this.insuranceOrder = insuranceOrder;
