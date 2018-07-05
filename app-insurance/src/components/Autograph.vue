@@ -1,12 +1,8 @@
 <template>
   <div>
-    <div class="hello">
-      <!--touchstart,touchmove,touchend,touchcancel 这-->
-      <button type="" v-on:click="clear">清除</button>
-      <button v-on:click="save">保存</button>
-      <canvas id="canvas" width="300" height="600" style="border:1px solid black">Canvas画板</canvas>
-      <img v-bind:src="url" alt="">
-    </div>
+    <!--<button @click="save">保存</button>-->
+    <!--<button @click="clear">清除</button>-->
+    <!--<button @click="undo">撤销</button>-->
 
     <div class="title">投保单资料签署</div>
     <div @click="check">
@@ -18,23 +14,30 @@
     </div>
     <div class="title" style="color: #e1bb3a">投保提示书签名</div>
     <div class="title-sign">投保人签名
-      <button>清除</button>
+      <button v-if="clickSign" @click="clear">清除</button>
     </div>
     <div class="canvas">
-      <canvas id="myCanvas1"></canvas>
-      <span>点击签名</span>
+      <div class="sign" v-if="!clickSign" @click="checkSign">点击签名
+      </div>
+      <div v-if="clickSign">
+        <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
+      </div>
     </div>
+
+
     <div class="title" style="color: #e1bb3a">投保单签名</div>
     <div class="headPhoto">
       <img src="../assets/img/headPhotograph.png"/>
       <p style="font-size: 13px">请点击此处，拍摄投保人正面头像</p>
     </div>
     <div class="title-sign">投保人签名
-      <button>清除</button>
+      <button v-if="clickSign1" @click="clear1">清除</button>
     </div>
     <div class="canvas">
-      <canvas id="myCanvas2"></canvas>
-      <span>点击签名</span>
+      <div class="sign" v-if="!clickSign1" @click="checkSign1">点击签名</div>
+      <div v-if="clickSign1">
+        <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
+      </div>
     </div>
     <div style="height: 48px;">
       <button class="i-footer">
@@ -47,111 +50,54 @@
 </template>
 
 <script>
-  var draw;
-  var preHandler = function (e) {
-    e.preventDefault();
-  }
-
-  class Draw {
-    constructor(el) {
-      this.el = el
-      this.canvas = document.getElementById(this.el)
-      this.cxt = this.canvas.getContext('2d')
-      this.stage_info = canvas.getBoundingClientRect()
-      this.path = {
-        beginX: 0,
-        beginY: 0,
-        endX: 0,
-        endY: 0
-      }
-    }
-
-    init(btn) {
-      var that = this;
-
-      this.canvas.addEventListener('touchstart', function (event) {
-        document.addEventListener('touchstart', preHandler, false);
-        that.drawBegin(event)
-      })
-      this.canvas.addEventListener('touchend', function (event) {
-        document.addEventListener('touchend', preHandler, false);
-        that.drawEnd()
-
-      })
-      this.clear(btn)
-    }
-
-    drawBegin(e) {
-      var that = this;
-      window.getSelection() ? window.getSelection().removeAllRanges() : document.selection.empty()
-      this.cxt.strokeStyle = "#000"
-      this.cxt.beginPath()
-      this.cxt.moveTo(
-        e.changedTouches[0].clientX - this.stage_info.left,
-        e.changedTouches[0].clientY - this.stage_info.top
-      )
-      this.path.beginX = e.changedTouches[0].clientX - this.stage_info.left
-      this.path.beginY = e.changedTouches[0].clientY - this.stage_info.top
-      canvas.addEventListener("touchmove", function () {
-        that.drawing(event)
-      })
-    }
-
-    drawing(e) {
-      this.cxt.lineTo(
-        e.changedTouches[0].clientX - this.stage_info.left,
-        e.changedTouches[0].clientY - this.stage_info.top
-      )
-      this.path.endX = e.changedTouches[0].clientX - this.stage_info.left
-      this.path.endY = e.changedTouches[0].clientY - this.stage_info.top
-      this.cxt.stroke()
-    }
-
-    drawEnd() {
-      document.removeEventListener('touchstart', preHandler, false);
-      document.removeEventListener('touchend', preHandler, false);
-      document.removeEventListener('touchmove', preHandler, false);
-      //canvas.ontouchmove = canvas.ontouchend = null
-    }
-
-    clear(btn) {
-      this.cxt.clearRect(0, 0, 300, 600)
-    }
-
-    save() {
-      return canvas.toDataURL("image/png")
-    }
-  }
+  import Signature from './Signature.vue'
 
   export default {
     name: 'Autograph',
     data() {
       return {
         state: false,
-        msg: 'Welcome to Your Vue.js App',
-        val: true,
-        url: ""
+        clickSign: false,
+        clickSign1: false,
+        option: {
+          penColor: "rgb(0, 0, 0)",
+          backgroundColor: "#dcdcdc",
+
+        }
       }
     },
-    mounted() {
-      draw = new Draw('canvas');
-      draw.init();
-    },
+    components: {Signature},
     methods: {
       check() {
         this.state = !this.state;
       },
-      clear: function () {
-        draw.clear();
+      checkSign() {
+        this.clickSign = !this.clickSign;
       },
-      save: function () {
-        var data = draw.save();
-        this.url = data;
-        console.log(data)
+      checkSign1() {
+        this.clickSign1 = !this.clickSign1;
       },
-      mutate(word) {
-        this.$emit("input", word);
+      save() {
+        var _this = this;
+        var png = _this.$refs.signature.save()
+        var jpeg = _this.$refs.signature.save('image/jpeg')
+        var svg = _this.$refs.signature.save('image/svg+xml');
+        console.log(png);
+        console.log(jpeg)
+        console.log(svg)
       },
+      clear() {
+        var _this = this;
+        _this.$refs.signature.clear();
+      },
+      clear1() {
+        var _this = this;
+        _this.$refs.signature1.clear();
+      },
+      fromDataURL(url) {
+        var _this = this;
+        _this.$refs.signature.fromDataURL("data:image/png;base64,iVBORw0K...");
+      }
     }
   }
 </script>
@@ -167,7 +113,7 @@
 
   .title-sign {
     background-color: #ffffff;
-    padding: 15px 15px 0 15px;
+    padding: 15px 15px 2px 15px;
     font-size: 13px;
   }
 
@@ -231,37 +177,27 @@
     height: auto;
     margin-bottom: 10px;
     background: #ffffff;
+    padding: 15px 0;
   }
 
-  #myCanvas1 {
+  .sign {
     background: #dcdcdc;
     width: 92%;
     height: 20vh;
     border-radius: 10px;
-    margin: 15px;
-  }
-
-  #myCanvas2 {
-    background: #dcdcdc;
-    width: 92%;
-    height: 20vh;
-    border-radius: 10px;
-    margin: 15px;
-  }
-
-  .canvas span {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 45%;
-    margin: auto;
-    color: #999;
+    margin: 0 15px;
     text-align: center;
+    line-height: 20vh;
+    color: #999;
     font-size: 13px;
   }
 
-  .message {
-    width: 100%;
-    height: 20vh;
+  .sign button {
+    float: right;
+    color: #999;
+    border-radius: 5px;
+    border: 1px solid #dcdcdc;
+    background: #EDEDED;
+    margin-top: -2px
   }
 </style>
