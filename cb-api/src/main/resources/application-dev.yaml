@@ -8,7 +8,7 @@ spring:
      store-type: none
   jpa:
       hibernate:
-          ddl-auto: create
+          ddl-auto: none
           naming:
               physical-strategy: com.yunxin.core.orm.ImprovedPhysicalNamingStrategy
       show-sql: true
