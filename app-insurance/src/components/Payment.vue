@@ -8,11 +8,11 @@
       <x-input title="账户姓名" placeholder="小妮"  readonly></x-input>
       <x-input title="交易金额(元)" placeholder="200000"  readonly></x-input>
       <x-input title="手机号码" placeholder="13666666666" readonly></x-input>
-      <popup-picker title="开户行" :data="list"  value-text-align="left"></popup-picker>
-      <popup-picker title="开户行省份" :data="list"  value-text-align="left"></popup-picker>
-      <popup-picker title="开户城市" :data="list" value-text-align="left"></popup-picker>
-      <popup-picker title="账户类型" :data="list" value-text-align="left"></popup-picker>
-      <x-input title="账户号码" placeholder="13666666666"  readonly></x-input>
+      <popup-picker title="开户行" placeholder="请选择开户行"  value-text-align="left"></popup-picker>
+      <popup-picker title="开户行省份" placeholder="请选择开户行省份"   value-text-align="left"></popup-picker>
+      <popup-picker title="开户城市" placeholder="请选择开户行城市" value-text-align="left"></popup-picker>
+      <popup-picker title="账户类型" placeholder="请选择账户类型" value-text-align="left"></popup-picker>
+      <x-input title="账户号码" placeholder="5661465748651316"  readonly></x-input>
       <div class="i-input">
         <div class="i-input-item">实时转账</div>
         <div  style="float: right;margin: 8px;">
@@ -58,7 +58,9 @@
     },
     data (){
       return {
-        list: [['居民身份证', '驾驶证', '护照']]
+        list: [['居民身份证', '驾驶证', '护照']],
+        cities:ChinaAddressData,
+        types:[['卡','券']]
       }
     },
     methods:{
@@ -118,7 +120,7 @@
     background-color: #ffffff;
     margin-left: 0;
     border-bottom: 1px solid rgb(217, 217, 217);
-    font-size: 10px;
+    font-size: 13px;
     padding: 10px 10px 10px 16px;
   }
 </style>
