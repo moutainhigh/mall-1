@@ -57,11 +57,24 @@ const order = {
   insuranceOrderBeneficiarys:[],
 };
 
+const bank = {
+  bankName:'',
+  amount:'',
+  bankMobile:'',
+  accountBank:'',
+  bankProvince:'',
+  bankCity:'',
+  accountType:'',
+  accountNo:'',
+  bankCardImg:''
+};
+
 export default
 {
   insured,
   holder,
-  order
+  order,
+  bank
 }
 
 
