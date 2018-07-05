@@ -208,7 +208,13 @@
         },
         immediate: true,
         deep: true
-
+      },
+      insured: {
+        handler(newVal, oldVal) {
+          storage.save('insured',newVal);
+        },
+        immediate: true,
+        deep: true
       }
     }
   }
