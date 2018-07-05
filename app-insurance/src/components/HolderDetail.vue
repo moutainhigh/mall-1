@@ -4,14 +4,36 @@
       被保人信息
     </div>
     <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="姓名" placeholder="请输入姓名" v-model="insured.insuredName"></x-input>
+      <x-input title="姓名" placeholder="请输入姓名" v-model.trim="insured.insuredName"></x-input>
+      <div class="error" v-if="!$v.insured.insuredName.required">姓名不能为空</div>
+      <div class="error" v-if="!$v.insured.insuredName.minLength">姓名最小为 {{$v.insured.insuredName.$params.minLength.min}} 个汉字</div>
+
       <popup-picker title="证件类型" placeholder="请选择证件类型" :data="cardTypes" v-model="insured.insuredCardType" value-text-align="left"></popup-picker>
+
       <x-input title="证件号码" placeholder="请输入证件号" v-model="insured.insuredCardNo"></x-input>
+      <div class="error" v-if="!$v.insured.insuredCardNo.required">身份证号码不能为空</div>
+      <div class="error" v-if="!$v.insured.insuredCardNo.idCardVali">请输入正确的身份证号码</div>
+
       <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="insured.insuredCardPeriod"></x-input>
+      <div class="error" v-if="!$v.insured.insuredCardPeriod.required">证件有效期不能为空</div>
+      <div class="error" v-if="!$v.insured.insuredCardPeriod.minLength">最小不小于1位数</div>
+      <div class="error" v-if="!$v.insured.insuredCardPeriod.maxLength">最大不超过2位数</div>
+      <div class="error" v-if="!$v.insured.insuredCardPeriod.numeric">证件有效期应为数字</div>
+
       <popup-picker title="国籍" placeholder="请选择国籍" :data="countries" value-text-align="left"></popup-picker>
+
       <x-input title="身高(cm)" placeholder="请输入身高" v-model="insured.insuredHeight"></x-input>
+      <div class="error" v-if="!$v.insured.insuredBodyWeight.required">身高不能为空</div>
+      <div class="error" v-if="!$v.insured.insuredHeight.decimal">请输入身高数字，支持小数点后两位</div>
+
       <x-input title="体重(kg)" placeholder="请输入体重" v-model="insured.insuredBodyWeight"></x-input>
+      <div class="error" v-if="!$v.insured.insuredBodyWeight.required">体重不能为空</div>
+      <div class="error" v-if="!$v.insured.insuredBodyWeight.decimal">请输入体重数字，支持小数点后两位</div>
+
       <x-input title="年收入(万元)" placeholder="请输入年收入" v-model="insured.insuredIncome"></x-input>
+      <div class="error" v-if="!$v.insured.insuredIncome.required">年收入不能为空</div>
+      <div class="error" v-if="!$v.insured.insuredIncome.decimal">请输入年收入，单位万元，支持小数点后两位</div>
+
       <popup-picker title="婚姻状况" placeholder="请选择婚姻状况" :data="maritalStatus" value-text-align="left" v-model="insured.insuredMarriage"></popup-picker>
       <div>
         <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
@@ -125,6 +147,12 @@
   import {PopupRadio, GroupTitle, Group, Cell, XInput, Selector, PopupPicker, Datetime, XNumber, ChinaAddressData, XAddress, XTextarea, XSwitch} from 'vux'
   import storage from "../store/storage";
   import countries from "../../static/countries"
+  import { required, minLength, maxLength, between, helpers, numeric } from 'vuelidate/lib/validators'
+
+  //身份证正则校验
+  const idCardVali = helpers.regex('idCardVali', /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/)
+  //小数点后两位校验
+  const decimal = helpers.regex('decimal', /^\d{0,8}\.{0,1}(\d{1,2})?$/)
 
   export default {
     components: {
@@ -157,6 +185,41 @@
         taxRelates: [["仅为中国税收居民", "仅为非居民", "既是中国税收居民又是其他国家（地区）税收居民"]],
         addressData: ChinaAddressData,
         endDate: new Date()
+      }
+    },
+    validations: {
+      insured: {
+        insuredName: {
+          required,
+          minLength: minLength(2)
+        },
+        insuredCardNo: {
+          required,
+          idCardVali,
+        },
+        insuredCardPeriod: {
+          required,
+          minLength: minLength(1),
+          maxLength: maxLength(2),
+          numeric
+        },
+        insuredHeight: {
+          required,
+          decimal,
+        },
+        insuredBodyWeight: {
+          required,
+          decimal,
+        },
+        insuredIncome: {
+          required,
+          decimal,
+        }
+      },
+      holder: {
+        policyholderTel: {
+          required,
+        }
       }
     },
     methods: {
@@ -300,5 +363,11 @@
 
   a {
     text-decoration: unset;
+  }
+
+  .error {
+    color: #c01212;
+    font-size: 12px;
+    margin-left: 155px;
   }
 </style>
