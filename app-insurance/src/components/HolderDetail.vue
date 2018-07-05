@@ -91,7 +91,7 @@
     </group>
 
     <div class="title" style="color: #2c3e50;">
-      <div class="title-select" @click="legalBeneficiary = !legalBeneficiary">
+      <div class="title-select" @click="changeLegal">
         <img v-if="legalBeneficiary" src="../assets/img/selected.png"/>
         <img v-if="!legalBeneficiary" src="../assets/img/unselect.png"/>
         受益人：法定受益人
@@ -242,17 +242,21 @@
         }
       },
       delBene(index) {
-        console.log(index);
         this.beneficiaries.splice(index, 1);
         storage.save("beneficiaries",this.beneficiaries);
         if (this.beneficiaries.length === 0) {
           this.legalBeneficiary = !this.legalBeneficiary;
         }
+      },
+      changeLegal() {
+        this.legalBeneficiary = !this.legalBeneficiary;
+        let order=  storage.fetch("order");
+        order.legalBeneficiary = this.legalBeneficiary;
+        storage.save("order",order);
       }
     },
     watch: {
       addressValue: function (val, oldVal) {
-        console.log(oldVal)
       },
       holder: {
         handler(newVal, oldVal) {
@@ -265,8 +269,6 @@
       },
       beneficiaries: {
         handler(newVal, oldVal) {
-          console.log(oldVal);
-          console.log(newVal);
           storage.save('beneficiaries', newVal);
         },
         immediate: true,
@@ -279,8 +281,11 @@
         immediate: true,
         deep: true
       }
+    },
+    created:function () {
+      let order = storage.fetch("order");
+      this.legalBeneficiary = order.legalBeneficiary;
     }
-
   }
 </script>
 
@@ -293,15 +298,11 @@
     color: #e1bb3a;
   }
 
-  .i-input .i-input-radio {
-    margin-left: 1rem;
-  }
-
   .i-input-radio {
     display: inline-block;
     position: relative;
     top: 10px;
-    left: 28px;
+    left: -5px;
     margin-left: 0;
   }
 
@@ -329,7 +330,8 @@
 
   .i-input-item {
     font-size: 14px;
-    color: #2c3e50;
+    width: 7rem;
+    margin-right: 2em;
   }
 
   .title-select img {

@@ -1,13 +1,9 @@
 package com.yunxin.cb.rest.customer;
 
-import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.meta.Result;
-import com.yunxin.cb.meta.SendType;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.vo.ResponseResult;
-import com.yunxin.cb.vo.VerificationCode;
-import com.yunxin.core.util.CommonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -15,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 @Api(description = "用户接口")
 @RestController
@@ -46,8 +41,8 @@ public class CustomerResource {
     }
 
     @ApiOperation(value ="修改密码")
-    @PostMapping(value = "updatePwd")
-    public ResponseResult updatePwd(@PathVariable int customerId, @PathVariable int friendId) {
+    @PostMapping(value = "updatePwd/{customerId}")
+    public ResponseResult updatePwd(@PathVariable int customerId, @RequestParam String oloPwd, @RequestParam String newPwd) {
         return new ResponseResult(Result.SUCCESS);
     }
 
