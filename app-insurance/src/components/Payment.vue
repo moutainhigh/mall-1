@@ -5,16 +5,16 @@
     </div>
     <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
       <x-input title="投保单号" placeholder="13132156132165" readonly></x-input>
-      <x-input title="账户姓名" placeholder="小妮"  readonly></x-input>
-      <x-input title="交易金额(元)" placeholder="200000"  readonly></x-input>
-      <x-input title="手机号码" placeholder="13666666666" readonly></x-input>
-      <popup-picker title="开户行" placeholder="请选择开户行"  value-text-align="left"></popup-picker>
-      <popup-picker title="开户行位置" placeholder="请选择开户行位置"  :list="cities" value-text-align="left"></popup-picker>
-      <popup-picker title="账户类型" placeholder="请选择账户类型" value-text-align="left"></popup-picker>
-      <x-input title="账户号码" placeholder="5661465748651316"  readonly></x-input>
+      <x-input title="账户姓名" :placeholder="insured.insuredName" readonly></x-input>
+      <x-input title="交易金额(元)" placeholder="200000" readonly></x-input>
+      <x-input title="手机号码" :placeholder="insured.insuredMobile" readonly></x-input>
+      <popup-picker title="开户行" placeholder="请选择开户行" value-text-align="left"></popup-picker>
+      <popup-picker title="开户行位置" placeholder="请选择开户行位置" :data="cities" value-text-align="left"></popup-picker>
+      <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"></popup-picker>
+      <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo"></x-input>
       <div class="i-input">
         <div class="i-input-item">实时转账</div>
-        <div  style="float: right;margin: 8px;">
+        <div style="float: right;margin: 8px;">
           <div style="position: absolute;margin-left: 34px;font-size: 10px;margin-top: 8px;">关闭</div>
           <img src="../assets/img/switch-off.png" style="width: 64px;">
         </div>
@@ -25,8 +25,8 @@
         </div>
       </div>
       <div class="input-ver">
-        <x-input title="验证码" placeholder="请输入验证码" max="6" style="width: 65%;"></x-input>
-        <div class="input-vile">获取验证码</div>
+        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 65%;"></x-input>
+        <div class="input-vile" @click="getVaild">获取验证码</div>
       </div>
     </group>
     <div style="height: 48px;">
@@ -38,33 +38,40 @@
 </template>
 
 <script>
-  import {GroupTitle, Group, Cell, XInput, Selector, PopupPicker, Datetime, XNumber, ChinaAddressData, XAddress, XTextarea, XSwitch} from 'vux'
+  import {ChinaAddressData, Datetime, Group, PopupPicker, XInput} from 'vux'
+  import storage from "../store/storage";
 
   export default {
     name: "Payment",
     components: {
       Group,
-      GroupTitle,
-      Cell,
       XInput,
-      Selector,
       PopupPicker,
-      XAddress,
       Datetime,
-      XNumber,
-      XTextarea,
-      XSwitch
     },
-    data (){
+    data() {
       return {
         list: [['居民身份证', '驾驶证', '护照']],
-        cities:ChinaAddressData,
-        types:[['卡','券']]
+        cities: ChinaAddressData,
+        types: [['银行卡', '存折']],
+        insured: storage.fetch("insured"),
+        bank: storage.fetch('bank')
       }
     },
-    methods:{
-      submit(){
+    methods: {
+      submit() {
         this.$router.push('policy')
+      },
+      getVaild() {
+
+      }
+    },
+    watch: {
+      bank: function (newVal, oldVal) {
+        if (bank.length === 0) {
+          storage.save('bank', Admin.bank);
+          this.bank = storage.fetch('bank');
+        }
       }
     }
   }

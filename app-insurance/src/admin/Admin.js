@@ -65,7 +65,7 @@ const bank = {
   accountBank: '',
   bankProvince: '',
   bankCity: '',
-  accountType: '',
+  accountType: [],
   accountNo: '',
   bankCardImg: ''
 };
