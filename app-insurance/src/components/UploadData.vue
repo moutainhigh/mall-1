@@ -291,6 +291,7 @@
   }
 
   .uploadTitle {
+
     background: #ffffff;
     margin: 0;
     color: #c01212;
