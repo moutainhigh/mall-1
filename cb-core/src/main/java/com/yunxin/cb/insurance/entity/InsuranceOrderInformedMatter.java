@@ -61,7 +61,7 @@ public class InsuranceOrderInformedMatter implements Serializable {
     /**
      * 选项值，可以为多个，以json方式存储
      */
-    private String values;
+    private String collectValues;
     /**
      * 被保人备注
      */
@@ -116,12 +116,12 @@ public class InsuranceOrderInformedMatter implements Serializable {
     }
 
     @Column(length = 255)
-    public String getValues() {
-        return values;
+    public String getCollectValues() {
+        return collectValues;
     }
 
-    public void setValues(String values) {
-        this.values = values;
+    public void setCollectValues(String collectValues) {
+        this.collectValues = collectValues;
     }
 
     @Column(length = 255)

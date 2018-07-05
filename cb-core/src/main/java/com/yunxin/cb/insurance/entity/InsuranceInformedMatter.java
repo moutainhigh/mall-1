@@ -98,7 +98,7 @@ public class InsuranceInformedMatter implements Serializable {
         this.matterId = matterId;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 512)
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 512, columnDefinition = "COMMENT '描述'")
     public String getMatterDescription() {
         return this.matterDescription;
     }

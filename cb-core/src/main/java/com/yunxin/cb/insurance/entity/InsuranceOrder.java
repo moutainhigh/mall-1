@@ -87,6 +87,10 @@ public class InsuranceOrder implements Serializable {
     @NotNull
     private boolean LegalBeneficiary;
     /**
+     * 订单状态
+     */
+    private String orderState;
+    /**
      * 订单创建时间
      */
     @NotNull
@@ -247,5 +251,14 @@ public class InsuranceOrder implements Serializable {
 
     public void setLegalBeneficiary(boolean legalBeneficiary) {
         LegalBeneficiary = legalBeneficiary;
+    }
+
+    @Column(nullable = false, length = 32)
+    public String getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(String orderState) {
+        this.orderState = orderState;
     }
 }
