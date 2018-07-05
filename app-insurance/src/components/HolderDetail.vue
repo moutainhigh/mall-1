@@ -20,8 +20,7 @@
       <div class="error" v-if="!$v.insured.insuredCardPeriod.maxLength">最大不超过2位数</div>
       <div class="error" v-if="!$v.insured.insuredCardPeriod.numeric">证件有效期应为数字</div>
 
-      <popup-picker title="国籍" placeholder="请选择国籍" :data="countries" value-text-align="left"></popup-picker>
-
+      <x-input title="国籍" placeholder="请输入国籍" v-model="insured.insuredCountry"></x-input>
       <x-input title="身高(cm)" placeholder="请输入身高" v-model="insured.insuredHeight"></x-input>
       <div class="error" v-if="!$v.insured.insuredBodyWeight.required">身高不能为空</div>
       <div class="error" v-if="!$v.insured.insuredHeight.decimal">请输入身高数字，支持小数点后两位</div>
@@ -73,7 +72,7 @@
       <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType" :data="cardTypes" value-text-align="left"></popup-picker>
       <x-input title="证件号码" v-model="holder.policyholderCardNo" placeholder="请输入证件号"></x-input>
       <x-input title="证件有效期" placeholder="请选择证件有效期"></x-input>
-      <popup-picker title="国籍" placeholder="请选择国籍" :data="countries" value-text-align="left"></popup-picker>
+      <x-input title="国籍" placeholder="请输入国籍" v-model="holder.insuredCountry"></x-input>
       <x-input title="身高(cm)" v-model="holder.policyholderHeight" placeholder="请输入身高"></x-input>
       <x-input title="体重(kg)" v-model="holder.policyholderBodyWeight" placeholder="请输入体重"></x-input>
       <x-input title="年收入(万元)" v-model="holder.policyholderIncome" placeholder="请输入年收入"></x-input>
@@ -101,8 +100,8 @@
         <img src="../assets/img/add.png"/>新增受益人
       </div>
     </div>
-    <div v-for="beneficiary in beneficiaries" v-if="!legalBeneficiary">
-      <div class="add">受益人信息 <span style="float: right;" @click="delBene">删除</span></div>
+    <div v-for="(beneficiary, index) in beneficiaries" v-if="!legalBeneficiary">
+      <div class="add">受益人信息 <span style="float: right;" @click="delBene(index)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary.beneficiaryName"></x-input>
         <div class="i-input">
@@ -120,13 +119,13 @@
             </div>
           </div>
         </div>
-        <popup-picker title="国籍" placeholder="请选择国籍" value-text-align="left"></popup-picker>
-        <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="maritalStatus" v-model="beneficiary.beneficiaryOrder" value-text-align="left"></popup-picker>
+        <x-input title="国籍" placeholder="请输入国籍" v-model="beneficiary.beneficiaryCountry" value-text-align="left"></x-input>
+        <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary.beneficiaryOrder" value-text-align="left"></popup-picker>
         <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary.beneficiaryProportion"></x-input>
         <datetime title="出生日期" placeholder="请选择出生日期" v-model="beneficiary.beneficiaryBirthday" value-text-align="left"></datetime>
-        <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="beneficiary.beneficiaryCardType"  value-text-align="left"></popup-picker>
-        <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary.beneficiaryCardNo" ></x-input>
-        <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary.beneficiaryCardPeroid" ></x-input>
+        <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="beneficiary.beneficiaryCardType" value-text-align="left"></popup-picker>
+        <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary.beneficiaryCardNo"></x-input>
+        <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary.beneficiaryCardPeroid"></x-input>
         <popup-picker title="是被保人的" placeholder="请选择关系" v-model="beneficiary.insuredRelation" value-text-align="left" :data="relates"></popup-picker>
       </group>
     </div>
@@ -144,9 +143,8 @@
 
 <script>
 
-  import {PopupRadio, GroupTitle, Group, Cell, XInput, Selector, PopupPicker, Datetime, XNumber, ChinaAddressData, XAddress, XTextarea, XSwitch} from 'vux'
+  import {Group, XInput, Selector, PopupPicker, Datetime, ChinaAddressData, XAddress} from 'vux'
   import storage from "../store/storage";
-  import countries from "../../static/countries"
   import { required, minLength, maxLength, between, helpers, numeric } from 'vuelidate/lib/validators'
 
   //身份证正则校验
@@ -156,18 +154,12 @@
 
   export default {
     components: {
-      PopupRadio,
       Group,
-      GroupTitle,
-      Cell,
       XInput,
       Selector,
       PopupPicker,
       XAddress,
       Datetime,
-      XNumber,
-      XTextarea,
-      XSwitch
     },
     name: "holder-detail",
     data() {
@@ -180,10 +172,11 @@
         legalBeneficiary: true,
         cardTypes: [['居民身份证', '居民户口簿', '军人身份证', '港澳居民往来内地通行证', '出生证', '台湾居民往来内地通行证', '外国护照', '外国人永久居留身份证', '武警身份证', '其他证件']],
         maritalStatus: [['未婚', '已婚', '丧偶', '离婚']],
-        countries: [['中国', '美国', '日本']],
         relates: [["本人", "配偶", "父母", "子女", "兄弟姐妹", "祖父母", "外祖父母", "祖孙", "外祖孙", "其他"]],
         taxRelates: [["仅为中国税收居民", "仅为非居民", "既是中国税收居民又是其他国家（地区）税收居民"]],
+        orders:[['1','2']],
         addressData: ChinaAddressData,
+        countries: this.Admin.countries,
         endDate: new Date()
       }
     },
@@ -227,7 +220,7 @@
         this.$router.back();
       },
       next() {
-        this.$router.push("group")
+        this.$router.push("infoMatters")
       },
       addBene() {
         if (this.beneficiaries.length < 2) {
@@ -238,16 +231,20 @@
             beneficiaryCardType: [],
             beneficiaryCardNo: '',
             beneficiaryCardPeroid: '',
-            insuredRelation: '',
+            insuredRelation: [],
             beneficiaryOrder: [],
-            beneficiaryProportion: ''
+            beneficiaryProportion: '',
+            beneficiaryCountry: ''
           };
           this.beneficiaries.push(beneficiary);
+          storage.save("beneficiaries",this.beneficiaries);
           this.legalBeneficiary = false;
         }
       },
       delBene(index) {
+        console.log(index);
         this.beneficiaries.splice(index, 1);
+        storage.save("beneficiaries",this.beneficiaries);
         if (this.beneficiaries.length === 0) {
           this.legalBeneficiary = !this.legalBeneficiary;
         }
@@ -268,22 +265,22 @@
       },
       beneficiaries: {
         handler(newVal, oldVal) {
-          storage.save('beneficiaries',newVal);
+          console.log(oldVal);
+          console.log(newVal);
+          storage.save('beneficiaries', newVal);
         },
         immediate: true,
         deep: true
       },
       insured: {
         handler(newVal, oldVal) {
-          storage.save('insured',newVal);
+          storage.save('insured', newVal);
         },
         immediate: true,
         deep: true
       }
-    },
-    created:function () {
-      console.log(countries);
     }
+
   }
 </script>
 
