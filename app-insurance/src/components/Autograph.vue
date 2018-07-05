@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position: relative">
     <!--<button @click="save">保存</button>-->
     <!--<button @click="clear">清除</button>-->
     <!--<button @click="undo">撤销</button>-->

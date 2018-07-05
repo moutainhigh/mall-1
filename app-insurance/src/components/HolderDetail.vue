@@ -124,6 +124,7 @@
 
   import {PopupRadio, GroupTitle, Group, Cell, XInput, Selector, PopupPicker, Datetime, XNumber, ChinaAddressData, XAddress, XTextarea, XSwitch} from 'vux'
   import storage from "../store/storage";
+  import countries from "../../static/countries"
 
   export default {
     components: {
@@ -163,7 +164,7 @@
         this.$router.back();
       },
       next() {
-        this.$router.push("infoMatters")
+        this.$router.push("group")
       },
       addBene() {
         if (this.beneficiaries.length < 2) {
@@ -216,6 +217,9 @@
         immediate: true,
         deep: true
       }
+    },
+    created:function () {
+      console.log(countries);
     }
   }
 </script>
