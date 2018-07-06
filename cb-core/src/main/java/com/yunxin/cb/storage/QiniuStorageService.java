@@ -48,6 +48,7 @@ public class QiniuStorageService implements IStorageService{
         uploadManager = new UploadManager(cfg);
     }
 
+    @Override
     public String put(InputStream inputStream, UploadType type) {
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = null;
@@ -55,6 +56,31 @@ public class QiniuStorageService implements IStorageService{
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(inputStream, key, upToken, null, null);
+            //解析上传成功的结果
+            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+            String url = domain+putRet.key;
+            logger.info("qiniu put success, url:"+url);
+            return url;
+        } catch (QiniuException ex) {
+            Response r = ex.response;
+            logger.error(r.toString());
+            try {
+                logger.error(r.bodyString());
+            } catch (QiniuException ex2) {
+                //ignore
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String put(byte[] data, UploadType type) {
+        //默认不指定key的情况下，以文件内容的hash值作为文件名
+        String key = null;
+        Auth auth = Auth.create(accessKey, secretKey);
+        String upToken = auth.uploadToken(bucket);
+        try {
+            Response response = uploadManager.put(data, key, upToken, null, null, true);
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             String url = domain+putRet.key;

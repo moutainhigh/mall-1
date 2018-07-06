@@ -4,6 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 
 public class BaseResource {
 
+    /**
+     * 获取IP地址
+     * @param request
+     * @return
+     */
     protected String getIpAddr(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
