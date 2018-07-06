@@ -6,6 +6,7 @@ import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangteng
@@ -45,4 +46,11 @@ public interface IInsuranceOrderService {
      * @return
      */
     boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState);
+
+    /**
+     * 获取事项
+     * @param orderId
+     * @return
+     */
+    List<Map<String,Object>> findMatter(int orderId);
 }

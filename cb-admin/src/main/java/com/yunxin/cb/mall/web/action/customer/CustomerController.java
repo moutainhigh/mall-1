@@ -5,13 +5,8 @@ import com.yunxin.cb.mall.entity.DeliveryAddress;
 import com.yunxin.cb.mall.service.IAddressService;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IRankService;
-import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.DeliveryAddress;
 import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.cb.mall.service.IAddressService;
-import com.yunxin.cb.mall.service.ICustomerService;
-import com.yunxin.cb.mall.service.IRankService;
+import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -82,7 +77,7 @@ public class CustomerController {
         try {
             customerService.addCustomer(customer);
             return "redirect:../common/success.do?reurl=customer/customers.do";
-        } catch (EntityExistException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             request.getSession().setAttribute("exception", e.getMessage());
             return "redirect:../common/failure.do?reurl=customer/customers.do";
