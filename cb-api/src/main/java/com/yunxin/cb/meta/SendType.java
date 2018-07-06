@@ -7,5 +7,6 @@ public enum SendType {
     LOGIN,
     REGISTER,
     FORGET_PASSWORD,
-    CHANGE_MOBILE
+    CHANGE_MOBILE,
+    ORDER_CONFIRM
 }

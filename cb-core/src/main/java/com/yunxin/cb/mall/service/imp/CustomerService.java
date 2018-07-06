@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.service.imp;
 
+import com.yunxin.cb.im.RongCloudService;
 import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
@@ -39,6 +40,9 @@ public class CustomerService implements ICustomerService {
 
     @Resource
     private FridgeDao fridgeDao;
+
+    @Resource
+    private RongCloudService rongCloudService;
 
     @Override
     public Fridge addFridge(Fridge fridge) {
@@ -85,7 +89,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer addCustomer(Customer customer) throws EntityExistException {
+    public Customer addCustomer(Customer customer) throws Exception {
         if (!customerDao.isUnique(customer, Customer_.accountName)) {
             throw new EntityExistException("客户账户名已存在");
         }
@@ -93,7 +97,10 @@ public class CustomerService implements ICustomerService {
         customer.setPassword("123456");
         customer.setCreateTime(new Date());
         customer.setRank(rankDao.getRankByDefaultRank());
-        return customerDao.save(customer);
+        Customer dbCustomer= customerDao.save(customer);
+        String token = rongCloudService.register(dbCustomer);
+        dbCustomer.setToken(token);
+        return dbCustomer;
     }
 
     @Override

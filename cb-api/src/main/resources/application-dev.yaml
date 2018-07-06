@@ -6,6 +6,17 @@ spring:
      password: 123456
   session:
      store-type: none
+  redis:
+     database: 0
+     host: 192.168.0.104
+     port: 6379
+     password:
+     timeout: 0
+     pool:
+         max-active: 8
+         max-wait: -1
+         max-idle: 8
+         min-idle: 0
   jpa:
       hibernate:
           ddl-auto: none
@@ -24,3 +35,8 @@ qiniu:
   bucket-2: crystal-ball-paperwork
   domain-1: http://pb9sg55i7.bkt.clouddn.com/
   domain-2: http://pbf9p2pks.bkt.clouddn.com/
+
+#融云IM
+rongcloud:
+  appKey: z3v5yqkbz1jp0
+  appSecret: AUUwTO6vXg7y7P

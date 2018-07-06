@@ -5,8 +5,10 @@ import {getStore} from '../config/mUtils'
  * 获取首页默认地址
  */
 
-export const testGet = () => fetch('/test', {
-});
+export const getVaildData = phoneNumber => fetch('/noAuth/sendMobileValidCode', {
+  sendType : 'BANK_VALID',
+  mobile : 13670150690
+},'POST');
 
 export const sendMobile = (sendData, captcha_code, type, password) => fetch('/test', {
   captcha_code,

@@ -175,6 +175,9 @@ public class Customer implements java.io.Serializable {
      */
     private Set<Kitchen> kitchens = new HashSet<>();
 
+    //临时属性
+    private String token;
+
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -475,5 +478,14 @@ public class Customer implements java.io.Serializable {
 
     public void setEmailChecked(boolean emailChecked) {
         this.emailChecked = emailChecked;
+    }
+
+    @Transient
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

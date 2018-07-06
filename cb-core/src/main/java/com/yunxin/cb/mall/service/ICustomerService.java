@@ -31,7 +31,7 @@ public interface ICustomerService {
 
     List<Fridge> getFridgesByCustomerId(int customerId);
 
-    public Customer addCustomer(Customer customer) throws EntityExistException;
+    public Customer addCustomer(Customer customer) throws Exception;
 
     Customer updateMobile(int customerId, String mobile);
 

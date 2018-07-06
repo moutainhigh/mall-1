@@ -8,8 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * @Author: gonglei
- * @Date: 2017/11/29 上午8:58
+ * @Author: tanggangyi
  * @Description:
  **/
 @Configuration
@@ -25,5 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
+
+        http.csrf().disable();
     }
 }
