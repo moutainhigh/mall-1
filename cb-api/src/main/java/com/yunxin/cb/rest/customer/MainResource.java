@@ -1,10 +1,10 @@
 package com.yunxin.cb.rest.customer;
 
+import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.meta.SendType;
-import com.yunxin.cb.pay.httpClient.HttpRequest;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sms.SmsHelper;
 import com.yunxin.cb.sns.entity.CustomerFriend;
@@ -32,17 +32,16 @@ public class MainResource extends BaseResource {
     @Resource
     private ICustomerService customerService;
 
-
     @ApiOperation(value ="用户注册")
     @PostMapping(value = "register")
     public ResponseResult register(@RequestBody Customer customer) {
         try {
-            customerService.addCustomer(customer);
+            customer = customerService.addCustomer(customer);
+            return new ResponseResult(customer);
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult(Result.FAILURE,"注册失败");
+            logger.error("用户注册异常", e);
         }
-        return new ResponseResult(Result.SUCCESS, customer);
+        return new ResponseResult(Result.FAILURE, "注册失败");
     }
 
     @ApiOperation(value ="用户名密码登录")
@@ -52,26 +51,42 @@ public class MainResource extends BaseResource {
     })
     @PostMapping(value = "loginByPwd")
     public ResponseResult loginByPwd(@RequestParam String accountName, @RequestParam String password) {
-
-        return new ResponseResult(Result.SUCCESS);
+        try {
+            Customer customer = customerService.getCustomerByAccountNameAndPassword(accountName, password);
+            if (customer != null) {
+                return new ResponseResult(customer);
+            }
+        } catch (Exception e) {
+            logger.error("登陆异常", e);
+        }
+        return new ResponseResult(Result.FAILURE, "注册失败");
     }
 
     @ApiOperation(value ="手机号验证码登录")
     @PostMapping(value = "loginByCode")
     public ResponseResult loginByCode(@RequestParam String accountName, @RequestParam String code) {
-        return new ResponseResult(Result.SUCCESS);
+        Customer customer = customerService.getCustomerByMobile(accountName);
+        if (customer != null) {
+            VerificationCode verificationCode=(VerificationCode) CachedUtil.getInstance().getContext(accountName);
+           if (code!=null&&code.equals(verificationCode.getCode()))
+           {
+               return new ResponseResult(customer);
+           }
+        }
+        return new ResponseResult(Result.FAILURE, "登陆失败");
     }
 
 
     @ApiOperation(value ="发送验证码")
     @PostMapping("sendMobileValidCode/{sendType}/{mobile}")
-    public ResponseResult sendMobileValidCode(@PathVariable SendType sendType, @PathVariable String mobile, HttpServletRequest request, HttpSession session) {
+    public ResponseResult sendMobileValidCode(@PathVariable SendType sendType, @PathVariable String mobile, HttpSession session, HttpServletRequest request) {
         ResponseResult responseResult = new ResponseResult(Result.FAILURE);
         //send to mobile
         boolean existMobile = customerService.getCustomerByMobile(mobile) != null ? true : false;
         boolean isSend = false;
         //判断时间，1分钟只允许发送一次
-        VerificationCode verificationCode = (VerificationCode) session.getAttribute(mobile);
+        VerificationCode verificationCode = (VerificationCode)  CachedUtil.getInstance().getContext(mobile);
+               // session.getAttribute(mobile);
         if(verificationCode != null && (System.currentTimeMillis() - verificationCode.getSendTime()) < 60000){
             responseResult.setMessage("发送过于频繁，请稍后在试！");
             return responseResult;
@@ -99,7 +114,7 @@ public class MainResource extends BaseResource {
                 if (sendState) {
                     responseResult.setResult(Result.SUCCESS);
                     VerificationCode mobileCode = new VerificationCode(mobile, randomCode, System.currentTimeMillis());
-                    session.setAttribute(mobile, mobileCode);
+                    CachedUtil.getInstance().setContext(mobile,mobileCode);
                 } else {
                     responseResult.setMessage("短信发送失败，请确认手机号或稍后再试!");
                 }
