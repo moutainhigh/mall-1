@@ -122,9 +122,9 @@
       <div class="error" v-if="!$v.holder.policyholderCardPeroid.maxLength">最大不超过2位数</div>
       <div class="error" v-if="!$v.holder.policyholderCardPeroid.numeric">证件有效期应为数字</div>
 
-      <x-input title="国籍" placeholder="请输入国籍" v-model="holder.insuredCountry" v-bind:class="{'errorInput': $v.holder.insuredCountry.$error}"
-               @input="$v.holder.insuredCountry.$touch()"></x-input>
-      <div class="error" v-if="!$v.holder.insuredCountry.required && $v.holder.insuredCountry.$dirty">请输入国籍</div>
+      <x-input title="国籍" placeholder="请输入国籍" v-model="holder.policyholderCountry" v-bind:class="{'errorInput': $v.holder.policyholderCountry.$error}"
+               @input="$v.holder.policyholderCountry.$touch()"></x-input>
+      <div class="error" v-if="!$v.holder.policyholderCountry.required && $v.holder.policyholderCountry.$dirty">请输入国籍</div>
 
       <x-input title="身高(cm)" v-model="holder.policyholderHeight" placeholder="请输入身高" v-bind:class="{'errorInput': $v.holder.policyholderHeight.$error}"
                @input="$v.holder.policyholderHeight.$touch()"></x-input>
