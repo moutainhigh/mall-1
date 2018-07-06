@@ -6,7 +6,7 @@ import storage from '../store/storage'
  * 获取首页默认地址
  */
 
-export const getVaildData = phoneNumber => fetch('/noAuth/sendMobileValidCode/ORDER_CONFIRM/'+13670150690,{},'POST');
+export const getVaildData = phoneNumber => fetch('/noAuth/sendMobileValidCode/ORDER_CONFIRM/'+phoneNumber,{},'POST');
 
 export const sendMobile = (sendData, captcha_code, type, password) => fetch('/test', {
   captcha_code,

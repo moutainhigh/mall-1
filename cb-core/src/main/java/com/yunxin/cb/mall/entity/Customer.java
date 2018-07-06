@@ -64,6 +64,14 @@ public class Customer implements java.io.Serializable {
      */
     private Date birthday;
     /**
+     * 用户头像
+     */
+    private String avatarUrl;
+    /**
+     * 推荐人
+     */
+    private Customer recommendCustomer;
+    /**
      * 所在省
      */
     private String province;
@@ -492,5 +500,25 @@ public class Customer implements java.io.Serializable {
 
     public void setRongCloudToken(String rongCloudToken) {
         this.rongCloudToken = rongCloudToken;
+    }
+
+    @Column(length = 256)
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RECOMMEND_CUSTOMER_ID")
+    public Customer getRecommendCustomer() {
+        return recommendCustomer;
+    }
+
+    public void setRecommendCustomer(Customer recommendCustomer) {
+        this.recommendCustomer = recommendCustomer;
     }
 }

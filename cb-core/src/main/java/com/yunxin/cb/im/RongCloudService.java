@@ -27,7 +27,7 @@ public class RongCloudService {
         UserModel user = new UserModel()
                 .setId(customer.getAccountName())
                 .setName(customer.getAccountName())
-                .setPortrait("http://pb9sg55i7.bkt.clouddn.com/avatar.png");
+                .setPortrait(customer.getAvatarUrl());
 
         TokenResult result = User.register(user);
         if(result.getCode() == 200){
