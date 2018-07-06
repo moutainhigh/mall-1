@@ -1,10 +1,7 @@
 package com.yunxin.cb.insurance.service.imp;
 
 import com.yunxin.cb.insurance.dao.*;
-import com.yunxin.cb.insurance.entity.InsuranceOrder;
-import com.yunxin.cb.insurance.entity.InsuranceOrderBeneficiary;
-import com.yunxin.cb.insurance.entity.InsuranceOrderInformedMatter;
-import com.yunxin.cb.insurance.entity.InsuranceOrder_;
+import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -16,9 +13,6 @@ import javax.annotation.Resource;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
 import java.util.*;
 
 @Service
@@ -118,7 +112,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Override
     public List<Map<String, Object>> findMatter(int orderId) {
         List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList =  insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
-
         List<Map<String, Object>> listMap=new ArrayList<>();
         int groupId=0;
         for(InsuranceOrderInformedMatter list:insuranceOrderInformedMatterList
