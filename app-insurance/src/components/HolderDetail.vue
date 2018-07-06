@@ -15,7 +15,8 @@
       <popup-picker title="证件类型" placeholder="请选择证件类型" :data="cardTypes" v-model="insured.insuredCardType"
                     value-text-align="left"></popup-picker>
 
-      <x-input title="证件号码" placeholder="请输入证件号" v-model="insured.insuredCardNo" v-bind:class="{'errorInput': $v.insured.insuredCardNo.$error}"
+      <x-input title="证件号码" placeholder="请输入证件号" v-model="insured.insuredCardNo"
+               v-bind:class="{'errorInput': $v.insured.insuredCardNo.$error}"
                @input="$v.insured.insuredCardNo.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredCardNo.required && $v.insured.insuredCardNo.$dirty">身份证号码不能为空</div>
       <div class="error" v-if="!$v.insured.insuredCardNo.idCardVali">请输入正确的身份证号码</div>
@@ -31,22 +32,26 @@
       <!--<div class="error" v-if="!$v.insured.insuredCardPeriod.maxLength">最大不超过2位数</div>-->
       <!--<div class="error" v-if="!$v.insured.insuredCardPeriod.numeric">证件有效期应为数字</div>-->
 
-      <x-input title="国籍" placeholder="请输入国籍" v-model="insured.insuredCountry" v-bind:class="{'errorInput': $v.insured.insuredCountry.$error}"
+      <x-input title="国籍" placeholder="请输入国籍" v-model="insured.insuredCountry"
+               v-bind:class="{'errorInput': $v.insured.insuredCountry.$error}"
                @input="$v.insured.insuredCountry.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredCountry.required && $v.insured.insuredCountry.$dirty">请输入国籍</div>
 
-      <x-input title="身高(cm)" placeholder="请输入身高" v-model="insured.insuredHeight" v-bind:class="{'errorInput': $v.insured.insuredHeight.$error}"
+      <x-input title="身高(cm)" placeholder="请输入身高" v-model="insured.insuredHeight"
+               v-bind:class="{'errorInput': $v.insured.insuredHeight.$error}"
                @input="$v.insured.insuredHeight.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredHeight.required && $v.insured.insuredHeight.$dirty">身高不能为空</div>
       <div class="error" v-if="!$v.insured.insuredHeight.decimal">身高支持小数点后两位</div>
 
-      <x-input title="体重(kg)" placeholder="请输入体重" v-model="insured.insuredBodyWeight" v-bind:class="{'errorInput': $v.insured.insuredBodyWeight.$error}"
+      <x-input title="体重(kg)" placeholder="请输入体重" v-model="insured.insuredBodyWeight"
+               v-bind:class="{'errorInput': $v.insured.insuredBodyWeight.$error}"
                @input="$v.insured.insuredBodyWeight.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredBodyWeight.required && $v.insured.insuredBodyWeight.$dirty">体重不能为空
       </div>
       <div class="error" v-if="!$v.insured.insuredBodyWeight.decimal">体重支持小数点后两位</div>
 
-      <x-input title="年收入(万元)" placeholder="请输入年收入" v-model="insured.insuredIncome" v-bind:class="{'errorInput': $v.insured.insuredIncome.$error}"
+      <x-input title="年收入(万元)" placeholder="请输入年收入" v-model="insured.insuredIncome"
+               v-bind:class="{'errorInput': $v.insured.insuredIncome.$error}"
                @input="$v.insured.insuredIncome.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredIncome.required && $v.insured.insuredIncome.$dirty">请输入年收入</div>
       <div class="error" v-if="!$v.insured.insuredIncome.decimal">请输入年收入，单位万元，支持小数点后两位</div>
@@ -67,9 +72,11 @@
       <x-input title="E-mail" placeholder="非必填项" v-model="insured.insuredEmail"></x-input>
       <div class="error" v-if="!$v.insured.insuredEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" v-model="insured.insuredPCD" value-text-align="left"></x-address>
+      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" v-model="insured.insuredPCD"
+                 value-text-align="left"></x-address>
 
-      <x-input title="详细地址" placeholder="请输入详细地址" v-model="insured.insuredAddress" v-bind:class="{'errorInput': $v.insured.insuredAddress.$error}"
+      <x-input title="详细地址" placeholder="请输入详细地址" v-model="insured.insuredAddress"
+               v-bind:class="{'errorInput': $v.insured.insuredAddress.$error}"
                @input="$v.insured.insuredAddress.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredAddress.required && $v.insured.insuredAddress.$dirty">请输入详细地址</div>
 
@@ -81,7 +88,8 @@
       投保人信息
     </div>
     <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="姓名" placeholder="请输入姓名" v-model="holder.policyholderName" v-bind:class="{'errorInput': $v.holder.policyholderName.$error}"
+      <x-input title="姓名" placeholder="请输入姓名" v-model="holder.policyholderName"
+               v-bind:class="{'errorInput': $v.holder.policyholderName.$error}"
                @input="$v.holder.policyholderName.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderName.required && $v.holder.policyholderName.$dirty">姓名不能为空</div>
       <div class="error" v-if="!$v.holder.policyholderName.minLength">姓名最少为
@@ -109,7 +117,8 @@
                 value-text-align="left"></datetime>
       <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType" :data="cardTypes"
                     value-text-align="left"></popup-picker>
-      <x-input title="证件号码" v-model="holder.policyholderCardNo" placeholder="请输入证件号" v-bind:class="{'errorInput': $v.holder.policyholderCardNo.$error}"
+      <x-input title="证件号码" v-model="holder.policyholderCardNo" placeholder="请输入证件号"
+               v-bind:class="{'errorInput': $v.holder.policyholderCardNo.$error}"
                @input="$v.holder.policyholderCardNo.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderCardNo.required && $v.holder.policyholderCardNo.$dirty">
         身份证号码不能为空
@@ -127,24 +136,29 @@
       <!--<div class="error" v-if="!$v.holder.policyholderCardPeroid.maxLength">最大不超过2位数</div>-->
       <!--<div class="error" v-if="!$v.holder.policyholderCardPeroid.numeric">证件有效期应为数字</div>-->
 
-      <x-input title="国籍" placeholder="请输入国籍" v-model="holder.policyholderCountry" v-bind:class="{'errorInput': $v.holder.policyholderCountry.$error}"
+      <x-input title="国籍" placeholder="请输入国籍" v-model="holder.policyholderCountry"
+               v-bind:class="{'errorInput': $v.holder.policyholderCountry.$error}"
                @input="$v.holder.policyholderCountry.$touch()"></x-input>
-      <div class="error" v-if="!$v.holder.policyholderCountry.required && $v.holder.policyholderCountry.$dirty">请输入国籍</div>
+      <div class="error" v-if="!$v.holder.policyholderCountry.required && $v.holder.policyholderCountry.$dirty">请输入国籍
+      </div>
 
-      <x-input title="身高(cm)" v-model="holder.policyholderHeight" placeholder="请输入身高" v-bind:class="{'errorInput': $v.holder.policyholderHeight.$error}"
+      <x-input title="身高(cm)" v-model="holder.policyholderHeight" placeholder="请输入身高"
+               v-bind:class="{'errorInput': $v.holder.policyholderHeight.$error}"
                @input="$v.holder.policyholderHeight.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderHeight.required && $v.holder.policyholderHeight.$dirty">身高不能为空
       </div>
       <div class="error" v-if="!$v.holder.policyholderHeight.decimal">身高支持小数点后两位</div>
 
-      <x-input title="体重(kg)" v-model="holder.policyholderBodyWeight" placeholder="请输入体重" v-bind:class="{'errorInput': $v.holder.policyholderBodyWeight.$error}"
+      <x-input title="体重(kg)" v-model="holder.policyholderBodyWeight" placeholder="请输入体重"
+               v-bind:class="{'errorInput': $v.holder.policyholderBodyWeight.$error}"
                @input="$v.holder.policyholderBodyWeight.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderBodyWeight.required && $v.holder.policyholderBodyWeight.$dirty">
         体重不能为空
       </div>
       <div class="error" v-if="!$v.holder.policyholderBodyWeight.decimal">体重支持小数点后两位</div>
 
-      <x-input title="年收入(万元)" v-model="holder.policyholderIncome" placeholder="请输入年收入" v-bind:class="{'errorInput': $v.holder.policyholderIncome.$error}"
+      <x-input title="年收入(万元)" v-model="holder.policyholderIncome" placeholder="请输入年收入"
+               v-bind:class="{'errorInput': $v.holder.policyholderIncome.$error}"
                @input="$v.holder.policyholderIncome.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderIncome.required && $v.holder.policyholderIncome.$dirty">请输入年收入
       </div>
@@ -157,22 +171,26 @@
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
-      <x-input title="固定电话" v-model="holder.policyholderTel" placeholder="请输入固定电话" v-bind:class="{'errorInput': $v.holder.policyholderTel.$error}"
+      <x-input title="固定电话" v-model="holder.policyholderTel" placeholder="请输入固定电话"
+               v-bind:class="{'errorInput': $v.holder.policyholderTel.$error}"
                @input="$v.holder.policyholderTel.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderTel.fixedTel">请输入正确的固定电话号码</div>
 
-      <x-input title="移动电话" v-model="holder.policyholderMobile" placeholder="请输入移动电话" v-bind:class="{'errorInput': $v.holder.policyholderMobile.$error}"
+      <x-input title="移动电话" v-model="holder.policyholderMobile" placeholder="请输入移动电话"
+               v-bind:class="{'errorInput': $v.holder.policyholderMobile.$error}"
                @input="$v.holder.policyholderMobile.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderMobile.mobile">请输入正确的手机号码</div>
 
-      <x-input title="E-mail" v-model="holder.policyholderEmail" placeholder="非必填项" v-bind:class="{'errorInput': $v.holder.policyholderEmail.$error}"
+      <x-input title="E-mail" v-model="holder.policyholderEmail" placeholder="非必填项"
+               v-bind:class="{'errorInput': $v.holder.policyholderEmail.$error}"
                @input="$v.holder.policyholderEmail.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderEmail.email">请输入正确邮箱地址</div>
 
       <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" v-model="holder.holderPCD"
                  value-text-align="left"></x-address>
 
-      <x-input title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址" v-bind:class="{'errorInput': $v.holder.policyholderAddress.$error}"
+      <x-input title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"
+               v-bind:class="{'errorInput': $v.holder.policyholderAddress.$error}"
                @input="$v.holder.policyholderAddress.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderAddress.required && $v.holder.policyholderAddress.$dirty">
         请输入详细地址
@@ -188,7 +206,7 @@
         <img v-if="!legalBeneficiary" src="../assets/img/unselect.png"/>
         受益人：法定受益人
       </div>
-      <div class="title-add" v-if="beneficiaries.length < 2" @click="addBene">
+      <div class="title-add" v-if="!legalBeneficiary || beneficiaries.length < 2" @click="addBene">
         <img src="../assets/img/add.png"/>新增受益人
       </div>
     </div>
@@ -248,7 +266,8 @@
         <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="beneficiary1.beneficiaryCardType"
                       value-text-align="left" :data="cardTypes"></popup-picker>
 
-        <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary1.beneficiaryCardNo" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardNo.$error}"
+        <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary1.beneficiaryCardNo"
+                 v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardNo.$error}"
                  @input="$v.beneficiary1.beneficiaryCardNo.$touch()"></x-input>
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryCardNo.required && $v.beneficiary1.beneficiaryCardNo.$dirty">请输入证件号
@@ -259,7 +278,8 @@
         <!--@input="$v.beneficiary1.beneficiaryCardPeroid.$touch()"></x-input>-->
         <datetime title="证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" placeholder="请选择证件有效期"
                   value-text-align="left"></datetime>
-        <div class="error" v-if="!$v.beneficiary1.beneficiaryCardPeroid.required && $v.beneficiary1.beneficiaryCardPeroid.$dirty">
+        <div class="error"
+             v-if="!$v.beneficiary1.beneficiaryCardPeroid.required && $v.beneficiary1.beneficiaryCardPeroid.$dirty">
           证件有效期不能为空
         </div>
         <!--<div class="error" v-if="!$v.beneficiary1.beneficiaryCardPeroid.minLength">最小不小于1位数</div>-->
@@ -274,7 +294,8 @@
     <div v-if="addBene2">
       <div class="add">受益人信息 <span style="float: right;" @click="delBene(2)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-        <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryName.$error}"
+        <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName"
+                 v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryName.$error}"
                  @input="$v.beneficiary2.beneficiaryName.$touch()"></x-input>
         <div class="error" v-if="!$v.beneficiary2.beneficiaryName.required && $v.beneficiary2.beneficiaryName.$dirty">
           姓名不能为空
@@ -308,7 +329,8 @@
 
         <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary2.beneficiaryOrder"
                       value-text-align="left"></popup-picker>
-        <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary2.beneficiaryProportion" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryProportion.$error}"
+        <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary2.beneficiaryProportion"
+                 v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryProportion.$error}"
                  @input="$v.beneficiary2.beneficiaryProportion.$touch()"></x-input>
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryProportion.between && $v.beneficiary2.beneficiaryProportion.$dirty">
@@ -320,7 +342,8 @@
         <popup-picker title="证件类型" placeholder="请选择证件类型" :data="cardTypes" v-model="beneficiary2.beneficiaryCardType"
                       value-text-align="left"></popup-picker>
 
-        <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary2.beneficiaryCardNo" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardNo.$error}"
+        <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary2.beneficiaryCardNo"
+                 v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardNo.$error}"
                  @input="$v.beneficiary2.beneficiaryCardNo.$touch()"></x-input>
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryCardNo.required && $v.beneficiary2.beneficiaryCardNo.$dirty">请输入证件号
@@ -331,7 +354,8 @@
         <!--@input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>-->
         <datetime title="证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" placeholder="请选择证件有效期"
                   value-text-align="left"></datetime>
-        <div class="error" v-if="!$v.beneficiary2.beneficiaryCardPeroid.required && $v.beneficiary2.beneficiaryCardPeroid.$dirty">
+        <div class="error"
+             v-if="!$v.beneficiary2.beneficiaryCardPeroid.required && $v.beneficiary2.beneficiaryCardPeroid.$dirty">
           证件有效期不能为空
         </div>
         <!--<div class="error" v-if="!$v.beneficiary2.beneficiaryCardPeroid.minLength">最小不小于1位数</div>-->
@@ -386,30 +410,8 @@
         holder: storage.fetch('holder'),
         insured: storage.fetch('insured'),
         beneficiaries: storage.fetch('beneficiaries'),
-        beneficiary1: {
-          beneficiaryName: '',
-          beneficiaryGender: '',
-          beneficiaryBirthday: '',
-          beneficiaryCardType: [],
-          beneficiaryCardNo: '',
-          beneficiaryCardPeroid: '',
-          insuredRelation: [],
-          beneficiaryOrder: [],
-          beneficiaryProportion: '',
-          beneficiaryCountry: ''
-        },
-        beneficiary2: {
-          beneficiaryName: '',
-          beneficiaryGender: '',
-          beneficiaryBirthday: '',
-          beneficiaryCardType: [],
-          beneficiaryCardNo: '',
-          beneficiaryCardPeroid: '',
-          insuredRelation: [],
-          beneficiaryOrder: [],
-          beneficiaryProportion: '',
-          beneficiaryCountry: ''
-        },
+        beneficiary1: storage.fetch('beneficiary1'),
+        beneficiary2: storage.fetch('beneficiary2'),
         //是否法定受益人
         legalBeneficiary: true,
         cardTypes: [['居民身份证', '居民户口簿', '军人身份证', '港澳居民往来内地通行证', '出生证', '台湾居民往来内地通行证', '外国护照', '外国人永久居留身份证', '武警身份证', '其他证件']],
@@ -578,6 +580,11 @@
           this.submitStatus = 'PENDING'
           setTimeout(() => {
             this.submitStatus = 'OK';
+            // let beneficiaries = storage.fetch('beneficiaries')
+            var beneficiaries = [];
+            beneficiaries.push(this.beneficiary1);
+            beneficiaries.push(this.beneficiary2);
+            storage.save("beneficiaries", beneficiaries);
             this.$router.push("infoMatters");
           }, 500)
         }
@@ -585,9 +592,15 @@
       addBene() {
         if (this.addBene1 === false) {
           this.addBene1 = true;
+          this.beneficiaries.push(this.beneficiary1);
         } else if (this.addBene1 === true && this.addBene2 === false) {
-          this.addBene2 = true
+          this.addBene2 = true;
+          this.beneficiaries.push(this.beneficiary2);
         }
+        this.legalBeneficiary = false;
+        let order = storage.fetch("order");
+        order.legalBeneficiary = this.legalBeneficiary;
+        storage.save("order", order);
         // if (this.beneficiaries.length < 2) {
         //     let beneficiary = {
         //       beneficiaryName: '',
@@ -607,22 +620,28 @@
         // }
       },
       delBene(index) {
+        if (index === 1) {
+          this.addBene1 = false;
+          // storage.save('beneficiary1', null);
+        } else {
+          this.addBene2 = false;
+          // storage.save('beneficiary2', null);
+        }
         // this.beneficiaries.splice(index, 1);
         // storage.save("beneficiaries", this.beneficiaries);
         // if (this.beneficiaries.length === 0) {
         //   this.legalBeneficiary = !this.legalBeneficiary;
         // }
-        if (index === 1) {
-          this.addBene1 = false;
-        } else {
-          this.addBene2 = false;
-        }
       },
       changeLegal() {
         this.legalBeneficiary = !this.legalBeneficiary;
         let order = storage.fetch("order");
         order.legalBeneficiary = this.legalBeneficiary;
         storage.save("order", order);
+        if (this.legalBeneficiary) {
+          this.addBene1 = false;
+          this.addBene2 = false;
+        }
       },
       submit() {
 
@@ -659,11 +678,30 @@
         },
         immediate: true,
         deep: true
-      }
+      },
+      beneficiary1: {
+        handler(newVal, oldVal) {
+          storage.save('beneficiary1', newVal);
+        },
+        immediate: true,
+        deep: true
+      },
+      beneficiary2: {
+        handler(newVal, oldVal) {
+          storage.save('beneficiary2', newVal);
+        },
+        immediate: true,
+        deep: true
+      },
     },
     created: function () {
       let order = storage.fetch("order");
+      let beneficiary1 = storage.fetch("beneficiary1");
+      let beneficiary2 = storage.fetch("beneficiary1");
       this.legalBeneficiary = order.legalBeneficiary;
+      if (!this.legalBeneficiary && this.beneficiary1) {
+
+      }
     }
   }
 </script>
