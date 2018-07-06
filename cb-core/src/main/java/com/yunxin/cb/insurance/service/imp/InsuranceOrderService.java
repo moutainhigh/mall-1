@@ -6,6 +6,7 @@ import com.yunxin.cb.insurance.entity.InsuranceOrderBeneficiary;
 import com.yunxin.cb.insurance.entity.InsuranceOrderInformedMatter;
 import com.yunxin.cb.insurance.entity.InsuranceOrder_;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
+import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
@@ -78,6 +79,11 @@ public class InsuranceOrderService implements IInsuranceOrderService {
 
         return insuranceOrder;
 
+    }
+
+    @Override
+    public boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState) {
+        return false;
     }
 
     /**
