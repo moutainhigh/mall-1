@@ -1,10 +1,7 @@
 package com.yunxin.cb.insurance.service.imp;
 
 import com.yunxin.cb.insurance.dao.*;
-import com.yunxin.cb.insurance.entity.InsuranceOrder;
-import com.yunxin.cb.insurance.entity.InsuranceOrderBeneficiary;
-import com.yunxin.cb.insurance.entity.InsuranceOrderInformedMatter;
-import com.yunxin.cb.insurance.entity.InsuranceOrder_;
+import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -57,12 +54,20 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
         insuranceOrder.setOrderCode("INS2018070600105");
         insuranceOrder.setCreateTime(new Date());
-        insuranceOrderInsuredDao.save(insuranceOrder.getInsuranceOrderInsured());
-        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
-        insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
+
+        InsuranceOrderInsured insuranceOrderInsured= insuranceOrder.getInsuranceOrderInsured();
+        insuranceOrderInsuredDao.save(insuranceOrderInsured);
+
+        InsuranceOrderPolicyholder insuranceOrderPolicyholder =insuranceOrder.getInsuranceOrderPolicyholder();
+        insuranceOrderPolicyholderDao.save(insuranceOrderPolicyholder);
+
+        InsuranceOrderPolicyholderBank insuranceOrderPolicyholderBank = insuranceOrder.getInsuranceOrderPolicyholderBank();
+        insuranceOrderPolicyholderBankDao.save(insuranceOrderPolicyholderBank);
+
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
         insuranceOrder.setOrderCode(insuranceOrder.getOrderCode()+insuranceOrder.getOrderId());
         insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
+
         Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
         for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
         {
