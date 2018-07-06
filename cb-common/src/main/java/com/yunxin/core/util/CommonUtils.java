@@ -36,7 +36,6 @@ public class CommonUtils {
 		         }	 
 	         }
 	         String res=new String(randBuffer);
-	         System.out.println("res:"+res);
 	         if(rule.equals(RANDRULE.RAND_LOWER)){
 	        	 res=res.toLowerCase();
 	         }else if(rule.equals(RANDRULE.RAND_UPPER)){

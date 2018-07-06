@@ -79,7 +79,6 @@ public class MainResource extends BaseResource {
         switch (sendType) {
             case FORGET_PASSWORD:
             case LOGIN:
-            case ORDER_CONFIRM:
                 isSend = existMobile;
                 if (!existMobile) {
                     responseResult.setMessage("手机号不存在！");
