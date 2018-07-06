@@ -185,6 +185,17 @@
         "name": "厨电设备", "code": "142", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../concent/devices.do"
       }
     ]
+  },
+  {
+    "name": "产品管理", "code": "14", "type": "MENU", "cssClass": "fa fa-phone", "value": "concent", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "产品列表", "code": "141", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/insurances.do"
+      },
+      {
+        "name": "订单列表", "code": "142", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/insuranceOrder.do"
+      }
+    ]
   }
 
 ]

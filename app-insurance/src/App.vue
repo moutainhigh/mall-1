@@ -18,8 +18,10 @@
     },
     created:function () {
       if (storage.fetch('holder').length === 0){
-        let holder = this.Admin.holder;
-        storage.save('holder',holder);
+        storage.save('holder',this.Admin.holder);
+      }
+      if (storage.fetch('insured').length === 0) {
+        storage.save('insured', this.Admin.insured);
       }
     }
   }

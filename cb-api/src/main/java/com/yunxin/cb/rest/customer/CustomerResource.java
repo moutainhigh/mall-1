@@ -42,7 +42,7 @@ public class CustomerResource {
 
     @ApiOperation(value ="修改密码")
     @PostMapping(value = "updatePwd/{customerId}")
-    public ResponseResult updatePwd(@PathVariable int customerId, @RequestParam String oloPwd, @RequestParam String newPwd) {
+    public ResponseResult updatePwd(@PathVariable int customerId, @RequestParam String code, @RequestParam String newPwd) {
         return new ResponseResult(Result.SUCCESS);
     }
 

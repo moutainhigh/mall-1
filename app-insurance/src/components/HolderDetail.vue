@@ -65,7 +65,7 @@
       <x-input title="E-mail" placeholder="非必填项" v-model="insured.insuredEmail"></x-input>
       <div class="error" v-if="!$v.insured.insuredEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" value-text-align="left"></x-address>
+      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" v-model="insured.insuredPCD" value-text-align="left"></x-address>
 
       <x-input title="详细地址" placeholder="请输入详细地址" v-model="insured.insuredAddress" v-bind:class="{'errorInput': $v.insured.insuredAddress.$error}"
                @input="$v.insured.insuredAddress.$touch()"></x-input>
@@ -164,7 +164,7 @@
                @input="$v.holder.policyholderEmail.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" v-model="addressValue" placeholder="请选择地址" raw-value :list="addressData"
+      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" v-model="holder.holderPCD"
                  value-text-align="left"></x-address>
 
       <x-input title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址" v-bind:class="{'errorInput': $v.holder.policyholderAddress.$error}"
@@ -241,7 +241,7 @@
         <datetime title="出生日期" placeholder="请选择出生日期" v-model="beneficiary1.beneficiaryBirthday"
                   value-text-align="left"></datetime>
         <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="beneficiary1.beneficiaryCardType"
-                      value-text-align="left"></popup-picker>
+                      value-text-align="left" :data="cardTypes"></popup-picker>
 
         <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary1.beneficiaryCardNo" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardNo.$error}"
                  @input="$v.beneficiary1.beneficiaryCardNo.$touch()"></x-input>
@@ -338,7 +338,7 @@
       <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
         <div>上一步</div>
       </button>
-      <button class="i-footer" style="width: 50%;right: 0" @click="submit">
+      <button class="i-footer" style="width: 50%;right: 0" @click="next">
         <div>下一步</div>
       </button>
     </div>
@@ -348,7 +348,7 @@
 
 <script>
 
-  import {Group, XInput, Selector, PopupPicker, Datetime, ChinaAddressData, XAddress} from 'vux'
+  import {ChinaAddressData, Datetime, Group, PopupPicker, Selector, XAddress, XInput} from 'vux'
   import storage from "../store/storage";
   import {required, minLength, maxLength, between, helpers, numeric, email} from 'vuelidate/lib/validators'
 
@@ -373,7 +373,6 @@
     name: "holder-detail",
     data() {
       return {
-        addressValue: [],
         holder: storage.fetch('holder'),
         insured: storage.fetch('insured'),
         beneficiaries: storage.fetch('beneficiaries'),
@@ -477,7 +476,7 @@
           maxLength: maxLength(2),
           numeric
         },
-        insuredCountry: {
+        policyholderCountry: {
           required
         },
         policyholderHeight: {
@@ -553,12 +552,6 @@
       },
     },
     methods: {
-      status(validation) {
-        return {
-          errorInput: validation.$error
-        },
-          console.log('jinlaile')
-      },
       comeBack() {
         this.$router.back();
       },
@@ -622,13 +615,14 @@
       }
     },
     watch: {
-      addressValue: function (val, oldVal) {
-      },
       holder: {
         handler(newVal, oldVal) {
-          if (oldVal != null || oldVal !== undefined) {
-            storage.save('holder', newVal);
+          if (newVal.holderPCD && newVal.holderPCD.length === 3){
+            newVal.policyholderProvince = this.holder.holderPCD[0];
+            newVal.policyholderCity = this.holder.holderPCD[1];
+            newVal.policyholderDistrict = this.holder.holderPCD[2];
           }
+          storage.save('holder', newVal);
         },
         immediate: true,
         deep: true
@@ -642,6 +636,11 @@
       },
       insured: {
         handler(newVal, oldVal) {
+          if (newVal.insuredPCD && newVal.insuredPCD.length === 3) {
+            newVal.insuredProvince = this.insured.insuredPCD[0];
+            newVal.insuredCity = this.insured.insuredPCD[1];
+            newVal.insuredDistrict = this.insured.insuredPCD[2];
+          }
           storage.save('insured', newVal);
         },
         immediate: true,

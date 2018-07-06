@@ -21,6 +21,7 @@ public class InsuranceProductService implements IInsuranceProductService {
      */
     @Override
     public List<InsuranceProduct> getInsuranceProducts() {
+
         return insuranceProductDao.findAll();
     }
 
