@@ -147,8 +147,9 @@
         storage.save('insured', insured);
       },
       submit() {
-        if (storage.fetch('insured').length === 0) {
-          storage.save('insured', this.Admin.holder);
+        console.log(storage.fetch('insured'));
+        if (storage.fetch('insured')) {
+          storage.save('insured', this.Admin.insured);
         }
         this.$router.push('/holder-detail');
       },
@@ -189,13 +190,9 @@
       }
       storage.save('order', order);
 
-      if (storage.fetch('insured').length === 0) {
-        storage.save('insured', this.Admin.insured);
-      }else {
-        let insured = storage.fetch("insured");
-        this.birthday = insured.insuredBirthday;
-        this.gender = insured.insuredGender;
-      }
+      let insured = storage.fetch("insured");
+      this.birthday = insured.insuredBirthday;
+      this.gender = insured.insuredGender;
     }
   }
 </script>

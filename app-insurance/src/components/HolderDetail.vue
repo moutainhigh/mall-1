@@ -52,7 +52,7 @@
       <x-input title="E-mail" placeholder="非必填项" v-model="insured.insuredEmail"></x-input>
       <div class="error" v-if="!$v.insured.insuredEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" value-text-align="left"></x-address>
+      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" v-model="insured.insuredPCD" value-text-align="left"></x-address>
 
       <x-input title="详细地址" placeholder="请输入详细地址" v-model="insured.insuredAddress"></x-input>
       <div class="error" v-if="!$v.insured.insuredAddress.required">请输入详细地址</div>
@@ -97,7 +97,7 @@
       <div class="error" v-if="!$v.holder.policyholderCardPeroid.numeric">证件有效期应为数字</div>
 
       <x-input title="国籍" placeholder="请输入国籍" v-model="holder.insuredCountry"></x-input>
-      <div class="error" v-if="!$v.holder.insuredCountry.required">请输入国籍</div>
+      <div class="error" v-if="!$v.holder.policyholderCountry.required">请输入国籍</div>
 
       <x-input title="身高(cm)" v-model="holder.policyholderHeight" placeholder="请输入身高"></x-input>
       <div class="error" v-if="!$v.holder.policyholderHeight.required">身高不能为空</div>
@@ -127,7 +127,7 @@
       <x-input title="E-mail" v-model="holder.policyholderEmail" placeholder="非必填项"></x-input>
       <div class="error" v-if="!$v.holder.policyholderEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" v-model="addressValue" placeholder="请选择地址" raw-value :list="addressData"
+      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" v-model="holder.holderPCD"
                  value-text-align="left"></x-address>
 
       <x-input title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"></x-input>
@@ -174,7 +174,7 @@
         <datetime title="出生日期" placeholder="请选择出生日期" v-model="beneficiary.beneficiaryBirthday"
                   value-text-align="left"></datetime>
         <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="beneficiary.beneficiaryCardType"
-                      value-text-align="left"></popup-picker>
+                      value-text-align="left" :data="cardTypes"></popup-picker>
         <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary.beneficiaryCardNo"></x-input>
         <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary.beneficiaryCardPeroid"></x-input>
         <popup-picker title="是被保人的" placeholder="请选择关系" v-model="beneficiary.insuredRelation" value-text-align="left"
@@ -195,9 +195,9 @@
 
 <script>
 
-  import {Group, XInput, Selector, PopupPicker, Datetime, ChinaAddressData, XAddress} from 'vux'
+  import {ChinaAddressData, Datetime, Group, PopupPicker, Selector, XAddress, XInput} from 'vux'
   import storage from "../store/storage";
-  import {required, minLength, maxLength, between, helpers, numeric, email} from 'vuelidate/lib/validators'
+  import {email, helpers, maxLength, minLength, numeric, required} from 'vuelidate/lib/validators'
 
   //身份证正则校验
   const idCardVali = helpers.regex('idCardVali', /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/);
@@ -220,7 +220,6 @@
     name: "holder-detail",
     data() {
       return {
-        addressValue: [],
         holder: storage.fetch('holder'),
         insured: storage.fetch('insured'),
         beneficiaries: storage.fetch('beneficiaries'),
@@ -288,7 +287,7 @@
           maxLength: maxLength(2),
           numeric
         },
-        insuredCountry: {
+        policyholderCountry: {
           required
         },
         policyholderHeight: {
@@ -358,13 +357,14 @@
       }
     },
     watch: {
-      addressValue: function (val, oldVal) {
-      },
       holder: {
         handler(newVal, oldVal) {
-          if (oldVal != null || oldVal !== undefined) {
-            storage.save('holder', newVal);
+          if (newVal.holderPCD && newVal.holderPCD.length === 3){
+            newVal.policyholderProvince = this.holder.holderPCD[0];
+            newVal.policyholderCity = this.holder.holderPCD[1];
+            newVal.policyholderDistrict = this.holder.holderPCD[2];
           }
+          storage.save('holder', newVal);
         },
         immediate: true,
         deep: true
@@ -378,6 +378,11 @@
       },
       insured: {
         handler(newVal, oldVal) {
+          if (newVal.insuredPCD && newVal.insuredPCD.length === 3) {
+            newVal.insuredProvince = this.insured.insuredPCD[0];
+            newVal.insuredCity = this.insured.insuredPCD[1];
+            newVal.insuredDistrict = this.insured.insuredPCD[2];
+          }
           storage.save('insured', newVal);
         },
         immediate: true,
