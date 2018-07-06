@@ -206,7 +206,7 @@
         <img v-if="!legalBeneficiary" src="../assets/img/unselect.png"/>
         受益人：法定受益人
       </div>
-      <div class="title-add" v-if="!legalBeneficiary || beneficiaries.length < 2" @click="addBene">
+      <div class="title-add" @click="addBene">
         <img src="../assets/img/add.png"/>新增受益人
       </div>
     </div>
