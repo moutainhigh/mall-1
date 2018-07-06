@@ -144,6 +144,11 @@ public class Customer implements java.io.Serializable {
     private String qqAccessToken;
 
     /**
+     * 融云token
+     */
+    private String rongCloudToken;
+
+    /**
      * 昵称
      */
     private String qqNickName;
@@ -175,8 +180,6 @@ public class Customer implements java.io.Serializable {
      */
     private Set<Kitchen> kitchens = new HashSet<>();
 
-    //临时属性
-    private String token;
 
 
     @Id
@@ -480,12 +483,12 @@ public class Customer implements java.io.Serializable {
         this.emailChecked = emailChecked;
     }
 
-    @Transient
-    public String getToken() {
-        return token;
+    @Column(length = 32)
+    public String getRongCloudToken() {
+        return rongCloudToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setRongCloudToken(String rongCloudToken) {
+        this.rongCloudToken = rongCloudToken;
     }
 }

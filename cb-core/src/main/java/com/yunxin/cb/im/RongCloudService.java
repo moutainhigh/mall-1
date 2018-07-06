@@ -28,7 +28,7 @@ public class RongCloudService {
                 .setId(customer.getAccountName());
         TokenResult result = User.register(user);
         if(result.getCode().equals("200")){
-            logger.info("getToken:  " + result.toString());
+            logger.info("getRongCloudToken:  " + result.toString());
             return result.getToken();
         }else {
             throw new Exception(result.getMsg());

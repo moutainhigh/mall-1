@@ -100,7 +100,7 @@ public class CustomerService implements ICustomerService {
         customer.setRank(rankDao.getRankByDefaultRank());
         Customer dbCustomer= customerDao.save(customer);
         String token = rongCloudService.register(dbCustomer);
-        dbCustomer.setToken(token);
+        dbCustomer.setRongCloudToken(token);
         return dbCustomer;
     }
 
