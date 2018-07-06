@@ -12,11 +12,13 @@ export const submitOrder = function (code) {
   let insured = wipeArray(storage.fetch("insured"));
   let holder = wipeArray(storage.fetch("holder"));
   let insuranceOrder = wipeArray(storage.fetch("order"));
+  let matters = storage.fetch("matters");
   insuranceOrder.insuranceOrderPolicyholderBank = wipeArray(insuranceOrder.insuranceOrderPolicyholderBank );
   let beneficiaries = storage.fetch('beneficiaries');
   insuranceOrder.insuranceOrderPolicyholder = holder;
   insuranceOrder.insuranceOrderInsured = insured;
   insuranceOrder.insuranceOrderBeneficiarys = beneficiaries;
+  insuranceOrder.insuranceOrderInformedMatters = matters;
   return fetch('/insurance/order/saveOrder?code='+ code, insuranceOrder,"POST");
 };
 

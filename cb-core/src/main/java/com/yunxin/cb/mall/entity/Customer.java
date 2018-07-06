@@ -189,7 +189,7 @@ public class Customer implements java.io.Serializable {
      */
     private Set<Kitchen> kitchens = new HashSet<>();
 
-
+    private String token;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -520,5 +520,14 @@ public class Customer implements java.io.Serializable {
 
     public void setRecommendCustomer(Customer recommendCustomer) {
         this.recommendCustomer = recommendCustomer;
+    }
+
+    @Transient
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

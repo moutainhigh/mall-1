@@ -1,15 +1,17 @@
 package com.yunxin.cb.rest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class BaseResource {
 
-    protected int getCustomerId(){
-        return 1;
+    protected int getCustomerId(HttpSession session) {
+        return (int) session.getAttribute("customerId");
     }
 
     /**
      * 获取IP地址
+     *
      * @param request
      * @return
      */

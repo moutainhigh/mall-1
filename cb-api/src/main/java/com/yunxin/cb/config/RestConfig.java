@@ -13,15 +13,15 @@ import java.nio.charset.Charset;
 @Configuration
 public class RestConfig {
 
-//    @Bean
-//    public FilterRegistrationBean restTokenFilter() {
-//        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-//        registrationBean.setFilter(new RestTokenFilter());
-//        registrationBean.addUrlPatterns("/rest/school/auth/*", "/rest/parent/auth/*");
-//        registrationBean.setName("restTokenFilter");
-//        registrationBean.setOrder(1);
-//        return registrationBean;
-//    }
+    @Bean
+    public FilterRegistrationBean restTokenFilter() {
+        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new RestTokenFilter());
+        registrationBean.addUrlPatterns("/customer/*", "/insurance/*");
+        registrationBean.setName("restTokenFilter");
+        registrationBean.setOrder(1);
+        return registrationBean;
+    }
 
     @Bean
     public JsonFilterFactoryBean jsonFilterFactoryBean() {
@@ -34,9 +34,7 @@ public class RestConfig {
         jsonConverter.setObjectMapper(new HibernateAwareObjectMapper());
         //解决返回字符串时乱码问题
         StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
-        stringConverter.setDefaultCharset( Charset.forName("utf-8"));
+        stringConverter.setDefaultCharset(Charset.forName("utf-8"));
         return new HttpMessageConverters(jsonConverter, stringConverter);
     }
-
-
 }
