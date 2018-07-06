@@ -7,6 +7,7 @@ package com.yunxin.cb.insurance.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.Customer;
+import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -53,6 +54,12 @@ public class InsuranceOrder implements Serializable {
     @Length(max = 32)
     private String orderCode;
     /**
+     * 合同编号
+     */
+    @NotBlank
+    @Length(max = 32)
+    private String contractNo;
+    /**
      * 产品
      */
     @NotNull
@@ -89,7 +96,7 @@ public class InsuranceOrder implements Serializable {
     /**
      * 订单状态
      */
-    private String orderState;
+    private InsuranceOrderState orderState;
     /**
      * 订单创建时间
      */
@@ -130,6 +137,14 @@ public class InsuranceOrder implements Serializable {
 
     public void setOrderCode(String orderCode) {
         this.orderCode = orderCode;
+    }
+
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
+    public String getContractNo() {
+        return this.contractNo;
+    }
+    public void setContractNo(String contractNo) {
+        this.contractNo = contractNo;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -254,11 +269,12 @@ public class InsuranceOrder implements Serializable {
     }
 
     @Column(nullable = false, length = 32)
-    public String getOrderState() {
+    @Enumerated(EnumType.ORDINAL)
+    public InsuranceOrderState getOrderState() {
         return orderState;
     }
 
-    public void setOrderState(String orderState) {
+    public void setOrderState(InsuranceOrderState orderState) {
         this.orderState = orderState;
     }
 }
