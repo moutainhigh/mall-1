@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  */
 @Api(description = "订单接口")
 @RestController
-@RequestMapping(value = "/insurance/Order")
+@RequestMapping(value = "/insurance/order")
 public class InsuranceOrderResource {
 
     @Resource
