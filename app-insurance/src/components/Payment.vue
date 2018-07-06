@@ -30,7 +30,7 @@
         <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 65%;padding-left: 0;"></x-input>
         <div class="input-vile" @click.prevent="getVerifyCode">{{computedTime === 0? "获取验证码" : computedTime +"s"}}</div>
       </div>
-      <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
+      <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle" :title="toastText"></toast>
     </group>
     <div style="height: 48px;">
       <button class="i-footer" @click="submit">
@@ -77,19 +77,21 @@
         let order =await submitOrder();
       },
       async getVerifyCode() {
-        if (this.computedTime === 0){
-          this.computedTime = 30;
-          //倒计时
-          let timer = setInterval(() => {
-            this.computedTime--;
-            if (this.computedTime === 0) {
-              clearInterval(timer)
-            }
-          }, 1000);
-          //获取验证信息
-          let getCode = await getVaildData(this.insured.policyholderMobile);
-          this.validate_token = getCode.validate_token;
-          this.showPositionValue = true;
+        if (this.bank.bankMobile) {
+          if (this.computedTime === 0){
+            this.computedTime = 30;
+            //倒计时
+            let timer = setInterval(() => {
+              this.computedTime--;
+              if (this.computedTime === 0) {
+                clearInterval(timer)
+              }
+            }, 1000);
+            //获取验证信息
+            let getCode = await getVaildData(this.bank.bankMobile);
+            this.toastText = "发送成功";
+            this.showPositionValue = true;
+          }
         }
       },
     },

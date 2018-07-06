@@ -20,14 +20,16 @@
       <div class="error" v-if="!$v.insured.insuredCardNo.required && $v.insured.insuredCardNo.$dirty">身份证号码不能为空</div>
       <div class="error" v-if="!$v.insured.insuredCardNo.idCardVali">请输入正确的身份证号码</div>
 
-      <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="insured.insuredCardPeriod" v-bind:class="{'errorInput': $v.insured.insuredCardPeriod.$error}"
-               @input="$v.insured.insuredCardPeriod.$touch()"></x-input>
+      <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="insured.insuredCardPeriod" v-bind:class="{'errorInput': $v.insured.insuredCardPeriod.$error}"-->
+      <!--@input="$v.insured.insuredCardPeriod.$touch()"></x-input>-->
+      <datetime title="证件有效期" v-model="insured.insuredCardPeriod" placeholder="请选择证件有效期"
+                value-text-align="left"></datetime>
       <div class="error" v-if="!$v.insured.insuredCardPeriod.required && $v.insured.insuredCardPeriod.$dirty">
         证件有效期不能为空
       </div>
-      <div class="error" v-if="!$v.insured.insuredCardPeriod.minLength">最小不小于1位数</div>
-      <div class="error" v-if="!$v.insured.insuredCardPeriod.maxLength">最大不超过2位数</div>
-      <div class="error" v-if="!$v.insured.insuredCardPeriod.numeric">证件有效期应为数字</div>
+      <!--<div class="error" v-if="!$v.insured.insuredCardPeriod.minLength">最小不小于1位数</div>-->
+      <!--<div class="error" v-if="!$v.insured.insuredCardPeriod.maxLength">最大不超过2位数</div>-->
+      <!--<div class="error" v-if="!$v.insured.insuredCardPeriod.numeric">证件有效期应为数字</div>-->
 
       <x-input title="国籍" placeholder="请输入国籍" v-model="insured.insuredCountry" v-bind:class="{'errorInput': $v.insured.insuredCountry.$error}"
                @input="$v.insured.insuredCountry.$touch()"></x-input>
@@ -114,14 +116,16 @@
       </div>
       <div class="error" v-if="!$v.holder.policyholderCardNo.idCardVali">请输入正确的身份证号码</div>
 
-      <x-input title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期" v-bind:class="{'errorInput': $v.holder.policyholderCardPeroid.$error}"
-               @input="$v.holder.policyholderCardPeroid.$touch()"></x-input>
+      <!--<x-input title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期" v-bind:class="{'errorInput': $v.holder.policyholderCardPeroid.$error}"-->
+      <!--@input="$v.holder.policyholderCardPeroid.$touch()"></x-input>-->
+      <datetime title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期"
+                value-text-align="left"></datetime>
       <div class="error" v-if="!$v.holder.policyholderCardPeroid.required && $v.holder.policyholderCardPeroid.$dirty">
         证件有效期不能为空
       </div>
-      <div class="error" v-if="!$v.holder.policyholderCardPeroid.minLength">最小不小于1位数</div>
-      <div class="error" v-if="!$v.holder.policyholderCardPeroid.maxLength">最大不超过2位数</div>
-      <div class="error" v-if="!$v.holder.policyholderCardPeroid.numeric">证件有效期应为数字</div>
+      <!--<div class="error" v-if="!$v.holder.policyholderCardPeroid.minLength">最小不小于1位数</div>-->
+      <!--<div class="error" v-if="!$v.holder.policyholderCardPeroid.maxLength">最大不超过2位数</div>-->
+      <!--<div class="error" v-if="!$v.holder.policyholderCardPeroid.numeric">证件有效期应为数字</div>-->
 
       <x-input title="国籍" placeholder="请输入国籍" v-model="holder.policyholderCountry" v-bind:class="{'errorInput': $v.holder.policyholderCountry.$error}"
                @input="$v.holder.policyholderCountry.$touch()"></x-input>
@@ -251,14 +255,16 @@
         </div>
         <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.idCardVali">请输入正确的身份证号码</div>
 
-        <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardPeroid.$error}"
-                 @input="$v.beneficiary1.beneficiaryCardPeroid.$touch()"></x-input>
+        <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardPeroid.$error}"-->
+        <!--@input="$v.beneficiary1.beneficiaryCardPeroid.$touch()"></x-input>-->
+        <datetime title="证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" placeholder="请选择证件有效期"
+                  value-text-align="left"></datetime>
         <div class="error" v-if="!$v.beneficiary1.beneficiaryCardPeroid.required && $v.beneficiary1.beneficiaryCardPeroid.$dirty">
           证件有效期不能为空
         </div>
-        <div class="error" v-if="!$v.beneficiary1.beneficiaryCardPeroid.minLength">最小不小于1位数</div>
-        <div class="error" v-if="!$v.beneficiary1.beneficiaryCardPeroid.maxLength">最大不超过2位数</div>
-        <div class="error" v-if="!$v.beneficiary1.beneficiaryCardPeroid.numeric">证件有效期应为数字</div>
+        <!--<div class="error" v-if="!$v.beneficiary1.beneficiaryCardPeroid.minLength">最小不小于1位数</div>-->
+        <!--<div class="error" v-if="!$v.beneficiary1.beneficiaryCardPeroid.maxLength">最大不超过2位数</div>-->
+        <!--<div class="error" v-if="!$v.beneficiary1.beneficiaryCardPeroid.numeric">证件有效期应为数字</div>-->
 
         <popup-picker title="是被保人的" placeholder="请选择关系" v-model="beneficiary1.insuredRelation" value-text-align="left"
                       :data="relates"></popup-picker>
@@ -321,20 +327,22 @@
         </div>
         <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.idCardVali">请输入正确的身份证号码</div>
 
-        <x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"
-                 @input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>
+        <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"-->
+        <!--@input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>-->
+        <datetime title="证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" placeholder="请选择证件有效期"
+                  value-text-align="left"></datetime>
         <div class="error" v-if="!$v.beneficiary2.beneficiaryCardPeroid.required && $v.beneficiary2.beneficiaryCardPeroid.$dirty">
           证件有效期不能为空
         </div>
-        <div class="error" v-if="!$v.beneficiary2.beneficiaryCardPeroid.minLength">最小不小于1位数</div>
-        <div class="error" v-if="!$v.beneficiary2.beneficiaryCardPeroid.maxLength">最大不超过2位数</div>
-        <div class="error" v-if="!$v.beneficiary2.beneficiaryCardPeroid.numeric">证件有效期应为数字</div>
+        <!--<div class="error" v-if="!$v.beneficiary2.beneficiaryCardPeroid.minLength">最小不小于1位数</div>-->
+        <!--<div class="error" v-if="!$v.beneficiary2.beneficiaryCardPeroid.maxLength">最大不超过2位数</div>-->
+        <!--<div class="error" v-if="!$v.beneficiary2.beneficiaryCardPeroid.numeric">证件有效期应为数字</div>-->
 
         <popup-picker title="是被保人的" placeholder="请选择关系" v-model="beneficiary2.insuredRelation" value-text-align="left"
                       :data="relates"></popup-picker>
       </group>
     </div>
-
+    <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 50px;">
       <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
         <div>上一步</div>
@@ -349,7 +357,7 @@
 
 <script>
 
-  import {ChinaAddressData, Datetime, Group, PopupPicker, Selector, XAddress, XInput} from 'vux'
+  import {ChinaAddressData, Datetime, Group, PopupPicker, Selector, XAddress, XInput, Toast} from 'vux'
   import storage from "../store/storage";
   import {required, minLength, maxLength, between, helpers, numeric, email} from 'vuelidate/lib/validators'
 
@@ -370,6 +378,7 @@
       PopupPicker,
       XAddress,
       Datetime,
+      Toast
     },
     name: "holder-detail",
     data() {
@@ -415,7 +424,9 @@
         addBene1: false,
         addBene2: false,
         //提交表单时校验状态
-        submitStatus: null
+        submitStatus: null,
+        showPositionValue: false,
+        toastText: ''
       }
     },
     validations: {
@@ -430,9 +441,9 @@
         },
         insuredCardPeriod: {
           required,
-          minLength: minLength(1),
-          maxLength: maxLength(2),
-          numeric
+          // minLength: minLength(1),
+          // maxLength: maxLength(2),
+          // numeric
         },
         insuredCountry: {
           required
@@ -473,9 +484,9 @@
         },
         policyholderCardPeroid: {
           required,
-          minLength: minLength(1),
-          maxLength: maxLength(2),
-          numeric
+          // minLength: minLength(1),
+          // maxLength: maxLength(2),
+          // numeric
         },
         policyholderCountry: {
           required
@@ -523,9 +534,9 @@
         },
         beneficiaryCardPeroid: {
           required,
-          minLength: minLength(1),
-          maxLength: maxLength(2),
-          numeric
+          // minLength: minLength(1),
+          // maxLength: maxLength(2),
+          // numeric
         }
       },
       beneficiary2: {
@@ -546,9 +557,9 @@
         },
         beneficiaryCardPeroid: {
           required,
-          minLength: minLength(1),
-          maxLength: maxLength(2),
-          numeric
+          // minLength: minLength(1),
+          // maxLength: maxLength(2),
+          // numeric
         }
       },
     },
@@ -557,7 +568,19 @@
         this.$router.back();
       },
       next() {
-        this.$router.push("infoMatters")
+        this.$v.$touch()
+        if (this.$v.$invalid) {
+          this.submitStatus = 'ERROR'
+          this.showPositionValue = true;
+          this.toastText = "信息填写有误"
+        } else {
+          // do your submit logic here
+          this.submitStatus = 'PENDING'
+          setTimeout(() => {
+            this.submitStatus = 'OK';
+            this.$router.push("infoMatters");
+          }, 500)
+        }
       },
       addBene() {
         if (this.addBene1 === false) {
@@ -602,23 +625,13 @@
         storage.save("order", order);
       },
       submit() {
-        this.$v.$touch()
-        if (this.$v.$invalid) {
-          this.submitStatus = 'ERROR'
-        } else {
-          // do your submit logic here
-          this.submitStatus = 'PENDING'
-          setTimeout(() => {
-            this.submitStatus = 'OK';
-            this.$router.push("infoMatters");
-          }, 500)
-        }
+
       }
     },
     watch: {
       holder: {
         handler(newVal, oldVal) {
-          if (newVal.holderPCD && newVal.holderPCD.length === 3){
+          if (newVal.holderPCD && newVal.holderPCD.length === 3) {
             newVal.policyholderProvince = this.holder.holderPCD[0];
             newVal.policyholderCity = this.holder.holderPCD[1];
             newVal.policyholderDistrict = this.holder.holderPCD[2];
