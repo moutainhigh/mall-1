@@ -8,13 +8,6 @@ import storage from '../store/storage'
 
 export const getVaildData = phoneNumber => fetch('/noAuth/sendMobileValidCode/ORDER_CONFIRM/'+phoneNumber,{},'POST');
 
-export const sendMobile = (sendData, captcha_code, type, password) => fetch('/test', {
-  captcha_code,
-  [type]: sendData,
-  way: type,
-  password,
-}, 'POST');
-
 export const submitOrder = function () {
   let insured = wipeArray(storage.fetch("insured"));
   let holder = wipeArray(storage.fetch("holder"));
@@ -25,4 +18,8 @@ export const submitOrder = function () {
   insuranceOrder.insuranceOrderInsured = insured;
   insuranceOrder.insuranceOrderBeneficiarys = beneficiaries;
   return fetch('/insurance/order/saveOrder',insuranceOrder,"POST");
+};
+
+export const uploadImage = function (base64) {
+  return fetch('/common/file/uploadBase64/ PAPERWORK', base64, 'POST','fetch');
 };
