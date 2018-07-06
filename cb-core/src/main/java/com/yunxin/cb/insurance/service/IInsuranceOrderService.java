@@ -1,11 +1,9 @@
 package com.yunxin.cb.insurance.service;
 
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
-import com.yunxin.cb.mall.entity.Commodity;
+import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,4 +38,11 @@ public interface IInsuranceOrderService {
      * @return
      */
     InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder);
+
+    /**
+     * 修改状态
+     * @param orderId
+     * @return
+     */
+    boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState);
 }
