@@ -41,7 +41,6 @@ public class InsuranceOrderInformedMatter implements Serializable {
     /**
      * 订单
      */
-    @NotNull
     private InsuranceOrder insuranceOrder;
     /**
      * 告知事项
