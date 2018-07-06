@@ -1,6 +1,7 @@
 package com.yunxin.cb.rest.customer;
 
 import com.yunxin.cb.common.utils.CachedUtil;
+import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.service.ICustomerService;
@@ -76,6 +77,8 @@ public class MainResource extends BaseResource {
                 customer.setRecommendCustomer(recommendCustomer);
             }
             customer = customerService.addCustomer(customer);
+            String token = JwtUtil.generateToken(customer.getCustomerId(), customer.getMobile());
+            customer.setToken(token);
             return new ResponseResult(customer);
         } catch (Exception e) {
             logger.error("用户注册异常", e);
@@ -93,6 +96,8 @@ public class MainResource extends BaseResource {
         try {
             Customer customer = customerService.getCustomerByAccountNameAndPassword(accountName, password);
             if (customer != null) {
+                String token = JwtUtil.generateToken(customer.getCustomerId(), customer.getMobile());
+                customer.setToken(token);
                 return new ResponseResult(customer);
             }else {
                 return new ResponseResult(Result.FAILURE, "账号或密码错误");
