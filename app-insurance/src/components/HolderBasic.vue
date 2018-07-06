@@ -32,9 +32,8 @@
         <!--<group>-->
         <!--<popup-picker title="受益顺序" placeholder="" :data="list" v-model="test"  value-text-align="left"></popup-picker>-->
         <!--</group>-->
-        <div class="i-input-select" @click="showJob">
-          <input class="input" v-model="career"/>
-          <!--<div>请输入职业</div>-->
+        <div class="i-input-select">
+          <input class="input" placeholder="请输入职业" v-model="career"/>
         </div>
       </div>
     </div>
@@ -82,12 +81,13 @@
       <div class="i-card-tip">
         ※ 投保须知
       </div>
-      <div class="i-message">
-        <div>1.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
-        <div>2.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
-        <div>3.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
-        <div>4.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
-        <div>5.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
+      <div class="i-message" @click="state = !state">
+        <img v-if="!state" class="checkIcon" src="../assets/img/checkoff.png">
+        <img v-if="state" class="checkIcon" src="../assets/img/checkon.png">
+        <div>&tdot;欢迎使用富德生命微信投保，请您仔细阅
+          读人身保险投保提示书、产品说明书及保险条款，如实
+          填写各项投保信息并确保为本人签名。保险合同将以此
+          为依据，否则可能影响所签合同的法律效力。</div>
       </div>
     </div>
     <div style="height: 48px;">
@@ -118,7 +118,8 @@
         list: [['居民身份证', '驾驶证', '护照']],
         title: '',
         proId: '',
-        career:''
+        career:'',
+        state:false
       }
     },
     methods: {
@@ -149,9 +150,12 @@
         storage.save('insured', insured);
       },
       submit() {
-        this.$router.push('/holder-detail');
-      },
-      showJob() {
+        if (this.state !== true){
+          alert('请勾选投保须知');
+          return false;
+        } else {
+          this.$router.push('/holder-detail');
+        }
       }
     },
     watch: {
@@ -222,5 +226,10 @@
     font-size: 14px;
     cursor: pointer;
     padding: 8px 6px 8px 0;
+  }
+
+  .checkIcon {
+    position: absolute;
+    width: 4vw;
   }
 </style>
