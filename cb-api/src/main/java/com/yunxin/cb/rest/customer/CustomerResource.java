@@ -25,6 +25,7 @@ public class CustomerResource {
     @ApiOperation(value ="我的好友")
     @PostMapping(value = "myFriends/{customerId}")
     public ResponseResult myFriends(@PathVariable int customerId) {
+
         return new ResponseResult(Result.SUCCESS);
     }
 
