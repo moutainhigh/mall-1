@@ -8,7 +8,7 @@ import storage from '../store/storage'
 
 export const getVaildData = phoneNumber => fetch('/noAuth/sendMobileValidCode/ORDER_CONFIRM/'+phoneNumber,{},'POST');
 
-export const submitOrder = function () {
+export const submitOrder = function (code) {
   let insured = wipeArray(storage.fetch("insured"));
   let holder = wipeArray(storage.fetch("holder"));
   let insuranceOrder = wipeArray(storage.fetch("order"));
@@ -17,7 +17,7 @@ export const submitOrder = function () {
   insuranceOrder.insuranceOrderPolicyholder = holder;
   insuranceOrder.insuranceOrderInsured = insured;
   insuranceOrder.insuranceOrderBeneficiarys = beneficiaries;
-  return fetch('/insurance/order/saveOrder',insuranceOrder,"POST");
+  return fetch('/insurance/order/saveOrder?code='+ code, insuranceOrder,"POST");
 };
 
 export const uploadImage = function (base64) {
