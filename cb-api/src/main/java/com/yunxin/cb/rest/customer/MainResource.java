@@ -71,6 +71,7 @@ public class MainResource extends BaseResource {
             customer.setPassword(pwd);
             customer.setAvatarUrl(avatarUrl);
             customer.setCustomerType(CustomerType.PLATFORM_SELF);
+            customer.setEnabled(true);
             if(recommendCustomer != null){
                 customer.setRecommendCustomer(recommendCustomer);
             }
