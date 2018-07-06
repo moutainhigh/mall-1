@@ -7,10 +7,10 @@
 
     </div>
     <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.bankName"></x-input>
+      <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.count"></x-input>
       <x-input class="price" title="交易金额(元)" :placeholder="price + '.00'" readonly></x-input>
       <x-input title="手机号码" placeholder="请输入手机号码" v-model="bank.bankMobile"></x-input>
-      <!--<popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left"></popup-picker>-->
+      <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.bankName"></popup-picker>
       <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" value-text-align="left"></x-address>
       <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"></popup-picker>
       <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo"></x-input>
@@ -27,7 +27,7 @@
       <!--</div>-->
       <!--</div>-->
       <div class="input-ver">
-        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 65%;padding-left: 0;"></x-input>
+        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 65%;padding-left: 0;" v-model="code"></x-input>
         <div class="input-vile" @click.prevent="getVerifyCode">{{computedTime === 0? "获取验证码" : computedTime +"s"}}</div>
       </div>
       <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle" :title="toastText"></toast>
@@ -68,18 +68,19 @@
         toastText: '',
         showPositionValue: false,
         validate_token: '',
-        computedTime: 0
+        computedTime: 0,
+        code:''
       }
     },
     methods: {
       async submit() {
         // this.$router.push('policy')
-        let order =await submitOrder();
+        let order =await submitOrder(this.code);
       },
       async getVerifyCode() {
         if (this.bank.bankMobile) {
           if (this.computedTime === 0){
-            this.computedTime = 30;
+            this.computedTime = 60;
             //倒计时
             let timer = setInterval(() => {
               this.computedTime--;
@@ -117,7 +118,7 @@
       }
     },
     created: function () {
-      this.bank.accountBank = storage.fetch('order').insuranceProductPrice.price;
+      this.bank.amount = storage.fetch('order').insuranceProductPrice.price;
     }
   }
 </script>
