@@ -1,13 +1,12 @@
 package com.yunxin.cb.rest.customer;
 
+import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.meta.SendType;
-import com.yunxin.cb.pay.httpClient.HttpRequest;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sms.SmsHelper;
-import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import com.yunxin.core.util.CommonUtils;
@@ -107,6 +106,9 @@ public class MainResource extends BaseResource {
                 if (existMobile) {
                     responseResult.setMessage("手机号已存在！");
                 }
+                break;
+            case ORDER_CONFIRM:
+                isSend = true;
                 break;
         }
         if (isSend) {
