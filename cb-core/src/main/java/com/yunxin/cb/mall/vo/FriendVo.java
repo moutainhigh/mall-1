@@ -1,39 +1,13 @@
-/**
- *
- */
-package com.yunxin.cb.mall.entity;
+package com.yunxin.cb.mall.vo;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.yunxin.cb.mall.entity.Rank;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
-import com.yunxin.core.web.json.deserializer.JsonTimestampDeserializer;
-import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import static javax.persistence.GenerationType.IDENTITY;
+public class FriendVo implements java.io.Serializable {
 
-/**
- * @author z001075  客户
- */
-@JsonAutoDetect
-@Entity
-@Table
-@DynamicInsert
-@DynamicUpdate
-public class Customer implements java.io.Serializable {
-
-    private static final long serialVersionUID = 3814946735437297136L;
+    private static final long serialVersionUID = 3814946535437297136L;
 
     /**
      * id
@@ -43,10 +17,7 @@ public class Customer implements java.io.Serializable {
      * 账户名
      */
     private String accountName;
-    /**
-     * 密码
-     */
-    private String password;
+
     /**
      * 创建时间
      */
@@ -63,14 +34,6 @@ public class Customer implements java.io.Serializable {
      * 出生日期
      */
     private Date birthday;
-    /**
-     * 用户头像
-     */
-    private String avatarUrl;
-    /**
-     * 推荐人
-     */
-    private Customer recommendCustomer;
     /**
      * 所在省
      */
@@ -153,11 +116,6 @@ public class Customer implements java.io.Serializable {
     private String qqAccessToken;
 
     /**
-     * 融云token
-     */
-    private String rongCloudToken;
-
-    /**
      * 昵称
      */
     private String qqNickName;
@@ -173,27 +131,6 @@ public class Customer implements java.io.Serializable {
     private CustomerType customerType;
 
 
-
-    /**
-     * 优惠券
-     */
-    private Set<Coupon> coupons = new HashSet<>();
-
-    /**
-     * 我的食谱
-     */
-    private Set<Recipe> recipes = new HashSet<>();
-
-    /**
-     * 我的厨房
-     */
-    private Set<Kitchen> kitchens = new HashSet<>();
-
-    private String token;
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(unique = true, nullable = false, precision = 12, scale = 0)
     public int getCustomerId() {
         return customerId;
     }
@@ -202,7 +139,6 @@ public class Customer implements java.io.Serializable {
         this.customerId = customerId;
     }
 
-    @Column(unique = true, nullable = false, length = 64)
     public String getAccountName() {
         return accountName;
     }
@@ -211,20 +147,7 @@ public class Customer implements java.io.Serializable {
         this.accountName = accountName;
     }
 
-    @Column(length = 16, nullable = false)
-    @JsonIgnore
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(length = 7, nullable = false)
-    @JsonSerialize(using = JsonTimestampSerializer.class)
-    @JsonDeserialize(using = JsonTimestampDeserializer.class)
     public Date getCreateTime() {
         return createTime;
     }
@@ -233,7 +156,6 @@ public class Customer implements java.io.Serializable {
         this.createTime = createTime;
     }
 
-    @Column(length = 64, nullable = true)
     public String getRealName() {
         return realName;
     }
@@ -242,7 +164,6 @@ public class Customer implements java.io.Serializable {
         this.realName = realName;
     }
 
-    @Column(precision = 1)
     public boolean isSex() {
         return sex;
     }
@@ -251,11 +172,6 @@ public class Customer implements java.io.Serializable {
         this.sex = sex;
     }
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(length = 7, nullable = true)
-    @JsonSerialize(using = JsonTimestampSerializer.class)
-    @JsonDeserialize(using = JsonTimestampDeserializer.class)
     public Date getBirthday() {
         return birthday;
     }
@@ -264,7 +180,6 @@ public class Customer implements java.io.Serializable {
         this.birthday = birthday;
     }
 
-    @Column(nullable = true, length = 32)
     public String getProvince() {
         return province;
     }
@@ -273,7 +188,6 @@ public class Customer implements java.io.Serializable {
         this.province = province;
     }
 
-    @Column(nullable = true, length = 32)
     public String getCity() {
         return city;
     }
@@ -282,7 +196,6 @@ public class Customer implements java.io.Serializable {
         this.city = city;
     }
 
-    @Column(nullable = true, length = 32)
     public String getDistrict() {
         return district;
     }
@@ -291,7 +204,6 @@ public class Customer implements java.io.Serializable {
         this.district = district;
     }
 
-    @Column(length = 64)
     public String getEmail() {
         return email;
     }
@@ -300,7 +212,6 @@ public class Customer implements java.io.Serializable {
         this.email = email;
     }
 
-    @Column(length = 32, nullable = false, unique = true)
     public String getMobile() {
         return mobile;
     }
@@ -309,7 +220,6 @@ public class Customer implements java.io.Serializable {
         this.mobile = mobile;
     }
 
-    @Column(length = 14, nullable = true)
     public String getTelephone() {
         return telephone;
     }
@@ -318,7 +228,6 @@ public class Customer implements java.io.Serializable {
         this.telephone = telephone;
     }
 
-    @Column(length = 255, nullable = false)
     public String getAddress() {
         return address;
     }
@@ -327,7 +236,6 @@ public class Customer implements java.io.Serializable {
         this.address = address;
     }
 
-    @Column(length = 6, nullable = true)
     public String getPostCode() {
         return postCode;
     }
@@ -336,7 +244,6 @@ public class Customer implements java.io.Serializable {
         this.postCode = postCode;
     }
 
-    @Column(length = 12, nullable = true)
     public int getIntegral() {
         return integral;
     }
@@ -345,7 +252,6 @@ public class Customer implements java.io.Serializable {
         this.integral = integral;
     }
 
-    @Column(length = 12, nullable = true)
     public int getTotalIntegral() {
         return totalIntegral;
     }
@@ -354,26 +260,6 @@ public class Customer implements java.io.Serializable {
         this.totalIntegral = totalIntegral;
     }
 
-    @Column(length = 1024, nullable = true)
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = true, name = "RANK")
-    public Rank getRank() {
-        return rank;
-    }
-
-    public void setRank(Rank rank) {
-        this.rank = rank;
-    }
-
-    @Column(length = 12)
     public int getExchangeIntegral() {
         return exchangeIntegral;
     }
@@ -382,7 +268,6 @@ public class Customer implements java.io.Serializable {
         this.exchangeIntegral = exchangeIntegral;
     }
 
-    @Column(length = 32)
     public String getCardNo() {
         return cardNo;
     }
@@ -391,7 +276,6 @@ public class Customer implements java.io.Serializable {
         this.cardNo = cardNo;
     }
 
-    @Column(nullable = false, precision = 1)
     public boolean isEnabled() {
         return enabled;
     }
@@ -400,7 +284,6 @@ public class Customer implements java.io.Serializable {
         this.enabled = enabled;
     }
 
-    @Column(precision = 1)
     public boolean isMobileChecked() {
         return mobileChecked;
     }
@@ -409,82 +292,6 @@ public class Customer implements java.io.Serializable {
         this.mobileChecked = mobileChecked;
     }
 
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
-    @Fetch(FetchMode.SELECT)
-    public Set<Coupon> getCoupons() {
-        return coupons;
-    }
-
-    public void setCoupons(Set<Coupon> coupons) {
-        this.coupons = coupons;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
-    public Set<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(Set<Recipe> recipes) {
-        this.recipes = recipes;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
-    public Set<Kitchen> getKitchens() {
-        return kitchens;
-    }
-
-    public void setKitchens(Set<Kitchen> kitchens) {
-        this.kitchens = kitchens;
-    }
-
-    @Column(unique = true, length = 32)
-    public String getQqOpenId() {
-        return qqOpenId;
-    }
-
-    public void setQqOpenId(String qqOpenId) {
-        this.qqOpenId = qqOpenId;
-    }
-
-    @Column(length = 32)
-    public String getQqAccessToken() {
-        return qqAccessToken;
-    }
-
-    public void setQqAccessToken(String qqAccessToken) {
-        this.qqAccessToken = qqAccessToken;
-    }
-
-    @Column(length = 32)
-    public String getQqNickName() {
-        return qqNickName;
-    }
-
-    public void setQqNickName(String qqNickName) {
-        this.qqNickName = qqNickName;
-    }
-
-    @Column(length = 512)
-    public String getQqFigureUrl() {
-        return qqFigureUrl;
-    }
-
-    public void setQqFigureUrl(String qqFigureUrl) {
-        this.qqFigureUrl = qqFigureUrl;
-    }
-
-    @Column(nullable = false, precision = 2)
-    @Enumerated(EnumType.ORDINAL)
-    public CustomerType getCustomerType() {
-        return customerType;
-    }
-
-    public void setCustomerType(CustomerType customerType) {
-        this.customerType = customerType;
-    }
-
-    @Column(precision = 1, columnDefinition = "bit default 0")
     public boolean isEmailChecked() {
         return emailChecked;
     }
@@ -493,41 +300,59 @@ public class Customer implements java.io.Serializable {
         this.emailChecked = emailChecked;
     }
 
-    @Column(length = 128)
-    public String getRongCloudToken() {
-        return rongCloudToken;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setRongCloudToken(String rongCloudToken) {
-        this.rongCloudToken = rongCloudToken;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
-    @Column(length = 256)
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public Rank getRank() {
+        return rank;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setRank(Rank rank) {
+        this.rank = rank;
     }
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RECOMMEND_CUSTOMER_ID")
-    public Customer getRecommendCustomer() {
-        return recommendCustomer;
+    public String getQqOpenId() {
+        return qqOpenId;
     }
 
-    public void setRecommendCustomer(Customer recommendCustomer) {
-        this.recommendCustomer = recommendCustomer;
+    public void setQqOpenId(String qqOpenId) {
+        this.qqOpenId = qqOpenId;
     }
 
-    @Transient
-    public String getToken() {
-        return token;
+    public String getQqAccessToken() {
+        return qqAccessToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setQqAccessToken(String qqAccessToken) {
+        this.qqAccessToken = qqAccessToken;
+    }
+
+    public String getQqNickName() {
+        return qqNickName;
+    }
+
+    public void setQqNickName(String qqNickName) {
+        this.qqNickName = qqNickName;
+    }
+
+    public String getQqFigureUrl() {
+        return qqFigureUrl;
+    }
+
+    public void setQqFigureUrl(String qqFigureUrl) {
+        this.qqFigureUrl = qqFigureUrl;
+    }
+
+    public CustomerType getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
     }
 }

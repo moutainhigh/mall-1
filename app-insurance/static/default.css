@@ -195,15 +195,15 @@ button a{
 }
 
 .i-message {
-  margin-top: 24px;
+  margin-top: 12px;
 }
 
 .i-message div {
   display: inline-block;
-  width: 100%;
+  width: 90%;
   font-size: 12px;
-  color: #999999;
-  margin: 5px 0;
+  color: #757575;
+  margin-left: 5%;
 }
 
 .r-frame {
@@ -238,5 +238,9 @@ p {
 }
 
 .vux-cell-value {
-  color: #888888 !important;
+  color: #757575 !important;
+}
+
+.vux-popup-picker-placeholder {
+  color: #757575 !important;
 }

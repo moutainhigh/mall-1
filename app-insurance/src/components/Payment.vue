@@ -3,12 +3,15 @@
     <div class="title">
       填写银行账号信息
     </div>
+    <div style="position:absolute;top: 0; height: 100%; width: 100%;z-index: 0">
+
+    </div>
     <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="账户姓名" :placeholder="insured.insuredName" readonly></x-input>
-      <x-input title="交易金额(元)" placeholder="" readonly></x-input>
-      <x-input title="手机号码" :placeholder="insured.insuredMobile" readonly></x-input>
-      <popup-picker title="开户行" placeholder="请选择开户行" value-text-align="left"></popup-picker>
-      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" value-text-align="left"></x-address>
+      <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.count"></x-input>
+      <x-input class="price" title="交易金额(元)" :placeholder="price + '.00'" readonly></x-input>
+      <x-input title="手机号码" placeholder="请输入手机号码" v-model="bank.bankMobile"></x-input>
+      <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.bankName"></popup-picker>
+      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" value-text-align="left"></x-address>
       <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"></popup-picker>
       <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo"></x-input>
       <!--<div class="i-input">-->
@@ -24,10 +27,10 @@
       <!--</div>-->
       <!--</div>-->
       <div class="input-ver">
-        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 65%;padding-left: 0;"></x-input>
+        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 65%;padding-left: 0;" v-model="code"></x-input>
         <div class="input-vile" @click.prevent="getVerifyCode">{{computedTime === 0? "获取验证码" : computedTime +"s"}}</div>
       </div>
-      <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
+      <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle" :title="toastText"></toast>
     </group>
     <div style="height: 48px;">
       <button class="i-footer" @click="submit">
@@ -41,7 +44,7 @@
   import {ChinaAddressData, Datetime, Group, PopupPicker, XInput, Toast} from 'vux'
   import storage from "../store/storage";
   import XAddress from "vux/src/components/x-address/index";
-  import {getVaildData} from '../service/getData'
+  import {getVaildData,submitOrder} from '../service/getData'
 
   export default {
     name: "Payment",
@@ -55,7 +58,8 @@
     },
     data() {
       return {
-        list: [['居民身份证', '驾驶证', '护照']],
+        price:storage.fetch('order').insuranceProductPrice.price,
+        list: [["兴业银行","中国工商银行","招商银行","上海浦东发展银行","中国邮政储蓄银行有限责任公司","中信银行","中国民生银行","中国银行","广东发展银行","平安银行","中国农业银行","交通银行","中国建设银行"]],
         cities: ChinaAddressData,
         types: [['银行卡', '存折']],
         insured: storage.fetch("insured"),
@@ -64,35 +68,37 @@
         toastText: '',
         showPositionValue: false,
         validate_token: '',
-        computedTime: 0
+        computedTime: 0,
+        code:''
       }
     },
     methods: {
-      submit() {
+      async submit() {
         // this.$router.push('policy')
-
+        let order =await submitOrder(this.code);
       },
       async getVerifyCode() {
-        if (this.computedTime === 0){
-          this.computedTime = 30;
-          //倒计时
-          let timer = setInterval(() => {
-            this.computedTime--;
-            if (this.computedTime === 0) {
-              clearInterval(timer)
-            }
-          }, 1000);
-          //获取验证信息
-          let getCode = await getVaildData(this.insured.policyholderMobile);
-          this.validate_token = getCode.validate_token;
-          this.showPositionValue = true;
+        if (this.bank.bankMobile) {
+          if (this.computedTime === 0){
+            this.computedTime = 60;
+            //倒计时
+            let timer = setInterval(() => {
+              this.computedTime--;
+              if (this.computedTime === 0) {
+                clearInterval(timer)
+              }
+            }, 1000);
+            //获取验证信息
+            let getCode = await getVaildData(this.bank.bankMobile);
+            this.toastText = "发送成功";
+            this.showPositionValue = true;
+          }
         }
       },
     },
     watch: {
       bank: {
         handler(newVal, oldVal) {
-          console.log(newVal);
           let order = storage.fetch('order');
           order.insuranceOrderPolicyholderBank = newVal;
           storage.save('order', order);
@@ -103,13 +109,16 @@
       address: {
         handler(newVal, oldVal) {
           if (newVal.length === 3) {
-            // this.bank.bankProvince = newVal[0];
-            // this.bank.bankCity = newVal[1];
+            this.bank.bankProvince = newVal[0];
+            this.bank.bankCity = newVal[1];
           }
         },
         immediate: true,
         deep: true
       }
+    },
+    created: function () {
+      this.bank.amount = storage.fetch('order').insuranceProductPrice.price;
     }
   }
 </script>

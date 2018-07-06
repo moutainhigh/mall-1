@@ -32,9 +32,8 @@
         <!--<group>-->
         <!--<popup-picker title="受益顺序" placeholder="" :data="list" v-model="test"  value-text-align="left"></popup-picker>-->
         <!--</group>-->
-        <div class="i-input-select" @click="showJob">
-          <div>请选择职业</div>
-          <img src="../assets/img/drop-down.png"/>
+        <div class="i-input-select">
+          <input class="input" placeholder="请输入职业" v-model="career"/>
         </div>
       </div>
     </div>
@@ -82,12 +81,13 @@
       <div class="i-card-tip">
         ※ 投保须知
       </div>
-      <div class="i-message">
-        <div>1.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
-        <div>2.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
-        <div>3.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
-        <div>4.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
-        <div>5.就来得及发非常急撒就分手了放假撒覅是你小妹。</div>
+      <div class="i-message" @click="state = !state">
+        <img v-if="!state" class="checkIcon" src="../assets/img/checkoff.png">
+        <img v-if="state" class="checkIcon" src="../assets/img/checkon.png">
+        <div>&tdot;欢迎使用富德生命微信投保，请您仔细阅
+          读人身保险投保提示书、产品说明书及保险条款，如实
+          填写各项投保信息并确保为本人签名。保险合同将以此
+          为依据，否则可能影响所签合同的法律效力。</div>
       </div>
     </div>
     <div style="height: 48px;">
@@ -101,10 +101,12 @@
 <script>
   import storage from "../store/storage"
   import {PopupPicker} from 'vux'
+  import XInput from "vux/src/components/x-input/index";
 
   export default {
     name: "holder-basic",
     components: {
+      XInput,
       PopupPicker
     },
     data() {
@@ -115,7 +117,9 @@
         profession: [],
         list: [['居民身份证', '驾驶证', '护照']],
         title: '',
-        proId: ''
+        proId: '',
+        career:'',
+        state:false
       }
     },
     methods: {
@@ -140,27 +144,24 @@
         })
       },
       changeGender:function(val){
-        console.log("test");
         this.gender = val;
         let insured = storage.fetch('insured');
         insured.insuredGender = val;
         storage.save('insured', insured);
       },
       submit() {
-        console.log(storage.fetch('insured'));
-        if (storage.fetch('insured')) {
-          storage.save('insured', this.Admin.insured);
+        if (this.state !== true){
+          alert('请勾选投保须知');
+          return false;
+        } else {
+          this.$router.push('/holder-detail');
         }
-        this.$router.push('/holder-detail');
-      },
-      showJob() {
       }
     },
     watch: {
       birthday: {
         handler(newVal, oldVal) {
           let insured = storage.fetch('insured');
-          console.log(newVal);
           if (newVal.length !== 0) {
             insured.insuredBirthday = newVal;
           }
@@ -172,7 +173,23 @@
       priceId: function (newVal, oldVal) {
         let order = storage.fetch('order');
         order.insuranceProductPrice.priceId = newVal;
+        switch (newVal) {
+          case 1:
+            order.insuranceProductPrice.price = 20000.00;
+            break;
+          case 2:
+            order.insuranceProductPrice.price = 50000.00;
+            break;
+          case 3:
+            order.insuranceProductPrice.price = 100000.00;
+            break;
+        }
         storage.save('order', order);
+      },
+      career: function (newVal, oldVal) {
+        let insured = storage.fetch("insured");
+        insured.insuredCareer = newVal;
+        storage.save('insured',insured);
       }
     },
     created: function () {
@@ -187,16 +204,32 @@
       }
       if (this.proId === 2) {
         order.insuranceProductPrice.priceId = 4;
+        order.insuranceProductPrice.price = 20000.00;
       }
       storage.save('order', order);
 
       let insured = storage.fetch("insured");
       this.birthday = insured.insuredBirthday;
       this.gender = insured.insuredGender;
+      this.career = insured.insuredCareer;
     }
   }
 </script>
 
 <style scoped>
+  .input {
+    border: unset;
+    margin-left: 10px;
+    text-rendering: unset;
+    width: 80%;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 6px 8px 0;
+  }
 
+  .checkIcon {
+    position: absolute;
+    width: 4vw;
+  }
 </style>

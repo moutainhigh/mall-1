@@ -1,8 +1,5 @@
 <template>
   <div style="position: relative">
-    <!--<button @click="save">保存</button>-->
-    <!--<button @click="clear">清除</button>-->
-    <!--<button @click="undo">撤销</button>-->
 
     <div class="title">投保单资料签署</div>
     <div @click="check">
@@ -12,7 +9,20 @@
         <p>本人已阅读并理解<span>《投保须知》、《保险条款》、《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
       </div>
     </div>
-    <div class="title" style="color: #e1bb3a">投保提示书签名</div>
+
+    <div class="title" style="color: #e1bb3a">投保单签名</div>
+    <div class="headPhoto" v-if="imgUrl === ''" @click.stop="addPic">
+      <div style="position: absolute; width: 100%; height: 120px"></div>
+      <img src="../assets/img/headPhotograph.png"/>
+      <p style="font-size: 13px">请点击此处，拍摄投保人正面头像</p>
+    </div>
+    <button class="clearButton" v-if="imgUrl !== ''" @click='delImage'>清除</button>
+    <input id="image" type="file" accept="image/*" capture="camera" @change="onFileChange"
+           style="display: none;">
+    <div v-if="imgUrl !== ''">
+      <img class="headPhoto-img" :src="imgUrl">
+    </div>
+
     <div class="title-sign">投保人签名
       <button v-if="clickSign" @click="clear">清除</button>
     </div>
@@ -21,29 +31,6 @@
       </div>
       <div v-if="clickSign">
         <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
-      </div>
-    </div>
-
-    <div class="title" style="color: #e1bb3a">投保单签名</div>
-    <div class="headPhoto" v-if="isPhoto" @click.stop="addPic">
-      <div style="position: absolute; width: 100%; height: 120px"></div>
-      <img src="../assets/img/headPhotograph.png"/>
-      <p style="font-size: 13px">请点击此处，拍摄投保人正面头像</p>
-    </div>
-    <button class="clearButton" v-if="!isPhoto" @click='delImage'>清除</button>
-    <input id="image" type="file" accept="image/*" capture="camera" @change="onFileChange"
-           style="display: none;">
-    <div v-if="!isPhoto">
-      <img class="headPhoto-img" :src="imgUrl">
-    </div>
-
-    <div class="title-sign">投保人签名
-      <button v-if="clickSign1" @click="clear1">清除</button>
-    </div>
-    <div class="canvas">
-      <div class="sign" v-if="!clickSign1" @click="checkSign1">点击签名</div>
-      <div v-if="clickSign1">
-        <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
       </div>
     </div>
     <div style="height: 48px;">
@@ -56,38 +43,23 @@
 
 <script>
   import Signature from './Signature.vue'
+  import {uploadImage} from "../service/getData";
+  import storage from "../store/storage";
   export default {
     name: 'Autograph',
     data() {
       return {
         state: false,
         clickSign: false,
-        clickSign1: false,
-        imgUrl: '',
-        isPhoto: true,
+        imgUrl: storage.fetch("holder").policyholderAvatar,
         option: {
           penColor: "rgb(0, 0, 0)",
           backgroundColor: "#dcdcdc",
-
         }
       }
     },
     components: {Signature},
-    watch: {
-      'imgUrl': {
-        handler(newurl, oldurl) {
-          this.toggleAddPic();
-        },
-        deep: true
-      }
-    },
     methods: {
-      toggleAddPic: function () {
-        let vm = this;
-        if (vm.imgUrl !== '') {
-          vm.isPhoto = false;
-        }
-      },
       //添加图片
       addPic: function () {
         document.getElementById("image").click();
@@ -101,29 +73,24 @@
       createImage: function (file, e) {
         let vm = this;
         lrz(file[0], {width: 480}).then(function (rst) {
-          vm.imgUrl = rst.base64;
+          rst.base64 = rst.base64.split(',')[1];
+          console.log(rst.base64);
+          uploadImage(rst.base64).then(function(result) {
+            vm.imgUrl = result.data;
+            let holder = storage.fetch("holder");
+            holder.policyholderAvatar = result.data;
+            storage.save("holder", holder);
+          });
           return rst;
-        }).always(function () {
-          // 清空文件上传控件的值
-          e.target.value = null;
-        });
+        })
       },
       //删除图片
       delImage: function () {
         let vm = this;
         vm.imgUrl = '';
-        vm.isPhoto = true;
-      },
-      saveImage: function () {
-        let vm = this;
-        let urlArr = [],
-          imgUrl = this.imgUrl;
-        if (imgUrl.indexOf('file') == -1) {
-          urlArr.push(imgUrl.split(',')[1]);
-        } else {
-          urlArr.push(imgUrl);
-        }
-        //数据传输操作
+        let holder = storage.fetch("holder");
+        holder.policyholderAvatar = '';
+        storage.save("holder", holder);
       },
 
       check() {
@@ -132,23 +99,18 @@
       checkSign() {
         this.clickSign = !this.clickSign;
       },
-      checkSign1() {
-        this.clickSign1 = !this.clickSign1;
-      },
       save() {
         var _this = this;
-        var jpeg = _this.$refs.signature.save('image/jpeg')
-        var jpeg1 = _this.$refs.signature1.save('image/jpeg')
-        console.log(jpeg);
-        console.log(jpeg1);
+        var jpeg = _this.$refs.signature.save('image/jpeg').split(',')[1];
+        uploadImage(jpeg).then(function(result) {
+          let holder = storage.fetch("holder");
+          holder.policyholderSign = result.data;
+          storage.save("holder", holder);
+        });
       },
       clear() {
         var _this = this;
         _this.$refs.signature.clear();
-      },
-      clear1() {
-        var _this = this;
-        _this.$refs.signature1.clear();
       },
       fromDataURL(url) {
         var _this = this;
@@ -163,11 +125,7 @@
           alert('请签署投保提示书签名');
           return false;
         }
-        if (this.clickSign1 === false) {
-          alert('请签署投保单签名');
-          return false;
-        }
-        // this.save();
+        this.save();
         this.$router.push("upload-data")
       }
     }

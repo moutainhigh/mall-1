@@ -6,12 +6,17 @@ import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.service.ICustomerService;
+import com.yunxin.cb.mall.vo.FriendVo;
+import com.yunxin.cb.sns.dao.CustomerFriendDao;
+import com.yunxin.cb.sns.entity.CustomerFriend;
+import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CommonUtils;
 import com.yunxin.core.util.LogicUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -30,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class CustomerService implements ICustomerService {
 
     @Resource
@@ -44,6 +49,9 @@ public class CustomerService implements ICustomerService {
 
     @Resource
     private RongCloudService rongCloudService;
+
+    @Resource
+    private CustomerFriendDao customerFriendDao;
 
     @Override
     public Fridge addFridge(Fridge fridge) {
@@ -94,8 +102,10 @@ public class CustomerService implements ICustomerService {
         if (!customerDao.isUnique(customer, Customer_.accountName)) {
             throw new EntityExistException("客户账户名已存在");
         }
-        // 初始密码
-        customer.setPassword(CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE));
+        if(StringUtils.isBlank(customer.getPassword())){
+            // 初始密码
+            customer.setPassword(CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE));
+        }
         customer.setCreateTime(new Date());
         customer.setRank(rankDao.getRankByDefaultRank());
         Customer dbCustomer= customerDao.save(customer);
@@ -345,5 +355,23 @@ public class CustomerService implements ICustomerService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public long countByQqOpenId(String qqOpenId) {
         return customerDao.countByQqOpenId(qqOpenId);
+    }
+
+    public List<Customer> getFriendByCustomerId(int customerId)
+    {
+        List <Customer> customers = customerFriendDao.findCustomerFriendByCustomerCustomerId(customerId);
+        return customers;
+    }
+    @Transactional
+    public CustomerFriend addFriend(CustomerFriend customerFriend)
+    {
+        customerFriend = customerFriendDao.save(customerFriend);
+        return customerFriend;
+    }
+
+    @Transactional
+    public void delFriendById(CustomerFriendId customerFriendId)
+    {
+        customerFriendDao.delete(customerFriendId);
     }
 }

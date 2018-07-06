@@ -22,7 +22,7 @@ public class CommonUtils {
 	         }
 	         if (randGen == null) {
 	                randGen = new Random();
-	                numbersAndLetters = ("0123456789abcdefghijklmnopqrstuvwxyz" +
+	                numbersAndLetters = ("123456789abcdefghijklmnopqrstuvwxyz" +
 	                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
 	                 }
 	         char [] randBuffer = new char[length];

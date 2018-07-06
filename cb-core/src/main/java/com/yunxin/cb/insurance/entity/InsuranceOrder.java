@@ -12,7 +12,6 @@ import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -50,13 +49,11 @@ public class InsuranceOrder implements Serializable {
     /**
      * 订单号
      */
-    @NotBlank
     @Length(max = 32)
     private String orderCode;
     /**
      * 合同编号
      */
-    @NotBlank
     @Length(max = 32)
     private String contractNo;
     /**
@@ -71,7 +68,6 @@ public class InsuranceOrder implements Serializable {
     /**
      * 客户
      */
-    @NotNull
     private Customer customer;
     /**
      * 被保人ID
@@ -92,7 +88,7 @@ public class InsuranceOrder implements Serializable {
      * 是否法定收益人
      */
     @NotNull
-    private boolean LegalBeneficiary;
+    private boolean legalBeneficiary;
     /**
      * 订单状态
      */
@@ -100,7 +96,6 @@ public class InsuranceOrder implements Serializable {
     /**
      * 订单创建时间
      */
-    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
     /**
@@ -144,7 +139,7 @@ public class InsuranceOrder implements Serializable {
         this.orderCode = orderCode;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
+    @Column(length = 32)
     public String getContractNo() {
         return this.contractNo;
     }
@@ -265,11 +260,11 @@ public class InsuranceOrder implements Serializable {
 
     @Column
     public boolean isLegalBeneficiary() {
-        return LegalBeneficiary;
+        return legalBeneficiary;
     }
 
     public void setLegalBeneficiary(boolean legalBeneficiary) {
-        LegalBeneficiary = legalBeneficiary;
+        legalBeneficiary = legalBeneficiary;
     }
 
     @Column(nullable = false, length = 32)
@@ -281,4 +276,6 @@ public class InsuranceOrder implements Serializable {
     public void setOrderState(InsuranceOrderState orderState) {
         this.orderState = orderState;
     }
+
+
 }
