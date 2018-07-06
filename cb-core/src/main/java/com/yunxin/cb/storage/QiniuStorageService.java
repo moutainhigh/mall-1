@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.io.InputStream;
 
 @Component
-public class QiniuStorageService implements IStorageService{
+public class QiniuStorageService implements IStorageService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -28,10 +28,10 @@ public class QiniuStorageService implements IStorageService{
     private String secretKey;
 
     @Value("${qiniu.bucket-1}")
-    private String bucket;
+    private String bucket_1;
 
     @Value("${qiniu.domain-1}")
-    private String domain;
+    private String domain_1;
 
     @Value("${qiniu.bucket-2}")
     private String bucket_2;
@@ -41,7 +41,7 @@ public class QiniuStorageService implements IStorageService{
 
     private UploadManager uploadManager;
 
-    public QiniuStorageService(){
+    public QiniuStorageService() {
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone2());
         //...其他参数参考类注释
@@ -53,13 +53,26 @@ public class QiniuStorageService implements IStorageService{
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = null;
         Auth auth = Auth.create(accessKey, secretKey);
+        String bucket = null;
+        String domain = null;
+        switch (type) {
+            case RESOURCE:
+            case OTHER:
+                bucket = bucket_1;
+                domain = domain_1;
+                break;
+            case PAPERWORK:
+                bucket = bucket_2;
+                domain = domain_2;
+                break;
+        }
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(inputStream, key, upToken, null, null);
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            String url = domain+putRet.key;
-            logger.info("qiniu put success, url:"+url);
+            String url = domain + putRet.key;
+            logger.info("qiniu put success, url:" + url);
             return url;
         } catch (QiniuException ex) {
             Response r = ex.response;
@@ -78,13 +91,26 @@ public class QiniuStorageService implements IStorageService{
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = null;
         Auth auth = Auth.create(accessKey, secretKey);
+        String bucket = null;
+        String domain = null;
+        switch (type) {
+            case RESOURCE:
+            case OTHER:
+                bucket = bucket_1;
+                domain = domain_1;
+                break;
+            case PAPERWORK:
+                bucket = bucket_2;
+                domain = domain_2;
+                break;
+        }
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(data, key, upToken, null, null, true);
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            String url = domain+putRet.key;
-            logger.info("qiniu put success, url:"+url);
+            String url = domain + putRet.key;
+            logger.info("qiniu put success, url:" + url);
             return url;
         } catch (QiniuException ex) {
             Response r = ex.response;

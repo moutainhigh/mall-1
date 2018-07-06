@@ -10,6 +10,7 @@ import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.CommonUtils;
 import com.yunxin.core.util.LogicUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -93,8 +94,8 @@ public class CustomerService implements ICustomerService {
         if (!customerDao.isUnique(customer, Customer_.accountName)) {
             throw new EntityExistException("客户账户名已存在");
         }
-        // 初始密码 123456
-        customer.setPassword("123456");
+        // 初始密码
+        customer.setPassword(CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE));
         customer.setCreateTime(new Date());
         customer.setRank(rankDao.getRankByDefaultRank());
         Customer dbCustomer= customerDao.save(customer);
