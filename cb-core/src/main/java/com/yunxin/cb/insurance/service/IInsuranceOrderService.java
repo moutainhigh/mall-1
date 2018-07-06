@@ -6,6 +6,9 @@ import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 /**
  * @author wangteng
  *
@@ -16,7 +19,6 @@ public interface IInsuranceOrderService {
      * @param query
      * @return
      */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     Page<InsuranceOrder> pageInsuranceOrder(PageSpecification<InsuranceOrder> query);
 
     /**
@@ -25,4 +27,17 @@ public interface IInsuranceOrderService {
      * @return
      */
     public InsuranceOrder getInsuranceOrderDetailById(int orderId);
+
+    /**
+     * 根据用户ID查询保险订单列表
+     * @return
+     */
+    List<InsuranceOrder> getInsuranceOrderByCustomer();
+
+    /**
+     * 添加保险订单
+     * @param insuranceOrder
+     * @return
+     */
+    InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder);
 }

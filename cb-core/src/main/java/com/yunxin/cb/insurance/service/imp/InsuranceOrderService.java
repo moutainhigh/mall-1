@@ -4,10 +4,16 @@ import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.entity.InsuranceOrderBeneficiary;
 import com.yunxin.cb.insurance.entity.InsuranceOrderInformedMatter;
+import com.yunxin.cb.insurance.entity.InsuranceOrder_;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
+import com.yunxin.core.persistence.CustomSpecification;
+import com.yunxin.core.persistence.PageSpecification;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
@@ -80,7 +86,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
      * @return
      */
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Page<InsuranceOrder> pageInsuranceOrder(PageSpecification<InsuranceOrder> query) {
         query.setCustomSpecification(new CustomSpecification<InsuranceOrder>(){
             @Override
@@ -90,7 +95,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 root.fetch(InsuranceOrder_.insuranceProductPrice,JoinType.LEFT);
             }
         });
-        return InsuranceOrderDao.findAll(query,query.getPageRequest());
+        return insuranceOrderDao.findAll(query,query.getPageRequest());
     }
 
     /**
@@ -99,9 +104,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
      * @return
      */
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public InsuranceOrder getInsuranceOrderDetailById(int orderId) {
-        InsuranceOrder InsuranceOrder = InsuranceOrderDao.getInsuranceOrderDetailById(orderId);
+        InsuranceOrder InsuranceOrder = insuranceOrderDao.getInsuranceOrderDetailById(orderId);
         return InsuranceOrder;
     }
 }
