@@ -3,7 +3,6 @@ package com.yunxin.cb.rest.insurance;
 import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
-import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.meta.Result;
@@ -41,7 +40,7 @@ public class InsuranceOrderResource extends BaseResource {
             return new ResponseResult(Result.FAILURE, "链接错误或用户不存在");
         }
         //校验验证码
-        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(customer.getMobile());
+        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(insuranceOrder.getInsuranceOrderPolicyholderBank().getBankMobile());
         //验证码不存在
         if (verificationCode == null){
             return new ResponseResult(Result.FAILURE, "验证码不存在");

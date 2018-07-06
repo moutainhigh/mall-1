@@ -24,8 +24,6 @@ public class SmsHandler {
 
     private final static Logger logger = LoggerFactory.getLogger(SmsHelper.class);
 
-    private static List<String> list = new Vector<String>();
-
     /***
      * 短信即时发送
      * @param content 内容
@@ -34,15 +32,6 @@ public class SmsHandler {
      * @throws UnsupportedEncodingException
      */
     protected static boolean sendSms(String ip, String content, String... phones) throws UnsupportedEncodingException {
-        if (list.contains(ip)) {
-            logResult("Repeat Access Ip Do Not Operation:" + ip);
-            return false;
-        }
-        if (list.size() == 10) {
-            list.clear();
-        }
-        logResult("Add Access Ip :" + ip);
-        list.add(ip);
 
         if (LogicUtils.isNullOrEmpty(phones)) {
             throw new NullPointerException("Mobile Phone is empty!");
@@ -78,37 +67,33 @@ public class SmsHandler {
 
 
     public static void logResult(String sWord) {
-        String filePath = GlobalConfig.getProperty("sms.log_path") + File.separator + DateUtils.getCurrentDate() + "_sms_log.txt";
-        File file = new File(filePath);
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
-        }
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(file, true);
-            writer.write(sWord + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+//        String filePath = GlobalConfig.getProperty("sms.log_path") + File.separator + DateUtils.getCurrentDate() + "_sms_log.txt";
+//        File file = new File(filePath);
+//        if (!file.getParentFile().exists()) {
+//            file.getParentFile().mkdirs();
+//        }
+//        if (!file.exists()) {
+//            try {
+//                file.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        FileWriter writer = null;
+//        try {
+//            writer = new FileWriter(file, true);
+//            writer.write(sWord + "\n");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (writer != null) {
+//                try {
+//                    writer.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
     }
 
-    @Scheduled(cron = "0/30 * *  * * ? ")
-    public void clear() {
-        SmsHandler.list.clear();
-    }
 }
