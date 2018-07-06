@@ -1,30 +1,79 @@
 package com.yunxin.cb.insurance.service.imp;
 
-import com.yunxin.cb.insurance.dao.InsuranceOrderDao;
+import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
-import com.yunxin.cb.insurance.entity.InsuranceOrder_;
+import com.yunxin.cb.insurance.entity.InsuranceOrderBeneficiary;
+import com.yunxin.cb.insurance.entity.InsuranceOrderInformedMatter;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
-import com.yunxin.cb.mall.entity.Brand;
-import com.yunxin.cb.mall.entity.Brand_;
-import com.yunxin.core.persistence.CustomSpecification;
-import com.yunxin.core.persistence.PageSpecification;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Set;
 
-/**
- * @author wangteng
- *
- */
 @Service
 public class InsuranceOrderService implements IInsuranceOrderService {
+
     @Resource
-    private InsuranceOrderDao InsuranceOrderDao;
+    private InsuranceOrderDao insuranceOrderDao;
+    @Resource
+    private InsuranceOrderBeneficiaryDao insuranceOrderBeneficiaryDao;
+    @Resource
+    private InsuranceOrderInformedMatterDao insuranceOrderInformedMatterDao;
+    @Resource
+    private InsuranceOrderInsuredDao insuranceOrderInsuredDao;
+    @Resource
+    private InsuranceOrderPolicyholderBankDao insuranceOrderPolicyholderBankDao;
+    @Resource
+    private InsuranceOrderPolicyholderDao insuranceOrderPolicyholderDao;
+
+
+
+
+    /**
+     * 根据用户ID查询保险订单列表
+     * @return
+     */
+    public List<InsuranceOrder> getInsuranceOrderByCustomer() {
+        return insuranceOrderDao.findAll();
+    }
+
+    /**
+     * 添加保险订单
+     * @param insuranceOrder
+     * @return
+     */
+    @Override
+    @Transactional
+    public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
+
+        //InsuranceOrderInsured insuranceOrderInsured =
+
+        insuranceOrderInsuredDao.save(insuranceOrder.getInsuranceOrderInsured());
+        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
+        insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
+        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
+        insuranceOrder = insuranceOrderDao.save(insuranceOrder);
+
+        Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
+        for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
+        {
+            insuranceOrderInformedMatter.setInsuranceOrder(insuranceOrder);
+        }
+        insuranceOrderInformedMatterDao.save(insuranceOrderInformedMatters);
+
+        Set<InsuranceOrderBeneficiary> insuranceOrderBeneficiarys = insuranceOrder.getInsuranceOrderBeneficiarys();
+        for(InsuranceOrderBeneficiary insuranceOrderBeneficiary: insuranceOrderBeneficiarys)
+        {
+            insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
+        }
+        insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
+
+        return insuranceOrder;
+
+    }
+
     /**
      * 保单分页
      * @param query
@@ -52,7 +101,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public InsuranceOrder getInsuranceOrderDetailById(int orderId) {
-        InsuranceOrder InsuranceOrder=InsuranceOrderDao.getInsuranceOrderDetailById(orderId);
+        InsuranceOrder InsuranceOrder = InsuranceOrderDao.getInsuranceOrderDetailById(orderId);
         return InsuranceOrder;
     }
 }

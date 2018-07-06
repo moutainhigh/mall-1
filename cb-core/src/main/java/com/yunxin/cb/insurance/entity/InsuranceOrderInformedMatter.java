@@ -52,12 +52,11 @@ public class InsuranceOrderInformedMatter implements Serializable {
      * 被保人采集结果
      */
     @NotNull
-    @Max(9999999999L)
-    private int insuredResult;
+    private boolean insuredResult;
     /**
      * 投保人采集结果
      */
-    private int policyholderResult;
+    private boolean policyholderResult;
     /**
      * 选项值，可以为多个，以json方式存储
      */
@@ -70,8 +69,6 @@ public class InsuranceOrderInformedMatter implements Serializable {
      * 投保人备注
      */
     private String policyholderRemark;
-
-
 
     //columns END
 
@@ -98,20 +95,20 @@ public class InsuranceOrderInformedMatter implements Serializable {
     }
 
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getInsuredResult() {
+    public boolean getInsuredResult() {
         return insuredResult;
     }
 
-    public void setInsuredResult(int insuredResult) {
+    public void setInsuredResult(boolean insuredResult) {
         this.insuredResult = insuredResult;
     }
 
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getPolicyholderResult() {
+    public boolean getPolicyholderResult() {
         return policyholderResult;
     }
 
-    public void setPolicyholderResult(int policyholderResult) {
+    public void setPolicyholderResult(boolean policyholderResult) {
         this.policyholderResult = policyholderResult;
     }
 

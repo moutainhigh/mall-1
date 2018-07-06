@@ -223,7 +223,7 @@ public class InsuranceProduct implements Serializable {
     }
 
 
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProduct")
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER, mappedBy = "insuranceProduct")
     public Set<InsuranceProductPrice> getInsuranceProductPrices() {
         return insuranceProductPrices;
     }

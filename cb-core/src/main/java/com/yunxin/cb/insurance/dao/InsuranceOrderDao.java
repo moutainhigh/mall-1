@@ -1,5 +1,6 @@
 package com.yunxin.cb.insurance.dao;
 
+
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.mall.entity.Commodity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,5 @@ public interface InsuranceOrderDao extends JpaRepository<InsuranceOrder, Integer
 
     @Query("select c from InsuranceOrder c left join fetch c.insuranceProduct left join fetch c.insuranceProductPrice left join fetch c.insuranceOrderInsured left join fetch c.insuranceOrderPolicyholder left join fetch c.insuranceOrderPolicyholderBank where c.orderId=?1")
     public InsuranceOrder getInsuranceOrderDetailById(int orderId);
+
 }

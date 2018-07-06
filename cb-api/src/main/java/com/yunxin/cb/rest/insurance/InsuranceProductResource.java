@@ -15,8 +15,10 @@ public class InsuranceProductResource {
     @Resource
     private IInsuranceProductService insuranceProductService;
 
-    @GetMapping(value = "getinsuranceProducts")
-    public ResponseResult getinsuranceProducts(){
+    @GetMapping(value = "getInsuranceProducts")
+    public ResponseResult getInsuranceProducts(){
         return new ResponseResult(insuranceProductService.getInsuranceProducts());
     }
+
+
 }
