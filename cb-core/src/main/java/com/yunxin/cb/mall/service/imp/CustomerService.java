@@ -12,6 +12,7 @@ import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CommonUtils;
 import com.yunxin.core.util.LogicUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -30,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class CustomerService implements ICustomerService {
 
     @Resource
@@ -94,8 +95,10 @@ public class CustomerService implements ICustomerService {
         if (!customerDao.isUnique(customer, Customer_.accountName)) {
             throw new EntityExistException("客户账户名已存在");
         }
-        // 初始密码
-        customer.setPassword(CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE));
+        if(StringUtils.isBlank(customer.getPassword())){
+            // 初始密码
+            customer.setPassword(CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE));
+        }
         customer.setCreateTime(new Date());
         customer.setRank(rankDao.getRankByDefaultRank());
         Customer dbCustomer= customerDao.save(customer);

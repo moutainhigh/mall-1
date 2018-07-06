@@ -4,6 +4,7 @@
 package com.yunxin.cb.mall.entity;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
@@ -203,6 +204,7 @@ public class Customer implements java.io.Serializable {
     }
 
     @Column(length = 16, nullable = false)
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -483,7 +485,7 @@ public class Customer implements java.io.Serializable {
         this.emailChecked = emailChecked;
     }
 
-    @Column(length = 32)
+    @Column(length = 128)
     public String getRongCloudToken() {
         return rongCloudToken;
     }
