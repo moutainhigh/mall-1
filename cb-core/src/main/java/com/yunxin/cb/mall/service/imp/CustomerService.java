@@ -6,6 +6,10 @@ import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.service.ICustomerService;
+import com.yunxin.cb.mall.vo.FriendVo;
+import com.yunxin.cb.sns.dao.CustomerFriendDao;
+import com.yunxin.cb.sns.entity.CustomerFriend;
+import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -45,6 +49,9 @@ public class CustomerService implements ICustomerService {
 
     @Resource
     private RongCloudService rongCloudService;
+
+    @Resource
+    private CustomerFriendDao customerFriendDao;
 
     @Override
     public Fridge addFridge(Fridge fridge) {
@@ -348,5 +355,23 @@ public class CustomerService implements ICustomerService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public long countByQqOpenId(String qqOpenId) {
         return customerDao.countByQqOpenId(qqOpenId);
+    }
+
+    public List<Customer> getFriendByCustomerId(int customerId)
+    {
+        List <Customer> customers = customerFriendDao.findCustomerFriendByCustomerCustomerId(customerId);
+        return customers;
+    }
+    @Transactional
+    public CustomerFriend addFriend(CustomerFriend customerFriend)
+    {
+        customerFriend = customerFriendDao.save(customerFriend);
+        return customerFriend;
+    }
+
+    @Transactional
+    public void delFriendById(CustomerFriendId customerFriendId)
+    {
+        customerFriendDao.delete(customerFriendId);
     }
 }

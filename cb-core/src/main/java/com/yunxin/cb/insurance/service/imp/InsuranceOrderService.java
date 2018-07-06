@@ -57,7 +57,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         insuranceOrderInsuredDao.save(insuranceOrder.getInsuranceOrderInsured());
         insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
         insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
-        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
 
         Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();

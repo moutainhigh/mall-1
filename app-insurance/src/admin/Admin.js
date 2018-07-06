@@ -47,6 +47,10 @@ const holder = {
   policyholderSign: '',
   cardPositiveImg: '',
   cardNegativeImg: '',
+  policyholderAvatar: '',
+  otherImg1: '',
+  otherImg2: '',
+  otherImg3: '',
   //临时变量，省市区
   holderPCD: []
 };

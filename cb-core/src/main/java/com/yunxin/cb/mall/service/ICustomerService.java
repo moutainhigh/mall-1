@@ -2,6 +2,8 @@ package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Fridge;
+import com.yunxin.cb.sns.entity.CustomerFriend;
+import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
@@ -128,4 +130,11 @@ public interface ICustomerService {
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     long countByQqOpenId(String qqOpenId);
+
+
+    public List<Customer> getFriendByCustomerId(int customerId);
+
+    public CustomerFriend addFriend(CustomerFriend customerFriend);
+
+    public void delFriendById(CustomerFriendId customerFriendId);
 }
