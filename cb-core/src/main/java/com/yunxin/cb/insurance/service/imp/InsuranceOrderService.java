@@ -54,9 +54,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Override
     @Transactional
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
-
-        //InsuranceOrderInsured insuranceOrderInsured =
-
         insuranceOrderInsuredDao.save(insuranceOrder.getInsuranceOrderInsured());
         insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
         insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());

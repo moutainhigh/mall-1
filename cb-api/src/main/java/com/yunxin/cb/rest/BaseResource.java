@@ -4,6 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 
 public class BaseResource {
 
+    protected int getCustomerId(){
+        return 1;
+    }
+
     /**
      * 获取IP地址
      * @param request
