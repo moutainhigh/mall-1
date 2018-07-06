@@ -4,6 +4,7 @@ import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.meta.Result;
+import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.cb.vo.ResponseResult;
@@ -21,7 +22,7 @@ import java.util.Date;
 @Api(description = "用户接口")
 @RestController
 @RequestMapping(value = "/customer")
-public class CustomerResource {
+public class CustomerResource extends BaseResource {
 
     private static Logger logger = LoggerFactory.getLogger(CustomerResource.class);
     @Resource
@@ -29,22 +30,31 @@ public class CustomerResource {
 
 
     @ApiOperation(value ="我的好友")
-    @PostMapping(value = "myFriends/{customerId}")
-    public ResponseResult myFriends(@PathVariable int customerId) {
+    @GetMapping(value = "myFriends")
+    public ResponseResult myFriends() {
+        int customerId=getCustomerId();
         return new ResponseResult( customerService.getFriendByCustomerId(customerId));
     }
 
     @ApiOperation(value ="添加好友")
     @PostMapping(value = "addFriend")
-    public ResponseResult addFriend(@RequestBody CustomerFriend customerFriend) {
-        Customer myself =customerService.getCustomerById(customerFriend.getId().getCustomerId());
-        Customer customer =customerService.getCustomerById(customerFriend.getId().getFriendId());
+    public ResponseResult addFriend(@RequestBody String mobile) {
+        int customerId=getCustomerId();
+        Customer myself =customerService.getCustomerById(customerId);
+        Customer customer =customerService.getCustomerByMobile(mobile);
+
+
 
         if(customer==null)
         {
             return new ResponseResult(Result.FAILURE,"您所添加的用户不存在");
         }
 
+        CustomerFriend customerFriend=new CustomerFriend();
+        CustomerFriendId customerFriendId=new CustomerFriendId ();
+        customerFriendId.setCustomerId(customerId);
+        customerFriendId.setFriendId(customer.getCustomerId());
+        customerFriend.setId(customerFriendId);
         customerFriend.setCustomer(myself);
         customerFriend.setFriend(customer);
         customerFriend.setCreateTime(new Date());
@@ -54,8 +64,9 @@ public class CustomerResource {
     }
 
     @ApiOperation(value ="删除好友")
-    @PostMapping(value = "removeFriend/{customerId}/{friendId}")
-    public ResponseResult removeFriend(@PathVariable int customerId, @PathVariable int friendId) {
+    @DeleteMapping(value = "removeFriend/{friendId}")
+    public ResponseResult removeFriend( @PathVariable int friendId) {
+        int customerId=getCustomerId();
         CustomerFriendId customerFriendId=new CustomerFriendId ();
         customerFriendId.setCustomerId(customerId);
         customerFriendId.setFriendId(friendId);
