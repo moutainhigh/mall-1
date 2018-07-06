@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.io.InputStream;
 
 @Component
-public class QiniuStorageService {
+public class QiniuStorageService implements IStorageService{
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
