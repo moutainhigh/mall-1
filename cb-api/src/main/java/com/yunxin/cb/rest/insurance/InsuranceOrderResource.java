@@ -54,6 +54,7 @@ public class InsuranceOrderResource extends BaseResource {
         if (!verificationCode.getCode().equals(code)) {
             return new ResponseResult(Result.FAILURE, "验证码错误");
         }
+        insuranceOrder.setCustomer(customer);
         return new ResponseResult(insuranceOrderService.addInsuranceOrder(insuranceOrder));
     }
 

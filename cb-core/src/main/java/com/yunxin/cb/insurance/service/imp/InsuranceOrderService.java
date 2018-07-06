@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -54,11 +55,14 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Override
     @Transactional
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
+        insuranceOrder.setOrderCode("INS2018070600105");
+        insuranceOrder.setCreateTime(new Date());
         insuranceOrderInsuredDao.save(insuranceOrder.getInsuranceOrderInsured());
         insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
         insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
-
+        insuranceOrder.setOrderCode(insuranceOrder.getOrderCode()+insuranceOrder.getOrderId());
+        insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
         Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
         for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
         {

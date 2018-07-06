@@ -139,7 +139,7 @@ public class InsuranceOrder implements Serializable {
         this.orderCode = orderCode;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
+    @Column(length = 32)
     public String getContractNo() {
         return this.contractNo;
     }
