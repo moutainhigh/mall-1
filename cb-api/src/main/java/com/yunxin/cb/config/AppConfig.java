@@ -18,5 +18,4 @@ public class AppConfig {
         mapper.registerModule(module);
         return mapper;
     }
-
 }

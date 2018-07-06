@@ -1,6 +1,7 @@
 package com.yunxin.cb.rest.customer;
 
 import com.yunxin.cb.common.utils.CachedUtil;
+import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.service.ICustomerService;
@@ -71,10 +72,13 @@ public class MainResource extends BaseResource {
             customer.setPassword(pwd);
             customer.setAvatarUrl(avatarUrl);
             customer.setCustomerType(CustomerType.PLATFORM_SELF);
+            customer.setEnabled(true);
             if(recommendCustomer != null){
                 customer.setRecommendCustomer(recommendCustomer);
             }
             customer = customerService.addCustomer(customer);
+            String token = JwtUtil.generateToken(customer.getCustomerId(), customer.getMobile());
+            customer.setToken(token);
             return new ResponseResult(customer);
         } catch (Exception e) {
             logger.error("用户注册异常", e);
@@ -92,6 +96,8 @@ public class MainResource extends BaseResource {
         try {
             Customer customer = customerService.getCustomerByAccountNameAndPassword(accountName, password);
             if (customer != null) {
+                String token = JwtUtil.generateToken(customer.getCustomerId(), customer.getMobile());
+                customer.setToken(token);
                 return new ResponseResult(customer);
             }else {
                 return new ResponseResult(Result.FAILURE, "账号或密码错误");
@@ -129,9 +135,9 @@ public class MainResource extends BaseResource {
     }
 
     @ApiOperation(value ="修改密码")
-    @PostMapping(value = "updatePwd/{customerId}")
-    public ResponseResult updatePwd(@PathVariable int customerId, @RequestParam String code, @RequestParam String newPwd) {
-        Customer customer = customerService.getCustomerById(customerId);
+    @PostMapping(value = "updatePwd/{mobile}")
+    public ResponseResult updatePwd(@PathVariable String mobile, @RequestParam String code, @RequestParam String newPwd) {
+        Customer customer = customerService.getCustomerByMobile(mobile);
         if(customer == null){
             return new ResponseResult(Result.FAILURE,"用户不存在");
         }
@@ -149,7 +155,7 @@ public class MainResource extends BaseResource {
         if (!verificationCode.getCode().equals(code)) {
             return new ResponseResult(Result.FAILURE, "验证码错误");
         }
-        customerService.updatePassword(customerId, newPwd);
+        customerService.updatePassword(customer.getCustomerId(), newPwd);
         return new ResponseResult(Result.SUCCESS);
     }
 
