@@ -317,7 +317,7 @@
 
         <datetime title="出生日期" placeholder="请选择出生日期" v-model="beneficiary2.beneficiaryBirthday"
                   value-text-align="left"></datetime>
-        <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="beneficiary2.beneficiaryCardType"
+        <popup-picker title="证件类型" placeholder="请选择证件类型" :data="cardTypes" v-model="beneficiary2.beneficiaryCardType"
                       value-text-align="left"></popup-picker>
 
         <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary2.beneficiaryCardNo" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardNo.$error}"
@@ -746,7 +746,8 @@
   .error {
     color: #f79483;
     font-size: 12px;
-    margin-left: 155px;
+    text-align: right;
+    margin-right: 10px;
   }
 
   .errorInput {

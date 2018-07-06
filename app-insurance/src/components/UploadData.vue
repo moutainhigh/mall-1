@@ -213,7 +213,7 @@
             switch (e.target.id) {
               case 'image1' :
                 vm.imgUrls.image1 = result.data;
-                order.bankCardImg = result.data;
+                order.insuranceOrderPolicyholderBank.bankCardImg = result.data;
                 break;
               case 'image2' :
                 vm.imgUrls.image2 = rst.base64;

@@ -115,6 +115,9 @@
         immediate: true,
         deep: true
       }
+    },
+    created: function () {
+      this.bank.accountBank = storage.fetch('order').insuranceProductPrice.price;
     }
   }
 </script>
