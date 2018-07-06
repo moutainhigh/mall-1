@@ -67,8 +67,8 @@ public class MainResource extends BaseResource {
     public ResponseResult loginByCode(@RequestParam String accountName, @RequestParam String code) {
         Customer customer = customerService.getCustomerByMobile(accountName);
         if (customer != null) {
-           String storedCode=(String) CachedUtil.getInstance().getContext(accountName);
-           if (code!=null&&code.equals(storedCode))
+            VerificationCode verificationCode=(VerificationCode) CachedUtil.getInstance().getContext(accountName);
+           if (code!=null&&code.equals(verificationCode.getCode()))
            {
                return new ResponseResult(customer);
            }
@@ -85,7 +85,8 @@ public class MainResource extends BaseResource {
         boolean existMobile = customerService.getCustomerByMobile(mobile) != null ? true : false;
         boolean isSend = false;
         //判断时间，1分钟只允许发送一次
-        VerificationCode verificationCode = (VerificationCode) session.getAttribute(mobile);
+        VerificationCode verificationCode = (VerificationCode)  CachedUtil.getInstance().getContext(mobile);
+               // session.getAttribute(mobile);
         if(verificationCode != null && (System.currentTimeMillis() - verificationCode.getSendTime()) < 60000){
             responseResult.setMessage("发送过于频繁，请稍后在试！");
             return responseResult;
@@ -113,8 +114,7 @@ public class MainResource extends BaseResource {
                 if (sendState) {
                     responseResult.setResult(Result.SUCCESS);
                     VerificationCode mobileCode = new VerificationCode(mobile, randomCode, System.currentTimeMillis());
-                    CachedUtil.getInstance().setContext(mobile,randomCode);
-                    session.setAttribute(mobile, mobileCode);
+                    CachedUtil.getInstance().setContext(mobile,mobileCode);
                 } else {
                     responseResult.setMessage("短信发送失败，请确认手机号或稍后再试!");
                 }
