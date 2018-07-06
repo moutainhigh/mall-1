@@ -96,9 +96,14 @@ public class InsuranceOrder implements Serializable {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
-
-
+    /**
+     * 受益人
+     */
     private Set insuranceOrderBeneficiarys = new HashSet(0);
+    /**
+     * 告知事项
+     */
+    private Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = new HashSet(0);
     //columns END
 
 
@@ -153,7 +158,6 @@ public class InsuranceOrder implements Serializable {
         this.insuranceOrderBeneficiarys = insuranceOrderBeneficiary;
     }
 
-    private Set insuranceOrderInformedMatters = new HashSet(0);
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceOrder")
     public Set<InsuranceOrderInformedMatter> getInsuranceOrderInformedMatters() {
