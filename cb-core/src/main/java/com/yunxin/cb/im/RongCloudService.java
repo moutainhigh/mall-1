@@ -25,9 +25,12 @@ public class RongCloudService {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         User User = rongCloud.user;
         UserModel user = new UserModel()
-                .setId(customer.getAccountName());
+                .setId(customer.getAccountName())
+                .setName(customer.getAccountName())
+                .setPortrait("http://pb9sg55i7.bkt.clouddn.com/avatar.png");
+
         TokenResult result = User.register(user);
-        if(result.getCode().equals("200")){
+        if(result.getCode() == 200){
             logger.info("getRongCloudToken:  " + result.toString());
             return result.getToken();
         }else {
