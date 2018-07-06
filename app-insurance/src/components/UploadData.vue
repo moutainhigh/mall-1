@@ -107,6 +107,8 @@
 
 <script>
   import '../lib/lrz.all.bundle'
+  import storage from "../store/storage";
+  import {uploadImage} from "../service/getData";
 
 
   export default {
@@ -203,26 +205,45 @@
       createImage: function (file, e) {
         let vm = this;
         lrz(file[0], {width: 480}).then(function (rst) {
-          switch (e.target.id) {
-            case 'image1' :
-              vm.imgUrls.image1 = rst.base64;
-              break;
-            case 'image2' :
-              vm.imgUrls.image2 = rst.base64;
-              break;
-            case 'image3' :
-              vm.imgUrls.image3 = rst.base64;
-              break;
-            case 'image4' :
-              vm.imgUrls.image4 = rst.base64;
-              break;
-            case 'image5' :
-              vm.imgUrls.image5 = rst.base64;
-              break;
-            case 'image6' :
-              vm.imgUrls.image6 = rst.base64;
-              break;
-          }
+          rst.base64 = rst.base64.split(',')[1];
+          //缓存
+          let holder = storage.fetch("holder");
+          let order = storage.fetch("order");
+          uploadImage(rst.base64).then(function(result) {
+            switch (e.target.id) {
+              case 'image1' :
+                vm.imgUrls.image1 = result.data;
+                order.bankCardImg = result.data;
+                break;
+              case 'image2' :
+                vm.imgUrls.image2 = rst.base64;
+                vm.imgUrls.image2 = result.data;
+                holder.cardPositiveImg = result.data;
+                break;
+              case 'image3' :
+                vm.imgUrls.image3 = rst.base64;
+                vm.imgUrls.image3 = result.data;
+                holder.cardNegativeImg = result.data;
+                break;
+              case 'image4' :
+                vm.imgUrls.image4 = rst.base64;
+                vm.imgUrls.image4 = result.data;
+                holder.cardPositiveImg = result.data;
+                break;
+              case 'image5' :
+                vm.imgUrls.image5 = rst.base64;
+                vm.imgUrls.image5 = result.data;
+                holder.cardPositiveImg = result.data;
+                break;
+              case 'image6' :
+                vm.imgUrls.image6 = rst.base64;
+                vm.imgUrls.image6 = result.data;
+                holder.cardPositiveImg = result.data;
+                break;
+            }
+            storage.save("holder", holder);
+            storage.save("order", order);
+          });
           return rst;
         }).always(function () {
           // 清空文件上传控件的值

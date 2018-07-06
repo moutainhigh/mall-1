@@ -26,3 +26,7 @@ export const submitOrder = function () {
   insuranceOrder.insuranceOrderBeneficiarys = beneficiaries;
   return fetch('/insurance/order/saveOrder',insuranceOrder,"POST");
 };
+
+export const uploadImage = function (base64) {
+  return fetch('/common/file/uploadBase64/ PAPERWORK', base64, 'POST','fetch');
+};
