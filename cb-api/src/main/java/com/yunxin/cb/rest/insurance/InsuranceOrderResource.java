@@ -5,9 +5,7 @@ import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -25,7 +23,7 @@ public class InsuranceOrderResource {
 
     @ApiOperation(value ="保存订单")
     @PostMapping(value = "saveOrder")
-    public ResponseResult saveOrder(InsuranceOrder insuranceOrder)
+    public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder)
     {
         return new ResponseResult(insuranceOrderService.addInsuranceOrder(insuranceOrder));
     }

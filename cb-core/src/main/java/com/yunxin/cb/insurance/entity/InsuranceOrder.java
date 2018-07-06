@@ -92,7 +92,7 @@ public class InsuranceOrder implements Serializable {
      * 是否法定收益人
      */
     @NotNull
-    private boolean LegalBeneficiary;
+    private boolean legalBeneficiary;
     /**
      * 订单状态
      */
@@ -265,11 +265,11 @@ public class InsuranceOrder implements Serializable {
 
     @Column
     public boolean isLegalBeneficiary() {
-        return LegalBeneficiary;
+        return legalBeneficiary;
     }
 
     public void setLegalBeneficiary(boolean legalBeneficiary) {
-        LegalBeneficiary = legalBeneficiary;
+        legalBeneficiary = legalBeneficiary;
     }
 
     @Column(nullable = false, length = 32)
@@ -281,4 +281,6 @@ public class InsuranceOrder implements Serializable {
     public void setOrderState(InsuranceOrderState orderState) {
         this.orderState = orderState;
     }
+
+
 }

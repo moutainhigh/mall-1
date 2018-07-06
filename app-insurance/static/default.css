@@ -240,3 +240,7 @@ p {
 .vux-cell-value {
   color: #888888 !important;
 }
+
+.vux-popup-picker-placeholder {
+  color: #888888 !important;
+}

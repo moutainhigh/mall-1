@@ -33,8 +33,8 @@
         <!--<popup-picker title="受益顺序" placeholder="" :data="list" v-model="test"  value-text-align="left"></popup-picker>-->
         <!--</group>-->
         <div class="i-input-select" @click="showJob">
-          <div>请选择职业</div>
-          <img src="../assets/img/drop-down.png"/>
+          <input class="input" v-model="career"/>
+          <!--<div>请输入职业</div>-->
         </div>
       </div>
     </div>
@@ -101,10 +101,12 @@
 <script>
   import storage from "../store/storage"
   import {PopupPicker} from 'vux'
+  import XInput from "vux/src/components/x-input/index";
 
   export default {
     name: "holder-basic",
     components: {
+      XInput,
       PopupPicker
     },
     data() {
@@ -115,7 +117,8 @@
         profession: [],
         list: [['居民身份证', '驾驶证', '护照']],
         title: '',
-        proId: ''
+        proId: '',
+        career:''
       }
     },
     methods: {
@@ -140,17 +143,12 @@
         })
       },
       changeGender:function(val){
-        console.log("test");
         this.gender = val;
         let insured = storage.fetch('insured');
         insured.insuredGender = val;
         storage.save('insured', insured);
       },
       submit() {
-        console.log(storage.fetch('insured'));
-        if (storage.fetch('insured')) {
-          storage.save('insured', this.Admin.insured);
-        }
         this.$router.push('/holder-detail');
       },
       showJob() {
@@ -160,7 +158,6 @@
       birthday: {
         handler(newVal, oldVal) {
           let insured = storage.fetch('insured');
-          console.log(newVal);
           if (newVal.length !== 0) {
             insured.insuredBirthday = newVal;
           }
@@ -172,7 +169,23 @@
       priceId: function (newVal, oldVal) {
         let order = storage.fetch('order');
         order.insuranceProductPrice.priceId = newVal;
+        switch (newVal) {
+          case 1:
+            order.insuranceProductPrice.price = 20000.00;
+            break;
+          case 2:
+            order.insuranceProductPrice.price = 50000.00;
+            break;
+          case 3:
+            order.insuranceProductPrice.price = 100000.00;
+            break;
+        }
         storage.save('order', order);
+      },
+      career: function (newVal, oldVal) {
+        let insured = storage.fetch("insured");
+        insured.insuredCareer = newVal;
+        storage.save('insured',insured);
       }
     },
     created: function () {
@@ -187,16 +200,27 @@
       }
       if (this.proId === 2) {
         order.insuranceProductPrice.priceId = 4;
+        order.insuranceProductPrice.price = 20000.00;
       }
       storage.save('order', order);
 
       let insured = storage.fetch("insured");
       this.birthday = insured.insuredBirthday;
       this.gender = insured.insuredGender;
+      this.career = insured.insuredCareer;
     }
   }
 </script>
 
 <style scoped>
-
+  .input {
+    border: unset;
+    margin-left: 10px;
+    text-rendering: unset;
+    width: 80%;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 6px 8px 0;
+  }
 </style>

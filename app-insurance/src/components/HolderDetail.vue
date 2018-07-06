@@ -101,7 +101,8 @@
           </div>
         </div>
       </div>
-      <popup-picker title="投保人职业" placeholder="请选择职业" value-text-align="left"></popup-picker>
+      <x-input title="投保人职业" placeholder="请输入您的职业" v-model="holder.policyholderCareer"></x-input>
+      <!--<popup-picker title="投保人职业" placeholder="请选择职业" value-text-align="left"></popup-picker>-->
       <datetime title="出生日期" v-model="holder.policyholderBirthday" placeholder="请输入生日日期"
                 value-text-align="left"></datetime>
       <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType" :data="cardTypes"
