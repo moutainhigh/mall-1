@@ -127,7 +127,6 @@ public class InsuranceOrderPolicyholder implements Serializable {
     /**
      * 投保人邮箱
      */
-    @NotBlank
     @Length(max = 32)
     private String policyholderEmail;
     /**

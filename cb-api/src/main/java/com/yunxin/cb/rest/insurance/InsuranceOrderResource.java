@@ -1,8 +1,16 @@
 package com.yunxin.cb.rest.insurance;
 
+import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
+import com.yunxin.cb.mall.entity.Brand;
+import com.yunxin.cb.mall.entity.Customer;
+import com.yunxin.cb.mall.service.ICustomerService;
+import com.yunxin.cb.meta.Result;
+import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.vo.ResponseResult;
+import com.yunxin.cb.vo.VerificationCode;
+import com.yunxin.core.persistence.PageSpecification;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +24,52 @@ import javax.annotation.Resource;
 @Api(description = "订单接口")
 @RestController
 @RequestMapping(value = "/insurance/order")
-public class InsuranceOrderResource {
+public class InsuranceOrderResource extends BaseResource {
 
     @Resource
     private IInsuranceOrderService insuranceOrderService;
 
+    @Resource
+    private ICustomerService customerService;
+
     @ApiOperation(value ="保存订单")
     @PostMapping(value = "saveOrder")
-    public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder)
-    {
+    public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code) {
+        int customerId = getCustomerId();
+        Customer customer = customerService.getCustomerById(customerId);
+        if(customer == null){
+            return new ResponseResult(Result.FAILURE, "链接错误或用户不存在");
+        }
+        //校验验证码
+        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(customer.getMobile());
+        //验证码不存在
+        if (verificationCode == null){
+            return new ResponseResult(Result.FAILURE, "验证码不存在");
+        }
+        //验证码超过5分钟，失效
+        if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
+            return new ResponseResult(Result.FAILURE, "验证码失效");
+        }
+        //验证码错误
+        if (!verificationCode.getCode().equals(code)) {
+            return new ResponseResult(Result.FAILURE, "验证码错误");
+        }
+        insuranceOrder.setCustomer(customer);
         return new ResponseResult(insuranceOrderService.addInsuranceOrder(insuranceOrder));
     }
 
 
+    @ApiOperation(value ="查询用户订单列表")
+    @PostMapping(value = "getOrders")
+    public ResponseResult getOrders(@RequestBody PageSpecification<InsuranceOrder> query) {
+        int customerId = getCustomerId();
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value ="查询用户订单详情")
+    @PostMapping(value = "getOrder/{orderCode}")
+    public ResponseResult getOrders(@PathVariable String orderCode) {
+        int customerId = getCustomerId();
+        return new ResponseResult(Result.SUCCESS);
+    }
 }

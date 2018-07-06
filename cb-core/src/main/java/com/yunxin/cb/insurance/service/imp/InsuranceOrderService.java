@@ -1,10 +1,7 @@
 package com.yunxin.cb.insurance.service.imp;
 
 import com.yunxin.cb.insurance.dao.*;
-import com.yunxin.cb.insurance.entity.InsuranceOrder;
-import com.yunxin.cb.insurance.entity.InsuranceOrderBeneficiary;
-import com.yunxin.cb.insurance.entity.InsuranceOrderInformedMatter;
-import com.yunxin.cb.insurance.entity.InsuranceOrder_;
+import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -16,6 +13,7 @@ import javax.annotation.Resource;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -54,14 +52,21 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Override
     @Transactional
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
+        insuranceOrder.setOrderCode("INS2018070600105");
+        insuranceOrder.setCreateTime(new Date());
 
-        //InsuranceOrderInsured insuranceOrderInsured =
+        InsuranceOrderInsured insuranceOrderInsured= insuranceOrder.getInsuranceOrderInsured();
+        insuranceOrderInsuredDao.save(insuranceOrderInsured);
 
-        insuranceOrderInsuredDao.save(insuranceOrder.getInsuranceOrderInsured());
-        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
-        insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
-        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
+        InsuranceOrderPolicyholder insuranceOrderPolicyholder =insuranceOrder.getInsuranceOrderPolicyholder();
+        insuranceOrderPolicyholderDao.save(insuranceOrderPolicyholder);
+
+        InsuranceOrderPolicyholderBank insuranceOrderPolicyholderBank = insuranceOrder.getInsuranceOrderPolicyholderBank();
+        insuranceOrderPolicyholderBankDao.save(insuranceOrderPolicyholderBank);
+
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
+        insuranceOrder.setOrderCode(insuranceOrder.getOrderCode()+insuranceOrder.getOrderId());
+        insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
 
         Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
         for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
