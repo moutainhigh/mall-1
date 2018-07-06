@@ -4,10 +4,8 @@ import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.meta.SendType;
-import com.yunxin.cb.pay.httpClient.HttpRequest;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sms.SmsHelper;
-import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import com.yunxin.core.util.CommonUtils;
@@ -25,13 +23,13 @@ import javax.servlet.http.HttpSession;
 
 @Api(description = "用户接口")
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/noAuth")
 public class MainResource extends BaseResource {
 
     private static Logger logger = LoggerFactory.getLogger(MainResource.class);
     @Resource
     private ICustomerService customerService;
-
 
     @ApiOperation(value ="用户注册")
     @PostMapping(value = "register")
@@ -52,7 +50,6 @@ public class MainResource extends BaseResource {
     })
     @PostMapping(value = "loginByPwd")
     public ResponseResult loginByPwd(@RequestParam String accountName, @RequestParam String password) {
-
         return new ResponseResult(Result.SUCCESS);
     }
 

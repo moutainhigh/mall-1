@@ -53,8 +53,10 @@ const holder = {
 
 const order = {
   orderCode: '',
+  insuranceOrderInsured:{},
+  insuranceOrderPolicyholder:{},
   insuranceProduct: {prodId: ''},
-  insuranceProductPrice: {priceId: 0},
+  insuranceProductPrice: {priceId: 0,price:20000},
   insuranceOrderPolicyholderBank: {
     bankName: '',
     amount: '',
@@ -66,7 +68,7 @@ const order = {
     accountNo: '',
     bankCardImg: ''
   },
-  LegalBeneficiary: '',
+  legalBeneficiary: true,
   insuranceOrderBeneficiarys: [],
 };
 
