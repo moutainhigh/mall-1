@@ -22,6 +22,7 @@ import javax.annotation.Resource;
  */
 @Api(description = "订单接口")
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/insurance/order")
 public class InsuranceOrderResource extends BaseResource {
 
