@@ -7,10 +7,10 @@
 
     </div>
     <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.count"></x-input>
+      <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.bankName"></x-input>
       <x-input class="price" title="交易金额(元)" :placeholder="price + '.00'" readonly></x-input>
       <x-input title="手机号码" placeholder="请输入手机号码" v-model="bank.bankMobile"></x-input>
-      <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.bankName"></popup-picker>
+      <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank"></popup-picker>
       <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" value-text-align="left"></x-address>
       <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"></popup-picker>
       <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo"></x-input>
