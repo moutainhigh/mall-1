@@ -210,7 +210,7 @@
         <img src="../assets/img/add.png"/>新增受益人
       </div>
     </div>
-    <div v-if="addBene1">
+    <div v-if="addBene1 || !legalBeneficiary">
       <div class="add">受益人信息 <span style="float: right;" @click="delBene(1)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary1.beneficiaryName"
@@ -291,7 +291,7 @@
       </group>
     </div>
 
-    <div v-if="addBene2">
+    <div v-if="addBene2 || !legalBeneficiary">
       <div class="add">受益人信息 <span style="float: right;" @click="delBene(2)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName"
