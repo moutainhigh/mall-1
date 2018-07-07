@@ -628,17 +628,24 @@
       <textarea class="content-text" v-if="matters[33].insuredResult" v-model="matters[33].insuredRemark" placeholder="被保人"/>
     </div>
 
+    <div class="content">
+      <p>请确认您（用户）已完全阅读并如实告知上述询问内容</p>
+      <div class="content-state">
+        <div style="display: inline" @click="state = !state">
+          <img v-if="!state" class="checkIcon" src="../assets/img/checkoff.png">
+          <img v-if="state" class="checkIcon" src="../assets/img/checkon.png">
+        </div>
+        <p class="recognizee">确认</p>
+      </div>
+    </div>
     <div style="height: 50px;">
       <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
         <div>上一步</div>
       </button>
-      <button class="i-footer" style="width: 50%;right: 0">
-        <router-link to="autograph">
+      <button class="i-footer" style="width: 50%;right: 0" @click="next">
           <div>下一步</div>
-        </router-link>
       </button>
     </div>
-
   </div>
 </template>
 
@@ -667,14 +674,18 @@
         this.matters[index].policyholderResult = !this.matters[index].policyholderResult;
         console.log(this.matters[index].policyholderResult);
       },
-      changeState(){
-
-      },
       changeFalse(){
         this.matters.forEach(function (matter) {
           matter.insuredResult = false;
           matter.policyholderResult = false;
         });
+      },
+      next(){
+        if (this.state) {
+          this.$router.push('autograph');
+        }else {
+          alert("请勾选确认")
+        }
       }
     },
     watch:{
@@ -784,5 +795,9 @@
     outline: none;
     font-size: 14px;
     cursor: pointer;
+  }
+
+  .checkIcon {
+    width: 24px;
   }
 </style>

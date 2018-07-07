@@ -23,7 +23,7 @@
 
       <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="insured.insuredCardPeriod" v-bind:class="{'errorInput': $v.insured.insuredCardPeriod.$error}"-->
       <!--@input="$v.insured.insuredCardPeriod.$touch()"></x-input>-->
-      <datetime title="证件有效期" v-model="insured.insuredCardPeriod" :startDate="startDate" :maxYear="2199-12-30" placeholder="请选择证件有效期"
+      <datetime title="证件有效期" v-model="insured.insuredCardPeriod" :startDate="startDate" endDate="2199-12-31" placeholder="请选择证件有效期"
                 value-text-align="left"></datetime>
       <div class="error" v-if="!$v.insured.insuredCardPeriod.required && $v.insured.insuredCardPeriod.$dirty">
         证件有效期不能为空
@@ -113,7 +113,7 @@
       </div>
       <x-input title="投保人职业" placeholder="请输入您的职业" v-model="holder.policyholderCareer"></x-input>
       <!--<popup-picker title="投保人职业" placeholder="请选择职业" value-text-align="left"></popup-picker>-->
-      <datetime title="出生日期" v-model="holder.policyholderBirthday" startDate="1950-01-01" :endDate="startDate" placeholder="请输入生日日期"
+      <datetime title="出生日期" v-model="holder.policyholderBirthday" startDate="1950-01-01" :endDate="startDate" placeholder="请选择生日日期"
                 value-text-align="left"></datetime>
       <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType" :data="cardTypes"
                     value-text-align="left"></popup-picker>
@@ -410,7 +410,6 @@
       return {
         holder: storage.fetch('holder'),
         insured: storage.fetch('insured'),
-        beneficiaries: storage.fetch('beneficiaries'),
         beneficiary1: storage.fetch('beneficiary1'),
         beneficiary2: storage.fetch('beneficiary2'),
         //是否法定受益人
@@ -592,14 +591,7 @@
         } else {
           // do your submit logic here
           this.submitStatus = 'PENDING'
-          setTimeout(() => {
-            this.submitStatus = 'OK';
-            var beneficiaries = [];
-            beneficiaries.push(this.beneficiary1);
-            beneficiaries.push(this.beneficiary2);
-            storage.save("beneficiaries", beneficiaries);
-            this.$router.push("infoMatters");
-          }, 500)
+          this.$router.push("infoMatters");
         }
       },
       addBene() {
@@ -617,7 +609,6 @@
             beneficiaryProportion: '',
             beneficiaryCountry: ''
           };
-          this.beneficiaries.push(beneficiary1);
         } else if (this.addBene1 === true && this.addBene2 === false) {
           this.addBene2 = true;
           let beneficiary2 = {
@@ -632,7 +623,6 @@
             beneficiaryProportion: '',
             beneficiaryCountry: ''
           };
-          this.beneficiaries.push(beneficiary2);
         } else if (this.addBene1 && this.addBene2) {
           this.toastText = "新增受益人最多为两个";
           this.showPositionValue = true;
@@ -701,13 +691,6 @@
             newVal.policyholderDistrict = this.holder.holderPCD[2];
           }
           storage.save('holder', newVal);
-        },
-        immediate: true,
-        deep: true
-      },
-      beneficiaries: {
-        handler(newVal, oldVal) {
-          storage.save('beneficiaries', newVal);
         },
         immediate: true,
         deep: true

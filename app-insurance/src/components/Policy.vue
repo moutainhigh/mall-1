@@ -30,8 +30,11 @@
     name: "policy",
     data() {
       return {
-        orderCode:this.$route.query.orderCode
+        orderCode:''
       }
+    },
+    created(){
+      this.orderCode = this.$route.query.orderCode;
     }
   }
 </script>

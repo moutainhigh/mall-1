@@ -45,7 +45,7 @@
         <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 65%;padding-left: 0;" v-model="code"></x-input>
         <div class="input-vile" @click.prevent="getVerifyCode">{{computedTime === 0? "获取验证码" : computedTime +"s"}}</div>
       </div>
-      <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
+      <toast v-model="showPositionValue" type="text" :time="1000" is-show-mask position="middle">{{toastText}}</toast>
     </group>
     <div style="height: 48px;">
       <button class="i-footer" @click="submit">
@@ -110,20 +110,27 @@
     },
     methods: {
       async submit() {
+        let _this = this;
         this.$vux.loading.show({
           text: 'Loading'
         });
-        let order =await submitOrder(this.code);
-        if (order.result == 'SUCCESS'){
-          this.$router().push({
-            path:'policy',
-            query:order.data.orderCode
-          })
-        }else{
-          this.toastText = "发送成功";
-          this.showPositionValue = true;
-        }
-        this.$vux.loading.hide()
+        await submitOrder(this.code).then(function (res) {
+          if (res.result === 'SUCCESS'){
+            console.log(res.data.orderCode);
+            _this.$router.push({
+              path:'policy',
+              query:{orderCode : res.data.orderCode}
+            });
+            _this.toastText = '请求成功！';
+            _this.showPositionValue = true;
+          }else{
+            _this.toastText = res.message;
+            _this.showPositionValue = true;
+          }
+          _this.$vux.loading.hide();
+        }).catch(function () {
+          _this.$vux.loading.hide();
+        });
       },
       async getVerifyCode() {
         if (this.bank.bankMobile) {

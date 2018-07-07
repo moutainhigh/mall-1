@@ -280,6 +280,8 @@ export const wipeArray = function (items) {
     if (items[item] instanceof Array){
       if (items[item].length > 0){
         items[item] = items[item][0]
+      }else {
+        items[item] = '';
       }
     }
   }

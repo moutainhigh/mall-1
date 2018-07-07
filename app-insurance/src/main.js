@@ -13,6 +13,9 @@ import Dev from '../config/dev.env'
 import Admin from './admin/Admin'
 import Vuelidate from 'vuelidate'
 import  { LoadingPlugin } from 'vux'
+import axios from 'axios' // 1、在这里引入axios
+
+Vue.prototype.$axios = axios;
 
 
 Vue.component('group', Group);

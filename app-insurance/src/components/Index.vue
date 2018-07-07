@@ -75,6 +75,10 @@
           });
         }
       }
+    },
+    created(){
+      let query = this.$route.query;
+      storage.save('token',query.token);
     }
   }
 </script>

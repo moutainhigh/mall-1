@@ -1,6 +1,7 @@
 import {
 	baseUrl
 } from './env'
+import storage from "../store/storage";
 
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 	type = type.toUpperCase();
@@ -19,13 +20,15 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 	}
 
 	if (window.fetch && method == 'fetch') {
+	  console.log("fetch");
 		let requestConfig = {
 			credentials: 'include',
 			method: type,
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
+				'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + storage.fetch('token')
+      },
 			mode: "cors",
 			cache: "force-cache"
 		}
@@ -59,7 +62,10 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 
 			requestObj.open(type, url, true);
 			requestObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			requestObj.setRequestHeader("Authorization",'Bearer ' + storage.fetch('token'));
 			requestObj.send(sendData);
+
+			console.log(requestObj)
 
 			requestObj.onreadystatechange = () => {
 				if (requestObj.readyState == 4) {
