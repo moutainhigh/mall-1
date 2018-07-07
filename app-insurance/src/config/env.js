@@ -6,7 +6,7 @@
  *
  */
 
-let baseUrl = 'http://192.168.0.42:8158/api';
+let baseUrl = 'http://119.23.59.102:8158/api';
 let imgBaseUrl = '';
 
 export {

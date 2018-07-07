@@ -391,7 +391,7 @@
   //小数点后两位校验
   const decimal = helpers.regex('decimal', /^\d{0,8}\.{0,1}(\d{1,2})?$/);
   //固定电话校验
-  const fixedTel = helpers.regex('fixedTel', /0\d{2}-\d{7,8}/);
+  const fixedTel = helpers.regex('fixedTel', /([0-9]{3,4}-)?[0-9]{7,8}/);
   //手机号码校验
   const mobile = helpers.regex('mobile', /^[1][3,4,5,7,8][0-9]{9}$/);
 
