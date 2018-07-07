@@ -641,23 +641,6 @@
         let order = storage.fetch("order");
         order.legalBeneficiary = this.legalBeneficiary;
         storage.save("order", order);
-        // if (this.beneficiaries.length < 2) {
-        //     let beneficiary = {
-        //       beneficiaryName: '',
-        //       beneficiaryGender: '',
-        //       beneficiaryBirthday: '',
-        //       beneficiaryCardType: [],
-        //       beneficiaryCardNo: '',
-        //       beneficiaryCardPeroid: '',
-        //       insuredRelation: [],
-        //       beneficiaryOrder: [],
-        //       beneficiaryProportion: '',
-        //       beneficiaryCountry: ''
-        //     };
-        //   this.beneficiaries.push(beneficiary);
-        //   storage.save("beneficiaries", this.beneficiaries);
-        //   this.legalBeneficiary = false;
-        // }
       },
       delBene(index) {
         if (index === 1) {
@@ -691,11 +674,6 @@
           };
           storage.save('beneficiary2', null);
         }
-        // this.beneficiaries.splice(index, 1);
-        // storage.save("beneficiaries", this.beneficiaries);
-        // if (this.beneficiaries.length === 0) {
-        //   this.legalBeneficiary = !this.legalBeneficiary;
-        // }
       },
       changeLegal() {
         this.legalBeneficiary = !this.legalBeneficiary;

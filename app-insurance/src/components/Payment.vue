@@ -7,13 +7,28 @@
 
     </div>
     <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.bankName"></x-input>
+      <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.bankName" v-bind:class="{'errorInput': $v.bank.bankName.$error}"
+               @input="$v.bank.bankName.$touch()"></x-input>
+      <div class="error" v-if="!$v.bank.bankName.required && $v.bank.bankName.$dirty">账户姓名不能为空</div>
+      <div class="error" v-if="!$v.bank.bankName.minLength">账户姓名最少为 {{$v.bank.bankName.$params.minLength.min}}
+        个字符
+      </div>
+
       <x-input class="price" title="交易金额(元)" :placeholder="price + '.00'" readonly></x-input>
-      <x-input title="手机号码" placeholder="请输入手机号码" v-model="bank.bankMobile"></x-input>
+      <x-input title="手机号码" placeholder="请输入手机号码" v-model="bank.bankMobile" v-bind:class="{'errorInput': $v.bank.bankMobile.$error}"
+               @input="$v.bank.bankMobile.$touch()"></x-input>
+      <div class="error" v-if="!$v.bank.bankMobile.mobile">请输入正确的手机号码</div>
+
       <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank"></popup-picker>
       <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" value-text-align="left"></x-address>
       <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"></popup-picker>
-      <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo"></x-input>
+      <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo" v-bind:class="{'errorInput': $v.bank.accountNo.$error}"
+               @input="$v.bank.accountNo.$touch()"></x-input>
+      <div class="error" v-if="!$v.bank.accountNo.required && $v.bank.accountNo.$dirty">账户号码不能为空</div>
+      <div class="error" v-if="!$v.bank.accountNo.maxLength">账户号码最多为 {{$v.bank.accountNo.$params.maxLength.max}}
+        个字符
+      </div>
+      <div class="error" v-if="!$v.bank.accountNo.numeric && $v.bank.accountNo.$dirty">请输入数字</div>
       <!--<div class="i-input">-->
       <!--<div class="i-input-item">实时转账</div>-->
       <!--<div style="float: right;margin: 8px;">-->
@@ -45,6 +60,10 @@
   import storage from "../store/storage";
   import XAddress from "vux/src/components/x-address/index";
   import {getVaildData,submitOrder} from '../service/getData'
+  import {required, minLength, maxLength, helpers, numeric} from 'vuelidate/lib/validators'
+
+  //手机号码校验
+  const mobile = helpers.regex('mobile', /^[1][3,4,5,7,8][0-9]{9}$/);
 
   export default {
     name: "Payment",
@@ -71,6 +90,23 @@
         computedTime: 0,
         code:''
       }
+    },
+    validations: {
+      bank: {
+        bankName: {
+          required,
+          minLength: minLength(2)
+        },
+        bankMobile: {
+          required,
+          mobile
+        },
+        accountNo: {
+          required,
+          maxLength: maxLength(19),
+          numeric
+        }
+      },
     },
     methods: {
       async submit() {
@@ -196,5 +232,47 @@
     border-bottom: 1px solid rgb(217, 217, 217);
     font-size: 13px;
     padding: 10px 10px 10px 16px;
+  }
+
+  .error {
+    color: #f79483;
+    font-size: 12px;
+    text-align: right;
+    margin-right: 10px;
+  }
+
+  .errorInput {
+    animation-name: shakeError;
+    animation-duration: .6s;
+    animation-timing-function: ease-in-out;
+    border: 1px solid #f79483;
+    border-radius: 5px;
+  }
+
+  @keyframes shakeError {
+    0% {
+      transform: translateX(0);
+    }
+    15% {
+      transform: translateX(0.375rem);
+    }
+    30% {
+      transform: translateX(-0.375rem);
+    }
+    45% {
+      transform: translateX(0.375rem);
+    }
+    60% {
+      transform: translateX(-0.375rem);
+    }
+    75% {
+      transform: translateX(0.375rem);
+    }
+    90% {
+      transform: translateX(-0.375rem);
+    }
+    100% {
+      transform: translateX(0);
+    }
   }
 </style>

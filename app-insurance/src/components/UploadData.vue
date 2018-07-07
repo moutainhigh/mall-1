@@ -176,31 +176,41 @@
             switch (e.target.id) {
               case 'image1' :
                 vm.imgUrls.image1 = result.data;
+                let order = storage.fetch("order");
                 order.insuranceOrderPolicyholderBank.bankCardImg = result.data;
+                storage.save("order", order);
                 break;
               case 'image2' :
                 vm.imgUrls.image2 = result.data;
-                holder.cardPositiveImg = result.data;
+                let holder1 = storage.fetch("holder");
+                holder1.cardPositiveImg = result.data;
+                storage.save("holder", holder1);
                 break;
               case 'image3' :
                 vm.imgUrls.image3 = result.data;
-                holder.cardNegativeImg = result.data;
+                let holder2 = storage.fetch("holder");
+                holder2.cardNegativeImg = result.data;
+                storage.save("holder", holder2);
                 break;
               case 'image4' :
                 vm.imgUrls.image4 = result.data;
-                holder.otherImg1 = result.data;
+                let holder3 = storage.fetch("holder");
+                holder3.otherImg1 = result.data;
+                storage.save("holder", holder3);
                 break;
               case 'image5' :
                 vm.imgUrls.image5 = result.data;
-                holder.otherImg2 = result.data;
+                let holder4 = storage.fetch("holder");
+                holder4.otherImg2 = result.data;
+                storage.save("holder", holder4);
                 break;
               case 'image6' :
                 vm.imgUrls.image6 = result.data;
-                holder.otherImg3 = result.data;
+                let holder5 = storage.fetch("holder");
+                holder5.otherImg3 = result.data;
+                storage.save("holder", holder5);
                 break;
             }
-            storage.save("holder", holder);
-            storage.save("order", order);
           });
           return rst;
         }).always(function () {
