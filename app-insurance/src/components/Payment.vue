@@ -20,11 +20,29 @@
       <div class="error" v-if="!$v.bank.bankMobile.mobile">请输入正确的手机号码</div>
 
       <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank"></popup-picker>
+      <div class="error"
+           v-if="!$v.bank.accountBank.required && $v.bank.accountBank.$dirty">
+        证件有效期不能为空
+      </div>
+
       <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" value-text-align="left"></x-address>
+      <div class="error"
+           v-if="!$v.address.required && $v.address.$dirty">
+        证件有效期不能为空
+      </div>
+
       <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"></popup-picker>
+      <div class="error"
+           v-if="!$v.bank.accountType.required && $v.bank.accountType.$dirty">
+        证件有效期不能为空
+      </div>
+
       <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo" v-bind:class="{'errorInput': $v.bank.accountNo.$error}"
                @input="$v.bank.accountNo.$touch()"></x-input>
       <div class="error" v-if="!$v.bank.accountNo.required && $v.bank.accountNo.$dirty">账户号码不能为空</div>
+      <div class="error" v-if="!$v.bank.accountNo.minLength">账户号码最少为 {{$v.bank.accountNo.$params.minLength.min}}
+        个字符
+      </div>
       <div class="error" v-if="!$v.bank.accountNo.maxLength">账户号码最多为 {{$v.bank.accountNo.$params.maxLength.max}}
         个字符
       </div>
@@ -88,7 +106,7 @@
         showPositionValue: false,
         validate_token: '',
         computedTime: 0,
-        code:''
+        code:'',
       }
     },
     validations: {
@@ -101,15 +119,32 @@
           required,
           mobile
         },
+        accountBank: {
+          required
+        },
+        accountType: {
+          required
+        },
         accountNo: {
           required,
+          minLength: minLength(16),
           maxLength: maxLength(19),
           numeric
         }
       },
+      address: {
+        required
+      }
     },
     methods: {
       async submit() {
+        this.$v.$touch();
+        if (this.$v.$invalid) {
+          this.showPositionValue = true;
+          this.toastText = "请完善账号信息"
+          return false;
+        }
+
         this.$vux.loading.show({
           text: 'Loading'
         });
