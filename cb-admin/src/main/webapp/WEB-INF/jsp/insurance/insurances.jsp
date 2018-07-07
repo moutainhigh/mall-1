@@ -122,14 +122,14 @@
                 <strong>投保时间:</strong>
               </div>
               <div class="toolbar-field">
-                <input name="createTime" id="createTime"  data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
               </div>
 
               <div class="toolbar-field">
                 <strong>-</strong>
               </div>
               <div class="toolbar-field">
-                <input name="createTime"  id="createTimes"  data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
+                <input name="createTime"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
               </div>
 
 
@@ -213,10 +213,11 @@
               </kendo:grid-filterable-operators>
             </kendo:grid-filterable>
             <kendo:grid-columns>
-              <kendo:grid-column title="保单编号" field="orderCode" width="100"  template="<a href='insuranceOrderDetail.do?orderId=#= orderId#'>#= orderCode#</a>" filterable="true"/>
+              <kendo:grid-column title="保单编号" field="orderCode" width="100"  template="<a href='insuranceOrderDetail.do?orderId=#= orderId#' style='color:blue'>#= orderCode#</a>" filterable="true"/>
               <kendo:grid-column title="合同编号" field="contractNo" width="100" filterable="true"/>
               <kendo:grid-column title="投保人" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderName#" width="100"/>
               <kendo:grid-column title="投保人手机" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderMobile#" width="100"/>
+              <kendo:grid-column title="被保人" field="insuranceOrderInsured" template="#=insuranceOrderInsured.insuredName#" width="100"/>
               <kendo:grid-column title="保险险种" field="insuranceProduct" template="#=insuranceProduct.prodName#" width="100"/>
               <kendo:grid-column title="保险期间" field="insuranceProduct"  template="#=insuranceProduct.insurePeriod#" width="100"/>
               <kendo:grid-column title="缴费年限" field="insuranceProduct" template="#=insuranceProduct.protectionYear#" width="100"/>
