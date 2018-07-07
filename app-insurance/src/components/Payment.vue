@@ -22,19 +22,19 @@
       <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountBank.required && $v.bank.accountBank.$dirty">
-        证件有效期不能为空
+        开户行不能为空
       </div>
 
       <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" value-text-align="left"></x-address>
       <div class="error"
            v-if="!$v.address.required && $v.address.$dirty">
-        证件有效期不能为空
+        开户行位置不能为空
       </div>
 
       <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountType.required && $v.bank.accountType.$dirty">
-        证件有效期不能为空
+        账户类型不能为空
       </div>
 
       <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo" v-bind:class="{'errorInput': $v.bank.accountNo.$error}"

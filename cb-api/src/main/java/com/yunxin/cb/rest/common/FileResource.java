@@ -21,6 +21,7 @@ import static com.yunxin.cb.meta.Result.FAILURE;
  */
 @Api(description = "公共文件上传接口")
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/common/file")
 public class FileResource {
 
