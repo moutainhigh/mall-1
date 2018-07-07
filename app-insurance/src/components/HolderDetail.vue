@@ -210,7 +210,7 @@
         <img src="../assets/img/add.png"/>新增受益人
       </div>
     </div>
-    <div v-if="addBene1 || !legalBeneficiary">
+    <div v-if="addBene1">
       <div class="add">受益人信息 <span style="float: right;" @click="delBene(1)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary1.beneficiaryName"
@@ -291,7 +291,7 @@
       </group>
     </div>
 
-    <div v-if="addBene2 || !legalBeneficiary">
+    <div v-if="addBene2">
       <div class="add">受益人信息 <span style="float: right;" @click="delBene(2)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName"
@@ -570,17 +570,28 @@
         this.$router.back();
       },
       next() {
-        this.$v.$touch()
-        if (this.$v.$invalid) {
-          this.submitStatus = 'ERROR'
+        this.$v.$touch();
+        if (this.$v.insured.$invalid || this.$v.holder.$invalid) {
+          this.submitStatus = 'ERROR';
           this.showPositionValue = true;
           this.toastText = "信息填写有误"
+        } else if (this.addBene1) {
+          if (this.$v.beneficiary1.$invalid) {
+            this.submitStatus = 'ERROR';
+            this.showPositionValue = true;
+            this.toastText = "信息填写有误"
+          }
+        } else if (this.addBene2) {
+          if (this.$v.beneficiary2.$invalid) {
+            this.submitStatus = 'ERROR';
+            this.showPositionValue = true;
+            this.toastText = "信息填写有误"
+          }
         } else {
           // do your submit logic here
           this.submitStatus = 'PENDING'
           setTimeout(() => {
             this.submitStatus = 'OK';
-            // let beneficiaries = storage.fetch('beneficiaries')
             var beneficiaries = [];
             beneficiaries.push(this.beneficiary1);
             beneficiaries.push(this.beneficiary2);
@@ -592,10 +603,37 @@
       addBene() {
         if (this.addBene1 === false) {
           this.addBene1 = true;
-          this.beneficiaries.push(this.beneficiary1);
+          let beneficiary1 = {
+            beneficiaryName: '',
+            beneficiaryGender: '',
+            beneficiaryBirthday: '',
+            beneficiaryCardType: [],
+            beneficiaryCardNo: '',
+            beneficiaryCardPeroid: '',
+            insuredRelation: [],
+            beneficiaryOrder: [],
+            beneficiaryProportion: '',
+            beneficiaryCountry: ''
+          };
+          this.beneficiaries.push(beneficiary1);
         } else if (this.addBene1 === true && this.addBene2 === false) {
           this.addBene2 = true;
-          this.beneficiaries.push(this.beneficiary2);
+          let beneficiary2 = {
+            beneficiaryName: '',
+            beneficiaryGender: '',
+            beneficiaryBirthday: '',
+            beneficiaryCardType: [],
+            beneficiaryCardNo: '',
+            beneficiaryCardPeroid: '',
+            insuredRelation: [],
+            beneficiaryOrder: [],
+            beneficiaryProportion: '',
+            beneficiaryCountry: ''
+          };
+          this.beneficiaries.push(beneficiary2);
+        } else if (this.addBene1 && this.addBene2) {
+          this.toastText = "新增受益人最多为两个";
+          this.showPositionValue = true;
         }
         this.legalBeneficiary = false;
         let order = storage.fetch("order");
@@ -622,10 +660,34 @@
       delBene(index) {
         if (index === 1) {
           this.addBene1 = false;
-          // storage.save('beneficiary1', null);
+          this.beneficiary1 = {
+            beneficiaryName: '',
+            beneficiaryGender: '',
+            beneficiaryBirthday: '',
+            beneficiaryCardType: [],
+            beneficiaryCardNo: '',
+            beneficiaryCardPeroid: '',
+            insuredRelation: [],
+            beneficiaryOrder: [],
+            beneficiaryProportion: '',
+            beneficiaryCountry: ''
+          };
+          storage.save('beneficiary1', null);
         } else {
           this.addBene2 = false;
-          // storage.save('beneficiary2', null);
+          this.beneficiary2 = {
+            beneficiaryName: '',
+            beneficiaryGender: '',
+            beneficiaryBirthday: '',
+            beneficiaryCardType: [],
+            beneficiaryCardNo: '',
+            beneficiaryCardPeroid: '',
+            insuredRelation: [],
+            beneficiaryOrder: [],
+            beneficiaryProportion: '',
+            beneficiaryCountry: ''
+          };
+          storage.save('beneficiary2', null);
         }
         // this.beneficiaries.splice(index, 1);
         // storage.save("beneficiaries", this.beneficiaries);
@@ -641,6 +703,9 @@
         if (this.legalBeneficiary) {
           this.addBene1 = false;
           this.addBene2 = false;
+        } else {
+          this.addBene1 = true;
+          this.addBene2 = true;
         }
       },
       submit() {
@@ -697,10 +762,39 @@
     created: function () {
       let order = storage.fetch("order");
       let beneficiary1 = storage.fetch("beneficiary1");
-      let beneficiary2 = storage.fetch("beneficiary1");
+      let beneficiary2 = storage.fetch("beneficiary2");
+      if (!beneficiary1) {
+        this.beneficiary1 = {
+          beneficiaryName: '',
+          beneficiaryGender: '',
+          beneficiaryBirthday: '',
+          beneficiaryCardType: [],
+          beneficiaryCardNo: '',
+          beneficiaryCardPeroid: '',
+          insuredRelation: [],
+          beneficiaryOrder: [],
+          beneficiaryProportion: '',
+          beneficiaryCountry: ''
+        };
+      }
+      if (!beneficiary2) {
+        this.beneficiary2 = {
+          beneficiaryName: '',
+          beneficiaryGender: '',
+          beneficiaryBirthday: '',
+          beneficiaryCardType: [],
+          beneficiaryCardNo: '',
+          beneficiaryCardPeroid: '',
+          insuredRelation: [],
+          beneficiaryOrder: [],
+          beneficiaryProportion: '',
+          beneficiaryCountry: ''
+        };
+      }
       this.legalBeneficiary = order.legalBeneficiary;
-      if (!this.legalBeneficiary && this.beneficiary1) {
-
+      if (!this.legalBeneficiary) {
+        this.addBene1 = true;
+        this.addBene2 = true;
       }
     }
   }
