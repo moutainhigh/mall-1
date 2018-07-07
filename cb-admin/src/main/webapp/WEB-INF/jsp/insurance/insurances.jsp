@@ -15,6 +15,11 @@
               culture:"zh-CN",
               parseFormats: ["yyyy-MM-dd"]
           });
+          $("#createTimes").kendoDatePicker({
+              format: "yyyy-MM-dd",
+              culture:"zh-CN",
+              parseFormats: ["yyyy-MM-dd"]
+          });
       });
       function formatOrderState(orderState) {
           switch (orderState) {
@@ -120,6 +125,13 @@
                 <input name="createTime" id="createTime"  data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
               </div>
 
+              <div class="toolbar-field">
+                <strong>-</strong>
+              </div>
+              <div class="toolbar-field">
+                <input name="createTime"  id="createTimes"  data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
+              </div>
+
 
 
               <div class="toolbar-field">
@@ -148,10 +160,10 @@
               </div>
 
               <div class="toolbar-field">
-                <strong>投保人&nbsp;&nbsp;:</strong>
+                <strong>投保人&nbsp;&nbsp;&nbsp;:</strong>
               </div>
               <div class="toolbar-field">
-                <input type="text" data-filter="insuranceOrderPolicyholder.policyholderName" style="width:170px;" data-operator="contains" class="form-control grid-filter" placeholder="请输入投保人"/>
+                <input type="text" data-filter="insuranceOrderPolicyholder.policyholderName" style="width:165px;" data-operator="contains" class="form-control grid-filter" placeholder="请输入投保人"/>
               </div>
 
               <div class="toolbar-field">
