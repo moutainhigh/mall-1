@@ -384,7 +384,7 @@
   import {ChinaAddressData, Datetime, Group, PopupPicker, Selector, XAddress, XInput, Toast} from 'vux'
   import storage from "../store/storage";
   import {required, minLength, maxLength, between, helpers, numeric, email} from 'vuelidate/lib/validators'
-  import {dateFormat} from "../config/mUtils";
+  import {dateFormat, wipeArray} from "../config/mUtils";
 
   //身份证正则校验
   const idCardVali = helpers.regex('idCardVali', /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/);
@@ -584,6 +584,11 @@
           } else {
             this.submitStatus = 'PENDING'
             this.$router.push("infoMatters");
+            let beneficiary1 = storage.fetch("beneficiary1");
+
+            let beneficiaries = [];
+            beneficiaries.push(beneficiary1);
+            wipeArray(storage.save("beneficiaries",beneficiaries))
           }
         } else if (this.addBene2) {
           if (this.$v.beneficiary2.$invalid) {
@@ -593,6 +598,10 @@
           }
         } else {
           // do your submit logic here
+          let beneficiaries = storage.fetch("beneficiaries");
+          let beneficiary2 = storage.fetch("beneficiary2");
+          beneficiaries.push(beneficiary2);
+          wipeArray(storage.save("beneficiaries",beneficiaries))
           this.submitStatus = 'PENDING'
           this.$router.push("infoMatters");
         }
