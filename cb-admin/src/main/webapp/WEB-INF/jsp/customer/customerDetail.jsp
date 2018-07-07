@@ -341,14 +341,14 @@
                     <div class="row">
                       <div class="inline-labels">
                         <div class="col-sm-2">
-                          <label>账户名：<span class="asterisk">*</span></label>
+                          <label>账户名：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-3">
                           ${customer.accountName}
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
-                          <label>手机号：<span class="asterisk">*</span></label>
+                          <label>手机号：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-3">
                           ${customer.mobile}
@@ -362,14 +362,14 @@
                       <div class="inline-labels">
 
                         <div class="col-sm-2">
-                          <label>邮箱：<span class="asterisk">*</span></label>
+                          <label>邮箱：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-3">
                           ${customer.email}
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
-                          <label>真实姓名：<span class="asterisk">*</span></label>
+                          <label>真实姓名：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-3">
                           ${customer.realName}
@@ -383,14 +383,14 @@
                     <div class="row">
                       <div class="inline-labels">
                         <div class="col-sm-2">
-                          <label>邮编：<span class="asterisk">*</span></label>
+                          <label>邮编：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-3">
                           ${customer.postCode}
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
-                          <label>固定电话：<span class="asterisk">*</span></label>
+                          <label>固定电话：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-3">
                           ${customer.telephone}
@@ -406,14 +406,14 @@
                     <div class="row">
                       <div class="inline-labels">
                         <div class="col-sm-2">
-                          <label>出生日期：<span class="asterisk">*</span></label>
+                          <label>出生日期：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-3">
                           ${customer.birthday}
                           </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
-                          <label>性别：<span class="asterisk">*</span></label>
+                          <label>性别：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-3">
                           ${customer.sex==true?'男':'女'}
@@ -424,7 +424,7 @@
                     <div class="spacer-10"></div>
                     <div class="row">
                       <div class="col-sm-2">
-                        <label>所在地区：<span class="asterisk">*</span></label>
+                        <label>所在地区：<span class="asterisk"></span></label>
                       </div>
                       <div class="col-sm-9" id="pdcDetail">
 
@@ -435,7 +435,7 @@
 
                     <div class="row">
                       <div class="col-sm-2">
-                        <label>详细地址：<span class="asterisk">*</span></label>
+                        <label>详细地址：<span class="asterisk"></span></label>
                       </div>
                       <div class="col-sm-9">
                         ${customer.address}
