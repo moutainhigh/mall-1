@@ -70,19 +70,20 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         insuranceOrder.setOrderCode(insuranceOrder.getOrderCode()+insuranceOrder.getOrderId());
         insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
 
-        Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
-        for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
-        {
-            insuranceOrderInformedMatter.setInsuranceOrder(insuranceOrder);
-        }
-        insuranceOrderInformedMatterDao.save(insuranceOrderInformedMatters);
+//        Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
+//        for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
+//        {
+//            insuranceOrderInformedMatter.setInsuranceOrder(insuranceOrder);
+//            insuranceOrderInformedMatterDao.save(insuranceOrderInformedMatter);
+//        }
 
-        Set<InsuranceOrderBeneficiary> insuranceOrderBeneficiarys = insuranceOrder.getInsuranceOrderBeneficiarys();
-        for(InsuranceOrderBeneficiary insuranceOrderBeneficiary: insuranceOrderBeneficiarys)
-        {
-            insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
-        }
-        insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
+
+//        Set<InsuranceOrderBeneficiary> insuranceOrderBeneficiarys = insuranceOrder.getInsuranceOrderBeneficiarys();
+//        for(InsuranceOrderBeneficiary insuranceOrderBeneficiary: insuranceOrderBeneficiarys)
+//        {
+//            insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
+//        }
+//        insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
 
         return insuranceOrder;
 
