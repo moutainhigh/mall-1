@@ -278,7 +278,7 @@
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderIncome}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span>  婚姻状况(cm)：</label>
+                                <label><span class="asterisk"></span>  婚姻状况：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage}
@@ -600,7 +600,7 @@
 
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span> 开户行省份(元) ：</label>
+                                <label><span class="asterisk"></span> 开户行省份 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.bankProvince}
@@ -629,7 +629,7 @@
 
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span> 账户号码(元) ：</label>
+                                <label><span class="asterisk"></span> 账户号码 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.accountNo}
@@ -652,10 +652,20 @@
                                     <tbody>
                                     <c:forEach items="${matterList}" var="matterLists">
                                         <tr>
-                                            <th scope="col" >${matterLists.matter}</th>
-                                            <th scope="col" width="100">
-                                                <c:if test="${matterLists.o_value==0}">否</c:if>
-                                                    <c:if test="${matterLists.o_value==1}">是</c:if>
+                                            <c:choose>
+                                                <c:when test="${matterLists.no=='0'}">
+                                                    <th scope="col" colspan="2">${matterLists.matter}</th>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <th scope="col" >${matterLists.matter}</th>
+                                                    <th scope="col" width="100">
+                                                        <c:if test="${matterLists.o_value==0}">否</c:if>
+                                                        <c:if test="${matterLists.o_value==1}">是</c:if>
+                                                    </th>
+
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </tr>
                                     </c:forEach>
 

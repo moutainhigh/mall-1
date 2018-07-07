@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface InsuranceOrderInformedMatterDao extends JpaRepository<InsuranceOrderInformedMatter, Integer>, JpaSpecificationExecutor<InsuranceOrderInformedMatter> {
 
-    @Query("select c from InsuranceOrderInformedMatter c left join fetch c.insuranceInformedMatter left join fetch c.insuranceOrder d where d.orderId=?1")
+    @Query("select c from InsuranceOrderInformedMatter c left join fetch c.insuranceInformedMatter f left join fetch c.insuranceOrder d where d.orderId=?1 order by f.matterId  ")
     public List<InsuranceOrderInformedMatter> getInsuranceOrderInformedMatter(int orderId);
 
 
