@@ -102,13 +102,13 @@ public class CustomerService implements ICustomerService {
         if (!customerDao.isUnique(customer, Customer_.accountName)) {
             throw new EntityExistException("客户账户名已存在");
         }
-        if(StringUtils.isBlank(customer.getPassword())){
+        if (StringUtils.isBlank(customer.getPassword())) {
             // 初始密码
             customer.setPassword(CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE));
         }
         customer.setCreateTime(new Date());
         customer.setRank(rankDao.getRankByDefaultRank());
-        Customer dbCustomer= customerDao.save(customer);
+        Customer dbCustomer = customerDao.save(customer);
         String token = rongCloudService.register(dbCustomer);
         dbCustomer.setRongCloudToken(token);
         return dbCustomer;
@@ -357,21 +357,25 @@ public class CustomerService implements ICustomerService {
         return customerDao.countByQqOpenId(qqOpenId);
     }
 
-    public List<Customer> getFriendByCustomerId(int customerId)
-    {
-        List <Customer> customers = customerFriendDao.findCustomerFriendByCustomerCustomerId(customerId);
+    public List<Customer> getFriendByCustomerId(int customerId) {
+        List<Customer> customers = customerFriendDao.findCustomerFriendByCustomerCustomerId(customerId);
         return customers;
     }
+
     @Transactional
-    public CustomerFriend addFriend(CustomerFriend customerFriend)
-    {
+    public CustomerFriend addFriend(CustomerFriend customerFriend) {
         customerFriend = customerFriendDao.save(customerFriend);
         return customerFriend;
     }
 
     @Transactional
-    public void delFriendById(CustomerFriendId customerFriendId)
-    {
+    public void delFriendById(CustomerFriendId customerFriendId) {
         customerFriendDao.delete(customerFriendId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isFriend(int customerId, int friendId) {
+        return customerFriendDao.findOne(new CustomerFriendId(customerId, friendId)) != null;
     }
 }

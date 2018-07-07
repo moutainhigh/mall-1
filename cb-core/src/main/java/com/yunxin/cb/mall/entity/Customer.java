@@ -173,7 +173,6 @@ public class Customer implements java.io.Serializable {
     private CustomerType customerType;
 
 
-
     /**
      * 优惠券
      */
@@ -190,6 +189,8 @@ public class Customer implements java.io.Serializable {
     private Set<Kitchen> kitchens = new HashSet<>();
 
     private String token;
+
+    private boolean friend;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -529,5 +530,14 @@ public class Customer implements java.io.Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Transient
+    public boolean isFriend() {
+        return friend;
+    }
+
+    public void setFriend(boolean friend) {
+        this.friend = friend;
     }
 }

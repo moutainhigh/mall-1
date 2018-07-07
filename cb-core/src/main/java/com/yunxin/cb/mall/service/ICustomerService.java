@@ -137,4 +137,6 @@ public interface ICustomerService {
     public CustomerFriend addFriend(CustomerFriend customerFriend);
 
     public void delFriendById(CustomerFriendId customerFriendId);
+
+    boolean isFriend(int customerId, int friendId);
 }

@@ -30,12 +30,22 @@ public class CustomerResource extends BaseResource {
         return new ResponseResult(customerService.getFriendByCustomerId(customerId));
     }
 
+    @ApiOperation(value = "通过手机号搜索好友")
+    @PostMapping(value = "queryFriend")
+    public ResponseResult queryFriend(@RequestParam("mobile") String mobile, @ModelAttribute("customerId") int customerId) {
+        Customer friend = customerService.getCustomerByMobile(mobile);
+        if (friend != null) {
+            friend.setFriend(customerService.isFriend(customerId, friend.getCustomerId()) || friend.getCustomerId() == customerId);
+            return new ResponseResult(friend);
+        }
+        return new ResponseResult(Result.FAILURE, "未找到相关好友");
+    }
+
     @ApiOperation(value = "添加好友")
     @PostMapping(value = "addFriend")
-    public ResponseResult addFriend(@RequestBody String mobile, @ModelAttribute("customerId") int customerId) {
+    public ResponseResult addFriend(@RequestParam("mobile") String mobile, @ModelAttribute("customerId") int customerId) {
         Customer myself = customerService.getCustomerById(customerId);
         Customer customer = customerService.getCustomerByMobile(mobile);
-
 
         if (customer == null) {
             return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
@@ -49,9 +59,9 @@ public class CustomerResource extends BaseResource {
         customerFriend.setCustomer(myself);
         customerFriend.setFriend(customer);
         customerFriend.setCreateTime(new Date());
-        customerFriend = customerService.addFriend(customerFriend);
+        customerService.addFriend(customerFriend);
 
-        return new ResponseResult(customerFriend);
+        return new ResponseResult(Result.SUCCESS);
     }
 
     @ApiOperation(value = "删除好友")
