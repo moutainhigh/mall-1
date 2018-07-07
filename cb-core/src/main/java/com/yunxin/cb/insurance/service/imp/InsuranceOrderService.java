@@ -10,8 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -179,6 +178,14 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 root.fetch(InsuranceOrder_.insuranceProduct,JoinType.LEFT);
                 root.fetch(InsuranceOrder_.insuranceProductPrice,JoinType.LEFT);
                 root.fetch(InsuranceOrder_.insuranceOrderInsured,JoinType.LEFT);
+
+            }
+
+            @Override
+            public void addConditions(Root<InsuranceOrder> root,
+                                      CriteriaQuery<?> query, CriteriaBuilder builder,
+                                      List<Predicate> predicates) {
+                query.orderBy(builder.desc(root.get(InsuranceOrder_.createTime)));
             }
         });
         return insuranceOrderDao.findAll(query,query.getPageRequest());
