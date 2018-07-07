@@ -12,6 +12,9 @@ export default {
 
     window.localStorage.setItem(key, window.JSON.stringify(items))
 
+  },
+  clear: function () {
+    window.localStorage.clear();
   }
 
 }

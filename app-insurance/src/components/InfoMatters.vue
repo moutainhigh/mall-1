@@ -712,7 +712,7 @@
       }
     },
     created:function () {
-      for (let i = 1 ; i <= 36 ; i ++){
+      for (let i = 1 ; i <= 34 ; i ++){
         this.matters.push(
           {
             insuranceInformedMatter:{
