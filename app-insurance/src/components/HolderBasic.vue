@@ -11,7 +11,7 @@
           <div v-if="birthday !== ''">{{birthday}}</div>
           <img src="../assets/img/drop-down.png"/>
         </div>
-        <div class="error" v-if="!$v.career.required && $v.career.$dirty">账户姓名不能为空</div>
+        <div class="error" v-if="!$v.career.required && $v.career.$dirty">请选择出生日期</div>
       </div>
       <div class="i-input">
         <div class="i-input-item">性别：</div>
@@ -37,7 +37,7 @@
           <input class="input" placeholder="请输入职业" v-model="career"
                  @input="$v.career.$touch()"/>
         </div>
-        <div class="error" v-if="!$v.career.required && $v.career.$dirty">账户姓名不能为空</div>
+        <div class="error" v-if="!$v.career.required && $v.career.$dirty">请输入职业</div>
       </div>
     </div>
     <div class="i-card">
@@ -100,7 +100,7 @@
 
 <script>
   import storage from "../store/storage"
-  import {PopupPicker} from 'vux'
+  import {PopupPicker, Toast} from 'vux'
   import XInput from "vux/src/components/x-input/index";
   import {required} from 'vuelidate/lib/validators'
 
@@ -120,7 +120,9 @@
         title: '',
         proId: '',
         career:'',
-        state:false
+        state:false,
+        toastText: '',
+        showPositionValue: false,
       }
     },
     validations: {
@@ -159,6 +161,12 @@
         storage.save('insured', insured);
       },
       submit() {
+        this.$v.$touch();
+        if (this.$v.$invalid) {
+          this.showPositionValue = true;
+          this.toastText = "请完善账号信息"
+          return false;
+        }
         if (this.state !== true){
           alert('请勾选投保须知');
           return false;
