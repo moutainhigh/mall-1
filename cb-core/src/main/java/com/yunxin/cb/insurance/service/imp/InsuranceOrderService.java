@@ -168,6 +168,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 root.fetch(InsuranceOrder_.insuranceOrderPolicyholder, JoinType.LEFT);
                 root.fetch(InsuranceOrder_.insuranceProduct,JoinType.LEFT);
                 root.fetch(InsuranceOrder_.insuranceProductPrice,JoinType.LEFT);
+                root.fetch(InsuranceOrder_.insuranceOrderInsured,JoinType.LEFT);
             }
         });
         return insuranceOrderDao.findAll(query,query.getPageRequest());

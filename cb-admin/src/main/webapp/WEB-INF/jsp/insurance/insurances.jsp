@@ -213,10 +213,11 @@
               </kendo:grid-filterable-operators>
             </kendo:grid-filterable>
             <kendo:grid-columns>
-              <kendo:grid-column title="保单编号" field="orderCode" width="100"  template="<a href='insuranceOrderDetail.do?orderId=#= orderId#'>#= orderCode#</a>" filterable="true"/>
+              <kendo:grid-column title="保单编号" field="orderCode" width="100"  template="<a href='insuranceOrderDetail.do?orderId=#= orderId#' style='color:blue'>#= orderCode#</a>" filterable="true"/>
               <kendo:grid-column title="合同编号" field="contractNo" width="100" filterable="true"/>
               <kendo:grid-column title="投保人" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderName#" width="100"/>
               <kendo:grid-column title="投保人手机" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderMobile#" width="100"/>
+              <kendo:grid-column title="被保人" field="insuranceOrderInsured" template="#=insuranceOrderInsured.insuredName#" width="100"/>
               <kendo:grid-column title="保险险种" field="insuranceProduct" template="#=insuranceProduct.prodName#" width="100"/>
               <kendo:grid-column title="保险期间" field="insuranceProduct"  template="#=insuranceProduct.insurePeriod#" width="100"/>
               <kendo:grid-column title="缴费年限" field="insuranceProduct" template="#=insuranceProduct.protectionYear#" width="100"/>
