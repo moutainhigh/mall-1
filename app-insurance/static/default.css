@@ -244,3 +244,11 @@ p {
 .vux-popup-picker-placeholder {
   color: #757575 !important;
 }
+
+.vux-cell-placeholder {
+  color: #757575 !important;
+}
+
+.weui-toast.vux-toast-middle {
+  width: 15.6em !important;
+}

@@ -108,21 +108,26 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 出生日期：</label>
+                                <label><span class="asterisk"></span> 出生日期：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 <fmt:formatDate value="${insuranceOrder.insuranceOrderPolicyholder.policyholderBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
 
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 性别：</label>
+                                <label><span class="asterisk"></span> 性别：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholder.policyholderGender}
+                                <c:choose>
+                                    <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='false'}">
+                                        女
+                                    </c:when>
+                                    <c:otherwise>男</c:otherwise>
+                                </c:choose>
                             </div>
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 被保人职业：</label>
+                                <label><span class="asterisk"></span> 被保人职业：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderInsured.insuredCareer}
@@ -134,20 +139,20 @@
                         <div class="row">
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 保单编号：</label>
+                                <label><span class="asterisk"></span> 保单编号：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.orderCode}
                             </div>
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 合同编号：</label>
+                                <label><span class="asterisk"></span> 合同编号：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.contractNo}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 保险期间：</label>
+                                <label><span class="asterisk"></span> 保险期间：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceProduct.insurePeriod}
@@ -158,19 +163,19 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 缴费期限：</label>
+                                <label><span class="asterisk"></span> 缴费期限：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceProduct.protectionYear}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 基本保额：</label>
+                                <label><span class="asterisk"></span> 基本保额：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceProductPrice.price}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 保单状态：</label>
+                                <label><span class="asterisk"></span> 保单状态：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 <c:if test="${insuranceOrder.orderState=='UN_PAID'}">待支付</c:if>
@@ -185,20 +190,25 @@
                         <div class="spacer-30">投保人信息</div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 姓名：</label>
+                                <label><span class="asterisk"></span> 姓名：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderName}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 性别：</label>
+                                <label><span class="asterisk"></span> 性别：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholder.policyholderGender}
+                                <c:choose>
+                                    <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='false'}">
+                                        女
+                                    </c:when>
+                                    <c:otherwise>男</c:otherwise>
+                                </c:choose>
                             </div>
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 投保人职业：</label>
+                                <label><span class="asterisk"></span> 投保人职业：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}
@@ -208,7 +218,7 @@
                         <div class="row">
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 出生日期：</label>
+                                <label><span class="asterisk"></span> 出生日期：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 <fmt:formatDate value="${insuranceOrder.insuranceOrderPolicyholder.policyholderBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
@@ -216,13 +226,13 @@
                             </div>
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>  证件类型：</label>
+                                <label><span class="asterisk"></span>  证件类型：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderCardType}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 证件号码：</label>
+                                <label><span class="asterisk"></span> 证件号码：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo}
@@ -232,20 +242,20 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>  证件有效期：</label>
+                                <label><span class="asterisk"></span>  证件有效期：</label>
                             </div>
                             <div class="col-sm-2 col-label">
 
                                     <fmt:formatDate value="${insuranceOrder.insuranceOrderPolicyholder.policyholderCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 国籍：</label>
+                                <label><span class="asterisk"></span> 国籍：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 身高(cm)：</label>
+                                <label><span class="asterisk"></span> 身高(cm)：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderHeight}
@@ -256,19 +266,19 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>  体重(kg)：</label>
+                                <label><span class="asterisk"></span>  体重(kg)：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderBodyWeight}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 年收入(万元)：</label>
+                                <label><span class="asterisk"></span> 年收入(万元)：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderIncome}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>  婚姻状况(cm)：</label>
+                                <label><span class="asterisk"></span>  婚姻状况(cm)：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage}
@@ -278,19 +288,19 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>  移动电话：</label>
+                                <label><span class="asterisk"></span>  移动电话：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> email：</label>
+                                <label><span class="asterisk"></span> email：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderEmail}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>  家庭住址：</label>
+                                <label><span class="asterisk"></span>  家庭住址：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
@@ -299,7 +309,7 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>  涉税人身份信息：</label>
+                                <label><span class="asterisk"></span>  涉税人身份信息：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderTaxRelated}
@@ -425,19 +435,24 @@
                         <c:forEach items="${insuranceOrder.insuranceOrderBeneficiarys}" var="insuranceOrderBeneficiarys">
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span> 姓名：</label>
+                                    <label><span class="asterisk"></span> 姓名：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
                                         ${insuranceOrderBeneficiarys.beneficiaryName}
                                 </div>
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span> 性别：</label>
+                                    <label><span class="asterisk"></span> 性别：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
-                                        ${insuranceOrderBeneficiarys.beneficiaryGender}
+                                    <c:choose>
+                                        <c:when test="${insuranceOrderBeneficiarys.beneficiaryGender=='false'}">
+                                                        女
+                                        </c:when>
+                                        <c:otherwise>男</c:otherwise>
+                                    </c:choose>
                                 </div>
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span>  国籍：</label>
+                                    <label><span class="asterisk"></span>  国籍：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
                                         ${insuranceOrderBeneficiarys.beneficiaryCountry}
@@ -446,19 +461,19 @@
                             <div class="spacer-10"></div>
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span> 受益顺序：</label>
+                                    <label><span class="asterisk"></span> 受益顺序：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
                                         ${insuranceOrderBeneficiarys.beneficiaryOrder}
                                 </div>
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span> 受益份额：</label>
+                                    <label><span class="asterisk"></span> 受益份额：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
                                         ${insuranceOrderBeneficiarys.beneficiaryProportion}
                                 </div>
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span>   出生日期：</label>
+                                    <label><span class="asterisk"></span>   出生日期：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
                                     <fmt:formatDate value="${insuranceOrderBeneficiarys.beneficiaryBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
@@ -472,19 +487,19 @@
                             <div class="spacer-10"></div>
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span> 证件类型 ：</label>
+                                    <label><span class="asterisk"></span> 证件类型 ：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
                                         ${insuranceOrderBeneficiarys.beneficiaryCardType}
                                 </div>
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span> 证件号码：</label>
+                                    <label><span class="asterisk"></span> 证件号码：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
                                         ${insuranceOrderBeneficiarys.beneficiaryCardNo}
                                 </div>
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span>   证件有效期：</label>
+                                    <label><span class="asterisk"></span>   证件有效期：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
                                     <fmt:formatDate value="${insuranceOrderBeneficiarys.beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
@@ -495,7 +510,7 @@
                             <div class="spacer-10"></div>
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <label><span class="asterisk">*</span> 与被保人关系 ：</label>
+                                    <label><span class="asterisk"></span> 与被保人关系 ：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
                                         ${insuranceOrderBeneficiarys.insuredRelation}
@@ -512,20 +527,20 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 投保人银行卡正面 ：</label>
+                                <label><span class="asterisk"></span> 投保人银行卡正面 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 <img src="${insuranceOrder.insuranceOrderPolicyholderBank.bankCardImg}" alt="投保人银行卡正面" width="200" height="150"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 投保人身份证正面 ：</label>
+                                <label><span class="asterisk"></span> 投保人身份证正面 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 <img src="${insuranceOrder.insuranceOrderPolicyholder.cardPositiveImg}" alt="投保人身份证正面" width="200" height="150"/>
                             </div>
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 投保人身份证反面 ：</label>
+                                <label><span class="asterisk"></span> 投保人身份证反面 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 <img src="${insuranceOrder.insuranceOrderPolicyholder.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
@@ -541,7 +556,7 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 投保单号 ：</label>
+                                <label><span class="asterisk"></span> 投保单号 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.orderCode}
@@ -549,7 +564,7 @@
 
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 账户姓名 ：</label>
+                                <label><span class="asterisk"></span> 账户姓名 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.bankName}
@@ -557,7 +572,7 @@
 
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 交易金额(元) ：</label>
+                                <label><span class="asterisk"></span> 交易金额(元) ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.amount}
@@ -569,7 +584,7 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 手机号码 ：</label>
+                                <label><span class="asterisk"></span> 手机号码 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.bankMobile}
@@ -577,7 +592,7 @@
 
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>  开户行 ：</label>
+                                <label><span class="asterisk"></span>  开户行 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.accountBank}
@@ -585,7 +600,7 @@
 
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 开户行省份(元) ：</label>
+                                <label><span class="asterisk"></span> 开户行省份(元) ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.bankProvince}
@@ -598,7 +613,7 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 开户行城市 ：</label>
+                                <label><span class="asterisk"></span> 开户行城市 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.bankCity}
@@ -606,7 +621,7 @@
 
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>  账户类型 ：</label>
+                                <label><span class="asterisk"></span>  账户类型 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.accountType}
@@ -614,7 +629,7 @@
 
 
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 账户号码(元) ：</label>
+                                <label><span class="asterisk"></span> 账户号码(元) ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.accountNo}

@@ -14,7 +14,10 @@ export const submitOrder = function (code) {
   let insuranceOrder = wipeArray(storage.fetch("order"));
   let matters = storage.fetch("matters");
   insuranceOrder.insuranceOrderPolicyholderBank = wipeArray(insuranceOrder.insuranceOrderPolicyholderBank );
-  let beneficiaries = storage.fetch('beneficiaries');
+  let beneficiaries = [];
+  if (!insuranceOrder.legalBeneficiary) {
+    beneficiaries =[wipeArray(storage.fetch('beneficiary1')),wipeArray(storage.fetch('beneficiary2'))];
+  }
   insuranceOrder.insuranceOrderPolicyholder = holder;
   insuranceOrder.insuranceOrderInsured = insured;
   insuranceOrder.insuranceOrderBeneficiarys = beneficiaries;
@@ -23,5 +26,5 @@ export const submitOrder = function (code) {
 };
 
 export const uploadImage = function (base64) {
-  return fetch('/common/file/uploadBase64/ PAPERWORK', base64, 'POST','fetch');
+  return fetch('/common/file/uploadBase64/PAPERWORK', base64, 'POST','fetch');
 };

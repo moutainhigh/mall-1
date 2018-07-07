@@ -17,7 +17,7 @@ public class RestConfig {
     public FilterRegistrationBean restTokenFilter() {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new RestTokenFilter());
-        registrationBean.addUrlPatterns("/customer/*", "/insurance/*");
+        registrationBean.addUrlPatterns("/customer/*");
         registrationBean.setName("restTokenFilter");
         registrationBean.setOrder(1);
         return registrationBean;

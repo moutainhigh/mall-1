@@ -11,7 +11,7 @@
     </div>
 
     <div class="title" style="color: #e1bb3a">投保单签名</div>
-    <div class="headPhoto" v-if="imgUrl === ''" @click.stop="addPic">
+    <div class="headPhoto" v-if="imgUrl === '' || imgUrl === null" @click.stop="addPic">
       <div style="position: absolute; width: 100%; height: 120px"></div>
       <img src="../assets/img/headPhotograph.png"/>
       <p style="font-size: 13px">请点击此处，拍摄投保人正面头像</p>

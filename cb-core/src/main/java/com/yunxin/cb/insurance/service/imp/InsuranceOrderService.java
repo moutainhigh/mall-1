@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -68,19 +70,20 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         insuranceOrder.setOrderCode(insuranceOrder.getOrderCode()+insuranceOrder.getOrderId());
         insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
 
-        Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
-        for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
-        {
-            insuranceOrderInformedMatter.setInsuranceOrder(insuranceOrder);
-        }
-        insuranceOrderInformedMatterDao.save(insuranceOrderInformedMatters);
+//        Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
+//        for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
+//        {
+//            insuranceOrderInformedMatter.setInsuranceOrder(insuranceOrder);
+//            insuranceOrderInformedMatterDao.save(insuranceOrderInformedMatter);
+//        }
 
-        Set<InsuranceOrderBeneficiary> insuranceOrderBeneficiarys = insuranceOrder.getInsuranceOrderBeneficiarys();
-        for(InsuranceOrderBeneficiary insuranceOrderBeneficiary: insuranceOrderBeneficiarys)
-        {
-            insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
-        }
-        insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
+
+//        Set<InsuranceOrderBeneficiary> insuranceOrderBeneficiarys = insuranceOrder.getInsuranceOrderBeneficiarys();
+//        for(InsuranceOrderBeneficiary insuranceOrderBeneficiary: insuranceOrderBeneficiarys)
+//        {
+//            insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
+//        }
+//        insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
 
         return insuranceOrder;
 
@@ -123,7 +126,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 if(null!=insuranceInformedMatter.getMatterGroup()){
                     if(groupId!=insuranceInformedMatter.getMatterGroup().getGroupId()){
                         Map<String,Object> maps=new HashMap<>();
-                        System.out.println(insuranceInformedMatter.getMatterGroup().getDescription());
                         maps.put("matter",insuranceInformedMatter.getMatterGroup().getDescription());
                         listMap.add(maps);
                         groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
@@ -144,12 +146,30 @@ public class InsuranceOrderService implements IInsuranceOrderService {
      */
     @Override
     public Page<InsuranceOrder> pageInsuranceOrder(PageSpecification<InsuranceOrder> query) {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
+        for (PageSpecification.FilterDescriptor filterDescriptor:list
+             ) {
+            if("createTime".equals(filterDescriptor.getField())){
+
+                Date createTime= null;
+                    SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
+                    String createTimes=simpleDateFormat.format(dates);
+                    filterDescriptor.setValue(createTimes);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         query.setCustomSpecification(new CustomSpecification<InsuranceOrder>(){
             @Override
             public void buildFetch(Root<InsuranceOrder> root) {
                 root.fetch(InsuranceOrder_.insuranceOrderPolicyholder, JoinType.LEFT);
                 root.fetch(InsuranceOrder_.insuranceProduct,JoinType.LEFT);
                 root.fetch(InsuranceOrder_.insuranceProductPrice,JoinType.LEFT);
+                root.fetch(InsuranceOrder_.insuranceOrderInsured,JoinType.LEFT);
             }
         });
         return insuranceOrderDao.findAll(query,query.getPageRequest());

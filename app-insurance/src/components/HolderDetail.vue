@@ -23,7 +23,7 @@
 
       <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="insured.insuredCardPeriod" v-bind:class="{'errorInput': $v.insured.insuredCardPeriod.$error}"-->
       <!--@input="$v.insured.insuredCardPeriod.$touch()"></x-input>-->
-      <datetime title="证件有效期" v-model="insured.insuredCardPeriod" placeholder="请选择证件有效期"
+      <datetime title="证件有效期" v-model="insured.insuredCardPeriod" :startDate="startDate" endDate="2199-12-31" placeholder="请选择证件有效期"
                 value-text-align="left"></datetime>
       <div class="error" v-if="!$v.insured.insuredCardPeriod.required && $v.insured.insuredCardPeriod.$dirty">
         证件有效期不能为空
@@ -113,7 +113,7 @@
       </div>
       <x-input title="投保人职业" placeholder="请输入您的职业" v-model="holder.policyholderCareer"></x-input>
       <!--<popup-picker title="投保人职业" placeholder="请选择职业" value-text-align="left"></popup-picker>-->
-      <datetime title="出生日期" v-model="holder.policyholderBirthday" placeholder="请输入生日日期"
+      <datetime title="出生日期" v-model="holder.policyholderBirthday" startDate="1950-01-01" :endDate="startDate" placeholder="请选择生日日期"
                 value-text-align="left"></datetime>
       <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType" :data="cardTypes"
                     value-text-align="left"></popup-picker>
@@ -127,7 +127,7 @@
 
       <!--<x-input title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期" v-bind:class="{'errorInput': $v.holder.policyholderCardPeroid.$error}"-->
       <!--@input="$v.holder.policyholderCardPeroid.$touch()"></x-input>-->
-      <datetime title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期"
+      <datetime title="证件有效期" v-model="holder.policyholderCardPeroid" :startDate="startDate" endDate="2199-12-30" placeholder="请选择证件有效期"
                 value-text-align="left"></datetime>
       <div class="error" v-if="!$v.holder.policyholderCardPeroid.required && $v.holder.policyholderCardPeroid.$dirty">
         证件有效期不能为空
@@ -210,8 +210,8 @@
         <img src="../assets/img/add.png"/>新增受益人
       </div>
     </div>
-    <div v-if="addBene1 || !legalBeneficiary">
-      <div class="add">受益人信息 <span style="float: right;" @click="delBene(1)">删除</span></div>
+    <div v-if="addBene1">
+      <div class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(1)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary1.beneficiaryName"
                  v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryName.$error}"
@@ -261,9 +261,9 @@
           请输入受益份额，在0%到100%之间
         </div>
 
-        <datetime title="出生日期" placeholder="请选择出生日期" v-model="beneficiary1.beneficiaryBirthday"
+        <datetime title="出生日期" placeholder="请选择出生日期" startDate="1950-01-01" :endDate="startDate" v-model="beneficiary1.beneficiaryBirthday"
                   value-text-align="left"></datetime>
-        <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="beneficiary1.beneficiaryCardType"
+        <popup-picker title="证件类型" placeholder="请选择证件类型"  v-model="beneficiary1.beneficiaryCardType"
                       value-text-align="left" :data="cardTypes"></popup-picker>
 
         <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary1.beneficiaryCardNo"
@@ -276,7 +276,7 @@
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary1.beneficiaryCardPeroid.$touch()"></x-input>-->
-        <datetime title="证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" placeholder="请选择证件有效期"
+        <datetime title="证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" :startDate="startDate" endDate="2199-12-30" placeholder="请选择证件有效期"
                   value-text-align="left"></datetime>
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryCardPeroid.required && $v.beneficiary1.beneficiaryCardPeroid.$dirty">
@@ -291,7 +291,7 @@
       </group>
     </div>
 
-    <div v-if="addBene2 || !legalBeneficiary">
+    <div v-if="addBene2">
       <div class="add">受益人信息 <span style="float: right;" @click="delBene(2)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName"
@@ -337,12 +337,12 @@
           请输入受益份额，在0%到100%之间
         </div>
 
-        <datetime title="出生日期" placeholder="请选择出生日期" v-model="beneficiary2.beneficiaryBirthday"
+        <datetime title="出生日期" placeholder="请选择出生日期" startDate="1950-01-01" :endDate="startDate" v-model="beneficiary2.beneficiaryBirthday"
                   value-text-align="left"></datetime>
         <popup-picker title="证件类型" placeholder="请选择证件类型" :data="cardTypes" v-model="beneficiary2.beneficiaryCardType"
                       value-text-align="left"></popup-picker>
 
-        <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary2.beneficiaryCardNo"
+        <x-input title="证件号码" placeholder="请输入证件号" :startDate="startDate" endDate="2199-12-30" v-model="beneficiary2.beneficiaryCardNo"
                  v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardNo.$error}"
                  @input="$v.beneficiary2.beneficiaryCardNo.$touch()"></x-input>
         <div class="error"
@@ -384,6 +384,7 @@
   import {ChinaAddressData, Datetime, Group, PopupPicker, Selector, XAddress, XInput, Toast} from 'vux'
   import storage from "../store/storage";
   import {required, minLength, maxLength, between, helpers, numeric, email} from 'vuelidate/lib/validators'
+  import {dateFormat, wipeArray} from "../config/mUtils";
 
   //身份证正则校验
   const idCardVali = helpers.regex('idCardVali', /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/);
@@ -409,7 +410,6 @@
       return {
         holder: storage.fetch('holder'),
         insured: storage.fetch('insured'),
-        beneficiaries: storage.fetch('beneficiaries'),
         beneficiary1: storage.fetch('beneficiary1'),
         beneficiary2: storage.fetch('beneficiary2'),
         //是否法定受益人
@@ -428,7 +428,8 @@
         //提交表单时校验状态
         submitStatus: null,
         showPositionValue: false,
-        toastText: ''
+        toastText: '',
+        startDate: dateFormat(new Date(),"yyyy-MM-dd")
       }
     },
     validations: {
@@ -570,68 +571,111 @@
         this.$router.back();
       },
       next() {
-        this.$v.$touch()
-        if (this.$v.$invalid) {
-          this.submitStatus = 'ERROR'
+        this.$v.$touch();
+        if (this.$v.insured.$invalid || this.$v.holder.$invalid) {
+          this.submitStatus = 'ERROR';
           this.showPositionValue = true;
           this.toastText = "信息填写有误"
+        } else if (this.addBene1) {
+          if (this.$v.beneficiary1.$invalid) {
+            this.submitStatus = 'ERROR';
+            this.showPositionValue = true;
+            this.toastText = "信息填写有误"
+          } else {
+            this.submitStatus = 'PENDING'
+            this.$router.push("infoMatters");
+            let beneficiary1 = storage.fetch("beneficiary1");
+
+            let beneficiaries = [];
+            beneficiaries.push(beneficiary1);
+            wipeArray(storage.save("beneficiaries",beneficiaries))
+          }
+        } else if (this.addBene2) {
+          if (this.$v.beneficiary2.$invalid) {
+            this.submitStatus = 'ERROR';
+            this.showPositionValue = true;
+            this.toastText = "信息填写有误"
+          }
         } else {
           // do your submit logic here
+          let beneficiaries = storage.fetch("beneficiaries");
+          let beneficiary2 = storage.fetch("beneficiary2");
+          beneficiaries.push(beneficiary2);
+          wipeArray(storage.save("beneficiaries",beneficiaries))
           this.submitStatus = 'PENDING'
-          setTimeout(() => {
-            this.submitStatus = 'OK';
-            // let beneficiaries = storage.fetch('beneficiaries')
-            var beneficiaries = [];
-            beneficiaries.push(this.beneficiary1);
-            beneficiaries.push(this.beneficiary2);
-            storage.save("beneficiaries", beneficiaries);
-            this.$router.push("infoMatters");
-          }, 500)
+          this.$router.push("infoMatters");
         }
       },
       addBene() {
         if (this.addBene1 === false) {
           this.addBene1 = true;
-          this.beneficiaries.push(this.beneficiary1);
+          let beneficiary1 = {
+            beneficiaryName: '',
+            beneficiaryGender: true,
+            beneficiaryBirthday: '',
+            beneficiaryCardType: [],
+            beneficiaryCardNo: '',
+            beneficiaryCardPeroid: '',
+            insuredRelation: [],
+            beneficiaryOrder: [],
+            beneficiaryProportion: '',
+            beneficiaryCountry: ''
+          };
         } else if (this.addBene1 === true && this.addBene2 === false) {
           this.addBene2 = true;
-          this.beneficiaries.push(this.beneficiary2);
+          let beneficiary2 = {
+            beneficiaryName: '',
+            beneficiaryGender: true,
+            beneficiaryBirthday: '',
+            beneficiaryCardType: [],
+            beneficiaryCardNo: '',
+            beneficiaryCardPeroid: '',
+            insuredRelation: [],
+            beneficiaryOrder: [],
+            beneficiaryProportion: '',
+            beneficiaryCountry: ''
+          };
+        } else if (this.addBene1 && this.addBene2) {
+          this.toastText = "新增受益人最多为两个";
+          this.showPositionValue = true;
         }
         this.legalBeneficiary = false;
         let order = storage.fetch("order");
         order.legalBeneficiary = this.legalBeneficiary;
         storage.save("order", order);
-        // if (this.beneficiaries.length < 2) {
-        //     let beneficiary = {
-        //       beneficiaryName: '',
-        //       beneficiaryGender: '',
-        //       beneficiaryBirthday: '',
-        //       beneficiaryCardType: [],
-        //       beneficiaryCardNo: '',
-        //       beneficiaryCardPeroid: '',
-        //       insuredRelation: [],
-        //       beneficiaryOrder: [],
-        //       beneficiaryProportion: '',
-        //       beneficiaryCountry: ''
-        //     };
-        //   this.beneficiaries.push(beneficiary);
-        //   storage.save("beneficiaries", this.beneficiaries);
-        //   this.legalBeneficiary = false;
-        // }
       },
       delBene(index) {
         if (index === 1) {
           this.addBene1 = false;
-          // storage.save('beneficiary1', null);
+          this.beneficiary1 = {
+            beneficiaryName: '',
+            beneficiaryGender: true,
+            beneficiaryBirthday: '',
+            beneficiaryCardType: [],
+            beneficiaryCardNo: '',
+            beneficiaryCardPeroid: '',
+            insuredRelation: [],
+            beneficiaryOrder: [],
+            beneficiaryProportion: '',
+            beneficiaryCountry: ''
+          };
+          storage.save('beneficiary1', null);
         } else {
           this.addBene2 = false;
-          // storage.save('beneficiary2', null);
+          this.beneficiary2 = {
+            beneficiaryName: '',
+            beneficiaryGender: true,
+            beneficiaryBirthday: '',
+            beneficiaryCardType: [],
+            beneficiaryCardNo: '',
+            beneficiaryCardPeroid: '',
+            insuredRelation: [],
+            beneficiaryOrder: [],
+            beneficiaryProportion: '',
+            beneficiaryCountry: ''
+          };
+          storage.save('beneficiary2', null);
         }
-        // this.beneficiaries.splice(index, 1);
-        // storage.save("beneficiaries", this.beneficiaries);
-        // if (this.beneficiaries.length === 0) {
-        //   this.legalBeneficiary = !this.legalBeneficiary;
-        // }
       },
       changeLegal() {
         this.legalBeneficiary = !this.legalBeneficiary;
@@ -641,6 +685,9 @@
         if (this.legalBeneficiary) {
           this.addBene1 = false;
           this.addBene2 = false;
+        } else {
+          this.addBene1 = true;
+          this.addBene2 = true;
         }
       },
       submit() {
@@ -656,13 +703,6 @@
             newVal.policyholderDistrict = this.holder.holderPCD[2];
           }
           storage.save('holder', newVal);
-        },
-        immediate: true,
-        deep: true
-      },
-      beneficiaries: {
-        handler(newVal, oldVal) {
-          storage.save('beneficiaries', newVal);
         },
         immediate: true,
         deep: true
@@ -697,10 +737,41 @@
     created: function () {
       let order = storage.fetch("order");
       let beneficiary1 = storage.fetch("beneficiary1");
-      let beneficiary2 = storage.fetch("beneficiary1");
+      let beneficiary2 = storage.fetch("beneficiary2");
+      if (beneficiary1) {
+        this.beneficiary1 = {
+          beneficiaryName: '',
+          beneficiaryGender: true,
+          beneficiaryBirthday: '',
+          beneficiaryCardType: [],
+          beneficiaryCardNo: '',
+          beneficiaryCardPeroid: '',
+          insuredRelation: [],
+          beneficiaryOrder: [],
+          beneficiaryProportion: '',
+          beneficiaryCountry: ''
+        };
+        storage.save('beneficiary1', this.beneficiary1);
+      }
+      if (beneficiary2) {
+        this.beneficiary2 = {
+          beneficiaryName: '',
+          beneficiaryGender: true,
+          beneficiaryBirthday: '',
+          beneficiaryCardType: [],
+          beneficiaryCardNo: '',
+          beneficiaryCardPeroid: '',
+          insuredRelation: [],
+          beneficiaryOrder: [],
+          beneficiaryProportion: '',
+          beneficiaryCountry: ''
+        };
+        storage.save('beneficiary2', this.beneficiary2);
+      }
       this.legalBeneficiary = order.legalBeneficiary;
-      if (!this.legalBeneficiary && this.beneficiary1) {
-
+      if (!this.legalBeneficiary) {
+        this.addBene1 = true;
+        this.addBene2 = true;
       }
     }
   }

@@ -15,6 +15,11 @@
               culture:"zh-CN",
               parseFormats: ["yyyy-MM-dd"]
           });
+          $("#createTimes").kendoDatePicker({
+              format: "yyyy-MM-dd",
+              culture:"zh-CN",
+              parseFormats: ["yyyy-MM-dd"]
+          });
       });
       function formatOrderState(orderState) {
           switch (orderState) {
@@ -117,7 +122,14 @@
                 <strong>投保时间:</strong>
               </div>
               <div class="toolbar-field">
-                <input name="createTime" id="createTime"  data-filter="createTime" data-operator="gte" class="grid-filter"/>
+                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+              </div>
+
+              <div class="toolbar-field">
+                <strong>-</strong>
+              </div>
+              <div class="toolbar-field">
+                <input name="createTime"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
               </div>
 
 
@@ -148,14 +160,14 @@
               </div>
 
               <div class="toolbar-field">
-                <strong>投保人:</strong>
+                <strong>投保人&nbsp;&nbsp;&nbsp;:</strong>
               </div>
               <div class="toolbar-field">
-                <input type="text" data-filter="insuranceOrderPolicyholder.policyholderName" data-operator="contains" class="form-control grid-filter" placeholder="请输入投保人"/>
+                <input type="text" data-filter="insuranceOrderPolicyholder.policyholderName" style="width:165px;" data-operator="contains" class="form-control grid-filter" placeholder="请输入投保人"/>
               </div>
 
               <div class="toolbar-field">
-                <strong>被保人:</strong>
+                <strong>被保人&nbsp;&nbsp;:</strong>
               </div>
               <div class="toolbar-field">
                 <input type="text" data-filter="insuranceOrderInsured.insuredName" data-operator="contains" class="form-control grid-filter" placeholder="请输入被保人"/>
@@ -185,7 +197,7 @@
         <div class="toolbar responsive-helper">
           <header>
             <div class="pull-left">
-              <h3>产品列表</h3>
+              <h3>保单列表</h3>
             </div>
 
           </header>
@@ -201,10 +213,11 @@
               </kendo:grid-filterable-operators>
             </kendo:grid-filterable>
             <kendo:grid-columns>
-              <kendo:grid-column title="保单编号" field="orderCode" width="100"  template="<a href='insuranceOrderDetail.do?orderId=#= orderId#'>#= orderCode#</a>" filterable="true"/>
+              <kendo:grid-column title="保单编号" field="orderCode" width="100"  template="<a href='insuranceOrderDetail.do?orderId=#= orderId#' style='color:blue'>#= orderCode#</a>" filterable="true"/>
               <kendo:grid-column title="合同编号" field="contractNo" width="100" filterable="true"/>
               <kendo:grid-column title="投保人" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderName#" width="100"/>
               <kendo:grid-column title="投保人手机" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderMobile#" width="100"/>
+              <kendo:grid-column title="被保人" field="insuranceOrderInsured" template="#=insuranceOrderInsured.insuredName#" width="100"/>
               <kendo:grid-column title="保险险种" field="insuranceProduct" template="#=insuranceProduct.prodName#" width="100"/>
               <kendo:grid-column title="保险期间" field="insuranceProduct"  template="#=insuranceProduct.insurePeriod#" width="100"/>
               <kendo:grid-column title="缴费年限" field="insuranceProduct" template="#=insuranceProduct.protectionYear#" width="100"/>

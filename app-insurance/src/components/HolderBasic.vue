@@ -11,6 +11,7 @@
           <div v-if="birthday !== ''">{{birthday}}</div>
           <img src="../assets/img/drop-down.png"/>
         </div>
+        <div class="error" v-if="!$v.career.required && $v.career.$dirty">请选择出生日期</div>
       </div>
       <div class="i-input">
         <div class="i-input-item">性别：</div>
@@ -32,9 +33,11 @@
         <!--<group>-->
         <!--<popup-picker title="受益顺序" placeholder="" :data="list" v-model="test"  value-text-align="left"></popup-picker>-->
         <!--</group>-->
-        <div class="i-input-select">
-          <input class="input" placeholder="请输入职业" v-model="career"/>
+        <div class="i-input-select" v-bind:class="{'errorInput': $v.career.$error}">
+          <input class="input" placeholder="请输入职业" v-model="career"
+                 @input="$v.career.$touch()"/>
         </div>
+        <div class="error" v-if="!$v.career.required && $v.career.$dirty">请输入职业</div>
       </div>
     </div>
     <div class="i-card">
@@ -84,10 +87,7 @@
       <div class="i-message" @click="state = !state">
         <img v-if="!state" class="checkIcon" src="../assets/img/checkoff.png">
         <img v-if="state" class="checkIcon" src="../assets/img/checkon.png">
-        <div>&tdot;欢迎使用富德生命微信投保，请您仔细阅
-          读人身保险投保提示书、产品说明书及保险条款，如实
-          填写各项投保信息并确保为本人签名。保险合同将以此
-          为依据，否则可能影响所签合同的法律效力。</div>
+        <div>&emsp;欢迎使用富德生命微信投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
       </div>
     </div>
     <div style="height: 48px;">
@@ -100,8 +100,9 @@
 
 <script>
   import storage from "../store/storage"
-  import {PopupPicker} from 'vux'
+  import {PopupPicker, Toast} from 'vux'
   import XInput from "vux/src/components/x-input/index";
+  import {required} from 'vuelidate/lib/validators'
 
   export default {
     name: "holder-basic",
@@ -119,7 +120,17 @@
         title: '',
         proId: '',
         career:'',
-        state:false
+        state:false,
+        toastText: '',
+        showPositionValue: false,
+      }
+    },
+    validations: {
+      birthday: {
+        required
+      },
+      career: {
+        required
       }
     },
     methods: {
@@ -130,7 +141,7 @@
           confirmText: '确定',
           format: 'YYYY-MM-DD',
           value: new Date().getVarDate,
-          minYear: '1956',
+          minYear: '1950',
           endDate: new Date(),
           onConfirm(val) {
             _this.birthday = val;
@@ -150,6 +161,12 @@
         storage.save('insured', insured);
       },
       submit() {
+        this.$v.$touch();
+        if (this.$v.$invalid) {
+          this.showPositionValue = true;
+          this.toastText = "请完善账号信息"
+          return false;
+        }
         if (this.state !== true){
           alert('请勾选投保须知');
           return false;
@@ -231,5 +248,46 @@
   .checkIcon {
     position: absolute;
     width: 4vw;
+  }
+
+  .error {
+    color: #f79483;
+    font-size: 12px;
+    text-align: right;
+    margin-right: 10px;
+  }
+
+  .errorInput {
+    animation-name: shakeError;
+    animation-duration: .6s;
+    animation-timing-function: ease-in-out;
+    border: 1px solid #f79483;
+  }
+
+  @keyframes shakeError {
+    0% {
+      transform: translateX(0);
+    }
+    15% {
+      transform: translateX(0.375rem);
+    }
+    30% {
+      transform: translateX(-0.375rem);
+    }
+    45% {
+      transform: translateX(0.375rem);
+    }
+    60% {
+      transform: translateX(-0.375rem);
+    }
+    75% {
+      transform: translateX(0.375rem);
+    }
+    90% {
+      transform: translateX(-0.375rem);
+    }
+    100% {
+      transform: translateX(0);
+    }
   }
 </style>

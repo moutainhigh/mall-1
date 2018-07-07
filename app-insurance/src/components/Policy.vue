@@ -3,7 +3,7 @@
     <div class="r-frame">
       <div style="top: 140px;position: relative;">
         <div style="font-size: 13px;">
-          投保单号：2548456812346
+          投保单号：{{orderCode}}
         </div>
         <div style="font-size: 15px;margin-top: 10px;">
           自核通过，待保险公司收费
@@ -27,7 +27,15 @@
 
 <script>
   export default {
-    name: "policy"
+    name: "policy",
+    data() {
+      return {
+        orderCode:''
+      }
+    },
+    created(){
+      this.orderCode = this.$route.query.orderCode;
+    }
   }
 </script>
 

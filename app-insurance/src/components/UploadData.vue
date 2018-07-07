@@ -94,18 +94,17 @@
           :src="imgUrls.image6">
       </div>
     </div>
-
+    <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 48px;">
-      <button class="i-footer">
-        <router-link to="payment">
+      <button class="i-footer" @click="next">
           <div>下一步</div>
-        </router-link>
       </button>
     </div>
   </div>
 </template>
 
 <script>
+  import {Toast} from 'vux'
   import '../lib/lrz.all.bundle'
   import storage from "../store/storage";
   import {uploadImage} from "../service/getData";
@@ -115,6 +114,9 @@
   let order = storage.fetch("order");
 
   export default {
+    components: {
+      Toast
+    },
     name: "UploadData",
     data() {
       return {
@@ -126,6 +128,8 @@
           image5: storage.fetch("holder").otherImg2,
           image6: storage.fetch("holder").otherImg3,
         },
+        showPositionValue: false,
+        toastText: '',
       }
     },
     methods: {
@@ -158,41 +162,55 @@
       onFileChange: function (e) {
         var files = e.target.files || e.dataTransfer.files;
         if (!files.length) return;
+        // this.$vux.loading.show({
+        //   text: 'Loading'
+        // });
         this.createImage(files, e);
+        // this.$vux.loading.hide()
       },
       createImage: function (file, e) {
         let vm = this;
         lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
-          uploadImage(rst.base64).then(function(result) {
+          uploadImage(rst.base64).then(function (result) {
             switch (e.target.id) {
               case 'image1' :
                 vm.imgUrls.image1 = result.data;
+                let order = storage.fetch("order");
                 order.insuranceOrderPolicyholderBank.bankCardImg = result.data;
+                storage.save("order", order);
                 break;
               case 'image2' :
                 vm.imgUrls.image2 = result.data;
-                holder.cardPositiveImg = result.data;
+                let holder1 = storage.fetch("holder");
+                holder1.cardPositiveImg = result.data;
+                storage.save("holder", holder1);
                 break;
               case 'image3' :
                 vm.imgUrls.image3 = result.data;
-                holder.cardNegativeImg = result.data;
+                let holder2 = storage.fetch("holder");
+                holder2.cardNegativeImg = result.data;
+                storage.save("holder", holder2);
                 break;
               case 'image4' :
                 vm.imgUrls.image4 = result.data;
-                holder.otherImg1 = result.data;
+                let holder3 = storage.fetch("holder");
+                holder3.otherImg1 = result.data;
+                storage.save("holder", holder3);
                 break;
               case 'image5' :
                 vm.imgUrls.image5 = result.data;
-                holder.otherImg2 = result.data;
+                let holder4 = storage.fetch("holder");
+                holder4.otherImg2 = result.data;
+                storage.save("holder", holder4);
                 break;
               case 'image6' :
                 vm.imgUrls.image6 = result.data;
-                holder.otherImg3 = result.data;
+                let holder5 = storage.fetch("holder");
+                holder5.otherImg3 = result.data;
+                storage.save("holder", holder5);
                 break;
             }
-            storage.save("holder", holder);
-            storage.save("order", order);
           });
           return rst;
         }).always(function () {
@@ -231,6 +249,24 @@
         }
         storage.save("holder", holder);
         storage.save("order", order);
+      },
+      next() {
+        if (this.imgUrls.image1 === '') {
+          this.showPositionValue = true;
+          this.toastText = "请上传银行卡正面图片";
+          return false;
+        }
+        if (this.imgUrls.image1 === '') {
+          this.showPositionValue = true;
+          this.toastText = "请上传身份证正面图片";
+          return false;
+        }
+        if (this.imgUrls.image1 === '') {
+          this.showPositionValue = true;
+          this.toastText = "请上传身份证背面图片";
+          return false;
+        }
+        this.$router.push("payment");
       },
     }
   }
