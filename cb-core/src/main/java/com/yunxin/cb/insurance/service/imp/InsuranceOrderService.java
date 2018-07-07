@@ -114,29 +114,38 @@ public class InsuranceOrderService implements IInsuranceOrderService {
      */
     @Override
     public List<Map<String, Object>> findMatter(int orderId) {
-        List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList =  insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
-        List<Map<String, Object>> listMap=new ArrayList<>();
-        int groupId=0;
-        for(InsuranceOrderInformedMatter list:insuranceOrderInformedMatterList
-             ) {
-            Map<String,Object> map=new HashMap<>();
-            InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(list.getInsuranceInformedMatter().getMatterId());
+        final List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList =  insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
 
-           if (null!=insuranceInformedMatter){
-                if(null!=insuranceInformedMatter.getMatterGroup()){
-                    if(groupId!=insuranceInformedMatter.getMatterGroup().getGroupId()){
-                        Map<String,Object> maps=new HashMap<>();
-                        maps.put("matter",insuranceInformedMatter.getMatterGroup().getDescription());
-                        listMap.add(maps);
-                        groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
+        return new ArrayList<Map<String,Object>>(){
+            {
+                int groupId=0;
+                for(InsuranceOrderInformedMatter list:insuranceOrderInformedMatterList
+                        ) {
+                    InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(list.getInsuranceInformedMatter().getMatterId());
+                    if(null!=insuranceInformedMatter) {
+                        if (null != insuranceInformedMatter.getMatterGroup()) {
+                            if(groupId!=insuranceInformedMatter.getMatterGroup().getGroupId()){
+                                add(new HashMap<String, Object>() {
+                                    {
+                                        put("matter",insuranceInformedMatter.getMatterGroup().getDescription());
+                                        put("no","0");
+                                    }
+                                });
+                                groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
+                            }
+                        }
+                        add(new HashMap<String,Object>(){
+                            {
+                                put("matter",insuranceInformedMatter.getMatterDescription());
+                                put("o_value",list.getCollectValues());
+                                put("no","1");
+                            }
+                        });
                     }
                 }
-                map.put("matter",insuranceInformedMatter.getMatterDescription());
-                map.put("o_value",list.getCollectValues());
-                listMap.add(map);
-           }
-        }
-        return listMap;
+
+            }
+        };
     }
 
     /**
