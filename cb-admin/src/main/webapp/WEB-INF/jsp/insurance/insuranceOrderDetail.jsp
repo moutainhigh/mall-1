@@ -118,7 +118,12 @@
                                 <label><span class="asterisk">*</span> 性别：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholder.policyholderGender}
+                                <c:choose>
+                                    <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='false'}">
+                                        女
+                                    </c:when>
+                                    <c:otherwise>男</c:otherwise>
+                                </c:choose>
                             </div>
 
                             <div class="col-sm-2">
@@ -194,7 +199,12 @@
                                 <label><span class="asterisk">*</span> 性别：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholder.policyholderGender}
+                                <c:choose>
+                                    <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='false'}">
+                                        女
+                                    </c:when>
+                                    <c:otherwise>男</c:otherwise>
+                                </c:choose>
                             </div>
 
                             <div class="col-sm-2">
@@ -434,7 +444,12 @@
                                     <label><span class="asterisk">*</span> 性别：</label>
                                 </div>
                                 <div class="col-sm-2 col-label">
-                                        ${insuranceOrderBeneficiarys.beneficiaryGender}
+                                    <c:choose>
+                                        <c:when test="${insuranceOrderBeneficiarys.beneficiaryGender=='false'}">
+                                                        女
+                                        </c:when>
+                                        <c:otherwise>男</c:otherwise>
+                                    </c:choose>
                                 </div>
                                 <div class="col-sm-2">
                                     <label><span class="asterisk">*</span>  国籍：</label>
