@@ -13,9 +13,7 @@ import javax.annotation.Resource;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class InsuranceOrderService implements IInsuranceOrderService {
@@ -32,7 +30,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private InsuranceOrderPolicyholderBankDao insuranceOrderPolicyholderBankDao;
     @Resource
     private InsuranceOrderPolicyholderDao insuranceOrderPolicyholderDao;
-
+    @Resource
+    private InsuranceInformedMatterDao insuranceInformedMatterDao;
 
 
 
@@ -61,9 +60,10 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         InsuranceOrderPolicyholder insuranceOrderPolicyholder =insuranceOrder.getInsuranceOrderPolicyholder();
         insuranceOrderPolicyholderDao.save(insuranceOrderPolicyholder);
 
-        InsuranceOrderPolicyholderBank insuranceOrderPolicyholderBank = insuranceOrder.getInsuranceOrderPolicyholderBank();
-        insuranceOrderPolicyholderBankDao.save(insuranceOrderPolicyholderBank);
-
+        insuranceOrderInsuredDao.save(insuranceOrder.getInsuranceOrderInsured());
+        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
+        insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
+        insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
         insuranceOrder.setOrderCode(insuranceOrder.getOrderCode()+insuranceOrder.getOrderId());
         insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
@@ -86,9 +86,55 @@ public class InsuranceOrderService implements IInsuranceOrderService {
 
     }
 
+    /**
+     * 修改状态
+     * @param orderId
+     * @param orderState
+     * @return
+     */
     @Override
+    @Transactional
     public boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState) {
-        return false;
+        boolean flag=true;
+        try {
+            insuranceOrderDao.updInsuranceOrderState(orderState,orderId);
+        }catch (Exception e){
+            flag=false;
+        }
+        return flag;
+    }
+
+    /**
+     * 获取事项
+     * @param orderId
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> findMatter(int orderId) {
+        List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList =  insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
+        List<Map<String, Object>> listMap=new ArrayList<>();
+        int groupId=0;
+        for(InsuranceOrderInformedMatter list:insuranceOrderInformedMatterList
+             ) {
+            Map<String,Object> map=new HashMap<>();
+            InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(list.getInsuranceInformedMatter().getMatterId());
+
+           if (null!=insuranceInformedMatter){
+                if(null!=insuranceInformedMatter.getMatterGroup()){
+                    if(groupId!=insuranceInformedMatter.getMatterGroup().getGroupId()){
+                        Map<String,Object> maps=new HashMap<>();
+                        System.out.println(insuranceInformedMatter.getMatterGroup().getDescription());
+                        maps.put("matter",insuranceInformedMatter.getMatterGroup().getDescription());
+                        listMap.add(maps);
+                        groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
+                    }
+                }
+                map.put("matter",insuranceInformedMatter.getMatterDescription());
+                map.put("o_value",list.getCollectValues());
+                listMap.add(map);
+           }
+        }
+        return listMap;
     }
 
     /**

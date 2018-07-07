@@ -5,8 +5,8 @@ import javax.servlet.http.HttpSession;
 
 public class BaseResource {
 
-    protected int getCustomerId(HttpSession session) {
-        return (int) session.getAttribute("customerId");
+    protected int getCustomerId() {
+        return 1;
     }
 
     /**

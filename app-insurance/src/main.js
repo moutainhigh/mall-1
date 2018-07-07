@@ -12,12 +12,15 @@ import { Group } from 'vux'
 import Dev from '../config/dev.env'
 import Admin from './admin/Admin'
 import Vuelidate from 'vuelidate'
+import  { LoadingPlugin } from 'vux'
 
 
 Vue.component('group', Group);
 Vue.use(AlertPlugin);
 Vue.use(ToastPlugin);
 Vue.use(datetime);
+Vue.use(LoadingPlugin)
+
 Vue.config.productionTip = false;
 
 Vue.use(Vuex);
