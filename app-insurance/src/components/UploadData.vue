@@ -94,18 +94,17 @@
           :src="imgUrls.image6">
       </div>
     </div>
-
+    <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 48px;">
-      <button class="i-footer">
-        <router-link to="payment">
+      <button class="i-footer" @click="next">
           <div>下一步</div>
-        </router-link>
       </button>
     </div>
   </div>
 </template>
 
 <script>
+  import {Toast} from 'vux'
   import '../lib/lrz.all.bundle'
   import storage from "../store/storage";
   import {uploadImage} from "../service/getData";
@@ -115,6 +114,9 @@
   let order = storage.fetch("order");
 
   export default {
+    components: {
+      Toast
+    },
     name: "UploadData",
     data() {
       return {
@@ -126,6 +128,8 @@
           image5: storage.fetch("holder").otherImg2,
           image6: storage.fetch("holder").otherImg3,
         },
+        showPositionValue: false,
+        toastText: '',
       }
     },
     methods: {
@@ -164,7 +168,7 @@
         let vm = this;
         lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
-          uploadImage(rst.base64).then(function(result) {
+          uploadImage(rst.base64).then(function (result) {
             switch (e.target.id) {
               case 'image1' :
                 vm.imgUrls.image1 = result.data;
@@ -231,6 +235,24 @@
         }
         storage.save("holder", holder);
         storage.save("order", order);
+      },
+      next() {
+        if (this.imgUrls.image1 === '') {
+          this.showPositionValue = true;
+          this.toastText = "请上传银行卡正面图片";
+          return false;
+        }
+        if (this.imgUrls.image1 === '') {
+          this.showPositionValue = true;
+          this.toastText = "请上传身份证正面图片";
+          return false;
+        }
+        if (this.imgUrls.image1 === '') {
+          this.showPositionValue = true;
+          this.toastText = "请上传身份证背面图片";
+          return false;
+        }
+        this.$router.push("payment");
       },
     }
   }
