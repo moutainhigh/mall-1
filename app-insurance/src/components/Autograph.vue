@@ -11,15 +11,15 @@
     </div>
 
     <div class="title" style="color: #e1bb3a">投保单签名</div>
-    <div class="headPhoto" v-if="imgUrl === '' || imgUrl === null" @click.stop="addPic">
+    <div class="headPhoto" v-if="imgUrl === '' || imgUrl === undefined || imgUrl === null" @click.stop="addPic">
       <div style="position: absolute; width: 100%; height: 120px"></div>
       <img src="../assets/img/headPhotograph.png"/>
       <p style="font-size: 13px">请点击此处，拍摄投保人正面头像</p>
     </div>
-    <button class="clearButton" v-if="imgUrl !== ''" @click='delImage'>清除</button>
+    <button class="clearButton" v-if="imgUrl !== undefined && imgUrl !== ''" @click='delImage'>清除</button>
     <input id="image" type="file" accept="image/*" capture="camera" @change="onFileChange"
            style="display: none;">
-    <div v-if="imgUrl !== ''">
+    <div v-if="imgUrl !== undefined && imgUrl !== ''">
       <img class="headPhoto-img" :src="imgUrl">
     </div>
 
@@ -45,6 +45,7 @@
   import Signature from './Signature.vue'
   import {uploadImage} from "../service/getData";
   import storage from "../store/storage";
+
   export default {
     name: 'Autograph',
     data() {
@@ -75,7 +76,7 @@
         lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
           console.log(rst.base64);
-          uploadImage(rst.base64).then(function(result) {
+          uploadImage(rst.base64).then(function (result) {
             vm.imgUrl = result.data;
             let holder = storage.fetch("holder");
             holder.policyholderAvatar = result.data;
@@ -102,7 +103,7 @@
       save() {
         var _this = this;
         var jpeg = _this.$refs.signature.save('image/jpeg').split(',')[1];
-        uploadImage(jpeg).then(function(result) {
+        uploadImage(jpeg).then(function (result) {
           let holder = storage.fetch("holder");
           holder.policyholderSign = result.data;
           storage.save("holder", holder);
@@ -117,7 +118,7 @@
         _this.$refs.signature.fromDataURL("data:image/png;base64,iVBORw0K...");
       },
       next() {
-        if (this.state !== true){
+        if (this.state !== true) {
           alert('请勾选同意条款');
           return false;
         }
@@ -128,6 +129,8 @@
         this.save();
         this.$router.push("upload-data")
       }
+    },
+    created: function () {
     }
   }
 </script>
