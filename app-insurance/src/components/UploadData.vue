@@ -270,7 +270,6 @@
       },
     },
     created: function () {
-      alert(this.imgUrls.image6)
     }
   }
 </script>
