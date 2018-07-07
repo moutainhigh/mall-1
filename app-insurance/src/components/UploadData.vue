@@ -2,76 +2,76 @@
   <div>
     <div class="title">投保资料上传</div>
     <p class="uploadTitle">投保人银行卡正面上传（必传）
-      <button v-if="imgUrls.image1 !== ''" @click='delImage(1)'>清除</button>
+      <button v-if="imgUrls.image1 !== '' && imgUrls.image1 !== undefined" @click='delImage(1)'>清除</button>
     </p>
     <div class="card">
-      <div v-if="imgUrls.image1 === ''" @click.stop="addPic1">
+      <div v-if="imgUrls.image1 === '' || imgUrls.image1 === undefined" @click.stop="addPic1">
         <div style="position: absolute; width: 100%; height: 120px"></div>
         <img src="../assets/img/upload.png">
       </div>
       <input id="image1" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
-      <div v-if="imgUrls.image1 !== ''">
+      <div v-if="imgUrls.image1 !== '' && imgUrls.image1 !== undefined">
         <img style="padding: 0;" :src="imgUrls.image1">
       </div>
     </div>
 
     <p class="uploadTitle">投保人身份证正面上传（必传）
-      <button v-if="imgUrls.image2 !== ''" @click='delImage(2)'>清除</button>
+      <button v-if="imgUrls.image2 !== '' && imgUrls.image2 !== undefined" @click='delImage(2)'>清除</button>
     </p>
     <div class="card">
-      <div v-if="imgUrls.image2 === ''" @click.stop="addPic2">
+      <div v-if="imgUrls.image2 === '' || imgUrls.image2 === undefined" @click.stop="addPic2">
         <div style="position: absolute; width: 100%; height: 120px"></div>
         <img src="../assets/img/takeIdCard.png">
       </div>
       <input id="image2" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
-      <div v-if="imgUrls.image2 !== ''">
+      <div v-if="imgUrls.image2 !== '' && imgUrls.image2 !== undefined">
         <img style="padding: 0;" :src="imgUrls.image2">
       </div>
     </div>
 
     <p class="uploadTitle">投保人身份证背面上传（必传）
-      <button v-if="imgUrls.image3 !== ''" @click='delImage(3)'>清除</button>
+      <button v-if="imgUrls.image3 !== '' && imgUrls.image3 !== undefined" @click='delImage(3)'>清除</button>
     </p>
     <div class="card">
-      <div v-if="imgUrls.image3 === ''" @click.stop="addPic3">
+      <div v-if="imgUrls.image3 === '' || imgUrls.image3 === undefined" @click.stop="addPic3">
         <div style="position: absolute; width: 100%; height: 120px"></div>
         <img src="../assets/img/takeEmblem.png">
       </div>
       <input id="image3" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
-      <div v-if="imgUrls.image3 !== ''">
+      <div v-if="imgUrls.image3 !== '' && imgUrls.image3 !== undefined">
         <img style="padding: 0;" :src="imgUrls.image3">
       </div>
     </div>
 
     <p class="uploadTitle">其它资料（资料）
-      <button v-if="imgUrls.image4 !== ''" @click='delImage(4)'>清除</button>
+      <button v-if="imgUrls.image4 !== '' && imgUrls.image4 !== undefined" @click='delImage(4)'>清除</button>
     </p>
     <div class="card">
-      <div v-if="imgUrls.image4 === ''" @click.stop="addPic4">
+      <div v-if="imgUrls.image4 === '' || imgUrls.image4 === undefined" @click.stop="addPic4">
         <div style="position: absolute; width: 100%; height: 120px"></div>
         <img src="../assets/img/upload.png">
       </div>
       <input id="image4" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
-      <div v-if="imgUrls.image4 !== ''">
+      <div v-if="imgUrls.image4 !== '' && imgUrls.image4 !== undefined">
         <img style="padding: 0;" :src="imgUrls.image4">
       </div>
     </div>
 
     <p class="uploadTitle">其它资料（资料）
-      <button v-if="imgUrls.image5 !== ''" @click='delImage(5)'>清除</button>
+      <button v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined" @click='delImage(5)'>清除</button>
     </p>
     <div class="card">
-      <div v-if="imgUrls.image5 === ''" @click.stop="addPic5">
+      <div v-if="imgUrls.image5 === '' || imgUrls.image5 === undefined" @click.stop="addPic5">
         <div style="position: absolute; width: 100%; height: 120px"></div>
         <img src="../assets/img/upload.png">
       </div>
       <input id="image5" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
-      <div v-if="imgUrls.image5 !== ''">
+      <div v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined">
         <img
           style="padding: 0;"
           :src="imgUrls.image5">
@@ -79,16 +79,16 @@
     </div>
 
     <p class="uploadTitle">其它资料（资料）
-      <button v-if="imgUrls.image6 !== ''" @click='delImage(6)'>清除</button>
+      <button v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined" @click='delImage(6)'>清除</button>
     </p>
     <div class="card">
-      <div v-if="imgUrls.image6 === ''" @click.stop="addPic6">
+      <div v-if="imgUrls.image6 === '' || imgUrls.image6 === undefined" @click.stop="addPic6">
         <div style="position: absolute; width: 100%; height: 120px"></div>
         <img src="../assets/img/upload.png">
       </div>
       <input id="image6" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
-      <div v-if="imgUrls.image6 !== ''">
+      <div v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined">
         <img
           style="padding: 0;"
           :src="imgUrls.image6">
@@ -97,7 +97,7 @@
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 48px;">
       <button class="i-footer" @click="next">
-          <div>下一步</div>
+        <div>下一步</div>
       </button>
     </div>
   </div>
@@ -268,6 +268,9 @@
         }
         this.$router.push("payment");
       },
+    },
+    created: function () {
+      alert(this.imgUrls.image6)
     }
   }
 </script>
