@@ -44,12 +44,14 @@
         </div>
       </div>
     </div>
+    <div><button @click="clear">清除缓存</button></div>
   </div>
 </template>
 
 <script>
   // import {testGet,sendMobile} from "../service/getData";
   import storage from '../store/storage'
+  import Admin from '../admin/Admin'
 
   export default {
     name: "index",
@@ -74,12 +76,24 @@
             }
           });
         }
+      },
+      clear(){
+        storage.clear();
+        storage.save('holder',Admin.holder);
+        storage.save('insured',Admin.insured);
       }
     },
     created(){
       let query = this.$route.query;
       storage.save('token',query.token);
+      if (storage.fetch('holder').length ==0){
+        storage.save('holder',Admin.holder);
+      }
+      if (storage.fetch('insured').length ==0){
+        storage.save('insured',Admin.insured);
+      }
     }
+
   }
 </script>
 

@@ -187,6 +187,11 @@
         immediate: true,
         deep: true
       },
+      gender:function(newVal,oldVal){
+        let insured = storage.fetch('insured');
+        insured.insuredGender = newVal;
+        storage.save('insured', insured);
+      },
       priceId: function (newVal, oldVal) {
         let order = storage.fetch('order');
         order.insuranceProductPrice.priceId = newVal;
