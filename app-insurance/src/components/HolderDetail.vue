@@ -23,7 +23,7 @@
 
       <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="insured.insuredCardPeriod" v-bind:class="{'errorInput': $v.insured.insuredCardPeriod.$error}"-->
       <!--@input="$v.insured.insuredCardPeriod.$touch()"></x-input>-->
-      <datetime title="证件有效期" v-model="insured.insuredCardPeriod" :startDate="startDate" endDate="2070-01-01" placeholder="请选择证件有效期"
+      <datetime title="证件有效期" v-model="insured.insuredCardPeriod" :startDate="startDate" :maxYear="2199-12-30" placeholder="请选择证件有效期"
                 value-text-align="left"></datetime>
       <div class="error" v-if="!$v.insured.insuredCardPeriod.required && $v.insured.insuredCardPeriod.$dirty">
         证件有效期不能为空
@@ -127,7 +127,7 @@
 
       <!--<x-input title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期" v-bind:class="{'errorInput': $v.holder.policyholderCardPeroid.$error}"-->
       <!--@input="$v.holder.policyholderCardPeroid.$touch()"></x-input>-->
-      <datetime title="证件有效期" v-model="holder.policyholderCardPeroid" :startDate="startDate" endDate="2070-01-01" placeholder="请选择证件有效期"
+      <datetime title="证件有效期" v-model="holder.policyholderCardPeroid" :startDate="startDate" endDate="2199-12-30" placeholder="请选择证件有效期"
                 value-text-align="left"></datetime>
       <div class="error" v-if="!$v.holder.policyholderCardPeroid.required && $v.holder.policyholderCardPeroid.$dirty">
         证件有效期不能为空
@@ -276,7 +276,7 @@
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary1.beneficiaryCardPeroid.$touch()"></x-input>-->
-        <datetime title="证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" :startDate="startDate" endDate="2070-01-01" placeholder="请选择证件有效期"
+        <datetime title="证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" :startDate="startDate" endDate="2199-12-30" placeholder="请选择证件有效期"
                   value-text-align="left"></datetime>
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryCardPeroid.required && $v.beneficiary1.beneficiaryCardPeroid.$dirty">
@@ -342,7 +342,7 @@
         <popup-picker title="证件类型" placeholder="请选择证件类型" :data="cardTypes" v-model="beneficiary2.beneficiaryCardType"
                       value-text-align="left"></popup-picker>
 
-        <x-input title="证件号码" placeholder="请输入证件号" :startDate="startDate" endDate="2070-01-01" v-model="beneficiary2.beneficiaryCardNo"
+        <x-input title="证件号码" placeholder="请输入证件号" :startDate="startDate" endDate="2199-12-30" v-model="beneficiary2.beneficiaryCardNo"
                  v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardNo.$error}"
                  @input="$v.beneficiary2.beneficiaryCardNo.$touch()"></x-input>
         <div class="error"

@@ -65,7 +65,7 @@ const order = {
     bankName: '',
     amount: '',
     bankMobile: '',
-    accountBank: '',
+    accountBank: [],
     bankProvince: '',
     bankCity: '',
     accountType: [],
