@@ -1,9 +1,9 @@
 # 开发环境配置
 spring:
   datasource:
-     url: jdbc:mysql://192.168.0.104:3306/crystal_ball?useUnicode=true&autoReconnect=true&characterEncoding=utf-8
+     url: jdbc:mysql://localhost:3306/skc?useUnicode=true&autoReconnect=true&characterEncoding=utf-8
      username: root
-     password: 123456
+     password: Yunxin1234
   session:
      store-type: none
   redis:
