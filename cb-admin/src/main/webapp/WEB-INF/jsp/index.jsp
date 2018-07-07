@@ -18,7 +18,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>易厨后台管理</title>
+  <title>水晶球后台管理</title>
 
   <!-- // IOS webapp icons // -->
 
@@ -105,6 +105,8 @@
 </head>
 <body>
 <div id="container-loginmin" class="clearfix">
+
+  <!--
   <div id="demo-overview">
     <a href="index.html">Dashboard</a>
     |
@@ -116,6 +118,7 @@
     |
     <a href="forgot.html">Forgot</a>
   </div>
+  -->
 
   <form:errors>
     <div class="alert alert-block alert-dismissable alert-danger">
@@ -129,14 +132,14 @@
     <div class="login-box-inner clearfix">
       <header id="login-header">
         <a href="#" id="login-logo">
-          <h1>易厨商城管理后台</h1>
+          <h1>水晶球商城管理后台</h1>
           <h4> ${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>
         </a>
       </header>
       <div class="spacer-40"></div>
       <form id="form-login" action="j_spring_security_check" method="post">
         <div class="login-avatar">
-          <img src="images/users/user-1.jpg" alt="" id="login-avatar"/>
+          <img src="images/users/logo.png" alt="" id="login-avatar"/>
         </div>
         <div class="login-fields-wrapper">
           <div class="row">
@@ -161,11 +164,12 @@
       </form>
     </div>
   </div>
+  <!--
   <footer id="login-footer">
     <strong>Copyright © 2013 3333.net</strong>
     <div class="spacer-5"></div>
     <small>. All rights reserved.</small>
-  </footer>
+  </footer>-->
 </div><!-- End #container -->
 </body>
 </html>
