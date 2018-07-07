@@ -162,7 +162,11 @@
       onFileChange: function (e) {
         var files = e.target.files || e.dataTransfer.files;
         if (!files.length) return;
+        // this.$vux.loading.show({
+        //   text: 'Loading'
+        // });
         this.createImage(files, e);
+        // this.$vux.loading.hide()
       },
       createImage: function (file, e) {
         let vm = this;

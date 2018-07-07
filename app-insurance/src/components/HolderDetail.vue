@@ -607,7 +607,7 @@
           this.addBene1 = true;
           let beneficiary1 = {
             beneficiaryName: '',
-            beneficiaryGender: '',
+            beneficiaryGender: true,
             beneficiaryBirthday: '',
             beneficiaryCardType: [],
             beneficiaryCardNo: '',
@@ -622,7 +622,7 @@
           this.addBene2 = true;
           let beneficiary2 = {
             beneficiaryName: '',
-            beneficiaryGender: '',
+            beneficiaryGender: true,
             beneficiaryBirthday: '',
             beneficiaryCardType: [],
             beneficiaryCardNo: '',
@@ -664,7 +664,7 @@
           this.addBene1 = false;
           this.beneficiary1 = {
             beneficiaryName: '',
-            beneficiaryGender: '',
+            beneficiaryGender: true,
             beneficiaryBirthday: '',
             beneficiaryCardType: [],
             beneficiaryCardNo: '',
@@ -679,7 +679,7 @@
           this.addBene2 = false;
           this.beneficiary2 = {
             beneficiaryName: '',
-            beneficiaryGender: '',
+            beneficiaryGender: true,
             beneficiaryBirthday: '',
             beneficiaryCardType: [],
             beneficiaryCardNo: '',
@@ -765,10 +765,10 @@
       let order = storage.fetch("order");
       let beneficiary1 = storage.fetch("beneficiary1");
       let beneficiary2 = storage.fetch("beneficiary2");
-      if (!beneficiary1) {
+      if (beneficiary1) {
         this.beneficiary1 = {
           beneficiaryName: '',
-          beneficiaryGender: '',
+          beneficiaryGender: true,
           beneficiaryBirthday: '',
           beneficiaryCardType: [],
           beneficiaryCardNo: '',
@@ -778,11 +778,12 @@
           beneficiaryProportion: '',
           beneficiaryCountry: ''
         };
+        storage.save('beneficiary1', this.beneficiary1);
       }
-      if (!beneficiary2) {
+      if (beneficiary2) {
         this.beneficiary2 = {
           beneficiaryName: '',
-          beneficiaryGender: '',
+          beneficiaryGender: true,
           beneficiaryBirthday: '',
           beneficiaryCardType: [],
           beneficiaryCardNo: '',
@@ -792,6 +793,7 @@
           beneficiaryProportion: '',
           beneficiaryCountry: ''
         };
+        storage.save('beneficiary2', this.beneficiary2);
       }
       this.legalBeneficiary = order.legalBeneficiary;
       if (!this.legalBeneficiary) {
