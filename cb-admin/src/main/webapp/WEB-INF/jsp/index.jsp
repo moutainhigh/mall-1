@@ -106,8 +106,9 @@
 <body>
 <div id="container-loginmin" class="clearfix">
 
-  <!--
+
   <div id="demo-overview">
+  <!--
     <a href="index.html">Dashboard</a>
     |
     <a href="login.html">Login 1</a>
@@ -117,8 +118,9 @@
     <a href="signup.html">SignUp</a>
     |
     <a href="forgot.html">Forgot</a>
+    -->
   </div>
-  -->
+
 
   <form:errors>
     <div class="alert alert-block alert-dismissable alert-danger">
