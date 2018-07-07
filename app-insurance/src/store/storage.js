@@ -15,6 +15,8 @@ export default {
   },
   clear: function () {
     window.localStorage.clear();
+    this.save('holder',this.Admin.holder);
+    this.save('insured', this.Admin.insured);
   }
 
 }

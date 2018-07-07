@@ -159,8 +159,6 @@
             _this.toastText = '请求成功！';
             _this.showPositionValue = true;
             storage.clear();
-            storage.save('holder',this.Admin.holder);
-            storage.save('insured', this.Admin.insured);
           }else{
             _this.toastText = res.message;
             _this.showPositionValue = true;
