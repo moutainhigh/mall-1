@@ -581,6 +581,9 @@
             this.submitStatus = 'ERROR';
             this.showPositionValue = true;
             this.toastText = "信息填写有误"
+          } else {
+            this.submitStatus = 'PENDING'
+            this.$router.push("infoMatters");
           }
         } else if (this.addBene2) {
           if (this.$v.beneficiary2.$invalid) {
