@@ -70,12 +70,12 @@ public class InsuranceOrder implements Serializable {
      */
     private Customer customer;
     /**
-     * 被保人ID
+     * 被保人
      */
     @NotNull
     private InsuranceOrderInsured insuranceOrderInsured;
     /**
-     * 投保人ID
+     * 投保人
      */
     @NotNull
     private InsuranceOrderPolicyholder insuranceOrderPolicyholder;

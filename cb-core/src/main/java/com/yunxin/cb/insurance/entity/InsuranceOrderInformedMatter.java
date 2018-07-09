@@ -5,6 +5,7 @@
 
 package com.yunxin.cb.insurance.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -158,6 +159,7 @@ public class InsuranceOrderInformedMatter implements Serializable {
         this.insuranceOrder = insuranceOrder;
     }
 
+    @JsonIgnore
     @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "ORDER_ID", nullable = false, insertable = true, updatable = true)

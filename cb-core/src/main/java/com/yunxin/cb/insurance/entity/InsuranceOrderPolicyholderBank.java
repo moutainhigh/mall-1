@@ -5,6 +5,7 @@
 
 package com.yunxin.cb.insurance.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
@@ -204,7 +205,7 @@ public class InsuranceOrderPolicyholderBank implements Serializable {
     }
 
 
-
+    @JsonIgnore
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceOrderPolicyholderBank")
     public Set<InsuranceOrder> getInsuranceOrders() {
         return insuranceOrders;
