@@ -162,15 +162,14 @@
       onFileChange: function (e) {
         var files = e.target.files || e.dataTransfer.files;
         if (!files.length) return;
-        // this.$vux.loading.show({
-        //   text: 'Loading'
-        // });
         this.createImage(files, e);
-        // this.$vux.loading.hide()
       },
-      createImage: function (file, e) {
+      async createImage(file, e) {
         let vm = this;
-        lrz(file[0], {width: 480}).then(function (rst) {
+        vm.$vux.loading.show({
+          text: 'Loading'
+        });
+        await lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
           uploadImage(rst.base64).then(function (result) {
             switch (e.target.id) {
@@ -212,10 +211,12 @@
                 break;
             }
           });
+          vm.$vux.loading.hide();
           return rst;
         }).always(function () {
           // 清空文件上传控件的值
           e.target.value = null;
+          vm.$vux.loading.hide();
         });
       },
       //删除图片

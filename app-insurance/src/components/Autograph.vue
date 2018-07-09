@@ -33,6 +33,7 @@
         <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
       </div>
     </div>
+    <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 48px;">
       <button class="i-footer" @click="next">
         <div>下一步</div>
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+  import {Toast} from 'vux'
   import Signature from './Signature.vue'
   import {uploadImage} from "../service/getData";
   import storage from "../store/storage";
@@ -56,10 +58,12 @@
         option: {
           penColor: "rgb(0, 0, 0)",
           backgroundColor: "#dcdcdc",
-        }
+        },
+        toastText: '',
+        showPositionValue: false,
       }
     },
-    components: {Signature},
+    components: {Signature, Toast},
     methods: {
       //添加图片
       addPic: function () {
@@ -71,9 +75,12 @@
         if (!files.length) return;
         this.createImage(files, e);
       },
-      createImage: function (file, e) {
+      async createImage(file, e) {
         let vm = this;
-        lrz(file[0], {width: 480}).then(function (rst) {
+        vm.$vux.loading.show({
+          text: 'Loading'
+        });
+        await lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
           console.log(rst.base64);
           uploadImage(rst.base64).then(function (result) {
@@ -82,6 +89,7 @@
             holder.policyholderAvatar = result.data;
             storage.save("holder", holder);
           });
+          vm.$vux.loading.hide();
           return rst;
         })
       },
@@ -119,11 +127,18 @@
       },
       next() {
         if (this.state !== true) {
-          alert('请勾选同意条款');
+          this.showPositionValue = true;
+          this.toastText = "请勾选同意条款";
+          return false;
+        }
+        if (this.imgUrl === '' || this.imgUrl === undefined) {
+          this.showPositionValue = true;
+          this.toastText = "请拍摄投保人正面头像";
           return false;
         }
         if (this.clickSign === false) {
-          alert('请签署投保提示书签名');
+          this.showPositionValue = true;
+          this.toastText = "请签署投保提示书签名";
           return false;
         }
         this.save();

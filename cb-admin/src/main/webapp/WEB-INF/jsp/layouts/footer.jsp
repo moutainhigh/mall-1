@@ -2,7 +2,7 @@
 <footer id="footer-main" class="footer-sticky">
     <div class="footer-main-inner">
         <div class="pull-left">
-            <p>Copyright © 2013 深圳市铂胜光电科技有限公司</p>
+            <p>Copyright © 2017 深圳市云信时代科技有限公司</p>
         </div>
         <div class="pull-right">
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">

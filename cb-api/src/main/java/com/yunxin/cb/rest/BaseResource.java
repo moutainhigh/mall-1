@@ -1,13 +1,14 @@
 package com.yunxin.cb.rest;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@RestController
 public class BaseResource {
-
-    protected int getCustomerId() {
-        return 1;
-    }
 
     /**
      * 获取IP地址
