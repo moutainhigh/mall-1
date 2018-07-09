@@ -28,6 +28,13 @@
                 }
            });
         }
+        $(document).ready(function () {
+            var province=$.citySelector.getProvince(${insuranceOrder.insuranceOrderPolicyholderBank.bankProvince});
+           $("#province").html(province);
+           var city=  $.citySelector.getCity(${insuranceOrder.insuranceOrderPolicyholderBank.bankCity});
+            $("#city").html(city);
+        });
+
     </script>
 </head>
 <body>
@@ -546,7 +553,38 @@
                                 <img src="${insuranceOrder.insuranceOrderPolicyholder.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
                             </div>
                         </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <c:if test="${insuranceOrder.insuranceOrderPolicyholder.otherImg1!=null}">
 
+                                <div class="col-sm-2">
+                                    <label><span class="asterisk"></span> 其他资料 ：</label>
+                                </div>
+                                <div class="col-sm-2 col-label">
+                                    <img src="${insuranceOrder.insuranceOrderPolicyholder.otherImg1}" alt="其他资料" width="200" height="150"/>
+                                </div>
+                            </c:if>
+
+                            <c:if test="${insuranceOrder.insuranceOrderPolicyholder.otherImg2!=null}">
+
+                                <div class="col-sm-2">
+                                    <label><span class="asterisk"></span> 其他资料 ：</label>
+                                </div>
+                                <div class="col-sm-2 col-label">
+                                    <img src="${insuranceOrder.insuranceOrderPolicyholder.otherImg2}" alt="其他资料" width="200" height="150"/>
+                                </div>
+                            </c:if>
+
+                            <c:if test="${insuranceOrder.insuranceOrderPolicyholder.otherImg3!=null}">
+
+                                <div class="col-sm-2">
+                                    <label><span class="asterisk"></span> 其他资料 ：</label>
+                                </div>
+                                <div class="col-sm-2 col-label">
+                                    <img src="${insuranceOrder.insuranceOrderPolicyholder.otherImg3}" alt="其他资料" width="200" height="150"/>
+                                </div>
+                            </c:if>
+                        </div>
 
                         <div class="spacer-30"></div>
                         <hr>
@@ -596,6 +634,7 @@
                             </div>
                             <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderPolicyholderBank.accountBank}
+
                             </div>
 
 
@@ -603,7 +642,7 @@
                                 <label><span class="asterisk"></span> 开户行省份 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholderBank.bankProvince}
+                                <div name="province" id="province"></div>
                             </div>
 
                         </div>
@@ -616,7 +655,8 @@
                                 <label><span class="asterisk"></span> 开户行城市 ：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholderBank.bankCity}
+
+                                    <div name="city" id="city"></div>
                             </div>
 
 
