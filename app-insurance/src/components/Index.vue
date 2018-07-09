@@ -61,7 +61,7 @@
           this.$router.push({
             path:'pro-detail',
             query: {
-              id:val,
+              id:1,
               title:"生命福星高照终身寿险（分红型）",
             }
           });
@@ -71,7 +71,7 @@
           this.$router.push({
             path:'/pro-detail',
             query:{
-              id:val,
+              id:2,
               title:"生命尊养无忧老年防癌疾病保险"
             }
           });
