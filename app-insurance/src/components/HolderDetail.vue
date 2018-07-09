@@ -917,7 +917,7 @@
         let elementsByClassName = document.getElementsByClassName("vux-cell-primary");
         let elementsByClassName2 = document.getElementsByClassName("i-input-radio");
         for (let i = 0; i < elementsByClassName.length; i++) {
-          elementsByClassName[i].setAttribute('margin-left', '10px');
+          elementsByClassName[i].style.setProperty('margin-left', '10px', 'important');
         }
         for (let i = 0; i < elementsByClassName2.length; i++) {
           elementsByClassName2[i].setAttribute('style', 'margin-left:10px;');
