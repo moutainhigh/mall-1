@@ -1,0 +1,36 @@
+# 开发环境配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhsot:3306/crystal_ball?useUnicode=true&autoReconnect=true&characterEncoding=utf-8
+    username: root
+    password: Yunxin1234
+  session:
+     store-type: none
+  jpa:
+      hibernate:
+          ddl-auto: none
+          naming:
+              physical-strategy: com.yunxin.core.orm.ImprovedPhysicalNamingStrategy
+      show-sql: true
+      open-in-view: false
+      properties:
+          hibernate.format_sql: true
+          hibernate.search.default.indexBase: /opt/www/cb/api/index
+#7牛云存储
+qiniu:
+  accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
+  secretKey: 9fglZdOXWmLXbU1rzroDOr2anFZydhnuKZjzBb-c
+  bucket-1: crystal-ball
+  bucket-2: crystal-ball-paperwork
+  domain-1: http://pb9sg55i7.bkt.clouddn.com/
+  domain-2: http://pbf9p2pks.bkt.clouddn.com/
+
+#融云IM
+rongcloud:
+  appKey: z3v5yqkbz1jp0
+  appSecret: AUUwTO6vXg7y7P
+
+#APP自定义配置
+application:
+  default:
+    avatarUrl: http://pb9sg55i7.bkt.clouddn.com/avatar.png

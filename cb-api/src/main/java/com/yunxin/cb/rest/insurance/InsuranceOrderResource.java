@@ -36,7 +36,7 @@ public class InsuranceOrderResource extends BaseResource {
 
     @ApiOperation(value ="保存订单")
     @PostMapping(value = "saveOrder")
-    @JsonFilter(value = "")
+    @JsonFilter(value = "data.insuranceOrderBeneficiarys,data.insuranceOrderInformedMatters")
     public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code) {
         int customerId = getCustomerId();
         Customer customer = customerService.getCustomerById(customerId);

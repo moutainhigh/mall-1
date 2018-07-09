@@ -133,11 +133,22 @@
     font-size: 14px;
   }
 
-  .arrow {
-    display: none !important;
+  ._v-container > ._v-content > .pull-to-refresh-layer {
+    width: 100%;
+    height: 60px;
+    margin-top: -60px;
+    text-align: center;
+    font-size: 12px !important;
+    color: #AAA;
   }
 
-  .loading-layer {
+  ._v-container > ._v-content > .loading-layer {
+    width: 100%;
+    height: 60px;
+    text-align: center;
     font-size: 12px !important;
+    line-height: 60px;
+    color: #AAA;
+    position: relative;
   }
 </style>

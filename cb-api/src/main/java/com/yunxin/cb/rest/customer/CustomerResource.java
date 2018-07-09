@@ -1,5 +1,6 @@
 package com.yunxin.cb.rest.customer;
 
+import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.meta.Result;
@@ -7,6 +8,7 @@ import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.cb.vo.ResponseResult;
+import com.yunxin.cb.vo.VerificationCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -83,6 +85,56 @@ public class CustomerResource extends BaseResource {
         customerFriendId.setCustomerId(customerId);
         customerFriendId.setFriendId(friendId);
         customerService.delFriendById(customerFriendId);
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "修改用户头像")
+    @PostMapping(value = "updateAvatar")
+    public ResponseResult updateAvatar(@RequestParam("avatar") String avatar, @ModelAttribute("customerId") int customerId) {
+        Customer customer = customerService.updateAvatar(customerId, avatar);
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "修改用户昵称")
+    @PostMapping(value = "updateNickName")
+    public ResponseResult updateNickName(@RequestParam("nickName") String nickName, @ModelAttribute("customerId") int customerId) {
+        Customer customer = customerService.updateNickName(customerId, nickName);
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "修改用户昵称")
+    @PostMapping(value = "updateSex")
+    public ResponseResult updateSex(@RequestParam("sex") boolean sex, @ModelAttribute("customerId") int customerId) {
+        Customer customer = customerService.updateSex(customerId, sex);
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "修改用户所在地")
+    @PostMapping(value = "updateAddress")
+    public ResponseResult updateAddress(@RequestParam("province") String province,@RequestParam("city") String city,
+                                        @RequestParam("district") String district,@RequestParam(value = "address", required = false) String address, @ModelAttribute("customerId") int customerId) {
+        Customer customer = customerService.updateAddress(customerId, province, city, district, address);
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "修改手机号")
+    @PostMapping(value = "updateMobile")
+    public ResponseResult updateMobile(String moblie,String code, @ModelAttribute("customerId") int customerId) {
+        //校验验证码
+        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(moblie);
+        //验证码不存在
+        if (verificationCode == null){
+            return new ResponseResult(Result.FAILURE, "验证码不存在");
+        }
+        //验证码超过5分钟，失效
+        if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
+            return new ResponseResult(Result.FAILURE, "验证码失效");
+        }
+        //验证码错误
+        if (!verificationCode.getCode().equals(code)) {
+            return new ResponseResult(Result.FAILURE, "验证码错误");
+        }
+        Customer customer = customerService.updateMobile(customerId, moblie);
         return new ResponseResult(Result.SUCCESS);
     }
 }
