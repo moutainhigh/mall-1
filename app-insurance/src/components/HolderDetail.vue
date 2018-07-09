@@ -11,6 +11,7 @@
       <div class="error" v-if="!$v.insured.insuredName.minLength">姓名最少为 {{$v.insured.insuredName.$params.minLength.min}}
         个字符
       </div>
+      <div class="error" v-if="!$v.insured.insuredName.maxLength">姓名最多不超过32位数</div>
 
       <popup-picker title="证件类型" placeholder="请选择证件类型" :data="cardTypes" v-model="insured.insuredCardType"
                     v-bind:class="{'errorInput': $v.insured.insuredCardType.$error}"
@@ -39,25 +40,29 @@
                v-bind:class="{'errorInput': $v.insured.insuredCountry.$error}"
                @input="$v.insured.insuredCountry.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredCountry.required && $v.insured.insuredCountry.$dirty">请输入国籍</div>
+      <div class="error" v-if="!$v.insured.insuredCountry.maxLength">国籍最多不超过64位数</div>
 
       <x-input title="身高(cm)" placeholder="请输入身高" v-model="insured.insuredHeight"
                v-bind:class="{'errorInput': $v.insured.insuredHeight.$error}"
                @input="$v.insured.insuredHeight.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredHeight.required && $v.insured.insuredHeight.$dirty">身高不能为空</div>
-      <div class="error" v-if="!$v.insured.insuredHeight.decimal">请输入正确的身高</div>
+      <div class="error" v-if="!$v.insured.insuredHeight.int">请输入正确的身高（正整数）</div>
+      <div class="error" v-if="!$v.insured.insuredHeight.maxLength">最大不超过3位数</div>
 
       <x-input title="体重(kg)" placeholder="请输入体重" v-model="insured.insuredBodyWeight"
                v-bind:class="{'errorInput': $v.insured.insuredBodyWeight.$error}"
                @input="$v.insured.insuredBodyWeight.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredBodyWeight.required && $v.insured.insuredBodyWeight.$dirty">体重不能为空
       </div>
-      <div class="error" v-if="!$v.insured.insuredBodyWeight.decimal">请输入正确的体重</div>
+      <div class="error" v-if="!$v.insured.insuredBodyWeight.int">请输入正确的体重（正整数）</div>
+      <div class="error" v-if="!$v.insured.insuredBodyWeight.maxLength">最大不超过3位数</div>
 
       <x-input title="年收入(万元)" placeholder="请输入年收入" v-model="insured.insuredIncome"
                v-bind:class="{'errorInput': $v.insured.insuredIncome.$error}"
                @input="$v.insured.insuredIncome.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredIncome.required && $v.insured.insuredIncome.$dirty">请输入年收入</div>
-      <div class="error" v-if="!$v.insured.insuredIncome.decimal">请输入年收入，单位万元，支持小数点后两位</div>
+      <div class="error" v-if="!$v.insured.insuredIncome.int">请输入年收入，单位万元（正整数）</div>
+      <div class="error" v-if="!$v.insured.insuredIncome.maxLength">最大不超过6位数</div>
 
       <popup-picker title="婚姻状况" placeholder="请选择婚姻状况" :data="maritalStatus" value-text-align="left"
                     v-model="insured.insuredMarriage"
@@ -70,16 +75,16 @@
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
-      <x-input title="固定电话" placeholder="请输入固定电话" v-model="insured.insuredTel" v-bind:class="{'errorInput': !$v.insured.insuredTel.required && $v.insured.insuredTel.$dirty && !$v.insured.insuredMobile.required && $v.insured.insuredMobile.$dirty || !$v.insured.insuredTel.fixedTel}"></x-input>
-      <div class="error" v-if="!$v.insured.insuredTel.required && $v.insured.insuredTel.$dirty && !$v.insured.insuredMobile.required && $v.insured.insuredMobile.$dirty">
-        请输入固定电话或移动电话
-      </div>
+      <x-input title="固定电话" placeholder="请输入固定电话" v-model="insured.insuredTel" v-bind:class="{'errorInput': $v.insured.insuredMobile.$error}"></x-input>
+      <!--<div class="error" v-if="!$v.insured.insuredTel.required && $v.insured.insuredTel.$dirty">-->
+        <!--请输入固定电话或移动电话-->
+      <!--</div>-->
       <div class="error" v-if="!$v.insured.insuredTel.fixedTel">请输入正确的固定电话号码</div>
 
       <x-input title="移动电话" placeholder="请输入移动电话" v-model="insured.insuredMobile" v-bind:class="{'errorInput': $v.insured.insuredMobile.$error}"></x-input>
-      <div class="error" v-if="!$v.insured.insuredTel.required && $v.insured.insuredTel.$dirty && !$v.insured.insuredMobile.required && $v.insured.insuredMobile.$dirty">
-        请输入固定电话或移动电话
-      </div>
+      <!--<div class="error" v-if="!$v.insured.insuredMobile.required && $v.insured.insuredMobile.$dirty">-->
+        <!--请输入固定电话或移动电话-->
+      <!--</div>-->
       <div class="error" v-if="!$v.insured.insuredMobile.mobile">请输入正确的手机号码</div>
 
       <x-input title="E-mail" placeholder="非必填项" v-model="insured.insuredEmail"></x-input>
@@ -95,6 +100,7 @@
                v-bind:class="{'errorInput': $v.insured.insuredAddress.$error}"
                @input="$v.insured.insuredAddress.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredAddress.required && $v.insured.insuredAddress.$dirty">请输入详细地址</div>
+      <div class="error" v-if="!$v.insured.insuredAddress.maxLength">详细地址最多不超过255位数</div>
 
       <popup-picker title="投保人是被保人的" placeholder="请选择投被保人的关系" :data="relates" value-text-align="left"
                     v-model="insured.insuredRelation"
@@ -116,6 +122,7 @@
         {{$v.holder.policyholderName.$params.minLength.min}}
         个字符
       </div>
+      <div class="error" v-if="!$v.holder.policyholderName.maxLength">姓名最多不超过32位数</div>
       <div class="i-input">
         <div class="i-input-item">性别</div>
         <div class="i-input-radio">
@@ -131,8 +138,15 @@
           </div>
         </div>
       </div>
-      <x-input title="投保人职业" placeholder="请输入您的职业" v-model="holder.policyholderCareer"></x-input>
+      <x-input title="投保人职业" placeholder="请输入您的职业" v-model="holder.policyholderCareer" v-bind:class="{'errorInput': $v.holder.policyholderCareer.$error}"
+               @input="$v.holder.policyholderCareer.$touch()"></x-input>
       <!--<popup-picker title="投保人职业" placeholder="请选择职业" value-text-align="left"></popup-picker>-->
+      <div class="error" v-if="!$v.holder.policyholderCareer.required && $v.holder.policyholderCareer.$dirty">职业不能为空</div>
+      <div class="error" v-if="!$v.holder.policyholderCareer.minLength">职业最少为
+        {{$v.holder.policyholderCareer.$params.minLength.min}}
+        个字符
+      </div>
+      <div class="error" v-if="!$v.holder.policyholderCareer.maxLength">职业最多不超过32位数</div>
 
       <datetime title="出生日期" v-model="holder.policyholderBirthday" startDate="1950-01-01" :endDate="startDate"
                 placeholder="请选择出生日期"
@@ -174,13 +188,15 @@
                @input="$v.holder.policyholderCountry.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderCountry.required && $v.holder.policyholderCountry.$dirty">请输入国籍
       </div>
+      <div class="error" v-if="!$v.holder.policyholderCountry.maxLength">国籍最多不超过64位数</div>
 
       <x-input title="身高(cm)" v-model="holder.policyholderHeight" placeholder="请输入身高"
                v-bind:class="{'errorInput': $v.holder.policyholderHeight.$error}"
                @input="$v.holder.policyholderHeight.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderHeight.required && $v.holder.policyholderHeight.$dirty">身高不能为空
       </div>
-      <div class="error" v-if="!$v.holder.policyholderHeight.decimal">请输入正确的身高</div>
+      <div class="error" v-if="!$v.holder.policyholderHeight.int">请输入正确的身高（正整数）</div>
+      <div class="error" v-if="!$v.holder.policyholderHeight.maxLength">最大不超过3位数</div>
 
       <x-input title="体重(kg)" v-model="holder.policyholderBodyWeight" placeholder="请输入体重"
                v-bind:class="{'errorInput': $v.holder.policyholderBodyWeight.$error}"
@@ -188,14 +204,16 @@
       <div class="error" v-if="!$v.holder.policyholderBodyWeight.required && $v.holder.policyholderBodyWeight.$dirty">
         体重不能为空
       </div>
-      <div class="error" v-if="!$v.holder.policyholderBodyWeight.decimal">请输入正确的体重</div>
+      <div class="error" v-if="!$v.holder.policyholderBodyWeight.int">请输入正确的体重（正整数）</div>
+      <div class="error" v-if="!$v.holder.policyholderBodyWeight.maxLength">最大不超过3位数</div>
 
       <x-input title="年收入(万元)" v-model="holder.policyholderIncome" placeholder="请输入年收入"
                v-bind:class="{'errorInput': $v.holder.policyholderIncome.$error}"
                @input="$v.holder.policyholderIncome.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderIncome.required && $v.holder.policyholderIncome.$dirty">请输入年收入
       </div>
-      <div class="error" v-if="!$v.holder.policyholderIncome.decimal">请输入年收入，单位万元，支持小数点后两位</div>
+      <div class="error" v-if="!$v.holder.policyholderIncome.int">请输入年收入，单位万元（正整数）</div>
+      <div class="error" v-if="!$v.holder.policyholderIncome.maxLength">最大不超过6位数</div>
 
       <popup-picker title="婚姻状况" v-model="holder.policyholderMarriage" placeholder="请选择婚姻状况" :data="maritalStatus"
                     value-text-align="left"
@@ -231,6 +249,7 @@
       <div class="error" v-if="!$v.holder.policyholderAddress.required && $v.holder.policyholderAddress.$dirty">
         请输入详细地址
       </div>
+      <div class="error" v-if="!$v.holder.policyholderAddress.maxLength">详细地址最多不超过255位数</div>
 
       <popup-picker title="涉税人身份信息" v-model="holder.policyholderTaxRelated" placeholder="请选择涉税人信息" :data="taxRelates"
                     value-text-align="left"
@@ -261,6 +280,7 @@
           {{$v.beneficiary1.beneficiaryName.$params.minLength.min}}
           个字符
         </div>
+        <div class="error" v-if="!$v.beneficiary1.beneficiaryName.maxLength">姓名最多不超过32位数</div>
 
         <div class="i-input">
           <div class="i-input-item">性别</div>
@@ -284,6 +304,7 @@
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryCountry.required && $v.beneficiary1.beneficiaryCountry.$dirty">请输入国籍
         </div>
+        <div class="error" v-if="!$v.beneficiary1.beneficiaryCountry.maxLength">国籍最多不超过64位数</div>
 
         <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary1.beneficiaryOrder"
                       value-text-align="left"
@@ -359,6 +380,7 @@
           {{$v.beneficiary2.beneficiaryName.$params.minLength.min}}
           个字符
         </div>
+        <div class="error" v-if="!$v.beneficiary2.beneficiaryName.maxLength">姓名最多不超过32位数</div>
 
         <div class="i-input">
           <div class="i-input-item">性别</div>
@@ -381,6 +403,7 @@
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryCountry.required && $v.beneficiary2.beneficiaryCountry.$dirty">请输入国籍
         </div>
+        <div class="error" v-if="!$v.beneficiary2.beneficiaryCountry.maxLength">国籍最多不超过32位数</div>
 
         <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary2.beneficiaryOrder"
                       value-text-align="left" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryOrder.$error}"></popup-picker>
@@ -466,7 +489,7 @@
   //身份证正则校验
   const idCardVali = helpers.regex('idCardVali', /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/);
   //小数点后两位校验
-  const decimal = helpers.regex('decimal', /^\d{0,8}\.{0,1}(\d{1,2})?$/);
+  const int = helpers.regex('int', /^[1-9]\d*$/);
   //固定电话校验
   const fixedTel = helpers.regex('fixedTel', /([0-9]{3,4}-)?[0-9]{7,8}/);
   //手机号码校验
@@ -513,7 +536,8 @@
       insured: {
         insuredName: {
           required,
-          minLength: minLength(2)
+          minLength: minLength(2),
+          maxLength: maxLength(32),
         },
         insuredCardType: {
           required
@@ -529,29 +553,33 @@
           // numeric
         },
         insuredCountry: {
-          required
+          required,
+          maxLength: maxLength(64),
         },
         insuredHeight: {
           required,
-          decimal,
+          int,
+          maxLength: maxLength(3),
         },
         insuredBodyWeight: {
           required,
-          decimal,
+          int,
+          maxLength: maxLength(3),
         },
         insuredIncome: {
           required,
-          decimal,
+          int,
+          maxLength: maxLength(6),
         },
         insuredMarriage: {
           required
         },
         insuredTel: {
-          required,
+          // required,
           fixedTel
         },
         insuredMobile: {
-          required,
+          // required,
           mobile
         },
         insuredEmail: {
@@ -562,6 +590,7 @@
         },
         insuredAddress: {
           required,
+          maxLength: maxLength(255),
         },
         insuredRelation: {
           required
@@ -570,7 +599,13 @@
       holder: {
         policyholderName: {
           required,
-          minLength: minLength(2)
+          minLength: minLength(2),
+          maxLength: maxLength(32),
+        },
+        policyholderCareer: {
+          required,
+          minLength: minLength(2),
+          maxLength: maxLength(32),
         },
         policyholderBirthday: {
           required
@@ -589,29 +624,33 @@
           // numeric
         },
         policyholderCountry: {
-          required
+          required,
+          maxLength: maxLength(64),
         },
         policyholderHeight: {
           required,
-          decimal,
+          int,
+          maxLength: maxLength(3),
         },
         policyholderBodyWeight: {
           required,
-          decimal,
+          int,
+          maxLength: maxLength(3),
         },
         policyholderIncome: {
           required,
-          decimal,
+          int,
+          maxLength: maxLength(6),
         },
         policyholderMarriage: {
           required
         },
         policyholderTel: {
-          required,
+          // required,
           fixedTel,
         },
         policyholderMobile: {
-          required,
+          // required,
           mobile
         },
         policyholderEmail: {
@@ -622,6 +661,7 @@
         },
         policyholderAddress: {
           required,
+          maxLength: maxLength(255),
         },
         policyholderTaxRelated: {
           required
@@ -630,10 +670,12 @@
       beneficiary1: {
         beneficiaryName: {
           required,
-          minLength: minLength(2)
+          minLength: minLength(2),
+          maxLength: maxLength(32),
         },
         beneficiaryCountry: {
-          required
+          required,
+          maxLength: maxLength(64),
         },
         beneficiaryOrder: {
           required
@@ -665,10 +707,12 @@
       beneficiary2: {
         beneficiaryName: {
           required,
-          minLength: minLength(2)
+          minLength: minLength(2),
+          maxLength: maxLength(32),
         },
         beneficiaryCountry: {
-          required
+          required,
+          maxLength: maxLength(64),
         },
         beneficiaryOrder: {
           required
