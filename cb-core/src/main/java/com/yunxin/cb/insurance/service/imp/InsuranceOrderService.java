@@ -35,9 +35,9 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private InsuranceInformedMatterDao insuranceInformedMatterDao;
 
 
-
     /**
      * 根据用户ID查询保险订单列表
+     *
      * @return
      */
     public List<InsuranceOrder> getInsuranceOrderByCustomer() {
@@ -46,6 +46,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
 
     /**
      * 添加保险订单
+     *
      * @param insuranceOrder
      * @return
      */
@@ -55,10 +56,10 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         insuranceOrder.setOrderCode("INS2018070600105");
         insuranceOrder.setCreateTime(new Date());
 
-        InsuranceOrderInsured insuranceOrderInsured= insuranceOrder.getInsuranceOrderInsured();
+        InsuranceOrderInsured insuranceOrderInsured = insuranceOrder.getInsuranceOrderInsured();
         insuranceOrderInsuredDao.save(insuranceOrderInsured);
 
-        InsuranceOrderPolicyholder insuranceOrderPolicyholder =insuranceOrder.getInsuranceOrderPolicyholder();
+        InsuranceOrderPolicyholder insuranceOrderPolicyholder = insuranceOrder.getInsuranceOrderPolicyholder();
         insuranceOrderPolicyholderDao.save(insuranceOrderPolicyholder);
 
         insuranceOrderInsuredDao.save(insuranceOrder.getInsuranceOrderInsured());
@@ -66,22 +67,20 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
         insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
-        insuranceOrder.setOrderCode(insuranceOrder.getOrderCode()+insuranceOrder.getOrderId());
+        insuranceOrder.setOrderCode(insuranceOrder.getOrderCode() + insuranceOrder.getOrderId());
         insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
 
-//        Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
-//        for(InsuranceOrderInformedMatter insuranceOrderInformedMatter: insuranceOrderInformedMatters)
-//        {
-//            insuranceOrderInformedMatter.setInsuranceOrder(insuranceOrder);
+        Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
+        for (InsuranceOrderInformedMatter insuranceOrderInformedMatter : insuranceOrderInformedMatters) {
+            insuranceOrderInformedMatter.setInsuranceOrder(insuranceOrder);
 //            insuranceOrderInformedMatterDao.save(insuranceOrderInformedMatter);
-//        }
+        }
 
 
-//        Set<InsuranceOrderBeneficiary> insuranceOrderBeneficiarys = insuranceOrder.getInsuranceOrderBeneficiarys();
-//        for(InsuranceOrderBeneficiary insuranceOrderBeneficiary: insuranceOrderBeneficiarys)
-//        {
-//            insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
-//        }
+        Set<InsuranceOrderBeneficiary> insuranceOrderBeneficiarys = insuranceOrder.getInsuranceOrderBeneficiarys();
+        for (InsuranceOrderBeneficiary insuranceOrderBeneficiary : insuranceOrderBeneficiarys) {
+            insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
+        }
 //        insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
 
         return insuranceOrder;
@@ -90,54 +89,56 @@ public class InsuranceOrderService implements IInsuranceOrderService {
 
     /**
      * 修改状态
+     *
      * @param orderId
      * @param orderState
      * @return
      */
     @Override
     @Transactional
-    public boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState) {
-        boolean flag=true;
+    public boolean updInsuranceOrderState(int orderId, InsuranceOrderState orderState) {
+        boolean flag = true;
         try {
-            insuranceOrderDao.updInsuranceOrderState(orderState,orderId);
-        }catch (Exception e){
-            flag=false;
+            insuranceOrderDao.updInsuranceOrderState(orderState, orderId);
+        } catch (Exception e) {
+            flag = false;
         }
         return flag;
     }
 
     /**
      * 获取事项
+     *
      * @param orderId
      * @return
      */
     @Override
     public List<Map<String, Object>> findMatter(int orderId) {
-        final List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList =  insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
+        final List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList = insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
 
-        return new ArrayList<Map<String,Object>>(){
+        return new ArrayList<Map<String, Object>>() {
             {
-                int groupId=0;
-                for(InsuranceOrderInformedMatter list:insuranceOrderInformedMatterList
+                int groupId = 0;
+                for (InsuranceOrderInformedMatter list : insuranceOrderInformedMatterList
                         ) {
-                    InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(list.getInsuranceInformedMatter().getMatterId());
-                    if(null!=insuranceInformedMatter) {
+                    InsuranceInformedMatter insuranceInformedMatter = insuranceInformedMatterDao.getInsuranceInformedMatter(list.getInsuranceInformedMatter().getMatterId());
+                    if (null != insuranceInformedMatter) {
                         if (null != insuranceInformedMatter.getMatterGroup()) {
-                            if(groupId!=insuranceInformedMatter.getMatterGroup().getGroupId()){
+                            if (groupId != insuranceInformedMatter.getMatterGroup().getGroupId()) {
                                 add(new HashMap<String, Object>() {
                                     {
-                                        put("matter",insuranceInformedMatter.getMatterGroup().getDescription());
-                                        put("no","0");
+                                        put("matter", insuranceInformedMatter.getMatterGroup().getDescription());
+                                        put("no", "0");
                                     }
                                 });
-                                groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
+                                groupId = insuranceInformedMatter.getMatterGroup().getGroupId();
                             }
                         }
-                        add(new HashMap<String,Object>(){
+                        add(new HashMap<String, Object>() {
                             {
-                                put("matter",insuranceInformedMatter.getMatterDescription());
-                                put("o_value",list.getCollectValues());
-                                put("no","1");
+                                put("matter", insuranceInformedMatter.getMatterDescription());
+                                put("o_value", list.getCollectValues());
+                                put("no", "1");
                             }
                         });
                     }
@@ -149,35 +150,36 @@ public class InsuranceOrderService implements IInsuranceOrderService {
 
     /**
      * 保单分页
+     *
      * @param query
      * @return
      */
     @Override
     public Page<InsuranceOrder> pageInsuranceOrder(PageSpecification<InsuranceOrder> query) {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
-        for (PageSpecification.FilterDescriptor filterDescriptor:list
-             ) {
-            if("createTime".equals(filterDescriptor.getField())){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        List<PageSpecification.FilterDescriptor> list = query.getFilter().getFilters();
+        for (PageSpecification.FilterDescriptor filterDescriptor : list
+                ) {
+            if ("createTime".equals(filterDescriptor.getField())) {
 
-                Date createTime= null;
-                    SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
+                Date createTime = null;
+                SimpleDateFormat simpleDateFormats = new SimpleDateFormat("yyyy-MM-dd");
                 try {
-                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
-                    String createTimes=simpleDateFormat.format(dates);
+                    Date dates = simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
+                    String createTimes = simpleDateFormat.format(dates);
                     filterDescriptor.setValue(createTimes);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         }
-        query.setCustomSpecification(new CustomSpecification<InsuranceOrder>(){
+        query.setCustomSpecification(new CustomSpecification<InsuranceOrder>() {
             @Override
             public void buildFetch(Root<InsuranceOrder> root) {
                 root.fetch(InsuranceOrder_.insuranceOrderPolicyholder, JoinType.LEFT);
-                root.fetch(InsuranceOrder_.insuranceProduct,JoinType.LEFT);
-                root.fetch(InsuranceOrder_.insuranceProductPrice,JoinType.LEFT);
-                root.fetch(InsuranceOrder_.insuranceOrderInsured,JoinType.LEFT);
+                root.fetch(InsuranceOrder_.insuranceProduct, JoinType.LEFT);
+                root.fetch(InsuranceOrder_.insuranceProductPrice, JoinType.LEFT);
+                root.fetch(InsuranceOrder_.insuranceOrderInsured, JoinType.LEFT);
 
             }
 
@@ -188,11 +190,12 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 query.orderBy(builder.desc(root.get(InsuranceOrder_.createTime)));
             }
         });
-        return insuranceOrderDao.findAll(query,query.getPageRequest());
+        return insuranceOrderDao.findAll(query, query.getPageRequest());
     }
 
     /**
      * 保单详情
+     *
      * @param orderId
      * @return
      */

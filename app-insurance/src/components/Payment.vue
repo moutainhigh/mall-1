@@ -151,7 +151,6 @@
         });
         await submitOrder(this.code).then(function (res) {
           if (res.result === 'SUCCESS'){
-            console.log(res.data.orderCode);
             _this.$router.push({
               path:'policy',
               query:{orderCode : res.data.orderCode}

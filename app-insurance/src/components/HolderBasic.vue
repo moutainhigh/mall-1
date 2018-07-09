@@ -75,8 +75,24 @@
             <img v-if="priceId !==3" src="../assets/img/case-off.png" height="100"/>
           </div>
         </div>
-        <div style="display: inline-block;color: #c01212;" v-if="proId == 2">
-          <span>￥20000.00元</span>
+        <div class="i-input-radio" v-if="proId == 2">
+          <div style="display: inline-block;color: #c01212;">
+            <div class="radio-div" @click="priceId = 4">
+              <span>2万</span>
+              <img v-if="priceId ===4" src="../assets/img/case-on.png" height="100"/>
+              <img v-if="priceId !==4" src="../assets/img/case-off.png" height="100"/>
+            </div>
+            <div class="radio-div" @click="priceId = 5">
+              <span>5万</span>
+              <img v-if="priceId ===5" src="../assets/img/case-on.png" height="100"/>
+              <img v-if="priceId !==5" src="../assets/img/case-off.png" height="100"/>
+            </div>
+            <div class="radio-div" @click="priceId = 6">
+              <span>10万</span>
+              <img v-if="priceId ===6" src="../assets/img/case-on.png" height="100"/>
+              <img v-if="priceId !==6" src="../assets/img/case-off.png" height="100"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -119,8 +135,8 @@
         list: [['居民身份证', '驾驶证', '护照']],
         title: '',
         proId: '',
-        career:'',
-        state:false,
+        career: '',
+        state: false,
         toastText: '',
         showPositionValue: false,
       }
@@ -154,7 +170,7 @@
           }
         })
       },
-      changeGender:function(val){
+      changeGender: function (val) {
         this.gender = val;
         let insured = storage.fetch('insured');
         insured.insuredGender = val;
@@ -167,7 +183,7 @@
           this.toastText = "请完善账号信息"
           return false;
         }
-        if (this.state !== true){
+        if (this.state !== true) {
           alert('请勾选投保须知');
           return false;
         } else {
@@ -187,7 +203,7 @@
         immediate: true,
         deep: true
       },
-      gender:function(newVal,oldVal){
+      gender: function (newVal, oldVal) {
         let insured = storage.fetch('insured');
         insured.insuredGender = newVal;
         storage.save('insured', insured);
@@ -196,13 +212,16 @@
         let order = storage.fetch('order');
         order.insuranceProductPrice.priceId = newVal;
         switch (newVal) {
-          case 1:
+          case 1 :
+          case 4 :
             order.insuranceProductPrice.price = 20000.00;
             break;
           case 2:
+          case 5 :
             order.insuranceProductPrice.price = 50000.00;
             break;
           case 3:
+          case 6 :
             order.insuranceProductPrice.price = 100000.00;
             break;
         }
@@ -211,7 +230,7 @@
       career: function (newVal, oldVal) {
         let insured = storage.fetch("insured");
         insured.insuredCareer = newVal;
-        storage.save('insured',insured);
+        storage.save('insured', insured);
       }
     },
     created: function () {
@@ -223,10 +242,11 @@
       order.insuranceProduct.prodId = this.proId;
       if (this.proId === 1) {
         order.insuranceProductPrice.priceId = 1;
+        this.priceId = 1;
       }
       if (this.proId === 2) {
         order.insuranceProductPrice.priceId = 4;
-        order.insuranceProductPrice.price = 20000.00;
+        this.priceId = 4;
       }
       storage.save('order', order);
 
