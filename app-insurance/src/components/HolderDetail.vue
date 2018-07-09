@@ -263,7 +263,7 @@
 
         <datetime title="出生日期" placeholder="请选择出生日期" startDate="1950-01-01" :endDate="startDate" v-model="beneficiary1.beneficiaryBirthday"
                   value-text-align="left"></datetime>
-        <popup-picker title="证件类型" placeholder="请选择证件类型"  v-model="beneficiary1.beneficiaryCardType"
+        <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="beneficiary1.beneficiaryCardType"
                       value-text-align="left" :data="cardTypes"></popup-picker>
 
         <x-input title="证件号码" placeholder="请输入证件号" v-model="beneficiary1.beneficiaryCardNo"
@@ -429,7 +429,7 @@
         submitStatus: null,
         showPositionValue: false,
         toastText: '',
-        startDate: dateFormat(new Date(),"yyyy-MM-dd")
+        startDate: dateFormat(new Date(), "yyyy-MM-dd")
       }
     },
     validations: {
@@ -588,7 +588,7 @@
 
             let beneficiaries = [];
             beneficiaries.push(beneficiary1);
-            wipeArray(storage.save("beneficiaries",beneficiaries))
+            wipeArray(storage.save("beneficiaries", beneficiaries))
           }
         } else if (this.addBene2) {
           if (this.$v.beneficiary2.$invalid) {
@@ -601,7 +601,7 @@
           let beneficiaries = storage.fetch("beneficiaries");
           let beneficiary2 = storage.fetch("beneficiary2");
           beneficiaries.push(beneficiary2);
-          wipeArray(storage.save("beneficiaries",beneficiaries))
+          wipeArray(storage.save("beneficiaries", beneficiaries))
           this.submitStatus = 'PENDING'
           this.$router.push("infoMatters");
         }
@@ -773,6 +773,20 @@
         this.addBene1 = true;
         this.addBene2 = true;
       }
+    },
+    mounted() {
+      let ua = navigator.userAgent.toLowerCase();
+      let isiOS = /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
+      if (isiOS) {
+        let elementsByClassName = document.getElementsByClassName("vux-cell-primary");
+        let elementsByClassName2 = document.getElementsByClassName("i-input-radio");
+        for (let i = 0; i < elementsByClassName.length; i++) {
+          elementsByClassName[i].setAttribute('margin-left', '10px');
+        }
+        for (let i = 0; i < elementsByClassName2.length; i++) {
+          elementsByClassName2[i].setAttribute('style','margin-left:10px;');
+        }
+      }
     }
   }
 </script>
@@ -817,9 +831,9 @@
   }
 
   .i-input-item {
-    font-size: 14px;
-    width: 7rem;
-    margin-right: 2em;
+    font-size: 14px !important;
+    width: 7rem !important;
+    margin: 13px 2em 13px 0 !important;
   }
 
   .title-select img {
