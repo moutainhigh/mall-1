@@ -71,9 +71,12 @@
         if (!files.length) return;
         this.createImage(files, e);
       },
-      createImage: function (file, e) {
+      async createImage(file, e) {
         let vm = this;
-        lrz(file[0], {width: 480}).then(function (rst) {
+        vm.$vux.loading.show({
+          text: 'Loading'
+        });
+        await lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
           console.log(rst.base64);
           uploadImage(rst.base64).then(function (result) {
@@ -82,6 +85,7 @@
             holder.policyholderAvatar = result.data;
             storage.save("holder", holder);
           });
+          vm.$vux.loading.hide();
           return rst;
         })
       },
