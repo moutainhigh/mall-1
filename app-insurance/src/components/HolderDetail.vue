@@ -20,8 +20,8 @@
       <x-input title="证件号码" placeholder="请输入证件号" v-model="insured.insuredCardNo"
                v-bind:class="{'errorInput': $v.insured.insuredCardNo.$error}"
                @input="$v.insured.insuredCardNo.$touch()"></x-input>
-      <div class="error" v-if="!$v.insured.insuredCardNo.required && $v.insured.insuredCardNo.$dirty">身份证号码不能为空</div>
-      <div class="error" v-if="!$v.insured.insuredCardNo.idCardVali">请输入正确的身份证号码</div>
+      <div class="error" v-if="!$v.insured.insuredCardNo.required && $v.insured.insuredCardNo.$dirty">证件号码不能为空</div>
+      <div class="error" v-if="!$v.insured.insuredCardNo.idCardVali">请输入正确的证件号码</div>
 
       <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="insured.insuredCardPeriod" v-bind:class="{'errorInput': $v.insured.insuredCardPeriod.$error}"-->
       <!--@input="$v.insured.insuredCardPeriod.$touch()"></x-input>-->
@@ -135,10 +135,10 @@
       <!--<popup-picker title="投保人职业" placeholder="请选择职业" value-text-align="left"></popup-picker>-->
 
       <datetime title="出生日期" v-model="holder.policyholderBirthday" startDate="1950-01-01" :endDate="startDate"
-                placeholder="请选择生日日期"
+                placeholder="请选择出生日期"
                 value-text-align="left" v-bind:class="{'errorInput': $v.holder.policyholderBirthday.$error}"></datetime>
       <div class="error" v-if="!$v.holder.policyholderBirthday.required && $v.holder.policyholderBirthday.$dirty">
-        生日日期不能为空
+        出生日期不能为空
       </div>
 
       <popup-picker title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType" :data="cardTypes"
@@ -152,9 +152,9 @@
                v-bind:class="{'errorInput': $v.holder.policyholderCardNo.$error}"
                @input="$v.holder.policyholderCardNo.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderCardNo.required && $v.holder.policyholderCardNo.$dirty">
-        身份证号码不能为空
+        证件号码不能为空
       </div>
-      <div class="error" v-if="!$v.holder.policyholderCardNo.idCardVali">请输入正确的身份证号码</div>
+      <div class="error" v-if="!$v.holder.policyholderCardNo.idCardVali">请输入正确的证件号码</div>
 
       <!--<x-input title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期" v-bind:class="{'errorInput': $v.holder.policyholderCardPeroid.$error}"-->
       <!--@input="$v.holder.policyholderCardPeroid.$touch()"></x-input>-->
