@@ -25,6 +25,7 @@ import javax.annotation.Resource;
 @Api(description = "订单接口")
 @RestController
 @RequestMapping(value = "/insurance/order")
+@SessionAttributes("customerId")
 public class InsuranceOrderResource extends BaseResource {
 
     @Resource
@@ -35,9 +36,8 @@ public class InsuranceOrderResource extends BaseResource {
 
     @ApiOperation(value ="保存订单")
     @PostMapping(value = "saveOrder")
-    @JsonFilter(value = "")
-    public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code) {
-        int customerId = getCustomerId();
+    @JsonFilter(value = "data.insuranceOrderBeneficiarys,data.insuranceOrderInformedMatters")
+    public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code, @ModelAttribute("customerId") int customerId) {
         Customer customer = customerService.getCustomerById(customerId);
         if(customer == null){
             return new ResponseResult(Result.FAILURE, "链接错误或用户不存在");
@@ -64,15 +64,13 @@ public class InsuranceOrderResource extends BaseResource {
 
     @ApiOperation(value ="查询用户订单列表")
     @PostMapping(value = "getOrders")
-    public ResponseResult getOrders(@RequestBody PageSpecification<InsuranceOrder> query) {
-        int customerId = getCustomerId();
+    public ResponseResult getOrders(@RequestBody PageSpecification<InsuranceOrder> query, @ModelAttribute("customerId") int customerId) {
         return new ResponseResult(Result.SUCCESS);
     }
 
     @ApiOperation(value ="查询用户订单详情")
     @PostMapping(value = "getOrder/{orderCode}")
-    public ResponseResult getOrders(@PathVariable String orderCode) {
-        int customerId = getCustomerId();
+    public ResponseResult getOrders(@PathVariable String orderCode, @ModelAttribute("customerId") int customerId) {
         return new ResponseResult(Result.SUCCESS);
     }
 }

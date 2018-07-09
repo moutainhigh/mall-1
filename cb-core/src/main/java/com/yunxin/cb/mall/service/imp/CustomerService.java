@@ -142,6 +142,39 @@ public class CustomerService implements ICustomerService {
         return customer;
     }
 
+
+    @Override
+    public Customer updateAvatar(int customerId, String avatar) {
+        Customer customer = customerDao.findOne(customerId);
+        customer.setAvatarUrl(avatar);
+        return customer;
+    }
+
+    @Override
+    public Customer updateNickName(int customerId, String nickName) {
+        Customer customer = customerDao.findOne(customerId);
+        customer.setNickName(nickName);
+        return customer;
+    }
+
+    @Override
+    public Customer updateSex(int customerId, boolean sex) {
+        Customer customer = customerDao.findOne(customerId);
+        customer.setSex(sex);
+        return customer;
+    }
+
+    @Override
+    public Customer updateAddress(int customerId, String province,String city,String district,String address) {
+        Customer customer = customerDao.findOne(customerId);
+        customer.setProvince(province);
+        customer.setCity(city);
+        customer.setDistrict(district);
+        customer.setAddress(address);
+        return customer;
+    }
+
+
     @Override
     public Customer updateMobileChecked(int customerId, boolean mobileChecked) {
         Customer customer = customerDao.findOne(customerId);
