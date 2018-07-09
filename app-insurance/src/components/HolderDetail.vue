@@ -393,7 +393,7 @@
   //固定电话校验
   const fixedTel = helpers.regex('fixedTel', /([0-9]{3,4}-)?[0-9]{7,8}/);
   //手机号码校验
-  const mobile = helpers.regex('mobile', /^[1][3,4,5,7,8][0-9]{9}$/);
+  const mobile = helpers.regex('mobile', /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/);
 
   export default {
     components: {
