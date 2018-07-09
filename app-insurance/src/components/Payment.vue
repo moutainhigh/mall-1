@@ -25,7 +25,7 @@
         开户行不能为空
       </div>
 
-      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" value-text-align="left" v-bind:class="{'errorInput': $v.address.$error}"></x-address>
+      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" hide-district="true" value-text-align="left" v-bind:class="{'errorInput': $v.address.$error}"></x-address>
       <div class="error"
            v-if="!$v.address.required && $v.address.$dirty">
         开户行位置不能为空
@@ -153,7 +153,7 @@
           if (res.result === 'SUCCESS'){
             _this.$router.push({
               path:'policy',
-              query:{orderCode : res.data.orderCode}
+              query:{orderCode : res.data}
             });
             _this.toastText = '请求成功！';
             _this.showPositionValue = true;

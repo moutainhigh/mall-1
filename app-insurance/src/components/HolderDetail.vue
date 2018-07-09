@@ -90,7 +90,7 @@
       <x-input title="E-mail" placeholder="非必填项" v-model="insured.insuredEmail"></x-input>
       <div class="error" v-if="!$v.insured.insuredEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" v-model="insured.insuredPCD"
+      <x-address title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="insured.insuredPCD"
                  value-text-align="left" v-bind:class="{'errorInput': $v.insured.insuredPCD.$error}"></x-address>
       <div class="error" v-if="!$v.insured.insuredPCD.required && $v.insured.insuredPCD.$dirty">
         家庭住址不能为空
@@ -239,7 +239,7 @@
                @input="$v.holder.policyholderEmail.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" placeholder="请选择地址" raw-value :list="addressData" v-model="holder.holderPCD"
+      <x-address title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="holder.holderPCD"
                  value-text-align="left" v-bind:class="{'errorInput': $v.holder.holderPCD.$error}"></x-address>
       <div class="error" v-if="!$v.holder.holderPCD.required && $v.holder.holderPCD.$dirty">家庭住址不能为空</div>
 
@@ -267,7 +267,7 @@
         <img src="../assets/img/add.png"/>新增受益人
       </div>
     </div>
-    <div v-if="addBene1">
+    <div v-show="addBene1">
       <div class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(1)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary1.beneficiaryName"
@@ -367,7 +367,7 @@
       </group>
     </div>
 
-    <div v-if="addBene2">
+    <div v-show="addBene2">
       <div class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(2)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName"
@@ -437,7 +437,7 @@
           证件类型不能为空
         </div>
 
-        <x-input title="证件号码" placeholder="请输入证件号" :startDate="startDate" endDate="2199-12-30"
+        <x-input title="证件号码" placeholder="请输入证件号" :startDate="startDate"
                  v-model="beneficiary2.beneficiaryCardNo"
                  v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardNo.$error}"
                  @input="$v.beneficiary2.beneficiaryCardNo.$touch()"></x-input>
@@ -448,7 +448,7 @@
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>-->
-        <datetime title="证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" placeholder="请选择证件有效期"
+        <datetime title="证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" endDate="2199-12-30" placeholder="请选择证件有效期"
                   value-text-align="left" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"></datetime>
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryCardPeroid.required && $v.beneficiary2.beneficiaryCardPeroid.$dirty">
@@ -869,9 +869,6 @@
           this.addBene1 = true;
           this.addBene2 = true;
         }
-      },
-      submit() {
-
       }
     },
     watch: {
@@ -955,13 +952,12 @@
       }
     },
     mounted() {
-      let ua = navigator.userAgent.toLowerCase();
       let isiOS = /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
       if (isiOS) {
         let elementsByClassName = document.getElementsByClassName("vux-cell-primary");
         let elementsByClassName2 = document.getElementsByClassName("i-input-radio");
         for (let i = 0; i < elementsByClassName.length; i++) {
-          elementsByClassName[i].style.setProperty('margin-left', '10px', 'important');
+          elementsByClassName[i].style.setProperty('margin-left', '7px', 'important');
         }
         for (let i = 0; i < elementsByClassName2.length; i++) {
           elementsByClassName2[i].setAttribute('style', 'margin-left:10px;');
