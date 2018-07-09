@@ -63,6 +63,18 @@ public class CustomerResource extends BaseResource {
         customerFriend.setCreateTime(new Date());
         customerService.addFriend(customerFriend);
 
+        //双向加好友
+        customerFriend = new CustomerFriend();
+        customerFriendId = new CustomerFriendId();
+        customerFriendId.setCustomerId(customer.getCustomerId());
+        customerFriendId.setFriendId(customerId);
+        customerFriend.setId(customerFriendId);
+        customerFriend.setCustomer(customer);
+        customerFriend.setFriend(myself);
+        customerFriend.setCreateTime(new Date());
+        customerService.addFriend(customerFriend);
+
+
         return new ResponseResult(Result.SUCCESS);
     }
 

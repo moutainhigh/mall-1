@@ -123,7 +123,6 @@ public class InsuranceOrderBeneficiary implements Serializable {
     /**
      * 受益人婚否
      */
-    @NotBlank
     @Length(max = 32)
     private String beneficiaryMarriage;
     /**
