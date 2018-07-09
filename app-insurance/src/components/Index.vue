@@ -35,7 +35,7 @@
         <div class="dt-price">
           <div>
             <div class="dt-price-pro">
-              ￥20000.00元
+              2万/5万/10万
             </div>
             <button @click="goToPro(2)">
               立即投保

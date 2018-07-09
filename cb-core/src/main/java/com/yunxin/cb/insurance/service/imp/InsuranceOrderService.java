@@ -73,7 +73,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
         for (InsuranceOrderInformedMatter insuranceOrderInformedMatter : insuranceOrderInformedMatters) {
             insuranceOrderInformedMatter.setInsuranceOrder(insuranceOrder);
-//            insuranceOrderInformedMatterDao.save(insuranceOrderInformedMatter);
+            insuranceOrderInformedMatterDao.save(insuranceOrderInformedMatter);
         }
 
 
@@ -81,7 +81,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         for (InsuranceOrderBeneficiary insuranceOrderBeneficiary : insuranceOrderBeneficiarys) {
             insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
         }
-//        insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
+        insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
 
         return insuranceOrder;
 

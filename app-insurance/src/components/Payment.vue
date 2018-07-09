@@ -19,19 +19,19 @@
                @input="$v.bank.bankMobile.$touch()"></x-input>
       <div class="error" v-if="!$v.bank.bankMobile.mobile">请输入正确的手机号码</div>
 
-      <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank"></popup-picker>
+      <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank" v-bind:class="{'errorInput': $v.bank.accountBank.$error}"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountBank.required && $v.bank.accountBank.$dirty">
         开户行不能为空
       </div>
 
-      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" value-text-align="left"></x-address>
+      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" value-text-align="left" v-bind:class="{'errorInput': $v.address.$error}"></x-address>
       <div class="error"
            v-if="!$v.address.required && $v.address.$dirty">
         开户行位置不能为空
       </div>
 
-      <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"></popup-picker>
+      <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left" v-bind:class="{'errorInput': $v.bank.accountType.$error}"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountType.required && $v.bank.accountType.$dirty">
         账户类型不能为空
@@ -81,7 +81,7 @@
   import {required, minLength, maxLength, helpers, numeric} from 'vuelidate/lib/validators'
 
   //手机号码校验
-  const mobile = helpers.regex('mobile', /^[1][3,4,5,7,8][0-9]{9}$/);
+  const mobile = helpers.regex('mobile', /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/);
 
   export default {
     name: "Payment",

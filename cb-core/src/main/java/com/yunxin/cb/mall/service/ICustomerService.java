@@ -139,4 +139,13 @@ public interface ICustomerService {
     public void delFriendById(CustomerFriendId customerFriendId);
 
     boolean isFriend(int customerId, int friendId);
+
+
+    Customer updateAvatar(int customerId, String avatar);
+
+    Customer updateNickName(int customerId, String nickName);
+
+    Customer updateSex(int customerId, boolean sex);
+
+    Customer updateAddress(int customerId, String province, String city, String district, String address);
 }

@@ -56,6 +56,10 @@ public class Customer implements java.io.Serializable {
      */
     private String realName;
     /**
+     * 昵称
+     */
+    private String nickName;
+    /**
      * 性别
      */
     private boolean sex = true;
@@ -157,10 +161,6 @@ public class Customer implements java.io.Serializable {
      */
     private String rongCloudToken;
 
-    /**
-     * 昵称
-     */
-    private String qqNickName;
 
     /**
      * 头像URL
@@ -458,12 +458,12 @@ public class Customer implements java.io.Serializable {
     }
 
     @Column(length = 32)
-    public String getQqNickName() {
-        return qqNickName;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setQqNickName(String qqNickName) {
-        this.qqNickName = qqNickName;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     @Column(length = 512)
