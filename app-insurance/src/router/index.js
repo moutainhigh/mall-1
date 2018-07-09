@@ -9,6 +9,7 @@ import UploadData from '../components/UploadData'
 import InfoMatters from '../components/InfoMatters'
 import Payment from '../components/Payment'
 import Policy from '../components/Policy'
+import myOrders from '../components/myOrders'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -52,6 +53,10 @@ export default new Router({
       path: '/policy',
       name: 'policy',
       component: Policy
+    }, {
+      path: '/my-orders',
+      name: 'my-orders',
+      component: myOrders
     }
   ]
 })

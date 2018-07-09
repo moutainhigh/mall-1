@@ -11,7 +11,7 @@
           <div v-if="birthday !== ''">{{birthday}}</div>
           <img src="../assets/img/drop-down.png"/>
         </div>
-        <div class="error" v-if="!$v.career.required && $v.career.$dirty">请选择出生日期</div>
+        <div class="error" v-if="!$v.birthday.required && $v.birthday.$dirty">请选择出生日期</div>
       </div>
       <div class="i-input">
         <div class="i-input-item">性别：</div>
@@ -103,7 +103,7 @@
       <div class="i-message" @click="state = !state">
         <img v-if="!state" class="checkIcon" src="../assets/img/checkoff.png">
         <img v-if="state" class="checkIcon" src="../assets/img/checkon.png">
-        <div>&emsp;欢迎使用富德生命微信投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
+        <div>&emsp;欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
       </div>
     </div>
     <div style="height: 48px;">

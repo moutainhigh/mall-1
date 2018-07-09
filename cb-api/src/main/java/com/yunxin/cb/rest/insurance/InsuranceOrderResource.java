@@ -1,5 +1,6 @@
 package com.yunxin.cb.rest.insurance;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
@@ -9,6 +10,7 @@ import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
+import com.yunxin.core.annotation.CustomJsonFilter;
 import com.yunxin.core.persistence.PageSpecification;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +36,7 @@ public class InsuranceOrderResource extends BaseResource {
 
     @ApiOperation(value ="保存订单")
     @PostMapping(value = "saveOrder")
+    @JsonFilter(value = "")
     public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code) {
         int customerId = getCustomerId();
         Customer customer = customerService.getCustomerById(customerId);
@@ -55,7 +58,8 @@ public class InsuranceOrderResource extends BaseResource {
             return new ResponseResult(Result.FAILURE, "验证码错误");
         }
         insuranceOrder.setCustomer(customer);
-        return new ResponseResult(insuranceOrderService.addInsuranceOrder(insuranceOrder));
+        insuranceOrder = insuranceOrderService.addInsuranceOrder(insuranceOrder);
+        return new ResponseResult(insuranceOrder.getOrderCode());
     }
 
 

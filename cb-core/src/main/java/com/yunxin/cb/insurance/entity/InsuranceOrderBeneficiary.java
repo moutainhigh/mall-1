@@ -5,6 +5,7 @@
 
 package com.yunxin.cb.insurance.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
@@ -70,7 +71,6 @@ public class InsuranceOrderBeneficiary implements Serializable {
     /**
      * 受益人职业
      */
-    @NotBlank
     @Length(max = 32)
     private String beneficiaryCareer;
     /**
@@ -108,13 +108,11 @@ public class InsuranceOrderBeneficiary implements Serializable {
     /**
      * 受益人身高
      */
-    @NotNull
     @Max(9999999999L)
     private int beneficiaryHeight;
     /**
      * 受益人体重
      */
-    @NotNull
     private Float beneficiaryBodyWeight;
     /**
      * 受益人收入
@@ -146,25 +144,21 @@ public class InsuranceOrderBeneficiary implements Serializable {
     /**
      * 受益人所在省
      */
-    @NotBlank
     @Length(max = 6)
     private String beneficiaryProvince;
     /**
      * 受益人所在市
      */
-    @NotBlank
     @Length(max = 6)
     private String beneficiaryCity;
     /**
      * 受益人所在区
      */
-    @NotBlank
     @Length(max = 6)
     private String beneficiaryDistrict;
     /**
      * 受益人详细地址
      */
-    @NotBlank
     @Length(max = 255)
     private String beneficiaryAddress;
     /**
@@ -405,6 +399,7 @@ public class InsuranceOrderBeneficiary implements Serializable {
         this.insuranceOrder = insuranceOrder;
     }
 
+    @JsonIgnore
     @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "ORDER_ID", nullable = false, insertable = true, updatable = true)

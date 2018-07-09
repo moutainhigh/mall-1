@@ -157,9 +157,9 @@
             });
             _this.toastText = '请求成功！';
             _this.showPositionValue = true;
-            storage.clear();
+            // storage.clear();
           }else{
-            _this.toastText = res.message;
+            _this.toastText = "请求失败，请稍候重试！";
             _this.showPositionValue = true;
           }
           _this.$vux.loading.hide();

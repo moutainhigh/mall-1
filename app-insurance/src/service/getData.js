@@ -16,7 +16,7 @@ export const submitOrder = function (code) {
   insuranceOrder.insuranceOrderPolicyholderBank = wipeArray(insuranceOrder.insuranceOrderPolicyholderBank );
   let beneficiaries = [];
   if (!insuranceOrder.legalBeneficiary) {
-    beneficiaries =[wipeArray(storage.fetch('beneficiary1')),wipeArray(storage.fetch('beneficiary2'))];
+    beneficiaries =wipeArray(storage.fetch("beneficiaries"));
   }
   insuranceOrder.insuranceOrderPolicyholder = holder;
   insuranceOrder.insuranceOrderInsured = insured;

@@ -103,11 +103,12 @@
 
 
 </head>
-<body>
+<body style="background: url('images/indexBg/background.png') no-repeat;  background-size: cover; background-position: center">
 <div id="container-loginmin" class="clearfix">
 
 
-  <div id="demo-overview">
+  <div id="demo-overview" align="center" style="margin-top: 40%; margin-bottom: 40px" >
+    <img style="width: 150px" src="images/indexBg/logo.png" alt=""/>
   <!--
     <a href="index.html">Dashboard</a>
     |
@@ -130,42 +131,72 @@
     </div>
   </form:errors>
 
-  <div id="login-box">
-    <div class="login-box-inner clearfix">
-      <header id="login-header">
-        <a href="#" id="login-logo">
-          <h1>水晶球商城管理后台</h1>
-          <h4> ${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>
-        </a>
-      </header>
-      <div class="spacer-40"></div>
-      <form id="form-login" action="j_spring_security_check" method="post">
-        <div class="login-avatar">
-          <img src="images/users/logo.png" alt="" id="login-avatar"/>
-        </div>
-        <div class="login-fields-wrapper">
-          <div class="row">
-            <div class="col-lg-12">
-              <input class="form-control input-lg" id="j_username" name="j_username" type="text" placeholder="Username" tabindex="1" value="admin" />
-            </div>
-          </div>
-          <div class="spacer-10"></div>
-          <div class="row">
-            <div class="col-lg-12">
-              <input class="form-control input-lg" id="j_password" name="j_password" type="password" placeholder="Password" tabindex="2" />
-            </div>
-          </div>
-          <div class="spacer-20"></div>
-          <div class="row">
-            <div class="col-lg-12">
-              <!-- this needs to be a button/input element -->
-              <button type="submit" class="btn btn-default btn-lg">登录</button>
-            </div>
+  <div style="position: relative">
+    <img style="width: 100%; position: absolute" src="images/indexBg/loginBg.png" alt=""/>
+    <h4> ${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>
+    <form id="form-login" style="width: 100%; margin-top: 40px" action="j_spring_security_check" method="post">
+      <%--<div class="login-avatar">--%>
+        <%--<img src="images/users/logo.png" alt="" id="login-avatar"/>--%>
+      <%--</div>--%>
+      <div class="login-fields-wrapper" style="float: none; width: 100%">
+        <div class="row" style="">
+          <div class="col-lg-12">
+            <input class="form-control input-lg" style="width: 85%; height: 50px; margin: 0 7.5%; border: 2px solid #e5e5e5; border-radius: 6px" id="j_username" name="j_username" type="text" placeholder="Username" tabindex="1" value="admin" />
           </div>
         </div>
-      </form>
-    </div>
+        <div class="spacer-10" style="height: 20px"></div>
+        <div class="row">
+          <div class="col-lg-12">
+            <input class="form-control input-lg" style="width: 85%; height: 50px; margin: 0 7.5%; border: 2px solid #e5e5e5; border-radius: 6px" id="j_password" name="j_password" type="password" placeholder="Password" tabindex="2" />
+          </div>
+        </div>
+        <div class="spacer-20"></div>
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- this needs to be a button/input element -->
+            <button type="submit" class="btn btn-default btn-lg" style="width: 85%; margin: 0 7.5%; height: 50px; color: #fff; background: #e1bb3a; font-size: 20px; border: 0; font-weight: normal">登录</button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
+
+  <%--<div id="login-box" style="position: relative; background-image: url('images/indexBg/loginBg.png')">--%>
+    <%--<div class="login-box-inner clearfix">--%>
+      <%--<header id="login-header">--%>
+        <%--<a href="#" id="login-logo">--%>
+          <%--<h1>水晶球商城管理后台</h1>--%>
+          <%--<h4> ${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>--%>
+        <%--</a>--%>
+      <%--</header>--%>
+      <%--<div class="spacer-40"></div>--%>
+      <%--<form id="form-login" action="j_spring_security_check" method="post">--%>
+        <%--<div class="login-avatar">--%>
+          <%--&lt;%&ndash;<img src="images/users/logo.png" alt="" id="login-avatar"/>&ndash;%&gt;--%>
+        <%--</div>--%>
+        <%--<div class="login-fields-wrapper">--%>
+          <%--<div class="row">--%>
+            <%--<div class="col-lg-12">--%>
+              <%--<input class="form-control input-lg" id="j_username" name="j_username" type="text" placeholder="Username" tabindex="1" value="admin" />--%>
+            <%--</div>--%>
+          <%--</div>--%>
+          <%--<div class="spacer-10"></div>--%>
+          <%--<div class="row">--%>
+            <%--<div class="col-lg-12">--%>
+              <%--<input class="form-control input-lg" id="j_password" name="j_password" type="password" placeholder="Password" tabindex="2" />--%>
+            <%--</div>--%>
+          <%--</div>--%>
+          <%--<div class="spacer-20"></div>--%>
+          <%--<div class="row">--%>
+            <%--<div class="col-lg-12">--%>
+              <%--<!-- this needs to be a button/input element -->--%>
+              <%--<button type="submit" class="btn btn-default btn-lg">登录</button>--%>
+            <%--</div>--%>
+          <%--</div>--%>
+        <%--</div>--%>
+      <%--</form>--%>
+    <%--</div>--%>
+  <%--</div>--%>
   <!--
   <footer id="login-footer">
     <strong>Copyright © 2013 3333.net</strong>
