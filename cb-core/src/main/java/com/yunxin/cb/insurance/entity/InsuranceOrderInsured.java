@@ -5,6 +5,7 @@
 
 package com.yunxin.cb.insurance.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
@@ -370,7 +371,7 @@ public class InsuranceOrderInsured implements Serializable {
     }
 
 
-
+    @JsonIgnore
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceOrderInsured")
     public Set<InsuranceOrder> getInsuranceOrders() {
         return insuranceOrders;
