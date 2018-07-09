@@ -292,7 +292,7 @@
     </div>
 
     <div v-if="addBene2">
-      <div class="add">受益人信息 <span style="float: right;" @click="delBene(2)">删除</span></div>
+      <div class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(2)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName"
                  v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryName.$error}"
@@ -675,6 +675,10 @@
             beneficiaryCountry: ''
           };
           storage.save('beneficiary2', null);
+        }
+
+        if (!this.addBene1 && !this.addBene2){
+          this.changeLegal();
         }
       },
       changeLegal() {
