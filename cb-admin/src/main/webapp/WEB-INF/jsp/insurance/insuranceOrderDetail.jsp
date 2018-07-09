@@ -6,8 +6,13 @@
 <!DOCTYPE html>
 <html class="no-js">                       <!--<![endif]-->
 <head>
+    <!--<script src="../js/zoomify/zoomify.js"></script>-->
+    <script src="../js/zoomify/viewer.min.js"></script>
+    <script src="../js/zoomify/viewer-jquery.min.js"></script>
+    <link rel="stylesheet" href="../js/zoomify/viewer.min.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
     <title>保单详情</title>
     <script type="text/javascript">
         function updInsuranceOrderState(orderId,oState){
@@ -33,6 +38,12 @@
            $("#province").html(province);
            var city=  $.citySelector.getCity(${insuranceOrder.insuranceOrderPolicyholderBank.bankCity});
             $("#city").html(city);
+
+            for (var i=1;i<7;i++){
+                $('#example'+i).viewer({
+                    url: 'data-original',
+                });
+            }
         });
 
     </script>
@@ -536,21 +547,21 @@
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 投保人银行卡正面 ：</label>
                             </div>
-                            <div class="col-sm-2 col-label">
-                                <img src="${insuranceOrder.insuranceOrderPolicyholderBank.bankCardImg}" alt="投保人银行卡正面" width="200" height="150"/>
+                            <div class="col-sm-2 col-label" id="example1">
+                                        <img data-original="${insuranceOrder.insuranceOrderPolicyholderBank.bankCardImg}"  src="${insuranceOrder.insuranceOrderPolicyholderBank.bankCardImg}" alt="投保人银行卡正面" width="200" height="150"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 投保人身份证正面 ：</label>
                             </div>
-                            <div class="col-sm-2 col-label">
-                                <img src="${insuranceOrder.insuranceOrderPolicyholder.cardPositiveImg}" alt="投保人身份证正面" width="200" height="150"/>
+                            <div class="col-sm-2 col-label"  id="example2">
+                                <img data-original="${insuranceOrder.insuranceOrderPolicyholder.cardPositiveImg}" src="${insuranceOrder.insuranceOrderPolicyholder.cardPositiveImg}" alt="投保人身份证正面" width="200" height="150"/>
                             </div>
 
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 投保人身份证反面 ：</label>
                             </div>
-                            <div class="col-sm-2 col-label">
-                                <img src="${insuranceOrder.insuranceOrderPolicyholder.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
+                            <div class="col-sm-2 col-label"  id="example3">
+                                <img data-original="${insuranceOrder.insuranceOrderPolicyholder.cardNegativeImg}" src="${insuranceOrder.insuranceOrderPolicyholder.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -560,8 +571,8 @@
                                 <div class="col-sm-2">
                                     <label><span class="asterisk"></span> 其他资料 ：</label>
                                 </div>
-                                <div class="col-sm-2 col-label">
-                                    <img src="${insuranceOrder.insuranceOrderPolicyholder.otherImg1}" alt="其他资料" width="200" height="150"/>
+                                <div class="col-sm-2 col-label"  id="example4">
+                                    <img data-original="${insuranceOrder.insuranceOrderPolicyholder.otherImg1}" src="${insuranceOrder.insuranceOrderPolicyholder.otherImg1}" alt="其他资料" width="200" height="150"/>
                                 </div>
                             </c:if>
 
@@ -570,8 +581,8 @@
                                 <div class="col-sm-2">
                                     <label><span class="asterisk"></span> 其他资料 ：</label>
                                 </div>
-                                <div class="col-sm-2 col-label">
-                                    <img src="${insuranceOrder.insuranceOrderPolicyholder.otherImg2}" alt="其他资料" width="200" height="150"/>
+                                <div class="col-sm-2 col-label" id="example5">
+                                    <img data-original="${insuranceOrder.insuranceOrderPolicyholder.otherImg2}" src="${insuranceOrder.insuranceOrderPolicyholder.otherImg2}" alt="其他资料" width="200" height="150"/>
                                 </div>
                             </c:if>
 
@@ -580,8 +591,8 @@
                                 <div class="col-sm-2">
                                     <label><span class="asterisk"></span> 其他资料 ：</label>
                                 </div>
-                                <div class="col-sm-2 col-label">
-                                    <img src="${insuranceOrder.insuranceOrderPolicyholder.otherImg3}" alt="其他资料" width="200" height="150"/>
+                                <div class="col-sm-2 col-label"  id="example6">
+                                    <img data-original="${insuranceOrder.insuranceOrderPolicyholder.otherImg3}" src="${insuranceOrder.insuranceOrderPolicyholder.otherImg3}" alt="其他资料" width="200" height="150"/>
                                 </div>
                             </c:if>
                         </div>
