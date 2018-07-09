@@ -65,6 +65,12 @@ public class InsuranceOrderResource extends BaseResource {
     @ApiOperation(value ="查询用户订单列表")
     @PostMapping(value = "getOrders")
     public ResponseResult getOrders(@RequestBody PageSpecification<InsuranceOrder> query, @ModelAttribute("customerId") int customerId) {
+        PageSpecification.FilterDescriptor filterDescriptor = new PageSpecification.FilterDescriptor();
+        filterDescriptor.setField("customer.customerId");
+        filterDescriptor.setLogic("and");
+        filterDescriptor.setOperator("eq");
+        filterDescriptor.setValue(customerId);
+        query.getFilter().getFilters().add(filterDescriptor);
         return new ResponseResult(Result.SUCCESS);
     }
 
