@@ -156,9 +156,6 @@
         <img v-if="!legalBeneficiary" src="../assets/img/unselect.png"/>
         受益人：法定受益人
       </div>
-      <div class="title-add" @click="addBene">
-        <img src="../assets/img/add.png"/>新增受益人
-      </div>
     </div>
     <div v-show="addBene1">
       <div class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(1)">删除</span></div>
@@ -361,6 +358,11 @@
           与被保人关系不能为空
         </div>
       </group>
+    </div>
+    <div class="title-add" :style="{'margin:10px 0 0 0;': !legalBeneficiary}" @click="addBene" v-if="!addBene1 || !addBene2">
+      <div>
+        <img src="../assets/img/add.png"/>新增受益人
+      </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 50px;">
@@ -795,11 +797,13 @@
 
 <style scoped>
   .title {
-    margin: 0 0 10px 0;
+    margin-top: 10px;
     background-color: #ffffff;
     padding: 15px;
     font-size: 13px;
     color: #e1bb3a;
+    text-align: center;
+    border-bottom: #D9D9D9 solid 1px;
   }
 
   .i-input-radio {
@@ -838,15 +842,32 @@
     margin: 13px 2em 13px 0 !important;
   }
 
+  .title-select {
+    font-size: 16px;
+    display: inline-block;
+  }
+
   .title-select img {
-    width: 14px;
+    width: 20px;
     position: relative;
-    top: 2px;
+    top: 4px;
     margin-right: 10px;
   }
 
   .title-add {
-    margin-top: 10px;
+    padding: 10px 0 ;
+    text-align: center;
+    font-size: 17px;
+    color: #f5ca1d;
+    background-color: #ffffff;
+  }
+
+  .title-add div {
+    width: 240px;
+    display: inline-block;
+    border: #f5ca1d solid 1px;
+    border-radius: 20px;
+    padding: 6px 0;
   }
 
   .title-add img {
