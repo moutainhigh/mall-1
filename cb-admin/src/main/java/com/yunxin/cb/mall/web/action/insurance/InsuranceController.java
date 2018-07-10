@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -65,5 +66,32 @@ public class InsuranceController {
     @RequestMapping(method = RequestMethod.GET)
     public boolean updInsuranceOrderState(@RequestParam("orderId") int orderId, @RequestParam("orderState") InsuranceOrderState orderState) {
         return iInsuranceOrderService.updInsuranceOrderState(orderId,orderState);
+    }
+    @RequestMapping(value="excelInsuranceOrder",method = RequestMethod.GET)
+    public String excelInsuranceOrder(HttpServletResponse response){
+//        String title = "保单";
+//        String[] rowsName = new String[]{"序号","保单编号","合同编号"};
+//        List<Object[]> dataList = new ArrayList<Object[]>();
+//        Object[] objs = null;
+//        Page<InsuranceOrder> page = iInsuranceOrderService.pageInsuranceOrder(new PageSpecification<InsuranceOrder>());
+//        for (int i = 0; i < page.getContent().size(); i++) {
+//            InsuranceOrder insuranceOrder = page.getContent().get(i);
+//            objs = new Object[rowsName.length];
+//            objs[0] = i;
+//            objs[1] = insuranceOrder.getOrderCode();
+//            objs[2] = insuranceOrder.getContractNo();
+//            dataList.add(objs);
+//        }
+//        ExportExcel exportExcel = new ExportExcel(title, rowsName,dataList,response);
+//        try {
+//            exportExcel.export();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        return "redirect:insurances.do";
+    }
+    @RequestMapping(method = RequestMethod.GET)
+    public String prints() {
+        return "insurance/prints";
     }
 }
