@@ -53,4 +53,13 @@ public interface IInsuranceOrderService {
      * @return
      */
     List<Map<String,Object>> findMatter(int orderId);
+
+    /**
+     * 根据订单编号查询订单
+     *
+     * @param orderCode
+     * @return
+     */
+    public InsuranceOrder getInsuranceOrderDetailByOrderCode(String orderCode);
+
 }
