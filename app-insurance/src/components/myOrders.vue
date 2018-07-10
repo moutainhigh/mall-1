@@ -3,10 +3,10 @@
     <scroller style="top: 0;font-size: 12px !important;"
               :on-refresh="refresh"
               :on-infinite="infinite"
-              refresh-layer-color="#e1bb3a"
-              loading-layer-color="#e1bb3a"
+              refresh-layer-color="#f5ca1d"
+              loading-layer-color="#f5ca1d"
     >
-      <svg class="spinner" style="fill: #e1bb3a;" slot="refresh-spinner" viewBox="0 0 64 64">
+      <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
         <g>
           <circle cx="16" cy="32" stroke-width="0" r="3">
             <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5" repeatCount="indefinite"></animate>
@@ -47,7 +47,7 @@
         </div>
       </div>
       <!-- custom infinite spinner -->
-      <svg class="spinner" style="fill: #e1bb3a;" slot="infinite-spinner" viewBox="0 0 64 64">
+      <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
         <g>
           <circle cx="16" cy="32" stroke-width="0" r="3">
             <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5" repeatCount="indefinite"></animate>

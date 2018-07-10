@@ -8,6 +8,7 @@ import com.yunxin.cb.mall.dao.FeedbackDao;
 import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.entity.Brand_;
 import com.yunxin.cb.mall.entity.Feedback;
+import com.yunxin.cb.mall.entity.Feedback_;
 import com.yunxin.cb.mall.service.IBrandService;
 import com.yunxin.cb.mall.service.IFeedbackService;
 import com.yunxin.core.exception.EntityExistException;
@@ -23,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +46,44 @@ public class FeedbackService implements IFeedbackService {
         return feedbackDao.save(Feedback);
     }
 
+    public Page<Feedback> pageFeedback(final PageSpecification<Feedback> queryRequest){
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        List<PageSpecification.FilterDescriptor> list=queryRequest.getFilter().getFilters();
+        for (PageSpecification.FilterDescriptor filterDescriptor:list
+                ) {
+            if("createTime".equals(filterDescriptor.getField())){
+
+                Date createTime= null;
+                SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
+                    String createTimes=simpleDateFormat.format(dates);
+                    filterDescriptor.setValue(createTimes);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        queryRequest.setCustomSpecification(new CustomSpecification<Feedback>() {
+            @Override
+            public void buildFetch(Root<Feedback> root) {
+                root.fetch(Feedback_.customer, JoinType.LEFT);
+            }
+            @Override
+            public void addConditions(Root<Feedback> root, CriteriaQuery<?> query,
+                                      CriteriaBuilder builder, List<Predicate> predicates) {
+                query.orderBy(builder.desc(root.get(Feedback_.createTime)));
+            }
+        });
+        Page<Feedback> page = feedbackDao.findAll(queryRequest, queryRequest.getPageRequest());
+        return page;
+    }
+
+
+    public Feedback getFeedbackByid(int id){
+        Feedback feedback=feedbackDao.findFeedbackByid(id);
+        return feedback;
+    }
 
 
 }
