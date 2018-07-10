@@ -29,9 +29,9 @@
         <img src="../assets/img/product2.png">
       </div>
       <div class="i-list-detail">
-        <div class="dt-title">生命尊养无忧老年防癌疾病保险</div>
-        <div class="dt-intro">老年专属防癌险</div>
-        <div class="dt-content">给爸妈一个安心的晚年</div>
+        <div class="dt-title">富德生命鑫福来年金保险</div>
+        <div class="dt-intro">富德生命鑫福来为投保</div>
+        <div class="dt-content">鑫福来，鑫福送福乐开怀</div>
         <div class="dt-price">
           <div>
             <div class="dt-price-pro">
@@ -72,7 +72,7 @@
             path:'/pro-detail',
             query:{
               id:2,
-              title:"生命尊养无忧老年防癌疾病保险"
+              title:"富德生命鑫福来年金保险"
             }
           });
         }
@@ -100,7 +100,7 @@
 <style scoped>
   button {
     height: 24px;
-    background-color: #e1bb3a;
+    background-color: #f5ca1d;
     float: right;
     font-size: 15px;
     color: #ffffff;

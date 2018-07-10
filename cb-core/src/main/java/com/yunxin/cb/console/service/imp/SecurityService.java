@@ -190,7 +190,8 @@ public class SecurityService implements ISecurityService, SecurityHolder {
                 RoleResc roleResc = new RoleResc(dbrole, rescCode);
                 roleRescDao.save(roleResc);
             }
-        }
+        }else
+            throw new EntityExistException("请至少选中一个权限进行操作");
         return dbrole;
     }
 

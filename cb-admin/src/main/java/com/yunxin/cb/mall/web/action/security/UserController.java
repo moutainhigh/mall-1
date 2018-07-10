@@ -7,11 +7,6 @@ import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.cb.console.entity.Role;
-import com.yunxin.cb.console.entity.User;
-import com.yunxin.cb.console.service.ISecurityService;
-import com.yunxin.cb.mall.entity.Seller;
-import com.yunxin.cb.security.SecurityConstants;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,6 +27,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author z001075
  */
+
 @Controller
 @RequestMapping(value = "/security")
 @SessionAttributes(SecurityConstants.LOGIN_SELLER)
