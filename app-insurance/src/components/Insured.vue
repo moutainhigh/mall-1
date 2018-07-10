@@ -65,8 +65,8 @@
       <div class="error" v-if="!$v.insured.insuredMarriage.required && $v.insured.insuredMarriage.$dirty">
         婚姻状况不能为空
       </div>
-      <div>
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
+      <div style="background-color: #f5f5f5">
+        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
