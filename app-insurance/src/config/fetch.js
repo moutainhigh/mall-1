@@ -27,7 +27,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer ' + 111111
+        'Authorization': 'Bearer ' + storage.fetch('token')
       },
 			mode: "cors",
 			cache: "force-cache"

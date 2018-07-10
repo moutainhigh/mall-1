@@ -31,3 +31,7 @@ export const submitOrder = function (code) {
 export const uploadImage = function (base64) {
   return fetch('/common/file/uploadBase64/PAPERWORK', base64, 'POST','fetch');
 };
+
+export const getOrders = function (query) {
+  return fetch('/insurance/order/getOrders', query, 'POST','fetch');
+};

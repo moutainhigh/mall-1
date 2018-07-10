@@ -22,10 +22,9 @@
           </circle>
         </g>
       </svg>
-
-      <div class="i-list" style="margin-top: 10px">
+      <div class="i-list" style="margin-top: 10px" v-for="order in orders">
         <div class="list-title">
-          <div style="margin-left: 16px">保单号：1111111</div>
+          <div style="margin-left: 16px">保单号：{{order.orderCode}}</div>
           <div style="float: right;margin-right: 16px;color: #c01212;">支付完成</div>
         </div>
         <div style="display: inline-block;">
@@ -47,7 +46,6 @@
           </div>
         </div>
       </div>
-
       <!-- custom infinite spinner -->
       <svg class="spinner" style="fill: #e1bb3a;" slot="infinite-spinner" viewBox="0 0 64 64">
         <g>
@@ -71,6 +69,8 @@
 </template>
 
 <script>
+  import {getOrders} from "../service/getData";
+
   export default {
     name: "myOrders",
     meta: {
@@ -78,50 +78,47 @@
     },
     data() {
       return {
-        items: []
+        orders: [],
+        pageQuery:{
+          page:1,
+          pageSize:10,
+          total:1
+        }
       }
-    },
-    mounted() {
-      for (let i = 1; i <= 20; i++) {
-        this.items.push(i + ' - keep walking, be 2 with you.')
-      }
-      this.top = 1
-      this.bottom = 20
     },
     methods: {
       refresh(done) {
-        setTimeout(() => {
-          let start = this.top - 1
-          for (let i = start; i > start - 10; i--) {
-            this.items.splice(0, 0, i + ' - keep walking, be 2 with you.')
+        this.pageQuery.page = 1;
+        getOrders(this.pageQuery).then(res=>{
+          if (res.result == 'SUCCESS') {
+            this.orders = res.data.content;
+            this.pageQuery.total = res.data.totalPages;
+            this.pageQuery.page++;
           }
-          this.top = this.top - 10;
           done()
-        }, 1500)
+        });
       },
 
       infinite(done) {
-        if (this.bottom >= 30) {
-          setTimeout(() => {
-            done(true)
-          }, 1500)
+        if (this.pageQuery.page > this.pageQuery.total) {
+          done(true)
           return;
         }
-
-        setTimeout(() => {
-          let start = this.bottom + 1
-          for (let i = start; i < start + 10; i++) {
-            this.items.push(i + ' - keep walking, be 2 with you.')
+        this.getOrders(done);
+      },
+      getOrders(done){
+        getOrders(this.pageQuery).then(res=>{
+          console.log(res);
+          if (res.result == 'SUCCESS') {
+            this.orders = this.orders.concat(res.data.content);
+            this.pageQuery.total = res.data.totalPages;
+            this.pageQuery.page++;
           }
-          this.bottom = this.bottom + 10;
-          setTimeout(() => {
+          if (done){
             done()
-          })
-        }, 1500)
+          }
+        });
       }
-    },
-    created() {
-      console.log("test")
     }
   }
 </script>
