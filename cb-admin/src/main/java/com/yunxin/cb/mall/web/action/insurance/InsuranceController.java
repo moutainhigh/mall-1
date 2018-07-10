@@ -4,7 +4,6 @@ import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
 import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.core.util.ExportExcel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -72,25 +69,25 @@ public class InsuranceController {
     }
     @RequestMapping(value="excelInsuranceOrder",method = RequestMethod.GET)
     public String excelInsuranceOrder(HttpServletResponse response){
-        String title = "保单";
-        String[] rowsName = new String[]{"序号","保单编号","合同编号"};
-        List<Object[]> dataList = new ArrayList<Object[]>();
-        Object[] objs = null;
-        Page<InsuranceOrder> page = iInsuranceOrderService.pageInsuranceOrder(new PageSpecification<InsuranceOrder>());
-        for (int i = 0; i < page.getContent().size(); i++) {
-            InsuranceOrder insuranceOrder = page.getContent().get(i);
-            objs = new Object[rowsName.length];
-            objs[0] = i;
-            objs[1] = insuranceOrder.getOrderCode();
-            objs[2] = insuranceOrder.getContractNo();
-            dataList.add(objs);
-        }
-        ExportExcel exportExcel = new ExportExcel(title, rowsName,dataList,response);
-        try {
-            exportExcel.export();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        String title = "保单";
+//        String[] rowsName = new String[]{"序号","保单编号","合同编号"};
+//        List<Object[]> dataList = new ArrayList<Object[]>();
+//        Object[] objs = null;
+//        Page<InsuranceOrder> page = iInsuranceOrderService.pageInsuranceOrder(new PageSpecification<InsuranceOrder>());
+//        for (int i = 0; i < page.getContent().size(); i++) {
+//            InsuranceOrder insuranceOrder = page.getContent().get(i);
+//            objs = new Object[rowsName.length];
+//            objs[0] = i;
+//            objs[1] = insuranceOrder.getOrderCode();
+//            objs[2] = insuranceOrder.getContractNo();
+//            dataList.add(objs);
+//        }
+//        ExportExcel exportExcel = new ExportExcel(title, rowsName,dataList,response);
+//        try {
+//            exportExcel.export();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return "redirect:insurances.do";
     }
     @RequestMapping(method = RequestMethod.GET)
