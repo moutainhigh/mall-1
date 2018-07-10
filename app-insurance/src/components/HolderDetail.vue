@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="title">
+    <div class="title" style="text-align: left">
       投保人信息
     </div>
-    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
+    <group label-width="7rem" label-margin-right="2em" label-align="left">
       <x-input title="姓名" placeholder="请输入姓名" v-model="holder.policyholderName"
                v-bind:class="{'errorInput': $v.holder.policyholderName.$error}"
                @input="$v.holder.policyholderName.$touch()"></x-input>
@@ -130,11 +130,17 @@
                @input="$v.holder.policyholderEmail.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="holder.holderPCD"
+      <div class="address" @click="holder.unifyAddr = !holder.unifyAddr">
+        <img src="../assets/img/unselect.png" v-if="!holder.unifyAddr"/>
+        <img src="../assets/img/selected.png" v-if="holder.unifyAddr"/>
+        与被保人同一地址
+      </div>
+
+      <x-address v-if="!holder.unifyAddr" title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="holder.holderPCD"
                  value-text-align="left" v-bind:class="{'errorInput': $v.holder.holderPCD.$error}"></x-address>
       <div class="error" v-if="!$v.holder.holderPCD.required && $v.holder.holderPCD.$dirty">家庭住址不能为空</div>
 
-      <x-input title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"
+      <x-input v-if="!holder.unifyAddr" title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"
                v-bind:class="{'errorInput': $v.holder.policyholderAddress.$error}"
                @input="$v.holder.policyholderAddress.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderAddress.required && $v.holder.policyholderAddress.$dirty">
@@ -359,7 +365,7 @@
         </div>
       </group>
     </div>
-    <div class="title-add" :style="{'margin:10px 0 0 0;': !legalBeneficiary}" @click="addBene" v-if="!addBene1 || !addBene2">
+    <div class="title-add" @click="addBene" v-if="!addBene1 || !addBene2">
       <div>
         <img src="../assets/img/add.png"/>新增受益人
       </div>
@@ -738,6 +744,12 @@
         immediate: true,
         deep: true
       },
+      unifyAddr:function (newVal,oldVal) {
+          if (newVal) {
+            let holder = storage.fetch("holder");
+
+          }
+      }
     },
     created: function () {
       let order = storage.fetch("order");
@@ -883,6 +895,18 @@
     padding: 10px 15px;
     margin-top: 10px;
     font-size: 14px;
+  }
+
+  .address {
+    background-color: #f5f5f5;
+    padding: 10px 0 10px 20px;
+    font-size: 13px;
+  }
+
+  .address img {
+    width: 18px;
+    position: relative;
+    top: 4px;
   }
 
   a {

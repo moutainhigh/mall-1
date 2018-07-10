@@ -52,7 +52,8 @@ const holder = {
   otherImg2: '',
   otherImg3: '',
   //临时变量，省市区
-  holderPCD: []
+  holderPCD: [],
+  unifyAddr:false
 };
 
 const order = {
