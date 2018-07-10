@@ -31,7 +31,7 @@
         <remember-me />
         <anonymous enabled="false"/>
         <session-management invalid-session-url="/index.do" session-fixation-protection="migrateSession">
-            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+
         </session-management>
 
         <custom-filter ref="securityInterceptorFilter" before="FILTER_SECURITY_INTERCEPTOR" />
