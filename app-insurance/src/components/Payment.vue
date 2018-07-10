@@ -28,7 +28,7 @@
         开户行不能为空
       </div>
 
-      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" hide-district="true"
+      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" hide-district
                  value-text-align="left" v-bind:class="{'errorInput': $v.address.$error}"></x-address>
       <div class="error"
            v-if="!$v.address.required && $v.address.$dirty">
@@ -124,11 +124,11 @@
       address: {required}
     },
     methods: {
-      async submit() {
+      submit() {
         this.$v.$touch();
         if (this.$v.$invalid) {
           this.showPositionValue = true;
-          this.toastText = "请完善账号信息"
+          this.toastText = "请完善账号信息";
           return false;
         }
 
@@ -136,25 +136,28 @@
         this.$vux.loading.show({
           text: 'Loading'
         });
-        await submitOrder(this.code).then(function (res) {
+        submitOrder(this.code).then(function (res) {
           if (res.result === 'SUCCESS') {
             _this.$router.push({
               path: 'policy',
               query: {orderCode: res.data}
             });
             _this.toastText = '请求成功！';
-            _this.showPositionValue = true;
             // storage.clear();
           } else {
-            _this.toastText = "请求失败，请稍候重试！";
-            _this.showPositionValue = true;
+            if (res.message.length > 10) {
+              _this.toastText = "请求失败，请稍候重试！";
+            } else {
+              _this.toastText = res.message;
+            }
           }
+          _this.showPositionValue = true;
           _this.$vux.loading.hide();
         }).catch(function () {
           _this.$vux.loading.hide();
         });
       },
-      async getVerifyCode() {
+      getVerifyCode() {
         if (this.bank.bankMobile) {
           if (this.computedTime === 0) {
             this.computedTime = 60;
@@ -166,9 +169,14 @@
               }
             }, 1000);
             //获取验证信息
-            let getCode = await getVaildData(this.bank.bankMobile);
-            this.toastText = "发送成功";
-            this.showPositionValue = true;
+            let getCode = getVaildData(this.bank.bankMobile).then(res => {
+              if (res.result == 'SUCCESS') {
+                this.toastText = "发送成功";
+              } else {
+                this.toastText = "发送失败,请稍候重试"
+              }
+              this.showPositionValue = true;
+            });
           }
         } else {
           this.toastText = "请填写手机号";
