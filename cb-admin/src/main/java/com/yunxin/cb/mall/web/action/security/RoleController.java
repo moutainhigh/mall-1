@@ -9,14 +9,6 @@ import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.cb.security.InvocationSecurityMetadataSource;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.cb.console.entity.Role;
-import com.yunxin.cb.console.entity.RoleResc;
-import com.yunxin.cb.console.entity.User;
-import com.yunxin.cb.console.service.ISecurityService;
-import com.yunxin.cb.mall.entity.Seller;
-import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.cb.security.InvocationSecurityMetadataSource;
-import com.yunxin.cb.security.SecurityConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -96,6 +88,7 @@ public class RoleController  implements ServletContextAware {
 			securityService.addRole(role);
 		} catch (EntityExistException e) {
 			result.addError(new FieldError("role", "roleName", role.getRoleName(), true, null, null,e.getMessage()));
+			modelMap.put("roleName",e.getMessage());
 			return toAddRole(role, seller, modelMap);
 		}
 		invocationSecurityMetadataSource.loadResourceDefine();
@@ -121,6 +114,7 @@ public class RoleController  implements ServletContextAware {
 			securityService.updateRole(role);
 		} catch (EntityExistException e) {
 			result.addError(new FieldError("role", "roleName", role.getRoleName(), true, null, null,e.getMessage()));
+			modelMap.put("roleName",e.getMessage());
 			return toEditRole(role.getRoleId(), seller, modelMap);
 		}
 		invocationSecurityMetadataSource.loadResourceDefine();

@@ -15,7 +15,10 @@
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
-
+            var roleName='${roleName}';
+            if(roleName!=null&&roleName!=""){
+                commonNotify(roleName,"error");
+            }
         });
     </script>
 
@@ -97,8 +100,8 @@
                                 <label><span class="asterisk">*</span>角色名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="roleName" maxlength="32"/>
-                                <form:errors path="roleName" cssClass="Validform_checktip"/>
+                                <form:input cssClass="form-control validate[required,minSize[2]]" path="roleName" maxlength="32" cssStyle="width: 200px"/>
+                                <!--  <form:errors path="roleName" cssClass="Validform_checktip"/>-->
                             </div>
                         </div>
 
