@@ -7,7 +7,8 @@
 
     </div>
     <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
-      <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.bankName" v-bind:class="{'errorInput': $v.bank.bankName.$error}"
+      <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.bankName"
+               v-bind:class="{'errorInput': $v.bank.bankName.$error}"
                @input="$v.bank.bankName.$touch()"></x-input>
       <div class="error" v-if="!$v.bank.bankName.required && $v.bank.bankName.$dirty">账户姓名不能为空</div>
       <div class="error" v-if="!$v.bank.bankName.minLength">账户姓名最少为 {{$v.bank.bankName.$params.minLength.min}}
@@ -15,29 +16,34 @@
       </div>
 
       <x-input class="price" title="交易金额(元)" :placeholder="price + '.00'" readonly></x-input>
-      <x-input title="手机号码" placeholder="请输入手机号码" v-model="bank.bankMobile" v-bind:class="{'errorInput': $v.bank.bankMobile.$error}"
+      <x-input title="手机号码" placeholder="请输入手机号码" v-model="bank.bankMobile"
+               v-bind:class="{'errorInput': $v.bank.bankMobile.$error}"
                @input="$v.bank.bankMobile.$touch()"></x-input>
       <div class="error" v-if="!$v.bank.bankMobile.mobile">请输入正确的手机号码</div>
 
-      <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank" v-bind:class="{'errorInput': $v.bank.accountBank.$error}"></popup-picker>
+      <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank"
+                    v-bind:class="{'errorInput': $v.bank.accountBank.$error}"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountBank.required && $v.bank.accountBank.$dirty">
         开户行不能为空
       </div>
 
-      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" hide-district="true" value-text-align="left" v-bind:class="{'errorInput': $v.address.$error}"></x-address>
+      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" hide-district="true"
+                 value-text-align="left" v-bind:class="{'errorInput': $v.address.$error}"></x-address>
       <div class="error"
            v-if="!$v.address.required && $v.address.$dirty">
         开户行位置不能为空
       </div>
 
-      <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left" v-bind:class="{'errorInput': $v.bank.accountType.$error}"></popup-picker>
+      <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"
+                    v-bind:class="{'errorInput': $v.bank.accountType.$error}"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountType.required && $v.bank.accountType.$dirty">
         账户类型不能为空
       </div>
 
-      <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo" v-bind:class="{'errorInput': $v.bank.accountNo.$error}"
+      <x-input title="账户号码" placeholder="请输入账户号码" v-model="bank.accountNo"
+               v-bind:class="{'errorInput': $v.bank.accountNo.$error}"
                @input="$v.bank.accountNo.$touch()"></x-input>
       <div class="error" v-if="!$v.bank.accountNo.required && $v.bank.accountNo.$dirty">账户号码不能为空</div>
       <div class="error" v-if="!$v.bank.accountNo.minLength">账户号码最少为 {{$v.bank.accountNo.$params.minLength.min}}
@@ -77,11 +83,9 @@
   import {ChinaAddressData, Datetime, Group, PopupPicker, XInput, Toast} from 'vux'
   import storage from "../store/storage";
   import XAddress from "vux/src/components/x-address/index";
-  import {getVaildData,submitOrder} from '../service/getData'
+  import {getVaildData, submitOrder} from '../service/getData'
   import {required, minLength, maxLength, helpers, numeric} from 'vuelidate/lib/validators'
-
-  //手机号码校验
-  const mobile = helpers.regex('mobile', /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/);
+  import {mobile} from "../admin/validate";
 
   export default {
     name: "Payment",
@@ -95,8 +99,8 @@
     },
     data() {
       return {
-        price:storage.fetch('order').insuranceProductPrice.price,
-        list: [["兴业银行","中国工商银行","招商银行","上海浦东发展银行","中国邮政储蓄银行有限责任公司","中信银行","中国民生银行","中国银行","广东发展银行","平安银行","中国农业银行","交通银行","中国建设银行"]],
+        price: storage.fetch('order').insuranceProductPrice.price,
+        list: [["兴业银行", "中国工商银行", "招商银行", "上海浦东发展银行", "中国邮政储蓄银行有限责任公司", "中信银行", "中国民生银行", "中国银行", "广东发展银行", "平安银行", "中国农业银行", "交通银行", "中国建设银行"]],
         cities: ChinaAddressData,
         types: [['银行卡', '存折']],
         insured: storage.fetch("insured"),
@@ -106,35 +110,18 @@
         showPositionValue: false,
         validate_token: '',
         computedTime: 0,
-        code:''
+        code: ''
       }
     },
     validations: {
       bank: {
-        bankName: {
-          required,
-          minLength: minLength(2)
-        },
-        bankMobile: {
-          required,
-          mobile
-        },
-        accountBank: {
-          required
-        },
-        accountType: {
-          required
-        },
-        accountNo: {
-          required,
-          minLength: minLength(16),
-          maxLength: maxLength(19),
-          numeric
-        }
+        bankName: {required, minLength: minLength(2)},
+        bankMobile: {required, mobile},
+        accountBank: {required},
+        accountType: {required},
+        accountNo: {required, minLength: minLength(16), maxLength: maxLength(19), numeric}
       },
-      address: {
-        required
-      }
+      address: {required}
     },
     methods: {
       async submit() {
@@ -150,15 +137,15 @@
           text: 'Loading'
         });
         await submitOrder(this.code).then(function (res) {
-          if (res.result === 'SUCCESS'){
+          if (res.result === 'SUCCESS') {
             _this.$router.push({
-              path:'policy',
-              query:{orderCode : res.data}
+              path: 'policy',
+              query: {orderCode: res.data}
             });
             _this.toastText = '请求成功！';
             _this.showPositionValue = true;
             // storage.clear();
-          }else{
+          } else {
             _this.toastText = "请求失败，请稍候重试！";
             _this.showPositionValue = true;
           }
@@ -169,7 +156,7 @@
       },
       async getVerifyCode() {
         if (this.bank.bankMobile) {
-          if (this.computedTime === 0){
+          if (this.computedTime === 0) {
             this.computedTime = 60;
             //倒计时
             let timer = setInterval(() => {

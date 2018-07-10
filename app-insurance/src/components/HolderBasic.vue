@@ -187,7 +187,7 @@
           alert('请勾选投保须知');
           return false;
         } else {
-          this.$router.push('/holder-detail');
+          this.$router.push('/insured');
         }
       }
     },
