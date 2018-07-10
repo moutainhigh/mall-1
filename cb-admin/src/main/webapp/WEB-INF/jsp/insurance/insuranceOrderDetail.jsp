@@ -566,7 +566,7 @@
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
-                            <c:if test="${insuranceOrder.insuranceOrderPolicyholder.otherImg1!=null}">
+                            <c:if test="${insuranceOrder.insuranceOrderPolicyholder.otherImg1!=null&&insuranceOrder.insuranceOrderPolicyholder.otherImg1!=''}">
 
                                 <div class="col-sm-2">
                                     <label><span class="asterisk"></span> 其他资料 ：</label>
@@ -576,7 +576,7 @@
                                 </div>
                             </c:if>
 
-                            <c:if test="${insuranceOrder.insuranceOrderPolicyholder.otherImg2!=null}">
+                            <c:if test="${insuranceOrder.insuranceOrderPolicyholder.otherImg2!=null&&insuranceOrder.insuranceOrderPolicyholder.otherImg2!=''}">
 
                                 <div class="col-sm-2">
                                     <label><span class="asterisk"></span> 其他资料 ：</label>
@@ -586,7 +586,7 @@
                                 </div>
                             </c:if>
 
-                            <c:if test="${insuranceOrder.insuranceOrderPolicyholder.otherImg3!=null}">
+                            <c:if test="${insuranceOrder.insuranceOrderPolicyholder.otherImg3!=null&&insuranceOrder.insuranceOrderPolicyholder.otherImg3!=''}">
 
                                 <div class="col-sm-2">
                                     <label><span class="asterisk"></span> 其他资料 ：</label>

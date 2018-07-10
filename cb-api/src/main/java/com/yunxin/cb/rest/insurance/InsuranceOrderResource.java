@@ -14,6 +14,7 @@ import com.yunxin.core.annotation.CustomJsonFilter;
 import com.yunxin.core.persistence.PageSpecification;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,18 +36,18 @@ public class InsuranceOrderResource extends BaseResource {
     @Resource
     private ICustomerService customerService;
 
-    @ApiOperation(value ="保存订单")
+    @ApiOperation(value = "保存订单")
     @PostMapping(value = "saveOrder")
     @JsonFilter(value = "data.insuranceOrderBeneficiarys,data.insuranceOrderInformedMatters")
     public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code, @ModelAttribute("customerId") int customerId) {
         Customer customer = customerService.getCustomerById(customerId);
-        if(customer == null){
+        if (customer == null) {
             return new ResponseResult(Result.FAILURE, "链接错误或用户不存在");
         }
         //校验验证码
         VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(insuranceOrder.getInsuranceOrderPolicyholderBank().getBankMobile());
         //验证码不存在
-        if (verificationCode == null){
+        if (verificationCode == null) {
             return new ResponseResult(Result.FAILURE, "验证码不存在");
         }
         //验证码超过5分钟，失效
@@ -63,15 +64,32 @@ public class InsuranceOrderResource extends BaseResource {
     }
 
 
-    @ApiOperation(value ="查询用户订单列表")
+    @ApiOperation(value = "查询用户订单列表")
     @PostMapping(value = "getOrders")
     public ResponseResult getOrders(@RequestBody PageSpecification<InsuranceOrder> query, @ModelAttribute("customerId") int customerId) {
-        return new ResponseResult(Result.SUCCESS);
+        PageSpecification.FilterDescriptor filterDescriptor = new PageSpecification.FilterDescriptor();
+        filterDescriptor.setField("customer.customerId");
+        filterDescriptor.setLogic("and");
+        filterDescriptor.setOperator("eq");
+        filterDescriptor.setValue(customerId);
+        query.getFilter().getFilters().add(filterDescriptor);
+        Page<InsuranceOrder> pagelist = insuranceOrderService.pageInsuranceOrder(query);
+        return new ResponseResult(pagelist);
+
     }
 
-    @ApiOperation(value ="查询用户订单详情")
+    @ApiOperation(value = "查询用户订单详情")
     @PostMapping(value = "getOrder/{orderCode}")
     public ResponseResult getOrders(@PathVariable String orderCode, @ModelAttribute("customerId") int customerId) {
-        return new ResponseResult(Result.SUCCESS);
+
+        InsuranceOrder  insuranceOrder =insuranceOrderService.getInsuranceOrderDetailByOrderCode(orderCode);
+        if(insuranceOrder!=null)
+        {
+            if(insuranceOrder.getCustomer().getCustomerId()!=customerId)
+            {
+                return new ResponseResult(null);
+            }
+        }
+        return new ResponseResult(insuranceOrder);
     }
 }
