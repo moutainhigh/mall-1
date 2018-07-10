@@ -289,19 +289,6 @@
       this.birthday = insured.insuredBirthday;
       this.gender = insured.insuredGender;
       this.career = insured.insuredCareer;
-    },
-    mounted() {
-      let isiOS = /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
-      if (isiOS) {
-        let elementsByClassName = document.getElementsByClassName("vux-cell-primary");
-        let elementsByClassName2 = document.getElementsByClassName("i-input-radio");
-        for (let i = 0; i < elementsByClassName.length; i++) {
-          elementsByClassName[i].style.setProperty('margin-left', '7px', 'important');
-        }
-        for (let i = 0; i < elementsByClassName2.length; i++) {
-          elementsByClassName2[i].setAttribute('style', 'margin-left:10px;');
-        }
-      }
     }
   }
 </script>
@@ -313,13 +300,17 @@
     text-rendering: unset;
     width: 80%;
     outline: none;
-    font-size: 15px;
+    font-size: 15px !important;
     cursor: pointer;
     padding: 8px 6px 8px 0;
   }
 
+  button {
+    outline: unset;
+  }
+
   .i-input .i-input-item {
-    font-size: 15px;
+    font-size: 15px !important;
   }
 
   a {
@@ -370,9 +361,5 @@
     100% {
       transform: translateX(0);
     }
-  }
-  .weui-cells {
-    margin-top: 0 !important;
-    font-size: 15px !important;
   }
 </style>
