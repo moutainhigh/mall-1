@@ -31,6 +31,12 @@ public class CustomerFriend implements java.io.Serializable {
 
     private Date createTime;
 
+    private java.lang.String aliasName;
+    private java.lang.String tag;
+    private java.lang.String phone;
+    private java.lang.String desc;
+    private java.lang.String image;
+
 
     @EmbeddedId
     @AttributeOverrides({@AttributeOverride(name = "customerId", column = @Column(name = "CUSTOMER_ID", nullable = false)), @AttributeOverride(name = "friendId", column =
@@ -73,6 +79,51 @@ public class CustomerFriend implements java.io.Serializable {
 
     public void setCreateTime(Date lastChatTime) {
         this.createTime = lastChatTime;
+    }
+
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 60)
+    public String getAliasName() {
+        return this.aliasName;
+    }
+
+    public void setAliasName(String aliasName) {
+        this.aliasName = aliasName;
+    }
+
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 20)
+    public String getTag() {
+        return this.tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 20)
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 255)
+    public String getDesc() {
+        return this.desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 255)
+    public String getImage() {
+        return this.image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 
