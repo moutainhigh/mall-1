@@ -90,10 +90,12 @@
         <div>&emsp;欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
       </div>
     </div>
-    <div style="height: 48px;">
-      <button class="i-footer" @click="submit">
-        <div>完善投保信息</div>
-      </button>
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="submit" >
+          <div>完善投保信息</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -250,9 +252,17 @@
     text-rendering: unset;
     width: 80%;
     outline: none;
-    font-size: 14px;
+    font-size: 15px !important;
     cursor: pointer;
     padding: 8px 6px 8px 0;
+  }
+
+  button {
+    outline: unset;
+  }
+
+  .i-input .i-input-item {
+    font-size: 15px !important;
   }
 
   a {

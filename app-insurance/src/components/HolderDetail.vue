@@ -366,13 +366,20 @@
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 50px;">
-      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
-        <div>上一步</div>
-      </button>
-      <button class="i-footer" style="width: 50%;right: 0" @click="next">
-        <div>下一步</div>
-      </button>
+    <!--<div style="height: 50px;">-->
+      <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">-->
+        <!--<div>上一步</div>-->
+      <!--</button>-->
+      <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
+        <!--<div>下一步</div>-->
+      <!--</button>-->
+    <!--</div>-->
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
+          <div>下一步</div>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -807,7 +814,7 @@
     margin-top: 10px;
     background-color: #ffffff;
     padding: 15px;
-    font-size: 13px;
+    font-size: 16px;
     color: #e1bb3a;
     text-align: center;
     border-bottom: #D9D9D9 solid 1px;
@@ -888,7 +895,8 @@
     background-color: #ffffff;
     padding: 10px 15px;
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 16px;
+    color: #f5ca1d;
   }
 
   .address {
