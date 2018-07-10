@@ -201,13 +201,16 @@
 
         <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary1.beneficiaryOrder"
                       value-text-align="left"
-                      v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryOrder.$error}"></popup-picker>
+                      v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryOrder.$error || valiOrderB1 === valiOrderB2}"></popup-picker>
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryOrder.required && $v.beneficiary1.beneficiaryOrder.$dirty">受益顺序不能为空
         </div>
+        <div class="error"
+             v-if="valiOrderB1 === valiOrderB2">受益顺序不正确
+        </div>
 
         <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary1.beneficiaryProportion"
-                 v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryProportion.$error}"
+                 v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryProportion.$error || valiProportion}"
                  @input="$v.beneficiary1.beneficiaryProportion.$touch()"></x-input>
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryProportion.required && $v.beneficiary1.beneficiaryProportion.$dirty">
@@ -217,6 +220,7 @@
              v-if="!$v.beneficiary1.beneficiaryProportion.between && $v.beneficiary1.beneficiaryProportion.$dirty">
           请输入受益份额，在0%到100%之间
         </div>
+        <div class="error" v-if="valiProportion">请重新分配受益份额</div>
 
         <datetime title="出生日期" placeholder="请选择出生日期" startDate="1950-01-01" :endDate="startDate"
                   v-model="beneficiary1.beneficiaryBirthday"
@@ -298,13 +302,16 @@
 
         <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary2.beneficiaryOrder"
                       value-text-align="left"
-                      v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryOrder.$error}"></popup-picker>
+                      v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryOrder.$error || valiOrderB1 === valiOrderB2}"></popup-picker>
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryOrder.required && $v.beneficiary2.beneficiaryOrder.$dirty">受益顺序不能为空
         </div>
+        <div class="error"
+             v-if="valiOrderB1 === valiOrderB2">受益顺序不正确
+        </div>
 
         <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary2.beneficiaryProportion"
-                 v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryProportion.$error}"
+                 v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryProportion.$error || valiProportion}"
                  @input="$v.beneficiary2.beneficiaryProportion.$touch()"></x-input>
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryProportion.required && $v.beneficiary2.beneficiaryProportion.$dirty">
@@ -314,6 +321,7 @@
              v-if="!$v.beneficiary2.beneficiaryProportion.between && $v.beneficiary2.beneficiaryProportion.$dirty">
           请输入受益份额，在0%到100%之间
         </div>
+        <div class="error" v-if="valiProportion">请重新分配受益份额</div>
 
         <datetime title="出生日期" placeholder="请选择出生日期" startDate="1950-01-01" :endDate="startDate"
                   v-model="beneficiary2.beneficiaryBirthday"
@@ -440,7 +448,11 @@
         startDate: dateFormat(new Date(), "yyyy-MM-dd"),
         valiHolder: '',
         valiBene1: '',
-        valiBene2: ''
+        valiBene2: '',
+        valiOrderB1: 1,
+        valiOrderB2: null,
+        valiProportion: false,
+        valiProportion2: 0
       }
     },
     validations() {
@@ -700,6 +712,23 @@
                 break;
             }
           }
+          //判断受益顺序
+          if (newVal.beneficiaryOrder) {
+            if (newVal.beneficiaryOrder[0] === "1") {
+              this.valiOrderB2 = 2;
+            }
+            if (newVal.beneficiaryOrder[0] === "2") {
+              this.valiOrderB2 = 1
+            }
+          }
+          //判断受益份额
+          if (newVal.beneficiaryProportion) {
+            if (parseInt(newVal.beneficiaryProportion) + parseInt(this.beneficiary2.beneficiaryProportion) === 100 || this.beneficiary2.beneficiaryProportion === '') {
+              this.valiProportion = false;
+            } else {
+              this.valiProportion = true;
+            }
+          }
           storage.save('beneficiary1', newVal);
         },
         immediate: true,
@@ -740,8 +769,25 @@
                 this.valiBene2 = '';
                 break;
             }
-            storage.save('beneficiary2', newVal);
           }
+          //判断受益顺序
+          if (newVal.beneficiaryOrder) {
+            if (newVal.beneficiaryOrder[0] === "1") {
+              this.valiOrderB1 = 2;
+            }
+            if (newVal.beneficiaryOrder[0] === "2") {
+              this.valiOrderB1 = 1;
+            }
+          }
+          //判断受益份额
+          if (newVal.beneficiaryProportion) {
+            if (parseInt(newVal.beneficiaryProportion) + parseInt(this.beneficiary1.beneficiaryProportion) === 100 || this.beneficiary1.beneficiaryProportion === '') {
+              this.valiProportion = false;
+            } else {
+              this.valiProportion = true;
+            }
+          }
+          storage.save('beneficiary2', newVal);
         },
         immediate: true,
         deep: true

@@ -105,6 +105,7 @@
   import {PopupPicker, Toast, Datetime} from 'vux'
   import XInput from "vux/src/components/x-input/index";
   import {required} from 'vuelidate/lib/validators'
+  import {dateFormat} from "../config/mUtils";
 
   export default {
     name: "holder-basic",
@@ -126,6 +127,7 @@
         state: false,
         toastText: '',
         showPositionValue: false,
+        startDate: dateFormat(new Date(), "yyyy-MM-dd"),
       }
     },
     validations: {
