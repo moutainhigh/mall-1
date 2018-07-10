@@ -10,6 +10,7 @@ import InfoMatters from '../components/InfoMatters'
 import Payment from '../components/Payment'
 import Policy from '../components/Policy'
 import myOrders from '../components/myOrders'
+import Insured from '../components/Insured'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -57,6 +58,10 @@ export default new Router({
       path: '/my-orders',
       name: 'my-orders',
       component: myOrders
+    }, {
+      path: '/insured',
+      name: 'insured',
+      component: Insured
     }
   ]
 })

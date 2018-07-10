@@ -304,7 +304,7 @@ public class PageSpecification<T> implements Specification<T> {
 
             if (!filters.isEmpty()) {
 
-                if (!filter.getFilters().isEmpty() && filter.getLogic().equals("or")) {
+                if (!filter.getFilters().isEmpty() && "or".equals(filter.getLogic())) {
                     // junction = Restrictions.disjunction();
                 }
 
