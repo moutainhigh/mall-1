@@ -83,7 +83,8 @@
           page:1,
           pageSize:10,
           total:1
-        }
+        },
+        isInfinite: true
       }
     },
     methods: {
@@ -100,8 +101,8 @@
       },
 
       infinite(done) {
-        if (this.pageQuery.page > this.pageQuery.total) {
-          done(true)
+        if (this.pageQuery.page > this.pageQuery.total || !this.isInfinite) {
+          done(true);
           return;
         }
         this.getOrders(done);
@@ -109,14 +110,17 @@
       getOrders(done){
         getOrders(this.pageQuery).then(res=>{
           console.log(res);
+          if (res.status == 401) {
+            this.isInfinite = false;
+          }
           if (res.result == 'SUCCESS') {
             this.orders = this.orders.concat(res.data.content);
             this.pageQuery.total = res.data.totalPages;
             this.pageQuery.page++;
+          }else {
+            done(true);
           }
-          if (done){
             done()
-          }
         });
       }
     }

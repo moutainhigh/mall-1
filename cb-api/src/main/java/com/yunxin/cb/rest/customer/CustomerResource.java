@@ -2,7 +2,9 @@ package com.yunxin.cb.rest.customer;
 
 import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.mall.entity.Customer;
+import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.service.ICustomerService;
+import com.yunxin.cb.mall.service.IFeedbackService;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
@@ -24,6 +26,9 @@ public class CustomerResource extends BaseResource {
 
     @Resource
     private ICustomerService customerService;
+
+    @Resource
+    private IFeedbackService feedbackService;
 
 
     @ApiOperation(value = "我的好友")
@@ -76,6 +81,12 @@ public class CustomerResource extends BaseResource {
 
 
         return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "修改好友备注")
+    @GetMapping(value = "updateFriendsProfile")
+    public ResponseResult updateFriendsProfile(CustomerFriend customerFriend ,@ModelAttribute("customerId") int customerId) {
+        return new ResponseResult(customerService.updateFriendsProfile(customerFriend));
     }
 
     @ApiOperation(value = "删除好友")
@@ -137,4 +148,12 @@ public class CustomerResource extends BaseResource {
         Customer customer = customerService.updateMobile(customerId, moblie);
         return new ResponseResult(Result.SUCCESS);
     }
+
+    @ApiOperation(value = "提交反馈")
+    @PostMapping(value = "addFeedback")
+    public ResponseResult addFeedback(Feedback feedback, @ModelAttribute("customerId") int customerId) {
+
+        return new ResponseResult(feedbackService.addFeedback(feedback));
+    }
+
 }

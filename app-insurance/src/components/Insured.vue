@@ -22,7 +22,7 @@
                v-bind:class="{'errorInput': $v.insured.insuredCardNo.$error}"
                @input="$v.insured.insuredCardNo.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredCardNo.required && $v.insured.insuredCardNo.$dirty">证件号码不能为空</div>
-      <div class="error" v-if="!$v.insured.insuredCardNo.idCardVali">请输入正确的证件号码</div>
+      <div class="error" v-if="!$v.insured.insuredCardNo.cardVali">请输入正确的证件号码</div>
 
       <datetime title="证件有效期" v-model="insured.insuredCardPeriod" :startDate="startDate" endDate="2199-12-31"
                 placeholder="请选择证件有效期"
@@ -65,8 +65,8 @@
       <div class="error" v-if="!$v.insured.insuredMarriage.required && $v.insured.insuredMarriage.$dirty">
         婚姻状况不能为空
       </div>
-      <div>
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
+      <div style="background-color: #f5f5f5">
+        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
@@ -99,7 +99,7 @@
       <div class="error" v-if="!$v.insured.insuredAddress.required && $v.insured.insuredAddress.$dirty">请输入详细地址</div>
       <div class="error" v-if="!$v.insured.insuredAddress.maxLength">详细地址最多不超过255位数</div>
 
-      <popup-picker title="投保人是被保人的" placeholder="请选择投被保人的关系" :data="relates" value-text-align="left"
+      <popup-picker title="是被保人的" placeholder="请选择投被保人的关系" :data="relates" value-text-align="left"
                     v-model="insured.insuredRelation"
                     v-bind:class="{'errorInput': $v.insured.insuredRelation.$error}"></popup-picker>
       <div class="error" v-if="!$v.insured.insuredRelation.required && $v.insured.insuredRelation.$dirty">
@@ -121,9 +121,9 @@
 <script>
   import {ChinaAddressData, Datetime, Group, PopupPicker, Selector, XAddress, XInput, Toast} from 'vux'
   import storage from "../store/storage";
-  import {required, minLength, maxLength, between, helpers, numeric, email} from 'vuelidate/lib/validators'
-  import {dateFormat, wipeArray} from "../config/mUtils";
-  import {idCardVali, int, fixedTel, mobile} from "../admin/validate";
+  import {required, minLength, maxLength, email, helpers} from 'vuelidate/lib/validators'
+  import {dateFormat} from "../config/mUtils";
+  import {idCardVali, householdVali, birthVali, hkmcPassVali, taiwanPassVali, passportVali, permanentResidenceVali, int, fixedTel, mobile} from "../admin/validate";
 
   export default {
     components: {
@@ -142,8 +142,6 @@
         cardTypes: [['居民身份证', '居民户口簿', '军人身份证', '港澳居民往来内地通行证', '出生证', '台湾居民往来内地通行证', '外国护照', '外国人永久居留身份证', '武警身份证', '其他证件']],
         maritalStatus: [['未婚', '已婚', '丧偶', '离婚']],
         relates: [["本人", "配偶", "父母", "子女", "兄弟姐妹", "祖父母", "外祖父母", "祖孙", "外祖孙", "其他"]],
-        taxRelates: [["仅为中国税收居民", "仅为非居民", "既是中国税收居民又是其他国家（地区）税收居民"]],
-        orders: [['1', '2']],
         addressData: ChinaAddressData,
         countries: this.Admin.countries,
         endDate: new Date(),
@@ -151,27 +149,30 @@
         submitStatus: null,
         showPositionValue: false,
         toastText: '',
-        startDate: dateFormat(new Date(), "yyyy-MM-dd")
+        startDate: dateFormat(new Date(), "yyyy-MM-dd"),
+        vali: ''
       }
     },
-    validations: {
-      insured: {
-        insuredName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-        insuredCardType: {required},
-        insuredCardNo: {required, idCardVali},
-        insuredCardPeriod: {required},
-        insuredCountry: {required, maxLength: maxLength(64)},
-        insuredHeight: {required, int, maxLength: maxLength(3)},
-        insuredBodyWeight: {required, int, maxLength: maxLength(3)},
-        insuredIncome: {required, int, maxLength: maxLength(6)},
-        insuredMarriage: {required},
-        insuredTel: {fixedTel},
-        insuredMobile: {mobile},
-        insuredEmail: {email},
-        insuredPCD: {required},
-        insuredAddress: {required, maxLength: maxLength(255)},
-        insuredRelation: {required}
-      },
+    validations() {
+        return {
+          insured: {
+            insuredName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            insuredCardType: {required},
+            insuredCardNo: {required, cardVali: this.vali},
+            insuredCardPeriod: {required},
+            insuredCountry: {required, maxLength: maxLength(64)},
+            insuredHeight: {required, int, maxLength: maxLength(3)},
+            insuredBodyWeight: {required, int, maxLength: maxLength(3)},
+            insuredIncome: {required, int, maxLength: maxLength(6)},
+            insuredMarriage: {required},
+            insuredTel: {fixedTel},
+            insuredMobile: {mobile},
+            insuredEmail: {email},
+            insuredPCD: {required},
+            insuredAddress: {required, maxLength: maxLength(255)},
+            insuredRelation: {required}
+          }
+        }
     },
     methods: {
       comeBack() {
@@ -196,6 +197,40 @@
             newVal.insuredProvince = this.insured.insuredPCD[0];
             newVal.insuredCity = this.insured.insuredPCD[1];
             newVal.insuredDistrict = this.insured.insuredPCD[2];
+          }
+          if (newVal.insuredCardType) {
+            switch (newVal.insuredCardType[0]) {
+              case '居民身份证' :
+                this.vali = idCardVali;
+                break;
+              case '居民户口簿' :
+                this.vali = householdVali;
+                break;
+              case '军人身份证' :
+                this.vali = idCardVali;
+                break;
+              case '港澳居民往来内地通行证' :
+                this.vali = hkmcPassVali;
+                break;
+              case '出生证' :
+                this.vali = birthVali;
+                break;
+              case '台湾居民往来内地通行证' :
+                this.vali = taiwanPassVali;
+                break;
+              case '外国护照' :
+                this.vali = passportVali;
+                break;
+              case '外国人永久居留身份证' :
+                this.vali = permanentResidenceVali;
+                break;
+              case '武警身份证' :
+                this.vali = idCardVali;
+                break;
+              case '其他证件' :
+                this.vali = '';
+                break;
+            }
           }
           storage.save('insured', newVal);
         },

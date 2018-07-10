@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="title">
+    <div class="title" style="text-align: left">
       投保人信息
     </div>
-    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
+    <group label-width="7rem" label-margin-right="2em" label-align="left">
       <x-input title="姓名" placeholder="请输入姓名" v-model="holder.policyholderName"
                v-bind:class="{'errorInput': $v.holder.policyholderName.$error}"
                @input="$v.holder.policyholderName.$touch()"></x-input>
@@ -60,7 +60,7 @@
       <div class="error" v-if="!$v.holder.policyholderCardNo.required && $v.holder.policyholderCardNo.$dirty">
         证件号码不能为空
       </div>
-      <div class="error" v-if="!$v.holder.policyholderCardNo.idCardVali">请输入正确的证件号码</div>
+      <div class="error" v-if="!$v.holder.policyholderCardNo.vali">请输入正确的证件号码</div>
 
       <!--<x-input title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期" v-bind:class="{'errorInput': $v.holder.policyholderCardPeroid.$error}"-->
       <!--@input="$v.holder.policyholderCardPeroid.$touch()"></x-input>-->
@@ -110,8 +110,8 @@
       <div class="error" v-if="!$v.holder.policyholderMarriage.required && $v.holder.policyholderIncome.$dirty">
         婚姻状况不能为空
       </div>
-      <div>
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
+      <div style="background-color: #f5f5f5">
+        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
@@ -130,11 +130,17 @@
                @input="$v.holder.policyholderEmail.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="holder.holderPCD"
+      <div class="address" @click="holder.unifyAddr = !holder.unifyAddr">
+        <img src="../assets/img/unselect.png" v-if="!holder.unifyAddr"/>
+        <img src="../assets/img/selected.png" v-if="holder.unifyAddr"/>
+        与被保人同一地址
+      </div>
+
+      <x-address v-if="!holder.unifyAddr" title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="holder.holderPCD"
                  value-text-align="left" v-bind:class="{'errorInput': $v.holder.holderPCD.$error}"></x-address>
       <div class="error" v-if="!$v.holder.holderPCD.required && $v.holder.holderPCD.$dirty">家庭住址不能为空</div>
 
-      <x-input title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"
+      <x-input v-if="!holder.unifyAddr" title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"
                v-bind:class="{'errorInput': $v.holder.policyholderAddress.$error}"
                @input="$v.holder.policyholderAddress.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderAddress.required && $v.holder.policyholderAddress.$dirty">
@@ -155,9 +161,6 @@
         <img v-if="legalBeneficiary" src="../assets/img/selected.png"/>
         <img v-if="!legalBeneficiary" src="../assets/img/unselect.png"/>
         受益人：法定受益人
-      </div>
-      <div class="title-add" @click="addBene">
-        <img src="../assets/img/add.png"/>新增受益人
       </div>
     </div>
     <div v-show="addBene1">
@@ -239,7 +242,7 @@
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryCardNo.required && $v.beneficiary1.beneficiaryCardNo.$dirty">请输入证件号
         </div>
-        <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.idCardVali">请输入正确的身份证号码</div>
+        <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.vali">请输入正确的身份证号码</div>
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary1.beneficiaryCardPeroid.$touch()"></x-input>-->
@@ -341,7 +344,7 @@
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryCardNo.required && $v.beneficiary2.beneficiaryCardNo.$dirty">请输入证件号
         </div>
-        <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.idCardVali">请输入正确的身份证号码</div>
+        <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.vali">请输入正确的身份证号码</div>
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>-->
@@ -362,6 +365,11 @@
         </div>
       </group>
     </div>
+    <div class="title-add" @click="addBene" v-if="!addBene1 || !addBene2">
+      <div>
+        <img src="../assets/img/add.png"/>新增受益人
+      </div>
+    </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 50px;">
       <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
@@ -381,7 +389,18 @@
   import storage from "../store/storage";
   import {required, minLength, maxLength, between, helpers, numeric, email} from 'vuelidate/lib/validators'
   import {dateFormat, wipeArray} from "../config/mUtils";
-  import {idCardVali, int, fixedTel, mobile} from "../admin/validate";
+  import {
+    idCardVali,
+    householdVali,
+    birthVali,
+    hkmcPassVali,
+    taiwanPassVali,
+    passportVali,
+    permanentResidenceVali,
+    int,
+    fixedTel,
+    mobile
+  } from "../admin/validate";
 
   export default {
     components: {
@@ -416,51 +435,56 @@
         submitStatus: null,
         showPositionValue: false,
         toastText: '',
-        startDate: dateFormat(new Date(), "yyyy-MM-dd")
+        startDate: dateFormat(new Date(), "yyyy-MM-dd"),
+        valiHolder: '',
+        valiBene1: '',
+        valiBene2: ''
       }
     },
-    validations: {
-      holder: {
-        policyholderName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-        policyholderCareer: {required, minLength: minLength(2), maxLength: maxLength(32)},
-        policyholderBirthday: {required},
-        policyholderCardType: {required},
-        policyholderCardNo: {required, idCardVali,},
-        policyholderCardPeroid: {required},
-        policyholderCountry: {required, maxLength: maxLength(64)},
-        policyholderHeight: {required, int, maxLength: maxLength(3)},
-        policyholderBodyWeight: {required, int, maxLength: maxLength(3)},
-        policyholderIncome: {required, int, maxLength: maxLength(6)},
-        policyholderMarriage: {required},
-        policyholderTel: {fixedTel},
-        policyholderMobile: {mobile},
-        policyholderEmail: {email},
-        holderPCD: {required},
-        policyholderAddress: {required, maxLength: maxLength(255)},
-        policyholderTaxRelated: {required}
-      },
-      beneficiary1: {
-        beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-        beneficiaryCountry: {required, maxLength: maxLength(64)},
-        beneficiaryOrder: {required},
-        beneficiaryProportion: {required, between: between(0, 100)},
-        beneficiaryBirthday: {required},
-        beneficiaryCardType: {required},
-        beneficiaryCardNo: {required, idCardVali,},
-        beneficiaryCardPeroid: {required},
-        insuredRelation: {required}
-      },
-      beneficiary2: {
-        beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-        beneficiaryCountry: {required, maxLength: maxLength(64)},
-        beneficiaryOrder: {required},
-        beneficiaryProportion: {required, between: between(0, 100)},
-        beneficiaryBirthday: {required},
-        beneficiaryCardType: {required},
-        beneficiaryCardNo: {required, idCardVali},
-        beneficiaryCardPeroid: {required},
-        insuredRelation: {required}
-      },
+    validations() {
+      return {
+        holder: {
+          policyholderName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+          policyholderCareer: {required, minLength: minLength(2), maxLength: maxLength(32)},
+          policyholderBirthday: {required},
+          policyholderCardType: {required},
+          policyholderCardNo: {required, vali: this.valiHolder},
+          policyholderCardPeroid: {required},
+          policyholderCountry: {required, maxLength: maxLength(64)},
+          policyholderHeight: {required, int, maxLength: maxLength(3)},
+          policyholderBodyWeight: {required, int, maxLength: maxLength(3)},
+          policyholderIncome: {required, int, maxLength: maxLength(6)},
+          policyholderMarriage: {required},
+          policyholderTel: {fixedTel},
+          policyholderMobile: {mobile},
+          policyholderEmail: {email},
+          holderPCD: {required},
+          policyholderAddress: {required, maxLength: maxLength(255)},
+          policyholderTaxRelated: {required}
+        },
+        beneficiary1: {
+          beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+          beneficiaryCountry: {required, maxLength: maxLength(64)},
+          beneficiaryOrder: {required},
+          beneficiaryProportion: {required, between: between(0, 100)},
+          beneficiaryBirthday: {required},
+          beneficiaryCardType: {required},
+          beneficiaryCardNo: {required, vali: this.valiBene1},
+          beneficiaryCardPeroid: {required},
+          insuredRelation: {required}
+        },
+        beneficiary2: {
+          beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+          beneficiaryCountry: {required, maxLength: maxLength(64)},
+          beneficiaryOrder: {required},
+          beneficiaryProportion: {required, between: between(0, 100)},
+          beneficiaryBirthday: {required},
+          beneficiaryCardType: {required},
+          beneficiaryCardNo: {required, vali: this.valiBene2},
+          beneficiaryCardPeroid: {required},
+          insuredRelation: {required}
+        },
+      }
     },
     methods: {
       comeBack() {
@@ -599,6 +623,40 @@
             newVal.policyholderCity = this.holder.holderPCD[1];
             newVal.policyholderDistrict = this.holder.holderPCD[2];
           }
+          if (newVal.policyholderCardType) {
+            switch (newVal.policyholderCardType[0]) {
+              case '居民身份证' :
+                this.valiHolder = idCardVali;
+                break;
+              case '居民户口簿' :
+                this.valiHolder = householdVali;
+                break;
+              case '军人身份证' :
+                this.valiHolder = idCardVali;
+                break;
+              case '港澳居民往来内地通行证' :
+                this.valiHolder = hkmcPassVali;
+                break;
+              case '出生证' :
+                this.valiHolder = birthVali;
+                break;
+              case '台湾居民往来内地通行证' :
+                this.valiHolder = taiwanPassVali;
+                break;
+              case '外国护照' :
+                this.valiHolder = passportVali;
+                break;
+              case '外国人永久居留身份证' :
+                this.valiHolder = permanentResidenceVali;
+                break;
+              case '武警身份证' :
+                this.valiHolder = idCardVali;
+                break;
+              case '其他证件' :
+                this.valiHolder = '';
+                break;
+            }
+          }
           storage.save('holder', newVal);
         },
         immediate: true,
@@ -606,6 +664,40 @@
       },
       beneficiary1: {
         handler(newVal, oldVal) {
+          if (newVal.beneficiaryCardType) {
+            switch (newVal.beneficiaryCardType[0]) {
+              case '居民身份证' :
+                this.valiBene1 = idCardVali;
+                break;
+              case '居民户口簿' :
+                this.valiBene1 = householdVali;
+                break;
+              case '军人身份证' :
+                this.valiBene1 = idCardVali;
+                break;
+              case '港澳居民往来内地通行证' :
+                this.valiBene1 = hkmcPassVali;
+                break;
+              case '出生证' :
+                this.valiBene1 = birthVali;
+                break;
+              case '台湾居民往来内地通行证' :
+                this.valiBene1 = taiwanPassVali;
+                break;
+              case '外国护照' :
+                this.valiBene1 = passportVali;
+                break;
+              case '外国人永久居留身份证' :
+                this.valiBene1 = permanentResidenceVali;
+                break;
+              case '武警身份证' :
+                this.valiBene1 = idCardVali;
+                break;
+              case '其他证件' :
+                this.valiBene1 = '';
+                break;
+            }
+          }
           storage.save('beneficiary1', newVal);
         },
         immediate: true,
@@ -613,11 +705,51 @@
       },
       beneficiary2: {
         handler(newVal, oldVal) {
-          storage.save('beneficiary2', newVal);
+          if (newVal.beneficiaryCardType) {
+            switch (newVal.beneficiaryCardType[0]) {
+              case '居民身份证' :
+                this.valiBene2 = idCardVali;
+                break;
+              case '居民户口簿' :
+                this.valiBene2 = householdVali;
+                break;
+              case '军人身份证' :
+                this.valiBene2 = idCardVali;
+                break;
+              case '港澳居民往来内地通行证' :
+                this.valiBene2 = hkmcPassVali;
+                break;
+              case '出生证' :
+                this.valiBene2 = birthVali;
+                break;
+              case '台湾居民往来内地通行证' :
+                this.valiBene2 = taiwanPassVali;
+                break;
+              case '外国护照' :
+                this.valiBene2 = passportVali;
+                break;
+              case '外国人永久居留身份证' :
+                this.valiBene2 = permanentResidenceVali;
+                break;
+              case '武警身份证' :
+                this.valiBene2 = idCardVali;
+                break;
+              case '其他证件' :
+                this.valiBene2 = '';
+                break;
+            }
+            storage.save('beneficiary2', newVal);
+          }
         },
         immediate: true,
         deep: true
       },
+      unifyAddr:function (newVal,oldVal) {
+          if (newVal) {
+            let holder = storage.fetch("holder");
+
+          }
+      }
     },
     created: function () {
       let order = storage.fetch("order");
@@ -677,11 +809,13 @@
 
 <style scoped>
   .title {
-    margin: 0 0 10px 0;
+    margin-top: 10px;
     background-color: #ffffff;
     padding: 15px;
     font-size: 13px;
     color: #e1bb3a;
+    text-align: center;
+    border-bottom: #D9D9D9 solid 1px;
   }
 
   .i-input-radio {
@@ -720,15 +854,32 @@
     margin: 13px 2em 13px 0 !important;
   }
 
+  .title-select {
+    font-size: 16px;
+    display: inline-block;
+  }
+
   .title-select img {
-    width: 14px;
+    width: 20px;
     position: relative;
-    top: 2px;
+    top: 4px;
     margin-right: 10px;
   }
 
   .title-add {
-    margin-top: 10px;
+    padding: 10px 0 ;
+    text-align: center;
+    font-size: 17px;
+    color: #f5ca1d;
+    background-color: #ffffff;
+  }
+
+  .title-add div {
+    width: 240px;
+    display: inline-block;
+    border: #f5ca1d solid 1px;
+    border-radius: 20px;
+    padding: 6px 0;
   }
 
   .title-add img {
@@ -744,6 +895,19 @@
     padding: 10px 15px;
     margin-top: 10px;
     font-size: 14px;
+  }
+
+  .address {
+    background-color: #f5f5f5;
+    padding: 10px 0 10px 20px;
+    font-size: 13px;
+    color: #f5ca1d;
+  }
+
+  .address img {
+    width: 18px;
+    position: relative;
+    top: 4px;
   }
 
   a {

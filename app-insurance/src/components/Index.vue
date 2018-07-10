@@ -85,7 +85,7 @@
     },
     created(){
       let query = this.$route.query;
-      storage.save('token',query.token);
+      storage.save('token',query.token + '');
       if (storage.fetch('holder').length ==0){
         storage.save('holder',Admin.holder);
       }

@@ -411,4 +411,17 @@ public class CustomerService implements ICustomerService {
     public boolean isFriend(int customerId, int friendId) {
         return customerFriendDao.findOne(new CustomerFriendId(customerId, friendId)) != null;
     }
+
+    @Transactional
+    public CustomerFriend updateFriendsProfile(CustomerFriend customerFriend) {
+        CustomerFriend renew= customerFriendDao.findOne(customerFriend.getId());
+
+        renew.setPhone(customerFriend.getPhone());
+        renew.setAliasName(customerFriend.getAliasName());
+        renew.setDesc(customerFriend.getDesc());
+        renew.setTag(customerFriend.getTag());
+        renew.setImage(customerFriend.getImage());
+
+        return renew;
+    }
 }
