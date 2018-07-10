@@ -3,30 +3,29 @@
 
     <div class="title">投保单资料签署</div>
     <div @click="check">
-      <img v-if="!state" class="checkIcon" src="../assets/img/checkoff.png">
-      <img v-if="state" class="checkIcon" src="../assets/img/checkon.png">
+      <img v-if="!state" class="checkIcon" src="../assets/img/unselect.png">
+      <img v-if="state" class="checkIcon" src="../assets/img/selected.png">
       <div class="tip">
         <p>本人已阅读并理解<span>《投保须知》、《保险条款》、《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
       </div>
     </div>
 
-    <div class="title" style="color: #e1bb3a">投保单签名</div>
+    <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保单签名</div>
     <div class="headPhoto" v-if="imgUrl === '' || imgUrl === undefined || imgUrl === null" @click.stop="addPic">
-      <div style="position: absolute; width: 100%; height: 120px"></div>
+      <div class="carmerBorder"></div>
       <img src="../assets/img/headPhotograph.png"/>
-      <p style="font-size: 13px">请点击此处，拍摄投保人正面头像</p>
+      <p style="font-size: 13px">拍摄或上传投保人正面头像</p>
     </div>
     <button class="clearButton" v-if="imgUrl !== undefined && imgUrl !== ''" @click='delImage'>清除</button>
-    <input id="image" type="file" accept="image/*" capture="camera" @change="onFileChange"
+    <input id="image" type="file" accept="image/*" @change="onFileChange"
            style="display: none;">
     <div v-if="imgUrl !== undefined && imgUrl !== ''">
       <img class="headPhoto-img" :src="imgUrl">
     </div>
 
-    <div class="title-sign">投保人签名
-      <button v-if="clickSign" @click="clear">清除</button>
-    </div>
     <div class="canvas">
+      <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
+      <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign" @click="clear">清除</span>
       <div class="sign" v-if="!clickSign" @click="checkSign">点击签名
       </div>
       <div v-if="clickSign">
@@ -34,10 +33,12 @@
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 48px;">
-      <button class="i-footer" @click="next">
-        <div>下一步</div>
-      </button>
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
+          <div>下一步</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -57,7 +58,7 @@
         imgUrl: storage.fetch("holder").policyholderAvatar,
         option: {
           penColor: "rgb(0, 0, 0)",
-          backgroundColor: "#dcdcdc",
+          backgroundColor: "#f3f5f7",
         },
         toastText: '',
         showPositionValue: false,
@@ -155,8 +156,10 @@
   .title {
     margin-bottom: 10px;
     background-color: #ffffff;
-    padding: 15px;
-    font-size: 13px;
+    padding: 12px 15px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #f5ca1d;
   }
 
   .title-sign {
@@ -210,13 +213,13 @@
 
   .headPhoto img {
     width: 23vw;
-    padding-top: 4vh;
+    padding-top: 3vh;
     margin-left: 38%;
     margin-bottom: 10px;
   }
 
   .headPhoto p {
-    padding-bottom: 2vh;
+    padding: 4vh 0 2vh 0;
     text-align: center;
   }
 
@@ -224,6 +227,17 @@
     width: 50vw;
     margin-left: 25vw;
     padding: 10px 0;
+  }
+
+  .carmerBorder {
+    position: absolute;
+    border: 1px solid #dddddd;
+    width: 50%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 120px;
+    border-radius: 16px;
   }
 
   .clearButton {
@@ -245,15 +259,15 @@
   }
 
   .sign {
-    background: #dcdcdc;
+    background: #f3f5f7;
     width: 92%;
     height: 20vh;
     border-radius: 10px;
     margin: 0 15px;
     text-align: center;
     line-height: 20vh;
-    color: #999;
-    font-size: 13px;
+    color: #bfbfbf;
+    font-size: 14px;
   }
 
   .sign button {

@@ -16,12 +16,19 @@
         </div>
       </div>
     </div>
-    <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a">
-      <router-link to="/">返回首页</router-link>
-    </button>
-    <button class="i-footer" style="width: 50%;right: 0">
-      <router-link to="/">继续投保关联产品</router-link>
-    </button>
+    <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a">-->
+      <!--<router-link to="/">返回首页</router-link>-->
+    <!--</button>-->
+    <!--<button class="i-footer" style="width: 50%;right: 0">-->
+      <!--<router-link to="/">继续投保关联产品</router-link>-->
+    <!--</button>-->
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="comeBack">
+          <div>继续投保关联产品</div>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,6 +42,11 @@
     },
     created(){
       this.orderCode = this.$route.query.orderCode;
+    },
+    methods:{
+      comeBack(){
+        this.$router.push("/");
+      }
     }
   }
 </script>

@@ -93,14 +93,21 @@ button a{
 
 .i-footer {
   position: fixed;
-  bottom: 0;
+  bottom: 10px;
   height: 48px;
   width: 100%;
   text-align: center;
+  background-color: #ffffff;
+}
+
+.i-footer button{
+  width: 94%;
+  height: 100%;
   background-color: #e1bb3a;
   font-size: 18px;
   color: #ffffff;
   border: unset;
+  border-radius: 5px;
 }
 
 .i-card {
@@ -111,7 +118,7 @@ button a{
 
 .i-card .i-card-tip {
   font-size: 13px;
-  color: #333333;
+  color: #888;
 }
 
 .i-card-tip .i-list-right {
@@ -124,7 +131,7 @@ button a{
 }
 
 .i-input {
-  padding-top: 8px;
+  padding-top: 2px;
 }
 
 .i-input .i-input-form {
@@ -147,14 +154,14 @@ button a{
 
 .i-input .i-input-val {
   font-size: 13px;
-  color: #999999;
+  color: #f5ca1d;
   display: inline-block;
 }
 
 .i-input .i-input-radio {
   display: inline-block;
   position: relative;
-  top: 10px;
+  /*top: 10px;*/
 }
 
 .i-input .i-input-radio .radio-div {
@@ -226,7 +233,7 @@ button a{
 
 .weui-cells {
   margin-top: 0 !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
 }
 
 p {
@@ -247,7 +254,7 @@ p {
 }
 
 .vux-cell-placeholder {
-  color: #757575 !important;
+  color: #bfbfbf !important;
 }
 
 .weui-toast.vux-toast-middle {

@@ -66,15 +66,17 @@
       <!--</div>-->
       <!--</div>-->
       <div class="input-ver">
-        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 65%;padding-left: 0;" v-model="code"></x-input>
+        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 70%;padding-left: 0;" v-model="code"></x-input>
         <div class="input-vile" @click.prevent="getVerifyCode">{{computedTime === 0? "获取验证码" : computedTime +"s"}}</div>
       </div>
       <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     </group>
-    <div style="height: 48px;">
-      <button class="i-footer" @click="submit">
-        <div>确认提交</div>
-      </button>
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="submit" style="background-color: #c01212">
+          <div>确认提交</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -143,7 +145,8 @@
               query: {orderCode: res.data}
             });
             _this.toastText = '请求成功！';
-            // storage.clear();
+
+            storage.clear();
           } else {
             if (res.message.length > 10) {
               _this.toastText = "请求失败，请稍候重试！";
@@ -196,7 +199,7 @@
       },
       address: {
         handler(newVal, oldVal) {
-          if (newVal.length === 3) {
+          if (newVal.length != 0) {
             this.bank.bankProvince = newVal[0];
             this.bank.bankCity = newVal[1];
           }
@@ -207,6 +210,19 @@
     },
     created: function () {
       this.bank.amount = storage.fetch('order').insuranceProductPrice.price;
+    },
+    mounted() {
+      let isiOS = /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
+      if (isiOS) {
+        let elementsByClassName = document.getElementsByClassName("vux-cell-primary");
+        let elementsByClassName2 = document.getElementsByClassName("i-input-radio");
+        for (let i = 0; i < elementsByClassName.length; i++) {
+          elementsByClassName[i].style.setProperty('margin-left', '7px', 'important');
+        }
+        for (let i = 0; i < elementsByClassName2.length; i++) {
+          elementsByClassName2[i].setAttribute('style', 'margin-left:10px;');
+        }
+      }
     }
   }
 </script>
@@ -255,11 +271,6 @@
 
   .input-ver .weui-input {
     width: 60% !important;
-  }
-
-  .i-footer {
-    background-color: #c01212;
-    color: #ffffff;
   }
 
   .title {

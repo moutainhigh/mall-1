@@ -65,8 +65,8 @@
       <div class="error" v-if="!$v.insured.insuredMarriage.required && $v.insured.insuredMarriage.$dirty">
         婚姻状况不能为空
       </div>
-      <div>
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
+      <div style="background-color: #f5f5f5">
+        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
@@ -99,7 +99,7 @@
       <div class="error" v-if="!$v.insured.insuredAddress.required && $v.insured.insuredAddress.$dirty">请输入详细地址</div>
       <div class="error" v-if="!$v.insured.insuredAddress.maxLength">详细地址最多不超过255位数</div>
 
-      <popup-picker title="投保人是被保人的" placeholder="请选择投被保人的关系" :data="relates" value-text-align="left"
+      <popup-picker title="是被保人的" placeholder="请选择投被保人的关系" :data="relates" value-text-align="left"
                     v-model="insured.insuredRelation"
                     v-bind:class="{'errorInput': $v.insured.insuredRelation.$error}"></popup-picker>
       <div class="error" v-if="!$v.insured.insuredRelation.required && $v.insured.insuredRelation.$dirty">
@@ -107,13 +107,20 @@
       </div>
     </group>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 50px;">
-      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
-        <div>上一步</div>
-      </button>
-      <button class="i-footer" style="width: 50%;right: 0" @click="next">
-        <div>下一步</div>
-      </button>
+    <!--<div style="height: 50px;">-->
+      <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">-->
+        <!--<div>上一步</div>-->
+      <!--</button>-->
+      <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
+        <!--<div>下一步</div>-->
+      <!--</button>-->
+    <!--</div>-->
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
+          <div>下一步</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -259,7 +266,7 @@
     margin: 10px 0;
     background-color: #ffffff;
     padding: 15px;
-    font-size: 13px;
+    font-size: 16px;
     color: #e1bb3a;
   }
 

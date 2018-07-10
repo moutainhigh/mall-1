@@ -203,6 +203,11 @@ public class SecurityService implements ISecurityService, SecurityHolder {
 
     @Override
     public void removeRoleById(int roleId) {
+        roleRescDao.removeRoleResc(new Role(){
+            {
+                setRoleId(roleId);
+            }
+        });
         roleDao.delete(roleId);
     }
 

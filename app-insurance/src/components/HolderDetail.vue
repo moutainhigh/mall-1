@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="title">
+    <div class="title" style="text-align: left">
       投保人信息
     </div>
-    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
+    <group label-width="7rem" label-margin-right="2em" label-align="left">
       <x-input title="姓名" placeholder="请输入姓名" v-model="holder.policyholderName"
                v-bind:class="{'errorInput': $v.holder.policyholderName.$error}"
                @input="$v.holder.policyholderName.$touch()"></x-input>
@@ -110,8 +110,8 @@
       <div class="error" v-if="!$v.holder.policyholderMarriage.required && $v.holder.policyholderIncome.$dirty">
         婚姻状况不能为空
       </div>
-      <div>
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
+      <div style="background-color: #f5f5f5">
+        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
@@ -130,11 +130,17 @@
                @input="$v.holder.policyholderEmail.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderEmail.email">请输入正确邮箱地址</div>
 
-      <x-address title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="holder.holderPCD"
+      <div class="address" @click="holder.unifyAddr = !holder.unifyAddr">
+        <img src="../assets/img/unselect.png" v-if="!holder.unifyAddr"/>
+        <img src="../assets/img/selected.png" v-if="holder.unifyAddr"/>
+        与被保人同一地址
+      </div>
+
+      <x-address v-if="!holder.unifyAddr" title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="holder.holderPCD"
                  value-text-align="left" v-bind:class="{'errorInput': $v.holder.holderPCD.$error}"></x-address>
       <div class="error" v-if="!$v.holder.holderPCD.required && $v.holder.holderPCD.$dirty">家庭住址不能为空</div>
 
-      <x-input title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"
+      <x-input v-if="!holder.unifyAddr" title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"
                v-bind:class="{'errorInput': $v.holder.policyholderAddress.$error}"
                @input="$v.holder.policyholderAddress.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderAddress.required && $v.holder.policyholderAddress.$dirty">
@@ -155,9 +161,6 @@
         <img v-if="legalBeneficiary" src="../assets/img/selected.png"/>
         <img v-if="!legalBeneficiary" src="../assets/img/unselect.png"/>
         受益人：法定受益人
-      </div>
-      <div class="title-add" @click="addBene">
-        <img src="../assets/img/add.png"/>新增受益人
       </div>
     </div>
     <div v-show="addBene1">
@@ -362,14 +365,26 @@
         </div>
       </group>
     </div>
+    <div class="title-add" @click="addBene" v-if="!addBene1 || !addBene2">
+      <div>
+        <img src="../assets/img/add.png"/>新增受益人
+      </div>
+    </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 50px;">
-      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
-        <div>上一步</div>
-      </button>
-      <button class="i-footer" style="width: 50%;right: 0" @click="next">
-        <div>下一步</div>
-      </button>
+    <!--<div style="height: 50px;">-->
+      <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">-->
+        <!--<div>上一步</div>-->
+      <!--</button>-->
+      <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
+        <!--<div>下一步</div>-->
+      <!--</button>-->
+    <!--</div>-->
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
+          <div>下一步</div>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -736,6 +751,12 @@
         immediate: true,
         deep: true
       },
+      unifyAddr:function (newVal,oldVal) {
+          if (newVal) {
+            let holder = storage.fetch("holder");
+
+          }
+      }
     },
     created: function () {
       let order = storage.fetch("order");
@@ -795,11 +816,13 @@
 
 <style scoped>
   .title {
-    margin: 0 0 10px 0;
+    margin-top: 10px;
     background-color: #ffffff;
     padding: 15px;
-    font-size: 13px;
+    font-size: 16px;
     color: #e1bb3a;
+    text-align: center;
+    border-bottom: #D9D9D9 solid 1px;
   }
 
   .i-input-radio {
@@ -838,15 +861,32 @@
     margin: 13px 2em 13px 0 !important;
   }
 
+  .title-select {
+    font-size: 16px;
+    display: inline-block;
+  }
+
   .title-select img {
-    width: 14px;
+    width: 20px;
     position: relative;
-    top: 2px;
+    top: 4px;
     margin-right: 10px;
   }
 
   .title-add {
-    margin-top: 10px;
+    padding: 10px 0 ;
+    text-align: center;
+    font-size: 17px;
+    color: #f5ca1d;
+    background-color: #ffffff;
+  }
+
+  .title-add div {
+    width: 240px;
+    display: inline-block;
+    border: #f5ca1d solid 1px;
+    border-radius: 20px;
+    padding: 6px 0;
   }
 
   .title-add img {
@@ -861,7 +901,21 @@
     background-color: #ffffff;
     padding: 10px 15px;
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 16px;
+    color: #f5ca1d;
+  }
+
+  .address {
+    background-color: #f5f5f5;
+    padding: 10px 0 10px 20px;
+    font-size: 13px;
+    color: #f5ca1d;
+  }
+
+  .address img {
+    width: 18px;
+    position: relative;
+    top: 4px;
   }
 
   a {
