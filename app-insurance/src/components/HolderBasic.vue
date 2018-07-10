@@ -12,24 +12,12 @@
         <div class="i-input-item" style="width: 7rem; margin-right: 2em">性别：</div>
         <div class="i-input-radio" style="top: 0;">
           <div class="radio-div" @click="changeGender(true)">
-            <button v-if="gender"
-                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
-              男
-            </button>
-            <button v-if="!gender"
-                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
-              男
-            </button>
+            <button v-if="gender" class="check-on">男</button>
+            <button v-if="!gender" class="check-off">男</button>
           </div>
           <div class="radio-div" @click="changeGender(false)">
-            <button v-if="!gender"
-                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px; margin-left: 15px">
-              女
-            </button>
-            <button v-if="gender"
-                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px; margin-left: 15px">
-              女
-            </button>
+            <button v-if="!gender" class="check-on" style="margin-left: 15px">女</button>
+            <button v-if="gender" class="check-off" style="margin-left: 15px">女</button>
           </div>
         </div>
       </div>
@@ -62,67 +50,31 @@
         <div class="i-input-item">基本保额：</div>
         <div class="i-input-radio" v-if="proId == 1">
           <div class="radio-div" @click="priceId = 1">
-            <button v-if="priceId ===1"
-                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
-              2万
-            </button>
-            <button v-if="priceId !==1"
-                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
-              2万
-            </button>
+            <button v-if="priceId ===1" class="check-on">2万</button>
+            <button v-if="priceId !==1" class="check-off">2万</button>
           </div>
           <div class="radio-div" @click="priceId = 2">
-            <button v-if="priceId ===2"
-                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
-              5万
-            </button>
-            <button v-if="priceId !==2"
-                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
-              5万
-            </button>
+            <button v-if="priceId ===2" class="check-on">5万</button>
+            <button v-if="priceId !==2" class="check-off">5万</button>
           </div>
           <div class="radio-div" @click="priceId = 3">
-            <button v-if="priceId ===3"
-                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
-              10万
-            </button>
-            <button v-if="priceId !==3"
-                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
-              10万
-            </button>
+            <button v-if="priceId ===3" class="check-on">10万</button>
+            <button v-if="priceId !==3" class="check-off">10万</button>
           </div>
         </div>
         <div class="i-input-radio" v-if="proId == 2">
           <div style="display: inline-block;color: #c01212;">
             <div class="radio-div" @click="priceId = 4">
-              <button v-if="priceId ===4"
-                      style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
-                2万
-              </button>
-              <button v-if="priceId !==4"
-                      style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
-                2万
-              </button>
+              <button v-if="priceId ===4" class="check-on">2万</button>
+              <button v-if="priceId !==4" class="check-off">2万</button>
             </div>
             <div class="radio-div" @click="priceId = 5">
-              <button v-if="priceId ===5"
-                      style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
-                5万
-              </button>
-              <button v-if="priceId !==5"
-                      style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
-                5万
-              </button>
+              <button v-if="priceId ===5" class="check-on">5万</button>
+              <button v-if="priceId !==5" class="check-off">5万</button>
             </div>
             <div class="radio-div" @click="priceId = 6">
-              <button v-if="priceId ===6"
-                      style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
-                10万
-              </button>
-              <button v-if="priceId !==6"
-                      style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
-                10万
-              </button>
+              <button v-if="priceId ===6" class="check-on">10万</button>
+              <button v-if="priceId !==6" class="check-off">10万</button>
             </div>
           </div>
         </div>
@@ -133,8 +85,8 @@
         ※ 投保须知
       </div>
       <div class="i-message" @click="state = !state">
-        <img v-if="!state" class="checkIcon" src="../assets/img/checkoff.png">
-        <img v-if="state" class="checkIcon" src="../assets/img/checkon.png">
+        <img v-if="!state" class="checkIcon" src="../assets/img/unselect.png">
+        <img v-if="state" class="checkIcon" src="../assets/img/selected.png">
         <div>&emsp;欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
       </div>
     </div>
@@ -301,10 +253,6 @@
     font-size: 14px;
     cursor: pointer;
     padding: 8px 6px 8px 0;
-  }
-
-  button {
-    outline: unset;
   }
 
   a {

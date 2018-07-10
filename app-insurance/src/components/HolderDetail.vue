@@ -17,14 +17,12 @@
         <div class="i-input-item">性别</div>
         <div class="i-input-radio">
           <div class="radio-div" @click="holder.policyholderGender = true">
-            <span>男</span>
-            <img v-if="holder.policyholderGender" src="../assets/img/case-on.png"/>
-            <img v-if="!holder.policyholderGender" src="../assets/img/case-off.png"/>
+            <button v-if="holder.policyholderGender" class="check-on">男</button>
+            <button v-if="!holder.policyholderGender" class="check-off">男</button>
           </div>
           <div class="radio-div" @click="holder.policyholderGender = false">
-            <span>女</span>
-            <img v-if="!holder.policyholderGender" src="../assets/img/case-on.png"/>
-            <img v-if="holder.policyholderGender" src="../assets/img/case-off.png"/>
+            <button v-if="!holder.policyholderGender" class="check-on" style="margin-left: 15px">女</button>
+            <button v-if="holder.policyholderGender" class="check-off" style="margin-left: 15px">女</button>
           </div>
         </div>
       </div>
@@ -136,7 +134,8 @@
         与被保人同一地址
       </div>
 
-      <x-address v-if="!holder.unifyAddr" title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="holder.holderPCD"
+      <x-address v-if="!holder.unifyAddr" title="家庭住址" placeholder="请选择地址" :list="addressData"
+                 v-model="holder.holderPCD"
                  value-text-align="left" v-bind:class="{'errorInput': $v.holder.holderPCD.$error}"></x-address>
       <div class="error" v-if="!$v.holder.holderPCD.required && $v.holder.holderPCD.$dirty">家庭住址不能为空</div>
 
@@ -164,7 +163,7 @@
       </div>
     </div>
     <div v-show="addBene1">
-      <div class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(1)">删除</span></div>
+      <div class="add">受益人信息 <span style="float: right;" @click="delBene(1)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary1.beneficiaryName"
                  v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryName.$error}"
@@ -182,14 +181,12 @@
           <div class="i-input-item">性别</div>
           <div class="i-input-radio">
             <div class="radio-div" @click="beneficiary1.beneficiaryGender = true">
-              <span>男</span>
-              <img v-if="beneficiary1.beneficiaryGender" src="../assets/img/case-on.png"/>
-              <img v-if="!beneficiary1.beneficiaryGender" src="../assets/img/case-off.png"/>
+              <button v-if="beneficiary1.beneficiaryGender" class="check-on">男</button>
+              <button v-if="!beneficiary1.beneficiaryGender" class="check-off">男</button>
             </div>
             <div class="radio-div" @click="beneficiary1.beneficiaryGender = false">
-              <span>女</span>
-              <img v-if="!beneficiary1.beneficiaryGender" src="../assets/img/case-on.png"/>
-              <img v-if="beneficiary1.beneficiaryGender" src="../assets/img/case-off.png"/>
+              <button v-if="!beneficiary1.beneficiaryGender" class="check-on" style="margin-left: 15px">女</button>
+              <button v-if="beneficiary1.beneficiaryGender" class="check-off" style="margin-left: 15px">女</button>
             </div>
           </div>
         </div>
@@ -264,7 +261,7 @@
     </div>
 
     <div v-show="addBene2">
-      <div class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(2)">删除</span></div>
+      <div class="add">受益人信息 <span style="float: right" @click="delBene(2)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName"
                  v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryName.$error}"
@@ -282,14 +279,12 @@
           <div class="i-input-item">性别</div>
           <div class="i-input-radio">
             <div class="radio-div" @click="beneficiary2.beneficiaryGender = true">
-              <span>男</span>
-              <img v-if="beneficiary2.beneficiaryGender" src="../assets/img/case-on.png"/>
-              <img v-if="!beneficiary2.beneficiaryGender" src="../assets/img/case-off.png"/>
+              <button v-if="beneficiary2.beneficiaryGender" class="check-on">男</button>
+              <button v-if="!beneficiary2.beneficiaryGender" class="check-off">男</button>
             </div>
             <div class="radio-div" @click="beneficiary2.beneficiaryGender = false">
-              <span>女</span>
-              <img v-if="!beneficiary2.beneficiaryGender" src="../assets/img/case-on.png"/>
-              <img v-if="beneficiary2.beneficiaryGender" src="../assets/img/case-off.png"/>
+              <button v-if="!beneficiary2.beneficiaryGender" class="check-on" style="margin-left: 15px">女</button>
+              <button v-if="beneficiary2.beneficiaryGender" class="check-off" style="margin-left: 15px">女</button>
             </div>
           </div>
         </div>
@@ -744,11 +739,11 @@
         immediate: true,
         deep: true
       },
-      unifyAddr:function (newVal,oldVal) {
-          if (newVal) {
-            let holder = storage.fetch("holder");
+      unifyAddr: function (newVal, oldVal) {
+        if (newVal) {
+          let holder = storage.fetch("holder");
 
-          }
+        }
       }
     },
     created: function () {
@@ -821,7 +816,6 @@
   .i-input-radio {
     display: inline-block;
     position: relative;
-    top: 10px;
     left: -5px;
     margin-left: 0;
   }
@@ -867,7 +861,7 @@
   }
 
   .title-add {
-    padding: 10px 0 ;
+    padding: 10px 0;
     text-align: center;
     font-size: 17px;
     color: #f5ca1d;

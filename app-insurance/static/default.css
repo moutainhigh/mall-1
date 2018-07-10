@@ -44,14 +44,18 @@ body {
   font-size: 14px;
   color: #333333;
   width: 56vw;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .i-list-detail .dt-intro {
   font-size: 13px;
   color: #999999;
   margin: 4px 0;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .i-list-detail .dt-content {
@@ -86,7 +90,7 @@ body {
   margin-right: 12px;
 }
 
-button a{
+button a {
   color: unset;
   text-decoration: unset;
 }
@@ -222,6 +226,25 @@ button a{
   margin-top: 20px;
   text-align: left;
   width: 300px;
+}
+
+.check-on {
+  border: 1px solid #f5ca1d;
+  color: #f5ca1d;
+  background: #fffbeb;
+  width: 10vh;
+  border-radius: 25px;
+  height: 27px;
+  outline: unset;
+}
+
+.check-off {
+  border: 1px solid #a8a8a8;
+  background: none;
+  width: 10vh;
+  border-radius: 25px;
+  height: 27px;
+  outline: unset;
 }
 
 .weui-cells {
