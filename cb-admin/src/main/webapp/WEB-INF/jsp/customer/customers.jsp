@@ -194,9 +194,10 @@
                   <%--<a href="javascript:editItem();"  class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>--%>
                   <%--<a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>--%>
                 </div>
+                <!--
                 <div class="btn-group">
                   <a href="javascript:resetPwd();" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;重置密码</a>
-                </div>
+                </div>-->
               </div>
             </header>
           </div>

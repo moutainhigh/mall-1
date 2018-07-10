@@ -26,23 +26,24 @@ public class RestTokenFilter extends GenericFilterBean {
         final HttpServletRequest request = (HttpServletRequest) req;
         final HttpServletResponse response = (HttpServletResponse) res;
 
-        String authHeader = request.getHeader(HEADER_STRING);
-        if ((authHeader == null) ||
-                !authHeader.startsWith(TOKEN_PREFIX)) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
+        if (!request.getMethod().equals("OPTIONS")) {
+            String authHeader = request.getHeader(HEADER_STRING);
+            if ((authHeader == null) ||
+                    !authHeader.startsWith(TOKEN_PREFIX)) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
 
-        try {
-            authHeader = authHeader.replace(TOKEN_PREFIX, "");
-            Token token = JwtUtil.getToken(authHeader);
-            request.getSession().setAttribute("customerId", token.getAccountId());
-            request.getSession().setAttribute("mobile", token.getMobile());
-        } catch (final Exception e) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
+            try {
+                authHeader = authHeader.replace(TOKEN_PREFIX, "");
+                Token token = JwtUtil.getToken(authHeader);
+                request.getSession().setAttribute("customerId", token.getAccountId());
+                request.getSession().setAttribute("mobile", token.getMobile());
+            } catch (final Exception e) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
         }
-
         chain.doFilter(req, res);
     }
 }
