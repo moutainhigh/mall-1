@@ -10,7 +10,6 @@ import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
-import com.yunxin.core.annotation.CustomJsonFilter;
 import com.yunxin.core.persistence.PageSpecification;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +24,6 @@ import javax.annotation.Resource;
  */
 @Api(description = "订单接口")
 @RestController
-@CrossOrigin
 @RequestMapping(value = "/insurance/order")
 @SessionAttributes("customerId")
 public class InsuranceOrderResource extends BaseResource {
