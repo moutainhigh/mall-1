@@ -107,13 +107,20 @@
       </div>
     </group>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 50px;">
-      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
-        <div>上一步</div>
-      </button>
-      <button class="i-footer" style="width: 50%;right: 0" @click="next">
-        <div>下一步</div>
-      </button>
+    <!--<div style="height: 50px;">-->
+      <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">-->
+        <!--<div>上一步</div>-->
+      <!--</button>-->
+      <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
+        <!--<div>下一步</div>-->
+      <!--</button>-->
+    <!--</div>-->
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
+          <div>下一步</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -259,7 +266,7 @@
     margin: 10px 0;
     background-color: #ffffff;
     padding: 15px;
-    font-size: 13px;
+    font-size: 16px;
     color: #e1bb3a;
   }
 

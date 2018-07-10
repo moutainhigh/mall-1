@@ -10,7 +10,9 @@ export default {
     window.localStorage.setItem(key, window.JSON.stringify(items))
   },
   clear: function () {
+    let token = this.fetch('token');
     window.localStorage.clear();
+    this.save("token",token);
   }
 
 }

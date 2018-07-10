@@ -34,10 +34,12 @@
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 48px;">
-      <button class="i-footer" @click="next">
-        <div>下一步</div>
-      </button>
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
+          <div>下一步</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>

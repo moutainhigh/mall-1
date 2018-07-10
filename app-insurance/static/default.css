@@ -93,14 +93,21 @@ button a{
 
 .i-footer {
   position: fixed;
-  bottom: 0;
+  bottom: 10px;
   height: 48px;
   width: 100%;
   text-align: center;
+  background-color: #ffffff;
+}
+
+.i-footer button{
+  width: 94%;
+  height: 100%;
   background-color: #e1bb3a;
   font-size: 18px;
   color: #ffffff;
   border: unset;
+  border-radius: 5px;
 }
 
 .i-card {

@@ -138,10 +138,12 @@
         <div>&emsp;欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
       </div>
     </div>
-    <div style="height: 48px;">
-      <button class="i-footer" @click="submit">
-        <div>完善投保信息</div>
-      </button>
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="submit" >
+          <div>完善投保信息</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -287,6 +289,19 @@
       this.birthday = insured.insuredBirthday;
       this.gender = insured.insuredGender;
       this.career = insured.insuredCareer;
+    },
+    mounted() {
+      let isiOS = /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
+      if (isiOS) {
+        let elementsByClassName = document.getElementsByClassName("vux-cell-primary");
+        let elementsByClassName2 = document.getElementsByClassName("i-input-radio");
+        for (let i = 0; i < elementsByClassName.length; i++) {
+          elementsByClassName[i].style.setProperty('margin-left', '7px', 'important');
+        }
+        for (let i = 0; i < elementsByClassName2.length; i++) {
+          elementsByClassName2[i].setAttribute('style', 'margin-left:10px;');
+        }
+      }
     }
   }
 </script>
@@ -298,9 +313,13 @@
     text-rendering: unset;
     width: 80%;
     outline: none;
-    font-size: 14px;
+    font-size: 15px;
     cursor: pointer;
     padding: 8px 6px 8px 0;
+  }
+
+  .i-input .i-input-item {
+    font-size: 15px;
   }
 
   a {
@@ -351,5 +370,9 @@
     100% {
       transform: translateX(0);
     }
+  }
+  .weui-cells {
+    margin-top: 0 !important;
+    font-size: 15px !important;
   }
 </style>
