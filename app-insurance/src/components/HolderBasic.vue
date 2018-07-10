@@ -303,6 +303,10 @@
     padding: 8px 6px 8px 0;
   }
 
+  button {
+    outline: unset;
+  }
+
   a {
     text-decoration: unset;
   }
