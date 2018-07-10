@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title" style="text-align: left">
+    <div class="title" style="text-align: left;margin-top: 0;">
       投保人信息
     </div>
     <group label-width="7rem" label-margin-right="2em" label-align="left">
@@ -79,26 +79,42 @@
       </div>
       <div class="error" v-if="!$v.holder.policyholderCountry.maxLength">国籍最多不超过64位数</div>
 
-      <x-input title="身高(cm)" v-model="holder.policyholderHeight" placeholder="请输入身高"
-               v-bind:class="{'errorInput': $v.holder.policyholderHeight.$error}"
-               @input="$v.holder.policyholderHeight.$touch()"></x-input>
+
+      <div v-bind:class="{'errorInput': $v.holder.policyholderHeight.$error}">
+        <div class="input-ver" >
+          <x-input title="身高" v-model="holder.policyholderHeight" placeholder="请输入身高"
+                   class="input-ver-x"
+                   @input="$v.holder.policyholderHeight.$touch()"></x-input>
+          <div class="input-vile">cm</div>
+        </div>
+      </div>
       <div class="error" v-if="!$v.holder.policyholderHeight.required && $v.holder.policyholderHeight.$dirty">身高不能为空
       </div>
       <div class="error" v-if="!$v.holder.policyholderHeight.int">请输入正确的身高（正整数）</div>
       <div class="error" v-if="!$v.holder.policyholderHeight.maxLength">最大不超过3位数</div>
 
-      <x-input title="体重(kg)" v-model="holder.policyholderBodyWeight" placeholder="请输入体重"
-               v-bind:class="{'errorInput': $v.holder.policyholderBodyWeight.$error}"
-               @input="$v.holder.policyholderBodyWeight.$touch()"></x-input>
+      <div v-bind:class="{'errorInput': $v.holder.policyholderBodyWeight.$error}">
+        <div class="input-ver" >
+          <x-input title="体重" v-model="holder.policyholderBodyWeight" placeholder="请输入体重" class="input-ver-x"
+                   @input="$v.holder.policyholderBodyWeight.$touch()"></x-input>
+          <div class="input-vile">kg</div>
+        </div>
+      </div>
+
       <div class="error" v-if="!$v.holder.policyholderBodyWeight.required && $v.holder.policyholderBodyWeight.$dirty">
         体重不能为空
       </div>
       <div class="error" v-if="!$v.holder.policyholderBodyWeight.int">请输入正确的体重（正整数）</div>
       <div class="error" v-if="!$v.holder.policyholderBodyWeight.maxLength">最大不超过3位数</div>
 
-      <x-input title="年收入(万元)" v-model="holder.policyholderIncome" placeholder="请输入年收入"
-               v-bind:class="{'errorInput': $v.holder.policyholderIncome.$error}"
-               @input="$v.holder.policyholderIncome.$touch()"></x-input>
+      <div v-bind:class="{'errorInput': $v.holder.policyholderIncome.$error}">
+        <div class="input-ver" >
+          <x-input title="年收入" v-model="holder.policyholderIncome" placeholder="请输入年收入" class="input-ver-x"
+                   @input="$v.holder.policyholderIncome.$touch()"></x-input>
+          <div class="input-vile">万元</div>
+        </div>
+      </div>
+
       <div class="error" v-if="!$v.holder.policyholderIncome.required && $v.holder.policyholderIncome.$dirty">请输入年收入
       </div>
       <div class="error" v-if="!$v.holder.policyholderIncome.int">请输入年收入，单位万元（正整数）</div>
@@ -110,8 +126,8 @@
       <div class="error" v-if="!$v.holder.policyholderMarriage.required && $v.holder.policyholderIncome.$dirty">
         婚姻状况不能为空
       </div>
-      <div>
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
+      <div style="background-color: #f5f5f5">
+        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
@@ -163,8 +179,8 @@
         受益人：法定受益人
       </div>
     </div>
-    <div v-show="addBene1">
-      <div class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(1)">删除</span></div>
+    <div v-show="addBene1" >
+      <div id="addBene1" class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(1)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary1.beneficiaryName"
                  v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryName.$error}"
@@ -264,7 +280,7 @@
     </div>
 
     <div v-show="addBene2">
-      <div class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(2)">删除</span></div>
+      <div id="addBene2" class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(2)">删除</span></div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName"
                  v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryName.$error}"
@@ -348,7 +364,7 @@
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>-->
-        <datetime title="证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" endDate="2199-12-30" placeholder="请选择证件有效期"
+        <datetime title="证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" endDate="2199-12-30" :startDate="startDate" placeholder="请选择证件有效期"
                   value-text-align="left"
                   v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"></datetime>
         <div class="error"
@@ -371,13 +387,20 @@
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 50px;">
-      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
-        <div>上一步</div>
-      </button>
-      <button class="i-footer" style="width: 50%;right: 0" @click="next">
-        <div>下一步</div>
-      </button>
+    <!--<div style="height: 50px;">-->
+      <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #f5ca1d" @click="comeBack">-->
+        <!--<div>上一步</div>-->
+      <!--</button>-->
+      <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
+        <!--<div>下一步</div>-->
+      <!--</button>-->
+    <!--</div>-->
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
+          <div>下一步</div>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -541,6 +564,7 @@
             beneficiaryProportion: '',
             beneficiaryCountry: ''
           };
+          document.getElementById("addBene1").scroll(0,0);
         } else if (this.addBene1 === true && this.addBene2 === false) {
           this.addBene2 = true;
           let beneficiary2 = {
@@ -555,9 +579,7 @@
             beneficiaryProportion: '',
             beneficiaryCountry: ''
           };
-        } else if (this.addBene1 && this.addBene2) {
-          this.toastText = "新增受益人最多为两个";
-          this.showPositionValue = true;
+          document.getElementById("addBene2").scroll(0,0);
         }
         this.legalBeneficiary = false;
         let order = storage.fetch("order");
@@ -812,8 +834,8 @@
     margin-top: 10px;
     background-color: #ffffff;
     padding: 15px;
-    font-size: 13px;
-    color: #e1bb3a;
+    font-size: 16px;
+    color: #f5ca1d;
     text-align: center;
     border-bottom: #D9D9D9 solid 1px;
   }
@@ -894,13 +916,15 @@
     background-color: #ffffff;
     padding: 10px 15px;
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 16px;
+    color: #f5ca1d;
   }
 
   .address {
     background-color: #f5f5f5;
     padding: 10px 0 10px 20px;
     font-size: 13px;
+    color: #f5ca1d;
   }
 
   .address img {
@@ -927,6 +951,28 @@
     border: 1px solid #f79483;
     border-radius: 5px;
   }
+
+
+  .input-vile {
+    width: 40px;
+    text-align: right;
+    float: right;
+    font-size: 16px;
+    margin-top: -36px;
+    margin-right: 16px;
+    padding: 4px 8px;
+  }
+
+  .input-ver {
+    margin-left: 16px;
+    border-top: #d9d9d9 solid 1px;
+  }
+
+  .input-ver-x {
+    width: 83%;
+    padding-left: 0;
+  }
+
 
   @keyframes shakeError {
     0% {

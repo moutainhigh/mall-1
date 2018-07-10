@@ -1,45 +1,47 @@
 <template>
   <div>
-    <div class="i-card">
-      <!--<div class="i-card-tip">-->
-      <!--请填写被保人信息，用于保费计算-->
-      <!--</div>-->
-      <div class="i-input">
-        <div class="i-input-item">出生日期：</div>
-        <div class="i-input-select" @click="showPlugin">
-          <div v-if="birthday === ''">请选择出生日期</div>
-          <div v-if="birthday !== ''">{{birthday}}</div>
-          <img src="../assets/img/drop-down.png"/>
-        </div>
-        <div class="error" v-if="!$v.birthday.required && $v.birthday.$dirty">请选择出生日期</div>
+    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;margin-bottom: 7px;">
+      <datetime title="出生日期" v-model="birthday" startDate="1950-01-01" :endDate="startDate"
+                placeholder="请选择出生日期"
+                value-text-align="left" v-bind:class="{'errorInput': $v.birthday.$error}"></datetime>
+      <div class="error" v-if="!$v.birthday.required && $v.birthday.$dirty">
+        出生日期不能为空
       </div>
-      <div class="i-input">
-        <div class="i-input-item">性别：</div>
-        <div class="i-input-radio">
+
+      <div class="i-input" style="padding: 0 15px 0 0; border-top: 1px solid #d9d9d9; margin-left: 15px">
+        <div class="i-input-item" style="width: 7rem; margin-right: 2em">性别：</div>
+        <div class="i-input-radio" style="top: 0;">
           <div class="radio-div" @click="changeGender(true)">
-            <span>男</span>
-            <img v-if="gender" src="../assets/img/case-on.png"/>
-            <img v-if="!gender" src="../assets/img/case-off.png"/>
+            <button v-if="gender"
+                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
+              男
+            </button>
+            <button v-if="!gender"
+                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
+              男
+            </button>
           </div>
           <div class="radio-div" @click="changeGender(false)">
-            <span>女</span>
-            <img v-if="!gender" src="../assets/img/case-on.png"/>
-            <img v-if="gender" src="../assets/img/case-off.png"/>
+            <button v-if="!gender"
+                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px; margin-left: 15px">
+              女
+            </button>
+            <button v-if="gender"
+                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px; margin-left: 15px">
+              女
+            </button>
           </div>
         </div>
       </div>
-      <div class="i-input">
-        <div class="i-input-item">被保人职业：</div>
-        <!--<group>-->
-        <!--<popup-picker title="受益顺序" placeholder="" :data="list" v-model="test"  value-text-align="left"></popup-picker>-->
-        <!--</group>-->
-        <div class="i-input-select" v-bind:class="{'errorInput': $v.career.$error}">
-          <input class="input" placeholder="请输入职业" v-model="career"
-                 @input="$v.career.$touch()"/>
-        </div>
-        <div class="error" v-if="!$v.career.required && $v.career.$dirty">请输入职业</div>
-      </div>
-    </div>
+
+      <x-input title="被保人职业" placeholder="请输入职业" v-model="career"
+               v-bind:class="{'errorInput': $v.career.$error}"
+               @input="$v.career.$touch()"></x-input>
+      <div class="error" v-if="!$v.career.required && $v.career.$dirty">请输入职业</div>
+    </group>
+
+
+    <!--</div>-->
     <div class="i-card">
       <div class="i-card-tip">
         {{title}}
@@ -60,37 +62,67 @@
         <div class="i-input-item">基本保额：</div>
         <div class="i-input-radio" v-if="proId == 1">
           <div class="radio-div" @click="priceId = 1">
-            <span>2万</span>
-            <img v-if="priceId ===1" src="../assets/img/case-on.png" height="100"/>
-            <img v-if="priceId !==1" src="../assets/img/case-off.png" height="100"/>
+            <button v-if="priceId ===1"
+                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
+              2万
+            </button>
+            <button v-if="priceId !==1"
+                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
+              2万
+            </button>
           </div>
           <div class="radio-div" @click="priceId = 2">
-            <span>5万</span>
-            <img v-if="priceId ===2" src="../assets/img/case-on.png" height="100"/>
-            <img v-if="priceId !==2" src="../assets/img/case-off.png" height="100"/>
+            <button v-if="priceId ===2"
+                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
+              5万
+            </button>
+            <button v-if="priceId !==2"
+                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
+              5万
+            </button>
           </div>
           <div class="radio-div" @click="priceId = 3">
-            <span>10万</span>
-            <img v-if="priceId ===3" src="../assets/img/case-on.png" height="100"/>
-            <img v-if="priceId !==3" src="../assets/img/case-off.png" height="100"/>
+            <button v-if="priceId ===3"
+                    style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
+              10万
+            </button>
+            <button v-if="priceId !==3"
+                    style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
+              10万
+            </button>
           </div>
         </div>
         <div class="i-input-radio" v-if="proId == 2">
           <div style="display: inline-block;color: #c01212;">
             <div class="radio-div" @click="priceId = 4">
-              <span>2万</span>
-              <img v-if="priceId ===4" src="../assets/img/case-on.png" height="100"/>
-              <img v-if="priceId !==4" src="../assets/img/case-off.png" height="100"/>
+              <button v-if="priceId ===4"
+                      style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
+                2万
+              </button>
+              <button v-if="priceId !==4"
+                      style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
+                2万
+              </button>
             </div>
             <div class="radio-div" @click="priceId = 5">
-              <span>5万</span>
-              <img v-if="priceId ===5" src="../assets/img/case-on.png" height="100"/>
-              <img v-if="priceId !==5" src="../assets/img/case-off.png" height="100"/>
+              <button v-if="priceId ===5"
+                      style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
+                5万
+              </button>
+              <button v-if="priceId !==5"
+                      style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
+                5万
+              </button>
             </div>
             <div class="radio-div" @click="priceId = 6">
-              <span>10万</span>
-              <img v-if="priceId ===6" src="../assets/img/case-on.png" height="100"/>
-              <img v-if="priceId !==6" src="../assets/img/case-off.png" height="100"/>
+              <button v-if="priceId ===6"
+                      style="border: 1px solid #f5ca1d; color: #f5ca1d; background: #fffbeb; width: 10vh; border-radius: 25px; height: 27px">
+                10万
+              </button>
+              <button v-if="priceId !==6"
+                      style="border: 1px solid #a8a8a8; background: none; width: 10vh; border-radius: 25px; height: 27px">
+                10万
+              </button>
             </div>
           </div>
         </div>
@@ -106,17 +138,19 @@
         <div>&emsp;欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
       </div>
     </div>
-    <div style="height: 48px;">
-      <button class="i-footer" @click="submit">
-        <div>完善投保信息</div>
-      </button>
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="submit" >
+          <div>完善投保信息</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   import storage from "../store/storage"
-  import {PopupPicker, Toast} from 'vux'
+  import {PopupPicker, Toast, Datetime} from 'vux'
   import XInput from "vux/src/components/x-input/index";
   import {required} from 'vuelidate/lib/validators'
 
@@ -124,7 +158,8 @@
     name: "holder-basic",
     components: {
       XInput,
-      PopupPicker
+      PopupPicker,
+      Datetime
     },
     data() {
       return {
@@ -237,8 +272,10 @@
       let query = this.$route.query;
       this.title = query.title;
       this.proId = query.id;
-
       let order = this.Admin.order;
+      if (storage.fetch('order').length != 0){
+        order = storage.fetch('order');
+      }
       order.insuranceProduct.prodId = this.proId;
       if (this.proId == 1) {
         order.insuranceProductPrice.priceId = 1;
@@ -265,9 +302,21 @@
     text-rendering: unset;
     width: 80%;
     outline: none;
-    font-size: 14px;
+    font-size: 15px !important;
     cursor: pointer;
     padding: 8px 6px 8px 0;
+  }
+
+  button {
+    outline: unset;
+  }
+
+  .i-input .i-input-item {
+    font-size: 15px !important;
+  }
+
+  a {
+    text-decoration: unset;
   }
 
   .checkIcon {

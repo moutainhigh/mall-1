@@ -37,24 +37,36 @@
       <div class="error" v-if="!$v.insured.insuredCountry.required && $v.insured.insuredCountry.$dirty">请输入国籍</div>
       <div class="error" v-if="!$v.insured.insuredCountry.maxLength">国籍最多不超过64位数</div>
 
-      <x-input title="身高(cm)" placeholder="请输入身高" v-model="insured.insuredHeight"
-               v-bind:class="{'errorInput': $v.insured.insuredHeight.$error}"
-               @input="$v.insured.insuredHeight.$touch()"></x-input>
+      <div v-bind:class="{'errorInput': $v.insured.insuredHeight.$error}">
+        <div class="input-ver" >
+          <x-input title="身高" placeholder="请输入身高" v-model="insured.insuredHeight" class="input-ver-x" @input="$v.insured.insuredHeight.$touch()"></x-input>
+          <div class="input-vile">cm</div>
+        </div>
+      </div>
       <div class="error" v-if="!$v.insured.insuredHeight.required && $v.insured.insuredHeight.$dirty">身高不能为空</div>
       <div class="error" v-if="!$v.insured.insuredHeight.int">请输入正确的身高（正整数）</div>
       <div class="error" v-if="!$v.insured.insuredHeight.maxLength">最大不超过3位数</div>
 
-      <x-input title="体重(kg)" placeholder="请输入体重" v-model="insured.insuredBodyWeight"
-               v-bind:class="{'errorInput': $v.insured.insuredBodyWeight.$error}"
-               @input="$v.insured.insuredBodyWeight.$touch()"></x-input>
+      <div v-bind:class="{'errorInput': $v.insured.insuredBodyWeight.$error}">
+        <div class="input-ver" >
+          <x-input title="体重" placeholder="请输入体重" v-model="insured.insuredBodyWeight"
+                   @input="$v.insured.insuredBodyWeight.$touch()" class="input-ver-x"></x-input>
+          <div class="input-vile">kg</div>
+        </div>
+      </div>
+
       <div class="error" v-if="!$v.insured.insuredBodyWeight.required && $v.insured.insuredBodyWeight.$dirty">体重不能为空
       </div>
       <div class="error" v-if="!$v.insured.insuredBodyWeight.int">请输入正确的体重（正整数）</div>
       <div class="error" v-if="!$v.insured.insuredBodyWeight.maxLength">最大不超过3位数</div>
 
-      <x-input title="年收入(万元)" placeholder="请输入年收入" v-model="insured.insuredIncome"
-               v-bind:class="{'errorInput': $v.insured.insuredIncome.$error}"
-               @input="$v.insured.insuredIncome.$touch()"></x-input>
+      <div v-bind:class="{'errorInput': $v.insured.insuredIncome.$error}">
+        <div class="input-ver" >
+          <x-input title="年收入(万元)" placeholder="请输入年收入" v-model="insured.insuredIncome" class="input-ver-x"
+                   @input="$v.insured.insuredIncome.$touch()"></x-input>
+          <div class="input-vile">万元</div>
+        </div>
+      </div>
       <div class="error" v-if="!$v.insured.insuredIncome.required && $v.insured.insuredIncome.$dirty">请输入年收入</div>
       <div class="error" v-if="!$v.insured.insuredIncome.int">请输入年收入，单位万元（正整数）</div>
       <div class="error" v-if="!$v.insured.insuredIncome.maxLength">最大不超过6位数</div>
@@ -65,8 +77,8 @@
       <div class="error" v-if="!$v.insured.insuredMarriage.required && $v.insured.insuredMarriage.$dirty">
         婚姻状况不能为空
       </div>
-      <div>
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #19ae00;">
+      <div style="background-color: #f5f5f5">
+        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
@@ -107,13 +119,20 @@
       </div>
     </group>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 50px;">
-      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
-        <div>上一步</div>
-      </button>
-      <button class="i-footer" style="width: 50%;right: 0" @click="next">
-        <div>下一步</div>
-      </button>
+    <!--<div style="height: 50px;">-->
+      <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">-->
+        <!--<div>上一步</div>-->
+      <!--</button>-->
+      <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
+        <!--<div>下一步</div>-->
+      <!--</button>-->
+    <!--</div>-->
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
+          <div>下一步</div>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -259,7 +278,7 @@
     margin: 10px 0;
     background-color: #ffffff;
     padding: 15px;
-    font-size: 13px;
+    font-size: 16px;
     color: #e1bb3a;
   }
 
@@ -342,6 +361,26 @@
     animation-timing-function: ease-in-out;
     border: 1px solid #f79483;
     border-radius: 5px;
+  }
+
+  .input-vile {
+    width: 40px;
+    text-align: right;
+    float: right;
+    font-size: 16px;
+    margin-top: -36px;
+    margin-right: 16px;
+    padding: 4px 8px;
+  }
+
+  .input-ver {
+    margin-left: 16px;
+    border-top: #d9d9d9 solid 1px;
+  }
+
+  .input-ver-x {
+    width: 83%;
+    padding-left: 0;
   }
 
   @keyframes shakeError {

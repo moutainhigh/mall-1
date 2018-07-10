@@ -1,10 +1,12 @@
 <template>
   <div>
     <img src="../assets/img/detail.png" width="100%"/>
-    <div style="height: 48px;" @click="next">
-        <button class="i-footer">
-          立即投保
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
+          <div>立即投保</div>
         </button>
+      </div>
     </div>
   </div>
 </template>

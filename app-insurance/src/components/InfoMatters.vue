@@ -638,14 +638,14 @@
         <p class="recognizee">确认</p>
       </div>
     </div>
-    <div style="height: 50px;">
-      <button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">
-        <div>上一步</div>
-      </button>
-      <button class="i-footer" style="width: 50%;right: 0" @click="next">
+    <div style="height: 60px;" >
+      <div class="i-footer">
+        <button  @click="next" >
           <div>下一步</div>
-      </button>
+        </button>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -663,9 +663,6 @@
       }
     },
     methods: {
-      comeBack() {
-        this.$router.back();
-      },
       changeInsuredState(index) {
         this.matters[index].insuredResult = !this.matters[index].insuredResult;
         console.log(this.matters[index].insuredResult);
