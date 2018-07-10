@@ -193,6 +193,14 @@
         "name": "保单列表", "code": "141", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/insurances.do"
       }
     ]
+  },
+  {
+    "name": "反馈信息", "code": "15", "type": "MENU", "cssClass": "fa fa-phone", "value": "concent", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "用户反馈管理", "code": "151", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../feedback/feedbacks.do"
+      }
+    ]
   }
 
 ]
