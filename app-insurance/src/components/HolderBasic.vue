@@ -240,11 +240,11 @@
 
       let order = this.Admin.order;
       order.insuranceProduct.prodId = this.proId;
-      if (this.proId === 1) {
+      if (this.proId == 1) {
         order.insuranceProductPrice.priceId = 1;
         this.priceId = 1;
       }
-      if (this.proId === 2) {
+      if (this.proId == 2) {
         order.insuranceProductPrice.priceId = 4;
         this.priceId = 4;
       }
