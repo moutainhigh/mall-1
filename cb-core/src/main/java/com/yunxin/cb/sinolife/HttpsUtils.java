@@ -99,13 +99,6 @@ public class HttpsUtils {
         }
         apiUrl += param;
         String result = null;
-        HttpClient httpClient = null;
-        if (apiUrl.startsWith("https")) {
-            httpClient = HttpClients.custom().setSSLSocketFactory(createSSLConnSocketFactory())
-                    .setConnectionManager(connMgr).setDefaultRequestConfig(requestConfig).build();
-        } else {
-            httpClient = HttpClients.createDefault();
-        }
         try {
             HttpGet httpGet = new HttpGet(apiUrl);
             HttpResponse response = httpClient.execute(httpGet);
@@ -160,8 +153,10 @@ public class HttpsUtils {
             }
             httpPost.setEntity(new UrlEncodedFormEntity(pairList, Charset.forName("UTF-8")));
             response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            httpStr = EntityUtils.toString(entity, "UTF-8");
+            if(response.getStatusLine().getStatusCode()==200){
+                HttpEntity entity = response.getEntity();
+                httpStr = EntityUtils.toString(entity, "UTF-8");
+            }
         } catch (IOException e) {
             logger.error(e.getMessage());
         } finally {
