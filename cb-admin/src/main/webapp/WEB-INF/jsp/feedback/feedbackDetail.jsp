@@ -16,9 +16,36 @@
   <title>品牌详情</title>
 
   <script type="text/javascript">
-    $(document).ready(function() {
+      $(function(){
+          $('img[name="viewImg"]').click(function(){
+              var width = $(this).width();
+              if(width==200)
+              {
+                  $(this).width(600);
+                  $(this).height(600);
+              }
+              else
+              {
+                  $(this).width(200);
+                  $(this).height(200);
+              }
+          });
+      });
 
-    });
+
+
+      function imgShow(outerdiv, innerdiv, bigimg, _this){
+          debugger;
+          var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+          $('#outerdiv').attr('display','block');
+          $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+          $(outerdiv).fadeIn("fast");
+
+          $(outerdiv).click(function(){//再次点击淡出消失弹出层
+              $(this).fadeOut("fast");
+          });
+      }
+
 
 
   </script>
@@ -49,7 +76,7 @@
 
     <div class="sidebar-sec-top"></div>
 
-    <!-- ********** -->
+      <!-- ********** -->
     <!-- NEW MODULE -->
     <!-- ********** -->
 
@@ -91,7 +118,7 @@
         <div class="sidebar-module">
           <ul class="mini-list">
             <li>
-              <img src="../images/users/user-1.jpg" alt="" class="avatar"/>
+              <img src="../images/users/user-1.jpg" id="" alt="" class="avatar"/>
               <ul>
                 <li><a href="#" class="bold">Steven Watson</a></li>
                 <li><a href="#">dummyemail@mail.com</a></li>
@@ -416,7 +443,7 @@
           <fieldset>
             <legend>反馈图片</legend>
             <c:forEach items="${list}"  var="name">
-             <img src="${name}" width="120px" height="120px" />
+             <img src="${name}" name="viewImg" width="200px" height="200px" />
             </c:forEach>
           </fieldset>
           <div class="spacer-40"></div>
