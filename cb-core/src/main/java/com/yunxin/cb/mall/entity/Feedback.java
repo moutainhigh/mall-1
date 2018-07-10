@@ -47,8 +47,7 @@ public class Feedback implements Serializable {
     /**
      *
      */
-    @Max(9999999999L)
-    private int customerId;
+    private Customer customer;
     /**
      *
      */
@@ -88,15 +87,6 @@ public class Feedback implements Serializable {
         this.id = id;
     }
 
-    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 10)
-    public int getCustomerId() {
-        return this.customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 255)
     public String getContent() {
         return this.content;
@@ -127,7 +117,6 @@ public class Feedback implements Serializable {
         this.createTime = createTime;
     }
 
-    private Customer customer;
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
