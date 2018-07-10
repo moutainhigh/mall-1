@@ -60,7 +60,7 @@
       <div class="error" v-if="!$v.holder.policyholderCardNo.required && $v.holder.policyholderCardNo.$dirty">
         证件号码不能为空
       </div>
-      <div class="error" v-if="!$v.holder.policyholderCardNo.idCardVali">请输入正确的证件号码</div>
+      <div class="error" v-if="!$v.holder.policyholderCardNo.vali">请输入正确的证件号码</div>
 
       <!--<x-input title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期" v-bind:class="{'errorInput': $v.holder.policyholderCardPeroid.$error}"-->
       <!--@input="$v.holder.policyholderCardPeroid.$touch()"></x-input>-->
@@ -239,7 +239,7 @@
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryCardNo.required && $v.beneficiary1.beneficiaryCardNo.$dirty">请输入证件号
         </div>
-        <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.idCardVali">请输入正确的身份证号码</div>
+        <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.vali">请输入正确的身份证号码</div>
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary1.beneficiaryCardPeroid.$touch()"></x-input>-->
@@ -341,7 +341,7 @@
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryCardNo.required && $v.beneficiary2.beneficiaryCardNo.$dirty">请输入证件号
         </div>
-        <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.idCardVali">请输入正确的身份证号码</div>
+        <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.vali">请输入正确的身份证号码</div>
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>-->
@@ -381,7 +381,18 @@
   import storage from "../store/storage";
   import {required, minLength, maxLength, between, helpers, numeric, email} from 'vuelidate/lib/validators'
   import {dateFormat, wipeArray} from "../config/mUtils";
-  import {idCardVali, int, fixedTel, mobile} from "../admin/validate";
+  import {
+    idCardVali,
+    householdVali,
+    birthVali,
+    hkmcPassVali,
+    taiwanPassVali,
+    passportVali,
+    permanentResidenceVali,
+    int,
+    fixedTel,
+    mobile
+  } from "../admin/validate";
 
   export default {
     components: {
@@ -416,51 +427,56 @@
         submitStatus: null,
         showPositionValue: false,
         toastText: '',
-        startDate: dateFormat(new Date(), "yyyy-MM-dd")
+        startDate: dateFormat(new Date(), "yyyy-MM-dd"),
+        valiHolder: '',
+        valiBene1: '',
+        valiBene2: ''
       }
     },
-    validations: {
-      holder: {
-        policyholderName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-        policyholderCareer: {required, minLength: minLength(2), maxLength: maxLength(32)},
-        policyholderBirthday: {required},
-        policyholderCardType: {required},
-        policyholderCardNo: {required, idCardVali,},
-        policyholderCardPeroid: {required},
-        policyholderCountry: {required, maxLength: maxLength(64)},
-        policyholderHeight: {required, int, maxLength: maxLength(3)},
-        policyholderBodyWeight: {required, int, maxLength: maxLength(3)},
-        policyholderIncome: {required, int, maxLength: maxLength(6)},
-        policyholderMarriage: {required},
-        policyholderTel: {fixedTel},
-        policyholderMobile: {mobile},
-        policyholderEmail: {email},
-        holderPCD: {required},
-        policyholderAddress: {required, maxLength: maxLength(255)},
-        policyholderTaxRelated: {required}
-      },
-      beneficiary1: {
-        beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-        beneficiaryCountry: {required, maxLength: maxLength(64)},
-        beneficiaryOrder: {required},
-        beneficiaryProportion: {required, between: between(0, 100)},
-        beneficiaryBirthday: {required},
-        beneficiaryCardType: {required},
-        beneficiaryCardNo: {required, idCardVali,},
-        beneficiaryCardPeroid: {required},
-        insuredRelation: {required}
-      },
-      beneficiary2: {
-        beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-        beneficiaryCountry: {required, maxLength: maxLength(64)},
-        beneficiaryOrder: {required},
-        beneficiaryProportion: {required, between: between(0, 100)},
-        beneficiaryBirthday: {required},
-        beneficiaryCardType: {required},
-        beneficiaryCardNo: {required, idCardVali},
-        beneficiaryCardPeroid: {required},
-        insuredRelation: {required}
-      },
+    validations() {
+      return {
+        holder: {
+          policyholderName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+          policyholderCareer: {required, minLength: minLength(2), maxLength: maxLength(32)},
+          policyholderBirthday: {required},
+          policyholderCardType: {required},
+          policyholderCardNo: {required, vali: this.valiHolder},
+          policyholderCardPeroid: {required},
+          policyholderCountry: {required, maxLength: maxLength(64)},
+          policyholderHeight: {required, int, maxLength: maxLength(3)},
+          policyholderBodyWeight: {required, int, maxLength: maxLength(3)},
+          policyholderIncome: {required, int, maxLength: maxLength(6)},
+          policyholderMarriage: {required},
+          policyholderTel: {fixedTel},
+          policyholderMobile: {mobile},
+          policyholderEmail: {email},
+          holderPCD: {required},
+          policyholderAddress: {required, maxLength: maxLength(255)},
+          policyholderTaxRelated: {required}
+        },
+        beneficiary1: {
+          beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+          beneficiaryCountry: {required, maxLength: maxLength(64)},
+          beneficiaryOrder: {required},
+          beneficiaryProportion: {required, between: between(0, 100)},
+          beneficiaryBirthday: {required},
+          beneficiaryCardType: {required},
+          beneficiaryCardNo: {required, vali: this.valiBene1},
+          beneficiaryCardPeroid: {required},
+          insuredRelation: {required}
+        },
+        beneficiary2: {
+          beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+          beneficiaryCountry: {required, maxLength: maxLength(64)},
+          beneficiaryOrder: {required},
+          beneficiaryProportion: {required, between: between(0, 100)},
+          beneficiaryBirthday: {required},
+          beneficiaryCardType: {required},
+          beneficiaryCardNo: {required, vali: this.valiBene2},
+          beneficiaryCardPeroid: {required},
+          insuredRelation: {required}
+        },
+      }
     },
     methods: {
       comeBack() {
@@ -599,6 +615,40 @@
             newVal.policyholderCity = this.holder.holderPCD[1];
             newVal.policyholderDistrict = this.holder.holderPCD[2];
           }
+          if (newVal.policyholderCardType) {
+            switch (newVal.policyholderCardType[0]) {
+              case '居民身份证' :
+                this.valiHolder = idCardVali;
+                break;
+              case '居民户口簿' :
+                this.valiHolder = householdVali;
+                break;
+              case '军人身份证' :
+                this.valiHolder = idCardVali;
+                break;
+              case '港澳居民往来内地通行证' :
+                this.valiHolder = hkmcPassVali;
+                break;
+              case '出生证' :
+                this.valiHolder = birthVali;
+                break;
+              case '台湾居民往来内地通行证' :
+                this.valiHolder = taiwanPassVali;
+                break;
+              case '外国护照' :
+                this.valiHolder = passportVali;
+                break;
+              case '外国人永久居留身份证' :
+                this.valiHolder = permanentResidenceVali;
+                break;
+              case '武警身份证' :
+                this.valiHolder = idCardVali;
+                break;
+              case '其他证件' :
+                this.valiHolder = '';
+                break;
+            }
+          }
           storage.save('holder', newVal);
         },
         immediate: true,
@@ -606,6 +656,40 @@
       },
       beneficiary1: {
         handler(newVal, oldVal) {
+          if (newVal.beneficiaryCardType) {
+            switch (newVal.beneficiaryCardType[0]) {
+              case '居民身份证' :
+                this.valiBene1 = idCardVali;
+                break;
+              case '居民户口簿' :
+                this.valiBene1 = householdVali;
+                break;
+              case '军人身份证' :
+                this.valiBene1 = idCardVali;
+                break;
+              case '港澳居民往来内地通行证' :
+                this.valiBene1 = hkmcPassVali;
+                break;
+              case '出生证' :
+                this.valiBene1 = birthVali;
+                break;
+              case '台湾居民往来内地通行证' :
+                this.valiBene1 = taiwanPassVali;
+                break;
+              case '外国护照' :
+                this.valiBene1 = passportVali;
+                break;
+              case '外国人永久居留身份证' :
+                this.valiBene1 = permanentResidenceVali;
+                break;
+              case '武警身份证' :
+                this.valiBene1 = idCardVali;
+                break;
+              case '其他证件' :
+                this.valiBene1 = '';
+                break;
+            }
+          }
           storage.save('beneficiary1', newVal);
         },
         immediate: true,
@@ -613,7 +697,41 @@
       },
       beneficiary2: {
         handler(newVal, oldVal) {
-          storage.save('beneficiary2', newVal);
+          if (newVal.beneficiaryCardType) {
+            switch (newVal.beneficiaryCardType[0]) {
+              case '居民身份证' :
+                this.valiBene2 = idCardVali;
+                break;
+              case '居民户口簿' :
+                this.valiBene2 = householdVali;
+                break;
+              case '军人身份证' :
+                this.valiBene2 = idCardVali;
+                break;
+              case '港澳居民往来内地通行证' :
+                this.valiBene2 = hkmcPassVali;
+                break;
+              case '出生证' :
+                this.valiBene2 = birthVali;
+                break;
+              case '台湾居民往来内地通行证' :
+                this.valiBene2 = taiwanPassVali;
+                break;
+              case '外国护照' :
+                this.valiBene2 = passportVali;
+                break;
+              case '外国人永久居留身份证' :
+                this.valiBene2 = permanentResidenceVali;
+                break;
+              case '武警身份证' :
+                this.valiBene2 = idCardVali;
+                break;
+              case '其他证件' :
+                this.valiBene2 = '';
+                break;
+            }
+            storage.save('beneficiary2', newVal);
+          }
         },
         immediate: true,
         deep: true
