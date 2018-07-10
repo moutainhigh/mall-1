@@ -99,7 +99,7 @@
       <div class="error" v-if="!$v.insured.insuredAddress.required && $v.insured.insuredAddress.$dirty">请输入详细地址</div>
       <div class="error" v-if="!$v.insured.insuredAddress.maxLength">详细地址最多不超过255位数</div>
 
-      <popup-picker title="投保人是被保人的" placeholder="请选择投被保人的关系" :data="relates" value-text-align="left"
+      <popup-picker title="是被保人的" placeholder="请选择投被保人的关系" :data="relates" value-text-align="left"
                     v-model="insured.insuredRelation"
                     v-bind:class="{'errorInput': $v.insured.insuredRelation.$error}"></popup-picker>
       <div class="error" v-if="!$v.insured.insuredRelation.required && $v.insured.insuredRelation.$dirty">
