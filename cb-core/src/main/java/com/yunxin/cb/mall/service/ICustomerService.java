@@ -148,4 +148,6 @@ public interface ICustomerService {
     Customer updateSex(int customerId, boolean sex);
 
     Customer updateAddress(int customerId, String province, String city, String district, String address);
+
+    CustomerFriend updateFriendsProfile(CustomerFriend customerFriend);
 }
