@@ -7,6 +7,10 @@
 
 package com.yunxin.cb.mall.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.yunxin.core.web.json.deserializer.JsonTimestampDeserializer;
+import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
@@ -14,6 +18,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import java.io.Serializable;
+import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -54,6 +59,11 @@ public class Feedback implements Serializable {
      */
     @Length(max = 1024)
     private String images;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
     //columns END
 
 
@@ -105,6 +115,17 @@ public class Feedback implements Serializable {
         this.images = images;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(length = 7, nullable = false)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    @JsonDeserialize(using = JsonTimestampDeserializer.class)
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     private Customer customer;
 
