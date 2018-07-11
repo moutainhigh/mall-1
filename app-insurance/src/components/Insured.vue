@@ -62,7 +62,7 @@
 
       <div v-bind:class="{'errorInput': $v.insured.insuredIncome.$error}">
         <div class="input-ver" >
-          <x-input title="年收入(万元)" placeholder="请输入年收入" v-model="insured.insuredIncome" class="input-ver-x"
+          <x-input title="年收入" placeholder="请输入年收入" v-model="insured.insuredIncome" class="input-ver-x"
                    @input="$v.insured.insuredIncome.$touch()"></x-input>
           <div class="input-vile">万元</div>
         </div>
@@ -199,6 +199,11 @@
       },
       next() {
         this.$v.$touch();
+        if (this.insured.insuredTel === '' && this.insured.insuredMobile === '') {
+          this.showPositionValue = true;
+          this.toastText = "请填写固定电话或手机号码";
+          return false;
+        }
         if (this.$v.insured.$invalid) {
           this.submitStatus = 'ERROR';
           this.showPositionValue = true;
