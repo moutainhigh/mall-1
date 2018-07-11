@@ -39,6 +39,19 @@
            var city=  $.citySelector.getCity(${insuranceOrder.insuranceOrderPolicyholderBank.bankCity});
             $("#city").html(city);
 
+
+            var policyholderProvince= $.citySelector.getProvince(${insuranceOrder.insuranceOrderPolicyholder.policyholderProvince});
+            var policyholderCity=  $.citySelector.getCity(${insuranceOrder.insuranceOrderPolicyholder.policyholderCity});
+            var policyholderDistrict=  $.citySelector.getDistrict(${insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
+            var address=policyholderProvince+policyholderCity+policyholderDistrict;
+            $("#policyholderDistrict").html(address);
+
+            var insuredProvince= $.citySelector.getProvince(${insuranceOrder.insuranceOrderInsured.insuredProvince});
+            var insuredCity= $.citySelector.getCity(${insuranceOrder.insuranceOrderInsured.insuredCity});
+            var insuredDistrict= $.citySelector.getProvince(${insuranceOrder.insuranceOrderInsured.insuredDistrict});
+            var insuredAddress=insuredProvince+insuredCity+insuredDistrict;
+            $("#insuredDistrict").html(insuredAddress);
+
             for (var i=1;i<7;i++){
                 $('#example'+i).viewer({
                     url: 'data-original',
@@ -321,11 +334,18 @@
                                 <label><span class="asterisk"></span>  家庭住址：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
+                                <div name="policyholderDistrict" id="policyholderDistrict"></div>${insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
                             </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
+                            <div class="col-sm-2">
+                                <label><span class="asterisk"></span>  固定电话：</label>
+                            </div>
+                            <div class="col-sm-2 col-label">
+                                ${insuranceOrder.insuranceOrderPolicyholder.policyholderTel}
+                            </div>
+
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span>  涉税人身份信息：</label>
                             </div>
@@ -333,6 +353,8 @@
                                 ${insuranceOrder.insuranceOrderPolicyholder.policyholderTaxRelated}
                             </div>
                         </div>
+
+
 
 
                         <div class="spacer-30"></div>
@@ -430,7 +452,7 @@
                                 <label>家庭住址：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderInsured.insuredAddress}
+                                <div name="insuredDistrict" id="insuredDistrict"></div>${insuranceOrder.insuranceOrderInsured.insuredAddress}
                             </div>
 
                         </div>
@@ -439,9 +461,16 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
+                                <label>固定电话：</label>
+                            </div>
+                            <div class="col-sm-2 col-label">
+                                ${insuranceOrder.insuranceOrderInsured.insuredTel}
+                            </div>
+
+                            <div class="col-sm-2">
                                 <label>与投保人关系：</label>
                             </div>
-                            <div class="col-sm-8 col-label">
+                            <div class="col-sm-2 col-label">
                                 ${insuranceOrder.insuranceOrderInsured.insuredRelation}
                             </div>
                         </div>
@@ -712,21 +741,43 @@
                             <div class="col-sm-8">
                                 <table id="specTable" class="table table-bordered table-striped">
                                     <thead id="attribute-table-th">
+                                    <th scope="col" width="700">问题及健康告知</th>
+                                    <th scope="col"  width="100">被保人</th>
+                                    <th scope="col">被保人备注</th>
+                                    <th scope="col"  width="100">投保人</th>
+                                    <th scope="col">投保人备注</th>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${matterList}" var="matterLists">
                                         <tr>
                                             <c:choose>
                                                 <c:when test="${matterLists.no=='0'}">
-                                                    <th scope="col" colspan="2">${matterLists.matter}</th>
+                                                    <th scope="col" colspan="5">${matterLists.matter}</th>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <th scope="col" >${matterLists.matter}</th>
-                                                    <th scope="col" width="100">
-                                                        <c:if test="${matterLists.o_value==0}">否</c:if>
-                                                        <c:if test="${matterLists.o_value==1}">是</c:if>
-                                                    </th>
-
+                                                    <c:choose>
+                                                        <c:when test="${matterLists.no=='1'}">
+                                                            <th scope="col" colspan="2">${matterLists.matter}</th>
+                                                            <th scope="col" colspan="3">${matterLists.insured_remark}</th>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <th scope="col" >${matterLists.matter}</th>
+                                                            <th scope="col" width="100">
+                                                                <c:if test="${matterLists.insured=='false'}">否</c:if>
+                                                                <c:if test="${matterLists.insured=='true'}">是</c:if>
+                                                            </th>
+                                                            <th scope="col">
+                                                                    ${matterLists.insured_remark}
+                                                            </th>
+                                                            <th scope="col" width="100">
+                                                                <c:if test="${matterLists.policy=='false'}">否</c:if>
+                                                                <c:if test="${matterLists.policy=='true'}">是</c:if>
+                                                            </th>
+                                                            <th scope="col">
+                                                                    ${matterLists.policy_remark}
+                                                            </th>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </c:otherwise>
                                             </c:choose>
 

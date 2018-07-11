@@ -160,6 +160,7 @@
 <script>
 
     function checkedNodeIds(nodes, checkedNodes) {
+        debugger;
         for (var i = 0; i < nodes.length; i++) {
             if (nodes[i].checked) {
                 var id = nodes[i].id;
@@ -179,6 +180,7 @@
     }
 
     function onCheck() {
+
         var checkedNodes = [],
                 treeView = $("#treeview").data("kendoTreeView"),
                 message;

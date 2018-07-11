@@ -18,6 +18,17 @@
             });
         });
 
+        function checkUser(){
+            debugger;
+            var chk=$('input[type=checkbox]:checked').length;
+            if(chk <=2  ){
+                bootbox.alert("用户角色不能为空");
+                return false;
+            }else{
+                return true;
+                $('#validateSubmitForm').submit();
+            }
+        }
     </script>
 
 </head>
@@ -76,7 +87,7 @@
                 </div>
             </div>
             <div class="inner-padding">
-                <form:form id="validateSubmitForm" action="editUser.do" cssClass="form-horizontal" method="post" commandName="user">
+                <form:form id="validateSubmitForm" action="editUser.do" cssClass="form-horizontal" method="post" commandName="user" >
                     <form:hidden path="userId"/>
 
                     <fieldset>
@@ -118,7 +129,7 @@
                                 <label><span class="asterisk">*</span>职务：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control" path="position" maxlength="64"/>
+                                <form:input cssClass="form-control validate[required,minSize[2]]" path="position" maxlength="64"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>性别：</label>
@@ -164,7 +175,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
-                                    <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
+                                    <button id="saveBtn" class="btn btn-default"  onclick = "checkUser();"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
                                     <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>

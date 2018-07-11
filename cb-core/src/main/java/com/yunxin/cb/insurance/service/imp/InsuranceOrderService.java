@@ -4,6 +4,7 @@ import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
+import com.yunxin.cb.util.CodeGenerator;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private InsuranceOrderPolicyholderDao insuranceOrderPolicyholderDao;
     @Resource
     private InsuranceInformedMatterDao insuranceInformedMatterDao;
+    @Resource
+    private InsuranceOrderOffsiteDao insuranceOrderOffsiteDao;
 
 
 
@@ -52,7 +55,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Override
     @Transactional
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
-        insuranceOrder.setOrderCode("INS2018070600105");
+        insuranceOrder.setOrderCode(CodeGenerator.getInsuranceCode());
         insuranceOrder.setCreateTime(new Date());
 
         InsuranceOrderInsured insuranceOrderInsured= insuranceOrder.getInsuranceOrderInsured();
@@ -65,8 +68,10 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
         insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
         insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
+        if(insuranceOrder.getInsuranceOrderOffsite() != null){
+            insuranceOrderOffsiteDao.save(insuranceOrder.getInsuranceOrderOffsite());
+        }
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
-        insuranceOrder.setOrderCode(insuranceOrder.getOrderCode()+insuranceOrder.getOrderId());
         insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
 
         Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
@@ -128,26 +133,33 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                         put("no","0");
                                     }
                                 });
-                                groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
+                                 groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
                             }
                         }
                         add(new HashMap<String,Object>(){
                             {
                                 if(insuranceInformedMatter.getMatterType()==0){
                                     put("matter",insuranceInformedMatter.getMatterDescription());
-                                    put("o_value",list.getCollectValues());
-                                    put("no","1");
+                                   // put("o_value",list.getCollectValues());
+                                    put("insured",list.getInsuredResult());
+                                    put("insured_remark",list.getInsuredRemark());
+                                    put("policy",list.getPolicyholderResult());
+                                    put("policy_remark",list.getPolicyholderRemark());
+                                    put("no","2");
                                 }else{
                                     String description=insuranceInformedMatter.getMatterDescription();
-                                    if(list.getCollectValues().contains("[")){
                                         String[] str={"{0}","{1}","{2}","{3}"};
-                                        String[] strValue=list.getCollectValues().replace("[","").replace("]","").replace("\"","") .split(",");
-
-                                        for (int j=0;j<strValue.length;j++)
-                                            description = description.replace(str[j],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;"+strValue[j]+"&nbsp;&nbsp;</p>");
-                                    }
+                                        if(null!=list.getCollectValues()&&!"".equals(list.getCollectValues())){
+                                            String[] strValue=list.getCollectValues().replace("[","").replace("]","").replace("\"","") .split(",");
+                                            for (int j=0;j<strValue.length;j++)
+                                                description = description.replace(str[j],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;"+strValue[j]+"&nbsp;&nbsp;</p>");
+                                        }else{
+                                            for (int i=0;i<str.length;i++)
+                                                description = description.replace(str[i],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;</p>");
+                                        }
                                     put("matter",description);
-                                    put("no","0");
+                                    put("insured_remark",list.getInsuredRemark());
+                                    put("no","1");
                                 }
 
                             }
