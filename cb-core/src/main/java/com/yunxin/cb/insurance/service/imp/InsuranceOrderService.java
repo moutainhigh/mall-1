@@ -128,7 +128,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                         put("no","0");
                                     }
                                 });
-                                groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
+                                 groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
                             }
                         }
                         add(new HashMap<String,Object>(){

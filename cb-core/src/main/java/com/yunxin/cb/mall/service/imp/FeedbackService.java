@@ -3,23 +3,16 @@
  */
 package com.yunxin.cb.mall.service.imp;
 
-import com.yunxin.cb.mall.dao.BrandDao;
 import com.yunxin.cb.mall.dao.FeedbackDao;
-import com.yunxin.cb.mall.entity.Brand;
-import com.yunxin.cb.mall.entity.Brand_;
 import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.entity.Feedback_;
-import com.yunxin.cb.mall.service.IBrandService;
 import com.yunxin.cb.mall.service.IFeedbackService;
-import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -46,6 +39,11 @@ public class FeedbackService implements IFeedbackService {
         return feedbackDao.save(Feedback);
     }
 
+    /**
+     * 获取feeback的分页信息
+     * @param queryRequest
+     * @return
+     */
     public Page<Feedback> pageFeedback(final PageSpecification<Feedback> queryRequest){
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         List<PageSpecification.FilterDescriptor> list=queryRequest.getFilter().getFilters();
@@ -80,6 +78,11 @@ public class FeedbackService implements IFeedbackService {
     }
 
 
+    /**
+     * 根据id获取feedback详情信息
+     * @param id
+     * @return
+     */
     public Feedback getFeedbackByid(int id){
         Feedback feedback=feedbackDao.findFeedbackByid(id);
         return feedback;

@@ -178,11 +178,11 @@
                             <kendo:grid-column title="真实姓名" field="realName" width="80"/>
                             <kendo:grid-column title="手机号码" field="mobile" width="80"/>
                             <kendo:grid-column title="邮箱" field="email" width="80"/>
-                            <kendo:grid-column title="性别" field="sex" width="80" template="#= sex ? '男' : '女' #"/>
-                            <kendo:grid-column title="角色" field="roles" width="120" template="#=formatRoles(roles)#"/>
-                            <kendo:grid-column title="创建时间" field="createTime" width="130" format="{0:yyyy-MM-dd HH:mm}"/>
-                            <kendo:grid-column title="最后登录时间" field="lastTime" width="130" format="{0:yyyy-MM-dd HH:mm}"/>
-                            <kendo:grid-column title="启用" field="enabled" width="80" template="#= enabled ? '是' : '否' #"/>
+                            <kendo:grid-column title="性别" field="sex" width="80" template="#= sex ? '男' : '女' #" filterable="false" />
+                            <kendo:grid-column title="角色" field="roles" width="120" template="#=formatRoles(roles)#" filterable="false" />
+                            <kendo:grid-column title="创建时间" field="createTime" width="130" format="{0:yyyy-MM-dd HH:mm}" filterable="false" />
+                            <kendo:grid-column title="最后登录时间" field="lastTime" width="130" format="{0:yyyy-MM-dd HH:mm}" filterable="false" />
+                            <kendo:grid-column title="状态" field="enabled" width="100px" template="#= enabled ? '启用' : '停用' #" filterable="false" />
                             <kendo:grid-column title="备注" field="remark" width="150" filterable="false"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
