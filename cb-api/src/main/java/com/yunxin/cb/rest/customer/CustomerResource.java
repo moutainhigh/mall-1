@@ -122,19 +122,19 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "修改用户所在地")
     @PostMapping(value = "updateAddress")
-    public ResponseResult updateAddress(@RequestParam("province") String province,@RequestParam("city") String city,
-                                        @RequestParam("district") String district,@RequestParam(value = "address", required = false) String address, @ModelAttribute("customerId") int customerId) {
+    public ResponseResult updateAddress(@RequestParam("province") String province, @RequestParam("city") String city,
+                                        @RequestParam(value = "district", required = false) String district, @RequestParam(value = "address", required = false) String address, @ModelAttribute("customerId") int customerId) {
         Customer customer = customerService.updateAddress(customerId, province, city, district, address);
         return new ResponseResult(Result.SUCCESS);
     }
 
     @ApiOperation(value = "修改手机号")
     @PostMapping(value = "updateMobile")
-    public ResponseResult updateMobile(String moblie,String code, @ModelAttribute("customerId") int customerId) {
+    public ResponseResult updateMobile(String moblie, String code, @ModelAttribute("customerId") int customerId) {
         //校验验证码
         VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(moblie);
         //验证码不存在
-        if (verificationCode == null){
+        if (verificationCode == null) {
             return new ResponseResult(Result.FAILURE, "验证码不存在");
         }
         //验证码超过5分钟，失效
