@@ -308,7 +308,7 @@
         <div class="pull-left">
           <ul class="breadcrumb">
             <li><a href="#">首页 </a></li>
-            <li><a href="#">反馈信息</a></li>
+            <li><a href="#">反馈信息 </a></li>
             <li><a href="#">反馈管理</a></li>
             <li class="active">反馈详情</li>
           </ul>

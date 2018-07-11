@@ -69,6 +69,10 @@ public class InsuranceInformedMatter implements Serializable {
     @Max(9999999999L)
     private int enabled;
     /**
+     * 类型
+     */
+    private int matterType;
+    /**
      * 所属组
      */
     private InsuranceInformedMatterGroup matterGroup;
@@ -155,6 +159,14 @@ public class InsuranceInformedMatter implements Serializable {
 
     public void setInsuranceOrderInformedMatters(Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatter) {
         this.insuranceOrderInformedMatters = insuranceOrderInformedMatter;
+    }
+    @Column(length = 10)
+    public int getMatterType() {
+        return matterType;
+    }
+
+    public void setMatterType(int matterType) {
+        this.matterType = matterType;
     }
 
     @ManyToMany(targetEntity = InsuranceProduct.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)

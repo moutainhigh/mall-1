@@ -187,10 +187,13 @@
     ]
   },
   {
-    "name": "保单管理", "code": "14", "type": "MENU", "cssClass": "fa fa-phone", "value": "concent", "childrenCssClass": "children",
+    "name": "保单管理", "code": "15", "type": "MENU", "cssClass": "fa fa-phone", "value": "concent", "childrenCssClass": "children",
     "children": [
       {
-        "name": "保单列表", "code": "141", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/insurances.do"
+        "name": "保单列表", "code": "143", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/insurances.do"
+      },
+      {
+        "name": "打印测试", "code": "144", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/prints.do"
       }
     ]
   },

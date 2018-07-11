@@ -269,7 +269,7 @@
           this.toastText = "请上传身份证背面图片";
           return false;
         }
-        this.$router.push("payment");
+        this.$router.push("differentPlaces");
       },
     },
     created: function () {

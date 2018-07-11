@@ -6,6 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
   <title>保单列表</title>
   <script type="application/javascript">
 
@@ -34,6 +35,12 @@
               case "ON_SURRENDER":
                   return "已退保";
           }
+      }
+      function excelInsuranceOrder(){
+          window.location.href="excelInsuranceOrder.do";
+      };
+      function daYin(){
+          $("#prints").jqprint();
       }
   </script>
 </head>
@@ -202,7 +209,7 @@
 
           </header>
         </div>
-        <div class="table-wrapper">
+        <div class="table-wrapper" id="prints">
           <kendo:grid name="grid" pageable="false" sortable="true" selectable="true" height="450"  filterable="true">
             <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="10"/>
             <kendo:grid-filterable extra="false">
