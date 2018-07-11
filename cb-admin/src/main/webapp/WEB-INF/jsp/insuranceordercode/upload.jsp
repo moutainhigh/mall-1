@@ -67,12 +67,6 @@
       <!-- End #header-main-top -->
       <div class="header-main-bottom">
         <div class="pull-left">
-          <ul class="breadcrumb">
-            <li><a href="#">首页</a></li>
-            <li><a href="#">商品管理</a></li>
-            <li><a href="#">品牌管理</a></li>
-            <li class="active">新增品牌</li>
-          </ul>
           <!-- End .breadcrumb -->
         </div>
         <div class="pull-right">

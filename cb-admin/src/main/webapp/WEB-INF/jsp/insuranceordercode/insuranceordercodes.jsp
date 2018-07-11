@@ -49,8 +49,8 @@
             <div class="pull-left">
                 <ul class="breadcrumb">
                     <li><a href="#">首页</a></li>
-                    <li><a href="#">反馈管理</a></li>
-                    <li class="active"><a href="#">用户反馈管理</a></li>
+                    <li><a href="#">保单管理</a></li>
+                    <li class="active"><a href="#">保险合同编号管理</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -64,7 +64,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>用户反馈管理</h2>
+                    <h2>保险合同编号管理</h2>
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
