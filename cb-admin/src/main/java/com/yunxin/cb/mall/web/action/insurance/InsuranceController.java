@@ -91,7 +91,10 @@ public class InsuranceController {
         return "redirect:insurances.do";
     }
     @RequestMapping(method = RequestMethod.GET)
-    public String prints() {
-        return "insurance/prints";
+    public String prints(ModelMap modelMap) {
+        InsuranceOrder InsuranceOrder= iInsuranceOrderService.getInsuranceOrderDetailById(27);
+        modelMap.addAttribute("insuranceOrder",InsuranceOrder);
+        modelMap.addAttribute("matterList",iInsuranceOrderService.findMatter(27));
+        return "insurance/orderDetailPrint";
     }
 }

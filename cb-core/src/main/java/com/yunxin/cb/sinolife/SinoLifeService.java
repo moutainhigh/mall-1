@@ -26,6 +26,7 @@ public class SinoLifeService {
     public void submitOrder(InsuranceOrder insuranceOrder) throws Exception{
         //1.进入登录页，获取COOKIE
         Map<String, String> cookies = getCookie();
+        cookies = getAjax();
         //2.获取验证码
         byte[] data = JsoupDoloadPicture.downloadImg("https://www.sino-life.com/elogin/getVerifyCode.do", cookies);
         String code = RuoKuai.createByData("107803","6cd4293bae4c4522ad83b5b56d19ad00","3040","tanggangyi","tgy123456",data);
@@ -48,7 +49,7 @@ public class SinoLifeService {
         connect.header("User-Agent",
                 "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36");
         // 携带登陆信息
-        connect.data("toURL", "http://www.sino-life.com/eportal/index.do")
+        connect.data("toURL", "https://www.sino-life.com/eportal/index.do")
                 .data("username", account)
                 .data("password", pwd)
                 .data("code", code);
@@ -92,6 +93,35 @@ public class SinoLifeService {
         }
         return cookies;
     }
+    /**
+     * 获取登录信息
+     * 主要就是访问一下主页面，获取一个cookie
+     */
+    public Map<String, String> getAjax() throws Exception {
+        String url = "https://www.sino-life.com/elogin/Ajax.sso?format=json&callback=jQuery17208830859364525903_1531230048758&SF_OP=LogoutSsoSession&_=1531230048781";
+        Connection connect = Jsoup.connect(url);
+        // 伪造请求头
+        connect.header("Accept", "application/json, text/javascript, */*; q=0.01").header("Accept-Encoding",
+                "gzip, deflate");
+        connect.header("Accept-Language", "zh-CN,zh;q=0.9").header("Connection", "keep-alive");
+        connect.header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        connect.header("Host", "www.sino-life.com").header("Referer", "http://www.sino-life.com");
+        connect.header("User-Agent",
+                "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36")
+                .header("X-Requested-With", "XMLHttpRequest");
+
+        // 请求url获取响应信息
+        Connection.Response res = connect.ignoreContentType(true).method(Connection.Method.POST).execute();// 执行请求
+        // 获取返回的cookie
+        Map<String, String> cookies = res.cookies();
+        logger.info("cookie info:");
+        for (Map.Entry<String, String> entry : cookies.entrySet()) {
+            logger.info(entry.getKey() + "-" + entry.getValue());
+        }
+        System.out.println(res.body());
+        return cookies;
+    }
+
 
 
 }

@@ -70,9 +70,6 @@ public class InsuranceOrderInformedMatter implements Serializable {
      */
     private String policyholderRemark;
 
-    //columns END
-
-
     public InsuranceOrderInformedMatter() {
     }
 
@@ -138,8 +135,6 @@ public class InsuranceOrderInformedMatter implements Serializable {
     public void setPolicyholderRemark(String policyholderRemark) {
         this.policyholderRemark = policyholderRemark;
     }
-
-
 
     public void setInsuranceInformedMatter(InsuranceInformedMatter insuranceInformedMatter) {
         this.insuranceInformedMatter = insuranceInformedMatter;
