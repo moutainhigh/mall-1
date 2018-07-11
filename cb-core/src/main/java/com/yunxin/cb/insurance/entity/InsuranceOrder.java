@@ -85,6 +85,10 @@ public class InsuranceOrder implements Serializable {
     @NotNull
     private InsuranceOrderPolicyholderBank insuranceOrderPolicyholderBank;
     /**
+     * 异地投保
+     */
+    private InsuranceOrderOffsite insuranceOrderOffsite;
+    /**
      * 是否法定收益人
      */
     @NotNull
@@ -219,6 +223,17 @@ public class InsuranceOrder implements Serializable {
         return insuranceOrderPolicyholderBank;
     }
 
+    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "OFFSITE_ID", nullable = false, insertable = true, updatable = true)
+    })
+    public InsuranceOrderOffsite getInsuranceOrderOffsite() {
+        return insuranceOrderOffsite;
+    }
+
+    public void setInsuranceOrderOffsite(InsuranceOrderOffsite insuranceOrderOffsite) {
+        this.insuranceOrderOffsite = insuranceOrderOffsite;
+    }
 
     public void setInsuranceProductPrice(InsuranceProductPrice insuranceProductPrice) {
         this.insuranceProductPrice = insuranceProductPrice;

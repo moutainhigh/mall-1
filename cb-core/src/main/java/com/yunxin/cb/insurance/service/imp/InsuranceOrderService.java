@@ -4,6 +4,7 @@ import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
+import com.yunxin.cb.util.CodeGenerator;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private InsuranceOrderPolicyholderDao insuranceOrderPolicyholderDao;
     @Resource
     private InsuranceInformedMatterDao insuranceInformedMatterDao;
+    @Resource
+    private InsuranceOrderOffsiteDao insuranceOrderOffsiteDao;
 
 
 
@@ -52,7 +55,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Override
     @Transactional
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
-        insuranceOrder.setOrderCode("INS2018070600105");
+        insuranceOrder.setOrderCode(CodeGenerator.getInsuranceCode());
         insuranceOrder.setCreateTime(new Date());
 
         InsuranceOrderInsured insuranceOrderInsured= insuranceOrder.getInsuranceOrderInsured();
@@ -65,8 +68,10 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
         insuranceOrderPolicyholderBankDao.save(insuranceOrder.getInsuranceOrderPolicyholderBank());
         insuranceOrderPolicyholderDao.save(insuranceOrder.getInsuranceOrderPolicyholder());
+        if(insuranceOrder.getInsuranceOrderOffsite() != null){
+            insuranceOrderOffsiteDao.save(insuranceOrder.getInsuranceOrderOffsite());
+        }
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
-        insuranceOrder.setOrderCode(insuranceOrder.getOrderCode()+insuranceOrder.getOrderId());
         insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
 
         Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
