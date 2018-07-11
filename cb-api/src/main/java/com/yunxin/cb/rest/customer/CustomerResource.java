@@ -83,9 +83,10 @@ public class CustomerResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
+
     @ApiOperation(value = "修改好友备注")
-    @GetMapping(value = "updateFriendsProfile")
-    public ResponseResult updateFriendsProfile(CustomerFriend customerFriend, @ModelAttribute("customerId") int customerId) {
+    @PostMapping(value = "updateFriendsProfile")
+    public ResponseResult updateFriendsProfile(@RequestBody CustomerFriend customerFriend, @ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerService.updateFriendsProfile(customerFriend));
     }
 
@@ -151,8 +152,11 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "提交反馈")
     @PostMapping(value = "addFeedback")
-    public ResponseResult addFeedback(Feedback feedback, @ModelAttribute("customerId") int customerId) {
-
+    public ResponseResult addFeedback(@RequestBody Feedback feedback, @ModelAttribute("customerId") int customerId) {
+        Customer customer=new Customer();
+        customer.setCustomerId(customerId);
+        feedback.setCustomer(customer);
+        feedback.setCreateTime(new Date());
         return new ResponseResult(feedbackService.addFeedback(feedback));
     }
 
