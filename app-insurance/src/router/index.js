@@ -11,6 +11,7 @@ import Payment from '../components/Payment'
 import Policy from '../components/Policy'
 import myOrders from '../components/myOrders'
 import Insured from '../components/Insured'
+import DifferentPlaces from '../components/DifferentPlaces'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -62,6 +63,10 @@ export default new Router({
       path: '/insured',
       name: 'insured',
       component: Insured
+    }, {
+      path: '/differentPlaces',
+      name: 'differentPlaces',
+      component: DifferentPlaces
     }
   ]
 })

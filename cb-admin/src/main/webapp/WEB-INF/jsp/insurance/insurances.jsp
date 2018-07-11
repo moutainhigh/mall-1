@@ -193,8 +193,6 @@
               <div class="toolbar-field">
                 <button type="button" class="btn btn-default" onclick="reloadGridFilters('grid')"><i class="fa fa-search"></i>查询</button>
                 &nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-default" onclick="daYin()">打印</button>
-                &nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-default" onclick="clearFilters('grid')">清空</button>
               </div>
             </div>

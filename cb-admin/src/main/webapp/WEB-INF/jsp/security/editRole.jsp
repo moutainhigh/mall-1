@@ -185,6 +185,7 @@
     }
 
     function onCheck() {
+        debugger;
         var checkedNodes = [],
                 treeView = $("#treeview").data("kendoTreeView"),
                 message;
