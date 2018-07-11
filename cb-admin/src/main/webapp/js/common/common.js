@@ -83,7 +83,7 @@ function reloadGridFilters(gridName) {
     $(".grid-filter").each(function (index) {
         var filterField = $(this).data("filter");
         var filterValue = $.trim($(this).val());
-        if (filterValue != "0" && filterValue != "") {
+        if (filterValue != "") {
             currentFilters.push({
                 field: filterField,
                 operator: $(this).data("operator"),

@@ -426,7 +426,7 @@
           <fieldset>
             <legend>反馈图片</legend>
             <c:forEach items="${list}"  var="name">
-             <img src="${name}" name="viewImg" width="200px" height="200px" />
+             <img data-original="${name}" src="${name}"   name="viewImg" width="200px" height="200px" />
             </c:forEach>
           </fieldset>
           <div class="spacer-40"></div>
