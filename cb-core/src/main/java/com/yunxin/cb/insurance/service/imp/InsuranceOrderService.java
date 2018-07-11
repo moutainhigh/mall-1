@@ -148,13 +148,15 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     put("no","2");
                                 }else{
                                     String description=insuranceInformedMatter.getMatterDescription();
-                                    //if(list.getCollectValues().contains("[")){
                                         String[] str={"{0}","{1}","{2}","{3}"};
-                                        String[] strValue=list.getCollectValues().replace("[","").replace("]","").replace("\"","") .split(",");
-
-                                        for (int j=0;j<strValue.length;j++)
-                                            description = description.replace(str[j],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;"+strValue[j]+"&nbsp;&nbsp;</p>");
-                                    //}else
+                                        if(null!=list.getCollectValues()&&!"".equals(list.getCollectValues())){
+                                            String[] strValue=list.getCollectValues().replace("[","").replace("]","").replace("\"","") .split(",");
+                                            for (int j=0;j<strValue.length;j++)
+                                                description = description.replace(str[j],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;"+strValue[j]+"&nbsp;&nbsp;</p>");
+                                        }else{
+                                            for (int i=0;i<str.length;i++)
+                                                description = description.replace(str[i],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;</p>");
+                                        }
                                     put("matter",description);
                                     put("insured_remark",list.getInsuredRemark());
                                     put("no","1");
