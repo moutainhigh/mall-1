@@ -7,6 +7,7 @@ import io.rong.methods.message.Message;
 import io.rong.methods.user.User;
 import io.rong.models.Result;
 import io.rong.models.message.SystemMessage;
+import io.rong.models.response.BlackListResult;
 import io.rong.models.response.ResponseResult;
 import io.rong.models.response.TokenResult;
 import io.rong.models.user.UserModel;
@@ -78,5 +79,50 @@ public class RongCloudService {
         if(result.getCode() != 200){
             throw new Exception(result.getMsg());
         }
+    }
+
+    public void addBlacklist() throws Exception {
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+
+        UserModel blackUser = new UserModel().setId("hdsjGB89");
+        UserModel[] blacklist = {blackUser};
+        UserModel user = new UserModel()
+                .setId("hdsjGB89")
+                .setBlacklist(blacklist);
+
+        Result result = (Result)rongCloud.user.blackList.add(user);
+
+
+        if(result.getCode() != 200){
+            throw new Exception(result.getMsg());
+        }
+    }
+
+    public void removeBlacklist() throws Exception {
+
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        UserModel blackUser = new UserModel().setId("hdsjGB89");
+        UserModel[] blacklist = {blackUser};
+        UserModel user = new UserModel()
+                .setId("hdsjGB89")
+                .setBlacklist(blacklist);
+        Result result = (Result)rongCloud.user.blackList.remove(user);
+        System.out.println("removeBlacklist:  " + result.toString());
+
+        if(result.getCode() != 200){
+            throw new Exception(result.getMsg());
+        }
+    }
+
+    public void getBlacklist() throws Exception {
+
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        UserModel user = new UserModel().setId("hdsjGB89");
+
+        BlackListResult result = rongCloud.user.blackList.getList(user);
+        System.out.println("queryBlacklist:  " + result.toString());
+
+
+
     }
 }
