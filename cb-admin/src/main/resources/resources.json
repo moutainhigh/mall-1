@@ -194,6 +194,9 @@
       },
       {
         "name": "打印测试", "code": "144", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/prints.do"
+      },
+      {
+        "name": "保险合同编号", "code": "145", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceordercode/insuranceordercodes.do"
       }
     ]
   },

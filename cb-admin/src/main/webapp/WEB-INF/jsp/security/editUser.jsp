@@ -19,7 +19,6 @@
         });
 
         function checkUser(){
-            debugger;
             var chk=$('input[type=checkbox]:checked').length;
             if(chk <=2  ){
                 bootbox.alert("用户角色不能为空");
