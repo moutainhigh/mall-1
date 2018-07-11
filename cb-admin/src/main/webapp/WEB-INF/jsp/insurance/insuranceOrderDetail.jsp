@@ -448,10 +448,10 @@
 
                         <div class="spacer-30"></div>
                         <hr>
-                        <div class="spacer-30">受益人信息  ${insuranceOrder.legalBeneficiary}
+                        <div class="spacer-30">受益人信息
                         </div>
                         <c:choose>
-                            <c:when test="${insuranceOrder.insuranceOrderBeneficiarys=='true'}">
+                            <c:when test="${insuranceOrder.legalBeneficiary=='true'}">
                                 <div class="row">
                                     <div class="col-sm-2">
                                         <label><span class="asterisk"></span> 受益人为法定受益人</label>

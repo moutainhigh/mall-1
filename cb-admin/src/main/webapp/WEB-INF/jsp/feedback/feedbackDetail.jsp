@@ -13,14 +13,24 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>品牌详情</title>
+  <title>反馈详情</title>
 
   <script type="text/javascript">
-    $(document).ready(function() {
-
-    });
-
-
+      $(function(){
+          $('img[name="viewImg"]').click(function(){
+              var width = $(this).width();
+              if(width==200)
+              {
+                  $(this).width(600);
+                  $(this).height(600);
+              }
+              else
+              {
+                  $(this).width(200);
+                  $(this).height(200);
+              }
+          });
+      });
   </script>
 </head>
 <body>
@@ -49,7 +59,7 @@
 
     <div class="sidebar-sec-top"></div>
 
-    <!-- ********** -->
+      <!-- ********** -->
     <!-- NEW MODULE -->
     <!-- ********** -->
 
@@ -91,7 +101,7 @@
         <div class="sidebar-module">
           <ul class="mini-list">
             <li>
-              <img src="../images/users/user-1.jpg" alt="" class="avatar"/>
+              <img src="../images/users/user-1.jpg" id="" alt="" class="avatar"/>
               <ul>
                 <li><a href="#" class="bold">Steven Watson</a></li>
                 <li><a href="#">dummyemail@mail.com</a></li>
@@ -297,7 +307,7 @@
       <div class="header-main-bottom">
         <div class="pull-left">
           <ul class="breadcrumb">
-            <li><a href="#">首页</a></li>
+            <li><a href="#">首页 </a></li>
             <li><a href="#">反馈信息</a></li>
             <li><a href="#">反馈管理</a></li>
             <li class="active">反馈详情</li>
@@ -416,7 +426,7 @@
           <fieldset>
             <legend>反馈图片</legend>
             <c:forEach items="${list}"  var="name">
-             <img src="${name}" width="120px" height="120px" />
+             <img src="${name}" name="viewImg" width="200px" height="200px" />
             </c:forEach>
           </fieldset>
           <div class="spacer-40"></div>

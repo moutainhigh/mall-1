@@ -17,14 +17,12 @@
         <div class="i-input-item">性别</div>
         <div class="i-input-radio">
           <div class="radio-div" @click="holder.policyholderGender = true">
-            <span>男</span>
-            <img v-if="holder.policyholderGender" src="../assets/img/case-on.png"/>
-            <img v-if="!holder.policyholderGender" src="../assets/img/case-off.png"/>
+            <button v-if="holder.policyholderGender" class="check-on">男</button>
+            <button v-if="!holder.policyholderGender" class="check-off">男</button>
           </div>
           <div class="radio-div" @click="holder.policyholderGender = false">
-            <span>女</span>
-            <img v-if="!holder.policyholderGender" src="../assets/img/case-on.png"/>
-            <img v-if="holder.policyholderGender" src="../assets/img/case-off.png"/>
+            <button v-if="!holder.policyholderGender" class="check-on" style="margin-left: 15px">女</button>
+            <button v-if="holder.policyholderGender" class="check-off" style="margin-left: 15px">女</button>
           </div>
         </div>
       </div>
@@ -81,7 +79,7 @@
 
 
       <div v-bind:class="{'errorInput': $v.holder.policyholderHeight.$error}">
-        <div class="input-ver" >
+        <div class="input-ver">
           <x-input title="身高" v-model="holder.policyholderHeight" placeholder="请输入身高"
                    class="input-ver-x"
                    @input="$v.holder.policyholderHeight.$touch()"></x-input>
@@ -94,7 +92,7 @@
       <div class="error" v-if="!$v.holder.policyholderHeight.maxLength">最大不超过3位数</div>
 
       <div v-bind:class="{'errorInput': $v.holder.policyholderBodyWeight.$error}">
-        <div class="input-ver" >
+        <div class="input-ver">
           <x-input title="体重" v-model="holder.policyholderBodyWeight" placeholder="请输入体重" class="input-ver-x"
                    @input="$v.holder.policyholderBodyWeight.$touch()"></x-input>
           <div class="input-vile">kg</div>
@@ -108,7 +106,7 @@
       <div class="error" v-if="!$v.holder.policyholderBodyWeight.maxLength">最大不超过3位数</div>
 
       <div v-bind:class="{'errorInput': $v.holder.policyholderIncome.$error}">
-        <div class="input-ver" >
+        <div class="input-ver">
           <x-input title="年收入" v-model="holder.policyholderIncome" placeholder="请输入年收入" class="input-ver-x"
                    @input="$v.holder.policyholderIncome.$touch()"></x-input>
           <div class="input-vile">万元</div>
@@ -123,7 +121,7 @@
       <popup-picker title="婚姻状况" v-model="holder.policyholderMarriage" placeholder="请选择婚姻状况" :data="maritalStatus"
                     value-text-align="left"
                     v-bind:class="{'errorInput': $v.holder.policyholderMarriage.$error}"></popup-picker>
-      <div class="error" v-if="!$v.holder.policyholderMarriage.required && $v.holder.policyholderIncome.$dirty">
+      <div class="error" v-if="!$v.holder.policyholderMarriage.required && $v.holder.policyholderMarriage.$dirty">
         婚姻状况不能为空
       </div>
       <div style="background-color: #f5f5f5">
@@ -152,17 +150,21 @@
         与被保人同一地址
       </div>
 
-      <x-address v-if="!holder.unifyAddr" title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="holder.holderPCD"
-                 value-text-align="left" v-bind:class="{'errorInput': $v.holder.holderPCD.$error}"></x-address>
-      <div class="error" v-if="!$v.holder.holderPCD.required && $v.holder.holderPCD.$dirty">家庭住址不能为空</div>
+      <div v-if="!this.holder.unifyAddr">
+        <x-address v-if="!holder.unifyAddr" title="家庭住址" placeholder="请选择地址" :list="addressData"
+                   v-model="holder.holderPCD"
+                   value-text-align="left" v-bind:class="{'errorInput': $v.holder.holderPCD.$error}"></x-address>
+        <div class="error" v-if="!$v.holder.holderPCD.required && $v.holder.holderPCD.$dirty">家庭住址不能为空</div>
 
-      <x-input v-if="!holder.unifyAddr" title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"
-               v-bind:class="{'errorInput': $v.holder.policyholderAddress.$error}"
-               @input="$v.holder.policyholderAddress.$touch()"></x-input>
-      <div class="error" v-if="!$v.holder.policyholderAddress.required && $v.holder.policyholderAddress.$dirty">
-        请输入详细地址
+        <x-input v-if="!holder.unifyAddr" title="详细地址" v-model="holder.policyholderAddress" placeholder="请输入详细地址"
+                 v-bind:class="{'errorInput': $v.holder.policyholderAddress.$error && !holder.unifyAddr}"
+                 @input="$v.holder.policyholderAddress.$touch()"></x-input>
+        <div class="error"
+             v-if="!$v.holder.policyholderAddress.required && $v.holder.policyholderAddress.$dirty && !holder.unifyAddr">
+          请输入详细地址
+        </div>
+        <div class="error" v-if="!$v.holder.policyholderAddress.maxLength">详细地址最多不超过255位数</div>
       </div>
-      <div class="error" v-if="!$v.holder.policyholderAddress.maxLength">详细地址最多不超过255位数</div>
 
       <popup-picker title="涉税人身份信息" v-model="holder.policyholderTaxRelated" placeholder="请选择涉税人信息" :data="taxRelates"
                     value-text-align="left"
@@ -179,8 +181,9 @@
         受益人：法定受益人
       </div>
     </div>
-    <div v-show="addBene1" >
-      <div id="addBene1" class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(1)">删除</span></div>
+    <div v-show="addBene1">
+      <div id="addBene1" class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(1)">删除</span>
+      </div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary1.beneficiaryName"
                  v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryName.$error}"
@@ -198,14 +201,12 @@
           <div class="i-input-item">性别</div>
           <div class="i-input-radio">
             <div class="radio-div" @click="beneficiary1.beneficiaryGender = true">
-              <span>男</span>
-              <img v-if="beneficiary1.beneficiaryGender" src="../assets/img/case-on.png"/>
-              <img v-if="!beneficiary1.beneficiaryGender" src="../assets/img/case-off.png"/>
+              <button v-if="beneficiary1.beneficiaryGender" class="check-on">男</button>
+              <button v-if="!beneficiary1.beneficiaryGender" class="check-off">男</button>
             </div>
             <div class="radio-div" @click="beneficiary1.beneficiaryGender = false">
-              <span>女</span>
-              <img v-if="!beneficiary1.beneficiaryGender" src="../assets/img/case-on.png"/>
-              <img v-if="beneficiary1.beneficiaryGender" src="../assets/img/case-off.png"/>
+              <button v-if="!beneficiary1.beneficiaryGender" class="check-on" style="margin-left: 15px">女</button>
+              <button v-if="beneficiary1.beneficiaryGender" class="check-off" style="margin-left: 15px">女</button>
             </div>
           </div>
         </div>
@@ -220,13 +221,16 @@
 
         <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary1.beneficiaryOrder"
                       value-text-align="left"
-                      v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryOrder.$error}"></popup-picker>
+                      v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryOrder.$error || (valiOrderB1 === valiOrderB2 && addBene2)}"></popup-picker>
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryOrder.required && $v.beneficiary1.beneficiaryOrder.$dirty">受益顺序不能为空
         </div>
+        <div class="error"
+             v-if="valiOrderB1 === valiOrderB2 && addBene2">受益顺序不正确
+        </div>
 
         <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary1.beneficiaryProportion"
-                 v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryProportion.$error}"
+                 v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryProportion.$error || valiProportion}"
                  @input="$v.beneficiary1.beneficiaryProportion.$touch()"></x-input>
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryProportion.required && $v.beneficiary1.beneficiaryProportion.$dirty">
@@ -236,6 +240,7 @@
              v-if="!$v.beneficiary1.beneficiaryProportion.between && $v.beneficiary1.beneficiaryProportion.$dirty">
           请输入受益份额，在0%到100%之间
         </div>
+        <div class="error" v-if="valiProportion">请重新分配受益份额</div>
 
         <datetime title="出生日期" placeholder="请选择出生日期" startDate="1950-01-01" :endDate="startDate"
                   v-model="beneficiary1.beneficiaryBirthday"
@@ -280,7 +285,8 @@
     </div>
 
     <div v-show="addBene2">
-      <div id="addBene2" class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(2)">删除</span></div>
+      <div id="addBene2" class="add">受益人信息 <span style="float: right;color: #c01212;" @click="delBene(2)">删除</span>
+      </div>
       <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
         <x-input title="姓名" placeholder="请输入姓名" v-model="beneficiary2.beneficiaryName"
                  v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryName.$error}"
@@ -298,14 +304,12 @@
           <div class="i-input-item">性别</div>
           <div class="i-input-radio">
             <div class="radio-div" @click="beneficiary2.beneficiaryGender = true">
-              <span>男</span>
-              <img v-if="beneficiary2.beneficiaryGender" src="../assets/img/case-on.png"/>
-              <img v-if="!beneficiary2.beneficiaryGender" src="../assets/img/case-off.png"/>
+              <button v-if="beneficiary2.beneficiaryGender" class="check-on">男</button>
+              <button v-if="!beneficiary2.beneficiaryGender" class="check-off">男</button>
             </div>
             <div class="radio-div" @click="beneficiary2.beneficiaryGender = false">
-              <span>女</span>
-              <img v-if="!beneficiary2.beneficiaryGender" src="../assets/img/case-on.png"/>
-              <img v-if="beneficiary2.beneficiaryGender" src="../assets/img/case-off.png"/>
+              <button v-if="!beneficiary2.beneficiaryGender" class="check-on" style="margin-left: 15px">女</button>
+              <button v-if="beneficiary2.beneficiaryGender" class="check-off" style="margin-left: 15px">女</button>
             </div>
           </div>
         </div>
@@ -319,13 +323,16 @@
 
         <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary2.beneficiaryOrder"
                       value-text-align="left"
-                      v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryOrder.$error}"></popup-picker>
+                      v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryOrder.$error || (valiOrderB1 === valiOrderB2 && addBene1)}"></popup-picker>
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryOrder.required && $v.beneficiary2.beneficiaryOrder.$dirty">受益顺序不能为空
         </div>
+        <div class="error"
+             v-if="valiOrderB1 === valiOrderB2 && addBene1">受益顺序不正确
+        </div>
 
         <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary2.beneficiaryProportion"
-                 v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryProportion.$error}"
+                 v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryProportion.$error || valiProportion}"
                  @input="$v.beneficiary2.beneficiaryProportion.$touch()"></x-input>
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryProportion.required && $v.beneficiary2.beneficiaryProportion.$dirty">
@@ -335,6 +342,7 @@
              v-if="!$v.beneficiary2.beneficiaryProportion.between && $v.beneficiary2.beneficiaryProportion.$dirty">
           请输入受益份额，在0%到100%之间
         </div>
+        <div class="error" v-if="valiProportion">请重新分配受益份额</div>
 
         <datetime title="出生日期" placeholder="请选择出生日期" startDate="1950-01-01" :endDate="startDate"
                   v-model="beneficiary2.beneficiaryBirthday"
@@ -364,7 +372,8 @@
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>-->
-        <datetime title="证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" endDate="2199-12-30" :startDate="startDate" placeholder="请选择证件有效期"
+        <datetime title="证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" endDate="2199-12-30" :startDate="startDate"
+                  placeholder="请选择证件有效期"
                   value-text-align="left"
                   v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"></datetime>
         <div class="error"
@@ -388,16 +397,16 @@
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <!--<div style="height: 50px;">-->
-      <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #f5ca1d" @click="comeBack">-->
-        <!--<div>上一步</div>-->
-      <!--</button>-->
-      <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
-        <!--<div>下一步</div>-->
-      <!--</button>-->
+    <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #f5ca1d" @click="comeBack">-->
+    <!--<div>上一步</div>-->
+    <!--</button>-->
+    <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
+    <!--<div>下一步</div>-->
+    <!--</button>-->
     <!--</div>-->
-    <div style="height: 60px;" >
+    <div style="height: 60px;">
       <div class="i-footer">
-        <button  @click="next" >
+        <button @click="next">
           <div>下一步</div>
         </button>
       </div>
@@ -461,53 +470,104 @@
         startDate: dateFormat(new Date(), "yyyy-MM-dd"),
         valiHolder: '',
         valiBene1: '',
-        valiBene2: ''
+        valiBene2: '',
+        valiOrderB1: 1,
+        valiOrderB2: null,
+        valiProportion: false,
+        valiProportion2: 0
       }
     },
     validations() {
-      return {
-        holder: {
-          policyholderName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-          policyholderCareer: {required, minLength: minLength(2), maxLength: maxLength(32)},
-          policyholderBirthday: {required},
-          policyholderCardType: {required},
-          policyholderCardNo: {required, vali: this.valiHolder},
-          policyholderCardPeroid: {required},
-          policyholderCountry: {required, maxLength: maxLength(64)},
-          policyholderHeight: {required, int, maxLength: maxLength(3)},
-          policyholderBodyWeight: {required, int, maxLength: maxLength(3)},
-          policyholderIncome: {required, int, maxLength: maxLength(6)},
-          policyholderMarriage: {required},
-          policyholderTel: {fixedTel},
-          policyholderMobile: {mobile},
-          policyholderEmail: {email},
-          holderPCD: {required},
-          policyholderAddress: {required, maxLength: maxLength(255)},
-          policyholderTaxRelated: {required}
-        },
-        beneficiary1: {
-          beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-          beneficiaryCountry: {required, maxLength: maxLength(64)},
-          beneficiaryOrder: {required},
-          beneficiaryProportion: {required, between: between(0, 100)},
-          beneficiaryBirthday: {required},
-          beneficiaryCardType: {required},
-          beneficiaryCardNo: {required, vali: this.valiBene1},
-          beneficiaryCardPeroid: {required},
-          insuredRelation: {required}
-        },
-        beneficiary2: {
-          beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-          beneficiaryCountry: {required, maxLength: maxLength(64)},
-          beneficiaryOrder: {required},
-          beneficiaryProportion: {required, between: between(0, 100)},
-          beneficiaryBirthday: {required},
-          beneficiaryCardType: {required},
-          beneficiaryCardNo: {required, vali: this.valiBene2},
-          beneficiaryCardPeroid: {required},
-          insuredRelation: {required}
-        },
+      if (this.holder.unifyAddr) {
+        return {
+          holder: {
+            policyholderName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            policyholderCareer: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            policyholderBirthday: {required},
+            policyholderCardType: {required},
+            policyholderCardNo: {required, vali: this.valiHolder},
+            policyholderCardPeroid: {required},
+            policyholderCountry: {required, maxLength: maxLength(64)},
+            policyholderHeight: {required, int, maxLength: maxLength(3)},
+            policyholderBodyWeight: {required, int, maxLength: maxLength(3)},
+            policyholderIncome: {required, int, maxLength: maxLength(6)},
+            policyholderMarriage: {required},
+            policyholderTel: {fixedTel},
+            policyholderMobile: {mobile},
+            policyholderEmail: {email},
+            // holderPCD: {required},
+            // policyholderAddress: {required, maxLength: maxLength(255)},
+            policyholderTaxRelated: {required}
+          },
+          beneficiary1: {
+            beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            beneficiaryCountry: {required, maxLength: maxLength(64)},
+            beneficiaryOrder: {required},
+            beneficiaryProportion: {required, between: between(0, 100)},
+            beneficiaryBirthday: {required},
+            beneficiaryCardType: {required},
+            beneficiaryCardNo: {required, vali: this.valiBene1},
+            beneficiaryCardPeroid: {required},
+            insuredRelation: {required}
+          },
+          beneficiary2: {
+            beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            beneficiaryCountry: {required, maxLength: maxLength(64)},
+            beneficiaryOrder: {required},
+            beneficiaryProportion: {required, between: between(0, 100)},
+            beneficiaryBirthday: {required},
+            beneficiaryCardType: {required},
+            beneficiaryCardNo: {required, vali: this.valiBene2},
+            beneficiaryCardPeroid: {required},
+            insuredRelation: {required}
+          },
+        }
+      } else {
+        return {
+          holder: {
+            policyholderName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            policyholderCareer: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            policyholderBirthday: {required},
+            policyholderCardType: {required},
+            policyholderCardNo: {required, vali: this.valiHolder},
+            policyholderCardPeroid: {required},
+            policyholderCountry: {required, maxLength: maxLength(64)},
+            policyholderHeight: {required, int, maxLength: maxLength(3)},
+            policyholderBodyWeight: {required, int, maxLength: maxLength(3)},
+            policyholderIncome: {required, int, maxLength: maxLength(6)},
+            policyholderMarriage: {required},
+            policyholderTel: {fixedTel},
+            policyholderMobile: {mobile},
+            policyholderEmail: {email},
+            holderPCD: {required},
+            policyholderAddress: {required, maxLength: maxLength(255)},
+            policyholderTaxRelated: {required}
+          },
+          beneficiary1: {
+            beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            beneficiaryCountry: {required, maxLength: maxLength(64)},
+            beneficiaryOrder: {required},
+            beneficiaryProportion: {required, between: between(0, 100)},
+            beneficiaryBirthday: {required},
+            beneficiaryCardType: {required},
+            beneficiaryCardNo: {required, vali: this.valiBene1},
+            beneficiaryCardPeroid: {required},
+            insuredRelation: {required}
+          },
+          beneficiary2: {
+            beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            beneficiaryCountry: {required, maxLength: maxLength(64)},
+            beneficiaryOrder: {required},
+            beneficiaryProportion: {required, between: between(0, 100)},
+            beneficiaryBirthday: {required},
+            beneficiaryCardType: {required},
+            beneficiaryCardNo: {required, vali: this.valiBene2},
+            beneficiaryCardPeroid: {required},
+            insuredRelation: {required}
+          },
+        }
       }
+
     },
     methods: {
       comeBack() {
@@ -515,39 +575,63 @@
       },
       next() {
         this.$v.$touch();
+        if (this.holder.policyholderTel === '' && this.holder.policyholderMobile === '') {
+          this.showPositionValue = true;
+          this.toastText = "请填写固定电话或手机号码";
+          return false;
+        }
+        //判断受益份额不为100时不通过
+        if (!this.legalBeneficiary) {
+          if (this.beneficiary2.beneficiaryProportion === '' && parseInt(this.beneficiary1.beneficiaryProportion) !== 100) {
+            this.submitStatus = 'ERROR';
+            this.showPositionValue = true;
+            this.toastText = "受益份额不足100";
+            return false;
+          }
+          if (this.beneficiary1.beneficiaryProportion === '' && parseInt(this.beneficiary2.beneficiaryProportion) !== 100) {
+            this.submitStatus = 'ERROR';
+            this.showPositionValue = true;
+            this.toastText = "受益份额不足100";
+            return false;
+          }
+        }
+        //holder验证不通过则返回
         if (this.$v.holder.$invalid) {
           this.submitStatus = 'ERROR';
           this.showPositionValue = true;
-          this.toastText = "信息填写有误"
-        } else if (this.addBene1) {
+          this.toastText = "信息填写有误";
+          return false;
+        }
+        let beneficiaries = [];
+        //addBene1为true时保存beneficiary1进数组
+        if (this.addBene1) {
           if (this.$v.beneficiary1.$invalid) {
             this.submitStatus = 'ERROR';
             this.showPositionValue = true;
-            this.toastText = "信息填写有误"
+            this.toastText = "信息填写有误";
+            return false;
           } else {
-            this.submitStatus = 'PENDING'
-            this.$router.push("infoMatters");
             let beneficiary1 = storage.fetch("beneficiary1");
-
-            let beneficiaries = [];
             beneficiaries.push(beneficiary1);
             wipeArray(storage.save("beneficiaries", beneficiaries))
           }
-        } else if (this.addBene2) {
+        }
+        //addBene2为true时保存beneficiary2进数组
+        if (this.addBene2) {
           if (this.$v.beneficiary2.$invalid) {
             this.submitStatus = 'ERROR';
             this.showPositionValue = true;
-            this.toastText = "信息填写有误"
+            this.toastText = "信息填写有误";
+            return false;
+          } else {
+            let beneficiary2 = storage.fetch("beneficiary2");
+            beneficiaries.push(beneficiary2);
+            wipeArray(storage.save("beneficiaries", beneficiaries));
           }
-        } else {
-          // do your submit logic here
-          let beneficiaries = storage.fetch("beneficiaries");
-          let beneficiary2 = storage.fetch("beneficiary2");
-          beneficiaries.push(beneficiary2);
-          wipeArray(storage.save("beneficiaries", beneficiaries))
-          this.submitStatus = 'PENDING'
-          this.$router.push("infoMatters");
         }
+        //验证通过跳转页面
+        this.submitStatus = 'PENDING';
+        this.$router.push("infoMatters");
       },
       addBene() {
         if (this.addBene1 === false) {
@@ -564,7 +648,7 @@
             beneficiaryProportion: '',
             beneficiaryCountry: ''
           };
-          document.getElementById("addBene1").scroll(0,0);
+          document.getElementById("addBene1").scroll(0, 0);
         } else if (this.addBene1 === true && this.addBene2 === false) {
           this.addBene2 = true;
           let beneficiary2 = {
@@ -579,7 +663,7 @@
             beneficiaryProportion: '',
             beneficiaryCountry: ''
           };
-          document.getElementById("addBene2").scroll(0,0);
+          document.getElementById("addBene2").scroll(0, 0);
         }
         this.legalBeneficiary = false;
         let order = storage.fetch("order");
@@ -720,6 +804,23 @@
                 break;
             }
           }
+          //判断受益顺序
+          if (newVal.beneficiaryOrder) {
+            if (newVal.beneficiaryOrder[0] === "1") {
+              this.valiOrderB2 = 2;
+            }
+            if (newVal.beneficiaryOrder[0] === "2") {
+              this.valiOrderB2 = 1
+            }
+          }
+          //判断受益份额
+          if (newVal.beneficiaryProportion) {
+            if (parseInt(newVal.beneficiaryProportion) + parseInt(this.beneficiary2.beneficiaryProportion) === 100 || this.beneficiary2.beneficiaryProportion === '') {
+              this.valiProportion = false;
+            } else {
+              this.valiProportion = true;
+            }
+          }
           storage.save('beneficiary1', newVal);
         },
         immediate: true,
@@ -760,17 +861,34 @@
                 this.valiBene2 = '';
                 break;
             }
-            storage.save('beneficiary2', newVal);
           }
+          //判断受益顺序
+          if (newVal.beneficiaryOrder) {
+            if (newVal.beneficiaryOrder[0] === "1") {
+              this.valiOrderB1 = 2;
+            }
+            if (newVal.beneficiaryOrder[0] === "2") {
+              this.valiOrderB1 = 1;
+            }
+          }
+          //判断受益份额
+          if (newVal.beneficiaryProportion) {
+            if (parseInt(newVal.beneficiaryProportion) + parseInt(this.beneficiary1.beneficiaryProportion) === 100 || this.beneficiary1.beneficiaryProportion === '') {
+              this.valiProportion = false;
+            } else {
+              this.valiProportion = true;
+            }
+          }
+          storage.save('beneficiary2', newVal);
         },
         immediate: true,
         deep: true
       },
-      unifyAddr:function (newVal,oldVal) {
-          if (newVal) {
-            let holder = storage.fetch("holder");
+      unifyAddr: function (newVal, oldVal) {
+        if (newVal) {
+          let holder = storage.fetch("holder");
 
-          }
+        }
       }
     },
     created: function () {
@@ -843,7 +961,6 @@
   .i-input-radio {
     display: inline-block;
     position: relative;
-    top: 10px;
     left: -5px;
     margin-left: 0;
   }
@@ -889,7 +1006,7 @@
   }
 
   .title-add {
-    padding: 10px 0 ;
+    padding: 10px 0;
     text-align: center;
     font-size: 17px;
     color: #f5ca1d;
@@ -952,7 +1069,6 @@
     border-radius: 5px;
   }
 
-
   .input-vile {
     width: 40px;
     text-align: right;
@@ -972,7 +1088,6 @@
     width: 83%;
     padding-left: 0;
   }
-
 
   @keyframes shakeError {
     0% {
