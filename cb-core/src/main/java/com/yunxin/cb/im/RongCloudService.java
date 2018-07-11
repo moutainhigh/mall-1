@@ -2,8 +2,12 @@ package com.yunxin.cb.im;
 
 import com.yunxin.cb.mall.entity.Customer;
 import io.rong.RongCloud;
+import io.rong.messages.TxtMessage;
+import io.rong.methods.message.Message;
 import io.rong.methods.user.User;
 import io.rong.models.Result;
+import io.rong.models.message.SystemMessage;
+import io.rong.models.response.ResponseResult;
 import io.rong.models.response.TokenResult;
 import io.rong.models.user.UserModel;
 import org.slf4j.Logger;
@@ -48,6 +52,29 @@ public class RongCloudService {
                 .setPortrait(customer.getAvatarUrl());
 
         Result result = User.update(user);
+        if(result.getCode() != 200){
+            throw new Exception(result.getMsg());
+        }
+    }
+
+    public void sendMessage(Customer customer,Customer friend,String requestMessage) throws Exception {
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+
+        String content=customer.getNickName()+"("+customer.getMobile()+")"+"加您为好友";
+        TxtMessage txtMessage = new TxtMessage(content,"");
+        SystemMessage systemMessage = new SystemMessage()
+                .setSenderId(customer.getMobile())
+                .setTargetId(new String[]{friend.getMobile()})
+                .setObjectName(txtMessage.getType())
+                .setContent(txtMessage)
+                .setPushContent(content)
+                .setPushData("{'pushData':'"+requestMessage+"'}")
+                .setIsPersisted(0)
+                .setIsCounted(0)
+                .setContentAvailable(0);
+        ResponseResult result = rongCloud.message.system.send(systemMessage);
+
+
         if(result.getCode() != 200){
             throw new Exception(result.getMsg());
         }
