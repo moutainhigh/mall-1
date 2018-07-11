@@ -83,8 +83,9 @@ public class CustomerResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
+
     @ApiOperation(value = "修改好友备注")
-    @GetMapping(value = "updateFriendsProfile")
+    @PostMapping(value = "updateFriendsProfile")
     public ResponseResult updateFriendsProfile(CustomerFriend customerFriend, @ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerService.updateFriendsProfile(customerFriend));
     }

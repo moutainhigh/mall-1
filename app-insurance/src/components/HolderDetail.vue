@@ -729,6 +729,13 @@
             newVal.policyholderCity = this.holder.holderPCD[1];
             newVal.policyholderDistrict = this.holder.holderPCD[2];
           }
+          if (this.holder.unifyAddr) {
+            let insured = storage.fetch("insured");
+            newVal.policyholderProvince = insured.insuredPCD[0];
+            newVal.policyholderCity = insured.insuredPCD[1];
+            newVal.policyholderDistrict = insured.insuredPCD[2];
+            newVal.policyholderAddress = insured.insuredAddress;
+          }
           if (newVal.policyholderCardType) {
             switch (newVal.policyholderCardType[0]) {
               case '居民身份证' :
