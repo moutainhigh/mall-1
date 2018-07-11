@@ -152,8 +152,9 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "提交反馈")
     @PostMapping(value = "addFeedback")
-    public ResponseResult addFeedback(Feedback feedback, @ModelAttribute("customerId") int customerId) {
-
+    public ResponseResult addFeedback(@RequestBody Feedback feedback, @ModelAttribute("customerId") int customerId) {
+        feedback.setCustomer(customerService.getCustomerById(customerId));
+        feedback.setCreateTime(new Date());
         return new ResponseResult(feedbackService.addFeedback(feedback));
     }
 
