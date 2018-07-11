@@ -9,6 +9,7 @@
     <title>品牌管理</title>
 
     <script type="text/javascript">
+
         $(document).ready(function () {
             $("#createTime").kendoDatePicker({
                 format: "yyyy-MM-dd",
@@ -167,7 +168,7 @@
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
                             <kendo:grid-column title="反馈帐户" field="customer.accountName" width="100px"/>
-                            <kendo:grid-column title="反馈用户手机号" field="customer.mobile" width="100px"/>
+                            <kendo:grid-column title="反馈用户手机号" field="customer.mobile" template="<a href='feedBackDetail.do?id=#= id#'>#= customer.mobile#</a>" width="100px"/>
                             <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
                             <kendo:grid-column title="反馈内容" field="content" width="100px"/>
                         </kendo:grid-columns>
