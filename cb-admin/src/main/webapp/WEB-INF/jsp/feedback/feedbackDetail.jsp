@@ -13,7 +13,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>品牌详情</title>
+  <title>反馈详情</title>
 
   <script type="text/javascript">
       $(function(){
@@ -31,23 +31,6 @@
               }
           });
       });
-
-
-
-      function imgShow(outerdiv, innerdiv, bigimg, _this){
-          debugger;
-          var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
-          $('#outerdiv').attr('display','block');
-          $(bigimg).attr("src", src);//设置#bigimg元素的src属性
-          $(outerdiv).fadeIn("fast");
-
-          $(outerdiv).click(function(){//再次点击淡出消失弹出层
-              $(this).fadeOut("fast");
-          });
-      }
-
-
-
   </script>
 </head>
 <body>
