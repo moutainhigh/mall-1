@@ -141,9 +141,9 @@ public interface ICustomerService {
     boolean isFriend(int customerId, int friendId);
 
 
-    Customer updateAvatar(int customerId, String avatar);
+    Customer updateAvatar(int customerId, String avatar) throws Exception;
 
-    Customer updateNickName(int customerId, String nickName);
+    Customer updateNickName(int customerId, String nickName) throws Exception;
 
     Customer updateSex(int customerId, boolean sex);
 

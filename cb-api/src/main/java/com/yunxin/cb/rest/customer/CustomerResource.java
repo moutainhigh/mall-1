@@ -85,7 +85,7 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "修改好友备注")
     @GetMapping(value = "updateFriendsProfile")
-    public ResponseResult updateFriendsProfile(CustomerFriend customerFriend ,@ModelAttribute("customerId") int customerId) {
+    public ResponseResult updateFriendsProfile(CustomerFriend customerFriend, @ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerService.updateFriendsProfile(customerFriend));
     }
 
@@ -101,19 +101,19 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "修改用户头像")
     @PostMapping(value = "updateAvatar")
-    public ResponseResult updateAvatar(@RequestParam("avatar") String avatar, @ModelAttribute("customerId") int customerId) {
+    public ResponseResult updateAvatar(@RequestParam("avatar") String avatar, @ModelAttribute("customerId") int customerId) throws Exception {
         Customer customer = customerService.updateAvatar(customerId, avatar);
         return new ResponseResult(Result.SUCCESS);
     }
 
     @ApiOperation(value = "修改用户昵称")
     @PostMapping(value = "updateNickName")
-    public ResponseResult updateNickName(@RequestParam("nickName") String nickName, @ModelAttribute("customerId") int customerId) {
+    public ResponseResult updateNickName(@RequestParam("nickName") String nickName, @ModelAttribute("customerId") int customerId) throws Exception {
         Customer customer = customerService.updateNickName(customerId, nickName);
         return new ResponseResult(Result.SUCCESS);
     }
 
-    @ApiOperation(value = "修改用户昵称")
+    @ApiOperation(value = "修改用户性别")
     @PostMapping(value = "updateSex")
     public ResponseResult updateSex(@RequestParam("sex") boolean sex, @ModelAttribute("customerId") int customerId) {
         Customer customer = customerService.updateSex(customerId, sex);
