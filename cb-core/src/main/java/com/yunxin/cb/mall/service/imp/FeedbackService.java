@@ -34,9 +34,8 @@ public class FeedbackService implements IFeedbackService {
     @Resource
     private FeedbackDao feedbackDao;
 
-    public Feedback addFeedback(Feedback Feedback)  {
-        Feedback.setCreateTime(new Date());
-        return feedbackDao.save(Feedback);
+    public Feedback addFeedback(Feedback feedback)  {
+        return feedbackDao.save(feedback);
     }
 
     /**

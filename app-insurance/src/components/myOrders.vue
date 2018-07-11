@@ -25,23 +25,23 @@
       <div class="i-list" style="margin-top: 10px" v-for="order in orders">
         <div class="list-title">
           <div style="margin-left: 16px">保单号：{{order.orderCode}}</div>
-          <div style="float: right;margin-right: 16px;color: #c01212;">支付完成</div>
+          <div style="float: right;margin-right: 16px;color: #c01212;" v-text="orderState(order.orderState)"></div>
         </div>
         <div style="display: inline-block;">
-          <img src="../assets/img/product1.png">
+          <img :src="order.insuranceProduct.prodImg">
         </div>
         <div class="i-list-detail">
-          <div class="dt-title">生命福星高照终身寿险（分红型）</div>
-          <div class="dt-intro">福相随综合保障计划（2017版）</div>
-          <div class="dt-content">爱相伴、心相知、福相随</div>
+          <div class="dt-title">{{order.insuranceProduct.prodName}}</div>
+          <div class="dt-intro">{{order.insuranceProduct.description}}</div>
+          <div class="dt-content">{{order.insuranceProduct.tags}}</div>
           <div class="dt-price">
             <div>
               <div class="dt-price-pro">
                 2万/5万/10万
               </div>
-              <button>
-                立即投保
-              </button>
+              <!--<button>-->
+                <!--立即投保-->
+              <!--</button>-->
             </div>
           </div>
         </div>
@@ -70,6 +70,7 @@
 
 <script>
   import {getOrders} from "../service/getData";
+  import storage from "../store/storage";
 
   export default {
     name: "myOrders",
@@ -122,6 +123,25 @@
           }
             done()
         });
+      },
+      orderState(state){
+        switch (state) {
+          case "UN_PAID":
+            return "待支付";
+          case "ON_PAID":
+            return "已支付";
+          case "BEEN_COMPLETED":
+            return "已完成";
+          case "UN_SURRENDER":
+            return "退保审核";
+          case "ON_SURRENDER":
+            return "已退保";
+        }
+      }
+    },
+    created(){
+      if (this.$route.query.token){
+        storage.save("token",this.$route.query.token);
       }
     }
   }

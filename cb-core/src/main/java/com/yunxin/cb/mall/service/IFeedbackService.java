@@ -13,7 +13,7 @@ import org.springframework.data.domain.Page;
  */
 public interface IFeedbackService {
 
-    public Feedback addFeedback(Feedback Feedback);
+    public Feedback addFeedback(Feedback feedback);
 
     public Page<Feedback> pageFeedback(final PageSpecification<Feedback> queryRequest);
 

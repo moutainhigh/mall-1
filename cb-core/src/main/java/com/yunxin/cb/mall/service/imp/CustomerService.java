@@ -144,16 +144,18 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
-    public Customer updateAvatar(int customerId, String avatar) {
+    public Customer updateAvatar(int customerId, String avatar) throws Exception{
         Customer customer = customerDao.findOne(customerId);
         customer.setAvatarUrl(avatar);
+        rongCloudService.update(customer);
         return customer;
     }
 
     @Override
-    public Customer updateNickName(int customerId, String nickName) {
+    public Customer updateNickName(int customerId, String nickName) throws Exception {
         Customer customer = customerDao.findOne(customerId);
         customer.setNickName(nickName);
+        rongCloudService.update(customer);
         return customer;
     }
 
