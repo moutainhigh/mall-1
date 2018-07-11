@@ -133,7 +133,7 @@
                                 <label><span class="asterisk">*</span>职务：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control" path="position" maxlength="64"/>
+                                <form:input cssClass="form-control validate[required,minSize[2]]" path="position" maxlength="64"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>性别：</label>
