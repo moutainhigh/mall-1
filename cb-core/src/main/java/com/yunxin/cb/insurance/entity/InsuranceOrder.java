@@ -264,7 +264,7 @@ public class InsuranceOrder implements Serializable {
     }
 
     public void setLegalBeneficiary(boolean legalBeneficiary) {
-        legalBeneficiary = legalBeneficiary;
+        this.legalBeneficiary = legalBeneficiary;
     }
 
     @Column(nullable = false, length = 32)
