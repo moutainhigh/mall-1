@@ -168,10 +168,10 @@
         "name": "角色管理", "code": "132", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../security/roles.do"
       },
       {
-        "name": "系统日志", "code": "133", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../logs/logs.jsp"
+        "name": "系统日志", "code": "133", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../logs/logs.do"
       },
       {
-        "name": "错误日志", "code": "134", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../logs/errorLogs.jsp"
+        "name": "错误日志", "code": "134", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../logs/errorLogs.do"
       }
     ]
   },
@@ -194,6 +194,9 @@
       },
       {
         "name": "保险合同编号", "code": "145", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceordercode/insuranceordercodes.do"
+      },
+      {
+        "name": "事项组管理", "code": "146", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceInformedMatterGroup/insuranceInformedMatterGroups.do"
       }
     ]
   },
