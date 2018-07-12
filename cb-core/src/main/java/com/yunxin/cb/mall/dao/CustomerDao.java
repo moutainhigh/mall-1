@@ -70,6 +70,8 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     long countByCreateTimeBetween(Date startDate, Date endDate);
 
     long countByQqOpenId(String qqOpenId);
+
+    List<Customer> findByRecommendCustomer_CustomerIdAndPraise(int customerId, boolean paraise);
 }
 
 interface CustomerPlusDao {

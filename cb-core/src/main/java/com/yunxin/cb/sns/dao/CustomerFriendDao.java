@@ -3,6 +3,7 @@ package com.yunxin.cb.sns.dao;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,6 @@ import java.util.List;
  */
 public interface CustomerFriendDao extends JpaRepository<CustomerFriend, CustomerFriendId>, JpaSpecificationExecutor<CustomerFriend> {
 
-    @Query("select cf.friend from CustomerFriend cf  where cf.customer.customerId = ?1")
-    List<Customer> findCustomerFriendByCustomerCustomerId(int customerId);
+    @Query("select cf from CustomerFriend cf left join fetch cf.friend where cf.customer.customerId = ?1")
+    List<CustomerFriend> findCustomerFriendByCustomerCustomerId(int customerId);
 }
