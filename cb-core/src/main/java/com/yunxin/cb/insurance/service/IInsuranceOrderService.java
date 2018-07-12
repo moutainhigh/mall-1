@@ -62,4 +62,11 @@ public interface IInsuranceOrderService {
      */
     public InsuranceOrder getInsuranceOrderDetailByOrderCode(String orderCode);
 
+    /**
+     * 打印保单
+     * @param orderId
+     * @return
+     */
+    public Map<String,Object> InsuranceOrder(int orderId);
+
 }

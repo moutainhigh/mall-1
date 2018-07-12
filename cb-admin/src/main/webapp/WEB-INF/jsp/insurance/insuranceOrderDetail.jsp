@@ -48,7 +48,7 @@
 
             var insuredProvince= $.citySelector.getProvince(${insuranceOrder.insuranceOrderInsured.insuredProvince});
             var insuredCity= $.citySelector.getCity(${insuranceOrder.insuranceOrderInsured.insuredCity});
-            var insuredDistrict= $.citySelector.getProvince(${insuranceOrder.insuranceOrderInsured.insuredDistrict});
+            var insuredDistrict= $.citySelector.getDistrict(${insuranceOrder.insuranceOrderInsured.insuredDistrict});
             var insuredAddress=insuredProvince+insuredCity+insuredDistrict;
             $("#insuredDistrict").html(insuredAddress);
 

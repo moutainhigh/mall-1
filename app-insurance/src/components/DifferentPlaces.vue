@@ -33,8 +33,8 @@
       <div class="borderBottom"></div>
     </div>
 
-    <div class="content" style="height: auto">
-      <p style="float: left">6、是否有其他需要说明事项：
+    <div class="content" style="height: auto;">
+      <p style="text-align: left">6、是否有其他需要说明事项：
         <span style="margin-left: 5vw">是</span>
         <img style="height: 3vh; margin-bottom: -5px;" v-if="isOther" src="../assets/img/selected.png"
              @click="clickIsOther">
@@ -47,7 +47,7 @@
              @click="clickIsOther">
       </p>
       <textarea class="content-text" v-if="isOther" v-model="insuranceOrderOffsite.otherMatter"></textarea>
-      <div class="borderBottom"></div>
+      <div class="borderBottom" v-if="isOther"></div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 60px;">
@@ -69,7 +69,7 @@
     name: "differentPlaces",
     data() {
       return {
-        insuranceOrderOffsite: storage.fetch("order").insuranceOrderOffsite,
+        insuranceOrderOffsite: null,
         isOther: false,
         isOffSite: false,
         showPositionValue: false,
@@ -87,6 +87,9 @@
             this.toastText = "请完善异地投保信息";
             return false;
           }
+          let order = storage.fetch("order");
+          order.insuranceOrderOffsite = this.insuranceOrderOffsite;
+          storage.save('order', order);
           if (this.isOther) {
             if (this.insuranceOrderOffsite.otherMatter === '') {
               this.showPositionValue = true;
@@ -108,14 +111,18 @@
       if (holder.policyholderCity !== '440300') {
         this.isOffSite = true;
       }
-      console.log(this.isOffSite)
+      this.insuranceOrderOffsite = {
+        sensue: '',
+        workplace: '',
+        leaveReason: '',
+        stayTime: '',
+        offsiteAddress: '',
+        otherMatter: ''
+      };
     },
     watch: {
       insuranceOrderOffsite: {
         handler(newVal, oldVal) {
-          let order = storage.fetch("order");
-          order.insuranceOrderOffsite = newVal;
-          storage.save('order', order);
         },
         immediate: true,
         deep: true
