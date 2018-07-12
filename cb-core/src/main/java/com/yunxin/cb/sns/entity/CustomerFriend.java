@@ -31,11 +31,11 @@ public class CustomerFriend implements java.io.Serializable {
 
     private Date createTime;
 
-    private java.lang.String aliasName;
-    private java.lang.String tag;
-    private java.lang.String phone;
-    private java.lang.String desc;
-    private java.lang.String image;
+    private String aliasName;
+    private String tag;
+    private String phone;
+    private String description;
+    private String image;
 
 
     @EmbeddedId
@@ -109,12 +109,12 @@ public class CustomerFriend implements java.io.Serializable {
     }
 
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 255)
-    public String getDesc() {
-        return this.desc;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 255)

@@ -12,6 +12,7 @@ import Policy from '../components/Policy'
 import myOrders from '../components/myOrders'
 import Insured from '../components/Insured'
 import DifferentPlaces from '../components/DifferentPlaces'
+import CareerSelect from '../components/CareerSelect'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -67,6 +68,10 @@ export default new Router({
       path: '/differentPlaces',
       name: 'differentPlaces',
       component: DifferentPlaces
+    }, {
+      path: '/careerSelect',
+      name: 'careerSelect',
+      component: CareerSelect
     }
   ]
 })

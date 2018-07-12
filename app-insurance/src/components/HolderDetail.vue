@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <x-input title="投保人职业" placeholder="请输入您的职业" v-model="holder.policyholderCareer"
+      <x-input title="投保人职业" placeholder="请选择职业" v-model="holder.policyholderCareer"
                v-bind:class="{'errorInput': $v.holder.policyholderCareer.$error}"
                @input="$v.holder.policyholderCareer.$touch()"></x-input>
       <!--<popup-picker title="投保人职业" placeholder="请选择职业" value-text-align="left"></popup-picker>-->
@@ -124,11 +124,11 @@
       <div class="error" v-if="!$v.holder.policyholderMarriage.required && $v.holder.policyholderMarriage.$dirty">
         婚姻状况不能为空
       </div>
-      <div style="background-color: #f5f5f5">
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #888;">
-          温馨提示：固定电话与移动电话可任填其中一项
-        </div>
-      </div>
+      <!--<div style="background-color: #f5f5f5">-->
+        <!--<div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 13px;padding: 10px 10px 10px 0;color: #888;">-->
+          <!--温馨提示：固定电话与移动电话可任填其中一项-->
+        <!--</div>-->
+      <!--</div>-->
       <x-input title="固定电话" v-model="holder.policyholderTel" placeholder="请输入固定电话"
                v-bind:class="{'errorInput': $v.holder.policyholderTel.$error}"
                @input="$v.holder.policyholderTel.$touch()"></x-input>
@@ -139,7 +139,7 @@
                @input="$v.holder.policyholderMobile.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderMobile.mobile">请输入正确的手机号码</div>
 
-      <x-input title="E-mail" v-model="holder.policyholderEmail" placeholder="非必填项"
+      <x-input title="E-mail" v-model="holder.policyholderEmail" placeholder="请输入邮箱地址（选填）"
                v-bind:class="{'errorInput': $v.holder.policyholderEmail.$error}"
                @input="$v.holder.policyholderEmail.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderEmail.mail">请输入正确邮箱地址</div>
@@ -219,7 +219,7 @@
         </div>
         <div class="error" v-if="!$v.beneficiary1.beneficiaryCountry.maxLength">国籍最多不超过64位数</div>
 
-        <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary1.beneficiaryOrder"
+        <popup-picker title="受益顺序" placeholder="请选择受益顺序" :data="orders" v-model="beneficiary1.beneficiaryOrder"
                       value-text-align="left"
                       v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryOrder.$error || (valiOrderB1 === valiOrderB2 && addBene2)}"></popup-picker>
         <div class="error"
@@ -232,6 +232,7 @@
         <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary1.beneficiaryProportion"
                  v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryProportion.$error || valiProportion}"
                  @input="$v.beneficiary1.beneficiaryProportion.$touch()"></x-input>
+        <div class="input-vile">%</div>
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryProportion.required && $v.beneficiary1.beneficiaryProportion.$dirty">
           请输入受益份额
@@ -321,7 +322,7 @@
         </div>
         <div class="error" v-if="!$v.beneficiary2.beneficiaryCountry.maxLength">国籍最多不超过32位数</div>
 
-        <popup-picker title="受益顺序" placeholder="请输入受益顺序" :data="orders" v-model="beneficiary2.beneficiaryOrder"
+        <popup-picker title="受益顺序" placeholder="请选择受益顺序" :data="orders" v-model="beneficiary2.beneficiaryOrder"
                       value-text-align="left"
                       v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryOrder.$error || (valiOrderB1 === valiOrderB2 && addBene1)}"></popup-picker>
         <div class="error"
@@ -334,6 +335,7 @@
         <x-input title="受益份额" placeholder="请输入受益份额" v-model="beneficiary2.beneficiaryProportion"
                  v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryProportion.$error || valiProportion}"
                  @input="$v.beneficiary2.beneficiaryProportion.$touch()"></x-input>
+        <div class="input-vile">%</div>
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryProportion.required && $v.beneficiary2.beneficiaryProportion.$dirty">
           请输入受益份额
@@ -967,7 +969,6 @@
     font-size: 16px;
     color: #f5ca1d;
     text-align: center;
-    border-bottom: #D9D9D9 solid 1px;
   }
 
   .i-input-radio {
@@ -1089,6 +1090,7 @@
     margin-top: -36px;
     margin-right: 16px;
     padding: 4px 8px;
+    color: #bfbfbf
   }
 
   .input-ver {

@@ -20,7 +20,8 @@ const insured = {
   insuredAddress: '',
   insuredRelation: [],
   //临时变量，省市区
-  insuredPCD: []
+  insuredPCD: [],
+  careerName:''
 };
 
 const holder = {
@@ -44,6 +45,7 @@ const holder = {
   policyholderDistrict: '',
   policyholderAddress: '',
   policyholderTaxRelated: [],
+  submissionSign: '',
   policyholderSign: '',
   cardPositiveImg: '',
   cardNegativeImg: '',
@@ -53,7 +55,8 @@ const holder = {
   otherImg3: '',
   //临时变量，省市区
   holderPCD: [],
-  unifyAddr:false
+  unifyAddr:false,
+  careerName:''
 };
 
 const order = {
@@ -73,14 +76,7 @@ const order = {
     accountNo: '',
     bankCardImg: ''
   },
-  insuranceOrderOffsite: {
-    sensue: '',
-    workplace: '',
-    leaveReason: '',
-    stayTime: '',
-    offsiteAddress: '',
-    otherMatter: ''
-  },
+  insuranceOrderOffsite: null,
   legalBeneficiary: true,
   insuranceOrderBeneficiarys: [],
   insuranceOrderInformedMatters: []

@@ -5,6 +5,7 @@
 		<pattern>/index.jsp*</pattern>
 		<pattern>/index.do*</pattern>
 		<pattern>/media/chooseMedias.do*</pattern>
+		<pattern>/insurance/prints.do*</pattern>
 	</excludes>
 
 	<!-- 默认装饰页面, 在需要装饰的页面增加<meta name="decorator" content="default"/> -->

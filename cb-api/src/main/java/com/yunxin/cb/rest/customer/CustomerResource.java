@@ -1,6 +1,8 @@
 package com.yunxin.cb.rest.customer;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.yunxin.cb.common.utils.CachedUtil;
+import com.yunxin.cb.im.RongCloudService;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.service.ICustomerService;
@@ -30,6 +32,9 @@ public class CustomerResource extends BaseResource {
     @Resource
     private IFeedbackService feedbackService;
 
+    @Resource
+    private RongCloudService rongCloudService;
+
 
     @ApiOperation(value = "我的好友")
     @GetMapping(value = "myFriends")
@@ -46,6 +51,13 @@ public class CustomerResource extends BaseResource {
             return new ResponseResult(friend);
         }
         return new ResponseResult(Result.FAILURE, "未找到相关好友");
+    }
+
+    @ApiOperation(value = "添加好友通知")
+    @PostMapping(value = "addFriendNotice")
+    public ResponseResult addFriendNotice(@RequestParam("accountName") String accountName, @RequestParam String requestMessage, @ModelAttribute("customerId") int customerId) throws Exception{
+//        rongCloudService.sendMessage();
+        return new ResponseResult(Result.SUCCESS);
     }
 
     @ApiOperation(value = "添加好友")
@@ -160,4 +172,17 @@ public class CustomerResource extends BaseResource {
         return new ResponseResult(feedbackService.addFeedback(feedback));
     }
 
+
+    @ApiOperation(value = "用户点赞")
+    @PostMapping(value = "praise")
+    public ResponseResult praise(@ModelAttribute("customerId") int customerId) {
+        customerService.customerPraise(customerId);
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "查询点赞用户")
+    @PostMapping(value = "getPraiseCustomer")
+    public ResponseResult getPraiseCustomer(@ModelAttribute("customerId") int customerId) {
+        return new ResponseResult(customerService.getPraiseCustomers(customerId));
+    }
 }
