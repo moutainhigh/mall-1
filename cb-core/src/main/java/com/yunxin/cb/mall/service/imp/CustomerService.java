@@ -6,7 +6,6 @@ import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.service.ICustomerService;
-import com.yunxin.cb.mall.vo.FriendVo;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
@@ -392,9 +391,9 @@ public class CustomerService implements ICustomerService {
         return customerDao.countByQqOpenId(qqOpenId);
     }
 
-    public List<Customer> getFriendByCustomerId(int customerId) {
-        List<Customer> customers = customerFriendDao.findCustomerFriendByCustomerCustomerId(customerId);
-        return customers;
+    public List<CustomerFriend> getFriendByCustomerId(int customerId) {
+        List<CustomerFriend> customerFriendss = customerFriendDao.findCustomerFriendByCustomerCustomerId(customerId);
+        return customerFriendss;
     }
 
     @Transactional
@@ -420,10 +419,36 @@ public class CustomerService implements ICustomerService {
 
         renew.setPhone(customerFriend.getPhone());
         renew.setAliasName(customerFriend.getAliasName());
-        renew.setDesc(customerFriend.getDesc());
+        renew.setDescription(customerFriend.getDescription());
         renew.setTag(customerFriend.getTag());
         renew.setImage(customerFriend.getImage());
 
         return renew;
+    }
+
+    /**
+     * 用户点赞
+     * @param customerId
+     * @return
+     */
+    @Override
+    @Transactional
+    public Customer customerPraise(int customerId) {
+        Customer customer = customerDao.findOne(customerId);
+        customer.setPraise(true);
+        Customer recommendCustomer = customer.getRecommendCustomer();
+        recommendCustomer.setPraiseNum(recommendCustomer.getPraiseNum()+1);
+        return customer;
+    }
+
+    /**
+     * 查询点赞用户
+     * @param customerId
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<Customer> getPraiseCustomers(int customerId) {
+        return customerDao.findByRecommendCustomer_CustomerIdAndPraise(customerId, true);
     }
 }
