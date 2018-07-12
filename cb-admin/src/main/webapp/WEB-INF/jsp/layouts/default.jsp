@@ -164,6 +164,7 @@
     <script type="text/javascript" src="../highcharts/modules/exporting.js"></script>
 
     <script src="../js/district/district.js" type="text/javascript"></script>
+    <script src="../js/profession/profession.js" type="text/javascript"></script>
     <script type="application/javascript">
         //全局后台图片库存放相对目录
         var PIC_PATH="${PIC_PATH}";

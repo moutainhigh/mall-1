@@ -9,9 +9,9 @@
     <!--<script src="../js/zoomify/zoomify.js"></script>-->
     <script src="../js/zoomify/jquery-1.4.4.min.js"></script>
     <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <link rel="stylesheet" type="text/css" href="../css/baodan.css"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" type="text/css" href="../css/baodan.css">
 
     <title></title>
 
@@ -52,7 +52,7 @@
                     <ul class="ext-tabs">
                         <li class="active">
                             <a class="btn btn-default pull-right"
-                                                                 href="javascript:void(0);" onclick="daYin()">打印</a>
+                               href="javascript:void(0);" onclick="daYin()">打印</a>
                         </li>
                     </ul>
                 </div>
@@ -66,32 +66,65 @@
 
 
             <div class="th-tab" id="prints">
-                <div style="position: absolute">
-
+                <div style="position: absolute;z-index: 20;">
+                    <div class="al-tab">
+                        <div class="al-line">
+                            <div class="al-font div-row-2">
+                                <div class="al-row-2">哈哈哈哈</div>
+                            </div>
+                            <div class="al-font div-sex">
+                                <div class="al-row-sex">√</div>
+                                <div>√</div>
+                            </div>
+                            <div class="al-font div-row-4">
+                                <div class="al-row-date">
+                                    <div>1996</div>
+                                    <div style="margin-left: 50px;">02</div>
+                                    <div style="margin-left: 50px;">02</div>
+                                </div>
+                            </div>
+                            <div class="al-font div-row-2">
+                                <div class="al-row-age">18</div>
+                            </div>
+                        </div>
+                        <div class="al-line">
+                            <div class="al-font div-row-5">
+                                <div class="al-row-cardType">
+                                    <div>√</div>
+                                    <div style="margin-left: 64px">√</div>
+                                    <div style="margin-left: 52px">√</div>
+                                    <div style="margin-left: 65px">√</div>
+                                </div>
+                            </div>
+                            <div class="al-font">
+                                <div class="card-num">445281166666666666</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="div-tab">
                     <div class="div-line">
                         <div class="div-line-con div-row-2">
                             <div class="title">A 1.姓名</div>
-                            <input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>
+                            <%--<input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>--%>
                         </div>
                         <div class="div-line-con div-sex">
                             <div class="title">A 2.性别</div>
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 男
-                                <input class="i-cb" style="margin-left: 30px; " type="checkbox"/>
+                                <input class="i-cb" style="margin-left: 20px; " type="checkbox"/>
                                 女
                             </div>
                         </div>
                         <div class="div-line-con div-row-4">
                             <div class="title">A 3.出生日期</div>
-                            <div style="padding-left: 20px;">
-                                <input class="c-input" type="text"/>
+                            <div style="padding-left: 40px;">
+                                <input class="b-input" type="text"/>
                                 年
-                                <input class="c-input" type="text"/>
+                                <input class="b-input" type="text"/>
                                 月
-                                <input class="c-input" type="text"/>
+                                <input class="b-input" type="text"/>
                                 日
                             </div>
                         </div>
@@ -114,7 +147,6 @@
                                 军官证
                                 <input class="i-cb" type="checkbox"/>
                                 其他
-                                <input type="text" style="border-bottom: #000000 solid 1px;width: 40px"/>
                             </div>
                         </div>
                         <div class="div-line-con">
@@ -156,7 +188,7 @@
                                     <input class="c-input" type="text"/>
                                     日
                                 </div>
-                                <input class="i-cb" type="checkbox"/>
+                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
                                 长期
                             </div>
                         </div>
@@ -268,7 +300,6 @@
                             <div class="title">A 5.职业代码</div>
                             <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
                             <div class="title">职业类别</div>
-                            <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
                         </div>
                         <div class="div-line-con div-email">
                             <div class="title">A 11.职业</div>
@@ -276,11 +307,10 @@
                         </div>
                         <div class="div-line-con div-part-job">
                             <div class="title">A 11.是否有兼职？</div>
-                            <input class="i-cb" style="margin-left: 20px" type="checkbox"/>
+                            <input class="i-cb" style="margin-left: 10px" type="checkbox"/>
                             是
                             <input class="i-cb" type="checkbox"/>
                             否，如是请说明：
-                            <input class="c-input" type="text"/>
                         </div>
                     </div>
                 </div>
@@ -291,25 +321,25 @@
                     <div class="div-line">
                         <div class="div-line-con div-row-2">
                             <div class="title">A 1.姓名</div>
-                            <input class="a-input" type="text"/>
+                            <%--<input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>--%>
                         </div>
                         <div class="div-line-con div-sex">
                             <div class="title">A 2.性别</div>
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 男
-                                <input class="i-cb" style="margin-left: 30px; " type="checkbox"/>
+                                <input class="i-cb" style="margin-left: 20px; " type="checkbox"/>
                                 女
                             </div>
                         </div>
                         <div class="div-line-con div-row-4">
                             <div class="title">A 3.出生日期</div>
-                            <div style="padding-left: 20px;">
-                                <input class="c-input" type="text"/>
+                            <div style="padding-left: 0;">
+                                <input class="b-input" type="text"/>
                                 年
-                                <input class="c-input" type="text"/>
+                                <input class="b-input" type="text"/>
                                 月
-                                <input class="c-input" type="text"/>
+                                <input class="b-input" type="text"/>
                                 日
                             </div>
                         </div>
@@ -332,7 +362,6 @@
                                 军官证
                                 <input class="i-cb" type="checkbox"/>
                                 其他
-                                <input type="text" style="border-bottom: #000000 solid 1px;width: 40px">
                             </div>
                         </div>
                         <div class="div-line-con">
@@ -374,7 +403,7 @@
                                     <input class="c-input" type="text"/>
                                     日
                                 </div>
-                                <input class="i-cb" type="checkbox"/>
+                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
                                 长期
                             </div>
                         </div>
@@ -479,6 +508,24 @@
                                 <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                 <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                             </div>
+                        </div>
+                    </div>
+                    <div class="div-line">
+                        <div class="div-line-con div-career">
+                            <div class="title">A 5.职业代码</div>
+                            <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
+                            <div class="title">职业类别</div>
+                        </div>
+                        <div class="div-line-con div-email">
+                            <div class="title">A 11.职业</div>
+                            <input class="a-input" type="text"/>
+                        </div>
+                        <div class="div-line-con div-part-job">
+                            <div class="title">A 11.是否有兼职？</div>
+                            <input class="i-cb" style="margin-left: 10px" type="checkbox"/>
+                            是
+                            <input class="i-cb" type="checkbox"/>
+                            否，如是请说明：
                         </div>
                     </div>
                 </div>

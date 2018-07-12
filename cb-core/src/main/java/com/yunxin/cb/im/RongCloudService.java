@@ -61,7 +61,7 @@ public class RongCloudService {
     public void sendMessage(Customer customer,Customer friend,String requestMessage) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
-        String content=customer.getNickName()+"("+customer.getMobile()+")"+"加您为好友";
+        String content=customer.getNickName()+"加您为好友";
         TxtMessage txtMessage = new TxtMessage(content,"");
         SystemMessage systemMessage = new SystemMessage()
                 .setSenderId(customer.getMobile())
@@ -81,13 +81,13 @@ public class RongCloudService {
         }
     }
 
-    public void addBlacklist() throws Exception {
+    public void addBlacklist(Customer customer,Customer friend) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
-        UserModel blackUser = new UserModel().setId("hdsjGB89");
+        UserModel blackUser = new UserModel().setId(customer.getAccountName());
         UserModel[] blacklist = {blackUser};
         UserModel user = new UserModel()
-                .setId("hdsjGB89")
+                .setId(friend.getAccountName())
                 .setBlacklist(blacklist);
 
         Result result = (Result)rongCloud.user.blackList.add(user);
@@ -98,31 +98,28 @@ public class RongCloudService {
         }
     }
 
-    public void removeBlacklist() throws Exception {
+    public void removeBlacklist(Customer customer,Customer friend) throws Exception {
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-        UserModel blackUser = new UserModel().setId("hdsjGB89");
+        UserModel blackUser = new UserModel().setId(customer.getAccountName());
         UserModel[] blacklist = {blackUser};
         UserModel user = new UserModel()
-                .setId("hdsjGB89")
+                .setId(friend.getAccountName())
                 .setBlacklist(blacklist);
         Result result = (Result)rongCloud.user.blackList.remove(user);
-        System.out.println("removeBlacklist:  " + result.toString());
 
         if(result.getCode() != 200){
             throw new Exception(result.getMsg());
         }
     }
 
-    public void getBlacklist() throws Exception {
+    public BlackListResult getBlacklist(Customer customer) throws Exception {
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-        UserModel user = new UserModel().setId("hdsjGB89");
+        UserModel user = new UserModel().setId(customer.getAccountName());
 
         BlackListResult result = rongCloud.user.blackList.getList(user);
-        System.out.println("queryBlacklist:  " + result.toString());
 
-
-
+        return result;
     }
 }

@@ -20,6 +20,7 @@
     display: inline-block;
     padding: 5px 5px 5px 10px;
     font-size: 13px;
+    box-sizing: border-box;
     /*margin-bottom: -1px;*/
     /*margin-top: -1px;*/
 }
@@ -34,28 +35,29 @@
     padding: 5px 5px 5px 10px;
     font-size: 13px;
     width: 26px;
-    height: 32px;
+    height: 30px;
+    box-sizing: border-box;
 }
 
 .div-line .div-line-con .i-cb {
     position: relative;
     top: 2px;
-    margin-left: 15px;
+    margin-left: 8px;
 }
 
 .a-input {
     padding-left: 10px;
-    width: 130px;
+    width: 100px;
 }
 
 .c-input {
     text-align: center;
-    width: 30px;
+    width: 25px;
 }
 
 .b-input {
     text-align: center;
-    width: 50px;
+    width: 30px;
 }
 
 .d-input {
@@ -76,7 +78,7 @@
 
 .i-cert-code {
     display: inline-block;
-    width: 25px;
+    width: 20px;
     font-size: 13px;
     margin-left: -1px;
     text-align: center;
@@ -131,7 +133,53 @@ input {
 .div-postcode {
     border-left: unset !important;
     float: right;
-    margin-right: 26px;
+    margin-right: 13px;
     height: 20px;
+}
+
+.al-font {
+    font-size: 13px;
+}
+
+.al-tab {
+    width: 1000px;
+}
+
+.al-line {
+    height: 33px;
+    font-size: 0;
+}
+
+.al-tab .al-line div{
+    display: inline-block !important;
+}
+
+.al-row-2 {
+    margin-top: 6px;
+    margin-left: 80px;
+}
+
+.al-row-sex {
+    margin-left: 80px;
+    margin-right: 55px;
+}
+
+.al-row-date {
+    margin-left: 120px;
+}
+
+.al-row-age {
+    margin-left: 70px;
+}
+
+.al-row-cardType {
+    margin-left: 108px;
+    margin-top: 4px;
+}
+
+.card-num {
+    letter-spacing: 17.8px;
+    margin-left: 120px;
+    width: 200px;
 }
 
