@@ -1,6 +1,5 @@
 package com.yunxin.cb.rest.customer;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.im.RongCloudService;
 import com.yunxin.cb.mall.entity.Customer;
@@ -13,18 +12,23 @@ import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
+import io.rong.models.response.BlackListResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+
 
 @Api(description = "用户接口")
 @RestController
 @RequestMapping(value = "/customer")
 @SessionAttributes("customerId")
 public class CustomerResource extends BaseResource {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Resource
     private ICustomerService customerService;
@@ -34,7 +38,6 @@ public class CustomerResource extends BaseResource {
 
     @Resource
     private RongCloudService rongCloudService;
-
 
     @ApiOperation(value = "我的好友")
     @GetMapping(value = "myFriends")
@@ -53,12 +56,7 @@ public class CustomerResource extends BaseResource {
         return new ResponseResult(Result.FAILURE, "未找到相关好友");
     }
 
-    @ApiOperation(value = "添加好友通知")
-    @PostMapping(value = "addFriendNotice")
-    public ResponseResult addFriendNotice(@RequestParam("accountName") String accountName, @RequestParam String requestMessage, @ModelAttribute("customerId") int customerId) throws Exception{
-//        rongCloudService.sendMessage();
-        return new ResponseResult(Result.SUCCESS);
-    }
+
 
     @ApiOperation(value = "添加好友")
     @PostMapping(value = "addFriend")
@@ -95,6 +93,24 @@ public class CustomerResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
+    @ApiOperation(value = "添加好友通知")
+    @PostMapping(value = "addFriendNotice")
+    public ResponseResult addFriendNoitce(@RequestParam("friendId") int friendId, @RequestParam("requestMessage") String requestMessage, @ModelAttribute("customerId") int customerId) {
+        try {
+            Customer myself = customerService.getCustomerById(customerId);
+            Customer friend = customerService.getCustomerById(friendId);
+
+            if (friend == null) {
+                return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
+            }
+
+            rongCloudService.sendMessage(myself, friend, requestMessage);
+            return new ResponseResult(Result.SUCCESS);
+        } catch (Exception e) {
+            logger.error("addFriendNotice failed", e);
+            return new ResponseResult(Result.FAILURE, e.getMessage());
+        }
+    }
 
     @ApiOperation(value = "修改好友备注")
     @PostMapping(value = "updateFriendsProfile")
@@ -165,11 +181,53 @@ public class CustomerResource extends BaseResource {
     @ApiOperation(value = "提交反馈")
     @PostMapping(value = "addFeedback")
     public ResponseResult addFeedback(@RequestBody Feedback feedback, @ModelAttribute("customerId") int customerId) {
-        Customer customer=new Customer();
+        Customer customer = new Customer();
         customer.setCustomerId(customerId);
         feedback.setCustomer(customer);
         feedback.setCreateTime(new Date());
         return new ResponseResult(feedbackService.addFeedback(feedback));
+    }
+
+    @ApiOperation(value = "添加黑名单")
+    @GetMapping(value = "addBlacklist/{friendId}")
+    public ResponseResult addBlacklist(@PathVariable int friendId, @ModelAttribute("customerId") int customerId) {
+        try {
+            Customer customer = customerService.getCustomerById(customerId);
+            Customer friend = customerService.getCustomerById(friendId);
+            rongCloudService.addBlacklist(customer, friend);
+            return new ResponseResult(Result.SUCCESS);
+        } catch (Exception e) {
+            logger.error("addBlacklist failed", e);
+            return new ResponseResult(Result.FAILURE, e.getMessage());
+        }
+    }
+
+
+    @ApiOperation(value = "移除黑名单")
+    @GetMapping(value = "removeBlacklist/{friendId}")
+    public ResponseResult removeBlacklist(@PathVariable int friendId, @ModelAttribute("customerId") int customerId) {
+        try {
+            Customer customer = customerService.getCustomerById(customerId);
+            Customer friend = customerService.getCustomerById(friendId);
+            rongCloudService.removeBlacklist(customer, friend);
+            return new ResponseResult(Result.SUCCESS);
+        } catch (Exception e) {
+            logger.error("removeBlacklist failed", e);
+            return new ResponseResult(Result.FAILURE, e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "获取黑名单")
+    @GetMapping(value = "getBlacklist")
+    public ResponseResult getBlacklist(@ModelAttribute("customerId") int customerId) {
+        try {
+            Customer customer = customerService.getCustomerById(customerId);
+            BlackListResult result = rongCloudService.getBlacklist(customer);
+            return new ResponseResult(result.getUsers());
+        } catch (Exception e) {
+            logger.error("getBlacklist failed", e);
+            return new ResponseResult(Result.FAILURE, e.getMessage());
+        }
     }
 
 
