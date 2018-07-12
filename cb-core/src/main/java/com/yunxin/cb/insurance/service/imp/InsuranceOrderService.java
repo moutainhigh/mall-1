@@ -7,6 +7,7 @@ import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
 import com.yunxin.cb.util.CodeGenerator;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -125,15 +126,16 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                         ) {
                     InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(list.getInsuranceInformedMatter().getMatterId());
                     if(null!=insuranceInformedMatter) {
-                        if (null != insuranceInformedMatter.getMatterGroup()) {
+                        InsuranceInformedMatterGroup matterGroup = insuranceInformedMatter.getMatterGroup();
+                        if (null != matterGroup && Hibernate.isInitialized(matterGroup)) {
                             if(groupId!=insuranceInformedMatter.getMatterGroup().getGroupId()){
                                 add(new HashMap<String, Object>() {
                                     {
-                                        put("matter",insuranceInformedMatter.getMatterGroup().getDescription());
+                                        put("matter",matterGroup.getDescription());
                                         put("no","0");
                                     }
                                 });
-                                 groupId=insuranceInformedMatter.getMatterGroup().getGroupId();
+                                 groupId=matterGroup.getGroupId();
                             }
                         }
                         add(new HashMap<String,Object>(){
