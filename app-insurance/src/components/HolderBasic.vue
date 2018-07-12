@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <x-input title="被保人职业" placeholder="请选择职业" v-model="career"
+      <x-input class="x-input-over" title="被保人职业" placeholder="请选择职业" v-model="career"
                v-bind:class="{'errorInput': $v.career.$error}"
                @input="$v.career.$touch()"></x-input>
       <div style="position:absolute;width: 100%;height: 42px;margin-top: -42px;" @click="goToSelect"></div>

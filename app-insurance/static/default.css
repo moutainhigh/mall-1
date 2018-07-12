@@ -288,3 +288,9 @@ p {
 .weui-toast.vux-toast-middle {
   width: 15.6em !important;
 }
+
+.weui-input {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
