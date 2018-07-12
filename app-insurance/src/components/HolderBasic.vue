@@ -103,17 +103,13 @@
 
 <script>
   import storage from "../store/storage"
-  import {PopupPicker, Picker, Datetime,Popup,TransferDom,Search} from 'vux'
+  import {Datetime, PopupPicker} from 'vux'
   import XInput from "vux/src/components/x-input/index";
   import {required} from 'vuelidate/lib/validators'
   import {dateFormat} from "../config/mUtils";
-  import {careerCode} from "../admin/career"
 
   export default {
     name: "holder-basic",
-    directives: {
-      TransferDom
-    },
     components: {
       XInput,
       PopupPicker,
