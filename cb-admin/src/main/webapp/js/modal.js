@@ -36,7 +36,7 @@
                 zIndex: 999,
                 left: 0,
                 top: 0
-            }).append(modalBg).append(modalContent);//纭畾modalContainer鐨勪綅缃�
+            }).append(modalBg).append(modalContent);
 
             var writeModal = function(_$this){
                 $(window).resize(function(){
@@ -47,14 +47,14 @@
                     $(modalBg).css({
                         "height": $(document).height()
                     })
-                });//绐楀彛澶у皬鍙樺寲鏃�,灏嗗脊绐楃Щ鍔ㄥ埌灞忓箷涓棿浣嶇疆
+                });
 
                 var getTitle = _$this.attr("data-title");
                 if(getTitle){
                     $(modalContent).append(
                         "<h1 class='modal-title' control-move>" + _$this.attr("data-title") + "</h1>"
                     );
-                }//鑾峰彇data-title鐨勫€�
+                }
 
                 $(modalContent).append(
                     "<div class='modal-close close-pos-r-t'>X</div>"
@@ -65,11 +65,11 @@
                         url: _$this.attr("data-url"),
                         async:false
                     });
-                    $(modalContent).append("<p>" + htmlobj.responseText + "</p>");//鍐欏叆ajax璇锋眰寰楀埌鐨勫€�
+                    $(modalContent).append("<p>" + htmlobj.responseText + "</p>");
                 }else {
                     if(opts.html == ""){
                         var getContent = _$this.html();
-                        $(modalContent).append("<p>" + getContent + "</p>").append("<p>杩欑鎯呭喌灏辨槸鐩存帴璇诲彇瑙﹀彂褰撳墠浜嬩欢鐨勫厓绱犵殑html浠ｇ爜</p>");
+                        $(modalContent).append("<p>" + getContent + "</p>").append("<p></p>");
                     }else{
                         $(modalContent).append(opts.html);
                     }
@@ -90,8 +90,7 @@
 
                 if(opts.move){
                     $(modalContent).find("[control-move]").css("cursor","move").on("mousedown",function(e){
-                        /*$(this)[0].onselectstart = function(e) { return false; }*///闃叉鎷栧姩绐楀彛鏃讹紝浼氭湁鏂囧瓧琚€変腑鐨勭幇璞�(浜嬪疄璇佹槑涓嶅姞涓婅繖娈垫晥鏋滀細鏇村ソ)
-                        $(this)[0].oncontextmenu = function(e) { return false; }//闃叉鍙冲嚮寮瑰嚭鑿滃崟
+                        $(this)[0].oncontextmenu = function(e) { return false; }
                         var getStartX = e.pageX,
                             getStartY =  e.pageY;
                         var getPositionX = $(modalContent).offset().left,
@@ -109,7 +108,7 @@
                         })
                     });
                 };
-                if(opts.resizable){//璁惧畾寮圭獥鏄惁鍙互鎷栧姩鏀瑰彉澶у皬
+                if(opts.resizable){
                     var resizeControl = "<div class='resizable-e'></div>" +
                         "<div class='resizable-s'></div>" +
                         "<div class='resizable-w'></div>" +
@@ -194,9 +193,6 @@
                 };
 
             }
-
-
-            //娉ㄦ剰杩欎釜if...else涓殑鍐呭鍩烘湰涓婃槸涓€鏍风殑锛屽彧鏄负浜嗛槻姝㈠嚭鐜板钁╁湪鍏冪礌涓婂啓鐨刼nclick鐨勬柟娉曟椂 鍑虹幇鏃犻檺寰幆
             writeModal($this);
         });
     };
