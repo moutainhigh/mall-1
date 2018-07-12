@@ -144,28 +144,31 @@ public class Customer implements java.io.Serializable {
      * 等级
      */
     private Rank rank;
-
+    /**
+     * 推荐人点赞
+     */
+    private boolean praise;
+    /**
+     * 收到点赞次数
+     */
+    private int praiseNum;
+    /**
+     * 融云token
+     */
+    private String rongCloudToken;
     /**
      * openid是唯一对应用户身份的标识，将此ID进行存储便于用户下次登录时辨识其身份，或将其与用户在网站上的原有帐号进行绑定。
      * 以便用户下次登录时可对应到其之前的身份信息，不需要重新授权。
      */
     private String qqOpenId;
-
-    /**
-     * 表示当前用户在此网站/应用的登录状态与授权信息
-     */
-    private String qqAccessToken;
-
-    /**
-     * 融云token
-     */
-    private String rongCloudToken;
-
-
     /**
      * 头像URL
      */
     private String qqFigureUrl;
+    /**
+     * 表示当前用户在此网站/应用的登录状态与授权信息
+     */
+    private String qqAccessToken;
 
     /**
      * 用户账号类型
@@ -521,6 +524,24 @@ public class Customer implements java.io.Serializable {
 
     public void setRecommendCustomer(Customer recommendCustomer) {
         this.recommendCustomer = recommendCustomer;
+    }
+
+    @Column
+    public boolean isPraise() {
+        return praise;
+    }
+
+    public void setPraise(boolean praise) {
+        this.praise = praise;
+    }
+
+    @Column
+    public int getPraiseNum() {
+        return praiseNum;
+    }
+
+    public void setPraiseNum(int praiseNum) {
+        this.praiseNum = praiseNum;
     }
 
     @Transient

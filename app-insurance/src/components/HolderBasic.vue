@@ -9,7 +9,7 @@
       </div>
 
       <div class="i-input" style="padding: 0 15px 0 0; border-top: 1px solid #d9d9d9; margin-left: 15px">
-        <div class="i-input-item" style="width: 7rem; margin-right: 2em">性别：</div>
+        <div class="i-input-item" style="width: 7rem; margin-right: 2em">性别</div>
         <div class="i-input-radio" style="top: 0;">
           <div class="radio-div" @click="changeGender(true)">
             <button v-if="gender" class="check-on">男</button>
@@ -22,10 +22,11 @@
         </div>
       </div>
 
-      <x-input title="被保人职业" placeholder="请输入职业" v-model="career"
+      <x-input class="x-input-over" title="被保人职业" placeholder="请选择职业" v-model="career"
                v-bind:class="{'errorInput': $v.career.$error}"
                @input="$v.career.$touch()"></x-input>
-      <div class="error" v-if="!$v.career.required && $v.career.$dirty">请输入职业</div>
+      <div style="position:absolute;width: 100%;height: 42px;margin-top: -42px;" @click="goToSelect"></div>
+      <div class="error" v-if="!$v.career.required && $v.career.$dirty">请选择职业</div>
     </group>
 
 
@@ -39,15 +40,15 @@
         </div>
       </div>
       <div class="i-input">
-        <div class="i-input-item">保险期间：</div>
+        <div class="i-input-item">保险期间</div>
         <div class="i-input-val">保障终身</div>
       </div>
       <div class="i-input">
-        <div class="i-input-item">保险年限：</div>
+        <div class="i-input-item">保障年限</div>
         <div class="i-input-val">终身</div>
       </div>
       <div class="i-input">
-        <div class="i-input-item">基本保额：</div>
+        <div class="i-input-item">基本保额</div>
         <div class="i-input-radio" v-if="proId == 1">
           <div class="radio-div" @click="priceId = 1">
             <button v-if="priceId ===1" class="check-on">2万</button>
@@ -102,7 +103,7 @@
 
 <script>
   import storage from "../store/storage"
-  import {PopupPicker, Toast, Datetime} from 'vux'
+  import {Datetime, PopupPicker} from 'vux'
   import XInput from "vux/src/components/x-input/index";
   import {required} from 'vuelidate/lib/validators'
   import {dateFormat} from "../config/mUtils";
@@ -178,6 +179,15 @@
         } else {
           this.$router.push('/insured');
         }
+      },
+      goToSelect(){
+        this.$router.push({
+          path:'/careerSelect',
+          query:{
+            type:'insured',
+            key:'insuredCareer'
+          }
+        })
       }
     },
     watch: {
@@ -215,11 +225,6 @@
             break;
         }
         storage.save('order', order);
-      },
-      career: function (newVal, oldVal) {
-        let insured = storage.fetch("insured");
-        insured.insuredCareer = newVal;
-        storage.save('insured', insured);
       }
     },
     created: function () {
@@ -244,7 +249,11 @@
       let insured = storage.fetch("insured");
       this.birthday = insured.insuredBirthday;
       this.gender = insured.insuredGender;
-      this.career = insured.insuredCareer;
+      this.career = insured.careerName;
+    },
+    activated(){
+      let insured = storage.fetch("insured");
+      this.career = insured.careerName;
     }
   }
 </script>

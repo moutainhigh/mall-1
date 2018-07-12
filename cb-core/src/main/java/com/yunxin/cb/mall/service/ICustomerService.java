@@ -132,7 +132,7 @@ public interface ICustomerService {
     long countByQqOpenId(String qqOpenId);
 
 
-    public List<Customer> getFriendByCustomerId(int customerId);
+    public List<CustomerFriend> getFriendByCustomerId(int customerId);
 
     public CustomerFriend addFriend(CustomerFriend customerFriend);
 
@@ -150,4 +150,10 @@ public interface ICustomerService {
     Customer updateAddress(int customerId, String province, String city, String district, String address);
 
     CustomerFriend updateFriendsProfile(CustomerFriend customerFriend);
+
+    @Transactional
+    Customer customerPraise(int customerId);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    List<Customer> getPraiseCustomers(int customerId);
 }

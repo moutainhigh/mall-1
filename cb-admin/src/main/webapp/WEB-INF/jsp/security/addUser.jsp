@@ -16,6 +16,21 @@
             });
 
         });
+
+        /**
+         * 手机验证
+         * @param value
+         * @returns {boolean}
+         */
+        function checkPhone(value) {
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(!myreg.test($("#phone").val()))
+            {
+                alert('请输入有效的手机号码！');
+                $('#phone').val("");
+                return false;
+            }
+        }
     </script>
 </head>
 <body>
@@ -85,14 +100,14 @@
                                 <label><span class="asterisk">*</span>用户名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32"/>
+                                <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32"/>
                                 <form:errors path="userName" cssClass="Validform_checktip"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>真实姓名：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="realName" maxlength="32"/>
+                                <form:input id="realName" onkeyup="this.value=this.value.replace(/[^\u4E00-\u9FA5]/g,'')" cssClass="form-control validate[required,minSize[2]]" path="realName" maxlength="32"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -102,13 +117,13 @@
                                 <label><span class="asterisk">*</span>密码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:password cssClass="form-control validate[required,minSize[6]]" path="password" maxlength="64"/>
+                                <form:password onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')"  cssClass="form-control validate[required,minSize[6]]" path="password" maxlength="64"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>确认密码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <input type="password" class="form-control validate[equals[password]]"/>
+                                <input type="password" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')"  class="form-control validate[equals[password]]"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -118,13 +133,13 @@
                                 <label><span class="asterisk">*</span>手机号码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="11"/>
+                                <form:input onblur="checkPhone(this.value)" id="phone" cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="11"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>邮箱：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[email]]" path="email" maxlength="64"/>
+                                <form:input onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/g,'');"   cssClass="form-control validate[required,custom[email]]" path="email" maxlength="64"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -133,7 +148,7 @@
                                 <label><span class="asterisk">*</span>职务：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="position" maxlength="64"/>
+                                <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2]]" path="position" maxlength="64"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>性别：</label>

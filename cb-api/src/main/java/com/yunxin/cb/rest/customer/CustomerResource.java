@@ -15,8 +15,6 @@ import com.yunxin.cb.vo.VerificationCode;
 import io.rong.models.response.BlackListResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -53,6 +51,13 @@ public class CustomerResource extends BaseResource {
             return new ResponseResult(friend);
         }
         return new ResponseResult(Result.FAILURE, "未找到相关好友");
+    }
+
+    @ApiOperation(value = "添加好友通知")
+    @PostMapping(value = "addFriendNotice")
+    public ResponseResult addFriendNotice(@RequestParam("accountName") String accountName, @RequestParam String requestMessage, @ModelAttribute("customerId") int customerId) throws Exception{
+//        rongCloudService.sendMessage();
+        return new ResponseResult(Result.SUCCESS);
     }
 
     @ApiOperation(value = "添加好友")
@@ -160,7 +165,7 @@ public class CustomerResource extends BaseResource {
     @ApiOperation(value = "提交反馈")
     @PostMapping(value = "addFeedback")
     public ResponseResult addFeedback(@RequestBody Feedback feedback, @ModelAttribute("customerId") int customerId) {
-        Customer customer = new Customer();
+        Customer customer=new Customer();
         customer.setCustomerId(customerId);
         feedback.setCustomer(customer);
         feedback.setCreateTime(new Date());
@@ -208,4 +213,17 @@ public class CustomerResource extends BaseResource {
         }
     }
 
+
+    @ApiOperation(value = "用户点赞")
+    @PostMapping(value = "praise")
+    public ResponseResult praise(@ModelAttribute("customerId") int customerId) {
+        customerService.customerPraise(customerId);
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "查询点赞用户")
+    @PostMapping(value = "getPraiseCustomer")
+    public ResponseResult getPraiseCustomer(@ModelAttribute("customerId") int customerId) {
+        return new ResponseResult(customerService.getPraiseCustomers(customerId));
+    }
 }

@@ -5,44 +5,51 @@
     </div>
     <div class="content" style="height: auto">
       <p>1、您的户籍所在地是哪里？？</p>
-      <textarea class="content-text"></textarea>
+      <textarea class="content-text" v-model="insuranceOrderOffsite.sensue"></textarea>
       <div class="borderBottom"></div>
     </div>
 
     <div class="content" style="height: auto">
       <p>2、您目前工作所在城市或地区名？单位名称？工作单位所属行业？您的职务？（例：深圳；深圳市前海水晶球文化传播有限公司；商业服务/内勤人员）</p>
-      <textarea class="content-text"></textarea>
+      <textarea class="content-text" v-model="insuranceOrderOffsite.workplace"></textarea>
       <div class="borderBottom"></div>
     </div>
 
     <div class="content" style="height: auto">
       <p>3、请说明您离开投保地的原因？前往何地？出行目的？（如是工作或学习，请提供单位或学校的名称和地址，并详细告知工作内容）公司派驻前往(户籍所在地)；作为异地业务员到xx（填现在的公司）公司负责开展传播工作。</p>
-      <textarea class="content-text"></textarea>
+      <textarea class="content-text" v-model="insuranceOrderOffsite.leaveReason"></textarea>
       <div class="borderBottom"></div>
     </div>
 
     <div class="content" style="height: auto">
       <p>4、您一年中平均在投保地逗留的时间多长？每次回投保地的时间间隔多久？您往来投保地和上述异地之间经常乘坐的交通工具是什么？逗留3个月；间隔1个多月；飞机</p>
-      <textarea class="content-text"></textarea>
+      <textarea class="content-text" v-model="insuranceOrderOffsite.stayTime"></textarea>
       <div class="borderBottom"></div>
     </div>
 
     <div class="content" style="height: auto">
       <p>5、您在投保地或异地是否已落实居住住所？如已落实请简述居住地址、环境？填异地的住址</p>
-      <textarea class="content-text"></textarea>
+      <textarea class="content-text" v-model="insuranceOrderOffsite.offsiteAddress"></textarea>
       <div class="borderBottom"></div>
     </div>
 
-    <div class="content" style="height: auto">
-      <p>6、是否有其他需要说明事项：
+    <div class="content" style="height: auto;">
+      <p style="text-align: left">6、是否有其他需要说明事项：
         <span style="margin-left: 5vw">是</span>
-        <img style="height: 3vh; margin-bottom: -5px;" src="../assets/img/selected.png">
+        <img style="height: 3vh; margin-bottom: -5px;" v-if="isOther" src="../assets/img/selected.png"
+             @click="clickIsOther">
+        <img style="height: 3vh; margin-bottom: -5px;" v-if="!isOther" src="../assets/img/unselect.png"
+             @click="clickIsOther">
         <span style="margin-left: 5vw">否</span>
-        <img style="height: 3vh; margin-bottom: -5px;" src="../assets/img/unselect.png">
+        <img style="height: 3vh; margin-bottom: -5px;" v-if="isOther" src="../assets/img/unselect.png"
+             @click="clickIsOther">
+        <img style="height: 3vh; margin-bottom: -5px;" v-if="!isOther" src="../assets/img/selected.png"
+             @click="clickIsOther">
       </p>
-      <textarea class="content-text"></textarea>
-      <div class="borderBottom"></div>
+      <textarea class="content-text" v-if="isOther" v-model="insuranceOrderOffsite.otherMatter"></textarea>
+      <div class="borderBottom" v-if="isOther"></div>
     </div>
+    <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 60px;">
       <div class="i-footer">
         <button @click="next">
@@ -54,13 +61,73 @@
 </template>
 
 <script>
+  import storage from "../store/storage";
+  import {Toast} from 'vux'
+
   export default {
+    components: {Toast},
     name: "differentPlaces",
+    data() {
+      return {
+        insuranceOrderOffsite: null,
+        isOther: false,
+        isOffSite: false,
+        showPositionValue: false,
+        toastText: '',
+      }
+    },
     methods: {
+      clickIsOther() {
+        this.isOther = !this.isOther;
+      },
       next() {
+        if (this.isOffSite) {
+          if (this.insuranceOrderOffsite.sensue === '' || this.insuranceOrderOffsite.workplace === '' || this.insuranceOrderOffsite.leaveReason === '' || this.insuranceOrderOffsite.stayTime === '' || this.insuranceOrderOffsite.offsiteAddress === '') {
+            this.showPositionValue = true;
+            this.toastText = "请完善异地投保信息";
+            return false;
+          }
+          let order = storage.fetch("order");
+          order.insuranceOrderOffsite = this.insuranceOrderOffsite;
+          storage.save('order', order);
+          if (this.isOther) {
+            if (this.insuranceOrderOffsite.otherMatter === '') {
+              this.showPositionValue = true;
+              this.toastText = "请完善异地投保信息";
+              return false;
+            }
+          } else {
+            this.insuranceOrderOffsite.otherMatter = '';
+            let order = storage.fetch("order");
+            order.insuranceOrderOffsite.otherMatter = this.insuranceOrderOffsite.otherMatter;
+            storage.save('order', order);
+          }
+        }
         this.$router.push("payment");
       }
-    }
+    },
+    created: function () {
+      let holder = storage.fetch("holder");
+      if (holder.policyholderCity !== '440300') {
+        this.isOffSite = true;
+      }
+      this.insuranceOrderOffsite = {
+        sensue: '',
+        workplace: '',
+        leaveReason: '',
+        stayTime: '',
+        offsiteAddress: '',
+        otherMatter: ''
+      };
+    },
+    watch: {
+      insuranceOrderOffsite: {
+        handler(newVal, oldVal) {
+        },
+        immediate: true,
+        deep: true
+      },
+    },
   }
 </script>
 

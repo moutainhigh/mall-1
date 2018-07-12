@@ -17,16 +17,18 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
         });
-
-        function checkUser(){
-            debugger;
-            var chk=$('input[type=checkbox]:checked').length;
-            if(chk <=2  ){
-                bootbox.alert("用户角色不能为空");
+        /**
+         * 手机验证
+         * @param value
+         * @returns {boolean}
+         */
+        function checkPhone(value) {
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(!myreg.test($("#phone").val()))
+            {
+                bootbox.alert("请输入有效的手机号码！");
+                $('#phone').val("");
                 return false;
-            }else{
-                return true;
-                $('#validateSubmitForm').submit();
             }
         }
     </script>
@@ -97,14 +99,14 @@
                                 <label><span class="asterisk">*</span>用户名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32"/>
+                                <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32"/>
                                 <form:errors path="userName" cssClass="Validform_checktip"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>真实姓名：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="realName" maxlength="32"/>
+                                <form:input onkeyup="this.value=this.value.replace(/[^\u4E00-\u9FA5]/g,'')" cssClass="form-control validate[required,minSize[2]]" path="realName" maxlength="32"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -114,13 +116,13 @@
                                 <label><span class="asterisk">*</span>手机号码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="11"/>
+                                <form:input onblur="checkPhone(this.value)" id="phone"  cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="11"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>邮箱：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[email]]" path="email" maxlength="64"/>
+                                <form:input onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/g,'');" cssClass="form-control validate[required,custom[email]]" path="email" maxlength="64"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -129,7 +131,7 @@
                                 <label><span class="asterisk">*</span>职务：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="position" maxlength="64"/>
+                                <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2]]" path="position" maxlength="64"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>性别：</label>
@@ -156,7 +158,7 @@
                                             <c:set var="choose" value="true"></c:set>
                                         </c:if>
                                     </c:forEach>
-                                    <input type="checkbox" name="roldIds" value="${role.roleId}" <c:if test="${choose}">checked</c:if>/>${role.roleName}
+                                    <input type="radio" name="roldIds" value="${role.roleId}" <c:if test="${choose}">checked</c:if>/>${role.roleName}
                                 </c:forEach>
                             </div>
                         </div>
@@ -175,7 +177,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
-                                    <button id="saveBtn" class="btn btn-default"  onclick = "checkUser();"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
+                                    <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
                                     <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>

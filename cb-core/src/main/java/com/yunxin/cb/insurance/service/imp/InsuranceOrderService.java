@@ -230,4 +230,46 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         InsuranceOrder InsuranceOrder = insuranceOrderDao.getInsuranceOrderDetailByOrderCode(orderCode);
         return InsuranceOrder;
     }
+
+    @Override
+    public Map<String, Object> InsuranceOrder(int orderId) {
+        /**
+         * 获取保单详情
+         */
+        InsuranceOrder insuranceOrder = getInsuranceOrderDetailById(orderId);
+        return new HashMap<String,Object>(){
+            {
+                    put("insuranceOrder",insuranceOrder);
+                /**
+                 * 受益人
+                 */
+                Set<InsuranceOrderBeneficiary> beneficiary=insuranceOrder.getInsuranceOrderBeneficiarys();
+                List<InsuranceOrderBeneficiary> list=new ArrayList<>(beneficiary);
+                List<InsuranceOrderBeneficiary> beneficiaryList= sortIntMethod(list);
+                if(beneficiaryList.size()<3)
+                    beneficiaryList.add(new InsuranceOrderBeneficiary());
+                put("beneficiaryList",beneficiaryList);
+            }
+
+        };
+    }
+
+    public static List<InsuranceOrderBeneficiary> sortIntMethod(List list){
+
+        Collections.sort(list, new Comparator(){
+            @Override
+            public int compare(Object o1, Object o2) {
+                InsuranceOrderBeneficiary insuranceOrderBeneficiary=(InsuranceOrderBeneficiary)o1;
+                InsuranceOrderBeneficiary insuranceOrderBeneficiary2=(InsuranceOrderBeneficiary)o2;
+                if(insuranceOrderBeneficiary.getBeneficiaryOrder()>insuranceOrderBeneficiary2.getBeneficiaryOrder())
+                    return 1;
+                else if(insuranceOrderBeneficiary.getBeneficiaryOrder()==insuranceOrderBeneficiary2.getBeneficiaryOrder())
+                    return 0;
+                else
+                    return -1;
+            }
+        });
+        return list;
+    }
+
 }

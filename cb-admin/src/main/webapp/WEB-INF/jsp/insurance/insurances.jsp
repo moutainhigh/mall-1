@@ -9,7 +9,6 @@
 
   <title>保单列表</title>
   <script type="application/javascript">
-
       $(document).ready(function () {
           $("#createTime").kendoDatePicker({
               format: "yyyy-MM-dd",
@@ -39,8 +38,11 @@
       function excelInsuranceOrder(){
           window.location.href="excelInsuranceOrder.do";
       };
-      function daYin(){
-          $("#prints").jqprint();
+      function orderPrint(){
+          var dataItem = getSelectedGridItem("grid");
+          if (dataItem) {
+              window.location.href = "prints.do?orderId=" + dataItem.orderId;
+          }
       }
   </script>
 </head>
@@ -206,6 +208,15 @@
             <div class="pull-left">
               <h3>保单列表</h3>
             </div>
+
+            <div class="pull-right">
+
+              <div class="btn-group">
+                <a href="javascript:void(0);"  onclick="orderPrint()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印</a>
+
+              </div>
+            </div>
+
 
           </header>
         </div>

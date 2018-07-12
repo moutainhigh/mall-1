@@ -167,6 +167,12 @@ public class InsuranceOrderPolicyholder implements Serializable {
     @Length(max = 255)
     private String policyholderSign;
     /**
+     * 投保人意见书签名
+     */
+    @NotBlank
+    @Length(max = 255)
+    private String submissionSign;
+    /**
      * 投保人头像
      */
     @NotBlank
@@ -482,5 +488,12 @@ public class InsuranceOrderPolicyholder implements Serializable {
         this.insuranceOrders = insuranceOrder;
     }
 
+    @Column(length = 255)
+    public String getSubmissionSign() {
+        return submissionSign;
+    }
 
+    public void setSubmissionSign(String submissionSign) {
+        this.submissionSign = submissionSign;
+    }
 }

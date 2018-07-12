@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lte9 lte8 lte7 no-js"> <![endif]-->
 <!--[if IE 7]> <html class="ie ie7 lte9 lte8 lte7 no-js"> <![endif]-->
@@ -367,59 +368,33 @@
             <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
             <fieldset>
               <legend>反馈详情</legend>
+
               <div class="row">
-                <div class="inline-labels">
-                  <div class="col-sm-2">
-                    <label>反馈帐户：</label>
-                  </div>
-                  <div class="col-sm-3">
-                    ${feedback.customer.accountName}
-                  </div>
-                  <div class="col-sm-1"></div>
-                  <div class="col-sm-2">
-                    <label>反馈用户真实姓名：</label>
-                  </div>
-                  <div class="col-sm-3">
-                    ${feedback.customer.realName}
-                  </div>
-                  <div class="col-sm-1"></div>
-                </div>
+              <div class="col-sm-2">
+                <label><span class="asterisk"></span>反馈帐户：</label>
               </div>
-              <div class="spacer-10"></div>
-
-              <div class="row">
-                <div class="inline-labels">
-
-                  <div class="col-sm-2">
-                    <label>反馈用户手机号：</label>
-                  </div>
-                  <div class="col-sm-3">
-                    ${feedback.customer.mobile}
-                  </div>
-                  <div class="col-sm-1"></div>
-                  <div class="col-sm-2">
-                    <label>创建时间：</label>
-                  </div>
-                  <div class="col-sm-3">
-                    ${feedback.createTime}
-                  </div>
-                  <div class="col-sm-1"></div>
-                </div>
+              <div class="col-sm-2 col-label">
+                ${feedback.customer.accountName}
               </div>
-
-              <div class="spacer-30"></div>
-              <hr>
-              <div class="spacer-30"></div>
-
+              <div class="col-sm-2">
+                <label><span class="asterisk"></span>反馈用户手机号：</label>
+              </div>
+              <div class="col-sm-2 col-label">
+                ${feedback.customer.mobile}
+              </div>
+              <div class="col-sm-2">
+                <label><span class="asterisk"></span>创建时间：</label>
+              </div>
+              <div class="col-sm-2 col-label">
+                ${fn:substring(feedback.createTime, 0, 16)}
+              </div>
+            </div>
               <div class="row">
-                <div class="inline-labels">
-                  <div class="col-sm-2">
-                    <label>反馈内容：</label>
-                  </div>
-                  <div class="col-sm-3">
-                    ${feedback.content}
-                  </div>
-                  <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                  <label><span class="asterisk"></span>反馈内容：</label>
+                </div>
+                <div class="col-sm-2 col-label">
+                  ${feedback.content}
                 </div>
               </div>
             </fieldset>

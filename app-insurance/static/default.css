@@ -270,7 +270,7 @@ p {
 }
 
 .vux-cell-value {
-  color: #bfbfbf !important;
+  color: #666 !important;
 }
 
 .vux-popup-picker-placeholder {
@@ -281,6 +281,16 @@ p {
   color: #bfbfbf !important;
 }
 
+.weui-cells input::-webkit-input-placeholder {
+  color: #bfbfbf !important;
+}
+
 .weui-toast.vux-toast-middle {
   width: 15.6em !important;
+}
+
+.weui-input {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

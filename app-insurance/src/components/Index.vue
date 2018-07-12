@@ -49,7 +49,6 @@
 </template>
 
 <script>
-  // import {testGet,sendMobile} from "../service/getData";
   import storage from '../store/storage'
   import Admin from '../admin/Admin'
 
