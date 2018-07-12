@@ -51,11 +51,10 @@
             <%--var insuredDistrict= $.citySelector.getDistrict(${insuranceOrder.insuranceOrderInsured.insuredDistrict});--%>
             <%--var insuredAddress=insuredProvince+insuredCity+insuredDistrict;--%>
             $("#insuredDistrict").html(insuredProvince);
-
-            var insuredCareer =$.profession.getProfession(${insuranceOrder.insuranceOrderInsured.insuredCareer});
+            var insuredCareer =$.profession.getProfession('${insuranceOrder.insuranceOrderInsured.insuredCareer}');
             $("#insuredCareer").html(insuredCareer);
 
-            var policyholderCareer =$.profession.getProfession(${insuranceOrder.insuranceOrderPolicyholder.policyholderCareer});
+            var policyholderCareer =$.profession.getProfession('${insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}');
             $("#policyholderCareer").html(policyholderCareer);
 
             for (var i=1;i<7;i++){
