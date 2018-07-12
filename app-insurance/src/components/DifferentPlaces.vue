@@ -33,8 +33,8 @@
       <div class="borderBottom"></div>
     </div>
 
-    <div class="content" style="height: auto">
-      <p style="float: left">6、是否有其他需要说明事项：
+    <div class="content" style="height: auto;">
+      <p style="text-align: left">6、是否有其他需要说明事项：
         <span style="margin-left: 5vw">是</span>
         <img style="height: 3vh; margin-bottom: -5px;" v-if="isOther" src="../assets/img/selected.png"
              @click="clickIsOther">
@@ -47,7 +47,7 @@
              @click="clickIsOther">
       </p>
       <textarea class="content-text" v-if="isOther" v-model="insuranceOrderOffsite.otherMatter"></textarea>
-      <div class="borderBottom"></div>
+      <div class="borderBottom" v-if="isOther"></div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 60px;">

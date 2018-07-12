@@ -79,7 +79,7 @@
         婚姻状况不能为空
       </div>
       <div style="background-color: #f5f5f5">
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 10px;padding: 10px 10px;color: #888;">
+        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 13px;padding: 10px 10px 10px 0;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
@@ -97,7 +97,7 @@
       <!--</div>-->
       <div class="error" v-if="!$v.insured.insuredMobile.mobile">请输入正确的手机号码</div>
 
-      <x-input title="E-mail" placeholder="请输入邮箱" v-model="insured.insuredEmail"></x-input>
+      <x-input title="E-mail" placeholder="请输入邮箱（选填）" v-model="insured.insuredEmail"></x-input>
       <div class="error" v-if="!$v.insured.insuredEmail.mail">请输入正确邮箱地址</div>
 
       <x-address title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="insured.insuredPCD"
@@ -293,7 +293,7 @@
 
 <style scoped>
   .title {
-    margin: 10px 0;
+    margin: 10px 0 0 0;
     background-color: #ffffff;
     padding: 15px;
     font-size: 16px;

@@ -28,6 +28,8 @@
       <div style="position:absolute;width: 100%;height: 42px;margin-top: -42px;" @click="goToSelect"></div>
       <div class="error" v-if="!$v.career.required && $v.career.$dirty">请选择职业</div>
     </group>
+
+
     <!--</div>-->
     <div class="i-card">
       <div class="i-card-tip">
@@ -115,10 +117,7 @@
     components: {
       XInput,
       PopupPicker,
-      Datetime,
-      Popup,
-      Search,
-      Picker
+      Datetime
     },
     data() {
       return {

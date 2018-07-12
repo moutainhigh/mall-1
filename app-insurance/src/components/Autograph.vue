@@ -10,6 +10,17 @@
       </div>
     </div>
 
+    <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保提示书签名</div>
+    <div class="canvas">
+      <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
+      <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign1" @click="clear1">清除</span>
+      <div class="sign" v-if="!clickSign1" @click="checkSign1">点击签名
+      </div>
+      <div v-if="clickSign1">
+        <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
+      </div>
+    </div>
+
     <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保单签名</div>
     <div class="headPhoto" v-if="imgUrl === '' || imgUrl === undefined || imgUrl === null" @click.stop="addPic">
       <div class="carmerBorder"></div>
@@ -55,6 +66,7 @@
       return {
         state: false,
         clickSign: false,
+        clickSign1: false,
         imgUrl: storage.fetch("holder").policyholderAvatar,
         option: {
           penColor: "rgb(0, 0, 0)",
@@ -109,18 +121,31 @@
       checkSign() {
         this.clickSign = !this.clickSign;
       },
+      checkSign1() {
+        this.clickSign1 = !this.clickSign1;
+      },
       save() {
         var _this = this;
         var jpeg = _this.$refs.signature.save('image/jpeg').split(',')[1];
+        var jpeg1 = _this.$refs.signature1.save('image/jpeg').split(',')[1];
         uploadImage(jpeg).then(function (result) {
           let holder = storage.fetch("holder");
           holder.policyholderSign = result.data;
+          storage.save("holder", holder);
+        });
+        uploadImage(jpeg1).then(function (result) {
+          let holder = storage.fetch("holder");
+          holder.submissionSign = result.data;
           storage.save("holder", holder);
         });
       },
       clear() {
         var _this = this;
         _this.$refs.signature.clear();
+      },
+      clear1() {
+        var _this = this;
+        _this.$refs.signature1.clear();
       },
       fromDataURL(url) {
         var _this = this;
@@ -138,6 +163,11 @@
           return false;
         }
         if (this.clickSign === false) {
+          this.showPositionValue = true;
+          this.toastText = "请签署投保单签名";
+          return false;
+        }
+        if (this.clickSign1 === false) {
           this.showPositionValue = true;
           this.toastText = "请签署投保提示书签名";
           return false;
