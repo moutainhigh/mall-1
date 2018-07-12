@@ -71,7 +71,6 @@
       return {
         insuranceOrderOffsite: null,
         isOther: false,
-        isOffSite: false,
         showPositionValue: false,
         toastText: '',
       }
@@ -81,36 +80,30 @@
         this.isOther = !this.isOther;
       },
       next() {
-        if (this.isOffSite) {
-          if (this.insuranceOrderOffsite.sensue === '' || this.insuranceOrderOffsite.workplace === '' || this.insuranceOrderOffsite.leaveReason === '' || this.insuranceOrderOffsite.stayTime === '' || this.insuranceOrderOffsite.offsiteAddress === '') {
+        if (this.insuranceOrderOffsite.sensue === '' || this.insuranceOrderOffsite.workplace === '' || this.insuranceOrderOffsite.leaveReason === '' || this.insuranceOrderOffsite.stayTime === '' || this.insuranceOrderOffsite.offsiteAddress === '') {
+          this.showPositionValue = true;
+          this.toastText = "请完善异地投保信息";
+          return false;
+        }
+        let order = storage.fetch("order");
+        order.insuranceOrderOffsite = this.insuranceOrderOffsite;
+        storage.save('order', order);
+        if (this.isOther) {
+          if (this.insuranceOrderOffsite.otherMatter === '') {
             this.showPositionValue = true;
             this.toastText = "请完善异地投保信息";
             return false;
           }
+        } else {
+          this.insuranceOrderOffsite.otherMatter = '';
           let order = storage.fetch("order");
-          order.insuranceOrderOffsite = this.insuranceOrderOffsite;
+          order.insuranceOrderOffsite.otherMatter = this.insuranceOrderOffsite.otherMatter;
           storage.save('order', order);
-          if (this.isOther) {
-            if (this.insuranceOrderOffsite.otherMatter === '') {
-              this.showPositionValue = true;
-              this.toastText = "请完善异地投保信息";
-              return false;
-            }
-          } else {
-            this.insuranceOrderOffsite.otherMatter = '';
-            let order = storage.fetch("order");
-            order.insuranceOrderOffsite.otherMatter = this.insuranceOrderOffsite.otherMatter;
-            storage.save('order', order);
-          }
         }
         this.$router.push("payment");
       }
     },
     created: function () {
-      let holder = storage.fetch("holder");
-      if (holder.policyholderCity !== '440300') {
-        this.isOffSite = true;
-      }
       this.insuranceOrderOffsite = {
         sensue: '',
         workplace: '',
