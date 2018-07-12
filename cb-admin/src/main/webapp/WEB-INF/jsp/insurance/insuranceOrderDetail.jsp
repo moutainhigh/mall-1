@@ -40,17 +40,23 @@
             $("#city").html(city);
 
 
-            var policyholderProvince= $.citySelector.getProvince(${insuranceOrder.insuranceOrderPolicyholder.policyholderProvince});
-            var policyholderCity=  $.citySelector.getCity(${insuranceOrder.insuranceOrderPolicyholder.policyholderCity});
-            var policyholderDistrict=  $.citySelector.getDistrict(${insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
-            var address=policyholderProvince+policyholderCity+policyholderDistrict;
-            $("#policyholderDistrict").html(address);
+            var policyholderProvince= $.citySelector.getPCDNames(${insuranceOrder.insuranceOrderPolicyholder.policyholderProvince},${insuranceOrder.insuranceOrderPolicyholder.policyholderCity},${insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
+            <%--var policyholderCity=  $.citySelector.getCity(${insuranceOrder.insuranceOrderPolicyholder.policyholderCity});--%>
+            <%--var policyholderDistrict=  $.citySelector.getDistrict(${insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});--%>
+            <%--var address=policyholderProvince+policyholderCity+policyholderDistrict;--%>
+            $("#policyholderDistrict").html(policyholderProvince);
 
-            var insuredProvince= $.citySelector.getProvince(${insuranceOrder.insuranceOrderInsured.insuredProvince});
-            var insuredCity= $.citySelector.getCity(${insuranceOrder.insuranceOrderInsured.insuredCity});
-            var insuredDistrict= $.citySelector.getDistrict(${insuranceOrder.insuranceOrderInsured.insuredDistrict});
-            var insuredAddress=insuredProvince+insuredCity+insuredDistrict;
-            $("#insuredDistrict").html(insuredAddress);
+            var insuredProvince= $.citySelector.getPCDNames(${insuranceOrder.insuranceOrderInsured.insuredProvince},${insuranceOrder.insuranceOrderInsured.insuredCity},${insuranceOrder.insuranceOrderInsured.insuredDistrict});
+            <%--var insuredCity= $.citySelector.getCity(${insuranceOrder.insuranceOrderInsured.insuredCity});--%>
+            <%--var insuredDistrict= $.citySelector.getDistrict(${insuranceOrder.insuranceOrderInsured.insuredDistrict});--%>
+            <%--var insuredAddress=insuredProvince+insuredCity+insuredDistrict;--%>
+            $("#insuredDistrict").html(insuredProvince);
+
+            var insuredCareer =$.profession.getProfession(${insuranceOrder.insuranceOrderInsured.insuredCareer});
+            $("#insuredCareer").html(insuredCareer);
+
+            var policyholderCareer =$.profession.getProfession(${insuranceOrder.insuranceOrderPolicyholder.policyholderCareer});
+            $("#policyholderCareer").html(policyholderCareer);
 
             for (var i=1;i<7;i++){
                 $('#example'+i).viewer({
@@ -164,7 +170,7 @@
                                 <label><span class="asterisk"></span> 被保人职业：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderInsured.insuredCareer}
+                                    <div name="insuredCareer" id="insuredCareer"></div>
                             </div>
 
                         </div>
@@ -245,7 +251,7 @@
                                 <label><span class="asterisk"></span> 投保人职业：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}
+                                    <div name="policyholderCareer" id="policyholderCareer"></div>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -760,7 +766,10 @@
                                                 <c:otherwise>
                                                     <c:choose>
                                                         <c:when test="${matterLists.no=='1'}">
-                                                            <th scope="col" colspan="2">${matterLists.matter}</th>
+                                                            <th scope="col">${matterLists.matter}</th>
+                                                            <th scope="col">
+                                                                <c:if test="${matterLists.insured=='false'}">否</c:if>
+                                                                <c:if test="${matterLists.insured=='true'}">是</c:if></th>
                                                             <th scope="col" colspan="3">${matterLists.insured_remark}</th>
                                                         </c:when>
                                                         <c:otherwise>
@@ -799,13 +808,12 @@
                     <div class="subheading">
                         <h3>异地投保</h3>
                     </div>
+                        <c:if test="${insuranceOrder.insuranceOrderOffsite!=null}">
                     <div class="inner-padding">
                         <div class="spacer-30">1、您的户籍所在地是哪里？
                         </div>
-                        <div class="row">
-                            <div class="col-sm-1">
+                        <div style="float: left;margin-left: 10px">
                                 <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.sensue}</label>
-                            </div>
                         </div>
 
                     </div>
@@ -815,10 +823,8 @@
                             <div class="spacer-30">
                                 2、您目前工作所在城市或地区名？单位名称？工作单位所属行业？您的职务？
                             </div>
-                            <div class="row">
-                                <div class="col-sm-1">
+                            <div style="float: left;margin-left: 10px">
                                     <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.workplace}</label>
-                                </div>
                             </div>
                         </div>
 
@@ -828,10 +834,8 @@
                             <div class="spacer-30">
                                 3、请说明您离开投保地的原因？前往何地？出行目的？（如是工作或学习，请提供单位或学校的名称和地址，并详细告知工作内容）
                             </div>
-                            <div class="row">
-                                <div class="col-sm-1">
+                            <div  style="float: left;margin-left: 10px">
                                     <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.leaveReason}</label>
-                                </div>
                             </div>
                         </div>
 
@@ -841,10 +845,8 @@
                             <div class="spacer-30">
                                 4、您一年中平均在投保地逗留的时间多长？每次回投保地的时间间隔多久？您往来投保地和上述异地之间经常乘坐的交通工具是什么？
                             </div>
-                            <div class="row">
-                                <div class="col-sm-1">
+                            <div  style="float: left;margin-left: 10px">
                                     <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.stayTime}</label>
-                                </div>
                             </div>
                         </div>
 
@@ -854,10 +856,8 @@
                             <div class="spacer-30">
                                 5、您在投保地或异地是否已落实居住住所？如已落实请简述居住地址、环境？
                             </div>
-                            <div class="row">
-                                <div class="col-sm-1">
+                            <div style="float: left;margin-left: 10px">
                                     <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.offsiteAddress}</label>
-                                </div>
                             </div>
                         </div>
 
@@ -868,13 +868,11 @@
                             <div class="spacer-30">
                                 6、是否有其他需要说明事项：
                             </div>
-                            <div class="row">
-                                <div class="col-sm-1">
+                            <div  style="float: left;margin-left: 10px">
                                     <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.otherMatter}</label>
-                                </div>
                             </div>
                         </div>
-
+                        </c:if>
 
                 </div><!-- End .inner-padding -->
 

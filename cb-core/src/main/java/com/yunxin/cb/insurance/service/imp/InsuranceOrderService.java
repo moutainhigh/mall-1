@@ -158,6 +158,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                                 description = description.replace(str[i],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;</p>");
                                         }
                                     put("matter",description);
+                                    put("insured",list.getInsuredResult());
                                     put("insured_remark",list.getInsuredRemark());
                                     put("no","1");
                                 }
@@ -237,6 +238,10 @@ public class InsuranceOrderService implements IInsuranceOrderService {
          * 获取保单详情
          */
         InsuranceOrder insuranceOrder = getInsuranceOrderDetailById(orderId);
+        /**
+         * 获取事项
+         */
+        List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList =  insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
         return new HashMap<String,Object>(){
             {
                     put("insuranceOrder",insuranceOrder);
@@ -249,13 +254,13 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 if(beneficiaryList.size()<3)
                     beneficiaryList.add(new InsuranceOrderBeneficiary());
                 put("beneficiaryList",beneficiaryList);
+                put("insuranceOrderInformedMatterList",insuranceOrderInformedMatterList);
             }
 
         };
     }
 
     public static List<InsuranceOrderBeneficiary> sortIntMethod(List list){
-
         Collections.sort(list, new Comparator(){
             @Override
             public int compare(Object o1, Object o2) {
