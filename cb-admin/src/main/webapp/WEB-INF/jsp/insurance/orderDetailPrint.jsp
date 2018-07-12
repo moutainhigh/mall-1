@@ -7,13 +7,13 @@
 <html class="no-js">                       <!--<![endif]-->
 <head>
     <!--<script src="../js/zoomify/zoomify.js"></script>-->
-    <script src="http://www.jq22.com/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../js/zoomify/jquery-1.4.4.min.js"></script>
     <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" type="text/css" href="../css/baodan.css">
 
-    <title>保单详情</title>
+    <title></title>
 
     <script type="text/javascript">
         function daYin() {
@@ -22,8 +22,6 @@
     </script>
 </head>
 <body>
-<jsp:include page="../layouts/left.jsp"/>
-<jsp:include page="../layouts/sidebarRight.jsp"/>
 <div id="main" class="clearfix">
     <header id="header-main">
         <div class="header-main-top">
@@ -40,19 +38,6 @@
             </div>
         </div>
         <!-- End #header-main-top -->
-        <div class="header-main-bottom">
-            <div class="pull-left">
-                <ul class="breadcrumb">
-                    <li><a href="#">首页</a></li>
-                    <li><a href="#">保单管理</a></li>
-                    <li class="active">保单详情</li>
-                </ul>
-                <!-- End .breadcrumb -->
-            </div>
-            <div class="pull-right">
-                <p>Version 1.0.0</p>
-            </div>
-        </div>
         <!-- End #header-main-bottom -->
     </header>
 
@@ -60,24 +45,13 @@
 
 
         <header id="header-sec">
-            <div class="inner-padding">
-                <div class="pull-left">
-                    <h2>保单详情</h2>
-                </div>
-                <div class="pull-right">
-                    <a class="btn btn-default" href="insurances.do">
-                        <i class="fa fa-reply"></i>
-                    </a>
-
-                </div>
-            </div>
         </header>
         <div class="window">
             <div class="actionbar">
                 <div class="pull-left">
                     <ul class="ext-tabs">
                         <li class="active">
-                            <a href="#content-tab-1">保单信息</a> <a class="btn btn-default pull-right"
+                            <a class="btn btn-default pull-right"
                                                                  href="javascript:void(0);" onclick="daYin()">打印</a>
                         </li>
                     </ul>
@@ -99,7 +73,7 @@
                     <div class="div-line">
                         <div class="div-line-con div-row-2">
                             <div class="title">A 1.姓名</div>
-                            <input class="a-input" type="text"/>
+                            <input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>
                         </div>
                         <div class="div-line-con div-sex">
                             <div class="title">A 2.性别</div>
@@ -310,7 +284,7 @@
                         </div>
                     </div>
                 </div>
-                <div style="color: red;">
+                <div>
                     投保人资料（如投保人为保险人本人，可免填本栏）
                 </div>
                 <div class="div-tab">
@@ -509,9 +483,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <jsp:include page="../layouts/footer.jsp"/>
         </div>
         <!-- End #content -->
     </div>
