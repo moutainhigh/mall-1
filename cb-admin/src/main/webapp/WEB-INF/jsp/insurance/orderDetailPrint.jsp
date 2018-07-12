@@ -66,14 +66,47 @@
 
 
             <div class="th-tab" id="prints">
-                <div style="position: absolute">
-
+                <div style="position: absolute;z-index: 20;">
+                    <div class="al-tab">
+                        <div class="al-line">
+                            <div class="al-font div-row-2">
+                                <div class="al-row-2">哈哈哈哈</div>
+                            </div>
+                            <div class="al-font div-sex">
+                                <div class="al-row-sex">√</div>
+                                <div>√</div>
+                            </div>
+                            <div class="al-font div-row-4">
+                                <div class="al-row-date">
+                                    <div>1996</div>
+                                    <div style="margin-left: 50px;">02</div>
+                                    <div style="margin-left: 50px;">02</div>
+                                </div>
+                            </div>
+                            <div class="al-font div-row-2">
+                                <div class="al-row-age">18</div>
+                            </div>
+                        </div>
+                        <div class="al-line">
+                            <div class="al-font div-row-5">
+                                <div class="al-row-cardType">
+                                    <div>√</div>
+                                    <div style="margin-left: 64px">√</div>
+                                    <div style="margin-left: 52px">√</div>
+                                    <div style="margin-left: 65px">√</div>
+                                </div>
+                            </div>
+                            <div class="al-font">
+                                <div class="card-num">445281166666666666</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="div-tab">
                     <div class="div-line">
                         <div class="div-line-con div-row-2">
                             <div class="title">A 1.姓名</div>
-                            <input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>
+                            <%--<input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>--%>
                         </div>
                         <div class="div-line-con div-sex">
                             <div class="title">A 2.性别</div>
@@ -87,11 +120,11 @@
                         <div class="div-line-con div-row-4">
                             <div class="title">A 3.出生日期</div>
                             <div style="padding-left: 20px;">
-                                <input class="c-input" type="text"/>
+                                <input class="b-input" type="text"/>
                                 年
-                                <input class="c-input" type="text"/>
+                                <input class="b-input" type="text"/>
                                 月
-                                <input class="c-input" type="text"/>
+                                <input class="b-input" type="text"/>
                                 日
                             </div>
                         </div>
