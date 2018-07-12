@@ -56,12 +56,7 @@ public class CustomerResource extends BaseResource {
         return new ResponseResult(Result.FAILURE, "未找到相关好友");
     }
 
-    @ApiOperation(value = "添加好友通知")
-    @PostMapping(value = "addFriendNotice")
-    public ResponseResult addFriendNotice(@RequestParam("accountName") String accountName, @RequestParam String requestMessage, @ModelAttribute("customerId") int customerId) throws Exception {
-//        rongCloudService.sendMessage();
-        return new ResponseResult(Result.SUCCESS);
-    }
+
 
     @ApiOperation(value = "添加好友")
     @PostMapping(value = "addFriend")
