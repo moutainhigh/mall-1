@@ -44,6 +44,7 @@ const holder = {
   policyholderDistrict: '',
   policyholderAddress: '',
   policyholderTaxRelated: [],
+  submissionSign: '',
   policyholderSign: '',
   cardPositiveImg: '',
   cardNegativeImg: '',

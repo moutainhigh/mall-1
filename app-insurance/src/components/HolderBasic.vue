@@ -25,7 +25,7 @@
       <x-input title="被保人职业" placeholder="请输入职业" v-model="career"
                v-bind:class="{'errorInput': $v.career.$error}"
                @input="$v.career.$touch()"></x-input>
-      <div class="error" v-if="!$v.career.required && $v.career.$dirty">请输入职业</div>
+      <div class="error" v-if="!$v.career.required && $v.career.$dirty">请选择职业</div>
     </group>
 
 
