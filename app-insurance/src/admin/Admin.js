@@ -20,7 +20,8 @@ const insured = {
   insuredAddress: '',
   insuredRelation: [],
   //临时变量，省市区
-  insuredPCD: []
+  insuredPCD: [],
+  careerName:''
 };
 
 const holder = {
@@ -53,7 +54,8 @@ const holder = {
   otherImg3: '',
   //临时变量，省市区
   holderPCD: [],
-  unifyAddr:false
+  unifyAddr:false,
+  careerName:''
 };
 
 const order = {

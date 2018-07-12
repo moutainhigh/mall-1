@@ -22,13 +22,12 @@
         </div>
       </div>
 
-      <x-input title="被保人职业" placeholder="请输入职业" v-model="career"
+      <x-input title="被保人职业" placeholder="请选择职业" v-model="career"
                v-bind:class="{'errorInput': $v.career.$error}"
                @input="$v.career.$touch()"></x-input>
-      <div class="error" v-if="!$v.career.required && $v.career.$dirty">请输入职业</div>
+      <div style="position:absolute;width: 100%;height: 42px;margin-top: -42px;" @click="goToSelect"></div>
+      <div class="error" v-if="!$v.career.required && $v.career.$dirty">请选择职业</div>
     </group>
-
-
     <!--</div>-->
     <div class="i-card">
       <div class="i-card-tip">
@@ -102,17 +101,24 @@
 
 <script>
   import storage from "../store/storage"
-  import {PopupPicker, Toast, Datetime} from 'vux'
+  import {PopupPicker, Picker, Datetime,Popup,TransferDom,Search} from 'vux'
   import XInput from "vux/src/components/x-input/index";
   import {required} from 'vuelidate/lib/validators'
   import {dateFormat} from "../config/mUtils";
+  import {careerCode} from "../admin/career"
 
   export default {
     name: "holder-basic",
+    directives: {
+      TransferDom
+    },
     components: {
       XInput,
       PopupPicker,
-      Datetime
+      Datetime,
+      Popup,
+      Search,
+      Picker
     },
     data() {
       return {
@@ -178,6 +184,15 @@
         } else {
           this.$router.push('/insured');
         }
+      },
+      goToSelect(){
+        this.$router.push({
+          path:'/careerSelect',
+          query:{
+            type:'insured',
+            key:'insuredCareer'
+          }
+        })
       }
     },
     watch: {
@@ -215,11 +230,6 @@
             break;
         }
         storage.save('order', order);
-      },
-      career: function (newVal, oldVal) {
-        let insured = storage.fetch("insured");
-        insured.insuredCareer = newVal;
-        storage.save('insured', insured);
       }
     },
     created: function () {
@@ -244,7 +254,11 @@
       let insured = storage.fetch("insured");
       this.birthday = insured.insuredBirthday;
       this.gender = insured.insuredGender;
-      this.career = insured.insuredCareer;
+      this.career = insured.careerName;
+    },
+    activated(){
+      let insured = storage.fetch("insured");
+      this.career = insured.careerName;
     }
   }
 </script>
