@@ -269,7 +269,15 @@
           this.toastText = "请上传身份证背面图片";
           return false;
         }
-        this.$router.push("differentPlaces");
+        let holder = storage.fetch("holder");
+        if (holder.policyholderCity !== '440300') {
+          this.$router.push("differentPlaces");
+        }else {
+          let order = storage.fetch("order");
+          order.insuranceOrderOffsite = null;
+          storage.save("order",order);
+          this.$router.push("payment")
+        }
       },
     },
     created: function () {

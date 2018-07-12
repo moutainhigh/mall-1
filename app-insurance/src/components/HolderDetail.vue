@@ -26,17 +26,16 @@
           </div>
         </div>
       </div>
-      <x-input title="投保人职业" placeholder="请选择职业" v-model="holder.policyholderCareer"
-               v-bind:class="{'errorInput': $v.holder.policyholderCareer.$error}"
-               @input="$v.holder.policyholderCareer.$touch()"></x-input>
-      <!--<popup-picker title="投保人职业" placeholder="请选择职业" value-text-align="left"></popup-picker>-->
-      <div class="error" v-if="!$v.holder.policyholderCareer.required && $v.holder.policyholderCareer.$dirty">职业不能为空
+      <x-input title="投保人职业" placeholder="请选择职业" v-model="holder.careerName"
+               v-bind:class="{'errorInput': $v.holder.careerName.$error}"
+               @input="$v.holder.careerName.$touch()"></x-input>
+      <div style="position:absolute;width: 100%;height: 42px;margin-top: -42px;" @click="goToSelect"></div>
+      <div class="error" v-if="!$v.holder.careerName.required && $v.holder.careerName.$dirty">职业不能为空
       </div>
-      <div class="error" v-if="!$v.holder.policyholderCareer.minLength">职业最少为
-        {{$v.holder.policyholderCareer.$params.minLength.min}}
+      <div class="error" v-if="!$v.holder.careerName.minLength">职业最少为
+        {{$v.holder.careerName.$params.minLength.min}}
         个字符
       </div>
-      <div class="error" v-if="!$v.holder.policyholderCareer.maxLength">职业最多不超过32位数</div>
 
       <datetime title="出生日期" v-model="holder.policyholderBirthday" startDate="1950-01-01" :endDate="startDate"
                 placeholder="请选择出生日期"
@@ -485,7 +484,7 @@
         return {
           holder: {
             policyholderName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-            policyholderCareer: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            careerName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             policyholderBirthday: {required},
             policyholderCardType: {required},
             policyholderCardNo: {required, vali: this.valiHolder},
@@ -529,7 +528,7 @@
         return {
           holder: {
             policyholderName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-            policyholderCareer: {required, minLength: minLength(2), maxLength: maxLength(32)},
+            careerName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             policyholderBirthday: {required},
             policyholderCardType: {required},
             policyholderCardNo: {required, vali: this.valiHolder},
@@ -733,6 +732,15 @@
           this.addBene1 = true;
           this.addBene2 = true;
         }
+      },
+      goToSelect(){
+        this.$router.push({
+          path:'/careerSelect',
+          query:{
+            type:'holder',
+            key:'policyholderCareer'
+          }
+        })
       }
     },
     watch: {
@@ -957,6 +965,9 @@
           elementsByClassName2[i].setAttribute('style', 'margin-left:10px;');
         }
       }
+    },
+    activated(){
+      this.holder = storage.fetch("holder");
     }
   }
 </script>
