@@ -11,12 +11,12 @@
     <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="stylesheet" type="text/css" href="../css/baodan.css">
+    <link rel="stylesheet" type="text/css" href="../css/insurance.css">
 
     <title></title>
 
     <script type="text/javascript">
-        function daYin() {
+        function jqPrints() {
             $("#prints").jqprint();
         }
     </script>
@@ -52,7 +52,7 @@
                     <ul class="ext-tabs">
                         <li class="active">
                             <a class="btn btn-default pull-right"
-                               href="javascript:void(0);" onclick="daYin()">打印</a>
+                               href="javascript:void(0);" onclick="jqPrints()">打印</a>
                         </li>
                     </ul>
                 </div>
@@ -70,7 +70,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font div-row-2">
-                                <div class="al-row-2">哈哈哈哈</div>
+                                <div class="al-row-2" style="margin-top: 9px;">哈哈哈哈</div>
                             </div>
                             <div class="al-font div-sex">
                                 <div class="al-row-sex">√</div>
