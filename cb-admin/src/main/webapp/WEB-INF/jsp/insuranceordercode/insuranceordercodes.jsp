@@ -5,7 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/modal.css">
+    <script src="../js/modal.js"></script>
     <title>品牌管理</title>
 
     <script type="text/javascript">
@@ -21,7 +23,21 @@
                 culture:"zh-CN",
                 parseFormats: ["yyyy-MM-dd"]
             });
+            $("#add-key").click(function(){
+                $("#add-key").createModal({
+                    background: "#000",//设定弹窗之后的覆盖层的颜色
+                    width: "400px",//设定弹窗的宽度
+                    height: "200px",//设定弹窗的高度
+                    resizable: true,//设定弹窗是否可以拖动改变大小
+                    html: '<p><form id="uploadForm" action="uploadPayerCreditInfoExcel.do" enctype="multipart/form-data" method="post">\n' +
+                    '          <input id="upfile" type="file" name="upfile">\n' +
+                    '          <input type="submit" class="btn btn-default"  value="导入"  name="btn">\n' +
+                    '        </form></p>'
+                });
+            });
         });
+
+
     </script>
 </head>
 <body>
@@ -143,7 +159,7 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="upload.do" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;导入</a>
+                                <a  href="javascript:void(0);"  id="add-key" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;导入</a>
                             </div>
                         </div>
                     </header>
