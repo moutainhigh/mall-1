@@ -66,42 +66,42 @@
 
 
             <div class="th-tab" id="prints">
-                <div style="position: absolute;z-index: 20;">
-                    <div class="al-tab">
-                        <div class="al-line">
-                            <div class="al-font div-row-2">
-                                <div class="al-row-2">哈哈哈哈</div>
-                            </div>
-                            <div class="al-font div-sex">
-                                <div class="al-row-sex">√</div>
-                                <div>√</div>
-                            </div>
-                            <div class="al-font div-row-4">
-                                <div class="al-row-date">
-                                    <div>1996</div>
-                                    <div style="margin-left: 50px;">02</div>
-                                    <div style="margin-left: 50px;">02</div>
-                                </div>
-                            </div>
-                            <div class="al-font div-row-2">
-                                <div class="al-row-age">18</div>
-                            </div>
-                        </div>
-                        <div class="al-line">
-                            <div class="al-font div-row-5">
-                                <div class="al-row-cardType">
-                                    <div>√</div>
-                                    <div style="margin-left: 64px">√</div>
-                                    <div style="margin-left: 52px">√</div>
-                                    <div style="margin-left: 65px">√</div>
-                                </div>
-                            </div>
-                            <div class="al-font">
-                                <div class="card-num">445281166666666666</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%--<div style="position: absolute;z-index: 20;">--%>
+                    <%--<div class="al-tab">--%>
+                        <%--<div class="al-line">--%>
+                            <%--<div class="al-font div-row-2">--%>
+                                <%--<div class="al-row-2">哈哈哈哈</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="al-font div-sex">--%>
+                                <%--<div class="al-row-sex">√</div>--%>
+                                <%--<div>√</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="al-font div-row-4">--%>
+                                <%--<div class="al-row-date">--%>
+                                    <%--<div>1996</div>--%>
+                                    <%--<div style="margin-left: 50px;">02</div>--%>
+                                    <%--<div style="margin-left: 50px;">02</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="al-font div-row-2">--%>
+                                <%--<div class="al-row-age">18</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="al-line">--%>
+                            <%--<div class="al-font div-row-5">--%>
+                                <%--<div class="al-row-cardType">--%>
+                                    <%--<div>√</div>--%>
+                                    <%--<div style="margin-left: 64px">√</div>--%>
+                                    <%--<div style="margin-left: 52px">√</div>--%>
+                                    <%--<div style="margin-left: 65px">√</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="al-font">--%>
+                                <%--<div class="card-num">445281166666666666</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="div-tab">
                     <div class="div-line">
                         <div class="div-line-con div-row-2">
@@ -113,13 +113,13 @@
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 男
-                                <input class="i-cb" style="margin-left: 30px; " type="checkbox"/>
+                                <input class="i-cb" style="margin-left: 20px; " type="checkbox"/>
                                 女
                             </div>
                         </div>
                         <div class="div-line-con div-row-4">
                             <div class="title">A 3.出生日期</div>
-                            <div style="padding-left: 20px;">
+                            <div style="padding-left: 0;">
                                 <input class="b-input" type="text"/>
                                 年
                                 <input class="b-input" type="text"/>
@@ -147,7 +147,6 @@
                                 军官证
                                 <input class="i-cb" type="checkbox"/>
                                 其他
-                                <input type="text" style="border-bottom: #000000 solid 1px;width: 40px">
                             </div>
                         </div>
                         <div class="div-line-con">
@@ -189,7 +188,7 @@
                                     <input class="c-input" type="text"/>
                                     日
                                 </div>
-                                <input class="i-cb" type="checkbox"/>
+                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
                                 长期
                             </div>
                         </div>
@@ -301,7 +300,6 @@
                             <div class="title">A 5.职业代码</div>
                             <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
                             <div class="title">职业类别</div>
-                            <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
                         </div>
                         <div class="div-line-con div-email">
                             <div class="title">A 11.职业</div>
@@ -309,11 +307,10 @@
                         </div>
                         <div class="div-line-con div-part-job">
                             <div class="title">A 11.是否有兼职？</div>
-                            <input class="i-cb" style="margin-left: 20px" type="checkbox"/>
+                            <input class="i-cb" style="margin-left: 10px" type="checkbox"/>
                             是
                             <input class="i-cb" type="checkbox"/>
                             否，如是请说明：
-                            <input class="c-input" type="text"/>
                         </div>
                     </div>
                 </div>
