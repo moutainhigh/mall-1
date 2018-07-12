@@ -36,6 +36,7 @@ public class CustomerFriend implements java.io.Serializable {
     private String phone;
     private String description;
     private String image;
+    private int state;
 
 
     @EmbeddedId
@@ -126,5 +127,12 @@ public class CustomerFriend implements java.io.Serializable {
         this.image = image;
     }
 
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 2)
+    public int getState() {
+        return state;
+    }
 
+    public void setState(int state) {
+        this.state = state;
+    }
 }
