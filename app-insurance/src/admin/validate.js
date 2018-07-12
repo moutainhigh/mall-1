@@ -20,3 +20,5 @@ export const int = helpers.regex('int', /^[1-9]\d*$/);
 export const fixedTel = helpers.regex('fixedTel', /([0-9]{3,4}-)?[0-9]{7,8}/);
 //手机号码校验
 export const mobile = helpers.regex('mobile', /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/);
+//邮箱校验
+export const mail = helpers.regex('mail', /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/);

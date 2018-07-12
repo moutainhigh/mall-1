@@ -73,6 +73,14 @@ const order = {
     accountNo: '',
     bankCardImg: ''
   },
+  insuranceOrderOffsite: {
+    sensue: '',
+    workplace: '',
+    leaveReason: '',
+    stayTime: '',
+    offsiteAddress: '',
+    otherMatter: ''
+  },
   legalBeneficiary: true,
   insuranceOrderBeneficiarys: [],
   insuranceOrderInformedMatters: []

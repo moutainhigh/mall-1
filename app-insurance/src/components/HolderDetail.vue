@@ -142,7 +142,7 @@
       <x-input title="E-mail" v-model="holder.policyholderEmail" placeholder="非必填项"
                v-bind:class="{'errorInput': $v.holder.policyholderEmail.$error}"
                @input="$v.holder.policyholderEmail.$touch()"></x-input>
-      <div class="error" v-if="!$v.holder.policyholderEmail.email">请输入正确邮箱地址</div>
+      <div class="error" v-if="!$v.holder.policyholderEmail.mail">请输入正确邮箱地址</div>
 
       <div class="address" @click="holder.unifyAddr = !holder.unifyAddr">
         <img src="../assets/img/unselect.png" v-if="!holder.unifyAddr"/>
@@ -419,7 +419,7 @@
 
   import {ChinaAddressData, Datetime, Group, PopupPicker, Selector, XAddress, XInput, Toast} from 'vux'
   import storage from "../store/storage";
-  import {required, minLength, maxLength, between, helpers, numeric, email} from 'vuelidate/lib/validators'
+  import {required, minLength, maxLength, between, helpers, numeric} from 'vuelidate/lib/validators'
   import {dateFormat, wipeArray} from "../config/mUtils";
   import {
     idCardVali,
@@ -431,7 +431,8 @@
     permanentResidenceVali,
     int,
     fixedTel,
-    mobile
+    mobile,
+    mail
   } from "../admin/validate";
 
   export default {
@@ -494,7 +495,7 @@
             policyholderMarriage: {required},
             policyholderTel: {fixedTel},
             policyholderMobile: {mobile},
-            policyholderEmail: {email},
+            policyholderEmail: {mail},
             // holderPCD: {required},
             // policyholderAddress: {required, maxLength: maxLength(255)},
             policyholderTaxRelated: {required}
@@ -538,7 +539,7 @@
             policyholderMarriage: {required},
             policyholderTel: {fixedTel},
             policyholderMobile: {mobile},
-            policyholderEmail: {email},
+            policyholderEmail: {mail},
             holderPCD: {required},
             policyholderAddress: {required, maxLength: maxLength(255)},
             policyholderTaxRelated: {required}
@@ -574,12 +575,23 @@
         this.$router.back();
       },
       next() {
+        if (this.holder.unifyAddr) {
+          let insured = storage.fetch("insured");
+          let holder = storage.fetch("holder");
+          holder.policyholderProvince = insured.insuredPCD[0];
+          holder.policyholderCity = insured.insuredPCD[1];
+          holder.policyholderDistrict = insured.insuredPCD[2];
+          holder.policyholderAddress = insured.insuredAddress;
+          storage.save("holder", holder);
+        }
+
         this.$v.$touch();
         if (this.holder.policyholderTel === '' && this.holder.policyholderMobile === '') {
           this.showPositionValue = true;
           this.toastText = "请填写固定电话或手机号码";
           return false;
         }
+
         //判断受益份额不为100时不通过
         if (!this.legalBeneficiary) {
           if (this.beneficiary2.beneficiaryProportion === '' && parseInt(this.beneficiary1.beneficiaryProportion) !== 100) {
@@ -728,13 +740,6 @@
             newVal.policyholderProvince = this.holder.holderPCD[0];
             newVal.policyholderCity = this.holder.holderPCD[1];
             newVal.policyholderDistrict = this.holder.holderPCD[2];
-          }
-          if (this.holder.unifyAddr) {
-            let insured = storage.fetch("insured");
-            newVal.policyholderProvince = insured.insuredPCD[0];
-            newVal.policyholderCity = insured.insuredPCD[1];
-            newVal.policyholderDistrict = insured.insuredPCD[2];
-            newVal.policyholderAddress = insured.insuredAddress;
           }
           if (newVal.policyholderCardType) {
             switch (newVal.policyholderCardType[0]) {

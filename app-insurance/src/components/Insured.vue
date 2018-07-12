@@ -97,7 +97,7 @@
       <div class="error" v-if="!$v.insured.insuredMobile.mobile">请输入正确的手机号码</div>
 
       <x-input title="E-mail" placeholder="非必填项" v-model="insured.insuredEmail"></x-input>
-      <div class="error" v-if="!$v.insured.insuredEmail.email">请输入正确邮箱地址</div>
+      <div class="error" v-if="!$v.insured.insuredEmail.mail">请输入正确邮箱地址</div>
 
       <x-address title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="insured.insuredPCD"
                  value-text-align="left" v-bind:class="{'errorInput': $v.insured.insuredPCD.$error}"></x-address>
@@ -142,7 +142,7 @@
   import storage from "../store/storage";
   import {required, minLength, maxLength, email, helpers} from 'vuelidate/lib/validators'
   import {dateFormat} from "../config/mUtils";
-  import {idCardVali, householdVali, birthVali, hkmcPassVali, taiwanPassVali, passportVali, permanentResidenceVali, int, fixedTel, mobile} from "../admin/validate";
+  import {idCardVali, householdVali, birthVali, hkmcPassVali, taiwanPassVali, passportVali, permanentResidenceVali, int, fixedTel, mobile, mail} from "../admin/validate";
 
   export default {
     components: {
@@ -186,7 +186,7 @@
             insuredMarriage: {required},
             insuredTel: {fixedTel},
             insuredMobile: {mobile},
-            insuredEmail: {email},
+            insuredEmail: {mail},
             insuredPCD: {required},
             insuredAddress: {required, maxLength: maxLength(255)},
             insuredRelation: {required}
