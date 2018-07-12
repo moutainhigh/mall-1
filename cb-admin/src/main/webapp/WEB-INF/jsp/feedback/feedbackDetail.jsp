@@ -403,6 +403,7 @@
             <c:forEach items="${list}"  var="name">
              <img data-original="${name}" src="${name}"   name="viewImg" width="200px" height="200px" />
             </c:forEach>
+            ${info}
           </fieldset>
           <div class="spacer-40"></div>
           <div class="hr-totop"><span>Top</span></div>

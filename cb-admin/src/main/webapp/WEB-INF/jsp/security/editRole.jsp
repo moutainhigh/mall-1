@@ -161,6 +161,7 @@
 
     function checkedNodeIds(nodes, checkedNodes) {
         for (var i = 0; i < nodes.length; i++) {
+            debugger;
             if (nodes[i].checked) {
                 var id = nodes[i].id;
                 var pid=id.substr(0,1);
@@ -177,7 +178,6 @@
                     pNode.set("checked",true);
                 }
             }
-
             if (nodes[i].hasChildren) {
                 checkedNodeIds(nodes[i].children.view(), checkedNodes);
             }
@@ -185,7 +185,6 @@
     }
 
     function onCheck() {
-        debugger;
         var checkedNodes = [],
                 treeView = $("#treeview").data("kendoTreeView"),
                 message;
