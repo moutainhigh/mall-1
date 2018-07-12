@@ -6,6 +6,14 @@
     width: 1000px;
     border-radius: 5px;
     border: #000000 solid 1px;
+    /*overflow: hidden;*/
+}
+
+.div-title {
+    font-size: 14px;
+    color: red;
+    width: 1000px;
+    margin: 5px;
 }
 
 .div-line {
@@ -13,6 +21,7 @@
     margin: -1px;
     border-bottom: #000000 solid 1px;
     font-size: 0;
+    /*height: 35px;*/
 }
 
 .div-line .div-line-con{
@@ -103,6 +112,10 @@
 .div-row-5 {
     width: 423px;
 }
+
+.div-row-6 {
+    width: 536px;
+}
 .div-part-job {
     width: 449px;
 }
@@ -116,6 +129,29 @@
 /*.div-row-4 .title {*/
     /*width: 20% !important;*/
 /*}*/
+
+.div-tab th {
+    border: #000000 solid 1px;
+    box-sizing: border-box;
+}
+.div-tab td {
+    border: #000000 solid 1px;
+    box-sizing: border-box;
+}
+
+.t-line div{
+    display: inline-block;
+}
+
+.t-line-cert {
+    border-left: #000000 solid 1px;
+    display: inline-block;
+    padding: 5px 5px 5px 10px;
+    font-size: 13px;
+    width: 28.5px;
+    height: 30px;
+    box-sizing: border-box;
+}
 
 .div-checkbox input{
     display: inline-block;

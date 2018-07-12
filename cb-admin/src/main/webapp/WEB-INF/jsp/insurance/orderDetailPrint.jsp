@@ -314,7 +314,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="div-title">
                     投保人资料（如投保人为保险人本人，可免填本栏）
                 </div>
                 <div class="div-tab">
@@ -529,6 +529,200 @@
                         </div>
                     </div>
                 </div>
+                <div class="div-title">本单联系地址（如此栏哦那个却，将以投保人住址为准</div>
+                <div class="div-tab">
+                    <div class="div-line">
+                        <div class="div-line-con">
+                            A 41. 信函寄往
+                            <div style="margin-left: 80px;">省</div>
+                            <div style="margin-left: 80px;">市</div>
+                            <div style="margin-left: 80px;">区/县</div>
+                        </div>
+                        <div class="div-line-con div-postcode" style="margin-right: 120px;">
+                            电话
+                        </div>
+                        <div class="div-line-con div-postcode">
+                            邮编
+                            <div style="margin-left: 20px;font-size: 0">
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>短信服务（未选默认为不需要）</div>
+                <div class="div-tab">
+                    <div class="div-line">
+                        <div class="div-line-con div-row-6">
+                            A 41. 投保人是否需要短信服务
+                            <div>
+                                <input class="i-cb" type="checkbox"/>
+                                需要
+                                <input class="i-cb" style="margin-left: 10px; " type="checkbox"/>
+                                不需要
+                            </div>
+                        </div>
+                        <div class="div-line-con">
+                            A 41. 移动电话
+                        </div>
+                    </div>
+                </div>
+                <div class="div-title"><span>身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充报告，则是剩余养老保险年金受益人与身故保险金受益人为同一人）
+                    <br>说明：1.指定受益人时，同一受益顺序的受益份额合计必须等于100%。2.后一受益顺序的受益人只有在前一受益顺序所有受益人丧失或放弃收益权后才能享有受益权。3.若未填写受益份额，同一顺序的保险金受益人按照相等份额享有保险金。4.若未指定受益人，或者受益人指定不明无法确定的，保险金将作为被保险人的遗产按照《中华人名共和国继承法》的规定进行分配。5.投保无身故保险利益的保险产品是无需填写本栏，填写亦视为无效。
+                </div>
+                <table class="div-tab" style="border-collapse: collapse;">
+                    <tr>
+                        <th style="width: 80px;">
+                            姓名
+                        </th>
+                        <th style="width: 80px;">
+                            姓名
+                        </th>
+                        <th style="width: 80px;">
+                            姓名
+                        </th>
+                        <th style="width: 80px;">
+                            姓名
+                        </th>
+                        <th style="width: 80px;">
+                            姓名
+                        </th>
+                        <th style="width: 80px;">
+                            姓名
+                        </th>
+                        <th style="width: 520px;">
+                            姓名
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>
+                            <div class="t-line">
+                                <input type="checkbox"/>
+                                <div>身份证</div>
+                                <input type="checkbox"/>
+                                <div>其他</div>
+                                <div style="margin:0 60px">有效期至</div>
+                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                长期
+                            </div>
+                            <div class="t-line" style="height: 31px;">
+                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;">
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>
+                            <div class="t-line">
+                                <input type="checkbox"/>
+                                <div>身份证</div>
+                                <input type="checkbox"/>
+                                <div>其他</div>
+                                <div style="margin:0 60px">有效期至</div>
+                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                长期
+                            </div>
+                            <div class="t-line" style="height: 31px;">
+                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;">
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>
+                            <div class="t-line">
+                                <input type="checkbox"/>
+                                <div>身份证</div>
+                                <input type="checkbox"/>
+                                <div>其他</div>
+                                <div style="margin:0 60px">有效期至</div>
+                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                长期
+                            </div>
+                            <div class="t-line" style="height: 31px;">
+                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;">
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                    <div class="t-line-cert"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="div-title" style="font-size: 13px">注：当受益人为被保险人法定继承人以外的指定受益人时，须在C16项勾选“是”，并填写身故受益人的姓名、国籍、职业名称、联系方式、住址地或者工作单位地址。</div>
             </div>
         </div>
         <!-- End #content -->

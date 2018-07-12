@@ -59,6 +59,9 @@ export default new Router({
     }, {
       path: '/my-orders',
       name: 'my-orders',
+      meta: {
+        title: '我的保单'
+      },
       component: myOrders
     }, {
       path: '/insured',
@@ -71,7 +74,18 @@ export default new Router({
     }, {
       path: '/careerSelect',
       name: 'careerSelect',
+      meta: {
+        title: '选择职业'
+      },
       component: CareerSelect
+    },{ /* Not Found 路由，必须是最后一个路由 */
+      path: '*',
+      // component: NotFound,
+      meta: {
+        title: '找不到页面'
+      }
     }
   ]
+
 })
+
