@@ -1,4 +1,4 @@
-package com.yunxin.cb.sinolife;
+package com.yunxin.cb.util;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -44,8 +44,6 @@ public class HttpsUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(HttpsUtils.class);
 
-    private static CloseableHttpClient httpClient;
-
     static {
         // 设置连接池
         connMgr = new PoolingHttpClientConnectionManager();
@@ -63,9 +61,6 @@ public class HttpsUtils {
         configBuilder.setConnectionRequestTimeout(MAX_TIMEOUT);
 
         requestConfig = configBuilder.build();
-
-        httpClient = HttpClients.custom().setSSLSocketFactory(createSSLConnSocketFactory())
-                .setConnectionManager(connMgr).setDefaultRequestConfig(requestConfig).build();
     }
 
     /**
@@ -99,6 +94,13 @@ public class HttpsUtils {
         }
         apiUrl += param;
         String result = null;
+        HttpClient httpClient = null;
+        if (apiUrl.startsWith("https")) {
+            httpClient = HttpClients.custom().setSSLSocketFactory(createSSLConnSocketFactory())
+                    .setConnectionManager(connMgr).setDefaultRequestConfig(requestConfig).build();
+        } else {
+            httpClient = HttpClients.createDefault();
+        }
         try {
             HttpGet httpGet = new HttpGet(apiUrl);
             HttpResponse response = httpClient.execute(httpGet);
@@ -120,7 +122,7 @@ public class HttpsUtils {
      * @return
      */
     public static String doPost(String apiUrl) {
-        return doPost(apiUrl, new HashMap<String, Object>(), null);
+        return doPost(apiUrl, new HashMap<String, Object>());
     }
 
     /**
@@ -128,24 +130,28 @@ public class HttpsUtils {
      *
      * @param apiUrl API接口URL
      * @param params 参数map
-     * @param headers 头部参数
      * @return
      */
-    public static String doPost(String apiUrl, Map<String, Object> params, Map<String, String> headers) {
-
+    public static String doPost(String apiUrl, Map<String, Object> params) {
+        CloseableHttpClient httpClient = null;
+        if (apiUrl.startsWith("https")) {
+            httpClient = HttpClients.custom().setSSLSocketFactory(createSSLConnSocketFactory())
+                    .setConnectionManager(connMgr).setDefaultRequestConfig(requestConfig).build();
+        } else {
+            httpClient = HttpClients.createDefault();
+        }
         String httpStr = null;
         HttpPost httpPost = new HttpPost(apiUrl);
         CloseableHttpResponse response = null;
 
         try {
+            httpPost.setHeader("Host","jx.ac.10086.cn");
+            httpPost.setHeader("Upgrade-Insecure-Requests","1");
+            httpPost.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+            httpPost.setHeader("Content-Type","application/x-www-form-urlencoded");
+            httpPost.setHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36");
+            httpPost.setHeader("Referer","http://service.jx.10086.cn/service/resources/indexNew.html");
             httpPost.setConfig(requestConfig);
-            if(headers != null){
-                for (String key : headers.keySet()) {
-
-                    httpPost.setHeader(key, headers.get(key));
-                }
-            }
-
             List<NameValuePair> pairList = new ArrayList<>(params.size());
             for (Map.Entry<String, Object> entry : params.entrySet()) {
                 NameValuePair pair = new BasicNameValuePair(entry.getKey(), entry.getValue().toString());
@@ -153,10 +159,8 @@ public class HttpsUtils {
             }
             httpPost.setEntity(new UrlEncodedFormEntity(pairList, Charset.forName("UTF-8")));
             response = httpClient.execute(httpPost);
-            if(response.getStatusLine().getStatusCode()==200){
-                HttpEntity entity = response.getEntity();
-                httpStr = EntityUtils.toString(entity, "UTF-8");
-            }
+            HttpEntity entity = response.getEntity();
+            httpStr = EntityUtils.toString(entity, "UTF-8");
         } catch (IOException e) {
             logger.error(e.getMessage());
         } finally {

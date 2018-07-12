@@ -9,9 +9,9 @@
     <!--<script src="../js/zoomify/zoomify.js"></script>-->
     <script src="../js/zoomify/jquery-1.4.4.min.js"></script>
     <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="stylesheet" type="text/css" href="../css/baodan.css">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link rel="stylesheet" type="text/css" href="../css/baodan.css"/>
 
     <title></title>
 
@@ -114,7 +114,7 @@
                                 军官证
                                 <input class="i-cb" type="checkbox"/>
                                 其他
-                                <input type="text" style="border-bottom: #000000 solid 1px;width: 40px">
+                                <input type="text" style="border-bottom: #000000 solid 1px;width: 40px"/>
                             </div>
                         </div>
                         <div class="div-line-con">
