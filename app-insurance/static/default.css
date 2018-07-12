@@ -281,6 +281,10 @@ p {
   color: #bfbfbf !important;
 }
 
+.weui-cells input::-webkit-input-placeholder {
+  color: #bfbfbf !important;
+}
+
 .weui-toast.vux-toast-middle {
   width: 15.6em !important;
 }

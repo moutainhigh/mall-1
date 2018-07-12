@@ -38,8 +38,9 @@
       <div class="error" v-if="!$v.insured.insuredCountry.maxLength">国籍最多不超过64位数</div>
 
       <div v-bind:class="{'errorInput': $v.insured.insuredHeight.$error}">
-        <div class="input-ver" >
-          <x-input title="身高" placeholder="请输入身高" v-model="insured.insuredHeight" class="input-ver-x" @input="$v.insured.insuredHeight.$touch()"></x-input>
+        <div class="input-ver">
+          <x-input title="身高" placeholder="请输入身高" v-model="insured.insuredHeight" class="input-ver-x"
+                   @input="$v.insured.insuredHeight.$touch()"></x-input>
           <div class="input-vile">cm</div>
         </div>
       </div>
@@ -48,7 +49,7 @@
       <div class="error" v-if="!$v.insured.insuredHeight.maxLength">最大不超过3位数</div>
 
       <div v-bind:class="{'errorInput': $v.insured.insuredBodyWeight.$error}">
-        <div class="input-ver" >
+        <div class="input-ver">
           <x-input title="体重" placeholder="请输入体重" v-model="insured.insuredBodyWeight"
                    @input="$v.insured.insuredBodyWeight.$touch()" class="input-ver-x"></x-input>
           <div class="input-vile">kg</div>
@@ -61,7 +62,7 @@
       <div class="error" v-if="!$v.insured.insuredBodyWeight.maxLength">最大不超过3位数</div>
 
       <div v-bind:class="{'errorInput': $v.insured.insuredIncome.$error}">
-        <div class="input-ver" >
+        <div class="input-ver">
           <x-input title="年收入" placeholder="请输入年收入" v-model="insured.insuredIncome" class="input-ver-x"
                    @input="$v.insured.insuredIncome.$touch()"></x-input>
           <div class="input-vile">万元</div>
@@ -96,7 +97,7 @@
       <!--</div>-->
       <div class="error" v-if="!$v.insured.insuredMobile.mobile">请输入正确的手机号码</div>
 
-      <x-input title="E-mail" placeholder="非必填项" v-model="insured.insuredEmail"></x-input>
+      <x-input title="E-mail" placeholder="请输入邮箱" v-model="insured.insuredEmail"></x-input>
       <div class="error" v-if="!$v.insured.insuredEmail.mail">请输入正确邮箱地址</div>
 
       <x-address title="家庭住址" placeholder="请选择地址" :list="addressData" v-model="insured.insuredPCD"
@@ -111,7 +112,7 @@
       <div class="error" v-if="!$v.insured.insuredAddress.required && $v.insured.insuredAddress.$dirty">请输入详细地址</div>
       <div class="error" v-if="!$v.insured.insuredAddress.maxLength">详细地址最多不超过255位数</div>
 
-      <popup-picker title="是被保人的" placeholder="请选择投被保人的关系" :data="relates" value-text-align="left"
+      <popup-picker title="是被保人的" placeholder="请选择关系" :data="relates" value-text-align="left"
                     v-model="insured.insuredRelation"
                     v-bind:class="{'errorInput': $v.insured.insuredRelation.$error}"></popup-picker>
       <div class="error" v-if="!$v.insured.insuredRelation.required && $v.insured.insuredRelation.$dirty">
@@ -120,16 +121,16 @@
     </group>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <!--<div style="height: 50px;">-->
-      <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">-->
-        <!--<div>上一步</div>-->
-      <!--</button>-->
-      <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
-        <!--<div>下一步</div>-->
-      <!--</button>-->
+    <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a" @click="comeBack">-->
+    <!--<div>上一步</div>-->
+    <!--</button>-->
+    <!--<button class="i-footer" style="width: 50%;right: 0" @click="next">-->
+    <!--<div>下一步</div>-->
+    <!--</button>-->
     <!--</div>-->
-    <div style="height: 60px;" >
+    <div style="height: 60px;">
       <div class="i-footer">
-        <button  @click="next" >
+        <button @click="next">
           <div>下一步</div>
         </button>
       </div>
@@ -142,7 +143,19 @@
   import storage from "../store/storage";
   import {required, minLength, maxLength, email, helpers} from 'vuelidate/lib/validators'
   import {dateFormat} from "../config/mUtils";
-  import {idCardVali, householdVali, birthVali, hkmcPassVali, taiwanPassVali, passportVali, permanentResidenceVali, int, fixedTel, mobile, mail} from "../admin/validate";
+  import {
+    idCardVali,
+    householdVali,
+    birthVali,
+    hkmcPassVali,
+    taiwanPassVali,
+    passportVali,
+    permanentResidenceVali,
+    int,
+    fixedTel,
+    mobile,
+    mail
+  } from "../admin/validate";
 
   export default {
     components: {
@@ -173,25 +186,25 @@
       }
     },
     validations() {
-        return {
-          insured: {
-            insuredName: {required, minLength: minLength(2), maxLength: maxLength(32)},
-            insuredCardType: {required},
-            insuredCardNo: {required, cardVali: this.vali},
-            insuredCardPeriod: {required},
-            insuredCountry: {required, maxLength: maxLength(64)},
-            insuredHeight: {required, int, maxLength: maxLength(3)},
-            insuredBodyWeight: {required, int, maxLength: maxLength(3)},
-            insuredIncome: {required, int, maxLength: maxLength(6)},
-            insuredMarriage: {required},
-            insuredTel: {fixedTel},
-            insuredMobile: {mobile},
-            insuredEmail: {mail},
-            insuredPCD: {required},
-            insuredAddress: {required, maxLength: maxLength(255)},
-            insuredRelation: {required}
-          }
+      return {
+        insured: {
+          insuredName: {required, minLength: minLength(2), maxLength: maxLength(32)},
+          insuredCardType: {required},
+          insuredCardNo: {required, cardVali: this.vali},
+          insuredCardPeriod: {required},
+          insuredCountry: {required, maxLength: maxLength(64)},
+          insuredHeight: {required, int, maxLength: maxLength(3)},
+          insuredBodyWeight: {required, int, maxLength: maxLength(3)},
+          insuredIncome: {required, int, maxLength: maxLength(6)},
+          insuredMarriage: {required},
+          insuredTel: {fixedTel},
+          insuredMobile: {mobile},
+          insuredEmail: {mail},
+          insuredPCD: {required},
+          insuredAddress: {required, maxLength: maxLength(255)},
+          insuredRelation: {required}
         }
+      }
     },
     methods: {
       comeBack() {
@@ -376,6 +389,7 @@
     margin-top: -36px;
     margin-right: 16px;
     padding: 4px 8px;
+    color: #bfbfbf
   }
 
   .input-ver {

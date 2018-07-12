@@ -69,7 +69,7 @@
     name: "differentPlaces",
     data() {
       return {
-        insuranceOrderOffsite: storage.fetch("order").insuranceOrderOffsite,
+        insuranceOrderOffsite: null,
         isOther: false,
         isOffSite: false,
         showPositionValue: false,
@@ -87,6 +87,9 @@
             this.toastText = "请完善异地投保信息";
             return false;
           }
+          let order = storage.fetch("order");
+          order.insuranceOrderOffsite = this.insuranceOrderOffsite;
+          storage.save('order', order);
           if (this.isOther) {
             if (this.insuranceOrderOffsite.otherMatter === '') {
               this.showPositionValue = true;
@@ -108,14 +111,18 @@
       if (holder.policyholderCity !== '440300') {
         this.isOffSite = true;
       }
-      console.log(this.isOffSite)
+      this.insuranceOrderOffsite = {
+        sensue: '',
+        workplace: '',
+        leaveReason: '',
+        stayTime: '',
+        offsiteAddress: '',
+        otherMatter: ''
+      };
     },
     watch: {
       insuranceOrderOffsite: {
         handler(newVal, oldVal) {
-          let order = storage.fetch("order");
-          order.insuranceOrderOffsite = newVal;
-          storage.save('order', order);
         },
         immediate: true,
         deep: true
