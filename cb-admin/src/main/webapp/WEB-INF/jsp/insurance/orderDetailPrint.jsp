@@ -52,7 +52,7 @@
                     <ul class="ext-tabs">
                         <li class="active">
                             <a class="btn btn-default pull-right"
-                                                                 href="javascript:void(0);" onclick="daYin()">打印</a>
+                               href="javascript:void(0);" onclick="daYin()">打印</a>
                         </li>
                     </ul>
                 </div>
@@ -66,42 +66,257 @@
 
 
             <div class="th-tab" id="prints">
-                <%--<div style="position: absolute;z-index: 20;">--%>
-                    <%--<div class="al-tab">--%>
-                        <%--<div class="al-line">--%>
-                            <%--<div class="al-font div-row-2">--%>
-                                <%--<div class="al-row-2">哈哈哈哈</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="al-font div-sex">--%>
-                                <%--<div class="al-row-sex">√</div>--%>
-                                <%--<div>√</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="al-font div-row-4">--%>
-                                <%--<div class="al-row-date">--%>
-                                    <%--<div>1996</div>--%>
-                                    <%--<div style="margin-left: 50px;">02</div>--%>
-                                    <%--<div style="margin-left: 50px;">02</div>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="al-font div-row-2">--%>
-                                <%--<div class="al-row-age">18</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                        <%--<div class="al-line">--%>
-                            <%--<div class="al-font div-row-5">--%>
-                                <%--<div class="al-row-cardType">--%>
-                                    <%--<div>√</div>--%>
-                                    <%--<div style="margin-left: 64px">√</div>--%>
-                                    <%--<div style="margin-left: 52px">√</div>--%>
-                                    <%--<div style="margin-left: 65px">√</div>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="al-font">--%>
-                                <%--<div class="card-num">445281166666666666</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
+                <div style="position: absolute;z-index: 20;">
+                    <div class="al-tab">
+                        <div class="al-line">
+                            <div class="al-font div-row-2">
+                                <div class="al-row-2">哈哈哈哈</div>
+                            </div>
+                            <div class="al-font div-sex">
+                                <div class="al-row-sex">√</div>
+                                <div>√</div>
+                            </div>
+                            <div class="al-font div-row-4">
+                                <div class="al-row-date">
+                                    <div>1996</div>
+                                    <div style="margin-left: 50px;">02</div>
+                                    <div style="margin-left: 50px;">02</div>
+                                </div>
+                            </div>
+                            <div class="al-font div-row-2">
+                                <div class="al-row-age">18</div>
+                            </div>
+                        </div>
+                        <div class="al-line">
+                            <div class="al-font div-row-5">
+                                <div class="al-row-cardType">
+                                    <div>√</div>
+                                    <div style="margin-left: 64px">√</div>
+                                    <div style="margin-left: 52px">√</div>
+                                    <div style="margin-left: 65px">√</div>
+                                </div>
+                            </div>
+                            <div class="al-font">
+                                <div class="card-num">445281166666666666</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="div-tab">
+                    <div class="div-line">
+                        <div class="div-line-con div-row-2">
+                            <div class="title">A 1.姓名</div>
+                            <%--<input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>--%>
+                        </div>
+                        <div class="div-line-con div-sex">
+                            <div class="title">A 2.性别</div>
+                            <div>
+                                <input class="i-cb" type="checkbox"/>
+                                男
+                                <input class="i-cb" style="margin-left: 20px; " type="checkbox"/>
+                                女
+                            </div>
+                        </div>
+                        <div class="div-line-con div-row-4">
+                            <div class="title">A 3.出生日期</div>
+                            <div style="padding-left: 40px;">
+                                <input class="b-input" type="text"/>
+                                年
+                                <input class="b-input" type="text"/>
+                                月
+                                <input class="b-input" type="text"/>
+                                日
+                            </div>
+                        </div>
+                        <div class="div-line-con div-row-2">
+                            <div class="title">A 4.年龄</div>
+                            <input class="c-input" type="text"/>
+                            <div>周岁</div>
+                        </div>
+                    </div>
+
+                    <div class="div-line">
+                        <div class="div-line-con div-row-5">
+                            <div class="title">A 5.证件类型</div>
+                            <div>
+                                <input class="i-cb" type="checkbox"/>
+                                身份证
+                                <input class="i-cb" type="checkbox"/>
+                                护照
+                                <input class="i-cb" type="checkbox"/>
+                                军官证
+                                <input class="i-cb" type="checkbox"/>
+                                其他
+                            </div>
+                        </div>
+                        <div class="div-line-con">
+                            <div class="title">A 5.证件号码</div>
+                        </div>
+                        <div style="display: inline-block;float: right;margin-top: 1px;margin-right: 1px;height: 20px">
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                            <div class="div-line-cert"></div>
+                        </div>
+                    </div>
+
+                    <div class="div-line">
+                        <div class="div-line-con div-row-5">
+                            <div class="title">A 5.证件有效期</div>
+                            <div>
+                                <input class="i-cb" type="checkbox"/>
+                                有效期至
+                                <div>
+                                    <input class="c-input" type="text"/>
+                                    年
+                                    <input class="c-input" type="text"/>
+                                    月
+                                    <input class="c-input" type="text"/>
+                                    日
+                                </div>
+                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                长期
+                            </div>
+                        </div>
+                        <div class="div-line-con div-row-3">
+                            <div class="title">A 11.国籍、户籍</div>
+                            <input class="a-input" type="text"/>
+                        </div>
+                        <div class="div-line-con div-row-3">
+                            <div class="title">A 9.身高</div>
+                            <input class="b-input" type="text"/>
+                            厘米，
+                            <div class="title">体重</div>
+                            <input class="b-input" type="text"/>
+                            公斤
+                        </div>
+                    </div>
+                    <div class="div-line">
+                        <div class="div-line-con div-row-5">
+                            <div class="title">A 5.婚姻状况</div>
+                            <div>
+                                <input class="i-cb" type="checkbox"/>
+                                未婚
+                                <input class="i-cb" type="checkbox"/>
+                                已婚
+                                <input class="i-cb" type="checkbox"/>
+                                离异
+                                <input class="i-cb" type="checkbox"/>
+                                丧偶
+                            </div>
+                        </div>
+                        <div class="div-line-con div-row-3">
+                            <div class="title">A 11.固定电话（<span style="font-size: 1px">区号<input class="b-input"
+                                                                                               type="text"/></span>)-(<input
+                                    class="mobile-input" type="text"/></span>)
+                            </div>
+                        </div>
+                        <div class="div-line-con div-row-3">
+                            <div class="title">A 12.移动电话</div>
+                            <input class="a-input" type="text"/>
+                        </div>
+                    </div>
+
+                    <div class="div-line">
+                        <div class="div-line-con div-row-7">
+                            <div class="title">A 10.住址</div>
+                            <div>
+                                <input class="b-input" type="text"/>
+                                省
+                                <input class="b-input" type="text"/>
+                                市
+                                <input class="b-input" type="text"/>
+                                区、县
+                                <input class="d-input" type="text"/>
+                            </div>
+                        </div>
+                        <div class="div-line-con div-postcode">
+                            邮编
+                            <div style="margin-left: 20px;font-size: 0">
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-line">
+                        <div class="div-line-con div-row-5">
+                            <div class="title">A 5.单位名称</div>
+                            <input class="a-input" type="text"/>
+                        </div>
+                        <div class="div-line-con div-row-3">
+                            <div class="title">A 11.职业</div>
+                            <input class="a-input" type="text"/>
+                        </div>
+                        <div class="div-line-con div-row-3">
+                            <div class="title">A 11.年收入</div>
+                            <input class="a-input" type="text"/>
+                        </div>
+                    </div>
+                    <div class="div-line">
+                        <div class="div-line-con div-row-7">
+                            <div class="title">A 10.单位地址</div>
+                            <div>
+                                <input class="b-input" type="text"/>
+                                省
+                                <input class="b-input" type="text"/>
+                                市
+                                <input class="b-input" type="text"/>
+                                区、县
+                                <input class="d-input" type="text"/>
+                            </div>
+                        </div>
+                        <div class="div-line-con div-postcode">
+                            邮编
+                            <div style="margin-left: 20px;font-size: 0">
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-line">
+                        <div class="div-line-con div-career">
+                            <div class="title">A 5.职业代码</div>
+                            <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
+                            <div class="title">职业类别</div>
+                        </div>
+                        <div class="div-line-con div-email">
+                            <div class="title">A 11.职业</div>
+                            <input class="a-input" type="text"/>
+                        </div>
+                        <div class="div-line-con div-part-job">
+                            <div class="title">A 11.是否有兼职？</div>
+                            <input class="i-cb" style="margin-left: 10px" type="checkbox"/>
+                            是
+                            <input class="i-cb" type="checkbox"/>
+                            否，如是请说明：
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    投保人资料（如投保人为保险人本人，可免填本栏）
+                </div>
                 <div class="div-tab">
                     <div class="div-line">
                         <div class="div-line-con div-row-2">
@@ -311,204 +526,6 @@
                             是
                             <input class="i-cb" type="checkbox"/>
                             否，如是请说明：
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    投保人资料（如投保人为保险人本人，可免填本栏）
-                </div>
-                <div class="div-tab">
-                    <div class="div-line">
-                        <div class="div-line-con div-row-2">
-                            <div class="title">A 1.姓名</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-sex">
-                            <div class="title">A 2.性别</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                男
-                                <input class="i-cb" style="margin-left: 30px; " type="checkbox"/>
-                                女
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-4">
-                            <div class="title">A 3.出生日期</div>
-                            <div style="padding-left: 20px;">
-                                <input class="c-input" type="text"/>
-                                年
-                                <input class="c-input" type="text"/>
-                                月
-                                <input class="c-input" type="text"/>
-                                日
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-2">
-                            <div class="title">A 4.年龄</div>
-                            <input class="c-input" type="text"/>
-                            <div>周岁</div>
-                        </div>
-                    </div>
-
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 5.证件类型</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                身份证
-                                <input class="i-cb" type="checkbox"/>
-                                护照
-                                <input class="i-cb" type="checkbox"/>
-                                军官证
-                                <input class="i-cb" type="checkbox"/>
-                                其他
-                                <input type="text" style="border-bottom: #000000 solid 1px;width: 40px">
-                            </div>
-                        </div>
-                        <div class="div-line-con">
-                            <div class="title">A 5.证件号码</div>
-                        </div>
-                        <div style="display: inline-block;float: right;margin-top: 1px;margin-right: 1px;height: 20px">
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                        </div>
-                    </div>
-
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 5.证件有效期</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                有效期至
-                                <div>
-                                    <input class="c-input" type="text"/>
-                                    年
-                                    <input class="c-input" type="text"/>
-                                    月
-                                    <input class="c-input" type="text"/>
-                                    日
-                                </div>
-                                <input class="i-cb" type="checkbox"/>
-                                长期
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 11.国籍、户籍</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 9.身高</div>
-                            <input class="b-input" type="text"/>
-                            厘米，
-                            <div class="title">体重</div>
-                            <input class="b-input" type="text"/>
-                            公斤
-                        </div>
-                    </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 5.婚姻状况</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                未婚
-                                <input class="i-cb" type="checkbox"/>
-                                已婚
-                                <input class="i-cb" type="checkbox"/>
-                                离异
-                                <input class="i-cb" type="checkbox"/>
-                                丧偶
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 11.固定电话（<span style="font-size: 1px">区号<input class="b-input"
-                                                                                               type="text"/></span>)-(<input
-                                    class="mobile-input" type="text"/></span>)
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 12.移动电话</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                    </div>
-
-                    <div class="div-line">
-                        <div class="div-line-con div-row-7">
-                            <div class="title">A 10.住址</div>
-                            <div>
-                                <input class="b-input" type="text"/>
-                                省
-                                <input class="b-input" type="text"/>
-                                市
-                                <input class="b-input" type="text"/>
-                                区、县
-                                <input class="d-input" type="text"/>
-                            </div>
-                        </div>
-                        <div class="div-line-con div-postcode">
-                            邮编
-                            <div style="margin-left: 20px;font-size: 0">
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 5.单位名称</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 11.职业</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 11.年收入</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                    </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-row-7">
-                            <div class="title">A 10.单位地址</div>
-                            <div>
-                                <input class="b-input" type="text"/>
-                                省
-                                <input class="b-input" type="text"/>
-                                市
-                                <input class="b-input" type="text"/>
-                                区、县
-                                <input class="d-input" type="text"/>
-                            </div>
-                        </div>
-                        <div class="div-line-con div-postcode">
-                            邮编
-                            <div style="margin-left: 20px;font-size: 0">
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                            </div>
                         </div>
                     </div>
                 </div>
