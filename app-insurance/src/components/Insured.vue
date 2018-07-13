@@ -3,7 +3,7 @@
     <div class="title" style="margin-top: 0;">
       被保人信息
     </div>
-    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
+    <group label-width="6rem" label-align="left" style="font-size: 15px;">
       <x-input title="姓名" placeholder="请输入姓名" v-model.trim="insured.insuredName"
                v-bind:class="{'errorInput': $v.insured.insuredName.$error}"
                @input="$v.insured.insuredName.$touch()"></x-input>
@@ -79,11 +79,11 @@
         婚姻状况不能为空
       </div>
       <div style="background-color: #f5f5f5">
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 13px;padding: 10px 10px 10px 0;color: #888;">
+        <div style="margin-left:15px;font-size: 13px;padding: 10px 10px 10px 0;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
-      <x-input title="固定电话" placeholder="请输入固定电话" v-model="insured.insuredTel"
+      <x-input id="tel" title="固定电话" placeholder="请输入固定电话" v-model="insured.insuredTel"
                v-bind:class="{'errorInput': $v.insured.insuredMobile.$error}"></x-input>
       <!--<div class="error" v-if="!$v.insured.insuredTel.required && $v.insured.insuredTel.$dirty">-->
       <!--请输入固定电话或移动电话-->
@@ -427,5 +427,9 @@
     100% {
       transform: translateX(0);
     }
+  }
+
+  #tel:before {
+    border-top: none;
   }
 </style>
