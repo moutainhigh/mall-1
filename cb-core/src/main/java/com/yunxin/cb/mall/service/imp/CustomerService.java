@@ -242,11 +242,11 @@ public class CustomerService implements ICustomerService {
         return customerDao.findAll(new Sort(Direction.ASC, "accountName"));
     }
 
-//    @Override
-//    public void resetCustomerPwd(int customerId) {
-//        Customer oldCustomer = customerDao.findOne(customerId);
-//        oldCustomer.setPassword("123456");
-//    }
+    @Override
+    public void resetCustomerPwd(int customerId) {
+        Customer oldCustomer = customerDao.findOne(customerId);
+        oldCustomer.setPassword("123456");
+    }
 
     @Override
     @Transactional(readOnly = true)
