@@ -97,12 +97,17 @@ h2 {
     padding: 8px 5px 8px 10px;
     font-size: 13px;
     box-sizing: border-box;
+    vertical-align: top;
     /*margin-bottom: -1px;*/
     /*margin-top: -1px;*/
 }
 
 .div-line .div-line-con div {
     display: inline-block;
+}
+
+.div-block {
+    display: block !important;
 }
 
 .div-line-cert {
@@ -160,7 +165,7 @@ input {
 .i-cert-code {
     display: inline-block;
     width: 20px;
-    font-size: 14px;
+    font-size: 13px;
     margin-left: -1px;
     text-align: center;
     border-radius: 0;
@@ -172,11 +177,12 @@ input {
 
 .table-line {
     height: 60px;
-    font-size: 13px;
+    font-size: 0;
 }
 
 .table-line div{
     display: table-cell;
+    font-size: 14px;
 }
 
 .div-table-1 {
@@ -185,6 +191,8 @@ input {
     margin: -1px;
     height: 60px;
     box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .div-table-2 {
@@ -193,6 +201,8 @@ input {
     margin: -1px;
     height: 60px;
     box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .div-row-2 {
