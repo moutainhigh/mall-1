@@ -66,6 +66,21 @@
 
 
             <div class="th-tab" id="prints">
+                <div class="header">
+                    <h1>富德生命人寿保险股份有限公司</h1>
+                    <h2>FUNDE  SINO  LIFE  INSUANCE  CO.,LTD.</h2>
+                    <h2>个人保险投保单（经代渠道）</h2>
+                    <div class="header-contract">
+                        <div class="contract" style="width: 450px;"></div>
+                        <div class="contract">
+                            <p>（本单所示金额单位：人民币元）</p>
+                            <div class="contract-num">
+                                <div style="width: 100px;vertical-align: text-bottom;margin-left: 5px;border: 0;">保险合同号码</div>
+                                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div style="position: absolute;z-index: 20;">
                     <div class="al-tab">
                         <div class="al-line">

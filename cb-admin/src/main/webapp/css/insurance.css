@@ -2,6 +2,48 @@
     width: 1020px;
 }
 
+.header {
+    text-align: center;
+    width: 1000px;
+}
+
+h1, h2, h3, h4, p {
+    margin: 0;
+}
+
+.header-contract {
+    height: 200px;
+    text-align: left;
+}
+
+.header .contract {
+    display: inline-block;
+    float: right;
+}
+
+.header .contract .contract-num {
+    border: 1px #000000 solid;
+    margin: 10px 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.header .contract .contract-num p {
+    font-size: 20px;
+    font-family: SimSun;
+    font-weight: bold;
+    padding: 8px 8px 8px 6px;
+    display: inline-block;
+}
+
+.header .contract .contract-num div {
+    border-left: 1px #000000 solid;
+    width: 28px;
+    display: inline-block;
+    height: 36px;
+    margin-bottom: -4px;
+}
+
 .div-tab {
     width: 1000px;
     border-radius: 5px;
@@ -24,11 +66,11 @@
     /*height: 35px;*/
 }
 
-.div-line .div-line-con{
+.div-line .div-line-con {
     border-left: #000000 solid 1px;
     display: inline-block;
     padding: 5px 5px 5px 10px;
-    font-size: 13px;
+    font-size: 14px;
     box-sizing: border-box;
     /*margin-bottom: -1px;*/
     /*margin-top: -1px;*/
@@ -42,7 +84,7 @@
     border-left: #000000 solid 1px;
     display: inline-block;
     padding: 5px 5px 5px 10px;
-    font-size: 13px;
+    font-size: 14px;
     width: 26px;
     height: 30px;
     box-sizing: border-box;
@@ -52,6 +94,11 @@
     position: relative;
     top: 2px;
     margin-left: 8px;
+}
+
+input {
+    margin: 0;
+    padding: 0;
 }
 
 .a-input {
@@ -88,7 +135,7 @@
 .i-cert-code {
     display: inline-block;
     width: 20px;
-    font-size: 13px;
+    font-size: 14px;
     margin-left: -1px;
     text-align: center;
     border-radius: 0;
@@ -105,6 +152,7 @@
 .div-row-3 {
     width: 288px;
 }
+
 .div-row-4 {
     width: 342px;
 }
@@ -116,23 +164,25 @@
 .div-row-6 {
     width: 536px;
 }
+
 .div-part-job {
     width: 449px;
 }
+
 .div-email {
     width: 289px;
 }
+
 .div-career {
     width: 261px;
 }
 
-
-table tr th,table tr td {
+table tr th, table tr td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
 }
 
-.t-line div{
+.t-line div {
     display: inline-block;
 }
 
@@ -140,13 +190,13 @@ table tr th,table tr td {
     border-left: #000000 solid 1px;
     display: inline-block;
     padding: 5px 5px 5px 10px;
-    font-size: 13px;
+    font-size: 14px;
     width: 27.5px;
-    height: 30px;
+    height: 27px;
     box-sizing: border-box;
 }
 
-.div-checkbox input{
+.div-checkbox input {
     display: inline-block;
 }
 
@@ -156,7 +206,7 @@ table tr th,table tr td {
 
 input {
     border: unset !important;
-    outline:unset;
+    outline: unset;
 }
 
 .div-postcode {
@@ -167,7 +217,7 @@ input {
 }
 
 .al-font {
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .al-tab {
@@ -179,7 +229,7 @@ input {
     font-size: 0;
 }
 
-.al-tab .al-line div{
+.al-tab .al-line div {
     display: inline-block !important;
 }
 
