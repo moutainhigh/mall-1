@@ -2,7 +2,7 @@ package com.yunxin.cb.mall.web.action.insurance;
 
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
-import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
+import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.util.HttpsUtils;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;

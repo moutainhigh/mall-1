@@ -9,12 +9,15 @@ import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
+import com.yunxin.cb.sns.meta.CustomerFriendState;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CommonUtils;
 import com.yunxin.core.util.LogicUtils;
+import io.rong.models.response.BlackListResult;
+import io.rong.models.user.UserModel;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -28,10 +31,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -143,7 +143,7 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
-    public Customer updateAvatar(int customerId, String avatar) throws Exception{
+    public Customer updateAvatar(int customerId, String avatar) throws Exception {
         Customer customer = customerDao.findOne(customerId);
         customer.setAvatarUrl(avatar);
         rongCloudService.update(customer);
@@ -166,7 +166,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer updateAddress(int customerId, String province,String city,String district,String address) {
+    public Customer updateAddress(int customerId, String province, String city, String district, String address) {
         Customer customer = customerDao.findOne(customerId);
         customer.setProvince(province);
         customer.setCity(city);
@@ -242,11 +242,11 @@ public class CustomerService implements ICustomerService {
         return customerDao.findAll(new Sort(Direction.ASC, "accountName"));
     }
 
-    @Override
-    public void resetCustomerPwd(int customerId) {
-        Customer oldCustomer = customerDao.findOne(customerId);
-        oldCustomer.setPassword("123456");
-    }
+//    @Override
+//    public void resetCustomerPwd(int customerId) {
+//        Customer oldCustomer = customerDao.findOne(customerId);
+//        oldCustomer.setPassword("123456");
+//    }
 
     @Override
     @Transactional(readOnly = true)
@@ -392,7 +392,7 @@ public class CustomerService implements ICustomerService {
     }
 
     public List<CustomerFriend> getFriendByCustomerId(int customerId) {
-        List<CustomerFriend> customerFriendss = customerFriendDao.findCustomerFriendByCustomerCustomerId(customerId);
+        List<CustomerFriend> customerFriendss = customerFriendDao.findCustomerFriendByCustomerCustomerIdAndState(customerId,CustomerFriendState.NORMAL);
         return customerFriendss;
     }
 
@@ -415,7 +415,7 @@ public class CustomerService implements ICustomerService {
 
     @Transactional
     public CustomerFriend updateFriendsProfile(CustomerFriend customerFriend) {
-        CustomerFriend renew= customerFriendDao.findOne(customerFriend.getId());
+        CustomerFriend renew = customerFriendDao.findOne(customerFriend.getId());
 
         renew.setPhone(customerFriend.getPhone());
         renew.setAliasName(customerFriend.getAliasName());
@@ -428,6 +428,7 @@ public class CustomerService implements ICustomerService {
 
     /**
      * 用户点赞
+     *
      * @param customerId
      * @return
      */
@@ -437,12 +438,13 @@ public class CustomerService implements ICustomerService {
         Customer customer = customerDao.findOne(customerId);
         customer.setPraise(true);
         Customer recommendCustomer = customer.getRecommendCustomer();
-        recommendCustomer.setPraiseNum(recommendCustomer.getPraiseNum()+1);
+        recommendCustomer.setPraiseNum(recommendCustomer.getPraiseNum() + 1);
         return customer;
     }
 
     /**
      * 查询点赞用户
+     *
      * @param customerId
      * @return
      */
@@ -451,4 +453,74 @@ public class CustomerService implements ICustomerService {
     public List<Customer> getPraiseCustomers(int customerId) {
         return customerDao.findByRecommendCustomer_CustomerIdAndPraise(customerId, true);
     }
+
+    /**
+     * 添加黑名单
+     *
+     * @param friendId
+     * @param customerId
+     * @throws Exception
+     */
+    @Transactional
+    public void addBlacklist(int friendId, int customerId) throws Exception {
+        CustomerFriendId customerFriendId=new CustomerFriendId();
+        customerFriendId.setCustomerId(customerId);
+        customerFriendId.setFriendId(friendId);
+        CustomerFriend customerFriend = customerFriendDao.getOne(customerFriendId);
+        Customer customer = customerFriend.getCustomer();
+        Customer friend = customerFriend.getFriend();
+        customerFriend.setState(CustomerFriendState.BLACKLIST);
+        rongCloudService.addBlacklist(customer.getAccountName(), friend.getAccountName());
+    }
+
+    /**
+     * 移除黑名单
+     *
+     * @param friendId
+     * @param customerId
+     * @throws Exception
+     */
+    @Transactional
+    public void removeBlacklist(int friendId, int customerId) throws Exception {
+        CustomerFriendId customerFriendId=new CustomerFriendId();
+        customerFriendId.setCustomerId(customerId);
+        customerFriendId.setFriendId(friendId);
+        CustomerFriend customerFriend = customerFriendDao.getOne(customerFriendId);
+        Customer customer = customerFriend.getCustomer();
+        Customer friend = customerFriend.getFriend();
+        customerFriend.setState(CustomerFriendState.NORMAL);
+        rongCloudService.removeBlacklist(customer.getAccountName(), friend.getAccountName());
+    }
+
+    @Transactional
+    public  List<CustomerFriend> getBlacklist(int customerId)throws Exception
+    {
+        Customer customer = customerDao.findByCustomerId(customerId);
+        List<CustomerFriend> blacklist= customerFriendDao.findCustomerFriendByCustomerCustomerIdAndState(customerId,CustomerFriendState.BLACKLIST);
+        BlackListResult result = rongCloudService.getBlacklist(customer.getAccountName());
+        List<String> blacklistId=new ArrayList<>();
+        List<String> blacklistIdRongcloud=new ArrayList<>();
+        for(CustomerFriend cf:blacklist)
+        {
+            blacklistId.add(cf.getFriend().getAccountName());
+        }
+        for(UserModel um:result.getUsers())
+        {
+            blacklistIdRongcloud.add(um.id);
+        }
+
+        //同步融云blackList
+        List<String> tempList=new ArrayList<>();
+        tempList.addAll(blacklistId);
+        tempList.removeAll(blacklistIdRongcloud);
+        for(String friend:tempList){
+            rongCloudService.addBlacklist(customer.getAccountName(),friend);
+        }
+        blacklistIdRongcloud.removeAll(blacklistId);
+        for(String friend:blacklistIdRongcloud){
+            rongCloudService.removeBlacklist(customer.getAccountName(),friend);
+        }
+        return blacklist;
+    }
+
 }

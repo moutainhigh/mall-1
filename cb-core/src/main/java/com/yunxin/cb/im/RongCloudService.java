@@ -61,7 +61,7 @@ public class RongCloudService {
     public void sendMessage(Customer customer,Customer friend,String requestMessage) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
-        String content=customer.getNickName()+"加您为好友";
+        String content=customer.getNickName()+"请求加您为好友";
         TxtMessage txtMessage = new TxtMessage(content,"");
         SystemMessage systemMessage = new SystemMessage()
                 .setSenderId(customer.getMobile())
@@ -81,30 +81,29 @@ public class RongCloudService {
         }
     }
 
-    public void addBlacklist(Customer customer,Customer friend) throws Exception {
+    public void addBlacklist(String customer,String friend) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
-        UserModel blackUser = new UserModel().setId(customer.getAccountName());
+        UserModel blackUser = new UserModel().setId(friend);
         UserModel[] blacklist = {blackUser};
         UserModel user = new UserModel()
-                .setId(friend.getAccountName())
+                .setId(customer)
                 .setBlacklist(blacklist);
 
         Result result = (Result)rongCloud.user.blackList.add(user);
-
 
         if(result.getCode() != 200){
             throw new Exception(result.getMsg());
         }
     }
 
-    public void removeBlacklist(Customer customer,Customer friend) throws Exception {
+    public void removeBlacklist(String customer,String friend) throws Exception {
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-        UserModel blackUser = new UserModel().setId(customer.getAccountName());
+        UserModel blackUser = new UserModel().setId(friend);
         UserModel[] blacklist = {blackUser};
         UserModel user = new UserModel()
-                .setId(friend.getAccountName())
+                .setId(customer)
                 .setBlacklist(blacklist);
         Result result = (Result)rongCloud.user.blackList.remove(user);
 
@@ -113,13 +112,10 @@ public class RongCloudService {
         }
     }
 
-    public BlackListResult getBlacklist(Customer customer) throws Exception {
-
+    public BlackListResult getBlacklist(String customer) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-        UserModel user = new UserModel().setId(customer.getAccountName());
-
+        UserModel user = new UserModel().setId(customer);
         BlackListResult result = rongCloud.user.blackList.getList(user);
-
         return result;
     }
 }

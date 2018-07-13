@@ -7,7 +7,7 @@ package com.yunxin.cb.insurance.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
+import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
