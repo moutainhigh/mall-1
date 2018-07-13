@@ -57,6 +57,7 @@
     methods: {
       goToPro(val){
         if (val === 1){
+          storage.save('packetId', 1);
           this.$router.push({
             path:'pro-detail',
             query: {
@@ -67,6 +68,7 @@
         }
 
         if (val === 2){
+          storage.save('packetId', 2);
           this.$router.push({
             path:'/pro-detail',
             query:{

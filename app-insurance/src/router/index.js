@@ -13,6 +13,10 @@ import myOrders from '../components/myOrders'
 import Insured from '../components/Insured'
 import DifferentPlaces from '../components/DifferentPlaces'
 import CareerSelect from '../components/CareerSelect'
+import InsurancePolicy from '../components/InsurancePolicy'
+import InsureNote from '../components/InsureNote'
+import LifeLongClause from '../components/LifeLongClause'
+import Clause from '../components/Clause'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -71,6 +75,22 @@ export default new Router({
       path: '/differentPlaces',
       name: 'differentPlaces',
       component: DifferentPlaces
+    }, {
+      path: '/insurancePolicy',
+      name: 'insurancePolicy',
+      component: InsurancePolicy
+    }, {
+      path: '/lifeLongClause',
+      name: 'lifeLongClause',
+      component: LifeLongClause
+    }, {
+      path: '/clause',
+      name: 'clause',
+      component: Clause
+    }, {
+      path: '/insureNote',
+      name: 'insureNote',
+      component: InsureNote
     }, {
       path: '/careerSelect',
       name: 'careerSelect',
