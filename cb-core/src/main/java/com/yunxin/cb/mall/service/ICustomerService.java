@@ -156,4 +156,11 @@ public interface ICustomerService {
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     List<Customer> getPraiseCustomers(int customerId);
+
+    void addBlacklist(int friendId, int customerId) throws Exception;
+
+    void removeBlacklist(int friendId, int customerId) throws Exception;
+
+    List<CustomerFriend> getBlacklist(int customerId)throws Exception;
+
 }
