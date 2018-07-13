@@ -2,11 +2,12 @@
   <div style="position: relative">
 
     <div class="title">投保单资料签署</div>
-    <div @click="check">
-      <img v-if="!state" class="checkIcon" src="../assets/img/unselect.png">
-      <img v-if="state" class="checkIcon" src="../assets/img/selected.png">
+    <div id="page1"></div>
+    <div>
+      <img v-if="!state" @click="check" class="checkIcon" src="../assets/img/unselect.png">
+      <img v-if="state" @click="check" class="checkIcon" src="../assets/img/selected.png">
       <div class="tip">
-        <p>本人已阅读并理解<span>《投保须知》、《保险条款》、《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
+        <p>本人已阅读并理解<span @click="imsurancePolicy">《投保须知》</span><span @click="loadclause">《保险条款》</span><span @click="insureNote">《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
       </div>
     </div>
 
@@ -174,9 +175,25 @@
         }
         this.save();
         this.$router.push("upload-data")
+      },
+      imsurancePolicy() {
+        this.$router.push("insurancePolicy")
+      },
+      insureNote() {
+        this.$router.push("insureNote")
+      },
+      loadclause() {
+        let packetId = storage.fetch("packetId");
+        if (packetId === 1) {
+          this.$router.push("lifeLongClause");
+        } else {
+          this.$router.push("clause");
+        }
+
       }
     },
     created: function () {
+
     }
   }
 </script>
@@ -229,10 +246,11 @@
     margin: 0;
     padding-bottom: 15px;
     text-align: left;
+    color: #888;
   }
 
   .tip span {
-    color: #c01212;
+    color: #333;
   }
 
   .headPhoto {
