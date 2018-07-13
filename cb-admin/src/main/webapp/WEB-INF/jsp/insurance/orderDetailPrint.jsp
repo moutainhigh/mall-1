@@ -771,7 +771,7 @@
                 </div>
                 <div class="div-tab">
                     <div class="div-line">
-                        <div class="div-line-con" style="width: 500px;">
+                        <div class="div-line-con" style="width: 500px;padding: 10px 5px 10px 10px;">
                             <div class="div-block">B1.交费周期：<input type="checkbox"/>趸交<input style="margin-left: 20px;"
                                                                                             type="checkbox"/>年交<input
                                     style="margin-left: 20px;" type="checkbox"/>半年交<input style="margin-left: 20px;"
@@ -859,7 +859,7 @@
                         <div class="div-table-2" style="width: 662px;height: 30px;">养老金给付方式</div>
                     </div>
                     <div class="table-line" style="height: 110px;">
-                        <div class="div-table-2" style="width: 210px;height: 110px;text-align: left;">
+                        <div class="div-table-2" style="width: 210px;height: 120px;text-align: left;">
                             <div class="div-block" style="margin-left:10px; padding: 5px 0;"><input type="checkbox"/>自被保险人55周岁始
                             </div>
                             <div class="div-block" style="margin-left:10px; padding: 5px 0;"><input type="checkbox"/>自被保险人60周岁始
@@ -868,7 +868,7 @@
                                     style="border-bottom: 1px #000000 solid !important;width: 50px;" type="text">周岁始
                             </div>
                         </div>
-                        <div class="div-table-2" style="width: 790px;height: 110px;vertical-align: top">
+                        <div class="div-table-2" style="width: 790px;height: 120px;vertical-align: top">
                             <div style="height: 82px;width: 790px;border-bottom: #000000 1px solid;">
                                 <div style="width: 129px;height: 82px;border-right: #000000 2px solid;box-sizing: border-box;text-align: left;">
                                     <div class="div-block" style="margin-left:10px; padding: 4px 0;"><input
@@ -914,33 +914,33 @@
                         <div class="div-table-2" style="width: 175px;height: 30px;">B15.基本保险金额</div>
                         <div class="div-table-2" style="width: 175px;height: 30px;">B16.每期标准保险费</div>
                     </div>
-                    <div class="table-line" style="height: 35px;">
-                        <div class="div-table-2" style="width: 338px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 156px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 156px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 175px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 175px;height: 35px;"></div>
+                    <div class="table-line" style="height: 40px;">
+                        <div class="div-table-2" style="width: 338px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 156px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 156px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 175px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 175px;height: 40px;"></div>
                     </div>
-                    <div class="table-line" style="height: 35px;">
-                        <div class="div-table-2" style="width: 338px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 156px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 156px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 175px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 175px;height: 35px;"></div>
+                    <div class="table-line" style="height: 40px;">
+                        <div class="div-table-2" style="width: 338px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 156px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 156px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 175px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 175px;height: 40px;"></div>
                     </div>
-                    <div class="table-line" style="height: 35px;">
-                        <div class="div-table-2" style="width: 338px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 156px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 156px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 175px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 175px;height: 35px;"></div>
+                    <div class="table-line" style="height: 40px;">
+                        <div class="div-table-2" style="width: 338px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 156px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 156px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 175px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 175px;height: 40px;"></div>
                     </div>
-                    <div class="table-line" style="height: 35px;">
-                        <div class="div-table-2" style="width: 338px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 156px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 156px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 175px;height: 35px;"></div>
-                        <div class="div-table-2" style="width: 175px;height: 35px;"></div>
+                    <div class="table-line" style="height: 40px;">
+                        <div class="div-table-2" style="width: 338px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 156px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 156px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 175px;height: 40px;"></div>
+                        <div class="div-table-2" style="width: 175px;height: 40px;"></div>
                     </div>
                 </div>
                 <div class="div-tab" style="margin-top: 10px;">
@@ -1036,16 +1036,18 @@
                         <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                 </div>
-                    <br><br>
-                <div class="div-tab" style="margin-top: 40px;">
-                    <div class="table-line" style="height: 60px;">
-                        <div class="div-table-2" style="width: 641px;height: 60px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C11.</div><div style="display: inline-block;width: 600px;">您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？怀孕___ 周数？
+
+                    <%--第三页--%>
+                    <br>
+                <div class="div-tab" style="margin-top: 30px;">
+                    <div class="table-line" style="height: 58px;">
+                        <div class="div-table-2" style="width: 641px;height:58px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C11.</div><div style="display: inline-block;width: 600px;">您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？怀孕___ 周数？
                             b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？d.母亲、姐妹中是否患有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height:58px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height:58px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 520px;">
-                        <div class="div-table-2" style="width: 641px;height: 520px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C12.</div><div style="display: inline-block;width: 600px;">是否患有或曾经患有一下疾病：
+                    <div class="table-line" style="height: 475px;">
+                        <div class="div-table-2" style="width: 641px;height: 475px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C12.</div><div style="display: inline-block;width: 600px;line-height: 1.3;">是否患有或曾经患有一下疾病：
                             <br>a.最近六个月内，您是否有下列疾患或自觉症状？
                             <br>.不明原因皮肤出血点或瘀斑、鼻衄、反复齿龈出血？
                             <br>.不明原因的声嘶、关节红肿酸痛、难以愈合的舌、皮肤溃疡，持续低热，体重显著减轻（短期内5公斤以上），痣的形态、大小或颜色改变、黄疸？
@@ -1065,16 +1067,16 @@
                             <br>k 先天性疾病、遗传性疾病？
                             <br>l 身体是否瘢痕？
                             <br>m 除上述以外的其它疾病、症状或意外受伤史？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 520px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 520px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 475px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 475px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 40px;">
                         <div class="div-table-2" style="width: 641px;height: 40px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">直系亲属中，是否患有或曾经患有高血压、肾病、心脏病、肝炎、肝肾囊肿、肝硬化、糖尿病、精神病、癌症或早于60周岁因病身故者？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 40px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                         <div class="div-table-2" style="width: 83px;height: 40px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 220px;">
-                        <div class="div-table-2" style="width: 641px;height: 220px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C14.</div><div style="display: inline-block;width: 600px;">您若为2周岁(不含)以下婴儿，请告知：
+                    <div class="table-line" style="height: 197px;">
+                        <div class="div-table-2" style="width: 641px;height: 197px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C14.</div><div style="display: inline-block;width: 600px;">您若为2周岁(不含)以下婴儿，请告知：
                             <br>a 出生时身长__厘米(cm)，体重__公斤(kg)，出生时留院天数__天，如超过7天，请详细说明
                             <br>b 出生时是否有早产、难产、窒息等情况？是否使用产钳等辅助器械？
                             <br>c 出生时是否有抢救史？
@@ -1084,22 +1086,1088 @@
                             <br>g是否曾患哮喘、肺炎、扁桃体炎等呼吸系统疾病？
                             <br>h是否曾患疝气？
                             <br>i是否曾出现“高热惊厥”</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 220px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 220px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 197px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 197px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 30px;">
-                        <div class="div-table-2" style="width: 641px;height: 30px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否参加公费医疗或社会医疗保险？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 28px;">
+                        <div class="div-table-2" style="width: 641px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否参加公费医疗或社会医疗保险？</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 30px;">
-                        <div class="div-table-2" style="width: 641px;height: 30px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否有其他事项告知本公司？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 28px;">
+                        <div class="div-table-2" style="width: 641px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否有其他事项告知本公司？</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                 </div>
+                    <%--<div style="position: absolute;z-index: 20;padding-left: 19px;padding-top: 37px;">--%>
+                        <%--<!-- Start .第一行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 433px;margin-left: 10px;">--%>
+                                        <%--周泣陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第一行-->--%>
+                        <%--<!-- Start .第二行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 423px;margin-left: 10px;">--%>
+                                        <%--周泣陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第二行-->--%>
+                        <%--<!-- Start .第三行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 458px;">--%>
+                                        <%--<div style="margin-left: 12px;float: left;">中国邮政</div>--%>
+                                        <%--<div style="margin-left: 105px;float: left;">南山</div>--%>
+                                        <%--<div style="margin-left: 125px;float: left;">110首银行</div>--%>
+                                        <%--<div style="margin-left: 210px;float: left;">中国邮政</div>--%>
+                                        <%--<div style="margin-left: 110px;float: left;">南山</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第三行-->--%>
+                        <%--<!-- Start .第四行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 450px;">--%>
+                                        <%--<div style="margin-left: 116px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+
+                                        <%--<div style="margin-left: 33px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+
+                                        <%--<div style="margin-left: 35px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+
+                                        <%--<div style="margin-left: 37px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+
+                                        <%--<div style="margin-left: 36px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+
+                                        <%--<div style="margin-left: 34px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                        <%--<div style="margin-left: 12.5px;float: left;">1</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第四行-->--%>
+                        <%--<!-- Start .第五行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 455px;">--%>
+                                        <%--<div style="margin-left: 50px;float: left;">买保险</div>--%>
+                                        <%--<div style="margin-left: 380px;float: left;">买保险</div>--%>
+                                        <%--<div style="margin-left: 160px;float: left;">2018</div>--%>
+                                        <%--<div style="margin-left: 50px;float: left;">07</div>--%>
+                                        <%--<div style="margin-left: 60px;float: left;">15</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第五行-->--%>
+                        <%--<!-- Start .第六行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 455px;">--%>
+                                        <%--<div style="margin-left: 50px;float: left;">买保险</div>--%>
+                                        <%--<div style="margin-left: 240px;float: left;">买保险</div>--%>
+                                        <%--<div style="margin-left: 240px;float: left;">2018111111111111111111111111</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第六行-->--%>
+                    <%--</div>--%>
+                    <div style="padding-left: 10px;font-size: 13px;">
+							<span style="color: red;">
+                    		投保人、被保险人向保险公司声明并同意下列事项:
+                    		</span>
+                    </div>
+                    <div class="div-tab" style="margin-top: 5px;">
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span>1.</span>
+                                </div>
+                                <div class="right-span-div">
+										<span>
+											投保人和被保险人对于投保单各栏目中的所有陈述均属真实，并亲笔签名，如投保人和被保险人故意或者因重大过失未履行如实告知义务，足以影响富德生命人寿保险股份有限公同决定是否同意承保或者提高保险费率的，富德生命人寿保险股份有限公同有权依法解除保险合同，并对保险合同解除前发生的保险事故，不承担赔偿或给付保险金的责任
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span style="color: red;">2.</span>
+                                </div>
+                                <div class="right-span-div">
+										<span style="color: red;">
+											本人已收到且认真阅读并完全理解人身保险投保提示书及产品说明书、保险条款，对于保险合网条款各项内容特别是有关保险责任、责任免除、免
+  											赔额、免赔率、比例赔付或给付或者减轻保险人责任的条款、保险期间、犹豫期、合同撤销和解除、保险合同的现金价值及父母为未成年子女投保以死亡为给付保险金条件人身保险的政策规定等内容均已了解和认可。
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span>3.</span>
+                                </div>
+                                <div class="right-span-div">
+										<span>
+											非经保险合同双方在保险单或业务批单上书面约定，任何人包括业务人员的任何与保险合同条款相违背或增减保险合同条款内容的书面或口头承诺，富德生命人寿保险股份有限公司有权不认可其法律效力。
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span>4.</span>
+                                </div>
+                                <div class="right-span-div">
+										<span>
+											同意富德生命人寿保险股份有限公司根据业务需要，对被保险人或投保人进行相关体检，或直接向被保险人或投保人就诊医院及其他知情机构、人士查询有关诊疗记录、病历及其他资料。
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span>5.</span>
+                                </div>
+                                <div class="right-span-div">
+										<span>
+											 按本投保单所签订的保险合同，只有在富德生命人寿保险股份有限公司收到投保人交纳的首期保险费并签发保险单，及自申请之日起至富德生命人寿保险股份有限公司签发保险单之日被保险人和投保人健康状况无明显改变后才能生效。如无其他特别要求或说明，则保险合同自富德生命人寿保险股份有限公司收取首期保险费并签发保险单的当日二十四时起生效。
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span>6.</span>
+                                </div>
+                                <div class="right-span-div" style="height: 20px;">
+										<span>
+											&nbsp;若本人接受富德生命人寿保险股份有限公司签发的包含批注或任何附加及更改的保险合同及任何经本人签署的文件，均视为本人已承认。
+										    &nbsp;&nbsp;&nbsp;&nbsp;
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span style="color: red;">7.</span>
+                                </div>
+                                <div class="right-span-div">
+										<span style="color: red;">
+											父母为其未成年人子女投保的人身保险，在被保险人成年之前各保险合同约定的被保险人死亡给付的保险金额总和、被保险人死亡时各保险公司实际给付的保险金总和不得超过保险监督管理机构规定的限额(被保险人不满10周岁的，不得超过人民币20万元；被保险人已满10周岁但未满18周岁的，不得超过人民币50万元)。若投保多份保险合同，存在超额情形的，本人同意按照保单生效日的先后顺序予以赔付或对超额部分无息退费。
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span>8.</span>
+                                </div>
+                                <div class="right-span-div">
+										<span>
+											在中国法律允许或要求的范围内，本人同意或授权承保公同将其个人信息(包括联系电话和联系地址)及保单信息提供给当地健康保险信息平台、 监管机构、行业协会做合理利用
+											<span style="color: red;"> (包括但不限于计算保费、核保、寄送保单和客户回访等)</span> 。
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span>9.</span>
+                                </div>
+                                <div class="right-span-div">
+										<span>
+											如您投保的是投资连结保险、万能保险、分红保险等新型产品，
+											<span style="color: red;">请亲笔抄录：</span>
+										<span style="font-weight: bold;">本人已阅读保险条款、产品说明书和投保提示书，了解本产品的特点和保单利益的不确定性。</span>
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 15px;">
+                            <div class="div-line-con-three div-row-5" style="border-left: solid 0px;">
+                                <div class="a-input-div" style="width: 970px;">
+                                    <span class="f-body-font">&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 15px;margin-bottom: 5px;">
+                            <div class="div-line-con-three div-row-5" style="border-left: solid 0px;">
+                                <div class="a-input-div" style="width: 970px;">
+                                    <span class="f-body-font">&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="left-span-div">
+                                    <span>10.</span>
+                                </div>
+                                <div class="right-span-div">
+										<span>
+											投保人同意并授权富德生命人寿保险股份有限公司及银行(或邮局)从本人以下账户中以约定的交费方式及金额按期收取各期保险费；如有溢交或其他支付也退还至下述授权帐号。
+											(账户开户名必须是投保人的姓名)
+										</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 10px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span>银行（全称）：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 100px;">
+                                    <span class="f-body-font">&nbsp;</span>
+                                </div>;
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 00px;">
+                                <div class="title">
+                                    <span>银行：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 100px;">
+                                    <span>&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span>分行：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 100px;">
+                                    <span>&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span>支行：</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 0px;margin-left: 20px;">
+                                <div class="title">
+                                    <span>邮局（全称）：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 100px;">
+                                    <span>&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span>分局：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 100px;">
+                                    <span>&nbsp;</span>
+                                </div>
+                                <div class="title">
+                                    <span>支局</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;padding-bottom: 5px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="div-line-con-three div-postcode">
+                                    授权活期账户号码/借记卡号码：
+                                    <div style="margin-left: 10px;font-size: 0">
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                    </div>
+                                    <div style="margin-left: 20px;font-size: 0">
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                    </div>
+                                    <div style="margin-left: 20px;font-size: 0">
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                    </div>
+                                    <div style="margin-left: 20px;font-size: 0">
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                    </div>
+                                    <div style="margin-left: 20px;font-size: 0">
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                    </div>
+                                    <div style="margin-left: 20px;font-size: 0">
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-tab" style="border: #FFFFFF solid 1px;">
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span class="d-body-font">投保人签名：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 130px;">
+                                    <span class="f-body-font">&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 00px;">
+                                <div class="title">
+                                    <span class="d-body-font">被保险人（或其法定监护人）签名：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 130px;">
+                                    <span class="body-font">&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span class="d-body-font">签署日期：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 40px;">
+                                    <span class="body-font">&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span class="d-body-font">年</span>
+                                    <div class="a-input-div" style="width: 40px;">
+                                        <span class="body-font">&nbsp;</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 0px;margin-left: 20px;">
+                                <div class="title">
+                                    <span class="d-body-font">月</span>
+                                </div>
+                                <div class="a-input-div" style="width: 50px;">
+                                    <span class="body-font">&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span class="d-body-font">日</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;">
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span class="c-body-font">业务人员签名：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 150px;">
+                                    <span class="f-body-font">&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 00px;">
+                                <div class="title">
+                                    <span class="c-body-font">业务人员电话：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 200px;">
+                                    <span class="body-font">&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-three" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span class="c-body-font">签署地：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 300px;">
+                                    <span class="body-font">&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
+                    <%--第四页--%>
+                    <!-- Start .第二层-->
+                    <%--<div style="position: absolute;z-index: 20;padding-left: 9px;">--%>
+                        <%--<!-- Start .第一行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 135px;margin-left: 150px;">周泣</div>--%>
+                                <%--</div>--%>
+                                <%--<div class="al-font" style="margin-left: 290px;">--%>
+                                    <%--<div class="al-row-sex">陈忠</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第一行-->--%>
+                        <%--<!-- Start .第二行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 128px;margin-left: 68px;">--%>
+                                        <%--<div style="margin-left: 105px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 50px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 50px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 50px;float: left;">√</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                                <%--<div class="al-font" style="margin-left: -20px;">--%>
+                                    <%--<div class="al-row-sex">其它意见</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第二行-->--%>
+                        <%--<!-- Start .第三行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 122px;margin-left: 10px;">--%>
+                                        <%--<div style="margin-left: 105px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 78px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 78px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 120px;float: left;">√</div>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="al-font" style="margin-left: -20px;">--%>
+                                        <%--<div class="al-row-sex">其它意见</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第三行-->--%>
+                        <%--<!-- Start .第四行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 118px;margin-left: 430px;">--%>
+                                        <%--<div style="margin-left: 105px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 38px;float: left;">√</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第四行-->--%>
+                        <%--<!-- Start .第五行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-font" style="margin-top: 110px;margin-left: 60px;">--%>
+                                        <%--<div class="al-row-sex">其它意见</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第五行-->--%>
+                        <%--<!-- Start .第六行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 103px;margin-left: 290px;">--%>
+                                        <%--<div style="margin-left: 105px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 38px;float: left;">√</div>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="al-font" style="margin-left: 60px;">--%>
+                                        <%--<div class="al-row-sex">其它意见</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第六行-->--%>
+                        <%--<!-- Start .第七行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 95px;margin-left: 232px;">--%>
+                                        <%--<div style="margin-left: 105px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 38px;float: left;">√</div>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="al-font" style="margin-left: 70px;">--%>
+                                        <%--<div class="al-row-sex">其它意见</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第七行-->--%>
+                        <%--<!-- Start .第八行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 90px;margin-left: 290px;">--%>
+                                        <%--<div style="margin-left: 105px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 38px;float: left;">√</div>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="al-font" style="margin-left: 60px;">--%>
+                                        <%--<div class="al-row-sex">其它意见</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第八行-->--%>
+                        <%--<!-- Start .第九行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 85px;margin-left: 95px;">--%>
+                                        <%--<div style="margin-left: 105px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 35px;float: left;">√</div>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="al-font" style="margin-left: 60px;">--%>
+                                        <%--<div class="al-row-sex">其它意见</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第九行-->--%>
+                        <%--<!-- Start .第十行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 80px;margin-left: 375px;">--%>
+                                        <%--<div class="al-row-sex">其它意见</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十行-->--%>
+                        <%--<!-- Start .第十一行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 70px;margin-left: 50px;">--%>
+                                        <%--<div style="margin-left: 105px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 200px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">1000</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十一行-->--%>
+                        <%--<!-- Start .第十二行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 110px;margin-left: -20px;">--%>
+                                        <%--<div class="al-row-sex">备注其它意见</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十二行-->--%>
+                        <%--<!-- Start .第十三行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 430px;">--%>
+                                        <%--<div style="margin-left: 55px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 260px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">2018</div>--%>
+                                        <%--<div style="margin-left: 40px;float: left;">07</div>--%>
+                                        <%--<div style="margin-left: 30px;float: left;">15</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十三行-->--%>
+                        <%--<!-- Start .第十四行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 630px;">--%>
+                                        <%--<div style="margin-left: -5px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 170px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 54px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">2018</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">07</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十四行-->--%>
+                        <%--<!-- Start .第十五行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 630px;">--%>
+                                        <%--<div style="margin-left: -5px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 170px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 54px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">2018</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">07</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十五行-->--%>
+                        <%--<!-- Start .第十六行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 630px;">--%>
+                                        <%--<div style="margin-left: -5px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 170px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 54px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">2018</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">07</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十六行-->--%>
+                        <%--<!-- Start .第十七行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 630px;">--%>
+                                        <%--<div style="margin-left: -5px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 170px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 54px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">2018</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">07</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十七行-->--%>
+                        <%--<!-- Start .第十八行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 630px;">--%>
+                                        <%--<div style="margin-left: -5px;float: left;">1000</div>--%>
+                                        <%--<div style="margin-left: 170px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 54px;float: left;">√</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">2018</div>--%>
+                                        <%--<div style="margin-left: 220px;float: left;">07</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十八行-->--%>
+                        <%--<!-- Start .第十九行-->--%>
+                        <%--<div class="al-tab">--%>
+                            <%--<div class="al-line">--%>
+                                <%--<div class="al-font">--%>
+                                    <%--<div class="al-row-2" style="margin-top: 640px;">--%>
+                                        <%--<div style="margin-left: 240px;float: left;">5</div>--%>
+                                        <%--<div style="margin-left: 240px;float: left;">2018</div>--%>
+                                        <%--<div style="margin-left: 219px;float: left;">07</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .第十九行-->--%>
+
+                    <%--</div>--%>
+                    <!-- End .第二层-->
+
+                    <!-- Start .第一层-->
+                    <div style="padding-left: 400px;padding-top:15px;font-size: 25px;">
+							<span>
+                    		业务人员报告书
+                    		</span>
+                    </div>
+                    <div style="height: 50px;">
+
+                    </div>
+                    <div style="padding-left: 10px;font-size: 16px;">
+							<span>
+                    		以下内容并非保险合同组成部分，为本公司业务用栏，投保人无须填写
+                    		</span>
+                    </div>
+                    <div class="div-tab" style="margin-top: 5px;">
+                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
+                            <div class="div-line-con-four div-row-5" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span class="f-body-font">被&nbsp;保&nbsp;险&nbsp;人&nbsp;姓&nbsp;名：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 260px;">
+                                    <span class="f-body-font">&nbsp;</span>
+                                </div>;
+                            </div>
+                            <div class="div-line-con-four div-row-5" style="border-left: solid 0px;">
+                                <div class="title">
+                                    <span class="f-body-font">投&nbsp;保&nbsp;人&nbsp;姓&nbsp;名：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 260px;">
+                                    <span class="body-font">&nbsp;</span>
+                                </div>;
+                            </div>
+                        </div>
+
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div class="title"><span class="body-font">&nbsp;1.&nbsp;&nbsp;&nbsp;本人与投保人关系：</span></div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 家属</span>
+                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 亲戚</span>
+                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 朋友</span>
+                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 其他：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 570px;">
+                                    <input class="l-input" type="text" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div class="title"><span class="body-font"> &nbsp;2.&nbsp;&nbsp;&nbsp;投保经过：</span></div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font"> 他人介绍</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font"> 陌生拜访</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font"> 投保人主动投保</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font">  其他：</span>
+                                </div>
+                                <div class="a-input-div" style="width: 500px;">
+                                    <input class="l-input" type="text" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div class="title"><span class="body-font"> &nbsp;3.&nbsp;&nbsp;&nbsp;据本人了解，被保险人目前是否呈病态，有生理缺陷或因疾病，外伤而治疗中：</span></div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 是</span>
+                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 否</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div class="title"><span class="body-font">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如是，请说明：</span></div>
+                                <div class="a-input-div" style="width: 849px;">
+                                    <input class="l-input" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div class="title"><span class="body-font"> &nbsp;4.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有吸烟，嗜酒或服用成瘾性药物：</span></div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
+                                </div>
+                                <div>
+                                    <div class="title"><span class="body-font">如是，请说明：</span></div>
+                                    <div class="a-input-div" style="width: 390px;">
+                                        <input class="l-input" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div class="title"><span class="body-font">&nbsp;5.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有兼职或从事特殊职业：</span></div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
+                                </div>
+                                <div>
+                                    <div class="title"><span class="body-font">如是，请说明：</span></div>
+                                    <div class="a-input-div" style="width: 445px;">
+                                        <input class="l-input" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div class="title"><span class="body-font">&nbsp;6.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有从事具有危险性的运动或爱好：</span></div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
+                                </div>
+                                <div>
+                                    <div class="title"><span class="body-font">如是，请说明：</span></div>
+                                    <div class="a-input-div" style="width: 389px;">
+                                        <input class="l-input" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div class="title"><span class="body-font">&nbsp;7.&nbsp;&nbsp;&nbsp;是否存在其它风险情况：</span></div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
+                                </div>
+                                <div>
+                                    <div class="title"><span class="body-font">如是，请说明：</span></div>
+                                    <div class="a-input-div" style="width: 584px;">
+                                        <input class="l-input" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div>
+                                    <div class="title"> <span class="body-font">&nbsp;8.&nbsp;&nbsp;&nbsp;如受益人非被保险人的直系亲属，请向投保人和被保险人了解原因：</span></div>
+                                    <div class="a-input-div" style="width: 525px;">
+                                        <input class="l-input" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four">
+                                <div>
+                                    <div class="title"><span class="body-font">&nbsp;9.&nbsp;&nbsp;&nbsp;估计被保险收入：</span></div>
+                                    <div>
+                                        <div class="a-input-div" style="width: 75px;">
+                                            <input class="l-input" type="text" />
+                                        </div><span class="body-font">;/月，</span>
+                                    </div>
+                                    <div class="title"><span class="body-font">估计投保收入：</span></div>
+                                    <div>
+                                        <div class="a-input-div" style="width: 75px;">
+                                            <input class="l-input" type="text" />
+                                        </div><span class="body-font">;/月，</span>
+                                    </div>
+                                    <div class="title"><span class="body-font">估计被保险人财产值：</span></div>
+                                    <div>
+                                        <div class="a-input-div" style="width: 75px;">
+                                            <input class="l-input" type="text" />
+                                        </div><span class="body-font">; ，</span>
+                                    </div>
+                                    <div class="title"><span class="body-font">估计投保人财产值：</span></div>
+                                    <div>
+                                        <div class="a-input-div" style="width: 85px;">
+                                            <input class="l-input" type="text" />
+                                        </div><span class="body-font">。</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line" style="border-bottom: solid 0px;">
+                            <div class="div-line-con-four" style="padding-top: 30px;">
+                                <div>
+                                    <div class="title"><span class="body-font">&nbsp;&nbsp;&nbsp;备注：</span></div>
+                                    <div style="width: 80%;height: 190px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="height: 10px;">
+
+                    </div>
+                    <div class="div-tab" style="background: #CDD9D7;">
+                        <div class="div-line">
+                            <div class="div-line-con-four">
+                                <div style="padding-bottom:8px;">
+                                    <div style="float:left; "><span class="body-font">业务人员声明：</span></div>
+                                    <div style="float:left; width: 89%;">
+											<span class="c-body-font">
+											 本人确认已就投保单中投保告知和健康告知的所有内容当面向投保人、被保险人询问和说明，见证经由投保人、被保险人亲自告知并亲笔签名无误；同时已向投保人提供了投保险种的保险条款，确认已就条款中各项内容特别是有关保险责任免除、免赔额、免赔率、比例赔付或给付或者减轻保险人责任的条款、保险期间、保险责任等待期、保险合同犹豫期、投保人相关权
+	                                                                                                               利义务、是否提供保证续保以及续保有效时间、理赔程序以及理赔文件要求、欠款扣除、解除保险合同及保险合同的现金价值、
+	                                        </span>
+                                        <span class="c-body-font" style="color: red;">
+	                                                                                                              产品说明书
+	                                        </span>
+                                        <span class="c-body-font">
+	                                                                                                              、 人身保险投保提示书等向投保人作了详细说明。本栏告知属实。如有代签名、不实见证或虚假报告等情形而招致纠纷，本人愿承担由此引起的一切法律责任。
+											</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con-four" style="padding-top: 20px;">
+                                <div class="div-line-con-four div-row-3" style="border-left: solid 0px;">
+                                    <div class="title"><span class="body-font"> 业务人员编号：</span></div>
+                                </div>
+                                <div class="div-line-con-four div-row-3" style="border-left: solid 0px;">
+                                    <div class="title"><span class="body-font"> 业务人员签名：</span></div>
+                                </div>
+                                <div class="div-line-con-four div-row-3" style="border-left: solid 0px;">
+                                    <div class="title"><span class="body-font"> 日期:</span></div>
+                                    <div style="padding-left: 40px;">
+                                        <div style="width: 40px;">
+                                        </div><span class="body-font">年</span>
+                                        <div style="width: 40px;">
+                                        </div><span class="body-font">月</span>
+                                        <div style="width: 40px;">
+                                        </div><span class="body-font">日</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="div-line-con-four">
+                                <div class="div-line-con-four div-row-3" style="border-left: solid 0px;padding-top: 10px;">
+                                    <div class="title"><span class="body-font">中介公司签单：</span></div>
+                                    <div style="width: 80%;height: 25px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 15px;">
+
+                    </div>
+
+                    <div style="padding-left: 420px;">
+                        <h3><span style="font-size: 25px;">附&nbsp;件&nbsp;签&nbsp;收&nbsp;栏</span></h3></div>
+                    <div class="div-tab">
+                        <div class="div-line">
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title" style="padding-left: 60px;"><span class="b-body-font">附件名称</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="b-body-font">种类</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="b-body-font">页数</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title" style="padding-left: 60px;"><span class="b-body-font">接收人签名</span></div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 30px;">
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 30px;">
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 30px;">
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 30px;">
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 30px;">
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
+                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                </div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;&nbsp;&nbsp;总计</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
+                            </div>
+                            <div class="div-line-con-four div-row-2">
+                                <div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding-top: 60px;padding-left: 300px;">
+                        <span style="font-size: 25px;">全国统一热线：&nbsp;&nbsp;&nbsp;95535/4008-200-035</span>
+                    </div>
+                    <!-- End .第一层-->
             </div>
         </div>
         <!-- End #content -->

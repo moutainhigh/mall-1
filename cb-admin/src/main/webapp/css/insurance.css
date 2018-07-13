@@ -322,3 +322,125 @@ input {
     width: 200px;
 }
 
+.three-span{
+    font-size: 14px;
+}
+.div-line .div-line-con-three{
+    border-left: #000000 solid 1px;
+    display: inline-block;
+    font-size: 13px;
+    box-sizing: border-box;
+    margin-top: -5px;
+    /*margin-bottom: -1px;*/
+    /*margin-top: -1px;*/
+}
+
+.div-line .div-line-con-three div {
+    display: inline-block;
+}
+
+.div-line .div-line-con-three .i-cb {
+    position: relative;
+    top: 2px;
+    margin-left: 8px;
+}
+
+.div-line-con-three .i-cert-code {
+    display: inline-block;
+    width: 21px;
+    font-size: 15px;
+    margin-left: -1px;
+    text-align: center;
+    border-radius: 0;
+}
+
+.left-span-div{
+    float: left;
+    width: 2%;
+}
+.right-span-div{
+    float: left;
+    width: 97%;
+}
+.a-body-font-three{
+    font-size: 15px;
+    line-height: 27px;
+}
+.d-body-font-three{
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.b-body-font-three{
+    font-size: 15px;
+    line-height: 40px;
+}
+.c-body-font-three{
+    font-size: 18px;
+    line-height: 25px;
+}
+.f-body-font-three{
+    font-size: 15px;
+    line-height: 22px;
+}
+.a-input-div{
+    width: 100px;
+    border-bottom: #000000 solid 1px;
+}
+.b-input-div{
+    width: 40px;
+    border-bottom: #000000 solid 1px;
+}
+
+
+.body-font{
+    font-size: 14px;
+}
+.a-body-font{
+    font-size: 15px;
+    line-height: 27px;
+}
+.d-body-font{
+    font-size: 15.5px;
+    line-height: 32px;
+}
+.b-body-font{
+    font-size: 15px;
+    line-height: 40px;
+}
+.c-body-font{
+    font-size: 14px;
+    line-height: 22px;
+}
+.f-body-font{
+    font-size: 15px;
+    line-height: 22px;
+}
+.div-line .div-line-con-four{
+    border-left: #000000 solid 1px;
+    display: inline-block;
+    padding: 3px 4px 4px 10px;
+    font-size: 13px;
+    box-sizing: border-box;
+    /*margin-bottom: -1px;*/
+    /*margin-top: -1px;*/
+}
+
+.div-line .div-line-con-four div {
+    display: inline-block;
+}
+
+.div-line .div-line-con-four .i-cb {
+    position: relative;
+    top: 2px;
+    margin-left: 8px;
+}
+
+.div-line-con-four .i-cert-code {
+    display: inline-block;
+    width: 21px;
+    font-size: 15px;
+    margin-left: -1px;
+    text-align: center;
+    border-radius: 0;
+}
