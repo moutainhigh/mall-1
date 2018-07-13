@@ -126,17 +126,10 @@
     width: 261px;
 }
 
-/*.div-row-4 .title {*/
-    /*width: 20% !important;*/
-/*}*/
 
-.div-tab th {
-    border: #000000 solid 1px;
-    box-sizing: border-box;
-}
-.div-tab td {
-    border: #000000 solid 1px;
-    box-sizing: border-box;
+table tr th,table tr td {
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
 }
 
 .t-line div{
@@ -148,7 +141,7 @@
     display: inline-block;
     padding: 5px 5px 5px 10px;
     font-size: 13px;
-    width: 28.5px;
+    width: 27.5px;
     height: 30px;
     box-sizing: border-box;
 }

@@ -82,13 +82,13 @@
       </div>
     </div>
     <div class="i-card">
-      <div class="i-card-tip">
-        ※ 投保须知
+      <div style="font-size: 15px;color: #333;">
+        投保须知
       </div>
       <div class="i-message" @click="state = !state">
         <img v-if="!state" class="checkIcon" src="../assets/img/unselect.png">
         <img v-if="state" class="checkIcon" src="../assets/img/selected.png">
-        <div>&emsp;欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
+        <div>欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
       </div>
     </div>
     <div style="height: 60px;" >
@@ -275,6 +275,10 @@
   }
 
   .i-input .i-input-item {
+    font-size: 15px !important;
+  }
+
+  .i-input .i-input-val {
     font-size: 15px !important;
   }
 
