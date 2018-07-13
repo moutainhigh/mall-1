@@ -52,11 +52,28 @@ h2 {
     margin-bottom: -5px;
 }
 
+.header .contract input {
+    border-bottom: 1px #000000 solid !important;
+    width: 30px;
+}
+
+.info {
+    width: 100%;
+    margin-top:10px;
+    display: inline-block;
+    font-size: 8px;
+    border: 1px #000000 solid;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #dff9fb;
+    box-sizing: border-box;
+}
+
 .div-tab {
     width: 1000px;
-    border-radius: 5px;
+    border-radius: 8px;
     border: #000000 solid 1px;
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 .div-title {
@@ -80,6 +97,7 @@ h2 {
     padding: 8px 5px 8px 10px;
     font-size: 13px;
     box-sizing: border-box;
+    vertical-align: top;
     /*margin-bottom: -1px;*/
     /*margin-top: -1px;*/
 }
@@ -88,13 +106,17 @@ h2 {
     display: inline-block;
 }
 
+.div-block {
+    display: block !important;
+}
+
 .div-line-cert {
     border-left: #000000 solid 1px;
     display: inline-block;
     padding: 5px 5px 5px 10px;
     font-size: 14px;
     width: 26px;
-    height: 30px;
+    height: 36px;
     box-sizing: border-box;
 }
 
@@ -143,7 +165,7 @@ input {
 .i-cert-code {
     display: inline-block;
     width: 20px;
-    font-size: 14px;
+    font-size: 13px;
     margin-left: -1px;
     text-align: center;
     border-radius: 0;
@@ -151,6 +173,36 @@ input {
 
 .div-sex {
     width: 188px;
+}
+
+.table-line {
+    height: 60px;
+    font-size: 0;
+}
+
+.table-line div{
+    display: table-cell;
+    font-size: 14px;
+}
+
+.div-table-1 {
+    width: 80px;
+    border: 1px #000000 solid;
+    margin: -1px;
+    height: 60px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.div-table-2 {
+    width: 520px;
+    border: 1px #000000 solid;
+    margin: -1px;
+    height: 60px;
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .div-row-2 {
@@ -198,11 +250,10 @@ table tr th, table tr td {
 .t-line-cert {
     border-left: #000000 solid 1px;
     display: inline-block;
-    padding: 5px 5px 5px 10px;
     font-size: 14px;
-    width: 27.5px;
-    height: 27px;
     box-sizing: border-box;
+    width: 28.6px;
+    height: 30px;
 }
 
 .div-checkbox input {

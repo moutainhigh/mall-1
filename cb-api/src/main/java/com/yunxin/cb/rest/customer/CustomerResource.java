@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 
 @Api(description = "用户接口")
@@ -192,9 +193,7 @@ public class CustomerResource extends BaseResource {
     @GetMapping(value = "addBlacklist/{friendId}")
     public ResponseResult addBlacklist(@PathVariable int friendId, @ModelAttribute("customerId") int customerId) {
         try {
-            Customer customer = customerService.getCustomerById(customerId);
-            Customer friend = customerService.getCustomerById(friendId);
-            rongCloudService.addBlacklist(customer, friend);
+            customerService.addBlacklist(friendId,customerId);
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("addBlacklist failed", e);
@@ -207,9 +206,7 @@ public class CustomerResource extends BaseResource {
     @GetMapping(value = "removeBlacklist/{friendId}")
     public ResponseResult removeBlacklist(@PathVariable int friendId, @ModelAttribute("customerId") int customerId) {
         try {
-            Customer customer = customerService.getCustomerById(customerId);
-            Customer friend = customerService.getCustomerById(friendId);
-            rongCloudService.removeBlacklist(customer, friend);
+            customerService.removeBlacklist(friendId,customerId);
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("removeBlacklist failed", e);
@@ -221,9 +218,8 @@ public class CustomerResource extends BaseResource {
     @GetMapping(value = "getBlacklist")
     public ResponseResult getBlacklist(@ModelAttribute("customerId") int customerId) {
         try {
-            Customer customer = customerService.getCustomerById(customerId);
-            BlackListResult result = rongCloudService.getBlacklist(customer);
-            return new ResponseResult(result.getUsers());
+            List<CustomerFriend> blackList=customerService.getBlacklist(customerId);
+            return new ResponseResult(blackList);
         } catch (Exception e) {
             logger.error("getBlacklist failed", e);
             return new ResponseResult(Result.FAILURE, e.getMessage());
@@ -243,4 +239,6 @@ public class CustomerResource extends BaseResource {
     public ResponseResult getPraiseCustomer(@ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerService.getPraiseCustomers(customerId));
     }
+
+
 }

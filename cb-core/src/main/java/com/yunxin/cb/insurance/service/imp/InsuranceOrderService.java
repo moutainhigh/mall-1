@@ -3,7 +3,7 @@ package com.yunxin.cb.insurance.service.imp;
 import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
-import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
+import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.util.CodeGenerator;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
