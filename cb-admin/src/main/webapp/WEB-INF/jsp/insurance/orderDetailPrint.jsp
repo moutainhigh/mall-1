@@ -67,7 +67,7 @@
 
             <div class="th-tab" id="prints">
                 <div class="header">
-                    <h1>富德生命人寿保险股份有限公司</h1>
+                    <h1 style="font-size: ">富德生命人寿保险股份有限公司</h1>
                     <h2>FUNDE  SINO  LIFE  INSUANCE  CO.,LTD.</h2>
                     <h2>个人保险投保单（经代渠道）</h2>
                     <div class="header-contract">
@@ -547,7 +547,7 @@
                 <div class="div-title">本单联系地址（如此栏哦那个却，将以投保人住址为准</div>
                 <div class="div-tab">
                     <div class="div-line">
-                        <div class="div-line-con">
+                        <div class="div-line-con" style="padding: 7px 5px 7px 10px;">
                             A 41. 信函寄往
                             <div style="margin-left: 80px;">省</div>
                             <div style="margin-left: 80px;">市</div>
@@ -569,10 +569,10 @@
                         </div>
                     </div>
                 </div>
-                <div>短信服务（未选默认为不需要）</div>
+                <div class="div-title">短信服务（未选默认为不需要）</div>
                 <div class="div-tab">
                     <div class="div-line">
-                        <div class="div-line-con div-row-6">
+                        <div class="div-line-con div-row-6" style="padding: 7px 5px 7px 10px;">
                             A 41. 投保人是否需要短信服务
                             <div>
                                 <input class="i-cb" type="checkbox"/>
@@ -586,7 +586,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="div-title"><span>身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充报告，则是剩余养老保险年金受益人与身故保险金受益人为同一人）
+                <div class="div-title" style="line-height: 1.5;"><span>身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充报告，则是剩余养老保险年金受益人与身故保险金受益人为同一人）
                     <br>说明：1.指定受益人时，同一受益顺序的受益份额合计必须等于100%。2.后一受益顺序的受益人只有在前一受益顺序所有受益人丧失或放弃收益权后才能享有受益权。3.若未填写受益份额，同一顺序的保险金受益人按照相等份额享有保险金。4.若未指定受益人，或者受益人指定不明无法确定的，保险金将作为被保险人的遗产按照《中华人名共和国继承法》的规定进行分配。5.投保无身故保险利益的保险产品是无需填写本栏，填写亦视为无效。
                 </div>
                 <table class="div-tab">
@@ -595,19 +595,19 @@
                             姓名
                         </th>
                         <th style="width: 80px;">
-                            姓名
+                            性别
                         </th>
                         <th style="width: 80px;">
-                            姓名
+                            收益顺序
                         </th>
                         <th style="width: 80px;">
-                            姓名
+                            收益份额
                         </th>
                         <th style="width: 80px;">
-                            姓名
+                            出生日期
                         </th>
-                        <th style="width: 80px;">
-                            姓名
+                        <th style="width: 80px;padding: 7px;">
+                            是被保险人的<span>关系</span>
                         </th>
                         <th style="width: 520px;">
                             姓名
@@ -621,7 +621,7 @@
                         <td>1</td>
                         <td>1</td>
                         <td>
-                            <div class="t-line">
+                            <div class="t-line" style=" margin: 7px 0;">
                                 <input type="checkbox"/>
                                 <div>身份证</div>
                                 <input type="checkbox"/>
@@ -662,7 +662,7 @@
                         <td>1</td>
                         <td>1</td>
                         <td>
-                            <div class="t-line">
+                            <div class="t-line"  style=" margin: 7px 0;">
                                 <input type="checkbox"/>
                                 <div>身份证</div>
                                 <input type="checkbox"/>
@@ -737,7 +737,7 @@
                         </td>
                     </tr>
                 </table>
-                <div class="div-title" style="font-size: 13px">注：当受益人为被保险人法定继承人以外的指定受益人时，须在C16项勾选“是”，并填写身故受益人的姓名、国籍、职业名称、联系方式、住址地或者工作单位地址。</div>
+                <div class="div-title" style="font-size: 12px;margin-bottom: 10px;">注：当受益人为被保险人法定继承人以外的指定受益人时，须在C16项勾选“是”，并填写身故受益人的姓名、国籍、职业名称、联系方式、住址地或者工作单位地址。</div>
             </div>
         </div>
         <!-- End #content -->
