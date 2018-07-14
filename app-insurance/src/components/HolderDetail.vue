@@ -58,6 +58,7 @@
         证件号码不能为空
       </div>
       <div class="error" v-if="!$v.holder.policyholderCardNo.vali">请输入正确的证件号码</div>
+      <div class="error" v-if="!$v.holder.policyholderCardNo.maxLength">证件号码最多不超过32位数</div>
 
       <!--<x-input title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期" v-bind:class="{'errorInput': $v.holder.policyholderCardPeroid.$error}"-->
       <!--@input="$v.holder.policyholderCardPeroid.$touch()"></x-input>-->
@@ -124,14 +125,15 @@
         婚姻状况不能为空
       </div>
       <!--<div style="background-color: #f5f5f5">-->
-        <!--<div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 13px;padding: 10px 10px 10px 0;color: #888;">-->
-          <!--温馨提示：固定电话与移动电话可任填其中一项-->
-        <!--</div>-->
+      <!--<div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 13px;padding: 10px 10px 10px 0;color: #888;">-->
+      <!--温馨提示：固定电话与移动电话可任填其中一项-->
+      <!--</div>-->
       <!--</div>-->
       <x-input title="固定电话" v-model="holder.policyholderTel" placeholder="请输入固定电话"
                v-bind:class="{'errorInput': $v.holder.policyholderTel.$error}"
                @input="$v.holder.policyholderTel.$touch()"></x-input>
       <div class="error" v-if="!$v.holder.policyholderTel.fixedTel">请输入正确的固定电话号码</div>
+      <div class="error" v-if="!$v.holder.policyholderTel.maxLength">固定电话最多不超过15位数</div>
 
       <x-input title="移动电话" v-model="holder.policyholderMobile" placeholder="请输入移动电话"
                v-bind:class="{'errorInput': $v.holder.policyholderMobile.$error}"
@@ -165,9 +167,9 @@
         <div class="error" v-if="!$v.holder.policyholderAddress.maxLength">详细地址最多不超过255位数</div>
       </div>
 
-      <popup-picker id="taxRelated" style="" title="涉税人信息" v-model="holder.policyholderTaxRelated" placeholder="请选择涉税人信息" :data="taxRelates"
+      <popup-picker title="涉税人信息" v-model="holder.policyholderTaxRelated" placeholder="请选择涉税人信息" :data="taxRelates"
                     value-text-align="left"
-                    v-bind:class="{'errorInput': $v.holder.policyholderTaxRelated.$error}"></popup-picker>
+                    v-bind:class="{'errorInput': $v.holder.policyholderTaxRelated.$error, 'taxRelated': this.holder.unifyAddr}"></popup-picker>
       <div class="error" v-if="!$v.holder.policyholderTaxRelated.required && $v.holder.policyholderTaxRelated.$dirty">
         涉税人信息不能为空
       </div>
@@ -239,7 +241,7 @@
         </div>
         <div class="error"
              v-if="!$v.beneficiary1.beneficiaryProportion.between && $v.beneficiary1.beneficiaryProportion.$dirty">
-          请输入受益份额，在0%到100%之间
+          请输入受益份额，在1%到100%之间
         </div>
         <div class="error" v-if="valiProportion">请重新分配受益份额</div>
 
@@ -265,6 +267,7 @@
              v-if="!$v.beneficiary1.beneficiaryCardNo.required && $v.beneficiary1.beneficiaryCardNo.$dirty">请输入证件号
         </div>
         <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.vali">请输入正确的身份证号码</div>
+        <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.maxLength">证件号码最多不超过32位数</div>
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary1.beneficiaryCardPeroid.$touch()"></x-input>-->
@@ -342,7 +345,7 @@
         </div>
         <div class="error"
              v-if="!$v.beneficiary2.beneficiaryProportion.between && $v.beneficiary2.beneficiaryProportion.$dirty">
-          请输入受益份额，在0%到100%之间
+          请输入受益份额，在1%到100%之间
         </div>
         <div class="error" v-if="valiProportion">请重新分配受益份额</div>
 
@@ -371,6 +374,7 @@
              v-if="!$v.beneficiary2.beneficiaryCardNo.required && $v.beneficiary2.beneficiaryCardNo.$dirty">请输入证件号
         </div>
         <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.vali">请输入正确的身份证号码</div>
+        <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.maxLength">证件号码最多不超过32位数</div>
 
         <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"-->
         <!--@input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>-->
@@ -488,14 +492,14 @@
             careerName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             policyholderBirthday: {required},
             policyholderCardType: {required},
-            policyholderCardNo: {required, vali: this.valiHolder},
+            policyholderCardNo: {required, vali: this.valiHolder, maxLength: maxLength(32)},
             policyholderCardPeroid: {required},
             policyholderCountry: {required, maxLength: maxLength(64)},
             policyholderHeight: {required, int, maxLength: maxLength(3)},
             policyholderBodyWeight: {required, int, maxLength: maxLength(3)},
             policyholderIncome: {required, int, maxLength: maxLength(6)},
             policyholderMarriage: {required},
-            policyholderTel: {fixedTel},
+            policyholderTel: {fixedTel, maxLength: maxLength(15)},
             policyholderMobile: {mobile},
             policyholderEmail: {mail},
             // holderPCD: {required},
@@ -506,10 +510,10 @@
             beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             beneficiaryCountry: {required, maxLength: maxLength(64)},
             beneficiaryOrder: {required},
-            beneficiaryProportion: {required, between: between(0, 100)},
+            beneficiaryProportion: {required, between: between(1, 100)},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
-            beneficiaryCardNo: {required, vali: this.valiBene1},
+            beneficiaryCardNo: {required, vali: this.valiBene1, maxLength: maxLength(32)},
             beneficiaryCardPeroid: {required},
             insuredRelation: {required}
           },
@@ -517,10 +521,10 @@
             beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             beneficiaryCountry: {required, maxLength: maxLength(64)},
             beneficiaryOrder: {required},
-            beneficiaryProportion: {required, between: between(0, 100)},
+            beneficiaryProportion: {required, between: between(1, 100)},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
-            beneficiaryCardNo: {required, vali: this.valiBene2},
+            beneficiaryCardNo: {required, vali: this.valiBene2, maxLength: maxLength(32)},
             beneficiaryCardPeroid: {required},
             insuredRelation: {required}
           },
@@ -532,14 +536,14 @@
             careerName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             policyholderBirthday: {required},
             policyholderCardType: {required},
-            policyholderCardNo: {required, vali: this.valiHolder},
+            policyholderCardNo: {required, vali: this.valiHolder, maxLength: maxLength(32)},
             policyholderCardPeroid: {required},
             policyholderCountry: {required, maxLength: maxLength(64)},
             policyholderHeight: {required, int, maxLength: maxLength(3)},
             policyholderBodyWeight: {required, int, maxLength: maxLength(3)},
             policyholderIncome: {required, int, maxLength: maxLength(6)},
             policyholderMarriage: {required},
-            policyholderTel: {fixedTel},
+            policyholderTel: {fixedTel, maxLength: maxLength(15)},
             policyholderMobile: {mobile},
             policyholderEmail: {mail},
             holderPCD: {required},
@@ -550,10 +554,10 @@
             beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             beneficiaryCountry: {required, maxLength: maxLength(64)},
             beneficiaryOrder: {required},
-            beneficiaryProportion: {required, between: between(0, 100)},
+            beneficiaryProportion: {required, between: between(1, 100)},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
-            beneficiaryCardNo: {required, vali: this.valiBene1},
+            beneficiaryCardNo: {required, vali: this.valiBene1, maxLength: maxLength(32)},
             beneficiaryCardPeroid: {required},
             insuredRelation: {required}
           },
@@ -561,10 +565,10 @@
             beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             beneficiaryCountry: {required, maxLength: maxLength(64)},
             beneficiaryOrder: {required},
-            beneficiaryProportion: {required, between: between(0, 100)},
+            beneficiaryProportion: {required, between: between(1, 100)},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
-            beneficiaryCardNo: {required, vali: this.valiBene2},
+            beneficiaryCardNo: {required, vali: this.valiBene2, maxLength: maxLength(32)},
             beneficiaryCardPeroid: {required},
             insuredRelation: {required}
           },
@@ -734,12 +738,12 @@
           this.addBene2 = true;
         }
       },
-      goToSelect(){
+      goToSelect() {
         this.$router.push({
-          path:'/careerSelect',
-          query:{
-            type:'holder',
-            key:'policyholderCareer'
+          path: '/careerSelect',
+          query: {
+            type: 'holder',
+            key: 'policyholderCareer'
           }
         })
       }
@@ -967,7 +971,7 @@
         }
       }
     },
-    activated(){
+    activated() {
       this.holder = storage.fetch("holder");
     }
   }
@@ -1142,7 +1146,7 @@
     }
   }
 
-  #taxRelated:before {
+  .taxRelated:before {
     border-top: none;
   }
 </style>

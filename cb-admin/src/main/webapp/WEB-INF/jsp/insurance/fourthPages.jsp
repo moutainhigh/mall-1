@@ -21,43 +21,44 @@
         }
     </script>
 </head>
-<body>
-<div id="main" class="clearfix">
-    <header id="header-main">
-        <div class="header-main-top">
-            <div class="pull-left">
-                <!-- * This is the responsive logo * -->
-                <a href="#" id="logo-small"><h4></h4><h5></h5></a>
+<div>
+    <div id="main" class="clearfix">
+        <header id="header-main">
+            <div class="header-main-top">
+                <div class="pull-left">
+                    <!-- * This is the responsive logo * -->
+                    <a href="#" id="logo-small"><h4></h4><h5></h5></a>
+                </div>
+                <div class="pull-right">
+                    <!-- * This is the trigger that will show/hide the menu * -->
+                    <!-- * if the layout is in responsive mode              * -->
+                    <a href="#" id="responsive-menu-trigger">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
             </div>
-            <div class="pull-right">
-                <!-- * This is the trigger that will show/hide the menu * -->
-                <!-- * if the layout is in responsive mode              * -->
-                <a href="#" id="responsive-menu-trigger">
-                    <i class="fa fa-bars"></i>
-                </a>
-            </div>
-        </div>
-        <!-- End #header-main-top -->
-        <!-- End #header-main-bottom -->
-    </header>
-
-    <div id="content" class="clearfix">
-
-
-        <header id="header-sec">
+            <!-- End #header-main-top -->
+            <!-- End #header-main-bottom -->
         </header>
-        <div class="window">
+
+        <div id="content" class="clearfix">
+
+
+            <header id="header-sec">
+            </header>
+            <div class="window">
                 <!-- Start .第四页第二层-->
                 <!-- Start .第二层-->
-                <div style="position: absolute;z-index: 20;padding-left: 0px;margin-top: 12px;">
+                <div style="position: absolute;z-index: 20;padding-left: 0px;margin-top: 30px;">
                     <!-- Start .第一行-->
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 135px;margin-left: 150px;">周泣</div>
+                                <div class="al-row-2"
+                                     style="margin-top: 135px;margin-left: 150px;">${insuranceOrder.insuranceOrderInsured.insuredName}</div>
                             </div>
-                            <div class="al-font" style="margin-left: 290px;">
-                                <div class="al-row-sex">陈忠</div>
+                            <div class="al-font" style="margin-left: 300px;">
+                                <div class="al-row-sex">${insuranceOrder.insuranceOrderPolicyholder.policyholderName}</div>
                             </div>
                         </div>
                     </div>
@@ -66,15 +67,23 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 128px;margin-left: 68px;">
-                                    <div style="margin-left: 105px;float: left;">√</div>
-                                    <div style="margin-left: 50px;float: left;">√</div>
-                                    <div style="margin-left: 50px;float: left;">√</div>
-                                    <div style="margin-left: 50px;float: left;">√</div>
+                                <div class="al-row-2" style="margin-top: 132px;margin-left: 68px;">
+                                    <div style="margin-left: 105px;float: left;">
+                                        &nbsp;
+                                    </div>
+                                    <div style="margin-left: 50px;float: left;">
+                                        &nbsp;
+                                    </div>
+                                    <div style="margin-left: 50px;float: left;">
+                                        &nbsp;
+                                    </div>
+                                    <div style="margin-left: 50px;float: left;">
+                                        &nbsp;
+                                    </div>
                                 </div>
                             </div>
                             <div class="al-font" style="margin-left: -20px;">
-                                <div class="al-row-sex">其它意见</div>
+                                <div class="al-row-sex">&nbsp;</div>
                             </div>
                         </div>
                     </div>
@@ -84,13 +93,13 @@
                         <div class="al-line">
                             <div class="al-font">
                                 <div class="al-row-2" style="margin-top: 125px;margin-left: 15px;">
-                                    <div style="margin-left: 105px;float: left;">√</div>
-                                    <div style="margin-left: 78px;float: left;">√</div>
-                                    <div style="margin-left: 78px;float: left;">√</div>
-                                    <div style="margin-left: 120px;float: left;">√</div>
+                                    <div style="margin-left: 105px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 78px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 78px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 120px;float: left;">&nbsp;</div>
                                 </div>
                                 <div class="al-font" style="margin-left: -20px;">
-                                    <div class="al-row-sex">其它意见</div>
+                                    <div class="al-row-sex">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -100,9 +109,9 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 118px;margin-left: 430px;">
-                                    <div style="margin-left: 105px;float: left;">√</div>
-                                    <div style="margin-left: 38px;float: left;">√</div>
+                                <div class="al-row-2" style="margin-top: 118px;margin-left: 433px;">
+                                    <div style="margin-left: 105px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 38px;float: left;">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +122,7 @@
                         <div class="al-line">
                             <div class="al-font">
                                 <div class="al-font" style="margin-top: 110px;margin-left: 60px;">
-                                    <div class="al-row-sex">其它意见</div>
+                                    <div class="al-row-sex">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -123,12 +132,12 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 103px;margin-left: 290px;">
-                                    <div style="margin-left: 105px;float: left;">√</div>
-                                    <div style="margin-left: 38px;float: left;">√</div>
+                                <div class="al-row-2" style="margin-top: 103px;margin-left: 295px;">
+                                    <div style="margin-left: 105px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 38px;float: left;">&nbsp;</div>
                                 </div>
                                 <div class="al-font" style="margin-left: 60px;">
-                                    <div class="al-row-sex">其它意见</div>
+                                    <div class="al-row-sex">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -138,12 +147,12 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 95px;margin-left: 232px;">
-                                    <div style="margin-left: 105px;float: left;">√</div>
-                                    <div style="margin-left: 38px;float: left;">√</div>
+                                <div class="al-row-2" style="margin-top: 95px;margin-left: 237px;">
+                                    <div style="margin-left: 105px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 38px;float: left;">&nbsp;</div>
                                 </div>
                                 <div class="al-font" style="margin-left: 70px;">
-                                    <div class="al-row-sex">其它意见</div>
+                                    <div class="al-row-sex">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -153,12 +162,12 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 90px;margin-left: 290px;">
-                                    <div style="margin-left: 105px;float: left;">√</div>
-                                    <div style="margin-left: 38px;float: left;">√</div>
+                                <div class="al-row-2" style="margin-top: 88px;margin-left: 295px;">
+                                    <div style="margin-left: 105px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 38px;float: left;">&nbsp;</div>
                                 </div>
                                 <div class="al-font" style="margin-left: 60px;">
-                                    <div class="al-row-sex">其它意见</div>
+                                    <div class="al-row-sex">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -168,12 +177,12 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 85px;margin-left: 95px;">
-                                    <div style="margin-left: 105px;float: left;">√</div>
-                                    <div style="margin-left: 35px;float: left;">√</div>
+                                <div class="al-row-2" style="margin-top: 80px;margin-left: 100px;">
+                                    <div style="margin-left: 105px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 35px;float: left;">&nbsp;</div>
                                 </div>
                                 <div class="al-font" style="margin-left: 60px;">
-                                    <div class="al-row-sex">其它意见</div>
+                                    <div class="al-row-sex">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -183,8 +192,8 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 80px;margin-left: 375px;">
-                                    <div class="al-row-sex">其它意见</div>
+                                <div class="al-row-2" style="margin-top: 70px;margin-left: 375px;">
+                                    <div class="al-row-sex">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -194,11 +203,11 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 70px;margin-left: 50px;">
-                                    <div style="margin-left: 105px;float: left;">1000</div>
-                                    <div style="margin-left: 200px;float: left;">1000</div>
-                                    <div style="margin-left: 220px;float: left;">1000</div>
-                                    <div style="margin-left: 220px;float: left;">1000</div>
+                                <div class="al-row-2" style="margin-top: 65px;margin-left: 50px;">
+                                    <div style="margin-left: 105px;float: left;">${insuranceOrder.insuranceOrderInsured.insuredIncome}</div>
+                                    <div style="margin-left: 200px;float: left;">${insuranceOrder.insuranceOrderPolicyholder.policyholderIncome}</div>
+                                    <div style="margin-left: 230px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +218,7 @@
                         <div class="al-line">
                             <div class="al-font">
                                 <div class="al-row-2" style="margin-top: 110px;margin-left: -20px;">
-                                    <div class="al-row-sex">备注其它意见</div>
+                                    <div class="al-row-sex">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -219,12 +228,13 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 430px;">
-                                    <div style="margin-left: 55px;float: left;">1000</div>
-                                    <div style="margin-left: 260px;float: left;">1000</div>
-                                    <div style="margin-left: 220px;float: left;">2018</div>
-                                    <div style="margin-left: 40px;float: left;">07</div>
-                                    <div style="margin-left: 30px;float: left;">15</div>
+                                <div class="al-row-2" style="margin-top: 420px;">
+                                    &nbsp;
+                                    <div style="margin-left: 55px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 260px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 40px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 30px;float: left;">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -234,12 +244,12 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
-                                    <div style="margin-left: -5px;float: left;">1000</div>
-                                    <div style="margin-left: 170px;float: left;">√</div>
-                                    <div style="margin-left: 54px;float: left;">√</div>
-                                    <div style="margin-left: 220px;float: left;">2018</div>
-                                    <div style="margin-left: 220px;float: left;">07</div>
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
+                                    <div style="margin-left: -5px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 170px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 54px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -249,12 +259,12 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
-                                    <div style="margin-left: -5px;float: left;">1000</div>
-                                    <div style="margin-left: 170px;float: left;">√</div>
-                                    <div style="margin-left: 54px;float: left;">√</div>
-                                    <div style="margin-left: 220px;float: left;">2018</div>
-                                    <div style="margin-left: 220px;float: left;">07</div>
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
+                                    <div style="margin-left: -5px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 170px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 54px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -264,12 +274,12 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
-                                    <div style="margin-left: -5px;float: left;">1000</div>
-                                    <div style="margin-left: 170px;float: left;">√</div>
-                                    <div style="margin-left: 54px;float: left;">√</div>
-                                    <div style="margin-left: 220px;float: left;">2018</div>
-                                    <div style="margin-left: 220px;float: left;">07</div>
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
+                                    <div style="margin-left: -5px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 170px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 54px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -279,12 +289,12 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
-                                    <div style="margin-left: -5px;float: left;">1000</div>
-                                    <div style="margin-left: 170px;float: left;">√</div>
-                                    <div style="margin-left: 54px;float: left;">√</div>
-                                    <div style="margin-left: 220px;float: left;">2018</div>
-                                    <div style="margin-left: 220px;float: left;">07</div>
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
+                                    <div style="margin-left: -5px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 170px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 54px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -294,12 +304,12 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
-                                    <div style="margin-left: -5px;float: left;">1000</div>
-                                    <div style="margin-left: 170px;float: left;">√</div>
-                                    <div style="margin-left: 54px;float: left;">√</div>
-                                    <div style="margin-left: 220px;float: left;">2018</div>
-                                    <div style="margin-left: 220px;float: left;">07</div>
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
+                                    <div style="margin-left: -5px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 170px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 54px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 220px;float: left;">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -309,10 +319,10 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 640px;">
-                                    <div style="margin-left: 240px;float: left;">5</div>
-                                    <div style="margin-left: 240px;float: left;">2018</div>
-                                    <div style="margin-left: 219px;float: left;">07</div>
+                                <div class="al-row-2" style="margin-top: 625px;margin-left: 90px">
+                                    <div style="margin-left: 240px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 240px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 219px;float: left;">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
@@ -346,7 +356,8 @@
                             </div>
                             <div class="a-input-div" style="width: 260px;">
                                 <span class="f-body-font">&nbsp;</span>
-                            </div>;
+                            </div>
+                            ;
                         </div>
                         <div class="div-line-con-four div-row-5" style="border-left: solid 0px;">
                             <div class="title">
@@ -354,7 +365,8 @@
                             </div>
                             <div class="a-input-div" style="width: 260px;">
                                 <span class="body-font">&nbsp;</span>
-                            </div>;
+                            </div>
+                            ;
                         </div>
                     </div>
 
@@ -362,13 +374,13 @@
                         <div class="div-line-con-four">
                             <div class="title"><span class="body-font">&nbsp;1.&nbsp;&nbsp;&nbsp;本人与投保人关系：</span></div>
                             <div>
-                                <input class="i-cb" type="checkbox" /><span class="body-font"> 家属</span>
-                                <input class="i-cb" type="checkbox" /><span class="body-font"> 亲戚</span>
-                                <input class="i-cb" type="checkbox" /><span class="body-font"> 朋友</span>
-                                <input class="i-cb" type="checkbox" /><span class="body-font"> 其他：</span>
+                                <input class="i-cb" type="checkbox"/><span class="body-font"> 家属</span>
+                                <input class="i-cb" type="checkbox"/><span class="body-font"> 亲戚</span>
+                                <input class="i-cb" type="checkbox"/><span class="body-font"> 朋友</span>
+                                <input class="i-cb" type="checkbox"/><span class="body-font"> 其他：</span>
                             </div>
                             <div class="a-input-div" style="width: 570px;">
-                                <input class="l-input" type="text" />
+                                <input class="l-input" type="text"/>
                             </div>
                         </div>
                     </div>
@@ -377,90 +389,96 @@
                         <div class="div-line-con-four">
                             <div class="title"><span class="body-font"> &nbsp;2.&nbsp;&nbsp;&nbsp;投保经过：</span></div>
                             <div>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font"> 他人介绍</span>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font"> 陌生拜访</span>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font"> 投保人主动投保</span>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font">  其他：</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font"> 他人介绍</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font"> 陌生拜访</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font"> 投保人主动投保</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font">  其他：</span>
                             </div>
                             <div class="a-input-div" style="width: 500px;">
-                                <input class="l-input" type="text" />
+                                <input class="l-input" type="text"/>
                             </div>
                         </div>
                     </div>
 
                     <div class="div-line" style="border-bottom: solid 0px;">
                         <div class="div-line-con-four">
-                            <div class="title"><span class="body-font"> &nbsp;3.&nbsp;&nbsp;&nbsp;据本人了解，被保险人目前是否呈病态，有生理缺陷或因疾病，外伤而治疗中：</span></div>
+                            <div class="title"><span class="body-font"> &nbsp;3.&nbsp;&nbsp;&nbsp;据本人了解，被保险人目前是否呈病态，有生理缺陷或因疾病，外伤而治疗中：</span>
+                            </div>
                             <div>
-                                <input class="i-cb" type="checkbox" /><span class="body-font"> 是</span>
-                                <input class="i-cb" type="checkbox" /><span class="body-font"> 否</span>
+                                <input class="i-cb" type="checkbox"/><span class="body-font"> 是</span>
+                                <input class="i-cb" type="checkbox"/><span class="body-font"> 否</span>
                             </div>
                         </div>
                     </div>
                     <div class="div-line" style="border-bottom: solid 0px;">
                         <div class="div-line-con-four">
-                            <div class="title"><span class="body-font">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如是，请说明：</span></div>
+                            <div class="title"><span
+                                    class="body-font">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如是，请说明：</span></div>
                             <div class="a-input-div" style="width: 849px;">
-                                <input class="l-input" type="text" />
+                                <input class="l-input" type="text"/>
                             </div>
                         </div>
                     </div>
                     <div class="div-line" style="border-bottom: solid 0px;">
                         <div class="div-line-con-four">
-                            <div class="title"><span class="body-font"> &nbsp;4.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有吸烟，嗜酒或服用成瘾性药物：</span></div>
+                            <div class="title"><span class="body-font"> &nbsp;4.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有吸烟、嗜酒或服用成瘾性药物?</span>
+                            </div>
                             <div>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font">是</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
                             </div>
                             <div>
                                 <div class="title"><span class="body-font">如是，请说明：</span></div>
                                 <div class="a-input-div" style="width: 390px;">
-                                    <input class="l-input" type="text" />
+                                    <input class="l-input" type="text"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="div-line" style="border-bottom: solid 0px;">
                         <div class="div-line-con-four">
-                            <div class="title"><span class="body-font">&nbsp;5.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有兼职或从事特殊职业：</span></div>
+                            <div class="title"><span
+                                    class="body-font">&nbsp;5.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有兼职或从事特殊职业?</span></div>
                             <div>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font">是</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
                             </div>
                             <div>
                                 <div class="title"><span class="body-font">如是，请说明：</span></div>
                                 <div class="a-input-div" style="width: 445px;">
-                                    <input class="l-input" type="text" />
+                                    <input class="l-input" type="text"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="div-line" style="border-bottom: solid 0px;">
                         <div class="div-line-con-four">
-                            <div class="title"><span class="body-font">&nbsp;6.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有从事具有危险性的运动或爱好：</span></div>
+                            <div class="title"><span class="body-font">&nbsp;6.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有从事具有危险性的运动或爱好?</span>
+                            </div>
                             <div>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font">是</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
                             </div>
                             <div>
                                 <div class="title"><span class="body-font">如是，请说明：</span></div>
                                 <div class="a-input-div" style="width: 389px;">
-                                    <input class="l-input" type="text" />
+                                    <input class="l-input" type="text"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="div-line" style="border-bottom: solid 0px;">
                         <div class="div-line-con-four">
-                            <div class="title"><span class="body-font">&nbsp;7.&nbsp;&nbsp;&nbsp;是否存在其它风险情况：</span></div>
+                            <div class="title"><span class="body-font">&nbsp;7.&nbsp;&nbsp;&nbsp;是否存在其它风险情况?</span>
+                            </div>
                             <div>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
-                                <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font">是</span>
+                                <input class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
                             </div>
                             <div>
                                 <div class="title"><span class="body-font">如是，请说明：</span></div>
                                 <div class="a-input-div" style="width: 584px;">
-                                    <input class="l-input" type="text" />
+                                    <input class="l-input" type="text"/>
                                 </div>
                             </div>
                         </div>
@@ -468,9 +486,10 @@
                     <div class="div-line" style="border-bottom: solid 0px;">
                         <div class="div-line-con-four">
                             <div>
-                                <div class="title"> <span class="body-font">&nbsp;8.&nbsp;&nbsp;&nbsp;如受益人非被保险人的直系亲属，请向投保人和被保险人了解原因：</span></div>
+                                <div class="title"><span class="body-font">&nbsp;8.&nbsp;&nbsp;&nbsp;如受益人非被保险人的直系亲属，请向投保人和被保险人了解原因：</span>
+                                </div>
                                 <div class="a-input-div" style="width: 525px;">
-                                    <input class="l-input" type="text" />
+                                    <input class="l-input" type="text"/>
                                 </div>
                             </div>
                         </div>
@@ -478,29 +497,34 @@
                     <div class="div-line" style="border-bottom: solid 0px;">
                         <div class="div-line-con-four">
                             <div>
-                                <div class="title"><span class="body-font">&nbsp;9.&nbsp;&nbsp;&nbsp;估计被保险收入：</span></div>
-                                <div>
-                                    <div class="a-input-div" style="width: 75px;">
-                                        <input class="l-input" type="text" />
-                                    </div><span class="body-font">;/月，</span>
+                                <div class="title"><span class="body-font">&nbsp;9.&nbsp;&nbsp;&nbsp;估计被保险收入：</span>
                                 </div>
-                                <div class="title"><span class="body-font">估计投保收入：</span></div>
                                 <div>
                                     <div class="a-input-div" style="width: 75px;">
-                                        <input class="l-input" type="text" />
-                                    </div><span class="body-font">;/月，</span>
+                                        <input class="l-input" type="text"/>
+                                    </div>
+                                    <span class="body-font">/月，</span>
+                                </div>
+                                <div class="title"><span class="body-font">估计投保人收入：</span></div>
+                                <div>
+                                    <div class="a-input-div" style="width: 75px;">
+                                        <input class="l-input" type="text"/>
+                                    </div>
+                                    <span class="body-font">/月，</span>
                                 </div>
                                 <div class="title"><span class="body-font">估计被保险人财产值：</span></div>
                                 <div>
                                     <div class="a-input-div" style="width: 75px;">
-                                        <input class="l-input" type="text" />
-                                    </div><span class="body-font">; ，</span>
+                                        <input class="l-input" type="text"/>
+                                    </div>
+                                    <span class="body-font">; ，</span>
                                 </div>
                                 <div class="title"><span class="body-font">估计投保人财产值：</span></div>
                                 <div>
                                     <div class="a-input-div" style="width: 85px;">
-                                        <input class="l-input" type="text" />
-                                    </div><span class="body-font">。</span>
+                                        <input class="l-input" type="text"/>
+                                    </div>
+                                    <span class="body-font">。</span>
                                 </div>
                             </div>
                         </div>
@@ -518,7 +542,7 @@
                 <div style="height: 10px;">
 
                 </div>
-                <div class="div-tab" style="background: #CDD9D7;">
+                <div class="div-tab" style="background-color: #dff9fb;">
                     <div class="div-line">
                         <div class="div-line-con-four">
                             <div style="padding-bottom:8px;">
@@ -550,17 +574,20 @@
                                 <div class="title"><span class="body-font"> 日期:</span></div>
                                 <div style="padding-left: 40px;">
                                     <div style="width: 40px;">
-                                    </div><span class="body-font">年</span>
+                                    </div>
+                                    <span class="body-font">年</span>
                                     <div style="width: 40px;">
-                                    </div><span class="body-font">月</span>
+                                    </div>
+                                    <span class="body-font">月</span>
                                     <div style="width: 40px;">
-                                    </div><span class="body-font">日</span>
+                                    </div>
+                                    <span class="body-font">日</span>
                                 </div>
                             </div>
                         </div>
                         <div class="div-line-con-four">
                             <div class="div-line-con-four div-row-3" style="border-left: solid 0px;padding-top: 10px;">
-                                <div class="title"><span class="body-font">中介公司签单：</span></div>
+                                <div class="title"><span class="body-font">中介公司签章：</span></div>
                                 <div style="width: 80%;height: 25px;"></div>
                             </div>
                         </div>
@@ -593,15 +620,17 @@
                         </div>
                         <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                     </div>
                     <div class="div-line">
@@ -610,15 +639,17 @@
                         </div>
                         <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                     </div>
                     <div class="div-line">
@@ -627,15 +658,17 @@
                         </div>
                         <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                     </div>
                     <div class="div-line">
@@ -644,15 +677,17 @@
                         </div>
                         <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                     </div>
                     <div class="div-line">
@@ -661,26 +696,31 @@
                         </div>
                         <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span>
+                            </div>
                         </div>
                     </div>
                     <div class="div-line">
                         <div class="div-line-con-four div-win-2">
-                            <div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;&nbsp;&nbsp;总计</span></div>
+                            <div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;&nbsp;&nbsp;总计</span>
+                            </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span>
+                            </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
-                            <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
+                            <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span>
+                            </div>
                         </div>
                         <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
@@ -689,14 +729,14 @@
                 </div>
 
                 <div style="padding-top: 60px;padding-left: 300px;">
-                    <span style="font-size: 25px;">全国统一热线：&nbsp;&nbsp;&nbsp;95535/4008-200-035</span>
+                    <span style="font-size: 25px;">全国统一客服热线：&nbsp;&nbsp;&nbsp;95535/4008-200-035</span>
                 </div>
                 <!-- End .第一层-->
+            </div>
+            <!-- End #content -->
         </div>
-        <!-- End #content -->
+        <!-- End #main -->
     </div>
-    <!-- End #main -->
 </div>
-
 </body>
 </html>

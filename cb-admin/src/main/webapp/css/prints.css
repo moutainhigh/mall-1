@@ -122,9 +122,10 @@ input {
     margin-left: 8px;
 }
 
-.div-line-con-three .i-cert-code {
+.div-line-con-three .i-cert-code-three {
     display: inline-block;
     width: 21px;
+    height: 20px;
     font-size: 15px;
     margin-left: -1px;
     text-align: center;

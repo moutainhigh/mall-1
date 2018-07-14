@@ -9,6 +9,8 @@
     <!--<script src="../js/zoomify/zoomify.js"></script>-->
     <script src="../js/zoomify/jquery-1.4.4.min.js"></script>
     <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
+    <script src="../js/district/district.js" type="text/javascript"></script>
+    <script src="../js/profession/profession.js" type="text/javascript"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" type="text/css" href="../css/insurance.css">
@@ -19,6 +21,39 @@
         function jqPrints() {
             $("#prints").jqprint();
         }
+        $(document).ready(function () {
+            <%--$.citySelector.getProvince(${insuranceOrder.insuranceOrderInsured.insuredProvince});--%>
+            <%--var policyholderCity=  $.citySelector.getCity(${insuranceOrder.insuranceOrderInsured.policyholderCity});--%>
+            <%--var policyholderDistrict=  $.citySelector.getDistrict(${insuranceOrder.insuranceOrderInsured.policyholderDistrict});--%>
+
+            var insuredProvince= $.citySelector.getProvince(${insuranceOrder.insuranceOrderInsured.insuredProvince});
+            insuredProvince=insuredProvince.replace("省","").replace("市","");
+            $("#insuredProvince").html(insuredProvince);
+            var insuredCity= $.citySelector.getCity(${insuranceOrder.insuranceOrderInsured.insuredCity});
+            insuredCity=insuredCity.replace("市","");
+            $("#insuredCity").html(insuredCity);
+            var insuredDistrict= $.citySelector.getDistrict(${insuranceOrder.insuranceOrderInsured.insuredDistrict});
+            insuredDistrict=insuredDistrict.replace("区","").replace("县","");
+            $("#insuredDistrict").html(insuredDistrict);
+            var policyholderProvince= $.citySelector.getProvince(${insuranceOrder.insuranceOrderPolicyholder.policyholderProvince});
+            policyholderProvince=policyholderProvince.replace("省","").replace("市","");
+            var policyholderCity=  $.citySelector.getCity(${insuranceOrder.insuranceOrderPolicyholder.policyholderCity});
+            policyholderCity =policyholderCity.replace("市","");
+            var policyholderDistrict=  $.citySelector.getDistrict(${insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
+            policyholderDistrict=policyholderDistrict.replace("区","").replace("县","");
+            $("#policyholderProvince").html(policyholderProvince);
+            $("#policyholderCity").html(policyholderCity);
+            $("#policyholderDistrict").html(policyholderDistrict);
+
+            $("#policyholderProvinces").html(policyholderProvince);
+            $("#policyholderCitys").html(policyholderCity);
+            $("#policyholderDistricts").html(policyholderDistrict);
+            var insuredCareer =$.profession.getProfession('${insuranceOrder.insuranceOrderInsured.insuredCareer}');
+            $("#insuredCareer").html(insuredCareer);
+            var policyholderCareer =$.profession.getProfession('${insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}');
+            $("#policyholderCareer").html(policyholderCareer);
+
+        });
     </script>
 </head>
 <body>
@@ -104,7 +139,7 @@
                                 投保须知:
                             </div>
                             <div style="display: inline-block">
-                                1、请您在仔细阅读人身保险投保提示书、产品说明书、保险条款后用蓝、黑墨水笔填写本投保单，并在合适的回答方框内打↓。
+                                1、请您在仔细阅读人身保险投保提示书、产品说明书、保险条款后用蓝、黑墨水笔填写本投保单，并在合适的回答方框内打√。
                                 <br/>2、您必须在此投保单上真实填写一切有关事实，并亲笔签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。
                                 <br/>3、富德生命人寿保险股份有限公司承诺未经客户同意，不会将客户信息用于人身保险公司和第三方机构的销售活动。
                             </div>
@@ -115,509 +150,1220 @@
                         <div class="div-title">被保险人资料</div>
                     </div>
                 </div>
-                <div style="position: absolute;z-index: 20;">
-                    <div class="al-tab">
-                        <div class="al-line">
-                            <div class="al-font div-row-2">
-                                <div class="al-row-2" style="margin-top: 9px;">哈哈哈哈</div>
-                            </div>
-                            <div class="al-font div-sex">
-                                <div class="al-row-sex">√</div>
-                                <div>√</div>
-                            </div>
-                            <div class="al-font div-row-4">
-                                <div class="al-row-date">
-                                    <div>1996</div>
-                                    <div style="margin-left: 50px;">02</div>
-                                    <div style="margin-left: 50px;">02</div>
+                    <div style="position: absolute;z-index: 20;">
+                        <div class="al-tab">
+                            <div class="al-line">
+                                <div class="al-font div-row-2">
+                                    <div class="al-row-2" style="margin-top: 9px;">${insuranceOrder.insuranceOrderInsured.insuredName}</div>
+                                </div>
+                                <div class="al-font div-sex">
+                                    <div class="al-row-sex">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderInsured.insuredGender=='true'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+
+
+                                    <div>
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderInsured.insuredGender=='false'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                                <div class="al-font div-row-4">
+                                    <div class="al-row-date">
+                                        <div>${map.insurance_b_year}</div>
+                                        <div style="margin-left: 56px;">${map.insurance_b_month}</div>
+                                        <div style="margin-left: 50px;">${map.insurance_b_day}</div>
+                                    </div>
+                                </div>
+                                <div class="al-font div-row-2">
+                                    <div class="al-row-age">${map.age}</div>
                                 </div>
                             </div>
-                            <div class="al-font div-row-2">
-                                <div class="al-row-age">18</div>
-                            </div>
-                        </div>
-                        <div class="al-line">
-                            <div class="al-font div-row-5">
-                                <div class="al-row-cardType">
-                                    <div>√</div>
-                                    <div style="margin-left: 64px">√</div>
-                                    <div style="margin-left: 52px">√</div>
-                                    <div style="margin-left: 65px">√</div>
+                            <div class="al-line">
+                                <div class="al-font div-row-5">
+                                    <div class="al-row-cardType" style="margin-top: 0px;">
+                                        <div style="margin-left: -20px;">
+                                            <c:choose>
+                                                <c:when test="${insuranceOrder.insuranceOrderInsured.insuredMarriage=='身份证'}">
+                                                    √
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                        <div style="margin-left: 64px">
+                                            <c:choose>
+                                                <c:when test="${insuranceOrder.insuranceOrderInsured.insuredMarriage=='护照'}">
+                                                    √
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                        <div style="margin-left: 55px">
+                                            <c:choose>
+                                                <c:when test="${insuranceOrder.insuranceOrderInsured.insuredMarriage=='军官证'}">
+                                                    √
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                        <div style="margin-left: 70px">
+                                            <c:choose>
+                                                <c:when test="${insuranceOrder.insuranceOrderInsured.insuredMarriage!='军官证'&&insuranceOrder.insuranceOrderInsured.insuredMarriage!='护照'&&insuranceOrder.insuranceOrderInsured.insuredMarriage!='身份证'}">
+                                                    √
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="al-font" >
+                                    <div class="card-num"  style="letter-spacing:17.5px;margin-left: 100px;">
+                                        ${insuranceOrder.insuranceOrderInsured.insuredCardNo}</div>
                                 </div>
                             </div>
-                            <div class="al-font">
-                                <div class="card-num">445281166666666666</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="div-tab">
-                    <div class="div-line">
-                        <div class="div-line-con div-row-2">
-                            <div class="title">A 1.姓名</div>
-                            <%--<input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>--%>
-                        </div>
-                        <div class="div-line-con div-sex">
-                            <div class="title">A 2.性别</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                男
-                                <input class="i-cb" style="margin-left: 20px; " type="checkbox"/>
-                                女
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-4">
-                            <div class="title">A 3.出生日期</div>
-                            <div style="padding-left: 40px;">
-                                <input class="b-input" type="text"/>
-                                年
-                                <input class="b-input" type="text"/>
-                                月
-                                <input class="b-input" type="text"/>
-                                日
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-2">
-                            <div class="title">A 4.年龄</div>
-                            <input class="c-input" type="text"/>
-                            <div>周岁</div>
-                        </div>
-                    </div>
 
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 5.证件类型</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                身份证
-                                <input class="i-cb" type="checkbox"/>
-                                护照
-                                <input class="i-cb" type="checkbox"/>
-                                军官证
-                                <input class="i-cb" type="checkbox"/>
-                                其他
-                            </div>
-                        </div>
-                        <div class="div-line-con">
-                            <div class="title">A 6.证件号码</div>
-                        </div>
-                        <div style="display: inline-block;float: right;margin-top: 1px;margin-right: 1px;height: 20px">
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                        </div>
-                    </div>
+                            <div class="al-line">
+                                <div class="al-font div-row-5">
+                                    <c:choose>
+                                        <c:when test="${map.insurance_p_year!=null&&map.insurance_p_year!=''}">
+                                            <div style="margin-left: 105px;float: left;">√</div>
+                                            <div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">${map.insurance_p_year}</div>
+                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.insurance_p_month}</div>
+                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.insurance_p_day}</div>
+                                            <div style="margin-left: 35px;float: left;">&nbsp;</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div style="margin-left: 105px;float: left;">&nbsp;</div>
+                                            <div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
+                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
+                                            <div style="margin-left: 35px;float: left;">√</div>
 
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 7.证件有效期</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                有效期至
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                </div>
+
+                                <div class="al-font div-row-3" style="position: absolute">
+                                    <div style="margin-left: 120px;position: absolute;margin-top: 10px;"> ${insuranceOrder.insuranceOrderInsured.insuredCountry}</div>
+                                </div>
+                                <div class="al-font" style="margin-left: 340px;position: absolute;margin-top: 10px;">
+                                    ${insuranceOrder.insuranceOrderInsured.insuredHeight}
+                                </div>
+                                <div class="al-font" style="margin-left: 457px;position: absolute;margin-top: 10px;">
+                                    ${insuranceOrder.insuranceOrderInsured.insuredBodyWeight}
+                                </div>
+
+
+                            </div>
+
+                            <div class="al-line">
+                                <div class="al-font div-row-5">
+                                    <div style="margin-left: 110px;position: absolute">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderInsured.insuredMarriage=='未婚'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div style="margin-left: 175px;position: absolute">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderInsured.insuredMarriage=='已婚'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div style="margin-left: 245px;position: absolute">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderInsured.insuredMarriage=='离异'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div style="margin-left: 310px;position: absolute">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderInsured.insuredMarriage=='丧偶'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+
+
+                                </div>
+                                <div class="al-font div-row-3">
+                                    <div style="position: absolute;margin-left: 110px;;margin-top: -6px;">
+                                        ${map.insurance_q_tel}
+                                    </div>
+                                    <div style="position: absolute;margin-left: 170px;;margin-top: -6px;">
+                                        ${map.insurance_h_tel}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="al-font div-row-3">
+                                    <div style="margin-left: 820px;position: absolute;margin-top: -6px;">${insuranceOrder.insuranceOrderInsured.insuredMobile}</div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="al-line">
+                                <div class="al-font div-row-7" style="margin-top: 13px;">
+
+                                    <div style="margin-left:75px;position: absolute">
+                                        <div id="insuredProvince"></div>
+                                    </div>
+                                    <div style="margin-left:135px;position: absolute">
+                                        <div id="insuredCity"></div>
+                                    </div>
+                                    <div style="margin-left:200px;position: absolute">
+                                        <div id="insuredDistrict"></div>
+                                    </div>
+                                    <div style="margin-left:320px;position: absolute">
+                                        ${insuranceOrder.insuranceOrderInsured.insuredAddress}
+                                    </div>
+
+                                </div>
+                                <div class="al-font div-postcode" style="margin-top: 13px;margin-right: 35px;">
+
+                                    <div style="margin-right : 10px;letter-spacing:13px;">&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="al-line">
+                                <div class="al-font div-row-5" style="margin-top: 5px">
+                                    <div style="margin-left: 100px;">&nbsp;&nbsp;</div>
+
+                                </div>
+                                <div class="al-font div-row-3" style="position: absolute;margin-left: 10px;">
+                                    <div style="margin-left: 60px;position: absolute;margin-top: 15px;"><div id="insuredCareer"></div></div>
+
+                                </div>
+                                <div class="al-font div-row-3" style="position: absolute;margin-left: 10px;">
+                                    <div  style="margin-left: 370px;position: absolute;margin-top: 15px;">${insuranceOrder.insuranceOrderInsured.insuredIncome}</div>
+
+                                </div>
+                            </div>
+
+                            <div class="al-line">
+                                <div class="al-font div-row-7" style="margin-top: 15px;">
+
+                                    <div style="margin-left:100px;float: left;">
+                                        &nbsp; &nbsp;
+                                    </div>
+                                    <div style="margin-left:35px;float: left;">
+                                        &nbsp; &nbsp;
+                                    </div>
+                                    <div style="margin-left:35px;float: left;">
+                                        &nbsp; &nbsp;
+                                    </div>
+                                    <div style="margin-left:70px;float: left;">
+                                        &nbsp; &nbsp;
+                                    </div>
+
+                                </div>
+                                <div class="al-font div-postcode" style="margin-top: 15px;margin-right: 35px;">
+
+                                    <div style="margin-right : 10px;letter-spacing:13px;">518000</div>
+                                </div>
+                            </div>
+
+
+                            <div class="al-line">
+                                <div class="al-font ">
+                                    <div style="float: left;margin-top:15px;margin-left: 100px;">&nbsp;&nbsp;</div>
+                                    <div style="float: left;margin-top:15px;margin-left: 75px;">&nbsp;&nbsp;</div>
+                                </div>
+                                <div class="al-font " style="position: absolute;margin-left: 60px;">
+                                    <div style="position: absolute;margin-top:15px;margin-left: 100px;">${insuranceOrder.insuranceOrderInsured.insuredEmail}</div>
+                                </div>
+                                <div class="al-font div-row-7">
+                                    <div style="margin-left: 160px;float: left;">&nbsp;<!--√--></div>
+                                    <div style="margin-left: 40px;float: left;">&nbsp;<!--√-->
+                                    </div>
+                                    <div style="float: left;margin-left: 10px;">&nbsp;</div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+                        <div class="al-tab">
+                            <div class="al-line" style="margin-top: 30px;">
+                                <div class="al-font div-row-2">
+                                    <div class="al-row-2" style="margin-top: 9px;">${insuranceOrder.insuranceOrderPolicyholder.policyholderName}</div>
+                                </div>
+                                <div class="al-font div-sex">
+                                    <div class="al-row-sex">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='true'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div>
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='false'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                                <div class="al-font div-row-4">
+                                    <div class="al-row-date">
+                                        <div>${map.policy_b_year}</div>
+                                        <div style="margin-left: 56px;">${map.policy_b_month}</div>
+                                        <div style="margin-left: 40px;">${map.policy_b_day}</div>
+                                    </div>
+                                </div>
+                                <div class="al-font div-row-2">
+                                    <div style="margin-left: 120px;">${insuranceOrder.insuranceOrderInsured.insuredRelation}</div>
+                                </div>
+                            </div>
+
+                            <div class="al-line">
+                                <div class="al-font div-row-5">
+                                    <div class="al-row-cardType" style="margin-top: 0px;position: absolute">
+                                        <div style="margin-left: -10px;position: absolute">
+                                            <c:choose>
+                                                <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='身份证'}">
+                                                    √
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;
+                                                </c:otherwise>
+                                            </c:choose></div>
+
+                                        <div style="margin-left: 64px;position: absolute">
+                                            <c:choose>
+                                                <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='护照'}">
+                                                    √
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                        <div style="margin-left: 125px;position: absolute">
+                                            <c:choose>
+                                                <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='军官证'}">
+                                                    √
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                        <div style="margin-left: 200px;position: absolute">
+                                            <c:choose>
+                                                <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='军官证'&&insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='护照'&&insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='身份证'}">
+                                                    √
+                                                </c:when>
+                                                <c:otherwise>
+                                                    &nbsp;
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="al-font" style="position: absolute">
+                                    <div class="card-num"  style="letter-spacing:17.8px;margin-left: 108px;position: absolute;margin-top: 10px;">${insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo}</div>
+                                </div>
+                            </div>
+
+
+                            <div class="al-line">
+                                <div class="al-font div-row-5" style="margin-top: 3px;">
+                                    <c:choose>
+                                        <c:when test="${map.policy_p_year!=null&&map.policy_p_year!=''}">
+                                            <div style="margin-left: 110px;float: left;">√</div>
+                                            <div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">${map.policy_p_year}</div>
+                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_month}</div>
+                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_day}</div>
+                                            <div style="margin-left: 35px;float: left;">&nbsp;</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div style="margin-left: 105px;float: left;">&nbsp;</div>
+                                            <div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
+                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
+                                            <div style="margin-left: 35px;float: left;">√</div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+
+                                <div class="al-font div-row-3" style="position: absolute">
+                                    <div style="margin-left: 110px;position: absolute;margin-top: 12px;"> ${insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}</div>
+                                </div>
+                                <div class="al-font" style="margin-left: 350px;position: absolute;margin-top: 12px;">
+                                    ${insuranceOrder.insuranceOrderPolicyholder.policyholderHeight}
+                                </div>
+                                <div class="al-font" style="margin-left: 465px;position: absolute;margin-top: 12px;">
+                                    ${insuranceOrder.insuranceOrderPolicyholder.policyholderBodyWeight}
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="al-line">
+                                <div class="al-font div-row-5" style="position: absolute;margin-top: 7px;">
+                                    <div style="margin-left: 110px;position: absolute">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='未婚'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div style="margin-left: 175px;position: absolute">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='已婚'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div style="margin-left: 245px;position: absolute">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='离异'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div style="margin-left: 310px;position: absolute">
+                                        <c:choose>
+                                            <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='丧偶'}">
+                                                √
+                                            </c:when>
+                                            <c:otherwise>
+                                                &nbsp;
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+
+
+                                </div>
+                                <div class="al-font div-row-3" style="position: absolute;margin-left: 300px;">
+                                    <div style="margin-left:250px;position: absolute;margin-top: 15px;">
+                                        ${map.policy_q_tel}
+                                    </div>
+                                    <div style="margin-left:305px;position: absolute; margin-top: 15px;">
+                                        ${map.policy_h_tel}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="al-font div-row-3"  style="position: absolute;margin-left: 700px;">
+                                    <div style="margin-left: 115px;position: absolute;margin-top: 15px;">${insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}</div>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="al-line" style="margin-top: 2px;">
+                                <div class="al-font div-row-7" style="margin-top: 13px;position: absolute">
+
+                                    <div style="margin-left:90px;position: absolute">
+                                        <div id="policyholderProvince"></div>
+                                    </div>
+                                    <div style="margin-left:180px;position: absolute">
+                                        <div id="policyholderCity"></div>
+                                    </div>
+                                    <div style="margin-left:250px;position: absolute">
+                                        <div id="policyholderDistrict"></div>
+                                    </div>
+                                    <div style="margin-left:355px;position: absolute">
+                                        ${insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
+                                    </div>
+
+                                </div>
+                                <div class="al-font div-postcode" style="margin-top: 13px;margin-right: 35px;">
+
+                                    <div style="margin-right : 10px;letter-spacing:13px;">518000</div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="al-line" style="position: absolute">
+                                <div class="al-font div-row-5" style="margin-top: 5px">
+                                    <div style="margin-left: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+                                </div>
+                                <div class="al-font div-row-3">
+                                    <div style="margin-left: 110px;"><div id="policyholderCareer"></div></div>
+
+                                </div>
+                                <div class="al-font div-row-3" style="position: absolute">
+                                    <div  style="margin-left: 110px;position: absolute;margin-top: 15px;">${insuranceOrder.insuranceOrderPolicyholder.policyholderIncome}</div>
+
+                                </div>
+                            </div>
+
+                            <div class="al-line" style="position: absolute;margin-top: 35px;">
+                                <div class="al-font div-row-7" style="margin-top: 15px;">
+
+                                    <div style="margin-left:100px;float: left;">
+                                        &nbsp;&nbsp;
+                                    </div>
+                                    <div style="margin-left:35px;float: left;">
+                                        &nbsp;&nbsp;
+                                    </div>
+                                    <div style="margin-left:35px;float: left;">
+                                        &nbsp;&nbsp;
+                                    </div>
+                                    <div style="margin-left:70px;float: left;">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+
+                                </div>
+                                <div class="al-font div-postcode" style="margin-top: 15px;margin-left: 545px;position: absolute">
+
+                                    <div style="position: absolute;letter-spacing:13px;">618001</div>
+                                </div>
+                            </div>
+
+                            <div class="al-line" style="position: absolute;margin-top:68px">
+                                <div class="al-font ">
+                                    <div style="float: left;margin-top:15px;margin-left: 100px;">&nbsp;&nbsp;</div>
+                                    <div style="float: left;margin-top:15px;margin-left: 75px;">&nbsp;&nbsp;</div>
+                                </div>
+                                <div class="al-font " style="position: absolute">
+                                    <div style="float: left;margin-top:15px;margin-left: 165px;">${insuranceOrder.insuranceOrderPolicyholder.policyholderEmail}</div>
+                                </div>
+                                <div class="al-font div-row-7">
+                                    <div style="margin-left: 160px;float: left;">&nbsp;&nbsp;&nbsp;</div>
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="al-line" style="position: absolute;margin-top: 100px">
+                                <div class="al-font div-row-7" style="margin-top: 38px;position: absolute">
+
+                                    <div style="margin-left:0px;position: absolute">
+                                        <div id=""></div>
+                                    </div>
+                                    <div style="position: absolute;margin-left:130px">
+                                        <div id="policyholderProvinces"></div>
+                                    </div>
+                                    <div style="margin-left:225px;position: absolute">
+                                        <div id="policyholderCitys"></div>
+                                    </div>
+                                    <div style="margin-left:300px;position: absolute">
+                                        <div id="policyholderDistricts"></div>
+                                    </div>
+                                    <div style="margin-left:395px;position: absolute">
+                                        ${insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
+                                    </div>
+
+                                </div>
+
+                                <div class="al-font div-postcode" style="margin-top: 38px;position: absolute;margin-left: 660px;">
+
+                                    <div style="margin-left: 20px;letter-spacing:13px;">518000</div>
+
+                                </div>
+                                <div class="al-font div-postcode" style="position: absolute;margin-top: 38px;margin-left: 880px;">
+                                    ${insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}
+                                </div>
+
+                            </div>
+
+
+                            <div class="al-line" style="position: absolute;margin-top: 157px">
+                                <div class="al-font div-row-3" style="margin-top: 60px;float: left;">
+                                    <div style="margin-left: 202px;float: left;">&nbsp;</div>
+                                    <div style="margin-left: 55px;float: left;">&nbsp;</div>
+
+                                </div>
+
+                                <div class="al-font div-row-3" style="margin-left: 280px;position: absolute;margin-top: 38px">
+                                    <div style="margin-left: 100px;position: absolute;">${insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}</div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="al-tab" style="margin-top: 400px;position: absolute">
+                            <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[0].beneficiaryName}">
+                            <div class="al-line">
+                                <div class="al-font">
+                                    <div style="position: absolute;margin-left: 5px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryName}</div>
+                                    <div style="position: absolute;margin-left: 95px;">
+                                        <c:choose>
+                                        <c:when test="${map.beneficiaryList.beneficiaryList[0].beneficiaryGender=='true'}">
+                                            男
+                                        </c:when>
+                                        <c:otherwise>
+                                            女
+
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </div>
+                                    <div style="position: absolute;margin-left: 180px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryOrder}</div>
+                                    <div style="position: absolute;margin-left: 260px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryProportion}</div>
+                                    <div style="position: absolute;margin-left: 325px;">
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[0].beneficiaryBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
+                                        </div>
+                                    <div style="position: absolute;margin-left: 435px;">${map.beneficiaryList.beneficiaryList[0].insuredRelation}</div>
+                                </div>
+                                <div class="al-font" style="position: absolute;margin-left: 510px;margin-top: -3px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='身份证'}">
+                                        √</c:if></div>
+
+                                <div class="al-font" style="position: absolute;margin-left: 590px;margin-top: -3px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType!='身份证'}">
+                                        √</c:if></div>
+                                <div class="al-font" style="position: absolute;margin-left: 945px;margin-top: -1px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='长期'}">
+                                        √</c:if>
+                                    </div>
+                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -3px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType!='长期'}">
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>  </c:if></div>
+                                <div class="al-font" style="position: absolute;margin-left: 390px;margin-top: 18px;">
+                                    <div class="card-num"  style="letter-spacing:19.8px;position: absolute;margin-top: 10px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryCardNo}</div>
+                                </div>
+                            </div>
+
+
+                            </c:if>
+
+
+                        </div>
+
+                        <div class="al-tab" style="margin-top: 460px;position: absolute">
+                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[1].beneficiaryName}">
+                            <div class="al-line">
+                                <div class="al-font">
+                                    <div style="position: absolute;margin-left: 5px;">${map.beneficiaryList.beneficiaryList[1].beneficiaryName}</div>
+                                    <div style="position: absolute;margin-left: 95px;">
+
+                                        <c:choose>
+                                            <c:when test="${map.beneficiaryList.beneficiaryList[1].beneficiaryGender=='true'}">
+                                                男
+                                            </c:when>
+                                            <c:otherwise>
+                                                女
+
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div style="position: absolute;margin-left: 180px;">${map.beneficiaryList.beneficiaryList[1].beneficiaryOrder}</div>
+                                    <div style="position: absolute;margin-left: 260px;">${map.beneficiaryList.beneficiaryList[1].beneficiaryProportion}</div>
+                                    <div style="position: absolute;margin-left: 325px;"><fmt:formatDate value="${map.beneficiaryList.beneficiaryList[1].beneficiaryBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/></div>
+                                    <div style="position: absolute;margin-left: 435px;">${map.beneficiaryList.beneficiaryList[1].insuredRelation}</div>
+                                </div>
+                                <div class="al-font" style="position: absolute;margin-left: 510px;margin-top: -3px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType=='身份证'}">
+                                        √</c:if></div>
+
+                                <div class="al-font" style="position: absolute;margin-left: 590px;margin-top: -3px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType!='身份证'}">
+                                        √</c:if></div>
+                                <div class="al-font" style="position: absolute;margin-left: 945px;margin-top: -1px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType=='长期'}">
+                                        √</c:if>
+                                </div>
+                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -3px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType!='长期'}">
+
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
+                                    </c:if></div>
+                                <div class="al-font" style="position: absolute;margin-left: 390px;margin-top: 18px;">
+                                    <div class="card-num"  style="letter-spacing:19.8px;position: absolute;margin-top: 10px;">${map.beneficiaryList.beneficiaryList[1].beneficiaryCardNo}</div>
+                                </div>
+                            </div>
+
+                    </c:if>
+
+                        </div>
+
+
+
+                        <div class="al-tab" style="margin-top: 520px;position: absolute">
+<c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[0].beneficiaryName}">
+                            <div class="al-line">
+                                <div class="al-font">
+                                    <div style="position: absolute;margin-left: 5px;">${map.beneficiaryList.beneficiaryList[2].beneficiaryName}</div>
+                                    <div style="position: absolute;margin-left: 95px;">
+                                        <c:choose>
+                                            <c:when test="${map.beneficiaryList.beneficiaryList[2].beneficiaryGender=='true'}">
+                                                            男
+                                            </c:when>
+                                                    <c:otherwise>
+                                                        女
+
+                                                    </c:otherwise>
+                                        </c:choose></div>
+                                    <div style="position: absolute;margin-left: 180px;">${map.beneficiaryList.beneficiaryList[2].beneficiaryOrder}</div>
+                                    <div style="position: absolute;margin-left: 260px;">${map.beneficiaryList.beneficiaryList[2].beneficiaryProportion}</div>
+                                    <div style="position: absolute;margin-left: 325px;">
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[2].beneficiaryBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/></div>
+                                    <div style="position: absolute;margin-left: 435px;">${map.beneficiaryList.beneficiaryList[2].insuredRelation}</div>
+                                </div>
+                                <div class="al-font" style="position: absolute;margin-left: 510px;margin-top: -3px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType=='身份证'}">
+                                        √</c:if></div>
+
+                                <div class="al-font" style="position: absolute;margin-left: 590px;margin-top: -3px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType!='身份证'}">
+                                        √</c:if></div>
+                                <div class="al-font" style="position: absolute;margin-left: 945px;margin-top: -1px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType=='长期'}">
+                                        √</c:if>
+                                </div>
+                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -3px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType!='长期'}">
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/> </c:if></div>
+                                <div class="al-font" style="position: absolute;margin-left: 390px;margin-top: 18px;">
+                                    <div class="card-num"  style="letter-spacing:19.8px;position: absolute;margin-top: 10px;">${map.beneficiaryList.beneficiaryList[2].beneficiaryCardNo}</div>
+                                </div>
+                            </div>
+
+</c:if>
+
+                        </div>
+
+                    </div>
+                    <div class="div-tab">
+
+
+                        <div class="div-line">
+                            <div class="div-line-con div-row-2">
+                                <div class="title">A 1.姓名</div>
+
+                            </div>
+                            <div class="div-line-con div-sex">
+                                <div class="title">A 2.性别</div>
                                 <div>
-                                    <input class="c-input" type="text"/>
+                                    <input class="i-cb" type="checkbox"  style="margin-left: 15px;" />
+                                    男
+                                    <input class="i-cb" style="margin-left: 35px; " type="checkbox"/>
+                                    女
+                                </div>
+                            </div>
+                            <div class="div-line-con div-row-4">
+                                <div class="title">A 3.出生日期</div>
+                                <div style="padding-left: 40px;margin-left: 30px;">
+                                    <input class="b-input" type="text"/>
                                     年
-                                    <input class="c-input" type="text"/>
+                                    <input class="b-input" type="text"/>
                                     月
-                                    <input class="c-input" type="text"/>
+                                    <input class="b-input" type="text"/>
                                     日
                                 </div>
-                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
-                                长期
+                            </div>
+                            <div class="div-line-con div-row-2">
+                                <div class="title">A 4.年龄</div>
+                                <input class="c-input" type="text"/>
+                                <div>周岁</div>
                             </div>
                         </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 8.国籍、户籍</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 9.身高</div>
-                            <input class="b-input" type="text"/>
-                            厘米，
-                            <div class="title">体重</div>
-                            <input class="b-input" type="text"/>
-                            公斤
-                        </div>
-                    </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 10.婚姻状况</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                未婚
-                                <input class="i-cb" type="checkbox"/>
-                                已婚
-                                <input class="i-cb" type="checkbox"/>
-                                离异
-                                <input class="i-cb" type="checkbox"/>
-                                丧偶
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 11.固定电话（<span style="font-size: 1px">区号<input class="b-input"
-                                                                                               type="text"/></span>)-(<input
-                                    class="mobile-input" type="text"/></span>)
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 12.移动电话</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                    </div>
 
-                    <div class="div-line">
-                        <div class="div-line-con div-row-7">
-                            <div class="title">A 13.住址</div>
-                            <div>
-                                <input class="b-input" type="text"/>
-                                省
-                                <input class="b-input" type="text"/>
-                                市
-                                <input class="b-input" type="text"/>
-                                区、县
-                                <input class="d-input" type="text"/>
-                            </div>
-                        </div>
-                        <div class="div-line-con div-postcode">
-                            邮编
-                            <div style="margin-left: 20px;font-size: 0">
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 14.单位名称</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 15.职业</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 16.年收入</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                    </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-row-7">
-                            <div class="title">A 17.单位地址</div>
-                            <div>
-                                <input class="b-input" type="text"/>
-                                省
-                                <input class="b-input" type="text"/>
-                                市
-                                <input class="b-input" type="text"/>
-                                区、县
-                                <input class="d-input" type="text"/>
-                            </div>
-                        </div>
-                        <div class="div-line-con div-postcode">
-                            邮编
-                            <div style="margin-left: 20px;font-size: 0">
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-career" style="color: green;">
-                            <div class="title">A 8.职业代码</div>
-                            <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
-                            <div class="title">职业类别</div>
-                        </div>
-                        <div class="div-line-con div-email">
-                            <div class="title">A 19.职业</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-part-job">
-                            <div class="title">A 20.是否有兼职？</div>
-                            <input class="i-cb" style="margin-left: 10px" type="checkbox"/>
-                            是
-                            <input class="i-cb" type="checkbox"/>
-                            否，如是请说明：
-                        </div>
-                    </div>
-                </div>
-                <div class="div-title">
-                    投保人资料（如投保人为保险人本人，可免填本栏）
-                </div>
-                <div class="div-tab">
-                    <div class="div-line">
-                        <div class="div-line-con div-row-2">
-                            <div class="title">A 21.姓名</div>
-                            <%--<input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>--%>
-                        </div>
-                        <div class="div-line-con div-sex">
-                            <div class="title">A 22.性别</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                男
-                                <input class="i-cb" style="margin-left: 20px; " type="checkbox"/>
-                                女
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-4">
-                            <div class="title">A 23.出生日期</div>
-                            <div style="padding-left: 0;">
-                                <input class="b-input" type="text"/>
-                                年
-                                <input class="b-input" type="text"/>
-                                月
-                                <input class="b-input" type="text"/>
-                                日
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-2">
-                            <div class="title">A 24.年龄</div>
-                            <input class="c-input" type="text"/>
-                            <div>周岁</div>
-                        </div>
-                    </div>
-
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 25.证件类型</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                身份证
-                                <input class="i-cb" type="checkbox"/>
-                                护照
-                                <input class="i-cb" type="checkbox"/>
-                                军官证
-                                <input class="i-cb" type="checkbox"/>
-                                其他
-                            </div>
-                        </div>
-                        <div class="div-line-con">
-                            <div class="title">A 26.证件号码</div>
-                        </div>
-                        <div style="display: inline-block;float: right;margin-top: 1px;margin-right: 1px;height: 20px">
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                            <div class="div-line-cert"></div>
-                        </div>
-                    </div>
-
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 27.证件有效期</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                有效期至
+                        <div class="div-line">
+                            <div class="div-line-con div-row-5">
+                                <div class="title">A 5.证件类型</div>
                                 <div>
-                                    <input class="c-input" type="text"/>
+                                    <input class="i-cb" type="checkbox"/>
+                                    身份证
+                                    <input class="i-cb" type="checkbox" style="margin-left:15px; " />
+                                    护照
+                                    <input class="i-cb" type="checkbox" style="margin-left:15px; "/>
+                                    军官证
+                                    <input class="i-cb" type="checkbox" style="margin-left:15px; "/>
+                                    其他
+                                </div>
+                            </div>
+                            <div class="div-line-con">
+                                <div class="title">A 6.证件号码</div>
+                            </div>
+                            <div style="display: inline-block;float: right;margin-top: 1px;margin-right: 1px;height: 20px">
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                            </div>
+                        </div>
+
+                        <div class="div-line">
+                            <div class="div-line-con div-row-5">
+                                <div class="title">A 7.证件有效期</div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" style="margin-left: 10px;" />
+                                    有效期至
+                                    <div>
+                                        <input class="c-input" type="text"/>
+                                        年
+                                        <input class="c-input" type="text"/>
+                                        月
+                                        <input class="c-input" type="text"/>
+                                        日
+                                    </div>
+                                    <input class="i-cb" style="margin-left: 15px" type="checkbox"/>
+                                    长期
+                                </div>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 8.国籍、户籍</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 9.身高</div>
+                                <input class="b-input" type="text" style="margin-left: 10px;" />
+                                厘米，
+                                <div class="title">体重</div>
+                                <input class="b-input" type="text" style="margin-left: 10px;" />
+                                公斤
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con div-row-5">
+                                <div class="title">A 10.婚姻状况</div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;"/>
+                                    未婚
+                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;"/>
+                                    已婚
+                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;"/>
+                                    离异
+                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;"/>
+                                    丧偶
+                                </div>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 11.固定电话（<span style="font-size: 1px">区号<input class="b-input"
+                                                                                                   type="text"/></span>)-(<input
+                                        class="mobile-input" type="text"/></span>)
+                                </div>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 12.移动电话</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                        </div>
+
+                        <div class="div-line">
+                            <div class="div-line-con div-row-7">
+                                <div class="title">A 13.住址</div>
+                                <div>
+                                    <input class="b-input" type="text" style="margin-left: 10px;"/>
+                                    省
+                                    <input class="b-input" type="text" style="margin-left: 10px;"/>
+                                    市
+                                    <input class="b-input" type="text" style="margin-left: 25px;"/>
+                                    区/县
+                                    <input class="d-input" type="text"/>
+                                </div>
+                            </div>
+                            <div class="div-line-con div-postcode" style="margin-right: 40px;">
+                                邮编
+                                <div style="margin-left: 20px;font-size: 0">
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con div-row-5">
+                                <div class="title">A 14.单位名称</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 15.职业</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                            <div class="div-line-con div-row-3" >
+                                <div class="title">A 16.年均收入</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con div-row-7">
+                                <div class="title">A 17.单位地址</div>
+                                <div>
+                                    <input class="b-input" type="text"/>
+                                    省
+                                    <input class="b-input" type="text" style="margin-left: 10px;"/>
+                                    市
+                                    <input class="b-input" type="text" style="margin-left: 25px;"/>
+                                    区/县
+                                    <input class="d-input" type="text"/>
+                                </div>
+                            </div>
+                            <div class="div-line-con div-postcode"  style="margin-right: 40px;">
+                                邮编
+                                <div style="margin-left: 20px;font-size: 0">
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con div-career">
+                                <div class="title">A 18.职业代码</div>
+                                <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
+                                <div class="title" style="margin-left: 25px;">职业类别</div>
+                            </div>
+                            <div class="div-line-con div-email">
+                                <div class="title">A 19.&nbsp;E-mail</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                            <div class="div-line-con div-part-job">
+                                <div class="title">A 20.是否有兼职？</div>
+                                <input class="i-cb" style="margin-left: 15px" type="checkbox"/>
+                                是
+                                <input class="i-cb" style="margin-left: 15px" type="checkbox"/>
+                                否，如是请说明：
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-title">
+                        投保人资料（如投保人为被保险人本人，可免填本栏）
+                    </div>
+                    <div class="div-tab">
+                        <div class="div-line">
+                            <div class="div-line-con div-row-2">
+                                <div class="title">A 21.姓名</div>
+
+                            </div>
+                            <div class="div-line-con div-sex">
+                                <div class="title">A 22.性别</div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" style="margin-left: 10px; "/>
+                                    男
+                                    <input class="i-cb" style="margin-left: 30px; " type="checkbox"/>
+                                    女
+                                </div>
+                            </div>
+                            <div class="div-line-con div-row-4">
+                                <div class="title">A 23.出生日期</div>
+                                <div style="padding-left: 0; margin-left: 55px;">
+                                    <input class="b-input" type="text"/>
                                     年
-                                    <input class="c-input" type="text"/>
+                                    <input class="b-input" type="text"/>
                                     月
-                                    <input class="c-input" type="text"/>
+                                    <input class="b-input" type="text"/>
                                     日
                                 </div>
-                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
-                                长期
+                            </div>
+                            <div class="div-line-con div-row-2">
+                                <div class="title">A 24.是被保人的</div>
+                                <input class="c-input" type="text" style="" />
+                                <div></div>
                             </div>
                         </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 28.国籍、户籍</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 29.身高</div>
-                            <input class="b-input" type="text"/>
-                            厘米，
-                            <div class="title">体重</div>
-                            <input class="b-input" type="text"/>
-                            公斤
-                        </div>
-                    </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 30.婚姻状况</div>
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                未婚
-                                <input class="i-cb" type="checkbox"/>
-                                已婚
-                                <input class="i-cb" type="checkbox"/>
-                                离异
-                                <input class="i-cb" type="checkbox"/>
-                                丧偶
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 31.固定电话（<span style="font-size: 1px">区号<input class="b-input"
-                                                                                               type="text"/></span>)-(<input
-                                    class="mobile-input" type="text"/></span>)
-                            </div>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 32.移动电话</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                    </div>
 
-                    <div class="div-line">
-                        <div class="div-line-con div-row-7">
-                            <div class="title">A 33.住址</div>
-                            <div>
-                                <input class="b-input" type="text"/>
-                                省
-                                <input class="b-input" type="text"/>
-                                市
-                                <input class="b-input" type="text"/>
-                                区、县
-                                <input class="d-input" type="text"/>
+                        <div class="div-line">
+                            <div class="div-line-con div-row-5">
+                                <div class="title">A 25.证件类型</div>
+                                <div>
+                                    <input class="i-cb" type="checkbox"/>
+                                    身份证
+                                    <input class="i-cb" type="checkbox" style="margin-left:15px; " />
+                                    护照
+                                    <input class="i-cb" type="checkbox" style="margin-left:15px; "/>
+                                    军官证
+                                    <input class="i-cb" type="checkbox" style="margin-left:15px; "/>
+                                    其他
+                                </div>
+                            </div>
+                            <div class="div-line-con">
+                                <div class="title">A 26.证件号码</div>
+                            </div>
+                            <div style="display: inline-block;float: right;margin-top: 1px;margin-right: 1px;height: 20px">
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
+                                <div class="div-line-cert"></div>
                             </div>
                         </div>
-                        <div class="div-line-con div-postcode">
-                            邮编
-                            <div style="margin-left: 20px;font-size: 0">
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+
+                        <div class="div-line">
+                            <div class="div-line-con div-row-5">
+                                <div class="title">A 27.证件有效期</div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" style="margin-left: 10px;" />
+                                    有效期至
+                                    <div>
+                                        <input class="c-input" type="text"/>
+                                        年
+                                        <input class="c-input" type="text"/>
+                                        月
+                                        <input class="c-input" type="text"/>
+                                        日
+                                    </div>
+                                    <input class="i-cb" style="margin-left: 15px" type="checkbox"/>
+                                    长期
+                                </div>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 28.国籍、户籍</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 29.身高</div>
+                                <input class="b-input" type="text" style="margin-left: 10px;" />
+                                厘米，
+                                <div class="title">体重</div>
+                                <input class="b-input" type="text" style="margin-left: 10px;" />
+                                公斤
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con div-row-5">
+                                <div class="title">A 30.婚姻状况</div>
+                                <div>
+                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;"/>
+                                    未婚
+                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;"/>
+                                    已婚
+                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;"/>
+                                    离异
+                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;"/>
+                                    丧偶
+                                </div>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 31.固定电话（<span style="font-size: 1px">区号<input class="b-input"
+                                                                                                   type="text"/></span>)-(<input
+                                        class="mobile-input" type="text"/></span>)
+                                </div>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 32.移动电话</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                        </div>
+
+                        <div class="div-line">
+                            <div class="div-line-con div-row-7">
+                                <div class="title">A 33.住址</div>
+                                <div>
+                                    <input class="b-input" type="text" style="margin-left:40px; "/>
+                                    省
+                                    <input class="b-input" type="text" style="margin-left: 30px;"/>
+                                    市
+                                    <input class="b-input" type="text" style="margin-left: 20px;"/>
+                                    区/县
+                                    <input class="d-input" type="text"/>
+                                </div>
+                            </div>
+                            <div class="div-line-con div-postcode" style="margin-right: 40px;">
+                                邮编
+                                <div style="margin-left: 20px;font-size: 0">
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con div-row-5">
+                                <div class="title">A 34.单位名称</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 35.职业</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                            <div class="div-line-con div-row-3">
+                                <div class="title">A 36.年均收入</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con div-row-7">
+                                <div class="title">A 37.单位地址</div>
+                                <div>
+                                    <input class="b-input" type="text"/>
+                                    省
+                                    <input class="b-input" type="text" style="margin-left: 10px;"/>
+                                    市
+                                    <input class="b-input" type="text" style="margin-left: 25px;"/>
+                                    区/县
+                                    <input class="d-input" type="text"/>
+                                </div>
+                            </div>
+                            <div class="div-line-con div-postcode"  style="margin-right: 40px;">
+                                邮编
+                                <div style="margin-left: 20px;font-size: 0">
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-line">
+                            <div class="div-line-con div-career">
+                                <div class="title">A 38.职业代码</div>
+                                <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
+                                <div class="title" style="margin-left: 25px;">职业类别</div>
+                            </div>
+                            <div class="div-line-con div-email">
+                                <div class="title">A 39. E-mail</div>
+                                <input class="a-input" type="text"/>
+                            </div>
+                            <div class="div-line-con div-part-job">
+                                <div class="title">A 40.其他联系电话</div>
+                                <input class="a-input" type="text"/>
                             </div>
                         </div>
                     </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-row-5">
-                            <div class="title">A 34.单位名称</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 35.职业</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-row-3">
-                            <div class="title">A 36.年收入</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                    </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-row-7">
-                            <div class="title">A 37.单位地址</div>
-                            <div>
-                                <input class="b-input" type="text"/>
-                                省
-                                <input class="b-input" type="text"/>
-                                市
-                                <input class="b-input" type="text"/>
-                                区、县
-                                <input class="d-input" type="text"/>
+                    <div class="div-title">本单联系地址（如此栏空缺，将以投保人住址为准</div>
+                    <div class="div-tab">
+                        <div class="div-line">
+                            <div class="div-line-con" style="padding: 7px 5px 7px 10px;">
+                                A 41. 信函寄往
+                                <div style="margin-left: 75px;">省</div>
+                                <div style="margin-left: 75px;">市</div>
+                                <div style="margin-left: 60px;">区/县</div>
                             </div>
-                        </div>
-                        <div class="div-line-con div-postcode">
-                            邮编
-                            <div style="margin-left: 20px;font-size: 0">
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                            <div class="div-line-con div-postcode" style="margin-right: 120px;">
+                                电话
+                            </div>
+                            <div class="div-line-con div-postcode" style="margin-right:  35px;">
+                                邮编
+                                <div style="margin-left: 20px;font-size: 0">
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="div-line">
-                        <div class="div-line-con div-career" style="color: green">
-                            <div class="title">A 38.职业代码</div>
-                            <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
-                            <div class="title">职业类别</div>
-                        </div>
-                        <div class="div-line-con div-email">
-                            <div class="title">A 39.职业</div>
-                            <input class="a-input" type="text"/>
-                        </div>
-                        <div class="div-line-con div-part-job">
-                            <div class="title">A 40.其他联系方式</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="div-title">本单联系地址（如此栏空缺，将以投保人住址为准</div>
-                <div class="div-tab">
-                    <div class="div-line">
-                        <div class="div-line-con" style="padding: 7px 5px 7px 10px;">
-                            A 41. 信函寄往
-                            <div style="margin-left: 80px;">省</div>
-                            <div style="margin-left: 80px;">市</div>
-                            <div style="margin-left: 80px;">区/县</div>
-                        </div>
-                        <div class="div-line-con div-postcode" style="margin-right: 120px;">
-                            电话
-                        </div>
-                        <div class="div-line-con div-postcode">
-                            邮编
-                            <div style="margin-left: 20px;font-size: 0">
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
-                                <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
+                    <div class="div-title">短信服务（未选默认为不需要）</div>
+                    <div class="div-tab">
+                        <div class="div-line">
+                            <div class="div-line-con div-row-6" style="padding: 7px 5px 7px 10px;">
+                                A 42. 投保人是否需要短信服务
+                                <div>
+                                    <input class="i-cb" type="checkbox"/>
+                                    需要
+                                    <input class="i-cb" style="margin-left: 15px; " type="checkbox"/>
+                                    不需要
+                                </div>
+                            </div>
+                            <div class="div-line-con">
+                                A 43. 移动电话
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="div-title">短信服务（未选默认为不需要）</div>
-                <div class="div-tab">
-                    <div class="div-line">
-                        <div class="div-line-con div-row-6" style="padding: 7px 5px 7px 10px;">
-                            A 42. 投保人是否需要短信服务
-                            <div>
-                                <input class="i-cb" type="checkbox"/>
-                                需要
-                                <input class="i-cb" style="margin-left: 10px; " type="checkbox"/>
-                                不需要
-                            </div>
-                        </div>
-                        <div class="div-line-con">
-                            A 43. 移动电话
-                        </div>
-                    </div>
-                </div>
-                <div class="div-title" style="line-height: 1.5;"><span>身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充报告，则是剩余养老保险年金受益人与身故保险金受益人为同一人）
-                    <br>说明：1.指定受益人时，同一受益顺序的受益份额合计必须等于100%。2.后一受益顺序的受益人只有在前一受益顺序所有受益人丧失或放弃收益权后才能享有受益权。3.若未填写受益份额，同一顺序的保险金受益人按照相等份额享有保险金。4.若未指定受益人，或者受益人指定不明无法确定的，保险金将作为被保险人的遗产按照《中华人名共和国继承法》的规定进行分配。5.投保无身故保险利益的保险产品是无需填写本栏，填写亦视为无效。
+                <div class="div-title" style="line-height: 1.5;"><span>身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险年金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充告知，则是剩余养老保险年金受益人与身故保险金受益人为同一人）
+                    <br>说明：1.指定受益人时，同一受益顺序的受益份额合计必须等于100%。2.后一受益顺序的受益人只有在前一受益顺序所有受益人丧失或放弃受益权后才能享有受益权。3.若未填写受益份额，同一顺序的保险金受益人按照相等份额享有保险金。4.若未指定受益人，或者受益人指定不明无法确定的，保险金将作为被保险人的遗产按照《中华人民共和国继承法》的规定进行分配。5.投保无身故保险利益的保险产品时无需填写本栏，填写亦视为无效。
                 </div>
                 <div class="div-tab" style="height: 240px;width: 1000px;">
                     <div class="table-line">
@@ -640,10 +1386,10 @@
                             <div class="t-line" style="padding: 5px 6px;">
                                 <input type="checkbox"/>
                                 <div>身份证</div>
-                                <input type="checkbox"/>
+                                <input type="checkbox" style="margin-left: 15px;"/>
                                 <div>其他</div>
-                                <div style="margin:0 60px">有效期至</div>
-                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                <div style="margin:0 60px;margin-left: 130px;">有效期至</div>
+                                <input class="i-cb" style="margin-left: 55px;" type="checkbox"/>
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
@@ -681,10 +1427,10 @@
                             <div class="t-line" style="padding: 5px 6px;">
                                 <input type="checkbox"/>
                                 <div>身份证</div>
-                                <input type="checkbox"/>
+                                <input type="checkbox" style="margin-left: 15px;"/>
                                 <div>其他</div>
-                                <div style="margin:0 60px">有效期至</div>
-                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                <div style="margin:0 60px;margin-left: 130px;">有效期至</div>
+                                <input class="i-cb" style="margin-left: 55px;" type="checkbox"/>
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
@@ -722,10 +1468,10 @@
                             <div class="t-line" style="padding: 6px;">
                                 <input type="checkbox"/>
                                 <div>身份证</div>
-                                <input type="checkbox"/>
+                                <input type="checkbox" style="margin-left: 15px;"/>
                                 <div>其他</div>
-                                <div style="margin:0 60px">有效期至</div>
-                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                <div style="margin:0 60px;margin-left: 130px;">有效期至</div>
+                                <input class="i-cb" style="margin-left: 55px;" type="checkbox"/>
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
