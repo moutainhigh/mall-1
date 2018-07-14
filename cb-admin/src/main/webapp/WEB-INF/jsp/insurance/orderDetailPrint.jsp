@@ -1842,7 +1842,7 @@
                                 <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
@@ -1853,7 +1853,7 @@
                                 <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
@@ -1863,7 +1863,7 @@
                                 <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
@@ -1873,7 +1873,7 @@
                                 <div class="a-tick" style="margin-left: 685px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
@@ -1883,7 +1883,7 @@
                                 <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
@@ -1893,7 +1893,7 @@
                                 <div class="a-tick" style="margin-left: 685px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
@@ -1903,7 +1903,7 @@
                                 <div class="a-tick" style="margin-left: 685px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
@@ -1913,7 +1913,7 @@
                                 <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
@@ -1923,7 +1923,7 @@
                                 <div class="a-tick" style="margin-left: 685px;margin-top: 65px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;margin-top: 65px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;margin-top: 65px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
@@ -1933,7 +1933,7 @@
                                 <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
-                                <div class="a-tick" style="margin-left: 805px;width:480px;font-size: 13px;">
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
                                     哈哈哈哈哈
                                 </div>
                         </div>
