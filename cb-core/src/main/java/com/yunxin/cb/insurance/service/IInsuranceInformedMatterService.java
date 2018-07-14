@@ -4,6 +4,8 @@ import com.yunxin.cb.insurance.entity.InsuranceInformedMatter;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * @author likang
  *
@@ -37,7 +39,7 @@ public interface IInsuranceInformedMatterService {
      *
      * @param metterId
      */
-    public void removeByid(int metterId);
+    public void removeById(int metterId);
 
     /**
      *
@@ -45,5 +47,6 @@ public interface IInsuranceInformedMatterService {
      * @return
      */
     public InsuranceInformedMatter update(InsuranceInformedMatter insuranceInformedMatter);
+
 
 }

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>品牌管理</title>
+    <title>保险告知事项</title>
 
     <script type="text/javascript">
 
@@ -22,19 +22,38 @@
                 parseFormats: ["yyyy-MM-dd"]
             });
         });
-
-        function checkTime()
-        {
-           if($('#createTime').val()>$('#createTimes').val()&&''!=$('#createTimes').val()){
-               alert("开始时间不能大于结束时间")
-               $('#createTimes').val('')
-           }
-        }
         function detailItem(){
             debugger;
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
-                window.location.href = "feedBackDetail.do?id=" + dataItem.id;
+                window.location.href = "toEditMatter.do?matterId=" + dataItem.matterId;
+            }
+        }
+
+        function editItem() {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                indow.location.href = "toEditMatter.do?matterId=" + dataItem.matterId;
+            }
+        }
+
+        function removeItem() {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                bootbox.confirm("确认删除吗？", function (result) {
+                    if (result) {
+                        $.get("removeById.do", {
+                            matterId: dataItem.matterId
+                        }, function (data) {
+                            if (data) {
+                                bootbox.alert("成功");
+                                $("#grid").data("kendoGrid").dataSource.read();
+                            } else {
+                                bootbox.alert("失败");
+                            }
+                        });
+                    }
+                });
             }
         }
     </script>
@@ -63,9 +82,9 @@
         <div class="header-main-bottom">
             <div class="pull-left">
                 <ul class="breadcrumb">
-                    <li><a href="#">首页</a></li>
-                    <li><a href="#">反馈管理</a></li>
-                    <li class="active"><a href="#">用户反馈管理</a></li>
+                    <li><a href="#">首页 </a></li>
+                    <li><a href="#">保单管理 </a></li>
+                    <li><a href="#">保险告知事项</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -79,7 +98,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>用户反馈管理</h2>
+                    <h2>保险告知事项</h2>
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
@@ -118,23 +137,17 @@
                     <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
-                                <strong>反馈帐户手机号:</strong>
-                            </div>
-                            <div class="toolbar-field">
-                                <input type="text"  data-filter="customer.mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
-                            </div>
-                            <div class="toolbar-field">
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" onchange="checkTime()" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
                             </div>
 
                             <div class="toolbar-field">
                                 <strong>-</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" onchange="checkTime()"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
+                                <input name="createTime"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
                             </div>
                         </div>
                         <!-- End .pull-left -->
@@ -155,11 +168,14 @@
                 <div class="toolbar responsive-helper">
                     <header>
                         <div class="pull-left">
-                            <h3>用户反馈列表</h3>
+                            <h3>保险告知事项</h3>
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
                                 <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;详情</a>
+                                <a href="toAddMatter.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
+                                <a href="javascript:editItem();"  class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+                                <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
                         </div>
                     </header>
@@ -175,10 +191,13 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="反馈用户手机号" filterable="false" field="customer.mobile" template="<a href='feedBackDetail.do?id=#= id#' style='color:blue'>#= customer.mobile#</a>" width="100px"/>
-                            <kendo:grid-column title="反馈帐户" filterable="false" field="customer.accountName" width="100px"/>
-                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
-                            <kendo:grid-column title="反馈内容" filterable="false" field="content" width="100px" />
+                            <kendo:grid-column title="事项ID" field="matterId" template="<a href='toEditMatter.do?matterId=#= matterId#' style='color:blue'>#= matterId#</a>" width="100px"/>
+                            <kendo:grid-column title="序号" field="serNo" width="50px"/>
+                            <kendo:grid-column title="事项描述" field="matterDescription" width="50px"/>
+                            <kendo:grid-column title="类型" field="matterType" template="#= matterType ?  '填空题' : '是否题' #" width="50px"/>
+                            <kendo:grid-column title="所属组" field="matterGroup.description" width="50px"/>
+                            <kendo:grid-column title="是否启用" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
+                            <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
@@ -189,7 +208,7 @@
                                 </kendo:dataSource-schema-model>
                             </kendo:dataSource-schema>
                             <kendo:dataSource-transport>
-                                <kendo:dataSource-transport-read url="pageFeedback.do" type="POST" contentType="application/json"/>
+                                <kendo:dataSource-transport-read url="pageInsuranceInformedMatter.do" type="POST" contentType="application/json"/>
                                 <kendo:dataSource-transport-parameterMap>
                                     <script>
                                         function parameterMap(options, type) {

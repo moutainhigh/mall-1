@@ -45,6 +45,8 @@
 </template>
 
 <script>
+  import storage from "../store/storage";
+
   export default {
     name: "pro-detail",
     data() {
@@ -62,8 +64,7 @@
       }
     },
     created: function () {
-      let query = this.$route.query;
-      this.id = query.id;
+      this.id = storage.fetch("packetId");
     }
   }
 </script>

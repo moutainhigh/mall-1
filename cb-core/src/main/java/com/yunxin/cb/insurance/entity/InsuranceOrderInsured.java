@@ -80,7 +80,7 @@ public class InsuranceOrderInsured implements Serializable {
      * 被保人证件号
      */
     @NotBlank
-    @Length(max = 18)
+    @Length(max = 32)
     private String insuredCardNo;
     /**
      * 被保人证件有效期
@@ -233,7 +233,7 @@ public class InsuranceOrderInsured implements Serializable {
         this.insuredCardType = insuredCardType;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 18)
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
     public String getInsuredCardNo() {
         return this.insuredCardNo;
     }

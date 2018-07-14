@@ -313,7 +313,7 @@
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
                     <li><a href="#">保单管理 </a></li>
-                    <li><a href="#">事项组</a></li>
+                    <li><a href="#">保险告知事项</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -337,7 +337,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>事项组</h2>
+                    <h2>保险告知事项</h2>
                 </div>
             </div>
             <!-- End .inner-padding -->
@@ -367,23 +367,50 @@
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
                     <legend>事项组</legend>
-                    <form:form id="validateSubmitForm" action="updateinsuranceInformedMatterGroup.do" cssClass="form-horizontal" method="post"
-                               commandName="insuranceInformedMatterGroup">
-                        <form:hidden path="groupId"/>
+                    <form:form id="validateSubmitForm" action="updateinsuranceInformedMatter.do" cssClass="form-horizontal" method="post"
+                               commandName="insuranceInformedMatter">
+                        <form:hidden path="matterId"/>
                         <div class="row">
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>序号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="serNo" maxlength="32"/>
+                                <form:input path="serNo" value=""  cssClass="form-control validate[required,minSize[1]]" maxlength="32"/>
                             </div>
                         </div>
+                        <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>事项组描述：</label>
+                                <label><span class="asterisk">*</span>事项描述：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="description" maxlength="32"/>
+                                <form:textarea path="matterDescription" cssClass="form-control validate[required,minSize[1]]"/>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>类型：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <select name="matterType">
+                                    <option value="0" <c:if test="${0 eq metterType}">selected</c:if>>是否题</option>
+                                    <option value="1" <c:if test="${1 eq metterType}">selected</c:if>>填空题</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>事项组：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <select name="groupId">
+                                    <option value="0">-不选-</option>
+                                    <c:forEach items="${groups}"  var="group">
+                                        <option value="${group.groupId}" <c:if test="${group.groupId eq groupId}">selected</c:if> >${group.description}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

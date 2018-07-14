@@ -2,18 +2,21 @@
   <div style="position: relative">
 
     <div class="title">投保单资料签署</div>
-    <div @click="check">
-      <img v-if="!state" class="checkIcon" src="../assets/img/unselect.png">
-      <img v-if="state" class="checkIcon" src="../assets/img/selected.png">
+    <div id="page1"></div>
+    <div>
+      <img v-if="!state" @click="check" class="checkIcon" src="../assets/img/unselect.png">
+      <img v-if="state" @click="check" class="checkIcon" src="../assets/img/selected.png">
       <div class="tip">
-        <p>本人已阅读并理解<span>《投保须知》、《保险条款》、《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
+        <p>本人已阅读并理解<span @click="imsurancePolicy">《投保须知》</span><span @click="loadclause">《保险条款》</span><span
+          @click="insureNote">《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
       </div>
     </div>
 
     <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保提示书签名</div>
     <div class="canvas">
       <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-      <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign1" @click="clear1">清除</span>
+      <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign1"
+            @click="clear1">清除</span>
       <div class="sign" v-if="!clickSign1" @click="checkSign1">点击签名
       </div>
       <div v-if="clickSign1">
@@ -28,15 +31,15 @@
       <p style="font-size: 13px">拍摄或上传投保人正面头像</p>
     </div>
     <button class="clearButton" v-if="imgUrl !== undefined && imgUrl !== ''" @click='delImage'>清除</button>
-    <input id="image" type="file" accept="image/*" @change="onFileChange"
-           style="display: none;">
-    <div v-if="imgUrl !== undefined && imgUrl !== ''">
-      <img class="headPhoto-img" :src="imgUrl">
+    <input id="image" type="file" accept="image/*" @change="onFileChange" style="display: none;">
+    <div v-if="imgUrl !== undefined && imgUrl !== ''" class="limitImg">
+      <img :src="imgUrl">
     </div>
 
     <div class="canvas">
       <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-      <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign" @click="clear">清除</span>
+      <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign"
+            @click="clear">清除</span>
       <div class="sign" v-if="!clickSign" @click="checkSign">点击签名
       </div>
       <div v-if="clickSign">
@@ -44,9 +47,9 @@
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 60px;" >
+    <div style="height: 60px;">
       <div class="i-footer">
-        <button  @click="next" >
+        <button @click="next">
           <div>下一步</div>
         </button>
       </div>
@@ -104,7 +107,11 @@
           });
           vm.$vux.loading.hide();
           return rst;
-        })
+        }).always(function () {
+          // 清空文件上传控件的值
+          e.target.value = null;
+          vm.$vux.loading.hide();
+        });
       },
       //删除图片
       delImage: function () {
@@ -174,9 +181,25 @@
         }
         this.save();
         this.$router.push("upload-data")
+      },
+      imsurancePolicy() {
+        this.$router.push("insurancePolicy")
+      },
+      insureNote() {
+        this.$router.push("insureNote")
+      },
+      loadclause() {
+        let packetId = storage.fetch("packetId");
+        if (packetId === 1) {
+          this.$router.push("lifeLongClause");
+        } else {
+          this.$router.push("clause");
+        }
+
       }
     },
     created: function () {
+
     }
   }
 </script>
@@ -229,10 +252,11 @@
     margin: 0;
     padding-bottom: 15px;
     text-align: left;
+    color: #888;
   }
 
   .tip span {
-    color: #c01212;
+    color: #f5ca1d;
   }
 
   .headPhoto {
@@ -257,6 +281,18 @@
     width: 50vw;
     margin-left: 25vw;
     padding: 10px 0;
+  }
+
+  .limitImg {
+    max-height: 144px;
+    width: 40vw;
+    margin-left: 30%;
+    overflow: hidden;
+  }
+
+  .limitImg img {
+    width: 100%;
+    height: 100%
   }
 
   .carmerBorder {

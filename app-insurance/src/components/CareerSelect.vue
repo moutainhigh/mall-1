@@ -100,7 +100,7 @@
     box-sizing: border-box;
     border: unset;
     border-radius: 8px;
-    background-color: #f1f3f5;
+    background-color: #f5f5f5;
     outline: unset;
   }
 

@@ -11,7 +11,7 @@ export const hkmcPassVali = helpers.regex('hkmcPassVali', /^[HMhm]{1}([0-9]{10}|
 // 台湾通行证
 export const taiwanPassVali = helpers.regex('taiwanPassVali', /^[0-9]{8}$/);
 //护照
-export const passportVali = helpers.regex('passportVali', /^(P\d{7}|G\d{7,8}|TH\d{7,8}|S\d{7,8}|A\d{7,8}|L\d{7,8}|\d{9}|D\d+|1[4,5]\d{7})$/);
+export const passportVali = helpers.regex('passportVali', /^[a-z0-9A-Z]{6,25}$/);
 //外国人永久居留证
 export const permanentResidenceVali = helpers.regex('permanentResidenceVali', /^[a-zA-Z]{3}\d{12}$/);
 //小数点后两位校验

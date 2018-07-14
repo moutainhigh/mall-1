@@ -3,7 +3,7 @@
     <div class="title" style="margin-top: 0;">
       被保人信息
     </div>
-    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;">
+    <group label-width="6rem" label-align="left" style="font-size: 15px;">
       <x-input title="姓名" placeholder="请输入姓名" v-model.trim="insured.insuredName"
                v-bind:class="{'errorInput': $v.insured.insuredName.$error}"
                @input="$v.insured.insuredName.$touch()"></x-input>
@@ -23,6 +23,7 @@
                @input="$v.insured.insuredCardNo.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredCardNo.required && $v.insured.insuredCardNo.$dirty">证件号码不能为空</div>
       <div class="error" v-if="!$v.insured.insuredCardNo.cardVali">请输入正确的证件号码</div>
+      <div class="error" v-if="!$v.insured.insuredCardNo.maxLength">证件号码最多不超过32位数</div>
 
       <datetime title="证件有效期" v-model="insured.insuredCardPeriod" :startDate="startDate" endDate="2199-12-31"
                 placeholder="请选择证件有效期"
@@ -79,16 +80,17 @@
         婚姻状况不能为空
       </div>
       <div style="background-color: #f5f5f5">
-        <div style="border-top: 1px solid #D9D9D9;margin-left:15px;font-size: 13px;padding: 10px 10px 10px 0;color: #888;">
+        <div style="margin-left:15px;font-size: 13px;padding: 10px 10px 10px 0;color: #888;">
           温馨提示：固定电话与移动电话可任填其中一项
         </div>
       </div>
-      <x-input title="固定电话" placeholder="请输入固定电话" v-model="insured.insuredTel"
+      <x-input id="tel" title="固定电话" placeholder="请输入固定电话" v-model="insured.insuredTel"
                v-bind:class="{'errorInput': $v.insured.insuredMobile.$error}"></x-input>
       <!--<div class="error" v-if="!$v.insured.insuredTel.required && $v.insured.insuredTel.$dirty">-->
       <!--请输入固定电话或移动电话-->
       <!--</div>-->
       <div class="error" v-if="!$v.insured.insuredTel.fixedTel">请输入正确的固定电话号码</div>
+      <div class="error" v-if="!$v.insured.insuredTel.maxLength">固定电话最多不超过15位数</div>
 
       <x-input title="移动电话" placeholder="请输入移动电话" v-model="insured.insuredMobile"
                v-bind:class="{'errorInput': $v.insured.insuredMobile.$error}"></x-input>
@@ -190,14 +192,14 @@
         insured: {
           insuredName: {required, minLength: minLength(2), maxLength: maxLength(32)},
           insuredCardType: {required},
-          insuredCardNo: {required, cardVali: this.vali},
+          insuredCardNo: {required, cardVali: this.vali, maxLength: maxLength(32)},
           insuredCardPeriod: {required},
           insuredCountry: {required, maxLength: maxLength(64)},
           insuredHeight: {required, int, maxLength: maxLength(3)},
           insuredBodyWeight: {required, int, maxLength: maxLength(3)},
           insuredIncome: {required, int, maxLength: maxLength(6)},
           insuredMarriage: {required},
-          insuredTel: {fixedTel},
+          insuredTel: {fixedTel, maxLength: maxLength(15)},
           insuredMobile: {mobile},
           insuredEmail: {mail},
           insuredPCD: {required},
@@ -427,5 +429,9 @@
     100% {
       transform: translateX(0);
     }
+  }
+
+  #tel:before {
+    border-top: none;
   }
 </style>

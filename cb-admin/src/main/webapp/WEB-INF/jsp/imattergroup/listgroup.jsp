@@ -43,7 +43,7 @@
                 bootbox.confirm("确认删除吗？", function (result) {
                     if (result) {
                         $.get("removeById.do", {
-                            brandId: dataItem.groupId
+                            groupId: dataItem.groupId
                         }, function (data) {
                             if (data) {
                                 bootbox.alert("成功");
@@ -193,6 +193,7 @@
                         <kendo:grid-columns>
                             <kendo:grid-column title="事项组ID" field="groupId" template="<a href='toEditGroup.do?groupId=#= groupId#' style='color:blue'>#= groupId#</a>" width="100px"/>
                             <kendo:grid-column title="事项组描述" field="description" width="50px"/>
+                            <kendo:grid-column title="排序" field="serNo" width="50px"/>
                             <kendo:grid-column title="是否启用" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
                             <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
                         </kendo:grid-columns>

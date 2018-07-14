@@ -3,6 +3,7 @@ package com.yunxin.cb.sns.entity;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.Customer;
+import com.yunxin.cb.sns.meta.CustomerFriendState;
 import com.yunxin.core.web.json.deserializer.JsonTimestampDeserializer;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
@@ -36,7 +37,7 @@ public class CustomerFriend implements java.io.Serializable {
     private String phone;
     private String description;
     private String image;
-    private int state;
+    private CustomerFriendState state;
 
 
     @EmbeddedId
@@ -128,11 +129,12 @@ public class CustomerFriend implements java.io.Serializable {
     }
 
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 2)
-    public int getState() {
+    @Enumerated(EnumType.ORDINAL)
+    public CustomerFriendState getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(CustomerFriendState state) {
         this.state = state;
     }
 }

@@ -217,7 +217,7 @@
                 <kendo:grid-column title="真实姓名" field="realName" width="100px"/>
                 <kendo:grid-column title="手机号" field="mobile" width="100px"/>
                 <kendo:grid-column title="Email" field="email" width="100px"/>
-                <kendo:grid-column title="性别" field="sex" width="100px" template="#=formatSex(sex)#"/>
+                <kendo:grid-column filterable="false" title="性别" field="sex" width="100px" template="#=formatSex(sex)#"/>
                 <kendo:grid-column title="创建时间" field="createTime" width="150px" format="{0:yyyy-MM-dd HH:mm}" filterable="false"/>
               </kendo:grid-columns>
               <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">

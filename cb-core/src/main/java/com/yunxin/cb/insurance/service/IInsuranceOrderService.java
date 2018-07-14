@@ -1,7 +1,7 @@
 package com.yunxin.cb.insurance.service;
 
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
-import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
+import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 
@@ -67,6 +67,6 @@ public interface IInsuranceOrderService {
      * @param orderId
      * @return
      */
-    public Map<String,Object> InsuranceOrder(int orderId);
+    public Map<String,Object> insuranceOrder(int orderId);
 
 }

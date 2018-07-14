@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <group label-width="7rem" label-margin-right="2em" label-align="left" style="font-size: 15px;margin-bottom: 7px;">
+  <div style="background: #fff; height: 100vh">
+    <group label-width="6rem" label-align="left" style="font-size: 15px;margin-bottom: 7px;">
       <datetime title="出生日期" v-model="birthday" startDate="1950-01-01" :endDate="startDate"
                 placeholder="请选择出生日期"
                 value-text-align="left" v-bind:class="{'errorInput': $v.birthday.$error}"></datetime>
@@ -9,13 +9,13 @@
       </div>
 
       <div class="i-input" style="padding: 0 15px 0 0; border-top: 1px solid #d9d9d9; margin-left: 15px">
-        <div class="i-input-item" style="width: 7rem; margin-right: 2em">性别</div>
+        <div class="i-input-item" style="width: 6rem">性别</div>
         <div class="i-input-radio" style="top: 0;">
-          <div class="radio-div" @click="changeGender(true)">
+          <div class="radio-div" style="margin-right: 0" @click="changeGender(true)">
             <button v-if="gender" class="check-on">男</button>
             <button v-if="!gender" class="check-off">男</button>
           </div>
-          <div class="radio-div" @click="changeGender(false)">
+          <div class="radio-div" style="margin-right: 0" @click="changeGender(false)">
             <button v-if="!gender" class="check-on" style="margin-left: 15px">女</button>
             <button v-if="gender" class="check-off" style="margin-left: 15px">女</button>
           </div>
@@ -31,7 +31,7 @@
 
 
     <!--</div>-->
-    <div class="i-card">
+    <div class="i-card" style="margin-bottom: 0">
       <div class="i-card-tip">
         {{title}}
         <div class="i-list-right">
@@ -81,6 +81,7 @@
         </div>
       </div>
     </div>
+    <div style="height: 1px; margin: 0 15px; background: #d9d9d9"></div>
     <div class="i-card">
       <div style="font-size: 15px;color: #333;">
         投保须知
@@ -275,6 +276,7 @@
   }
 
   .i-input .i-input-item {
+    width: 6rem;
     font-size: 15px !important;
   }
 

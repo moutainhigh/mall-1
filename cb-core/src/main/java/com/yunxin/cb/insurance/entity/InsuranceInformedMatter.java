@@ -71,7 +71,7 @@ public class InsuranceInformedMatter implements Serializable {
     /**
      * 类型
      */
-    private int matterType;
+        private int matterType;
     /**
      * 所属组
      */

@@ -3,7 +3,7 @@ package com.yunxin.cb.insurance.service.imp;
 import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
-import com.yunxin.cb.mall.entity.meta.InsuranceOrderState;
+import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.util.CodeGenerator;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
@@ -235,7 +235,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     }
 
     @Override
-    public Map<String, Object> InsuranceOrder(int orderId) {
+    public Map<String, Object> insuranceOrder(int orderId) {
         /**
          * 获取保单详情
          */
@@ -251,12 +251,16 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                  * 受益人
                  */
                 Set<InsuranceOrderBeneficiary> beneficiary=insuranceOrder.getInsuranceOrderBeneficiarys();
-                List<InsuranceOrderBeneficiary> list=new ArrayList<>(beneficiary);
-                List<InsuranceOrderBeneficiary> beneficiaryList= sortIntMethod(list);
-                if(beneficiaryList.size()<3)
-                    beneficiaryList.add(new InsuranceOrderBeneficiary());
-                put("beneficiaryList",beneficiaryList);
-                put("insuranceOrderInformedMatterList",insuranceOrderInformedMatterList);
+
+                if(null!=beneficiary&&Hibernate.isInitialized(beneficiary)){
+                    List<InsuranceOrderBeneficiary> list=new ArrayList<>(beneficiary);
+                    List<InsuranceOrderBeneficiary> beneficiaryList= sortIntMethod(list);
+//                    while (beneficiaryList.size()<3)
+//                        beneficiaryList.add(new InsuranceOrderBeneficiary());
+                    put("beneficiaryList",beneficiaryList);
+                    put("insurance_matterList",insuranceOrderInformedMatterList);
+                }
+
             }
 
         };
