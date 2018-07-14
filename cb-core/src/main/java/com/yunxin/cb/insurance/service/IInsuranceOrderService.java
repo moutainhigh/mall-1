@@ -67,6 +67,6 @@ public interface IInsuranceOrderService {
      * @param orderId
      * @return
      */
-    public Map<String,Object> InsuranceOrder(int orderId);
+    public Map<String,Object> insuranceOrder(int orderId);
 
 }
