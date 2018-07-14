@@ -150,7 +150,7 @@
                         <div class="div-title">被保险人资料</div>
                     </div>
                 </div>
-                    <div style="position: absolute;z-index: 20;">
+                    <div style="position: absolute;z-index: 20;" >
                         <div class="al-tab">
                             <div class="al-line">
                                 <div class="al-font div-row-2">
@@ -262,15 +262,17 @@
                                         </c:otherwise>
                                     </c:choose>
 
+
+
                                 </div>
 
                                 <div class="al-font div-row-3" style="position: absolute">
-                                    <div style="margin-left: 120px;position: absolute;margin-top: 10px;"> ${insuranceOrder.insuranceOrderInsured.insuredCountry}</div>
+                                    <div style="margin-left: 530px;position: absolute;margin-top: 10px;"> ${insuranceOrder.insuranceOrderInsured.insuredCountry}</div>
                                 </div>
-                                <div class="al-font" style="margin-left: 340px;position: absolute;margin-top: 10px;">
+                                <div class="al-font" style="margin-left: 780px;position: absolute;margin-top: 10px;">
                                     ${insuranceOrder.insuranceOrderInsured.insuredHeight}
                                 </div>
-                                <div class="al-font" style="margin-left: 457px;position: absolute;margin-top: 10px;">
+                                <div class="al-font" style="margin-left: 900px;position: absolute;margin-top: 10px;">
                                     ${insuranceOrder.insuranceOrderInsured.insuredBodyWeight}
                                 </div>
 
@@ -465,7 +467,7 @@
                                     </div>
                                 </div>
                                 <div class="al-font div-row-2">
-                                    <div style="margin-left: 140px;">${insuranceOrder.insuranceOrderInsured.insuredRelation}</div>
+                                    <div style="margin-left: 120px;">${insuranceOrder.insuranceOrderInsured.insuredRelation}</div>
                                 </div>
                             </div>
 
@@ -520,33 +522,51 @@
                             </div>
 
 
-                            <div class="al-line">
-                                <div class="al-font div-row-5" style="margin-top: 3px;">
-                                    <c:choose>
-                                        <c:when test="${map.policy_p_year!=null&&map.policy_p_year!=''}">
-                                            <div style="margin-left: 110px;float: left;">√</div>
-                                            <div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">${map.policy_p_year}</div>
-                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_month}</div>
-                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_day}</div>
-                                            <div style="margin-left: 35px;float: left;">&nbsp;</div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div style="margin-left: 105px;float: left;">&nbsp;</div>
-                                            <div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
-                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
-                                            <div style="margin-left: 78px;float: left;">√</div>
-                                        </c:otherwise>
-                                    </c:choose>
+                            <div class="al-line" >
+                                <div class="al-font div-row-5" style="margin-top: 3px;position: absolute">
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${map.policy_p_year!=null&&map.policy_p_year!=''}">--%>
+                                            <%--<div style="margin-left: 110px;float: left;">√</div>--%>
+                                            <%--<div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">${map.policy_p_year}</div>--%>
+                                            <%--<div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_month}</div>--%>
+                                            <%--<div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_day}</div>--%>
+                                            <%--<div style="margin-left: 35px;float: left;">&nbsp;</div>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <%--<div style="margin-left: 105px;float: left;">&nbsp;</div>--%>
+                                            <%--<div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>--%>
+                                            <%--<div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>--%>
+                                            <%--<div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>--%>
+                                            <%--<div style="margin-left: 35px;float: left;">√</div>--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
+                                        <c:choose>
+                                            <c:when test="${map.policy_p_year!=null&&map.policy_p_year!=''}">
+                                                <div style="margin-left: 115px;position:absolute;">√</div>
+                                                <div style="position:absolute;margin-left: 180px;font-size: 13px;margin-top: 2px;">${map.policy_p_year}</div>
+                                                <div style="position:absolute;margin-left: 230px;font-size: 13px;margin-top: 2px;">${map.policy_p_month}</div>
+                                                <div style="position:absolute;margin-left: 275px;font-size: 13px;margin-top: 2px;">${map.policy_p_day}</div>
+                                                <div style="margin-left: 340px;float: left;">&nbsp;</div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div style="margin-left: 115px;position:absolute;">&nbsp;</div>
+                                                <div style="position:absolute;margin-left: 180px;font-size: 13px;margin-top: 2px;">&nbsp;</div>
+                                                <div style="position:absolute;margin-left: 230px;font-size: 13px;margin-top: 2px;">&nbsp;</div>
+                                                <div style="position:absolute;margin-left: 275px;font-size: 13px;margin-top: 2px;">&nbsp;</div>
+                                                <div style="margin-left: 340px;float: left;">√</div>
+
+                                            </c:otherwise>
+                                        </c:choose>
+
                                 </div>
 
                                 <div class="al-font div-row-3" style="position: absolute">
-                                    <div style="margin-left: 110px;position: absolute;margin-top: 12px;"> ${insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}</div>
+                                    <div style="margin-left: 535px;position: absolute;margin-top: 15px;">  ${insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}</div>
                                 </div>
-                                <div class="al-font" style="margin-left: 350px;position: absolute;margin-top: 12px;">
+                                <div class="al-font" style="margin-left: 790px;position: absolute;margin-top: 15px;">
                                     ${insuranceOrder.insuranceOrderPolicyholder.policyholderHeight}
                                 </div>
-                                <div class="al-font" style="margin-left: 465px;position: absolute;margin-top: 12px;">
+                                <div class="al-font" style="margin-left: 905px;position: absolute;margin-top: 15px;">
                                     ${insuranceOrder.insuranceOrderPolicyholder.policyholderBodyWeight}
                                 </div>
 
