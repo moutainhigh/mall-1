@@ -143,7 +143,7 @@
                                 <br/>2、您必须在此投保单上真实填写一切有关事实，并亲笔签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。
                                 <br/>3、富德生命人寿保险股份有限公司承诺未经客户同意，不会将客户信息用于人身保险公司和第三方机构的销售活动。
                             </div>
-                            <div style="float: right;color: darkgreen;margin-top: 35px;font-weight: bold;">绿色栏由业务员填写。
+                            <div style="float: right;color: green;margin-top: 35px;">绿色栏由业务员填写。
                             </div>
                         </div>
                         <div style="margin-left: 5px;font-weight: bold;font-size: 18px;">A.基本资料</div>
@@ -1393,8 +1393,8 @@
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
-                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;text-align: left">
-                                    <div class="t-line-cert"></div>
+                                <div style="display: inline-block;height: 30px;font-size: 0;border-top: #000000 solid 1px;width: 100%;margin:0 -1px;text-align: left">
+                                    <div class="t-line-cert" style="border: 0"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
@@ -1434,8 +1434,8 @@
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
-                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;text-align: left">
-                                    <div class="t-line-cert"></div>
+                                <div style="display: inline-block;height: 30px;font-size: 0;border-top: #000000 solid 1px;border-left: 0;width: 100%;margin:0 -1px;text-align: left">
+                                    <div class="t-line-cert" style="border: 0"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
@@ -1475,8 +1475,8 @@
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
-                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;text-align: left">
-                                    <div class="t-line-cert"></div>
+                                <div style="display: inline-block;height: 30px;font-size: 0;border-top: #000000 solid 1px;width: 100%;margin:0 -1px;text-align: left">
+                                    <div class="t-line-cert" style="border: 0"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
@@ -1701,7 +1701,7 @@
                         </div>
                         <div class="div-table-2" style="width: 790px;height: 120px;vertical-align: top">
                             <div style="height: 82px;width: 790px;border-bottom: #000000 1px solid;">
-                                <div style="width: 129px;height: 82px;border-right: #000000 2px solid;box-sizing: border-box;text-align: left;">
+                                <div style="width: 129px;height: 82px;border-right: #000000 1px solid;box-sizing: border-box;text-align: left;">
                                     <div class="div-block" style="margin-left:10px; padding: 4px 0;"><input
                                             type="checkbox"/>年领
                                     </div>
@@ -1836,7 +1836,7 @@
                 <div class="div-tab">
                     <%--可保资料告知 start--%>
                     <div style="position: absolute">
-                        <div class="a-table-line" style="position:relative;height: 53px;margin-top: 40px;">
+                        <div class="a-table-line" style="position:relative;height: 54px;margin-top: 40px;">
                             <%--B12--%>
                                 <div class="a-tick" style="margin-left: 645px;margin-top: 15px;">√</div>
                                 <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
@@ -1948,42 +1948,42 @@
                     <div class="table-line" style="height: 53px;">
                         <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C1.</div><div style="display: inline-block;width: 600px;">您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承包公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和。住院每日补贴日额及保险合同生效日期。</div></div>
                         <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 53px;">
                         <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C2.</div><div style="display: inline-block;width: 600px;">您的人寿保险、人身意外或健康保险的投保申请是否曾被拒保、推迟、加费、或作限制保障权益？是否有解除保险合同？是否曾向任何保险公司提出索赔申请？若“是”，请说明。</div></div>
                         <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 53px;">
                         <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C3.</div><div style="display: inline-block;width: 600px;">是否计划出国或改变居住地或工作地点？正在试图参加私人性质飞行，或携带氧气瓶潜水、或登山、或从事危险性的运动？若“是”，请填妥相关问卷，连同此投保单一并交回本公司。</div></div>
                         <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 25px;">
                         <div class="div-table-2" style="width: 636px;height: 25px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C4.</div><div style="display: inline-block;width: 600px;">是否持有有效摩托车驾照？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 25px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 60px;">
                         <div class="div-table-2" style="width: 636px;height: 60px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C5.</div><div style="display: inline-block;width: 600px;">a.是否吸烟?若“是”，吸烟__年__支/天；若现在已停止吸烟，停止吸烟原因及时间__。b.是否饮酒？若“是”，饮酒__年，种类____，数量__（两/周）；若现在已停止饮酒，停止饮酒原因及时间____。</div></div>
                         <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 60px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 30px;">
                         <div class="div-table-2" style="width: 636px;height: 30px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C6.</div><div style="display: inline-block;width: 600px;">您是否曾经或正在使用麻醉剂、可成瘾药物、毒品或接受戒毒、戒酒治疗？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 30px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 30px;">
                         <div class="div-table-2" style="width: 636px;height: 30px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C7.</div><div style="display: inline-block;width: 600px;">最近六个月内是否有医生建议您服药、住院、手术或其他医疗方案？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 30px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 60px;">
                         <div class="div-table-2" style="width: 636px;height: 60px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C8.</div><div style="display: inline-block;width: 600px;">最近五年内，您是否曾经作下列之一的检查且结果异常：核磁共振(MRI)、心电图、胃镜、纤维结肠镜、气管镜、CT、超声波、X光、眼底检查、脑电图、肝功能、肾功能、病理活检及其它特殊检查？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 60px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 160px;">
                         <div class="div-table-2" style="width: 636px;height: 160px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C9.</div><div style="display: inline-block;width: 600px;">您是否有下列身体残障状况：
@@ -1995,13 +1995,13 @@
                             f 精神、智能障碍或性格行为异常？
                             g 脾、肺、胃、小肠、结肠、直肠、胰腺、肝、肾、膀胱切除？心脏的结构损伤或功能障碍？输尿管闭锁或缺失？其它内脏或身体器官缺损、摘除或移植？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 160px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 160px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 160px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 53px;">
                         <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C10.</div><div style="display: inline-block;width: 600px;">a 您及您的配偶是否曾接受或试图接受与艾滋病(AIDS)有关的医疗咨询、检验或治疗，或艾滋病病毒(HIV)呈阳性反应？
                             b 是否曾经验血而得知为乙肝表面抗原(HbsAg)阳性反应或不宜献血？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                 </div>
 
@@ -2173,7 +2173,7 @@
                         <div class="div-table-2" style="width: 639px;height:58px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C11.</div><div style="display: inline-block;width: 600px;">您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？怀孕___ 周数？
                             b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？d.母亲、姐妹中是否患有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？</div></div>
                         <div class="div-table-2" style="width: 83px;height:58px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height:58px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height:58px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 465px;">
                         <div class="div-table-2" style="width: 639px;height: 465px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C12.</div><div style="display: inline-block;width: 600px;line-height: 1.3;">是否患有或曾经患有一下疾病：
@@ -2211,7 +2211,7 @@
                             <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                             <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                         </div>
-                        <div class="div-table-2" style="width: 83px;height: 465px;vertical-align: top;">
+                        <div class="div-table-2" style="width: 83px;height: 465px;vertical-align: top;border-right:#000000 1px solid;">
                             <div style="display: block;margin-top:25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                             <div style="display: block;margin-top:125px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                             <div style="display: block;margin-top:0;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
@@ -2230,7 +2230,7 @@
                     <div class="table-line" style="height: 40px;">
                         <div class="div-table-2" style="width: 639px;height: 40px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">直系亲属中，是否患有或曾经患有高血压、肾病、心脏病、肝炎、肝肾囊肿、肝硬化、糖尿病、精神病、癌症或早于60周岁因病身故者？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 40px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 40px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 40px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 197px;">
                         <div class="div-table-2" style="width: 639px;height: 197px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C14.</div><div style="display: inline-block;width: 600px;">您若为2周岁(不含)以下婴儿，请告知：
@@ -2244,17 +2244,17 @@
                             <br>h是否曾患疝气？
                             <br>i是否曾出现“高热惊厥”</div></div>
                         <div class="div-table-2" style="width: 83px;height: 197px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 197px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 197px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 28px;">
                         <div class="div-table-2" style="width: 639px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否参加公费医疗或社会医疗保险？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 28px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 28px;">
                         <div class="div-table-2" style="width: 639px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否有其他事项告知本公司？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 28px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                 </div>
                     <%--<div style="position: absolute;z-index: 20;padding-left: 19px;padding-top: 37px;">--%>

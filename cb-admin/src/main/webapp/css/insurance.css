@@ -65,7 +65,7 @@ h2 {
     border: 1px #000000 solid;
     padding: 5px;
     border-radius: 8px;
-    background-color: #dff9fb;
+    background-color: #f6f9f2;
     box-sizing: border-box;
 }
 
@@ -177,6 +177,9 @@ input {
 
 .table-line {
     height: 60px;
+    border-bottom: #000000 1px solid;
+    margin-left: -1px;
+    margin-bottom: -1px;
     font-size: 0;
 }
 
@@ -187,7 +190,7 @@ input {
 
 .div-table-1 {
     width: 80px;
-    border: 1px #000000 solid;
+    border-left: 1px #000000 solid;
     margin: -1px;
     height: 60px;
     box-sizing: border-box;
@@ -197,7 +200,7 @@ input {
 
 .div-table-2 {
     width: 500px;
-    border: 1px #000000 solid;
+    border-left: 1px #000000 solid;
     margin: -1px;
     height: 60px;
     box-sizing: border-box;
