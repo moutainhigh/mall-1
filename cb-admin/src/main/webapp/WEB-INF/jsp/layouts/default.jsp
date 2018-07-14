@@ -1,4 +1,3 @@
-<%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lte9 lte8 lte7 no-js"> <![endif]-->
@@ -12,7 +11,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>水晶球 - <sitemesh:title/></title>
+    <title>水晶球 - <sitemesh:write property='title'/></title>
 
     <!-- // IOS webapp icons // -->
 
@@ -183,11 +182,11 @@
             }
         };
     </script>
-    <sitemesh:head/>
+    <sitemesh:write property='head'/>
 </head>
 <body class="hide-right-sidebar">
 <div id="container" class="clearfix">
-    <sitemesh:body/>
+    <sitemesh:write property='body'/>
 </div>
 <!-- Lockscreen -->
 <div class="lockscreen" id="lockscreen-slider">

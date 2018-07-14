@@ -41,7 +41,7 @@ public class UserController {
         return "security/users";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageUsers", method = RequestMethod.POST)
     @ResponseBody
     public Page<User> pageUsers(@RequestBody PageSpecification<User> query, HttpSession session) {
         User user =(User)session.getAttribute(SecurityConstants.LOGIN_SESSION);
@@ -71,13 +71,13 @@ public class UserController {
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddUser", method = RequestMethod.GET)
     public String toAddUser(@ModelAttribute("user") User user,@ModelAttribute(SecurityConstants.LOGIN_SELLER) Seller seller,ModelMap modelMap) {
         modelMap.addAttribute("roles",securityService.getRolesBySeller(seller));
         return "security/addUser";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public String addUser(@Valid @ModelAttribute("user") User user,BindingResult result, HttpSession session,ModelMap modelMap) {
         Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
         user.setSeller(seller);
@@ -90,7 +90,7 @@ public class UserController {
         return "redirect:../common/success.do?reurl=security/users.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditUser", method = RequestMethod.GET)
     public String toEditUser(@RequestParam("userId") int userId, @ModelAttribute(SecurityConstants.LOGIN_SELLER) Seller seller,ModelMap modelMap) {
         modelMap.addAttribute("roles",securityService.getRolesBySeller(seller));
         User user = securityService.getUserById(userId);
@@ -98,7 +98,7 @@ public class UserController {
         return "security/editUser";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editUser", method = RequestMethod.POST)
     public String editUser(@Valid @ModelAttribute("user") User user,BindingResult result, HttpSession session,ModelMap modelMap) {
         Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
         user.setSeller(seller);
@@ -114,14 +114,14 @@ public class UserController {
     /**
      * 启用、禁用用户
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "enableUserById", method = RequestMethod.GET)
     @ResponseBody
     public int enableUserById(@RequestParam("enabled") boolean enabled, @RequestParam("userId") int userId) {
         securityService.enabledUserById(enabled, userId);
         return userId;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeUserById", method = RequestMethod.GET)
     @ResponseBody
     public boolean removeUserById(@RequestParam("userId") int userId) {
         try{

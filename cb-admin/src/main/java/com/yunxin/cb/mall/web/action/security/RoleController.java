@@ -1,14 +1,19 @@
 package com.yunxin.cb.mall.web.action.security;
 
+import com.yunxin.cb.console.entity.Permission;
 import com.yunxin.cb.console.entity.Role;
-import com.yunxin.cb.console.entity.RoleResc;
 import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.console.service.ISecurityService;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.cb.security.InvocationSecurityMetadataSource;
+import com.yunxin.cb.mall.web.vo.TreeNode;
+import com.yunxin.cb.security.Privilege;
 import com.yunxin.cb.security.SecurityConstants;
+import com.yunxin.cb.security.SecurityProvider;
 import com.yunxin.core.exception.EntityExistException;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -40,15 +45,14 @@ public class RoleController  implements ServletContextAware {
 
 	private ServletContext servletContext;
 
-	@Resource
-	private InvocationSecurityMetadataSource invocationSecurityMetadataSource;
+
 
 	@Override
 	public void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
 
-	@RequestMapping( method = RequestMethod.GET)
+	@RequestMapping(value = "roles",method = RequestMethod.GET)
 	public String roles(ModelMap modelMap,HttpSession session) {
 		try {
 			User user =(User)session.getAttribute(SecurityConstants.LOGIN_SESSION);
@@ -71,16 +75,16 @@ public class RoleController  implements ServletContextAware {
 		return "security/roles";
 	}
 	
-	@RequestMapping(  method = RequestMethod.GET)
+	@RequestMapping(value = "toAddRole", method = RequestMethod.GET)
 	public String toAddRole(@ModelAttribute("role") Role role,@ModelAttribute(SecurityConstants.LOGIN_SELLER) Seller seller,ModelMap modelMap) {
-		Set<RoleResc> roleRescs = new HashSet<>();
-		List<com.yunxin.cb.security.Resource> resources = (List<com.yunxin.cb.security.Resource>) servletContext.getAttribute(SecurityConstants.RESOURCES);
-		List<TreeViewItem> viewItems = buildResourceTree(resources, roleRescs);
-		modelMap.addAttribute("roleRescTree", viewItems);
+//		Set<RoleResc> roleRescs = new HashSet<>();
+//		List<com.yunxin.cb.security.Resource> resources = (List<com.yunxin.cb.security.Resource>) servletContext.getAttribute(SecurityConstants.RESOURCES);
+//		List<TreeViewItem> viewItems = getResourceTree(resources, roleRescs);
+//		modelMap.addAttribute("roleRescTree", viewItems);
 		return "security/addRole";
 	}
 
-	@RequestMapping(  method = RequestMethod.POST)
+	@RequestMapping(value = "addRole", method = RequestMethod.POST)
 	public String addRole(@Valid @ModelAttribute("role") Role role,BindingResult result,HttpSession session,ModelMap modelMap) {
 		Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
 		role.setSeller(seller);
@@ -91,22 +95,21 @@ public class RoleController  implements ServletContextAware {
 			modelMap.put("roleName",e.getMessage());
 			return toAddRole(role, seller, modelMap);
 		}
-		invocationSecurityMetadataSource.loadResourceDefine();
 		return "redirect:../common/success.do?reurl=security/roles.do";
 	}
 	
 	@RequestMapping(value = "toEditRole", method = RequestMethod.GET)
 	public String toEditRole(@RequestParam("roleId") int roleId,@ModelAttribute(SecurityConstants.LOGIN_SELLER) Seller seller,ModelMap modelMap) {
-		Role role = securityService.getRoleById(roleId);
-		modelMap.addAttribute("role", role);
-		List<RoleResc> roleRescs = securityService.getRoleRescsByRole(role);
-		List<com.yunxin.cb.security.Resource> resources = (List<com.yunxin.cb.security.Resource>) servletContext.getAttribute(SecurityConstants.RESOURCES);
-		List<TreeViewItem> viewItems = buildResourceTree(resources, new HashSet(roleRescs));
-		modelMap.addAttribute("roleRescTree", viewItems);
+//		Role role = securityService.getRoleById(roleId);
+//		modelMap.addAttribute("role", role);
+//		List<Permission> roleRescs = securityService.getPermissionsByRole(role);
+//		List<Privilege> resources = null;
+//		List<TreeViewItem> viewItems = buildResourceTree(role.getRoleId(), true);
+//		modelMap.addAttribute("roleRescTree", viewItems);
 		return "security/editRole";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "editRole", method = RequestMethod.POST)
 	public String editRole(@Valid @ModelAttribute("role") Role role,BindingResult result,HttpSession session,ModelMap modelMap) {
 		Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
 		role.setSeller(seller);
@@ -117,11 +120,10 @@ public class RoleController  implements ServletContextAware {
 			modelMap.put("roleName",e.getMessage());
 			return toEditRole(role.getRoleId(), seller, modelMap);
 		}
-		invocationSecurityMetadataSource.loadResourceDefine();
 		return "redirect:../common/success.do?reurl=security/roles.do";
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "removeRoleById", method = RequestMethod.GET)
 	@ResponseBody
 	public boolean removeRoleById(@RequestParam("roleId") int roleId) {
 		try{
@@ -132,29 +134,63 @@ public class RoleController  implements ServletContextAware {
 		}
 	}
 
-	/**
-	 * 初始化角色资源授权树
-	 * @param resources
-	 * @param roleRescs
-	 * @return
-	 */
-	public List<TreeViewItem> buildResourceTree(List<com.yunxin.cb.security.Resource> resources, Set<RoleResc> roleRescs) {
-		List<TreeViewItem> viewItems = new ArrayList<>();
-		for (com.yunxin.cb.security.Resource resource : resources) {
-			TreeViewItem viewItem = new TreeViewItem(resource.getCode(), resource.getName(), true, resource.getType().toString(), true, true);
-			List<com.yunxin.cb.security.Resource> children = resource.getChildren();
-			if (children != null && children.size() > 0) {
-				List<TreeViewItem> childItems = buildResourceTree(children, roleRescs);
-				if (childItems.size() > 0) {
-					viewItem.setHasChildren(true);
-				}
-				viewItem.setItems(childItems);
-			}
-			//是否已经授权
-			boolean checked = roleRescs.stream().anyMatch(p -> p.getRescCode().equals(resource.getCode()));
-			viewItem.setChecked(checked);
-			viewItems.add(viewItem);
+	private List<TreeNode> getResourceTree(Integer roleId,boolean editSate) {
+		List<String> roleRescCodes = null;
+		if (roleId != null) {
+			roleRescCodes = securityService.getPrivilegeCodesByRoleId(roleId);
 		}
-		return viewItems;
+		List<TreeNode> treeNodes = new ArrayList<>();
+		try {
+			List<Privilege> resources = ((SecurityProvider) securityService).getAllPrivileges();
+			if(null!=resources){
+				for (Privilege privilege : resources) {
+					boolean hasChildren = CollectionUtils.isNotEmpty(privilege.getChildren());
+
+					TreeNode treeNode = new TreeNode(privilege);
+					if (!hasChildren
+							&& roleRescCodes != null
+							&& roleRescCodes.contains(privilege.getCode())) {
+						treeNode.getState().setSelected(true);
+						treeNode.getState().setChecked(true);
+					}
+					treeNode.getState().setDisabled(editSate);
+					treeNodes.add(treeNode);
+					buildResourceTree(treeNode, privilege.getChildren(), roleRescCodes,editSate);
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
+		return treeNodes;
+	}
+
+	private void buildResourceTree(TreeNode parentNode, List<Privilege> resources, List<String> roleRescCodes,boolean editSate) {
+		if (CollectionUtils.isEmpty(resources)) {
+			return;
+		}
+		parentNode.getState().setOpened(true);
+		for (Privilege resource : resources) {
+			TreeNode treeNode = new TreeNode(resource);
+			boolean hasChildren = CollectionUtils.isNotEmpty(resource.getChildren());
+
+			if (!hasChildren&&roleRescCodes != null
+					&& roleRescCodes.contains(resource.getCode())) {
+				treeNode.getState().setSelected(true);
+				treeNode.getState().setChecked(true);
+			}
+			treeNode.getState().setDisabled(editSate);
+			parentNode.addChildNode(treeNode);
+			buildResourceTree(treeNode, resource.getChildren(), roleRescCodes,editSate);
+		}
+	}
+
+
+
+	private void reloadUserPrivileges(HttpSession session) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		List<Privilege> userPrivileges = ((SecurityProvider) securityService).loadUserPrivileges(authentication);
+		session.setAttribute(SecurityConstants.USER_PRIVILEGES, userPrivileges);
+
 	}
 }

@@ -58,11 +58,11 @@ public class Role implements java.io.Serializable {
     private String remark;
 
 
-    private Set<RoleResc> roleRescs = new HashSet<>();
+    private Set<Permission> permissions = new HashSet<>();
 
     private Set<User> users = new HashSet<User>(0);
 
-    private String[] rescCodes;
+    private String rescCodes;
 
     public Role() {
         super();
@@ -134,12 +134,12 @@ public class Role implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
-    public Set<RoleResc> getRoleRescs() {
-        return roleRescs;
+    public Set<Permission> getPermissions() {
+        return permissions;
     }
 
-    public void setRoleRescs(Set<RoleResc> roleRescs) {
-        this.roleRescs = roleRescs;
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
 
@@ -153,11 +153,11 @@ public class Role implements java.io.Serializable {
     }
 
     @Transient
-    public String[] getRescCodes() {
+    public String getRescCodes() {
         return rescCodes;
     }
 
-    public void setRescCodes(String[] rescCodes) {
+    public void setRescCodes(String rescCodes) {
         this.rescCodes = rescCodes;
     }
 

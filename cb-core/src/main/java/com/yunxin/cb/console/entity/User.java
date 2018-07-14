@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
+import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
@@ -278,6 +280,19 @@ public class User implements java.io.Serializable, UserDetails {
             grantedAuthorities.add(new SimpleGrantedAuthority(securityRole.getRoleName()));
         }
         return grantedAuthorities;
+    }
+
+    @Transient
+    public String getRoleNames() {
+        if (Hibernate.isInitialized(roles) && CollectionUtils.isNotEmpty(roles)) {
+            StringBuilder builder = new StringBuilder();
+            roles.forEach(role -> builder.append(role.getRoleName()).append(","));
+            if (builder.length() > 1) {
+                builder.deleteCharAt(builder.length() - 1);
+            }
+            return builder.toString();
+        }
+        return null;
     }
 
     @Override

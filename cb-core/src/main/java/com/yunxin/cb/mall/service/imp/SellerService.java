@@ -88,15 +88,9 @@ public class SellerService implements ISellerService {
         role.setRoleName(sellerDb.getSellerName() + "_管理员");
         role.setRemark(sellerDb.getSellerName() + "_管理员");
         role.setSeller(sellerDb);
-        List<String> rescCodes = new ArrayList<String>();
-        rescCodes.add("3");
-        rescCodes.add("33");
+        String rescCodes = "3,33,5,51,52,53";
 
-        rescCodes.add("5");
-        rescCodes.add("51");
-        rescCodes.add("52");
-        rescCodes.add("53");
-        role.setRescCodes((String[]) rescCodes.toArray());
+        role.setRescCodes(rescCodes);
 
         role = securityService.addRole(role);
 

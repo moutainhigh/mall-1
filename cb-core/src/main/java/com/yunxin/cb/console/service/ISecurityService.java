@@ -3,15 +3,18 @@
  */
 package com.yunxin.cb.console.service;
 
+
+import com.yunxin.cb.console.entity.Permission;
 import com.yunxin.cb.console.entity.Role;
-import com.yunxin.cb.console.entity.RoleResc;
+
 import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.entity.Seller;
-import com.yunxin.cb.security.Privilege;
+
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +23,14 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 /**
  * @author gonglei
  */
-public interface ISecurityService {
+public interface ISecurityService extends UserDetailsService {
 
     /**
      * IUserService
@@ -35,6 +39,8 @@ public interface ISecurityService {
      * @return
      */
     User getUserByName(String userName);
+
+    void initAdminAccount();
 
     List<Role> getAllRoles() throws Exception;
 
@@ -62,6 +68,11 @@ public interface ISecurityService {
     User findByUserNameAndPassword1(String userName, String password);
 
 
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    List<Permission> getPermissionsByRole(Role role);
+
+    void updateLoginTime(int userId, Date date);
+
     /**
      * 修改密码
      *
@@ -83,8 +94,11 @@ public interface ISecurityService {
 
     public Role getRoleById(int roleId);
 
-    public void removeRoleById(int roleId);
+    public void removeRoleById(int roleId) throws Exception;
 
+
+
+    List<String> getPrivilegeCodesByRoleId(int roleId);
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     List<Role> getRolesBySeller(Seller seller);
@@ -92,8 +106,7 @@ public interface ISecurityService {
 
     public Role getRoleById1(int roleId);
 
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    List<RoleResc> getAllRoleRescs();
+
 
 
     public List<Role> queryRolersByUser(int userId) throws Exception;
@@ -117,11 +130,7 @@ public interface ISecurityService {
 
     public long countUsersByRoles(String roleCode);
 
-    List<RoleResc> getRoleRescsByRole(Role role);
-
-    List<String> getRescCodesByUser(User user);
 
     UserDetails getUserDetailsByName(String userName);
 
-    public List<Privilege> loadPrivilegesDefine();
 }

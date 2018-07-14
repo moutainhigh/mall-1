@@ -134,20 +134,20 @@
   <div style="position: relative">
     <img style="width: 100%; position: absolute" src="images/indexBg/loginBg.png" alt=""/>
     <h4> ${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>
-    <form id="form-login" style="width: 100%; margin-top: 40px" action="j_spring_security_check" method="post">
+    <form id="form-login" style="width: 100%; margin-top: 40px" action="login" method="post">
       <%--<div class="login-avatar">--%>
         <%--<img src="images/users/logo.png" alt="" id="login-avatar"/>--%>
       <%--</div>--%>
       <div class="login-fields-wrapper" style="float: none; width: 100%">
         <div class="row" style="">
           <div class="col-lg-12">
-            <input class="form-control input-lg" style="width: 85%; height: 50px; margin: 0 7.5%; border: 2px solid #e5e5e5; border-radius: 6px" id="j_username" name="j_username" type="text" placeholder="Username" tabindex="1" value="admin" />
+            <input class="form-control input-lg" style="width: 85%; height: 50px; margin: 0 7.5%; border: 2px solid #e5e5e5; border-radius: 6px" id="j_username" name="username" type="text" placeholder="Username" tabindex="1" value="admin" />
           </div>
         </div>
         <div class="spacer-10" style="height: 20px"></div>
         <div class="row">
           <div class="col-lg-12">
-            <input class="form-control input-lg" style="width: 85%; height: 50px; margin: 0 7.5%; border: 2px solid #e5e5e5; border-radius: 6px" id="j_password" name="j_password" type="password" placeholder="Password" tabindex="2" />
+            <input class="form-control input-lg" style="width: 85%; height: 50px; margin: 0 7.5%; border: 2px solid #e5e5e5; border-radius: 6px" id="j_password" name="password" type="password" placeholder="Password" tabindex="2" />
           </div>
         </div>
         <div class="spacer-20"></div>

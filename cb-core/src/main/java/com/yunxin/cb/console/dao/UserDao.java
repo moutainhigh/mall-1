@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +44,12 @@ public interface UserDao extends UserPlusDao, JpaRepository<User, Integer>, JpaS
     @Query("select u from User u left join fetch u.roles r  where r.roleCode=?1")
     public List<User> findUsersByRole(String roleCode);
 
+    @Query("select u from User u left join fetch u.roles where u.userName=:userName")
+    User findTopByUserName(@Param("userName") String userName);
+
+    @Modifying
+    @Query("update User u set u.lastTime=:lastTime where u.userId=:userId")
+    void updateLoginTime(@Param("userId") int userId, @Param("lastTime") Date date);
 
 }
 

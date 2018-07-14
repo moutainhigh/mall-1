@@ -22,8 +22,10 @@ public interface RoleDao extends RolePlusDao, JpaRepository<Role, Integer>, JpaS
 
     Role findByRoleNameAndRoleIdNot(String roleName, int roleId);
 
-    @Query("select r from Role r left join fetch r.roleRescs where r.roleId=?1")
+    @Query("select r from Role r left join fetch r.permissions where r.roleId=?1")
     Role findByRoleId1(int roleId);
+
+    Role findFirstByRoleCode(String roleCode);
 
 }
 

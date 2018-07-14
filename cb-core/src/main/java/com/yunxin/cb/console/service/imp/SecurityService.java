@@ -1,25 +1,29 @@
 package com.yunxin.cb.console.service.imp;
 
+import com.yunxin.cb.console.dao.PermissionDao;
 import com.yunxin.cb.console.dao.RoleDao;
-import com.yunxin.cb.console.dao.RoleRescDao;
 import com.yunxin.cb.console.dao.UserDao;
 import com.yunxin.cb.console.entity.*;
 import com.yunxin.cb.console.service.ISecurityService;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.entity.Seller_;
-import com.yunxin.cb.security.Privilege;
-import com.yunxin.cb.security.SecurityHolder;
+import com.yunxin.cb.security.IPermission;
+import com.yunxin.cb.security.SecurityProvider;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.LogicUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,10 +35,11 @@ import javax.crypto.NoSuchPaddingException;
 import javax.persistence.criteria.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.yunxin.cb.security.SecurityConstants.ADMINISTRATOR;
+import static com.yunxin.cb.security.SecurityConstants.SUPER_ROLE;
 
 
 /**
@@ -42,7 +47,7 @@ import java.util.Set;
  */
 @Service
 @Transactional
-public class SecurityService implements ISecurityService, SecurityHolder {
+public class SecurityService extends SecurityProvider implements ISecurityService {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
@@ -53,7 +58,7 @@ public class SecurityService implements ISecurityService, SecurityHolder {
     private RoleDao roleDao;
 
     @Resource
-    private RoleRescDao roleRescDao;
+    private PermissionDao permissionDao;
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -164,35 +169,35 @@ public class SecurityService implements ISecurityService, SecurityHolder {
         }
         role.setCreateTime(new Date());
         Role newRole = roleDao.save(role);
-        String[] rescCodes = role.getRescCodes();
-        if (rescCodes != null && rescCodes.length > 0) {
-            for (String rescCode : rescCodes) {
-                RoleResc roleResc = new RoleResc(newRole, rescCode);
-                roleRescDao.save(roleResc);
-            }
+        if (StringUtils.isNotBlank(role.getRescCodes())) {
+            String[] rescCodes = role.getRescCodes().split(",");
+            // 保存可访问资源
+            List<Permission> rolePrivileges = Arrays.stream(rescCodes)
+                    .map(rescCode -> new Permission(newRole, rescCode))
+                    .collect(Collectors.toList());
+            permissionDao.save(rolePrivileges);
         }
         return newRole;
     }
 
     @Override
     public Role updateRole(Role role) throws EntityExistException {
-        if (!roleDao.isOrUnique(role, Role_.roleCode, Role_.roleName)) {
-            throw new EntityExistException("角色编码或名称已存在");
+        if (!roleDao.isUnique(role, Role_.roleName)) {
+            throw new EntityExistException("角色名已存在");
         }
-        Role dbrole = roleDao.findOne(role.getRoleId());
-        dbrole.setRoleName(role.getRoleName());
-        dbrole.setRoleCode(role.getRoleCode());
-        dbrole.setRemark(role.getRemark());
-        String[] rescCodes = role.getRescCodes();
-        if (rescCodes != null && rescCodes.length > 0) {
-            roleRescDao.removeRoleResc(role);
-            for (String rescCode : rescCodes) {
-                RoleResc roleResc = new RoleResc(dbrole, rescCode);
-                roleRescDao.save(roleResc);
-            }
-        }else
-            throw new EntityExistException("请至少选中一个权限进行操作");
-        return dbrole;
+        Role dbRole = roleDao.findOne(role.getRoleId());
+        dbRole.setRoleName(role.getRoleName());
+        dbRole.setRemark(role.getRemark());
+        // 保存新的可访问资源
+        permissionDao.deleteByRole_RoleId(dbRole.getRoleId());
+        if (StringUtils.isNotBlank(role.getRescCodes())) {
+            String[] rescCodes = role.getRescCodes().split(",");
+            List<Permission> roleRescs = Arrays.stream(rescCodes)
+                    .map(rescCode -> new Permission(dbRole, rescCode))
+                    .collect(Collectors.toList());
+            permissionDao.save(roleRescs);
+        }
+        return dbRole;
     }
 
     @Override
@@ -203,19 +208,22 @@ public class SecurityService implements ISecurityService, SecurityHolder {
     }
 
     @Override
-    public void removeRoleById(int roleId) {
-        roleRescDao.removeRoleResc(new Role(){
-            {
-                setRoleId(roleId);
-            }
-        });
-        roleDao.delete(roleId);
+    public void removeRoleById(int roleId) throws Exception {
+        Role dbRole = roleDao.getOne(roleId);
+        if (SUPER_ROLE.equals(dbRole.getRoleCode())) {
+            // 系统超级管理员角色不能删除
+            throw new Exception("系统超级管理员角色不能删除");
+        }
+        if (dbRole.getUsers().isEmpty()) {
+            permissionDao.deleteByRole_RoleId(roleId);
+            roleDao.delete(roleId);
+        }
     }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<RoleResc> getRoleRescsByRole(Role role) {
-        return roleRescDao.findByRole(role);
+    public List<String> getPrivilegeCodesByRoleId(int roleId) {
+        return permissionDao.findPrivilegeCodesByRoleId(roleId);
     }
 
     @Override
@@ -240,9 +248,24 @@ public class SecurityService implements ISecurityService, SecurityHolder {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<RoleResc> getAllRoleRescs() {
-        return roleRescDao.findAllRoles();
+    public void initAdminAccount() {
+        Role superRole = roleDao.findFirstByRoleCode(SUPER_ROLE);
+        if (superRole == null) {
+            superRole = new Role();
+            superRole.setRoleCode(SUPER_ROLE);
+            superRole.setRoleName("超级管理员");
+            superRole.setCreateTime(new Date());
+            superRole = roleDao.save(superRole);
+        }
+        User admin = userDao.findTopByUserName(ADMINISTRATOR);
+        if (admin == null) {
+            admin = new User();
+            admin.setUserName(ADMINISTRATOR);
+            admin.setPassword("123456");
+            admin.setCreateTime(new Date());
+            admin = userDao.save(admin);
+            admin.getRoles().add(superRole);
+        }
     }
 
 
@@ -268,10 +291,14 @@ public class SecurityService implements ISecurityService, SecurityHolder {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<String> getRescCodesByUser(User user) {
-        return roleRescDao.findRescCodesByUser(user);
+    public List<Permission> getPermissionsByRole(Role role){
+        return permissionDao.findByRole_RoleId(role.getRoleId());
     }
 
+    @Override
+    public void updateLoginTime(int userId, Date date) {
+        userDao.updateLoginTime(userId, date);
+    }
 
     @Override
     public User changePassword(int userId, String password)
@@ -326,15 +353,30 @@ public class SecurityService implements ISecurityService, SecurityHolder {
         return user;
     }
 
+
     @Override
-    public List<Privilege> loadPrivilegesDefine() {
-        List<RoleResc> roleRescs = roleRescDao.findAllRoles();
-        List<Privilege> privileges = new ArrayList<>(roleRescs.size());
-        for (RoleResc roleResc : roleRescs) {
-            privileges.add(roleResc);
-        }
-        return privileges;
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<? extends IPermission> getAllPermissions() {
+        //关联role
+        return permissionDao.findDetailPermissions();
     }
 
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<String> getPrivilegeCodesByUserName(String userName) {
+        return permissionDao.findPrivilegeCodesByUserName(userName);
+    }
 
+    @Override
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = userDao.findTopByUserName(userName);
+        if (user != null) {
+            List<GrantedAuthority> authorities = user.getRoles().stream()
+                    .map(role -> new SimpleGrantedAuthority(role.getRoleCode()))
+                    .collect(Collectors.toList());
+            return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), user.isEnabled(), user.isEnabled(), user.isEnabled(), user.isEnabled(), authorities);
+        } else {
+            return null;
+        }
+    }
 }

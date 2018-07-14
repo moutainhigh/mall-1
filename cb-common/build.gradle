@@ -46,7 +46,6 @@ dependencies {
             "commons-collections:commons-collections:3.2",
             "commons-httpclient:commons-httpclient:3.1",
             "mysql:mysql-connector-java:5.1.26",
-            "opensymphony:sitemesh:2.4.2",
             "com.google.code.gson:gson:2.6.2",
             "org.freemarker:freemarker:2.3.23",
             "javax.mail:mail:1.4.7",
