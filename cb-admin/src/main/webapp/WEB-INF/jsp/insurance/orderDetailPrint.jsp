@@ -198,7 +198,7 @@
                             </div>
                         </div>
                         <div class="div-line-con">
-                            <div class="title">A 5.证件号码</div>
+                            <div class="title">A 6.证件号码</div>
                         </div>
                         <div style="display: inline-block;float: right;margin-top: 1px;margin-right: 1px;height: 20px">
                             <div class="div-line-cert"></div>
@@ -224,7 +224,7 @@
 
                     <div class="div-line">
                         <div class="div-line-con div-row-5">
-                            <div class="title">A 5.证件有效期</div>
+                            <div class="title">A 7.证件有效期</div>
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 有效期至
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 11.国籍、户籍</div>
+                            <div class="title">A 8.国籍、户籍</div>
                             <input class="a-input" type="text"/>
                         </div>
                         <div class="div-line-con div-row-3">
@@ -255,7 +255,7 @@
                     </div>
                     <div class="div-line">
                         <div class="div-line-con div-row-5">
-                            <div class="title">A 5.婚姻状况</div>
+                            <div class="title">A 10.婚姻状况</div>
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 未婚
@@ -281,7 +281,7 @@
 
                     <div class="div-line">
                         <div class="div-line-con div-row-7">
-                            <div class="title">A 10.住址</div>
+                            <div class="title">A 13.住址</div>
                             <div>
                                 <input class="b-input" type="text"/>
                                 省
@@ -306,21 +306,21 @@
                     </div>
                     <div class="div-line">
                         <div class="div-line-con div-row-5">
-                            <div class="title">A 5.单位名称</div>
+                            <div class="title">A 14.单位名称</div>
                             <input class="a-input" type="text"/>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 11.职业</div>
+                            <div class="title">A 15.职业</div>
                             <input class="a-input" type="text"/>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 11.年收入</div>
+                            <div class="title">A 16.年收入</div>
                             <input class="a-input" type="text"/>
                         </div>
                     </div>
                     <div class="div-line">
                         <div class="div-line-con div-row-7">
-                            <div class="title">A 10.单位地址</div>
+                            <div class="title">A 17.单位地址</div>
                             <div>
                                 <input class="b-input" type="text"/>
                                 省
@@ -344,17 +344,17 @@
                         </div>
                     </div>
                     <div class="div-line">
-                        <div class="div-line-con div-career">
-                            <div class="title">A 5.职业代码</div>
+                        <div class="div-line-con div-career" style="color: green;">
+                            <div class="title">A 8.职业代码</div>
                             <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
                             <div class="title">职业类别</div>
                         </div>
                         <div class="div-line-con div-email">
-                            <div class="title">A 11.职业</div>
+                            <div class="title">A 19.职业</div>
                             <input class="a-input" type="text"/>
                         </div>
                         <div class="div-line-con div-part-job">
-                            <div class="title">A 11.是否有兼职？</div>
+                            <div class="title">A 20.是否有兼职？</div>
                             <input class="i-cb" style="margin-left: 10px" type="checkbox"/>
                             是
                             <input class="i-cb" type="checkbox"/>
@@ -368,11 +368,11 @@
                 <div class="div-tab">
                     <div class="div-line">
                         <div class="div-line-con div-row-2">
-                            <div class="title">A 1.姓名</div>
+                            <div class="title">A 21.姓名</div>
                             <%--<input class="a-input" type="text" value="${insuranceOrder.insuranceOrderInsured.insuredName}"/>--%>
                         </div>
                         <div class="div-line-con div-sex">
-                            <div class="title">A 2.性别</div>
+                            <div class="title">A 22.性别</div>
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 男
@@ -381,7 +381,7 @@
                             </div>
                         </div>
                         <div class="div-line-con div-row-4">
-                            <div class="title">A 3.出生日期</div>
+                            <div class="title">A 23.出生日期</div>
                             <div style="padding-left: 0;">
                                 <input class="b-input" type="text"/>
                                 年
@@ -392,7 +392,7 @@
                             </div>
                         </div>
                         <div class="div-line-con div-row-2">
-                            <div class="title">A 4.年龄</div>
+                            <div class="title">A 24.年龄</div>
                             <input class="c-input" type="text"/>
                             <div>周岁</div>
                         </div>
@@ -400,7 +400,7 @@
 
                     <div class="div-line">
                         <div class="div-line-con div-row-5">
-                            <div class="title">A 5.证件类型</div>
+                            <div class="title">A 25.证件类型</div>
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 身份证
@@ -413,7 +413,7 @@
                             </div>
                         </div>
                         <div class="div-line-con">
-                            <div class="title">A 5.证件号码</div>
+                            <div class="title">A 26.证件号码</div>
                         </div>
                         <div style="display: inline-block;float: right;margin-top: 1px;margin-right: 1px;height: 20px">
                             <div class="div-line-cert"></div>
@@ -439,7 +439,7 @@
 
                     <div class="div-line">
                         <div class="div-line-con div-row-5">
-                            <div class="title">A 5.证件有效期</div>
+                            <div class="title">A 27.证件有效期</div>
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 有效期至
@@ -456,11 +456,11 @@
                             </div>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 11.国籍、户籍</div>
+                            <div class="title">A 28.国籍、户籍</div>
                             <input class="a-input" type="text"/>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 9.身高</div>
+                            <div class="title">A 29.身高</div>
                             <input class="b-input" type="text"/>
                             厘米，
                             <div class="title">体重</div>
@@ -470,7 +470,7 @@
                     </div>
                     <div class="div-line">
                         <div class="div-line-con div-row-5">
-                            <div class="title">A 5.婚姻状况</div>
+                            <div class="title">A 30.婚姻状况</div>
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 未婚
@@ -483,20 +483,20 @@
                             </div>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 11.固定电话（<span style="font-size: 1px">区号<input class="b-input"
+                            <div class="title">A 31.固定电话（<span style="font-size: 1px">区号<input class="b-input"
                                                                                                type="text"/></span>)-(<input
                                     class="mobile-input" type="text"/></span>)
                             </div>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 12.移动电话</div>
+                            <div class="title">A 32.移动电话</div>
                             <input class="a-input" type="text"/>
                         </div>
                     </div>
 
                     <div class="div-line">
                         <div class="div-line-con div-row-7">
-                            <div class="title">A 10.住址</div>
+                            <div class="title">A 33.住址</div>
                             <div>
                                 <input class="b-input" type="text"/>
                                 省
@@ -521,21 +521,21 @@
                     </div>
                     <div class="div-line">
                         <div class="div-line-con div-row-5">
-                            <div class="title">A 5.单位名称</div>
+                            <div class="title">A 34.单位名称</div>
                             <input class="a-input" type="text"/>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 11.职业</div>
+                            <div class="title">A 35.职业</div>
                             <input class="a-input" type="text"/>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 11.年收入</div>
+                            <div class="title">A 36.年收入</div>
                             <input class="a-input" type="text"/>
                         </div>
                     </div>
                     <div class="div-line">
                         <div class="div-line-con div-row-7">
-                            <div class="title">A 10.单位地址</div>
+                            <div class="title">A 37.单位地址</div>
                             <div>
                                 <input class="b-input" type="text"/>
                                 省
@@ -559,21 +559,17 @@
                         </div>
                     </div>
                     <div class="div-line">
-                        <div class="div-line-con div-career">
-                            <div class="title">A 5.职业代码</div>
+                        <div class="div-line-con div-career" style="color: green">
+                            <div class="title">A 38.职业代码</div>
                             <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
                             <div class="title">职业类别</div>
                         </div>
                         <div class="div-line-con div-email">
-                            <div class="title">A 11.职业</div>
+                            <div class="title">A 39.职业</div>
                             <input class="a-input" type="text"/>
                         </div>
                         <div class="div-line-con div-part-job">
-                            <div class="title">A 11.是否有兼职？</div>
-                            <input class="i-cb" style="margin-left: 10px" type="checkbox"/>
-                            是
-                            <input class="i-cb" type="checkbox"/>
-                            否，如是请说明：
+                            <div class="title">A 40.其他联系方式</div>
                         </div>
                     </div>
                 </div>
@@ -606,7 +602,7 @@
                 <div class="div-tab">
                     <div class="div-line">
                         <div class="div-line-con div-row-6" style="padding: 7px 5px 7px 10px;">
-                            A 41. 投保人是否需要短信服务
+                            A 42. 投保人是否需要短信服务
                             <div>
                                 <input class="i-cb" type="checkbox"/>
                                 需要
@@ -615,7 +611,7 @@
                             </div>
                         </div>
                         <div class="div-line-con">
-                            A 41. 移动电话
+                            A 43. 移动电话
                         </div>
                     </div>
                 </div>
@@ -625,11 +621,11 @@
                 <div class="div-tab" style="height: 240px;width: 1000px;">
                     <div class="table-line">
                         <div class="div-table-1">A 44.姓名</div>
-                        <div class="div-table-1">A 45.姓名</div>
-                        <div class="div-table-1">A 46.收益顺序</div>
-                        <div class="div-table-1">A 47.收益份额</div>
-                        <div class="div-table-1">A 48.出生日期</div>
-                        <div class="div-table-1">A 49.是被保险人的（关系）</div>
+                        <div class="div-table-1">A 45.性别</div>
+                        <div class="div-table-1"><div style="display: inline-block;vertical-align: top;">A 46.</div><div style="display: inline-block;">受益<br>顺序</div></div>
+                        <div class="div-table-1"><div style="display: inline-block;vertical-align: top;">A 47.</div><div style="display: inline-block;">受益<br>份额</div></div>
+                        <div class="div-table-1"><div style="display: inline-block;vertical-align: top;">A 48.</div><div style="display: inline-block;">出生<br>日期</div></div>
+                        <div class="div-table-1" style="width: 100px;">A 49.是被保险人的<span style="font-size: 10px;">（关系）</span></div>
                         <div class="div-table-2">A 50.证件类型及号码</div>
                     </div>
                     <div class="table-line">
@@ -638,7 +634,7 @@
                         <div class="div-table-1"></div>
                         <div class="div-table-1"></div>
                         <div class="div-table-1"></div>
-                        <div class="div-table-1"></div>
+                        <div class="div-table-1" style="width: 100px;"></div>
                         <div class="div-table-2">
                             <div class="t-line" style="padding: 5px 6px;">
                                 <input type="checkbox"/>
@@ -650,7 +646,7 @@
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
-                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;">
+                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;text-align: left">
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
@@ -679,7 +675,7 @@
                         <div class="div-table-1"></div>
                         <div class="div-table-1"></div>
                         <div class="div-table-1"></div>
-                        <div class="div-table-1"></div>
+                        <div class="div-table-1" style="width: 100px;"></div>
                         <div class="div-table-2">
                             <div class="t-line" style="padding: 5px 6px;">
                                 <input type="checkbox"/>
@@ -691,7 +687,7 @@
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
-                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;">
+                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;text-align: left">
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
@@ -720,7 +716,7 @@
                         <div class="div-table-1"></div>
                         <div class="div-table-1"></div>
                         <div class="div-table-1"></div>
-                        <div class="div-table-1"></div>
+                        <div class="div-table-1" style="width: 100px;"></div>
                         <div class="div-table-2">
                             <div class="t-line" style="padding: 6px;">
                                 <input type="checkbox"/>
@@ -732,7 +728,7 @@
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
-                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;">
+                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;text-align: left">
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
@@ -762,7 +758,7 @@
 
                 <%--第二页--%><br><br><br>
                 <div>B.投保内容</div>
-                <div style="display: inline-block">
+                <div class="div-title" style="display: inline-block">
                     <div style="display: inline-block;vertical-align: top">注意:</div>
                     <div style="display: inline-block">
                         1.若主保险合同的交费周期为“趸交”，则附加“年期”保险合同的交费周期必须为°年交”
@@ -778,16 +774,16 @@
                                                                                           type="checkbox"/>季交<input
                                     style="margin-left: 20px;" type="checkbox"/>月交
                             </div>
-                            <div class="div-block">（半年交、季交、月交必须采用银行转账）</div>
+                            <div class="div-block tip">（半年交、季交、月交必须采用银行转账）</div>
                             <div class="div-block">B3.保险费溢交转下期：<input type="checkbox"/>同意<input
                                     style="margin-left: 20px;"
-                                    type="checkbox"/>不同意（未选默认为同意）
+                                    type="checkbox"/>不同意<span class="tip">（未选默认为同意）</span>
                             </div>
                         </div>
                         <div class="div-line-con" style="width: 500px;">
                             <div class="div-block">
                                 <div>
-                                    <div style="vertical-align: top">B1.交费方式：</div>
+                                    <div style="vertical-align: top">B2.交费方式：</div>
                                     <div>
                                         <div class="div-block"><input type="checkbox"/>首期自行交费；续期银行转账</div>
                                         <div class="div-block"><input type="checkbox"/>全部银行转账</div>
@@ -795,7 +791,7 @@
 
                                 </div>
                                 <div class="div-block">B4.生存保险金领取方式： <input type="checkbox"/>积累生息<input
-                                        type="checkbox"/>现金领取（未选默认为积累生息）
+                                        type="checkbox"/>现金领取<span class="tip">（未选默认为积累生息）</span>
                                 </div>
                             </div>
                         </div>
@@ -805,15 +801,15 @@
                 <div class="div-tab">
                     <div class="table-line" style="height: 50px;">
                         <div class="div-table-2" style="width: 210px;height: 50px;">B5.主保险合同名称
-                            <div style="display: block;font-size: 13px;color: red;">(请填写完整险种名称)</div>
+                            <div  class="tip" style="display: block;line-height: 1">(请填写完整险种名称)</div>
                         </div>
                         <div class="div-table-2" style="width: 128px;height: 50px;">B6.交费期限</div>
                         <div class="div-table-2" style="width: 226px;height: 50px;">B7.保险期间
-                            <div style="display: block;font-size: 13px;color: red;">(养老年金产品，请填写B11项)</div>
+                            <div  class="tip" style="display: block;line-height: 1">(养老年金产品，请填写B11项)</div>
                         </div>
                         <div class="div-table-2" style="width: 138px;height: 50px;">B8.基本保险金额<br/>或养老年金领取金额</div>
                         <div class="div-table-2" style="width: 145px;height: 50px;">B9.红利领取方式
-                            <div style="display: block;font-size: 13px;color: red;line-height: 1">(无分红险及保额<br/>分红险无需勾选)
+                            <div  class="tip" style="display: block;line-height: 1">(非分红险及保额<br/>分红险无需勾选)
                             </div>
                         </div>
                         <div class="div-table-2" style="width: 153px;height: 50px;">B10.每期标准保险费</div>
@@ -956,7 +952,7 @@
                         </div>
                     </div>
                     <div class="div-line">
-                        <div class="div-line-con" style="width: 210px;box-sizing: border-box">B17.追加保险费：</div>
+                        <div class="div-line-con" style="width: 210px;box-sizing: border-box">B18.追加保险费：</div>
                         <div class="div-line-con" style="border: 0;">
                             <div>(大写）<span style="margin-left: 60px">仟</span><span
                                     style="margin-left: 55px">佰</span><span style="margin-left: 55px">拾</span><span
@@ -975,7 +971,7 @@
                         <div class="div-table-2" style="width: 641px;height: 40px;">问题及健康告知</div>
                         <div class="div-table-2" style="width: 83px;height: 40px;">被保险人</div>
                         <div class="div-table-2" style="width: 83px;height: 40px;">投保人</div>
-                        <div class="div-table-2" style="width: 193px;height: 40px;text-align: left;">若“是”请说明(原因、日期、医院名称及诊治结果等。)</div>
+                        <div class="div-table-2" style="width: 193px;height: 40px;text-align: left;">若“是”请说明<span class="tip">(原因、日期、医院名称及诊治结果等。)</span></div>
                     </div>
                     <div class="table-line" style="height: 60px;">
                         <div class="div-table-2" style="width: 641px;height: 60px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C1.</div><div style="display: inline-block;width: 600px;">您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承包公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和。住院每日补贴日额及保险合同生效日期。</div></div>
@@ -1206,323 +1202,323 @@
                         <%--</div>--%>
                         <%--<!-- End .第六行-->--%>
                     <%--</div>--%>
-                    <div style="padding-left: 10px;font-size: 13px;">
-							<span style="color: red;">
-                    		投保人、被保险人向保险公司声明并同意下列事项:
-                    		</span>
-                    </div>
-                    <div class="div-tab" style="margin-top: 5px;">
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span>1.</span>
-                                </div>
-                                <div class="right-span-div">
-										<span>
-											投保人和被保险人对于投保单各栏目中的所有陈述均属真实，并亲笔签名，如投保人和被保险人故意或者因重大过失未履行如实告知义务，足以影响富德生命人寿保险股份有限公同决定是否同意承保或者提高保险费率的，富德生命人寿保险股份有限公同有权依法解除保险合同，并对保险合同解除前发生的保险事故，不承担赔偿或给付保险金的责任
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span style="color: red;">2.</span>
-                                </div>
-                                <div class="right-span-div">
-										<span style="color: red;">
-											本人已收到且认真阅读并完全理解人身保险投保提示书及产品说明书、保险条款，对于保险合网条款各项内容特别是有关保险责任、责任免除、免
-  											赔额、免赔率、比例赔付或给付或者减轻保险人责任的条款、保险期间、犹豫期、合同撤销和解除、保险合同的现金价值及父母为未成年子女投保以死亡为给付保险金条件人身保险的政策规定等内容均已了解和认可。
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span>3.</span>
-                                </div>
-                                <div class="right-span-div">
-										<span>
-											非经保险合同双方在保险单或业务批单上书面约定，任何人包括业务人员的任何与保险合同条款相违背或增减保险合同条款内容的书面或口头承诺，富德生命人寿保险股份有限公司有权不认可其法律效力。
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span>4.</span>
-                                </div>
-                                <div class="right-span-div">
-										<span>
-											同意富德生命人寿保险股份有限公司根据业务需要，对被保险人或投保人进行相关体检，或直接向被保险人或投保人就诊医院及其他知情机构、人士查询有关诊疗记录、病历及其他资料。
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span>5.</span>
-                                </div>
-                                <div class="right-span-div">
-										<span>
-											 按本投保单所签订的保险合同，只有在富德生命人寿保险股份有限公司收到投保人交纳的首期保险费并签发保险单，及自申请之日起至富德生命人寿保险股份有限公司签发保险单之日被保险人和投保人健康状况无明显改变后才能生效。如无其他特别要求或说明，则保险合同自富德生命人寿保险股份有限公司收取首期保险费并签发保险单的当日二十四时起生效。
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span>6.</span>
-                                </div>
-                                <div class="right-span-div" style="height: 20px;">
-										<span>
-											&nbsp;若本人接受富德生命人寿保险股份有限公司签发的包含批注或任何附加及更改的保险合同及任何经本人签署的文件，均视为本人已承认。
-										    &nbsp;&nbsp;&nbsp;&nbsp;
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span style="color: red;">7.</span>
-                                </div>
-                                <div class="right-span-div">
-										<span style="color: red;">
-											父母为其未成年人子女投保的人身保险，在被保险人成年之前各保险合同约定的被保险人死亡给付的保险金额总和、被保险人死亡时各保险公司实际给付的保险金总和不得超过保险监督管理机构规定的限额(被保险人不满10周岁的，不得超过人民币20万元；被保险人已满10周岁但未满18周岁的，不得超过人民币50万元)。若投保多份保险合同，存在超额情形的，本人同意按照保单生效日的先后顺序予以赔付或对超额部分无息退费。
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span>8.</span>
-                                </div>
-                                <div class="right-span-div">
-										<span>
-											在中国法律允许或要求的范围内，本人同意或授权承保公同将其个人信息(包括联系电话和联系地址)及保单信息提供给当地健康保险信息平台、 监管机构、行业协会做合理利用
-											<span style="color: red;"> (包括但不限于计算保费、核保、寄送保单和客户回访等)</span> 。
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span>9.</span>
-                                </div>
-                                <div class="right-span-div">
-										<span>
-											如您投保的是投资连结保险、万能保险、分红保险等新型产品，
-											<span style="color: red;">请亲笔抄录：</span>
-										<span style="font-weight: bold;">本人已阅读保险条款、产品说明书和投保提示书，了解本产品的特点和保单利益的不确定性。</span>
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 15px;">
-                            <div class="div-line-con-three div-row-5" style="border-left: solid 0px;">
-                                <div class="a-input-div" style="width: 970px;">
-                                    <span class="f-body-font">&nbsp;</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 15px;margin-bottom: 5px;">
-                            <div class="div-line-con-three div-row-5" style="border-left: solid 0px;">
-                                <div class="a-input-div" style="width: 970px;">
-                                    <span class="f-body-font">&nbsp;</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="left-span-div">
-                                    <span>10.</span>
-                                </div>
-                                <div class="right-span-div">
-										<span>
-											投保人同意并授权富德生命人寿保险股份有限公司及银行(或邮局)从本人以下账户中以约定的交费方式及金额按期收取各期保险费；如有溢交或其他支付也退还至下述授权帐号。
-											(账户开户名必须是投保人的姓名)
-										</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 10px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span>银行（全称）：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 100px;">
-                                    <span class="f-body-font">&nbsp;</span>
-                                </div>;
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 00px;">
-                                <div class="title">
-                                    <span>银行：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 100px;">
-                                    <span>&nbsp;</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span>分行：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 100px;">
-                                    <span>&nbsp;</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span>支行：</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 0px;margin-left: 20px;">
-                                <div class="title">
-                                    <span>邮局（全称）：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 100px;">
-                                    <span>&nbsp;</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span>分局：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 100px;">
-                                    <span>&nbsp;</span>
-                                </div>
-                                <div class="title">
-                                    <span>支局</span>
-                                </div>
-                            </div>
-                        </div>
+                    <%--<div style="padding-left: 10px;font-size: 13px;">--%>
+							<%--<span style="color: red;">--%>
+                    		<%--投保人、被保险人向保险公司声明并同意下列事项:--%>
+                    		<%--</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="div-tab" style="margin-top: 5px;">--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span>1.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div">--%>
+										<%--<span>--%>
+											<%--投保人和被保险人对于投保单各栏目中的所有陈述均属真实，并亲笔签名，如投保人和被保险人故意或者因重大过失未履行如实告知义务，足以影响富德生命人寿保险股份有限公同决定是否同意承保或者提高保险费率的，富德生命人寿保险股份有限公同有权依法解除保险合同，并对保险合同解除前发生的保险事故，不承担赔偿或给付保险金的责任--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span style="color: red;">2.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div">--%>
+										<%--<span style="color: red;">--%>
+											<%--本人已收到且认真阅读并完全理解人身保险投保提示书及产品说明书、保险条款，对于保险合网条款各项内容特别是有关保险责任、责任免除、免--%>
+  											<%--赔额、免赔率、比例赔付或给付或者减轻保险人责任的条款、保险期间、犹豫期、合同撤销和解除、保险合同的现金价值及父母为未成年子女投保以死亡为给付保险金条件人身保险的政策规定等内容均已了解和认可。--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span>3.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div">--%>
+										<%--<span>--%>
+											<%--非经保险合同双方在保险单或业务批单上书面约定，任何人包括业务人员的任何与保险合同条款相违背或增减保险合同条款内容的书面或口头承诺，富德生命人寿保险股份有限公司有权不认可其法律效力。--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span>4.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div">--%>
+										<%--<span>--%>
+											<%--同意富德生命人寿保险股份有限公司根据业务需要，对被保险人或投保人进行相关体检，或直接向被保险人或投保人就诊医院及其他知情机构、人士查询有关诊疗记录、病历及其他资料。--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span>5.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div">--%>
+										<%--<span>--%>
+											 <%--按本投保单所签订的保险合同，只有在富德生命人寿保险股份有限公司收到投保人交纳的首期保险费并签发保险单，及自申请之日起至富德生命人寿保险股份有限公司签发保险单之日被保险人和投保人健康状况无明显改变后才能生效。如无其他特别要求或说明，则保险合同自富德生命人寿保险股份有限公司收取首期保险费并签发保险单的当日二十四时起生效。--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span>6.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div" style="height: 20px;">--%>
+										<%--<span>--%>
+											<%--&nbsp;若本人接受富德生命人寿保险股份有限公司签发的包含批注或任何附加及更改的保险合同及任何经本人签署的文件，均视为本人已承认。--%>
+										    <%--&nbsp;&nbsp;&nbsp;&nbsp;--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span style="color: red;">7.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div">--%>
+										<%--<span style="color: red;">--%>
+											<%--父母为其未成年人子女投保的人身保险，在被保险人成年之前各保险合同约定的被保险人死亡给付的保险金额总和、被保险人死亡时各保险公司实际给付的保险金总和不得超过保险监督管理机构规定的限额(被保险人不满10周岁的，不得超过人民币20万元；被保险人已满10周岁但未满18周岁的，不得超过人民币50万元)。若投保多份保险合同，存在超额情形的，本人同意按照保单生效日的先后顺序予以赔付或对超额部分无息退费。--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span>8.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div">--%>
+										<%--<span>--%>
+											<%--在中国法律允许或要求的范围内，本人同意或授权承保公同将其个人信息(包括联系电话和联系地址)及保单信息提供给当地健康保险信息平台、 监管机构、行业协会做合理利用--%>
+											<%--<span style="color: red;"> (包括但不限于计算保费、核保、寄送保单和客户回访等)</span> 。--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span>9.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div">--%>
+										<%--<span>--%>
+											<%--如您投保的是投资连结保险、万能保险、分红保险等新型产品，--%>
+											<%--<span style="color: red;">请亲笔抄录：</span>--%>
+										<%--<span style="font-weight: bold;">本人已阅读保险条款、产品说明书和投保提示书，了解本产品的特点和保单利益的不确定性。</span>--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 15px;">--%>
+                            <%--<div class="div-line-con-three div-row-5" style="border-left: solid 0px;">--%>
+                                <%--<div class="a-input-div" style="width: 970px;">--%>
+                                    <%--<span class="f-body-font">&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 15px;margin-bottom: 5px;">--%>
+                            <%--<div class="div-line-con-three div-row-5" style="border-left: solid 0px;">--%>
+                                <%--<div class="a-input-div" style="width: 970px;">--%>
+                                    <%--<span class="f-body-font">&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="left-span-div">--%>
+                                    <%--<span>10.</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="right-span-div">--%>
+										<%--<span>--%>
+											<%--投保人同意并授权富德生命人寿保险股份有限公司及银行(或邮局)从本人以下账户中以约定的交费方式及金额按期收取各期保险费；如有溢交或其他支付也退还至下述授权帐号。--%>
+											<%--(账户开户名必须是投保人的姓名)--%>
+										<%--</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 10px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span>银行（全称）：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 100px;">--%>
+                                    <%--<span class="f-body-font">&nbsp;</span>--%>
+                                <%--</div>;--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 00px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span>银行：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 100px;">--%>
+                                    <%--<span>&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span>分行：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 100px;">--%>
+                                    <%--<span>&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span>支行：</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;margin-left: 20px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span>邮局（全称）：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 100px;">--%>
+                                    <%--<span>&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span>分局：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 100px;">--%>
+                                    <%--<span>&nbsp;</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="title">--%>
+                                    <%--<span>支局</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;padding-bottom: 5px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="div-line-con-three div-postcode">
-                                    授权活期账户号码/借记卡号码：
-                                    <div style="margin-left: 10px;font-size: 0">
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                    </div>
-                                    <div style="margin-left: 20px;font-size: 0">
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                    </div>
-                                    <div style="margin-left: 20px;font-size: 0">
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                    </div>
-                                    <div style="margin-left: 20px;font-size: 0">
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                    </div>
-                                    <div style="margin-left: 20px;font-size: 0">
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                    </div>
-                                    <div style="margin-left: 20px;font-size: 0">
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                        <input class="i-cert-code" style="border: #000000 solid 1px !important" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="div-tab" style="border: #FFFFFF solid 1px;">
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span class="d-body-font">投保人签名：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 130px;">
-                                    <span class="f-body-font">&nbsp;</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 00px;">
-                                <div class="title">
-                                    <span class="d-body-font">被保险人（或其法定监护人）签名：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 130px;">
-                                    <span class="body-font">&nbsp;</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span class="d-body-font">签署日期：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 40px;">
-                                    <span class="body-font">&nbsp;</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span class="d-body-font">年</span>
-                                    <div class="a-input-div" style="width: 40px;">
-                                        <span class="body-font">&nbsp;</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 0px;margin-left: 20px;">
-                                <div class="title">
-                                    <span class="d-body-font">月</span>
-                                </div>
-                                <div class="a-input-div" style="width: 50px;">
-                                    <span class="body-font">&nbsp;</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span class="d-body-font">日</span>
-                                </div>
-                            </div>
-                        </div>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;padding-bottom: 5px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="div-line-con-three div-postcode">--%>
+                                    <%--授权活期账户号码/借记卡号码：--%>
+                                    <%--<div style="margin-left: 10px;font-size: 0">--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                    <%--</div>--%>
+                                    <%--<div style="margin-left: 20px;font-size: 0">--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                    <%--</div>--%>
+                                    <%--<div style="margin-left: 20px;font-size: 0">--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                    <%--</div>--%>
+                                    <%--<div style="margin-left: 20px;font-size: 0">--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                    <%--</div>--%>
+                                    <%--<div style="margin-left: 20px;font-size: 0">--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                    <%--</div>--%>
+                                    <%--<div style="margin-left: 20px;font-size: 0">--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                        <%--<input class="i-cert-code" style="border: #000000 solid 1px !important" />--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="div-tab" style="border: #FFFFFF solid 1px;">--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="d-body-font">投保人签名：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 130px;">--%>
+                                    <%--<span class="f-body-font">&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 00px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="d-body-font">被保险人（或其法定监护人）签名：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 130px;">--%>
+                                    <%--<span class="body-font">&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="d-body-font">签署日期：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 40px;">--%>
+                                    <%--<span class="body-font">&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="d-body-font">年</span>--%>
+                                    <%--<div class="a-input-div" style="width: 40px;">--%>
+                                        <%--<span class="body-font">&nbsp;</span>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;margin-left: 20px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="d-body-font">月</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 50px;">--%>
+                                    <%--<span class="body-font">&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="d-body-font">日</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;">
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span class="c-body-font">业务人员签名：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 150px;">
-                                    <span class="f-body-font">&nbsp;</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 00px;">
-                                <div class="title">
-                                    <span class="c-body-font">业务人员电话：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 200px;">
-                                    <span class="body-font">&nbsp;</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-three" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span class="c-body-font">签署地：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 300px;">
-                                    <span class="body-font">&nbsp;</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;">--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="c-body-font">业务人员签名：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 150px;">--%>
+                                    <%--<span class="f-body-font">&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 00px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="c-body-font">业务人员电话：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 200px;">--%>
+                                    <%--<span class="body-font">&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-three" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="c-body-font">签署地：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 300px;">--%>
+                                    <%--<span class="body-font">&nbsp;</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
 
 
                     <%--第四页--%>
@@ -1801,373 +1797,375 @@
                     <!-- End .第二层-->
 
                     <!-- Start .第一层-->
-                    <div style="padding-left: 400px;padding-top:15px;font-size: 25px;">
-							<span>
-                    		业务人员报告书
-                    		</span>
-                    </div>
-                    <div style="height: 50px;">
+                    <%--<div style="padding-left: 400px;padding-top:15px;font-size: 25px;">--%>
+							<%--<span>--%>
+                    		<%--业务人员报告书--%>
+                    		<%--</span>--%>
+                    <%--</div>--%>
+                    <%--<div style="height: 50px;">--%>
 
-                    </div>
-                    <div style="padding-left: 10px;font-size: 16px;">
-							<span>
-                    		以下内容并非保险合同组成部分，为本公司业务用栏，投保人无须填写
-                    		</span>
-                    </div>
-                    <div class="div-tab" style="margin-top: 5px;">
-                        <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
-                            <div class="div-line-con-four div-row-5" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span class="f-body-font">被&nbsp;保&nbsp;险&nbsp;人&nbsp;姓&nbsp;名：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 260px;">
-                                    <span class="f-body-font">&nbsp;</span>
-                                </div>;
-                            </div>
-                            <div class="div-line-con-four div-row-5" style="border-left: solid 0px;">
-                                <div class="title">
-                                    <span class="f-body-font">投&nbsp;保&nbsp;人&nbsp;姓&nbsp;名：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 260px;">
-                                    <span class="body-font">&nbsp;</span>
-                                </div>;
-                            </div>
-                        </div>
+                    <%--</div>--%>
+                    <%--<div style="padding-left: 10px;font-size: 16px;">--%>
+							<%--<span>--%>
+                    		<%--以下内容并非保险合同组成部分，为本公司业务用栏，投保人无须填写--%>
+                    		<%--</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="div-tab" style="margin-top: 5px;">--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">--%>
+                            <%--<div class="div-line-con-four div-row-5" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="f-body-font">被&nbsp;保&nbsp;险&nbsp;人&nbsp;姓&nbsp;名：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 260px;">--%>
+                                    <%--<span class="f-body-font">&nbsp;</span>--%>
+                                <%--</div>;--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-5" style="border-left: solid 0px;">--%>
+                                <%--<div class="title">--%>
+                                    <%--<span class="f-body-font">投&nbsp;保&nbsp;人&nbsp;姓&nbsp;名：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 260px;">--%>
+                                    <%--<span class="body-font">&nbsp;</span>--%>
+                                <%--</div>;--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div class="title"><span class="body-font">&nbsp;1.&nbsp;&nbsp;&nbsp;本人与投保人关系：</span></div>
-                                <div>
-                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 家属</span>
-                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 亲戚</span>
-                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 朋友</span>
-                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 其他：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 570px;">
-                                    <input class="l-input" type="text" />
-                                </div>
-                            </div>
-                        </div>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div class="title"><span class="body-font">&nbsp;1.&nbsp;&nbsp;&nbsp;本人与投保人关系：</span></div>--%>
+                                <%--<div>--%>
+                                    <%--<input class="i-cb" type="checkbox" /><span class="body-font"> 家属</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /><span class="body-font"> 亲戚</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /><span class="body-font"> 朋友</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /><span class="body-font"> 其他：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 570px;">--%>
+                                    <%--<input class="l-input" type="text" />--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div class="title"><span class="body-font"> &nbsp;2.&nbsp;&nbsp;&nbsp;投保经过：</span></div>
-                                <div>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font"> 他人介绍</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font"> 陌生拜访</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font"> 投保人主动投保</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font">  其他：</span>
-                                </div>
-                                <div class="a-input-div" style="width: 500px;">
-                                    <input class="l-input" type="text" />
-                                </div>
-                            </div>
-                        </div>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div class="title"><span class="body-font"> &nbsp;2.&nbsp;&nbsp;&nbsp;投保经过：</span></div>--%>
+                                <%--<div>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font"> 他人介绍</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font"> 陌生拜访</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font"> 投保人主动投保</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font">  其他：</span>--%>
+                                <%--</div>--%>
+                                <%--<div class="a-input-div" style="width: 500px;">--%>
+                                    <%--<input class="l-input" type="text" />--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div class="title"><span class="body-font"> &nbsp;3.&nbsp;&nbsp;&nbsp;据本人了解，被保险人目前是否呈病态，有生理缺陷或因疾病，外伤而治疗中：</span></div>
-                                <div>
-                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 是</span>
-                                    <input class="i-cb" type="checkbox" /><span class="body-font"> 否</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div class="title"><span class="body-font">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如是，请说明：</span></div>
-                                <div class="a-input-div" style="width: 849px;">
-                                    <input class="l-input" type="text" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div class="title"><span class="body-font"> &nbsp;4.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有吸烟，嗜酒或服用成瘾性药物：</span></div>
-                                <div>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
-                                </div>
-                                <div>
-                                    <div class="title"><span class="body-font">如是，请说明：</span></div>
-                                    <div class="a-input-div" style="width: 390px;">
-                                        <input class="l-input" type="text" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div class="title"><span class="body-font">&nbsp;5.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有兼职或从事特殊职业：</span></div>
-                                <div>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
-                                </div>
-                                <div>
-                                    <div class="title"><span class="body-font">如是，请说明：</span></div>
-                                    <div class="a-input-div" style="width: 445px;">
-                                        <input class="l-input" type="text" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div class="title"><span class="body-font">&nbsp;6.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有从事具有危险性的运动或爱好：</span></div>
-                                <div>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
-                                </div>
-                                <div>
-                                    <div class="title"><span class="body-font">如是，请说明：</span></div>
-                                    <div class="a-input-div" style="width: 389px;">
-                                        <input class="l-input" type="text" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div class="title"><span class="body-font">&nbsp;7.&nbsp;&nbsp;&nbsp;是否存在其它风险情况：</span></div>
-                                <div>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font">是</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>
-                                </div>
-                                <div>
-                                    <div class="title"><span class="body-font">如是，请说明：</span></div>
-                                    <div class="a-input-div" style="width: 584px;">
-                                        <input class="l-input" type="text" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div>
-                                    <div class="title"> <span class="body-font">&nbsp;8.&nbsp;&nbsp;&nbsp;如受益人非被保险人的直系亲属，请向投保人和被保险人了解原因：</span></div>
-                                    <div class="a-input-div" style="width: 525px;">
-                                        <input class="l-input" type="text" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four">
-                                <div>
-                                    <div class="title"><span class="body-font">&nbsp;9.&nbsp;&nbsp;&nbsp;估计被保险收入：</span></div>
-                                    <div>
-                                        <div class="a-input-div" style="width: 75px;">
-                                            <input class="l-input" type="text" />
-                                        </div><span class="body-font">;/月，</span>
-                                    </div>
-                                    <div class="title"><span class="body-font">估计投保收入：</span></div>
-                                    <div>
-                                        <div class="a-input-div" style="width: 75px;">
-                                            <input class="l-input" type="text" />
-                                        </div><span class="body-font">;/月，</span>
-                                    </div>
-                                    <div class="title"><span class="body-font">估计被保险人财产值：</span></div>
-                                    <div>
-                                        <div class="a-input-div" style="width: 75px;">
-                                            <input class="l-input" type="text" />
-                                        </div><span class="body-font">; ，</span>
-                                    </div>
-                                    <div class="title"><span class="body-font">估计投保人财产值：</span></div>
-                                    <div>
-                                        <div class="a-input-div" style="width: 85px;">
-                                            <input class="l-input" type="text" />
-                                        </div><span class="body-font">。</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line" style="border-bottom: solid 0px;">
-                            <div class="div-line-con-four" style="padding-top: 30px;">
-                                <div>
-                                    <div class="title"><span class="body-font">&nbsp;&nbsp;&nbsp;备注：</span></div>
-                                    <div style="width: 80%;height: 190px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div class="title"><span class="body-font"> &nbsp;3.&nbsp;&nbsp;&nbsp;据本人了解，被保险人目前是否呈病态，有生理缺陷或因疾病，外伤而治疗中：</span></div>--%>
+                                <%--<div>--%>
+                                    <%--<input class="i-cb" type="checkbox" /><span class="body-font"> 是</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /><span class="body-font"> 否</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div class="title"><span class="body-font">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如是，请说明：</span></div>--%>
+                                <%--<div class="a-input-div" style="width: 849px;">--%>
+                                    <%--<input class="l-input" type="text" />--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div class="title"><span class="body-font"> &nbsp;4.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有吸烟，嗜酒或服用成瘾性药物：</span></div>--%>
+                                <%--<div>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font">是</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>--%>
+                                <%--</div>--%>
+                                <%--<div>--%>
+                                    <%--<div class="title"><span class="body-font">如是，请说明：</span></div>--%>
+                                    <%--<div class="a-input-div" style="width: 390px;">--%>
+                                        <%--<input class="l-input" type="text" />--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div class="title"><span class="body-font">&nbsp;5.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有兼职或从事特殊职业：</span></div>--%>
+                                <%--<div>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font">是</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>--%>
+                                <%--</div>--%>
+                                <%--<div>--%>
+                                    <%--<div class="title"><span class="body-font">如是，请说明：</span></div>--%>
+                                    <%--<div class="a-input-div" style="width: 445px;">--%>
+                                        <%--<input class="l-input" type="text" />--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div class="title"><span class="body-font">&nbsp;6.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有从事具有危险性的运动或爱好：</span></div>--%>
+                                <%--<div>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font">是</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>--%>
+                                <%--</div>--%>
+                                <%--<div>--%>
+                                    <%--<div class="title"><span class="body-font">如是，请说明：</span></div>--%>
+                                    <%--<div class="a-input-div" style="width: 389px;">--%>
+                                        <%--<input class="l-input" type="text" />--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div class="title"><span class="body-font">&nbsp;7.&nbsp;&nbsp;&nbsp;是否存在其它风险情况：</span></div>--%>
+                                <%--<div>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font">是</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="body-font">否，</span>--%>
+                                <%--</div>--%>
+                                <%--<div>--%>
+                                    <%--<div class="title"><span class="body-font">如是，请说明：</span></div>--%>
+                                    <%--<div class="a-input-div" style="width: 584px;">--%>
+                                        <%--<input class="l-input" type="text" />--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div>--%>
+                                    <%--<div class="title"> <span class="body-font">&nbsp;8.&nbsp;&nbsp;&nbsp;如受益人非被保险人的直系亲属，请向投保人和被保险人了解原因：</span></div>--%>
+                                    <%--<div class="a-input-div" style="width: 525px;">--%>
+                                        <%--<input class="l-input" type="text" />--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div>--%>
+                                    <%--<div class="title"><span class="body-font">&nbsp;9.&nbsp;&nbsp;&nbsp;估计被保险收入：</span></div>--%>
+                                    <%--<div>--%>
+                                        <%--<div class="a-input-div" style="width: 75px;">--%>
+                                            <%--<input class="l-input" type="text" />--%>
+                                        <%--</div><span class="body-font">;/月，</span>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="title"><span class="body-font">估计投保收入：</span></div>--%>
+                                    <%--<div>--%>
+                                        <%--<div class="a-input-div" style="width: 75px;">--%>
+                                            <%--<input class="l-input" type="text" />--%>
+                                        <%--</div><span class="body-font">;/月，</span>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="title"><span class="body-font">估计被保险人财产值：</span></div>--%>
+                                    <%--<div>--%>
+                                        <%--<div class="a-input-div" style="width: 75px;">--%>
+                                            <%--<input class="l-input" type="text" />--%>
+                                        <%--</div><span class="body-font">; ，</span>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="title"><span class="body-font">估计投保人财产值：</span></div>--%>
+                                    <%--<div>--%>
+                                        <%--<div class="a-input-div" style="width: 85px;">--%>
+                                            <%--<input class="l-input" type="text" />--%>
+                                        <%--</div><span class="body-font">。</span>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line" style="border-bottom: solid 0px;">--%>
+                            <%--<div class="div-line-con-four" style="padding-top: 30px;">--%>
+                                <%--<div>--%>
+                                    <%--<div class="title"><span class="body-font">&nbsp;&nbsp;&nbsp;备注：</span></div>--%>
+                                    <%--<div style="width: 80%;height: 190px;"></div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
 
-                    <div style="height: 10px;">
+                    <%--<div style="height: 10px;">--%>
 
-                    </div>
-                    <div class="div-tab" style="background: #CDD9D7;">
-                        <div class="div-line">
-                            <div class="div-line-con-four">
-                                <div style="padding-bottom:8px;">
-                                    <div style="float:left; "><span class="body-font">业务人员声明：</span></div>
-                                    <div style="float:left; width: 89%;">
-											<span class="c-body-font">
-											 本人确认已就投保单中投保告知和健康告知的所有内容当面向投保人、被保险人询问和说明，见证经由投保人、被保险人亲自告知并亲笔签名无误；同时已向投保人提供了投保险种的保险条款，确认已就条款中各项内容特别是有关保险责任免除、免赔额、免赔率、比例赔付或给付或者减轻保险人责任的条款、保险期间、保险责任等待期、保险合同犹豫期、投保人相关权
-	                                                                                                               利义务、是否提供保证续保以及续保有效时间、理赔程序以及理赔文件要求、欠款扣除、解除保险合同及保险合同的现金价值、
-	                                        </span>
-                                        <span class="c-body-font" style="color: red;">
-	                                                                                                              产品说明书
-	                                        </span>
-                                        <span class="c-body-font">
-	                                                                                                              、 人身保险投保提示书等向投保人作了详细说明。本栏告知属实。如有代签名、不实见证或虚假报告等情形而招致纠纷，本人愿承担由此引起的一切法律责任。
-											</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div-line">
-                            <div class="div-line-con-four" style="padding-top: 20px;">
-                                <div class="div-line-con-four div-row-3" style="border-left: solid 0px;">
-                                    <div class="title"><span class="body-font"> 业务人员编号：</span></div>
-                                </div>
-                                <div class="div-line-con-four div-row-3" style="border-left: solid 0px;">
-                                    <div class="title"><span class="body-font"> 业务人员签名：</span></div>
-                                </div>
-                                <div class="div-line-con-four div-row-3" style="border-left: solid 0px;">
-                                    <div class="title"><span class="body-font"> 日期:</span></div>
-                                    <div style="padding-left: 40px;">
-                                        <div style="width: 40px;">
-                                        </div><span class="body-font">年</span>
-                                        <div style="width: 40px;">
-                                        </div><span class="body-font">月</span>
-                                        <div style="width: 40px;">
-                                        </div><span class="body-font">日</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="div-line-con-four">
-                                <div class="div-line-con-four div-row-3" style="border-left: solid 0px;padding-top: 10px;">
-                                    <div class="title"><span class="body-font">中介公司签单：</span></div>
-                                    <div style="width: 80%;height: 25px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="height: 15px;">
+                    <%--</div>--%>
+                    <%--<div class="div-tab" style="background: #CDD9D7;">--%>
+                        <%--<div class="div-line">--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div style="padding-bottom:8px;">--%>
+                                    <%--<div style="float:left; "><span class="body-font">业务人员声明：</span></div>--%>
+                                    <%--<div style="float:left; width: 89%;">--%>
+											<%--<span class="c-body-font">--%>
+											 <%--本人确认已就投保单中投保告知和健康告知的所有内容当面向投保人、被保险人询问和说明，见证经由投保人、被保险人亲自告知并亲笔签名无误；同时已向投保人提供了投保险种的保险条款，确认已就条款中各项内容特别是有关保险责任免除、免赔额、免赔率、比例赔付或给付或者减轻保险人责任的条款、保险期间、保险责任等待期、保险合同犹豫期、投保人相关权--%>
+	                                                                                                               <%--利义务、是否提供保证续保以及续保有效时间、理赔程序以及理赔文件要求、欠款扣除、解除保险合同及保险合同的现金价值、--%>
+	                                        <%--</span>--%>
+                                        <%--<span class="c-body-font" style="color: red;">--%>
+	                                                                                                              <%--产品说明书--%>
+	                                        <%--</span>--%>
+                                        <%--<span class="c-body-font">--%>
+	                                                                                                              <%--、 人身保险投保提示书等向投保人作了详细说明。本栏告知属实。如有代签名、不实见证或虚假报告等情形而招致纠纷，本人愿承担由此引起的一切法律责任。--%>
+											<%--</span>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line">--%>
+                            <%--<div class="div-line-con-four" style="padding-top: 20px;">--%>
+                                <%--<div class="div-line-con-four div-row-3" style="border-left: solid 0px;">--%>
+                                    <%--<div class="title"><span class="body-font"> 业务人员编号：</span></div>--%>
+                                <%--</div>--%>
+                                <%--<div class="div-line-con-four div-row-3" style="border-left: solid 0px;">--%>
+                                    <%--<div class="title"><span class="body-font"> 业务人员签名：</span></div>--%>
+                                <%--</div>--%>
+                                <%--<div class="div-line-con-four div-row-3" style="border-left: solid 0px;">--%>
+                                    <%--<div class="title"><span class="body-font"> 日期:</span></div>--%>
+                                    <%--<div style="padding-left: 40px;">--%>
+                                        <%--<div style="width: 40px;">--%>
+                                        <%--</div><span class="body-font">年</span>--%>
+                                        <%--<div style="width: 40px;">--%>
+                                        <%--</div><span class="body-font">月</span>--%>
+                                        <%--<div style="width: 40px;">--%>
+                                        <%--</div><span class="body-font">日</span>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four">--%>
+                                <%--<div class="div-line-con-four div-row-3" style="border-left: solid 0px;padding-top: 10px;">--%>
+                                    <%--<div class="title"><span class="body-font">中介公司签单：</span></div>--%>
+                                    <%--<div style="width: 80%;height: 25px;"></div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div style="height: 15px;">--%>
 
-                    </div>
+                    <%--</div>--%>
 
-                    <div style="padding-left: 420px;">
-                        <h3><span style="font-size: 25px;">附&nbsp;件&nbsp;签&nbsp;收&nbsp;栏</span></h3></div>
-                    <div class="div-tab">
-                        <div class="div-line">
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title" style="padding-left: 60px;"><span class="b-body-font">附件名称</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="b-body-font">种类</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="b-body-font">页数</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title" style="padding-left: 60px;"><span class="b-body-font">接收人签名</span></div>
-                            </div>
-                        </div>
-                        <div class="div-line">
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 30px;">
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                        </div>
-                        <div class="div-line">
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 30px;">
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                        </div>
-                        <div class="div-line">
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 30px;">
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                        </div>
-                        <div class="div-line">
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 30px;">
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                        </div>
-                        <div class="div-line">
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 30px;">
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
-                                    <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
-                                </div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
-                            </div>
-                        </div>
-                        <div class="div-line">
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;&nbsp;&nbsp;总计</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
-                            </div>
-                            <div class="div-line-con-four div-row-2">
-                                <div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
-                            </div>
-                        </div>
-                    </div>
+                    <%--<div style="padding-left: 420px;">--%>
+                        <%--<h3><span style="font-size: 25px;">附&nbsp;件&nbsp;签&nbsp;收&nbsp;栏</span></h3></div>--%>
+                    <%--<div class="div-tab">--%>
+                        <%--<div class="div-line">--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title" style="padding-left: 60px;"><span class="b-body-font">附件名称</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="b-body-font">种类</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="b-body-font">页数</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title" style="padding-left: 60px;"><span class="b-body-font">接收人签名</span></div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line">--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 30px;">--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line">--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 30px;">--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line">--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 30px;">--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line">--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 30px;">--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line">--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 30px;">--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>--%>
+                                    <%--<input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="div-line">--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;&nbsp;&nbsp;总计</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                            <%--<div class="div-line-con-four div-row-2">--%>
+                                <%--<div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
 
-                    <div style="padding-top: 60px;padding-left: 300px;">
-                        <span style="font-size: 25px;">全国统一热线：&nbsp;&nbsp;&nbsp;95535/4008-200-035</span>
-                    </div>
+                    <%--<div style="padding-top: 60px;padding-left: 300px;">--%>
+                        <%--<span style="font-size: 25px;">全国统一热线：&nbsp;&nbsp;&nbsp;95535/4008-200-035</span>--%>
+                    <%--</div>--%>
                     <!-- End .第一层-->
+                    <%--<%@ include file="thirdPages.jsp" %>--%>
+                    <%--<%@ include file="fourthPages.jsp" %>--%>
             </div>
         </div>
         <!-- End #content -->

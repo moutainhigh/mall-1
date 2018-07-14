@@ -59,7 +59,7 @@ h2 {
 
 .info {
     width: 100%;
-    margin-top:10px;
+    margin-top: 10px;
     display: inline-block;
     font-size: 8px;
     border: 1px #000000 solid;
@@ -180,7 +180,7 @@ input {
     font-size: 0;
 }
 
-.table-line div{
+.table-line div {
     display: table-cell;
     font-size: 14px;
 }
@@ -196,7 +196,7 @@ input {
 }
 
 .div-table-2 {
-    width: 520px;
+    width: 500px;
     border: 1px #000000 solid;
     margin: -1px;
     height: 60px;
@@ -238,6 +238,11 @@ input {
     width: 261px;
 }
 
+.tip {
+    color: red;
+    font-size: 10px;
+}
+
 table tr th, table tr td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
@@ -252,7 +257,7 @@ table tr th, table tr td {
     display: inline-block;
     font-size: 14px;
     box-sizing: border-box;
-    width: 28.6px;
+    width: 29px;
     height: 30px;
 }
 
@@ -322,10 +327,11 @@ input {
     width: 200px;
 }
 
-.three-span{
+.three-span {
     font-size: 14px;
 }
-.div-line .div-line-con-three{
+
+.div-line .div-line-con-three {
     border-left: #000000 solid 1px;
     display: inline-block;
     font-size: 13px;
@@ -354,69 +360,82 @@ input {
     border-radius: 0;
 }
 
-.left-span-div{
+.left-span-div {
     float: left;
     width: 2%;
 }
-.right-span-div{
+
+.right-span-div {
     float: left;
     width: 97%;
 }
-.a-body-font-three{
+
+.a-body-font-three {
     font-size: 15px;
     line-height: 27px;
 }
-.d-body-font-three{
+
+.d-body-font-three {
     font-size: 18px;
     line-height: 25px;
     font-weight: bold;
 }
-.b-body-font-three{
+
+.b-body-font-three {
     font-size: 15px;
     line-height: 40px;
 }
-.c-body-font-three{
+
+.c-body-font-three {
     font-size: 18px;
     line-height: 25px;
 }
-.f-body-font-three{
+
+.f-body-font-three {
     font-size: 15px;
     line-height: 22px;
 }
-.a-input-div{
+
+.a-input-div {
     width: 100px;
     border-bottom: #000000 solid 1px;
 }
-.b-input-div{
+
+.b-input-div {
     width: 40px;
     border-bottom: #000000 solid 1px;
 }
 
-
-.body-font{
+.body-font {
     font-size: 14px;
 }
-.a-body-font{
+
+.a-body-font {
     font-size: 15px;
     line-height: 27px;
 }
-.d-body-font{
+
+.d-body-font {
     font-size: 15.5px;
     line-height: 32px;
 }
-.b-body-font{
+
+.b-body-font {
     font-size: 15px;
     line-height: 40px;
 }
-.c-body-font{
+
+.c-body-font {
     font-size: 14px;
     line-height: 22px;
 }
-.f-body-font{
+
+.f-body-font {
     font-size: 15px;
     line-height: 22px;
 }
-.div-line .div-line-con-four{
+
+.div-line .div-line-con-four {
     border-left: #000000 solid 1px;
     display: inline-block;
     padding: 3px 4px 4px 10px;
