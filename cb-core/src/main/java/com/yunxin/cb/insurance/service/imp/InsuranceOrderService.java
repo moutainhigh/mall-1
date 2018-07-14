@@ -252,14 +252,13 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                  */
                 Set<InsuranceOrderBeneficiary> beneficiary=insuranceOrder.getInsuranceOrderBeneficiarys();
 
-                if(null!=beneficiary&&Hibernate.isInitialized(beneficiary)){
+                if(null!=beneficiary&&Hibernate.isInitialized(beneficiary)&&beneficiary.size()>0){
                     List<InsuranceOrderBeneficiary> list=new ArrayList<>(beneficiary);
                     List<InsuranceOrderBeneficiary> beneficiaryList= sortIntMethod(list);
-//                    while (beneficiaryList.size()<3)
-//                        beneficiaryList.add(new InsuranceOrderBeneficiary());
                     put("beneficiaryList",beneficiaryList);
-                    put("insurance_matterList",insuranceOrderInformedMatterList);
+
                 }
+                    put("insurance_matterList",insuranceOrderInformedMatterList);
 
             }
 
