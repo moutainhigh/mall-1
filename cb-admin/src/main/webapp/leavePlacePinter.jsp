@@ -74,7 +74,6 @@
         .t1{
             width: 936px;
             height: 134px;
-            border: 1px solid #000;
         }
         .t1_head{
             height: 64px;
@@ -98,8 +97,8 @@
         .border_top{
             border-top: 1px solid #000;
         }
-        .border_none{
-            border: none;
+        .border_all{
+            border: 1px solid #000;
         }
         .t1_head_col1{
             height: 64px;
@@ -161,7 +160,6 @@
         .t3_questions{
             width: 926px;
             height: 780px;
-            border: 1px solid #000;
             font-size: 21px;
         }
         .t3_questions div{
@@ -204,6 +202,13 @@
             height: 66px;
             margin-bottom: 10px;
         }
+        .indent{
+            text-indent: 2em;
+            font-size: 18px;
+            color: #666;
+            line-height: 2em;
+            font-family: \9ED1\4F53;
+        }
         .foreground{
             position: absolute;
             top: 0;
@@ -213,7 +218,7 @@
     </style>
 </head>
 <body>
-<div class="background hide_div">
+<div class="background">
     <div class="head">
         <div class="logo"><img src="/images/files/logo.png"></div>
         <div class="barcode"><img src="/images/files/barcode2.png" height="70px"></div>
@@ -223,7 +228,7 @@
         <span>离开投保地问卷</span>
     </div>
     <div class="content">
-        <div class="t1">
+        <div class="t1 border_all">
             <div class="t1_head border_bottom">
                 <div class="t1_head_col1">
                     <div class="t1_head_col1_name"><span>姓名</span></div>
@@ -245,19 +250,19 @@
             <div class="t3_title">
                 请逐条回答下列问题，并将答案写在相应问题后面。
             </div>
-            <div class="t3_questions">
+            <div class="t3_questions border_all">
                 <div>1、您的户籍所在地是哪里？</div>
-                <div style="height: 90px">&nbsp;</div>
+                <div class="indent" style="height: 90px">&nbsp;</div>
                 <div>2、您目前工作所在城市或地区名？单位名称？工作单位所属行业？您的职务？</div>
-                <div style="height: 90px">&nbsp;</div>
+                <div class="indent" style="height: 90px">&nbsp;</div>
                 <div>3、请说明您离开投保地的原因？前往何地？出行目的？（如是工作或学习，请提供单位或学校的 名称和地址，并详细告知工作内容）</div>
-                <div style="height: 90px">&nbsp;</div>
+                <div class="indent" style="height: 90px">&nbsp;</div>
                 <div>4、您一年中平均在投保地逗留的时间多长？每次回投保地的时间间隔多久？您往来投保地和上述 异地之间经常乘坐的交通工具是什么？ </div>
-                <div style="height: 90px">&nbsp;</div>
+                <div class="indent" style="height: 90px">&nbsp;</div>
                 <div>5、您在投保地或异地是否已落实居住住所？如已落实请简述居住地址、环境？ </div>
-                <div style="height: 90px">&nbsp;</div>
+                <div class="indent" style="height: 90px">&nbsp;</div>
                 <div>6、是否有其他需要说明事项：□是  □否</div>
-                <div style="height: 90px">&nbsp;</div>
+                <div class="indent" style="height: 90px">&nbsp;</div>
             </div>
             <div class="t5">
                 <div class="declare">
@@ -293,20 +298,20 @@
     </div>
     <div class="content">
         <div class="t1">
-            <div class="t1_head ">
+            <div class="t1_head">
                 <div class="t1_head_col1">
                     <div class="t1_head_col1_name"><span>&nbsp;</span></div>
                     <div class="t1_head_col1_role ">
-                        <div class="">&nbsp;</div>
-                        <div>&nbsp;</div>
+                        <div class="">√</div>
+                        <div>√</div>
                     </div>
                 </div>
-                <div class="t1_head_col2 border_left border_right"><span>&nbsp;</span></div>
+                <div class="t1_head_col2  "><span>&nbsp;</span></div>
                 <div class="t1_head_col3"><span>&nbsp;</span></div>
             </div>
             <div class="t1_body">
                 <div><span>邓诚刚</span></div>
-                <div class="border_left border_right"><span>430482198607270051</span></div>
+                <div class=" "><span>430482198607270051</span></div>
                 <div><span>515456885568</span></div>
             </div>
         </div>
@@ -316,19 +321,19 @@
             </div>
             <div class="t3_questions">
                 <div>&nbsp;</div>
-                <div style="height: 90px">我是中华人民共和国公民</div>
+                <div class="indent" style="height: 90px">我是中华人民共和国公民</div>
                 <div>&nbsp;</div>
-                <div style="height: 90px">abcad fd fas f ddsa f fda     </div>
+                <div class="indent" style="height: 90px">abcad fd fas f ddsa f fda     </div>
                 <div>&nbsp;</div>
                 <div>&nbsp;</div>
-                <div style="height: 90px">abcccc</div>
+                <div  class="indent" style="height: 90px">abcccc</div>
                 <div>&nbsp; </div>
                 <div>&nbsp; </div>
-                <div style="height: 90px">我是中华人民共和国公民</div>
+                <div class="indent" style="height: 90px">我是中华人民共和国公民</div>
                 <div>&nbsp; </div>
-                <div style="height: 90px">我是中华人民共和国公民</div>
-                <div>&nbsp; </div>
-                <div style="height: 90px">我是中华人民共和国公民</div>
+                <div class="indent" style="height: 90px">我是中华人民共和国公民</div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;√&nbsp;&nbsp;&nbsp;&nbsp;√ </div>
+                <div class="indent" style="height: 90px">我是中华人民共和国公民</div>
             </div>
             <div class="t5">
                 <div class="declare">

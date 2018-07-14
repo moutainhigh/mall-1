@@ -126,6 +126,11 @@ public class CustomerResource extends BaseResource {
         customerFriendId.setCustomerId(customerId);
         customerFriendId.setFriendId(friendId);
         customerService.delFriendById(customerFriendId);
+
+        customerFriendId = new CustomerFriendId();
+        customerFriendId.setCustomerId(friendId);
+        customerFriendId.setFriendId(customerId);
+        customerService.delFriendById(customerFriendId);
         return new ResponseResult(Result.SUCCESS);
     }
 
