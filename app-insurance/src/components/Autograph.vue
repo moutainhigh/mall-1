@@ -31,9 +31,10 @@
       <p style="font-size: 13px">拍摄或上传投保人正面头像</p>
     </div>
     <button class="clearButton" v-if="imgUrl !== undefined && imgUrl !== ''" @click='delImage'>清除</button>
-    <input id="image" type="file" accept="image/*" @change="onFileChange" style="display: none;">
-    <div v-if="imgUrl !== undefined && imgUrl !== ''" class="limitImg">
-      <img :src="imgUrl">
+    <input id="image" type="file" accept="image/*" @change="onFileChange"
+           style="display: none;">
+    <div v-if="imgUrl !== undefined && imgUrl !== ''">
+      <img class="headPhoto-img" :src="imgUrl">
     </div>
 
     <div class="canvas">

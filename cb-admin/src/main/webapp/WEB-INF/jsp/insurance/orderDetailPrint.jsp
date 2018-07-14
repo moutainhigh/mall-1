@@ -1530,6 +1530,7 @@
                             <div class="a-tick" style="margin-left: 93px;margin-top: 6px;">√</div>
                             <div class="a-tick" style="margin-left: 93px;margin-top: 20px;">√</div>
                         </div>
+                            <br>
                             <%--B3--%>
                         <div class="a-div-line-con" style="width: 480px;height: 40px;">
                             <div>
@@ -1834,16 +1835,109 @@
                 <div class="div-title">请投保人告知被保险人的健康状况并对被保险人栏中的答案进行勾选；如保险条款中涉及对投保人承担保险责任事项、投保人栏也须填写:</div>
                 <div class="div-tab">
                     <%--可保资料告知 start--%>
-                        <div class="a-table-line" style="height: 40px;margin-top: 30px;">
+                    <div style="position: absolute">
+                        <div class="a-table-line" style="position:relative;height: 53px;margin-top: 40px;">
                             <%--B12--%>
-                            <div class="a-div-table-2" style="width: 1000px;">
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 53px;">
+                            <%--B12--%>
+
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 53px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 25px;">
+                            <%--B12--%>
                                 <div class="a-tick" style="margin-left: 645px;">√</div>
                                 <div class="a-tick" style="margin-left: 685px;">√</div>
                                 <div class="a-tick" style="margin-left: 730px;">√</div>
                                 <div class="a-tick" style="margin-left: 765px;">√</div>
-                            </div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
                         </div>
-
+                        <div class="a-table-line" style="position:relative;height: 60px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 30px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;">√</div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 30px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;">√</div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 60px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 160px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 65px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 65px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 65px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 65px;">√</div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 53px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;">√</div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈
+                                </div>
+                        </div>
+                    </div>
                     <%--可保资料告知 end--%>
                     <div class="table-line" style="height: 40px;">
                         <div class="div-table-2" style="width: 636px;height: 40px;">问题及健康告知</div>
@@ -1913,14 +2007,176 @@
 
                     <%--第三页--%>
                 <div class="div-tab" style="margin-top: 60px;">
+                    <div style="position: absolute">
+                        <div class="a-table-line" style="position:relative;height: 58px;">
+                            <%--B12--%>
+                            <div class="a-tick" style="margin-left: 650px;margin-top: 20px;">√</div>
+                            <div class="a-tick" style="margin-left: 685px;margin-top: 20px;">√</div>
+                            <div class="a-tick" style="margin-left: 733px;margin-top: 20px;">√</div>
+                            <div class="a-tick" style="margin-left: 770px;margin-top: 20px;">√</div>
+                            <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                哈哈哈哈哈
+                            </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 465px;">
+                            <%--B12--%>
+                            <div style="position: absolute;margin-top: 25px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈1
+                                </div>
+                            </div>
+                            <div style="position: absolute;margin-top: 165px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div>
+                                <div style="position: absolute;margin-top: 185px;">
+                                    <div class="a-tick" style="margin-left: 650px;">√</div>
+                                    <div class="a-tick" style="margin-left: 685px;">√</div>
+                                    <div class="a-tick" style="margin-left: 733px;">√</div>
+                                    <div class="a-tick" style="margin-left: 770px;">√</div>
+                                    <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                        哈哈哈哈哈2
+                                    </div>
+                                </div><div style="position: absolute;margin-top: 220px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div><div style="position: absolute;margin-top: 238px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div><div style="position: absolute;margin-top: 275px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div><div style="position: absolute;margin-top: 305px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div><div style="position: absolute;margin-top: 325px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div><div style="position: absolute;margin-top: 345px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div><div style="position: absolute;margin-top: 380px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div><div style="position: absolute;margin-top: 400px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div><div style="position: absolute;margin-top: 415px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div><div style="position: absolute;margin-top: 435px;">
+                                <div class="a-tick" style="margin-left: 650px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 733px;">√</div>
+                                <div class="a-tick" style="margin-left: 770px;">√</div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    哈哈哈哈哈2
+                                </div>
+                            </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 40px;">
+                            <%--B12--%>
+                            <div class="a-tick" style="margin-left: 650px;margin-top: 10px;">√</div>
+                            <div class="a-tick" style="margin-left: 685px;margin-top: 10px;">√</div>
+                            <div class="a-tick" style="margin-left: 733px;margin-top: 10px;">√</div>
+                            <div class="a-tick" style="margin-left: 770px;margin-top: 10px;">√</div>
+                            <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                哈哈哈哈哈
+                            </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 197px;">
+                            <%--B12--%>
+                            <div class="a-tick" style="margin-left: 650px;margin-top: 85px;">√</div>
+                            <div class="a-tick" style="margin-left: 685px;margin-top: 85px;">√</div>
+                            <div class="a-tick" style="margin-left: 733px;margin-top: 85px;">√</div>
+                            <div class="a-tick" style="margin-left: 770px;margin-top: 85px;">√</div>
+                            <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                哈哈哈哈哈
+                            </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 28px;">
+                            <%--B12--%>
+                            <div class="a-tick" style="margin-left: 650px;">√</div>
+                            <div class="a-tick" style="margin-left: 685px;">√</div>
+                            <div class="a-tick" style="margin-left: 733px;">√</div>
+                            <div class="a-tick" style="margin-left: 770px;">√</div>
+                            <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                哈哈哈哈哈
+                            </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 28px;">
+                            <%--B12--%>
+                            <div class="a-tick" style="margin-left: 650px;">√</div>
+                            <div class="a-tick" style="margin-left: 685px;">√</div>
+                            <div class="a-tick" style="margin-left: 730px;">√</div>
+                            <div class="a-tick" style="margin-left: 770px;">√</div>
+                            <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                哈哈哈哈哈
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-line" style="height: 58px;">
-                        <div class="div-table-2" style="width: 641px;height:58px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C11.</div><div style="display: inline-block;width: 600px;">您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？怀孕___ 周数？
+                        <div class="div-table-2" style="width: 639px;height:58px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C11.</div><div style="display: inline-block;width: 600px;">您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？怀孕___ 周数？
                             b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？d.母亲、姐妹中是否患有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？</div></div>
                         <div class="div-table-2" style="width: 83px;height:58px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                         <div class="div-table-2" style="width: 83px;height:58px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 465px;">
-                        <div class="div-table-2" style="width: 641px;height: 465px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C12.</div><div style="display: inline-block;width: 600px;line-height: 1.3;">是否患有或曾经患有一下疾病：
+                        <div class="div-table-2" style="width: 639px;height: 465px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C12.</div><div style="display: inline-block;width: 600px;line-height: 1.3;">是否患有或曾经患有一下疾病：
                             <br>a.最近六个月内，是否有下列疾患或自觉症状?
                             <br>不明原因皮肤出血点或瘀斑、鼻衄、反复齿龈出血?
                             <br>不明原因的声嘶、关节红肿酸痛、难以愈合的舌、皮肤溃疡，持续低热，体重显著减轻(短期内5公斤以上)，痣的形态、大小或颜色改变、黄疸?
@@ -1940,16 +2196,44 @@
                             <br>k.先天性疾病、遗传性疾病?
                             <br>l.身体是否有瘢痕？
                             <br>m.除上述以外的其它疾病、症状或意外受伤史?</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 465px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 465px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 465px;vertical-align: top">
+                            <div style="display: block;margin-top:25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:125px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:0;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        </div>
+                        <div class="div-table-2" style="width: 83px;height: 465px;vertical-align: top;">
+                            <div style="display: block;margin-top:25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:125px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:0;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        </div>
                     </div>
                     <div class="table-line" style="height: 40px;">
-                        <div class="div-table-2" style="width: 641px;height: 40px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">直系亲属中，是否患有或曾经患有高血压、肾病、心脏病、肝炎、肝肾囊肿、肝硬化、糖尿病、精神病、癌症或早于60周岁因病身故者？</div></div>
+                        <div class="div-table-2" style="width: 639px;height: 40px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">直系亲属中，是否患有或曾经患有高血压、肾病、心脏病、肝炎、肝肾囊肿、肝硬化、糖尿病、精神病、癌症或早于60周岁因病身故者？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 40px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                         <div class="div-table-2" style="width: 83px;height: 40px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 197px;">
-                        <div class="div-table-2" style="width: 641px;height: 197px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C14.</div><div style="display: inline-block;width: 600px;">您若为2周岁(不含)以下婴儿，请告知：
+                        <div class="div-table-2" style="width: 639px;height: 197px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C14.</div><div style="display: inline-block;width: 600px;">您若为2周岁(不含)以下婴儿，请告知：
                             <br>a 出生时身长__厘米(cm)，体重__公斤(kg)，出生时留院天数__天，如超过7天，请详细说明
                             <br>b 出生时是否有早产、难产、窒息等情况？是否使用产钳等辅助器械？
                             <br>c 出生时是否有抢救史？
@@ -1963,12 +2247,12 @@
                         <div class="div-table-2" style="width: 83px;height: 197px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 28px;">
-                        <div class="div-table-2" style="width: 641px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否参加公费医疗或社会医疗保险？</div></div>
+                        <div class="div-table-2" style="width: 639px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否参加公费医疗或社会医疗保险？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                         <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 28px;">
-                        <div class="div-table-2" style="width: 641px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否有其他事项告知本公司？</div></div>
+                        <div class="div-table-2" style="width: 639px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否有其他事项告知本公司？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                         <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
