@@ -1612,8 +1612,8 @@
                         <div class="a-table-line" style="height: 60px;margin-top: 170px;">
                             <%--领取时间--%>
                             <div class="a-div-table-2" style="width: 210px;">
-                                <div class="a-tick" style="margin-left: 11px;margin-top: 20px;">√</div>
-                                <div class="a-tick" style="margin-left: 11px;margin-top: 50px;">√</div>
+                                <div class="a-tick" style="margin-left: 11px;margin-top: 16px;">√</div>
+                                <div class="a-tick" style="margin-left: 11px;margin-top: 46px;">√</div>
                                 <div class="a-tick" style="margin-left: 11px;margin-top: 75px;">√<span style="padding-left: 90px;">10</span></div>
                             </div>
                             <%--领取方式--%>
@@ -1833,31 +1833,43 @@
                 <div>C.可保资料告知</div>
                 <div class="div-title">请投保人告知被保险人的健康状况并对被保险人栏中的答案进行勾选；如保险条款中涉及对投保人承担保险责任事项、投保人栏也须填写:</div>
                 <div class="div-tab">
+                    <%--可保资料告知 start--%>
+                        <div class="a-table-line" style="height: 40px;margin-top: 30px;">
+                            <%--B12--%>
+                            <div class="a-div-table-2" style="width: 1000px;">
+                                <div class="a-tick" style="margin-left: 645px;">√</div>
+                                <div class="a-tick" style="margin-left: 685px;">√</div>
+                                <div class="a-tick" style="margin-left: 730px;">√</div>
+                                <div class="a-tick" style="margin-left: 765px;">√</div>
+                            </div>
+                        </div>
+
+                    <%--可保资料告知 end--%>
                     <div class="table-line" style="height: 40px;">
                         <div class="div-table-2" style="width: 636px;height: 40px;">问题及健康告知</div>
                         <div class="div-table-2" style="width: 83px;height: 40px;">被保险人</div>
                         <div class="div-table-2" style="width: 83px;height: 40px;">投保人</div>
                         <div class="div-table-2" style="width: 198px;height: 40px;text-align: left;">若“是”请说明<span class="tip">(原因、日期、医院名称及诊治结果等。)</span></div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C1.</div><div style="display: inline-block;width: 600px;">您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承包公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和。住院每日补贴日额及保险合同生效日期。</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 53px;">
+                        <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C1.</div><div style="display: inline-block;width: 600px;">您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承包公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和。住院每日补贴日额及保险合同生效日期。</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C2.</div><div style="display: inline-block;width: 600px;">您的人寿保险、人身意外或健康保险的投保申请是否曾被拒保、推迟、加费、或作限制保障权益？是否有解除保险合同？是否曾向任何保险公司提出索赔申请？若“是”，请说明。</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 53px;">
+                        <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C2.</div><div style="display: inline-block;width: 600px;">您的人寿保险、人身意外或健康保险的投保申请是否曾被拒保、推迟、加费、或作限制保障权益？是否有解除保险合同？是否曾向任何保险公司提出索赔申请？若“是”，请说明。</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C3.</div><div style="display: inline-block;width: 600px;">是否计划出国或改变居住地或工作地点？正在试图参加私人性质飞行，或携带氧气瓶潜水、或登山、或从事危险性的运动？若“是”，请填妥相关问卷，连同此投保单一并交回本公司。</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 53px;">
+                        <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C3.</div><div style="display: inline-block;width: 600px;">是否计划出国或改变居住地或工作地点？正在试图参加私人性质飞行，或携带氧气瓶潜水、或登山、或从事危险性的运动？若“是”，请填妥相关问卷，连同此投保单一并交回本公司。</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 30px;">
-                        <div class="div-table-2" style="width: 636px;height: 30px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C4.</div><div style="display: inline-block;width: 600px;">是否持有有效摩托车驾照？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 25px;">
+                        <div class="div-table-2" style="width: 636px;height: 25px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C4.</div><div style="display: inline-block;width: 600px;">是否持有有效摩托车驾照？</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 60px;">
                         <div class="div-table-2" style="width: 636px;height: 60px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C5.</div><div style="display: inline-block;width: 600px;">a.是否吸烟?若“是”，吸烟__年__支/天；若现在已停止吸烟，停止吸烟原因及时间__。b.是否饮酒？若“是”，饮酒__年，种类____，数量__（两/周）；若现在已停止饮酒，停止饮酒原因及时间____。</div></div>
@@ -1874,13 +1886,13 @@
                         <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                         <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C8.</div><div style="display: inline-block;width: 600px;">最近五年内，您是否曾经作下列之一的检查且结果异常：核磁共振(MRI)、心电图、胃镜、纤维结肠镜、气管镜、CT、超声波、X光、眼底检查、脑电图、肝功能、肾功能、病理活检及其它特殊检查？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 60px;">
+                        <div class="div-table-2" style="width: 636px;height: 60px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C8.</div><div style="display: inline-block;width: 600px;">最近五年内，您是否曾经作下列之一的检查且结果异常：核磁共振(MRI)、心电图、胃镜、纤维结肠镜、气管镜、CT、超声波、X光、眼底检查、脑电图、肝功能、肾功能、病理活检及其它特殊检查？</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 180px;">
-                        <div class="div-table-2" style="width: 636px;height: 180px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C9.</div><div style="display: inline-block;width: 600px;">您是否有下列身体残障状况：
+                    <div class="table-line" style="height: 160px;">
+                        <div class="div-table-2" style="width: 636px;height: 160px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C9.</div><div style="display: inline-block;width: 600px;">您是否有下列身体残障状况：
                             <br>a 脊柱、胸廓、四肢、手指或手掌、足趾或足部缺损畸形、两上肢或两下肢长度不等、跛行？
                             b 眼、耳、鼻、舌或其它颜面部软组织缺损畸形？牙齿脱落、上下颌骨缺失、颞下颌关节强直？肋骨骨折或缺失？颈部或腰部活动受限？肢体肌力下降？
                             c 睾丸萎缩或缺失？阴茎缺失？输精管闭锁或缺失？（男性）
@@ -1888,19 +1900,19 @@
                             e 视力、听力、语言、咀嚼、吞咽、嗅觉、触觉等功能障碍或中枢神经系统障碍？
                             f 精神、智能障碍或性格行为异常？
                             g 脾、肺、胃、小肠、结肠、直肠、胰腺、肝、肾、膀胱切除？心脏的结构损伤或功能障碍？输尿管闭锁或缺失？其它内脏或身体器官缺损、摘除或移植？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 180px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 180px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 160px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 160px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C10.</div><div style="display: inline-block;width: 600px;">a 您及您的配偶是否曾接受或试图接受与艾滋病(AIDS)有关的医疗咨询、检验或治疗，或艾滋病病毒(HIV)呈阳性反应？
+                    <div class="table-line" style="height: 53px;">
+                        <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C10.</div><div style="display: inline-block;width: 600px;">a 您及您的配偶是否曾接受或试图接受与艾滋病(AIDS)有关的医疗咨询、检验或治疗，或艾滋病病毒(HIV)呈阳性反应？
                             b 是否曾经验血而得知为乙肝表面抗原(HbsAg)阳性反应或不宜献血？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                 </div>
 
                     <%--第三页--%>
-                <div class="div-tab" style="margin-top: 5px;">
+                <div class="div-tab" style="margin-top: 60px;">
                     <div class="table-line" style="height: 58px;">
                         <div class="div-table-2" style="width: 641px;height:58px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C11.</div><div style="display: inline-block;width: 600px;">您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？怀孕___ 周数？
                             b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？d.母亲、姐妹中是否患有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？</div></div>

@@ -489,11 +489,6 @@ input {
     display: table-cell;
 }
 
-.table-line div {
-    display: table-cell;
-    font-size: 14px;
-}
-
 .a-price {
     position: absolute;
     width: 600px;
