@@ -187,7 +187,7 @@
                     		投保人、被保险人向保险公司声明并同意下列事项:
                     		</span>
 </div>
-<div class="div-tab" style="margin-top: 5px;background-color: #dff9fb;">
+<div class="div-tab" style="margin-top: 5px;background-color: #f6f9f2;">
     <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 5px;">
         <div class="div-line-con-three" style="border-left: solid 0px;">
             <div class="left-span-div">
@@ -385,40 +385,40 @@
             <div class="div-line-con-three div-postcode">
                 授权活期账户号码&nbsp;/&nbsp;借记卡号码&nbsp;：&nbsp;
                 <div style="margin-left: 10px;font-size: 0">
-                    <input class="i-cert-code-three"  style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
+                    <input class="i-cert-code-three"  style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
                 </div>
                 <div style="margin-left: 20px;font-size: 0">
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
                 </div>
                 <div style="margin-left: 20px;font-size: 0">
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
                 </div>
                 <div style="margin-left: 20px;font-size: 0">
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
                 </div>
                 <div style="margin-left: 20px;font-size: 0">
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
                 </div>
                 <div style="margin-left: 20px;font-size: 0">
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
-                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #dff9fb"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
+                    <input class="i-cert-code-three" style="border: #000000 solid 1px !important;background-color: #f6f9f2"/>
                 </div>
             </div>
         </div>

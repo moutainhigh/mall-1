@@ -181,7 +181,7 @@ public class InsuranceController {
         }
 
         modelMap.addAttribute("insuranceOrder", insuranceOrder);
-        modelMap.addAttribute("matterList", iInsuranceOrderService.findMatter(orderId));
+        //modelMap.addAttribute("matterList", iInsuranceOrderService.findMatter(orderId));
         return "insurance/orderDetailPrint";
     }
 
