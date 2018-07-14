@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #fff; height: 100vh">
     <group label-width="6rem" label-align="left" style="font-size: 15px;margin-bottom: 7px;">
       <datetime title="出生日期" v-model="birthday" startDate="1950-01-01" :endDate="startDate"
                 placeholder="请选择出生日期"
@@ -31,7 +31,7 @@
 
 
     <!--</div>-->
-    <div class="i-card">
+    <div class="i-card" style="margin-bottom: 0">
       <div class="i-card-tip">
         {{title}}
         <div class="i-list-right">
@@ -81,6 +81,7 @@
         </div>
       </div>
     </div>
+    <div style="height: 1px; margin: 0 15px; background: #d9d9d9"></div>
     <div class="i-card">
       <div style="font-size: 15px;color: #333;">
         投保须知

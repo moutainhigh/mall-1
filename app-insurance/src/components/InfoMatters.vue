@@ -643,7 +643,7 @@
             <img v-if="matters[29].insuredResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[29].insuredResult" v-model="matters[29].insuredRemark"
+        <textarea class="content-text" v-if="matters[29].insuredResult" v-model="matters[29].insuredRemark" maxlength="100"
                   placeholder="被保人"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -707,6 +707,7 @@
         <p class="recognizee">确认</p>
       </div>
     </div>
+    <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 60px;">
       <div class="i-footer">
         <button @click="next">
@@ -720,8 +721,10 @@
 
 <script>
   import storage from "../store/storage";
+  import {Toast} from 'vux'
 
   export default {
+    components: {Toast},
     name: "infoMatters",
     data() {
       return {
@@ -729,7 +732,9 @@
         matters: [],
         values11: '',
         values12: ['', '', ''],
-        twoYear: true
+        twoYear: true,
+        showPositionValue: false,
+        toastText: '',
       }
     },
     methods: {
@@ -754,6 +759,20 @@
             return false;
           }
         }
+        if (this.values11.length > 3) {
+          alert("怀孕周数长度不大于3");
+          return false;
+        }
+        if (this.values12[0].length > 3 || this.values12[1].length > 3 || this.values12[2].length > 3) {
+          alert("婴儿信息栏填写长度不大于3");
+          return false;
+        }
+        if (this.matters[29].insuredResult) {
+          if (this.matters[29].insuredRemark === '') {
+            alert("请输入第12条被保人告知事项");
+            return false;
+          }
+        }
         if (this.state) {
           this.$router.push('autograph');
         } else {
@@ -767,6 +786,18 @@
           if (this.matters.length != 0) {
             this.matters[29].collectValues = JSON.stringify(newVal);
           }
+          if (newVal[0].length > 3) {
+            this.showPositionValue = true;
+            this.toastText = "输入长度不得大于3位";
+          }
+          if (newVal[1].length > 3) {
+            this.showPositionValue = true;
+            this.toastText = "输入长度不得大于3位";
+          }
+          if (newVal[2].length > 3) {
+            this.showPositionValue = true;
+            this.toastText = "输入长度不得大于3位";
+          }
         },
         immediate: true,
         deep: true
@@ -774,6 +805,10 @@
       values11: function (newVal, oldVal) {
         if (this.matters.length != 0) {
           this.matters[28].collectValues = newVal;
+        }
+        if (newVal.length > 3) {
+          this.showPositionValue = true;
+          this.toastText = "输入长度不得大于3位";
         }
       },
       matters: {
