@@ -99,8 +99,8 @@
     height: 36px;
     box-sizing: border-box;
     border: unset;
-    border-radius: 5px;
-    background-color: #f1f3f5;
+    border-radius: 8px;
+    background-color: #f5f5f5;
     outline: unset;
   }
 
@@ -130,14 +130,14 @@
 
   .search-item {
     padding: 16px 16px 16px 0;
-    border-bottom: #d9d9d9 solid 1px;
-    margin-left: 16px;
+    border-bottom: #ececec solid 1px;
+    margin: 0 16px;
   }
 
   .select {
     width: 26px;
     float: right;
-    margin-right: 10px;
+    margin-right: -10px;
     margin-top: -22px;
   }
 </style>

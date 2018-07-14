@@ -1,4 +1,4 @@
-package com.yunxin.cb.mall.entity.meta;
+package com.yunxin.cb.insurance.meta;
 
 public enum InsuranceOrderState {
      UN_PAID("待支付"),ON_PAID("已支付"),BEEN_COMPLETED("已完成"),UN_SURRENDER("退保审核"),ON_SURRENDER("已退保");

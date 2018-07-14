@@ -765,7 +765,7 @@
       values12: {
         handler(newVal, oldVal) {
           if (this.matters.length != 0) {
-            this.matters[30].collectValues = JSON.stringify(newVal);
+            this.matters[29].collectValues = JSON.stringify(newVal);
           }
         },
         immediate: true,
@@ -773,7 +773,7 @@
       },
       values11: function (newVal, oldVal) {
         if (this.matters.length != 0) {
-          this.matters[29].collectValues = newVal;
+          this.matters[28].collectValues = newVal;
         }
       },
       matters: {
