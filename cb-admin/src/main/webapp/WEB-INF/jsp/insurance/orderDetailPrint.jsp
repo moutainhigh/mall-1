@@ -267,12 +267,12 @@
                                 </div>
 
                                 <div class="al-font div-row-3" style="position: absolute">
-                                    <div style="margin-left: 530px;position: absolute;margin-top: 10px;"> ${insuranceOrder.insuranceOrderInsured.insuredCountry}</div>
+                                    <div style="margin-left: 130px;position: absolute;margin-top: 10px;"> ${insuranceOrder.insuranceOrderInsured.insuredCountry}</div>
                                 </div>
-                                <div class="al-font" style="margin-left: 780px;position: absolute;margin-top: 10px;">
+                                <div class="al-font" style="margin-left: 350px;position: absolute;margin-top: 10px;">
                                     ${insuranceOrder.insuranceOrderInsured.insuredHeight}
                                 </div>
-                                <div class="al-font" style="margin-left: 900px;position: absolute;margin-top: 10px;">
+                                <div class="al-font" style="margin-left: 474px;position: absolute;margin-top: 10px;">
                                     ${insuranceOrder.insuranceOrderInsured.insuredBodyWeight}
                                 </div>
 
@@ -561,12 +561,12 @@
                                 </div>
 
                                 <div class="al-font div-row-3" style="position: absolute">
-                                    <div style="margin-left: 130px;position: absolute;margin-top: 15px;">  ${insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}</div>
+                                    <div style="margin-left: 535px;position: absolute;margin-top: 15px;">  ${insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}</div>
                                 </div>
-                                <div class="al-font" style="margin-left: 350px;position: absolute;margin-top: 15px;">
+                                <div class="al-font" style="margin-left: 790px;position: absolute;margin-top: 15px;">
                                     ${insuranceOrder.insuranceOrderPolicyholder.policyholderHeight}
                                 </div>
-                                <div class="al-font" style="margin-left: 474px;position: absolute;margin-top: 15px;">
+                                <div class="al-font" style="margin-left: 905px;position: absolute;margin-top: 15px;">
                                     ${insuranceOrder.insuranceOrderPolicyholder.policyholderBodyWeight}
                                 </div>
 
