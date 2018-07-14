@@ -465,7 +465,7 @@
                                     </div>
                                 </div>
                                 <div class="al-font div-row-2">
-                                    <div style="margin-left: 120px;">${insuranceOrder.insuranceOrderInsured.insuredRelation}</div>
+                                    <div style="margin-left: 140px;">${insuranceOrder.insuranceOrderInsured.insuredRelation}</div>
                                 </div>
                             </div>
 
@@ -535,7 +535,7 @@
                                             <div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
                                             <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
                                             <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
-                                            <div style="margin-left: 35px;float: left;">√</div>
+                                            <div style="margin-left: 78px;float: left;">√</div>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
