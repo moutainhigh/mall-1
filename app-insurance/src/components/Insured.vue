@@ -23,6 +23,7 @@
                @input="$v.insured.insuredCardNo.$touch()"></x-input>
       <div class="error" v-if="!$v.insured.insuredCardNo.required && $v.insured.insuredCardNo.$dirty">证件号码不能为空</div>
       <div class="error" v-if="!$v.insured.insuredCardNo.cardVali">请输入正确的证件号码</div>
+      <div class="error" v-if="!$v.insured.insuredCardNo.maxLength">证件号码最多不超过32位数</div>
 
       <datetime title="证件有效期" v-model="insured.insuredCardPeriod" :startDate="startDate" endDate="2199-12-31"
                 placeholder="请选择证件有效期"
@@ -89,6 +90,7 @@
       <!--请输入固定电话或移动电话-->
       <!--</div>-->
       <div class="error" v-if="!$v.insured.insuredTel.fixedTel">请输入正确的固定电话号码</div>
+      <div class="error" v-if="!$v.insured.insuredTel.maxLength">固定电话最多不超过15位数</div>
 
       <x-input title="移动电话" placeholder="请输入移动电话" v-model="insured.insuredMobile"
                v-bind:class="{'errorInput': $v.insured.insuredMobile.$error}"></x-input>
@@ -190,14 +192,14 @@
         insured: {
           insuredName: {required, minLength: minLength(2), maxLength: maxLength(32)},
           insuredCardType: {required},
-          insuredCardNo: {required, cardVali: this.vali},
+          insuredCardNo: {required, cardVali: this.vali, maxLength: maxLength(32)},
           insuredCardPeriod: {required},
           insuredCountry: {required, maxLength: maxLength(64)},
           insuredHeight: {required, int, maxLength: maxLength(3)},
           insuredBodyWeight: {required, int, maxLength: maxLength(3)},
           insuredIncome: {required, int, maxLength: maxLength(6)},
           insuredMarriage: {required},
-          insuredTel: {fixedTel},
+          insuredTel: {fixedTel, maxLength: maxLength(15)},
           insuredMobile: {mobile},
           insuredEmail: {mail},
           insuredPCD: {required},
