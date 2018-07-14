@@ -139,7 +139,7 @@
                                 投保须知:
                             </div>
                             <div style="display: inline-block">
-                                1、请您在仔细阅读人身保险投保提示书、产品说明书、保险条款后用蓝、黑墨水笔填写本投保单，并在合适的回答方框内打↓。
+                                1、请您在仔细阅读人身保险投保提示书、产品说明书、保险条款后用蓝、黑墨水笔填写本投保单，并在合适的回答方框内打√。
                                 <br/>2、您必须在此投保单上真实填写一切有关事实，并亲笔签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。
                                 <br/>3、富德生命人寿保险股份有限公司承诺未经客户同意，不会将客户信息用于人身保险公司和第三方机构的销售活动。
                             </div>
@@ -753,101 +753,143 @@
                         </div>
 
                         <div class="al-tab" style="margin-top: 400px;position: absolute">
+                            <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[0].beneficiaryName}">
                             <div class="al-line">
                                 <div class="al-font">
                                     <div style="position: absolute;margin-left: 5px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryName}</div>
-                                    <div style="position: absolute;margin-left: 95px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryGender}</div>
+                                    <div style="position: absolute;margin-left: 95px;">
+                                        <c:choose>
+                                        <c:when test="${map.beneficiaryList.beneficiaryList[0].beneficiaryGender=='true'}">
+                                            男
+                                        </c:when>
+                                        <c:otherwise>
+                                            女
+
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </div>
                                     <div style="position: absolute;margin-left: 180px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryOrder}</div>
                                     <div style="position: absolute;margin-left: 260px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryProportion}</div>
-                                    <div style="position: absolute;margin-left: 325px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryBirthday}</div>
+                                    <div style="position: absolute;margin-left: 325px;">
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[0].beneficiaryBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
+                                        </div>
                                     <div style="position: absolute;margin-left: 435px;">${map.beneficiaryList.beneficiaryList[0].insuredRelation}</div>
                                 </div>
                                 <div class="al-font" style="position: absolute;margin-left: 510px;margin-top: -3px;">
                                     <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='身份证'}">
                                         √</c:if></div>
 
-                                <div class="al-font" style="position: absolute;margin-left: 575px;margin-top: -3px;">
+                                <div class="al-font" style="position: absolute;margin-left: 590px;margin-top: -3px;">
                                     <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType!='身份证'}">
                                         √</c:if></div>
-                                <div class="al-font" style="position: absolute;margin-left: 737px;margin-top: -1px;font-size: 10px;">
-                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='身份证'}">
+                                <div class="al-font" style="position: absolute;margin-left: 945px;margin-top: -1px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='长期'}">
                                         √</c:if>
                                     </div>
-                                <div class="al-font" style="position: absolute;margin-left: 810px;margin-top: -3px;">
+                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -3px;font-size: 10px;">
                                     <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType!='长期'}">
-                                        ${map.beneficiaryList.beneficiaryList[0].beneficiaryCardPeroid} </c:if></div>
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>  </c:if></div>
                                 <div class="al-font" style="position: absolute;margin-left: 390px;margin-top: 18px;">
                                     <div class="card-num"  style="letter-spacing:19.8px;position: absolute;margin-top: 10px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryCardNo}</div>
                                 </div>
                             </div>
 
 
-
+                            </c:if>
 
 
                         </div>
 
                         <div class="al-tab" style="margin-top: 460px;position: absolute">
+                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[1].beneficiaryName}">
                             <div class="al-line">
                                 <div class="al-font">
-                                    <div style="position: absolute;margin-left: 5px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryName}</div>
-                                    <div style="position: absolute;margin-left: 95px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryGender}</div>
-                                    <div style="position: absolute;margin-left: 185px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryOrder}</div>
-                                    <div style="position: absolute;margin-left: 275px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryProportion}</div>
-                                    <div style="position: absolute;margin-left: 355px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryBirthday}</div>
-                                    <div style="position: absolute;margin-left: 435px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].insuredRelation}</div>
+                                    <div style="position: absolute;margin-left: 5px;">${map.beneficiaryList.beneficiaryList[1].beneficiaryName}</div>
+                                    <div style="position: absolute;margin-left: 95px;">
+
+                                        <c:choose>
+                                            <c:when test="${map.beneficiaryList.beneficiaryList[1].beneficiaryGender=='true'}">
+                                                男
+                                            </c:when>
+                                            <c:otherwise>
+                                                女
+
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div style="position: absolute;margin-left: 180px;">${map.beneficiaryList.beneficiaryList[1].beneficiaryOrder}</div>
+                                    <div style="position: absolute;margin-left: 260px;">${map.beneficiaryList.beneficiaryList[1].beneficiaryProportion}</div>
+                                    <div style="position: absolute;margin-left: 325px;"><fmt:formatDate value="${map.beneficiaryList.beneficiaryList[1].beneficiaryBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/></div>
+                                    <div style="position: absolute;margin-left: 435px;">${map.beneficiaryList.beneficiaryList[1].insuredRelation}</div>
                                 </div>
                                 <div class="al-font" style="position: absolute;margin-left: 510px;margin-top: -3px;">
-                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='身份证'}">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType=='身份证'}">
                                         √</c:if></div>
 
-                                <div class="al-font" style="position: absolute;margin-left: 575px;margin-top: -3px;">
-                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType!='身份证'}">
+                                <div class="al-font" style="position: absolute;margin-left: 590px;margin-top: -3px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType!='身份证'}">
                                         √</c:if></div>
-                                <div class="al-font" style="position: absolute;margin-left: 737px;margin-top: -1px;font-size: 10px;">
-                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='身份证'}">
+                                <div class="al-font" style="position: absolute;margin-left: 945px;margin-top: -1px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType=='长期'}">
                                         √</c:if>
                                 </div>
-                                <div class="al-font" style="position: absolute;margin-left: 810px;margin-top: -3px;">
-                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType!='长期'}">
-                                        ${map.beneficiaryList.beneficiaryList[0].beneficiaryCardPeroid} </c:if></div>
+                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -3px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType!='长期'}">
+
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
+                                    </c:if></div>
                                 <div class="al-font" style="position: absolute;margin-left: 390px;margin-top: 18px;">
-                                    <div class="card-num"  style="letter-spacing:19.8px;position: absolute;margin-top: 10px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryCardNo}</div>
+                                    <div class="card-num"  style="letter-spacing:19.8px;position: absolute;margin-top: 10px;">${map.beneficiaryList.beneficiaryList[1].beneficiaryCardNo}</div>
                                 </div>
                             </div>
+
+                    </c:if>
 
                         </div>
 
 
 
                         <div class="al-tab" style="margin-top: 520px;position: absolute">
+<c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[0].beneficiaryName}">
                             <div class="al-line">
                                 <div class="al-font">
-                                    <div style="position: absolute;margin-left: 5px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryName}</div>
-                                    <div style="position: absolute;margin-left: 95px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryGender}</div>
-                                    <div style="position: absolute;margin-left: 185px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryOrder}</div>
-                                    <div style="position: absolute;margin-left: 275px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryProportion}</div>
-                                    <div style="position: absolute;margin-left: 355px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryBirthday}</div>
-                                    <div style="position: absolute;margin-left: 435px;width: 70px;">${map.beneficiaryList.beneficiaryList[0].insuredRelation}</div>
+                                    <div style="position: absolute;margin-left: 5px;">${map.beneficiaryList.beneficiaryList[2].beneficiaryName}</div>
+                                    <div style="position: absolute;margin-left: 95px;">
+                                        <c:choose>
+                                            <c:when test="${map.beneficiaryList.beneficiaryList[2].beneficiaryGender=='true'}">
+                                                            男
+                                            </c:when>
+                                                    <c:otherwise>
+                                                        女
+
+                                                    </c:otherwise>
+                                        </c:choose></div>
+                                    <div style="position: absolute;margin-left: 180px;">${map.beneficiaryList.beneficiaryList[2].beneficiaryOrder}</div>
+                                    <div style="position: absolute;margin-left: 260px;">${map.beneficiaryList.beneficiaryList[2].beneficiaryProportion}</div>
+                                    <div style="position: absolute;margin-left: 325px;">
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[2].beneficiaryBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/></div>
+                                    <div style="position: absolute;margin-left: 435px;">${map.beneficiaryList.beneficiaryList[2].insuredRelation}</div>
                                 </div>
                                 <div class="al-font" style="position: absolute;margin-left: 510px;margin-top: -3px;">
-                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='身份证'}">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType=='身份证'}">
                                         √</c:if></div>
 
-                                <div class="al-font" style="position: absolute;margin-left: 575px;margin-top: -3px;">
-                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType!='身份证'}">
+                                <div class="al-font" style="position: absolute;margin-left: 590px;margin-top: -3px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType!='身份证'}">
                                         √</c:if></div>
-                                <div class="al-font" style="position: absolute;margin-left: 737px;margin-top: -1px;font-size: 10px;">
-                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='身份证'}">
+                                <div class="al-font" style="position: absolute;margin-left: 945px;margin-top: -1px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType=='长期'}">
                                         √</c:if>
                                 </div>
-                                <div class="al-font" style="position: absolute;margin-left: 810px;margin-top: -3px;">
-                                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType!='长期'}">
-                                        ${map.beneficiaryList.beneficiaryList[0].beneficiaryCardPeroid} </c:if></div>
+                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -3px;font-size: 10px;">
+                                    <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType!='长期'}">
+                                        <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/> </c:if></div>
                                 <div class="al-font" style="position: absolute;margin-left: 390px;margin-top: 18px;">
-                                    <div class="card-num"  style="letter-spacing:19.8px;position: absolute;margin-top: 10px;">${map.beneficiaryList.beneficiaryList[0].beneficiaryCardNo}</div>
+                                    <div class="card-num"  style="letter-spacing:19.8px;position: absolute;margin-top: 10px;">${map.beneficiaryList.beneficiaryList[2].beneficiaryCardNo}</div>
                                 </div>
                             </div>
+
+</c:if>
 
                         </div>
 
@@ -992,7 +1034,7 @@
                                     <input class="b-input" type="text" style="margin-left: 10px;"/>
                                     市
                                     <input class="b-input" type="text" style="margin-left: 25px;"/>
-                                    区、县
+                                    区/县
                                     <input class="d-input" type="text"/>
                                 </div>
                             </div>
@@ -1031,7 +1073,7 @@
                                     <input class="b-input" type="text" style="margin-left: 10px;"/>
                                     市
                                     <input class="b-input" type="text" style="margin-left: 25px;"/>
-                                    区、县
+                                    区/县
                                     <input class="d-input" type="text"/>
                                 </div>
                             </div>
@@ -1067,7 +1109,7 @@
                         </div>
                     </div>
                     <div class="div-title">
-                        投保人资料（如投保人为保险人本人，可免填本栏）
+                        投保人资料（如投保人为被保险人本人，可免填本栏）
                     </div>
                     <div class="div-tab">
                         <div class="div-line">
@@ -1207,7 +1249,7 @@
                                     <input class="b-input" type="text" style="margin-left: 30px;"/>
                                     市
                                     <input class="b-input" type="text" style="margin-left: 20px;"/>
-                                    区、县
+                                    区/县
                                     <input class="d-input" type="text"/>
                                 </div>
                             </div>
@@ -1246,7 +1288,7 @@
                                     <input class="b-input" type="text" style="margin-left: 10px;"/>
                                     市
                                     <input class="b-input" type="text" style="margin-left: 25px;"/>
-                                    区、县
+                                    区/县
                                     <input class="d-input" type="text"/>
                                 </div>
                             </div>
@@ -1320,8 +1362,8 @@
                             </div>
                         </div>
                     </div>
-                <div class="div-title" style="line-height: 1.5;"><span>身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充报告，则是剩余养老保险年金受益人与身故保险金受益人为同一人）
-                    <br>说明：1.指定受益人时，同一受益顺序的受益份额合计必须等于100%。2.后一受益顺序的受益人只有在前一受益顺序所有受益人丧失或放弃收益权后才能享有受益权。3.若未填写受益份额，同一顺序的保险金受益人按照相等份额享有保险金。4.若未指定受益人，或者受益人指定不明无法确定的，保险金将作为被保险人的遗产按照《中华人名共和国继承法》的规定进行分配。5.投保无身故保险利益的保险产品是无需填写本栏，填写亦视为无效。
+                <div class="div-title" style="line-height: 1.5;"><span>身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险年金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充告知，则是剩余养老保险年金受益人与身故保险金受益人为同一人）
+                    <br>说明：1.指定受益人时，同一受益顺序的受益份额合计必须等于100%。2.后一受益顺序的受益人只有在前一受益顺序所有受益人丧失或放弃受益权后才能享有受益权。3.若未填写受益份额，同一顺序的保险金受益人按照相等份额享有保险金。4.若未指定受益人，或者受益人指定不明无法确定的，保险金将作为被保险人的遗产按照《中华人民共和国继承法》的规定进行分配。5.投保无身故保险利益的保险产品时无需填写本栏，填写亦视为无效。
                 </div>
                 <div class="div-tab" style="height: 240px;width: 1000px;">
                     <div class="table-line">
@@ -1344,10 +1386,10 @@
                             <div class="t-line" style="padding: 5px 6px;">
                                 <input type="checkbox"/>
                                 <div>身份证</div>
-                                <input type="checkbox"/>
+                                <input type="checkbox" style="margin-left: 15px;"/>
                                 <div>其他</div>
-                                <div style="margin:0 60px">有效期至</div>
-                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                <div style="margin:0 60px;margin-left: 130px;">有效期至</div>
+                                <input class="i-cb" style="margin-left: 55px;" type="checkbox"/>
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
@@ -1385,10 +1427,10 @@
                             <div class="t-line" style="padding: 5px 6px;">
                                 <input type="checkbox"/>
                                 <div>身份证</div>
-                                <input type="checkbox"/>
+                                <input type="checkbox" style="margin-left: 15px;"/>
                                 <div>其他</div>
-                                <div style="margin:0 60px">有效期至</div>
-                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                <div style="margin:0 60px;margin-left: 130px;">有效期至</div>
+                                <input class="i-cb" style="margin-left: 55px;" type="checkbox"/>
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
@@ -1426,10 +1468,10 @@
                             <div class="t-line" style="padding: 6px;">
                                 <input type="checkbox"/>
                                 <div>身份证</div>
-                                <input type="checkbox"/>
+                                <input type="checkbox" style="margin-left: 15px;"/>
                                 <div>其他</div>
-                                <div style="margin:0 60px">有效期至</div>
-                                <input class="i-cb" style="margin-left: 5px" type="checkbox"/>
+                                <div style="margin:0 60px;margin-left: 130px;">有效期至</div>
+                                <input class="i-cb" style="margin-left: 55px;" type="checkbox"/>
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
