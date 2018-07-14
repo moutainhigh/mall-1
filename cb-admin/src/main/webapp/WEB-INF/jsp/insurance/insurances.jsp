@@ -58,6 +58,13 @@
               window.location.href = "prints4.do?orderId=" + dataItem.orderId;
           }
       }
+      function checkTime()
+      {
+          if($('#createTime').val()>$('#createTimes').val()&&''!=$('#createTimes').val()){
+              alert("开始时间不能大于结束时间")
+              $('#createTimes').val('')
+          }
+      }
   </script>
 </head>
 <body>
@@ -145,14 +152,14 @@
                 <strong>投保时间:</strong>
               </div>
               <div class="toolbar-field">
-                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                <input name="createTime" onchange="checkTime()" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
               </div>
 
               <div class="toolbar-field">
                 <strong>-</strong>
               </div>
               <div class="toolbar-field">
-                <input name="createTime"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
+                <input name="createTime"  onchange="checkTime()" id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
               </div>
 
 
@@ -246,17 +253,17 @@
               </kendo:grid-filterable-operators>
             </kendo:grid-filterable>
             <kendo:grid-columns>
-              <kendo:grid-column title="保单编号" field="orderCode" width="100"  template="<a href='insuranceOrderDetail.do?orderId=#= orderId#' style='color:blue'>#= orderCode#</a>" filterable="true"/>
-              <kendo:grid-column title="合同编号" field="contractNo" width="100" filterable="true"/>
-              <kendo:grid-column title="投保人" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderName#" width="100"/>
-              <kendo:grid-column title="投保人手机" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderMobile#" width="100"/>
-              <kendo:grid-column title="被保人" field="insuranceOrderInsured" template="#=insuranceOrderInsured.insuredName#" width="100"/>
-              <kendo:grid-column title="保险险种" field="insuranceProduct" template="#=insuranceProduct.prodName#" width="100"/>
-              <kendo:grid-column title="保险期间" field="insuranceProduct"  template="#=insuranceProduct.insurePeriod#" width="100"/>
-              <kendo:grid-column title="缴费年限" field="insuranceProduct" template="#=insuranceProduct.protectionYear#" width="100"/>
-              <kendo:grid-column title="基本保额" field="insuranceProductPrice" template="#=insuranceProductPrice.price#"  width="100"/>
-              <kendo:grid-column title="保单状态" field="orderState" template="#=formatOrderState(orderState)#" width="100"/>
-              <kendo:grid-column title="投保时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100"/>
+              <kendo:grid-column  title="保单编号" filterable="false" field="orderCode" width="100"  template="<a href='insuranceOrderDetail.do?orderId=#= orderId#' style='color:blue'>#= orderCode#</a>"/>
+              <kendo:grid-column title="合同编号" filterable="false" field="contractNo" width="100"/>
+              <kendo:grid-column title="投保人" filterable="false" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderName#" width="100"/>
+              <kendo:grid-column title="投保人手机" filterable="false" field="insuranceOrderPolicyholder" template="#=insuranceOrderPolicyholder.policyholderMobile#" width="100"/>
+              <kendo:grid-column title="被保人" filterable="false" field="insuranceOrderInsured" template="#=insuranceOrderInsured.insuredName#" width="100"/>
+              <kendo:grid-column title="保险险种" filterable="false" field="insuranceProduct" template="#=insuranceProduct.prodName#" width="100"/>
+              <kendo:grid-column title="保险期间" filterable="false" field="insuranceProduct"  template="#=insuranceProduct.insurePeriod#" width="100"/>
+              <kendo:grid-column title="缴费年限" filterable="false" field="insuranceProduct" template="#=insuranceProduct.protectionYear#" width="100"/>
+              <kendo:grid-column title="基本保额" filterable="false" field="insuranceProductPrice" template="#=insuranceProductPrice.price#"  width="100"/>
+              <kendo:grid-column title="保单状态" filterable="false" field="orderState" template="#=formatOrderState(orderState)#" width="100"/>
+              <kendo:grid-column title="投保时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100"/>
             </kendo:grid-columns>
             <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
               <kendo:dataSource-schema data="content" total="totalElements">
