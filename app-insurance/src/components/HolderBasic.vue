@@ -1,6 +1,6 @@
 <template>
   <div style="background: #fff; height: 100vh">
-    <group label-width="6rem" label-align="left" style="font-size: 15px;margin-bottom: 7px;">
+    <group label-width="6rem" label-align="left" style="font-size: 15px;">
       <datetime title="出生日期" v-model="birthday" startDate="1950-01-01" :endDate="startDate"
                 placeholder="请选择出生日期"
                 value-text-align="left" v-bind:class="{'errorInput': $v.birthday.$error}"></datetime>
@@ -8,7 +8,7 @@
         出生日期不能为空
       </div>
 
-      <div class="i-input" style="padding: 0 15px 0 0; border-top: 1px solid #d9d9d9; margin-left: 15px">
+      <div class="i-input" style="padding: 0 15px 0 0; border-top: 1px solid #ececec; margin-left: 15px; margin-right: 15px">
         <div class="i-input-item" style="width: 6rem">性别</div>
         <div class="i-input-radio" style="top: 0;">
           <div class="radio-div" style="margin-right: 0" @click="changeGender(true)">
@@ -22,12 +22,13 @@
         </div>
       </div>
 
-      <x-input class="x-input-over" title="被保人职业" placeholder="请选择职业" v-model="career"
+      <x-input class="x-input-over" style="margin-right: 15px" title="被保人职业" placeholder="请选择职业" v-model="career"
                v-bind:class="{'errorInput': $v.career.$error}"
                @input="$v.career.$touch()"></x-input>
       <div style="position:absolute;width: 100%;height: 42px;margin-top: -42px;" @click="goToSelect"></div>
       <div class="error" v-if="!$v.career.required && $v.career.$dirty">请选择职业</div>
     </group>
+    <div style="width: 100%; height: 10px; background: #f5f5f5"></div>
 
 
     <!--</div>-->
@@ -36,7 +37,7 @@
         {{title}}
         <div class="i-list-right">
           <img src="../assets/img/risk.png" height="18">
-          <span>主险</span>
+          <span style="color: #333">主险</span>
         </div>
       </div>
       <div class="i-input">
@@ -81,7 +82,7 @@
         </div>
       </div>
     </div>
-    <div style="height: 1px; margin: 0 15px; background: #d9d9d9"></div>
+    <div style="height: 1px; margin: 0 15px; background: #ececec"></div>
     <div class="i-card">
       <div style="font-size: 15px;color: #333;">
         投保须知
@@ -277,11 +278,11 @@
 
   .i-input .i-input-item {
     width: 6rem;
-    font-size: 15px !important;
+    font-size: 16px !important;
   }
 
   .i-input .i-input-val {
-    font-size: 15px !important;
+    font-size: 16px !important;
   }
 
   a {
