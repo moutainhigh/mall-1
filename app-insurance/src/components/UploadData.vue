@@ -72,9 +72,7 @@
       <input id="image5" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
       <div v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined">
-        <img
-          style="padding: 0;"
-          :src="imgUrls.image5">
+        <img style="padding: 0;" :src="imgUrls.image5">
       </div>
     </div>
 
@@ -89,9 +87,7 @@
       <input id="image6" type="file" accept="image/*" @change="onFileChange"
              style="display: none;">
       <div v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined">
-        <img
-          style="padding: 0;"
-          :src="imgUrls.image6">
+        <img style="padding: 0;" :src="imgUrls.image6">
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
@@ -323,5 +319,19 @@
     width: 50vw;
     margin-left: 25vw;
     padding: 20px 0;
+  }
+
+  .limitImg {
+    max-height: 144px;
+    width: 40vw;
+    margin-left: 30%;
+    overflow: hidden;
+  }
+
+  .limitImg img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
 </style>

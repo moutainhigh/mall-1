@@ -32,7 +32,7 @@ h2 {
 .header .contract .contract-num {
     border: 1px #000000 solid;
     margin: 10px 0;
-    border-radius: 8px;
+    border-radius: 8px !important;
     overflow: hidden;
 }
 
@@ -46,7 +46,7 @@ h2 {
 
 .header .contract .contract-num div {
     border-left: 1px #000000 solid;
-    width: 28px;
+    width: 22px;
     display: inline-block;
     height: 40px;
     margin-bottom: -5px;
@@ -59,13 +59,13 @@ h2 {
 
 .info {
     width: 100%;
-    margin-top:10px;
+    margin-top: 10px;
     display: inline-block;
     font-size: 8px;
     border: 1px #000000 solid;
     padding: 5px;
     border-radius: 8px;
-    background-color: #dff9fb;
+    background-color: #f6f9f2;
     box-sizing: border-box;
 }
 
@@ -97,12 +97,17 @@ h2 {
     padding: 8px 5px 8px 10px;
     font-size: 13px;
     box-sizing: border-box;
+    vertical-align: top;
     /*margin-bottom: -1px;*/
     /*margin-top: -1px;*/
 }
 
 .div-line .div-line-con div {
     display: inline-block;
+}
+
+.div-block {
+    display: block !important;
 }
 
 .div-line-cert {
@@ -159,8 +164,9 @@ input {
 
 .i-cert-code {
     display: inline-block;
-    width: 20px;
-    font-size: 14px;
+    width: 25px;
+    height: 25px;
+    font-size: 13px;
     margin-left: -1px;
     text-align: center;
     border-radius: 0;
@@ -172,27 +178,35 @@ input {
 
 .table-line {
     height: 60px;
-    font-size: 13px;
+    border-bottom: #000000 1px solid;
+    margin-left: -1px;
+    margin-bottom: -1px;
+    font-size: 0;
 }
 
-.table-line div{
+.table-line div {
     display: table-cell;
+    font-size: 14px;
 }
 
 .div-table-1 {
     width: 80px;
-    border: 1px #000000 solid;
+    border-left: 1px #000000 solid;
     margin: -1px;
     height: 60px;
     box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .div-table-2 {
-    width: 520px;
-    border: 1px #000000 solid;
+    width: 500px;
+    border-left: 1px #000000 solid;
     margin: -1px;
     height: 60px;
     box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .div-row-2 {
@@ -228,6 +242,11 @@ input {
     width: 261px;
 }
 
+.tip {
+    color: red;
+    font-size: 10px;
+}
+
 table tr th, table tr td {
     border-right: 1px solid #000000;
     border-bottom: 1px solid #000000;
@@ -242,7 +261,7 @@ table tr th, table tr td {
     display: inline-block;
     font-size: 14px;
     box-sizing: border-box;
-    width: 28.6px;
+    width: 27.5px;
     height: 30px;
 }
 
@@ -262,7 +281,7 @@ input {
 .div-postcode {
     border-left: unset !important;
     float: right;
-    margin-right: 13px;
+    margin-right: 4px;
     height: 20px;
 }
 
@@ -312,3 +331,177 @@ input {
     width: 200px;
 }
 
+.three-span {
+    font-size: 14px;
+}
+
+.div-line .div-line-con-three {
+    border-left: #000000 solid 1px;
+    display: inline-block;
+    font-size: 13px;
+    box-sizing: border-box;
+    margin-top: -5px;
+    /*margin-bottom: -1px;*/
+    /*margin-top: -1px;*/
+}
+
+.div-line .div-line-con-three div {
+    display: inline-block;
+}
+
+.div-line .div-line-con-three .i-cb {
+    position: relative;
+    top: 2px;
+    margin-left: 8px;
+}
+
+.div-line-con-three .i-cert-code {
+    display: inline-block;
+    width: 21px;
+    font-size: 15px;
+    margin-left: -1px;
+    text-align: center;
+    border-radius: 0;
+}
+
+.left-span-div {
+    float: left;
+    width: 2%;
+}
+
+.right-span-div {
+    float: left;
+    width: 97%;
+}
+
+.a-body-font-three {
+    font-size: 15px;
+    line-height: 27px;
+}
+
+.d-body-font-three {
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: bold;
+}
+
+.b-body-font-three {
+    font-size: 15px;
+    line-height: 40px;
+}
+
+.c-body-font-three {
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.f-body-font-three {
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.a-input-div {
+    width: 100px;
+    border-bottom: #000000 solid 1px;
+}
+
+.b-input-div {
+    width: 40px;
+    border-bottom: #000000 solid 1px;
+}
+
+.body-font {
+    font-size: 14px;
+}
+
+.a-body-font {
+    font-size: 15px;
+    line-height: 27px;
+}
+
+.d-body-font {
+    font-size: 15.5px;
+    line-height: 32px;
+}
+
+.b-body-font {
+    font-size: 15px;
+    line-height: 40px;
+}
+
+.c-body-font {
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.f-body-font {
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.div-line .div-line-con-four {
+    border-left: #000000 solid 1px;
+    display: inline-block;
+    padding: 3px 4px 4px 10px;
+    font-size: 13px;
+    box-sizing: border-box;
+    /*margin-bottom: -1px;*/
+    /*margin-top: -1px;*/
+}
+
+.div-line .div-line-con-four div {
+    display: inline-block;
+}
+
+.div-line .div-line-con-four .i-cb {
+    position: relative;
+    top: 2px;
+    margin-left: 8px;
+}
+
+.div-line-con-four .i-cert-code {
+    display: inline-block;
+    width: 21px;
+    font-size: 15px;
+    margin-left: -1px;
+    text-align: center;
+    border-radius: 0;
+}
+
+/*浮动层*/
+.a-div-line-con {
+    display: inline-block;
+    font-size: 13px;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.a-tick {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.a-table-line {
+    position: absolute;
+    font-size: 0;
+}
+
+.a-div-table-2 {
+    height: 60px;
+    box-sizing: border-box;
+    display: table-cell;
+}
+
+.a-price {
+    position: absolute;
+    width: 600px;
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 300px;
+}
+
+.a-price span {
+    position: absolute;
+}

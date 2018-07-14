@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author likang
@@ -28,7 +29,7 @@ public class InsuranceInformedMatterGroupController {
 
     @RequestMapping(value = "insuranceInformedMatterGroups")
     public String insuranceordercodes(ModelMap modelMap) {
-        return "insuranceInformedMatterGroup/listgroup";
+        return "imattergroup/listgroup";
     }
 
     /**
@@ -49,7 +50,8 @@ public class InsuranceInformedMatterGroupController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String toAddGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup, ModelMap modelMap){
-            return "insuranceInformedMatterGroup/addgroup";
+        modelMap.addAttribute("insuranceInformedMatterGroup",insuranceInformedMatterGroup);
+        return "imattergroup/addgroup";
     }
 
     /**
@@ -62,7 +64,7 @@ public class InsuranceInformedMatterGroupController {
     public String toEditGroup(@RequestParam("groupId") int groupId, ModelMap modelMap){
         InsuranceInformedMatterGroup insuranceInformedMatterGroup=insuranceInformedMatterGroupService.getInsuranceInformedMatterGroup(groupId);
         modelMap.addAttribute("insuranceInformedMatterGroup",insuranceInformedMatterGroup);
-        return "insuranceInformedMatterGroup/editgroup";
+        return "imattergroup/editgroup";
     }
 
     /**
@@ -71,6 +73,8 @@ public class InsuranceInformedMatterGroupController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public String addinsuranceInformedMatterGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup) {
+        insuranceInformedMatterGroup.setEnabled(0);
+        insuranceInformedMatterGroup.setCreateTime(new Date());
         insuranceInformedMatterGroupService.addInsuranceInformedMatterGroup(insuranceInformedMatterGroup);
         return "redirect:../common/success.do?reurl=insuranceInformedMatterGroup/insuranceInformedMatterGroups.do";
     }
@@ -95,7 +99,7 @@ public class InsuranceInformedMatterGroupController {
     @ResponseBody
     public boolean removeById(@RequestParam("groupId") int groupId) {
         try{
-            insuranceInformedMatterGroupService.removeByid(groupId);
+            insuranceInformedMatterGroupService.removeById(groupId);
             return true;
         }catch (Exception e){
             return false;

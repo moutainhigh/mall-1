@@ -81,7 +81,7 @@ public class InsuranceOrderPolicyholder implements Serializable {
      * 投保人证件号
      */
     @NotBlank
-    @Length(max = 18)
+    @Length(max = 32)
     private String policyholderCardNo;
     /**
      * 投保人国籍
@@ -278,7 +278,7 @@ public class InsuranceOrderPolicyholder implements Serializable {
         this.policyholderCardType = policyholderCardType;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 18)
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
     public String getPolicyholderCardNo() {
         return this.policyholderCardNo;
     }

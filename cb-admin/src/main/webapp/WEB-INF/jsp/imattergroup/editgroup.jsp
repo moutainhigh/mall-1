@@ -367,7 +367,7 @@
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
                     <legend>事项组</legend>
-                    <form:form id="validateSubmitForm" action="addinsuranceInformedMatterGroup.do" cssClass="form-horizontal" method="post"
+                    <form:form id="validateSubmitForm" action="updateinsuranceInformedMatterGroup.do" cssClass="form-horizontal" method="post"
                                commandName="insuranceInformedMatterGroup">
                         <form:hidden path="groupId"/>
                         <div class="row">
@@ -375,15 +375,20 @@
                                 <label><span class="asterisk">*</span>序号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="serNo" maxlength="32"/>
+                                <form:input path="serNo" cssClass="form-control validate[required,minSize[1]]" maxlength="32"/>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>事项组描述：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="description" maxlength="32"/>
+                                <form:textarea path="description" cssClass="form-control validate[required,minSize[1]]"/>
                             </div>
                         </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">

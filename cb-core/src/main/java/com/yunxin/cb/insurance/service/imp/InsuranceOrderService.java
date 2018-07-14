@@ -235,7 +235,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     }
 
     @Override
-    public Map<String, Object> InsuranceOrder(int orderId) {
+    public Map<String, Object> insuranceOrder(int orderId) {
         /**
          * 获取保单详情
          */
@@ -251,12 +251,15 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                  * 受益人
                  */
                 Set<InsuranceOrderBeneficiary> beneficiary=insuranceOrder.getInsuranceOrderBeneficiarys();
-                List<InsuranceOrderBeneficiary> list=new ArrayList<>(beneficiary);
-                List<InsuranceOrderBeneficiary> beneficiaryList= sortIntMethod(list);
-                if(beneficiaryList.size()<3)
-                    beneficiaryList.add(new InsuranceOrderBeneficiary());
-                put("beneficiaryList",beneficiaryList);
-                put("insuranceOrderInformedMatterList",insuranceOrderInformedMatterList);
+
+                if(null!=beneficiary&&Hibernate.isInitialized(beneficiary)&&beneficiary.size()>0){
+                    List<InsuranceOrderBeneficiary> list=new ArrayList<>(beneficiary);
+                    List<InsuranceOrderBeneficiary> beneficiaryList= sortIntMethod(list);
+                    put("beneficiaryList",beneficiaryList);
+
+                }
+                    put("insurance_matterList",insuranceOrderInformedMatterList);
+
             }
 
         };

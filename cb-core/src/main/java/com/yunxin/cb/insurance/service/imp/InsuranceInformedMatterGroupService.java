@@ -12,6 +12,8 @@ import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -24,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class InsuranceInformedMatterGroupService implements IInsuranceInformedMatterGroupService {
 
     @Resource
@@ -61,6 +64,7 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
             @Override
             public void addConditions(Root<InsuranceInformedMatterGroup> root, CriteriaQuery<?> query,
                                       CriteriaBuilder builder, List<Predicate> predicates) {
+                query.orderBy(builder.asc(root.get(InsuranceInformedMatterGroup_.serNo)));
             }
         });
         Page<InsuranceInformedMatterGroup> page = insuranceInformedMatterGroupDao.findAll(query, query.getPageRequest());
@@ -93,7 +97,7 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
      * @param groupId
      */
     @Override
-    public void removeByid(int groupId){
+    public void removeById(int groupId){
         insuranceInformedMatterGroupDao.delete(groupId);
     }
 
@@ -108,5 +112,15 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
         oldGroup.setDescription(insuranceInformedMatterGroup.getDescription());
         oldGroup.setSerNo(insuranceInformedMatterGroup.getSerNo());
         return oldGroup;
+    }
+
+    /**
+     *
+     * @param enabled
+     * @return
+     */
+    @Override
+    public List<InsuranceInformedMatterGroup> findList(int enabled){
+        return insuranceInformedMatterGroupDao.findList(enabled);
     }
 }
