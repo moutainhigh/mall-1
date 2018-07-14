@@ -234,8 +234,6 @@
 
               <div class="btn-group">
                 <a href="javascript:void(0);"  onclick="orderPrint()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印</a>
-                <a href="javascript:void(0);"  onclick="orderPrint3()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印3页</a>
-                <a href="javascript:void(0);"  onclick="orderPrint4()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印4页</a>
               </div>
             </div>
 
