@@ -255,10 +255,10 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 if(null!=beneficiary&&Hibernate.isInitialized(beneficiary)){
                     List<InsuranceOrderBeneficiary> list=new ArrayList<>(beneficiary);
                     List<InsuranceOrderBeneficiary> beneficiaryList= sortIntMethod(list);
-                    while (beneficiaryList.size()<3)
-                        beneficiaryList.add(new InsuranceOrderBeneficiary());
+//                    while (beneficiaryList.size()<3)
+//                        beneficiaryList.add(new InsuranceOrderBeneficiary());
                     put("beneficiaryList",beneficiaryList);
-                    put("insuranceOrderInformedMatterList",insuranceOrderInformedMatterList);
+                    put("insurance_matterList",insuranceOrderInformedMatterList);
                 }
 
             }
