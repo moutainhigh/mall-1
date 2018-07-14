@@ -166,12 +166,6 @@
       },
       {
         "name": "角色管理", "code": "132", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../security/roles.do"
-      },
-      {
-        "name": "系统日志", "code": "133", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../logs/logs.do"
-      },
-      {
-        "name": "错误日志", "code": "134", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../logs/errorLogs.do"
       }
     ]
   },

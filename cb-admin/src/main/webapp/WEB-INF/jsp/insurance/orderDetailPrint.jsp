@@ -68,8 +68,9 @@
             <div class="th-tab" id="prints">
                 <%--第一页--%>
                 <div class="header">
-                    <h1 style="font-size: 40px">富德生命人寿保险股份有限公司</h1>
-                    <h2>FUNDE SINO LIFE INSUANCE CO.,LTD.</h2>
+                    <img src="../images/orderHeader/logo.png">
+                    <%--<h1 style="font-size: 40px">富德生命人寿保险股份有限公司</h1>--%>
+                    <%--<h2>FUNDE SINO LIFE INSUANCE CO.,LTD.</h2>--%>
                     <h2>个人保险投保单（经代渠道）</h2>
                     <div class="header-contract">
                         <div class="contract" style="width: 450px;"></div>
@@ -94,7 +95,7 @@
                                 <div></div>
                                 <div></div>
                                 <div></div>
-                                <div></div>
+                                <div style="padding-right: 4px;"></div>
                             </div>
                             <p>本次同时投保共<input/>单，第<input/>单</p>
                         </div>
@@ -1034,8 +1035,7 @@
                 </div>
 
                     <%--第三页--%>
-                    <br>
-                <div class="div-tab" style="margin-top: 30px;">
+                <div class="div-tab" style="margin-top: 5px;">
                     <div class="table-line" style="height: 58px;">
                         <div class="div-table-2" style="width: 641px;height:58px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C11.</div><div style="display: inline-block;width: 600px;">您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？怀孕___ 周数？
                             b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？d.母亲、姐妹中是否患有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？</div></div>
@@ -2164,8 +2164,8 @@
                         <%--<span style="font-size: 25px;">全国统一热线：&nbsp;&nbsp;&nbsp;95535/4008-200-035</span>--%>
                     <%--</div>--%>
                     <!-- End .第一层-->
-                    <%--<%@ include file="thirdPages.jsp" %>--%>
-                    <%--<%@ include file="fourthPages.jsp" %>--%>
+                    <%@ include file="thirdPages.jsp" %>
+                    <%@ include file="fourthPages.jsp" %>
             </div>
         </div>
         <!-- End #content -->
