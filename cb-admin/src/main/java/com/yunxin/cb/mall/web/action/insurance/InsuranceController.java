@@ -170,6 +170,13 @@ public class InsuranceController {
                 }
 
             }
+
+            /**
+             * 受益人
+             */
+            Map<String,Object> maps= iInsuranceOrderService.insuranceOrder(orderId);
+            if(null!=maps)
+                map.put("beneficiaryList",maps);
             modelMap.addAttribute("map", map);
         }
 
