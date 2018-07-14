@@ -49,15 +49,15 @@
         <div class="window">
                 <!-- Start .第四页第二层-->
                 <!-- Start .第二层-->
-                <div style="position: absolute;z-index: 20;padding-left: 0px;margin-top: 12px;">
+                <div style="position: absolute;z-index: 20;padding-left: 0px;margin-top: 30px;">
                     <!-- Start .第一行-->
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 135px;margin-left: 150px;">周泣</div>
+                                <div class="al-row-2" style="margin-top: 135px;margin-left: 150px;">${insuranceOrder.insuranceOrderInsured.insuredName}</div>
                             </div>
                             <div class="al-font" style="margin-left: 290px;">
-                                <div class="al-row-sex">陈忠</div>
+                                <div class="al-row-sex">${insuranceOrder.insuranceOrderPolicyholder.policyholderName}</div>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 128px;margin-left: 68px;">
+                                <div class="al-row-2" style="margin-top: 132px;margin-left: 68px;">
                                     <div style="margin-left: 105px;float: left;">√</div>
                                     <div style="margin-left: 50px;float: left;">√</div>
                                     <div style="margin-left: 50px;float: left;">√</div>
@@ -100,7 +100,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 118px;margin-left: 430px;">
+                                <div class="al-row-2" style="margin-top: 118px;margin-left: 433px;">
                                     <div style="margin-left: 105px;float: left;">√</div>
                                     <div style="margin-left: 38px;float: left;">√</div>
                                 </div>
@@ -123,7 +123,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 103px;margin-left: 290px;">
+                                <div class="al-row-2" style="margin-top: 103px;margin-left: 295px;">
                                     <div style="margin-left: 105px;float: left;">√</div>
                                     <div style="margin-left: 38px;float: left;">√</div>
                                 </div>
@@ -138,7 +138,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 95px;margin-left: 232px;">
+                                <div class="al-row-2" style="margin-top: 95px;margin-left: 237px;">
                                     <div style="margin-left: 105px;float: left;">√</div>
                                     <div style="margin-left: 38px;float: left;">√</div>
                                 </div>
@@ -153,7 +153,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 90px;margin-left: 290px;">
+                                <div class="al-row-2" style="margin-top: 88px;margin-left: 295px;">
                                     <div style="margin-left: 105px;float: left;">√</div>
                                     <div style="margin-left: 38px;float: left;">√</div>
                                 </div>
@@ -168,7 +168,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 85px;margin-left: 95px;">
+                                <div class="al-row-2" style="margin-top: 80px;margin-left: 100px;">
                                     <div style="margin-left: 105px;float: left;">√</div>
                                     <div style="margin-left: 35px;float: left;">√</div>
                                 </div>
@@ -183,7 +183,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 80px;margin-left: 375px;">
+                                <div class="al-row-2" style="margin-top: 70px;margin-left: 375px;">
                                     <div class="al-row-sex">其它意见</div>
                                 </div>
                             </div>
@@ -194,10 +194,10 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 70px;margin-left: 50px;">
-                                    <div style="margin-left: 105px;float: left;">1000</div>
-                                    <div style="margin-left: 200px;float: left;">1000</div>
-                                    <div style="margin-left: 220px;float: left;">1000</div>
+                                <div class="al-row-2" style="margin-top: 65px;margin-left: 50px;">
+                                    <div style="margin-left: 105px;float: left;">${insuranceOrder.insuranceOrderInsured.insuredIncome}</div>
+                                    <div style="margin-left: 200px;float: left;">${insuranceOrder.insuranceOrderPolicyholder.policyholderIncome}</div>
+                                    <div style="margin-left: 230px;float: left;">1000</div>
                                     <div style="margin-left: 220px;float: left;">1000</div>
                                 </div>
                             </div>
@@ -219,7 +219,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 430px;">
+                                <div class="al-row-2" style="margin-top: 420px;">
                                     <div style="margin-left: 55px;float: left;">1000</div>
                                     <div style="margin-left: 260px;float: left;">1000</div>
                                     <div style="margin-left: 220px;float: left;">2018</div>
@@ -234,7 +234,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
                                     <div style="margin-left: -5px;float: left;">1000</div>
                                     <div style="margin-left: 170px;float: left;">√</div>
                                     <div style="margin-left: 54px;float: left;">√</div>
@@ -249,7 +249,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
                                     <div style="margin-left: -5px;float: left;">1000</div>
                                     <div style="margin-left: 170px;float: left;">√</div>
                                     <div style="margin-left: 54px;float: left;">√</div>
@@ -264,7 +264,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
                                     <div style="margin-left: -5px;float: left;">1000</div>
                                     <div style="margin-left: 170px;float: left;">√</div>
                                     <div style="margin-left: 54px;float: left;">√</div>
@@ -279,7 +279,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
                                     <div style="margin-left: -5px;float: left;">1000</div>
                                     <div style="margin-left: 170px;float: left;">√</div>
                                     <div style="margin-left: 54px;float: left;">√</div>
@@ -294,7 +294,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 630px;">
+                                <div class="al-row-2" style="margin-top: 620px;margin-left: 90px">
                                     <div style="margin-left: -5px;float: left;">1000</div>
                                     <div style="margin-left: 170px;float: left;">√</div>
                                     <div style="margin-left: 54px;float: left;">√</div>
@@ -309,7 +309,7 @@
                     <div class="al-tab">
                         <div class="al-line">
                             <div class="al-font">
-                                <div class="al-row-2" style="margin-top: 640px;">
+                                <div class="al-row-2" style="margin-top: 625px;margin-left: 90px">
                                     <div style="margin-left: 240px;float: left;">5</div>
                                     <div style="margin-left: 240px;float: left;">2018</div>
                                     <div style="margin-left: 219px;float: left;">07</div>
