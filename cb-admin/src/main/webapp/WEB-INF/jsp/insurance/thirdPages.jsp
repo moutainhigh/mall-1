@@ -3,6 +3,7 @@
 <%@ taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html class="no-js">                       <!--<![endif]-->
 <head>
@@ -29,7 +30,7 @@
         <div class="al-line" style="height: 0px">
             <div class="al-font">
                 <div class="al-row-2" style="margin-top: 413px;margin-left: 10px;">
-                    周泣陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠
+                    &nbsp;
                 </div>
             </div>
         </div>
@@ -40,7 +41,7 @@
         <div class="al-line">
             <div class="al-font">
                 <div class="al-row-2" style="margin-top: 430px;margin-left: 10px;">
-                    周泣陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠陈忠
+                    &nbsp;
                 </div>
             </div>
         </div>
@@ -51,11 +52,11 @@
         <div class="al-line">
             <div class="al-font">
                 <div class="al-row-2" style="margin-top: 458px;">
-                    <div style="margin-left: 12px;float: left;">中国邮政</div>
-                    <div style="margin-left: 105px;float: left;">南山</div>
-                    <div style="margin-left: 125px;float: left;">110首银行</div>
-                    <div style="margin-left: 210px;float: left;">中国邮政</div>
-                    <div style="margin-left: 110px;float: left;">南山</div>
+                    <div name="accountBank" style="margin-left: 12px;float: left;">${insuranceOrder.insuranceOrderPolicyholderBank.accountBank}</div>
+                    <div style="margin-left: 85px;float: left;">&nbsp;</div>
+                    <div style="margin-left: 65px;float: left;">&nbsp;</div>
+                    <div style="margin-left: 170px;float: left;">&nbsp;</div>
+                    <div style="margin-left: 80px;float: left;">&nbsp;</div>
                 </div>
             </div>
         </div>
@@ -66,35 +67,83 @@
         <div class="al-line">
             <div class="al-font">
                 <div class="al-row-2" style="margin-top: 450px;">
-                    <div style="margin-left: 116px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
+                    <div style="margin-left: 116px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 0, 1)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 1, 2)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 2, 3)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 3, 4)}
+                    </div>
 
-                    <div style="margin-left: 33px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
+                    <div style="margin-left: 33px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 4, 5)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 5, 6)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 7, 8)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 8, 9)}
+                    </div>
 
-                    <div style="margin-left: 35px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
+                    <div style="margin-left: 35px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 9, 10)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 10, 11)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 11, 12)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 12, 13)}
+                    </div>
 
-                    <div style="margin-left: 37px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
+                    <div style="margin-left: 37px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 13, 14)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 14, 15)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 15, 16)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 16, 17)}
+                    </div>
 
-                    <div style="margin-left: 36px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
+                    <div style="margin-left: 36px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 17, 18)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 18, 19)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 19, 20)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 20, 21)}
+                    </div>
 
-                    <div style="margin-left: 34px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
-                    <div style="margin-left: 12.5px;float: left;">1</div>
+                    <div style="margin-left: 34px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 21, 22)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 22, 23)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 23, 24)}
+                    </div>
+                    <div style="margin-left: 12.5px;float: left;">
+                        ${fn:substring(insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 24, 25)}
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,11 +154,13 @@
         <div class="al-line">
             <div class="al-font">
                 <div class="al-row-2" style="margin-top: 455px;">
-                    <div style="margin-left: 50px;float: left;">买保险</div>
-                    <div style="margin-left: 380px;float: left;">买保险</div>
-                    <div style="margin-left: 170px;float: left;">2018</div>
-                    <div style="margin-left: 50px;float: left;">07</div>
-                    <div style="margin-left: 60px;float: left;">15</div>
+                    <div name="policyholderSign" style="margin-left: 20px;float: left;">
+                        <img style="width: 100px;height: 20px" src="${insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt="">
+                    </div>
+                    <div style="margin-left: 380px;float: left;">&nbsp;</div>
+                    <div style="margin-left: 170px;float: left;">&nbsp;</div>
+                    <div style="margin-left: 50px;float: left;">&nbsp;</div>
+                    <div style="margin-left: 60px;float: left;">&nbsp;</div>
                 </div>
             </div>
         </div>
@@ -120,9 +171,9 @@
         <div class="al-line">
             <div class="al-font">
                 <div class="al-row-2" style="margin-top: 455px;">
-                    <div style="margin-left: 50px;float: left;">买保险</div>
-                    <div style="margin-left: 240px;float: left;">买保险</div>
-                    <div style="margin-left: 240px;float: left;">2018111111111111111111111111</div>
+                    <div style="margin-left: 50px;float: left;">&nbsp;</div>
+                    <div style="margin-left: 240px;float: left;">&nbsp;</div>
+                    <div style="margin-left: 240px;float: left;">&nbsp;</div>
                 </div>
             </div>
         </div>
@@ -144,7 +195,7 @@
             </div>
             <div class="right-span-div">
 										<span class="three-span">
-											投保人和被保险人对于投保单各栏目中的所有陈述均属真实，并亲笔签名，如投保人和被保险人故意或者因重大过失未履行如实告知义务，足以影响富德生命人寿保险股份有限公同决定是否同意承保或者提高保险费率的，富德生命人寿保险股份有限公同有权依法解除保险合同，并对保险合同解除前发生的保险事故，不承担赔偿或给付保险金的责任
+											投保人和被保险人对于投保单各栏目中的所有陈述均属真实，并亲笔签名，如投保人和被保险人故意或者因重大过失未履行如实告知义务，足以影响富德生命人寿保险股份有限公同决定是否同意承保或者提高保险费率的，富德生命人寿保险股份有限公司有权依法解除保险合同，并对保险合同解除前发生的保险事故，不承担赔偿或给付保险金的责任
 										</span>
             </div>
         </div>
@@ -156,7 +207,7 @@
             </div>
             <div class="right-span-div">
 										<span style="color: red;" class="three-span">
-											本人已收到且认真阅读并完全理解人身保险投保提示书及产品说明书、保险条款，对于保险合网条款各项内容特别是有关保险责任、责任免除、免
+											本人已收到且认真阅读并完全理解人身保险投保提示书及产品说明书、保险条款，对于保险合同条款各项内容特别是有关保险责任、责任免除、免
   											赔额、免赔率、比例赔付或给付或者减轻保险人责任的条款、保险期间、犹豫期、合同撤销和解除、保险合同的现金价值及父母为未成年子女投保以死亡为给付保险金条件人身保险的政策规定等内容均已了解和认可。
 										</span>
             </div>
@@ -218,7 +269,7 @@
             </div>
             <div class="right-span-div">
 										<span style="color: red;" class="three-span">
-											父母为其未成年人子女投保的人身保险，在被保险人成年之前各保险合同约定的被保险人死亡给付的保险金额总和、被保险人死亡时各保险公司实际给付的保险金总和不得超过保险监督管理机构规定的限额(被保险人不满10周岁的，不得超过人民币20万元；被保险人已满10周岁但未满18周岁的，不得超过人民币50万元)。若投保多份保险合同，存在超额情形的，本人同意按照保单生效日的先后顺序予以赔付或对超额部分无息退费。
+											父母为其未成年人子女投保的人身保险，在被保险人成年之前，各保险合同约定的被保险人死亡给付的保险金额总和、被保险人死亡时各保险公司实际给付的保险金总和不得超过保险监督管理机构规定的限额(被保险人不满10周岁的，不得超过人民币20万元；被保险人已满10周岁但未满18周岁的，不得超过人民币50万元)。若投保多份保险合同，存在超额情形的，本人同意按照保单生效日的先后顺序予以赔付或对超额部分无息退费。
 										</span>
             </div>
         </div>
@@ -285,11 +336,11 @@
             <div class="a-input-div" style="width: 100px;">
                 <span class="f-body-font-three">&nbsp;</span>
             </div>
-            ;
+
         </div>
         <div class="div-line-con-three" style="border-left: solid 00px;">
             <div class="title">
-                <span class="three-span">银行：</span>
+                <span class="three-span">银行</span>
             </div>
             <div class="a-input-div" style="width: 100px;">
                 <span class="three-span">&nbsp;</span>
@@ -297,7 +348,7 @@
         </div>
         <div class="div-line-con-three" style="border-left: solid 0px;">
             <div class="title">
-                <span class="three-span">分行：</span>
+                <span class="three-span">分行</span>
             </div>
             <div class="a-input-div" style="width: 100px;">
                 <span class="three-span">&nbsp;</span>
@@ -305,7 +356,7 @@
         </div>
         <div class="div-line-con-three" style="border-left: solid 0px;">
             <div class="title">
-                <span class="three-span">支行：</span>
+                <span class="three-span">支行</span>
             </div>
         </div>
         <div class="div-line-con-three" style="border-left: solid 0px;margin-left: 20px;">
@@ -318,7 +369,7 @@
         </div>
         <div class="div-line-con-three" style="border-left: solid 0px;">
             <div class="title">
-                <span class="three-span">分局：</span>
+                <span class="three-span">分局</span>
             </div>
             <div class="a-input-div" style="width: 100px;">
                 <span class="three-span">&nbsp;</span>
