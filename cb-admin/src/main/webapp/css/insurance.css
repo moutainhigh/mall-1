@@ -257,7 +257,7 @@ table tr th, table tr td {
     display: inline-block;
     font-size: 14px;
     box-sizing: border-box;
-    width: 27px;
+    width: 27.5px;
     height: 30px;
 }
 
@@ -462,4 +462,42 @@ input {
     margin-left: -1px;
     text-align: center;
     border-radius: 0;
+}
+
+/*浮动层*/
+.a-div-line-con {
+    display: inline-block;
+    font-size: 13px;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.a-tick {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.a-table-line {
+    position: absolute;
+    font-size: 0;
+}
+
+.a-div-table-2 {
+    height: 60px;
+    box-sizing: border-box;
+    display: table-cell;
+}
+
+.a-price {
+    position: absolute;
+    width: 600px;
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 300px;
+}
+
+.a-price span {
+    position: absolute;
 }
