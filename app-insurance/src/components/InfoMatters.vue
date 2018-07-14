@@ -798,6 +798,10 @@
             this.showPositionValue = true;
             this.toastText = "输入长度不得大于3位";
           }
+          if (newVal[0] === '0' || newVal[0] === '0' || newVal[0] === '0') {
+
+          }
+          // console.log(newVal[0] === '0');
         },
         immediate: true,
         deep: true
