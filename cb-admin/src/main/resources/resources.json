@@ -197,6 +197,9 @@
       },
       {
         "name": "事项组管理", "code": "146", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceInformedMatterGroup/insuranceInformedMatterGroups.do"
+      },
+      {
+        "name": "事项管理", "code": "146", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceInformedMatter/insuranceInformedMatters.do"
       }
     ]
   },

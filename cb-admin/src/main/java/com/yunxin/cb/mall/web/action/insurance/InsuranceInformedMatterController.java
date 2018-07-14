@@ -1,7 +1,9 @@
 package com.yunxin.cb.mall.web.action.insurance;
 
 import com.yunxin.cb.insurance.entity.InsuranceInformedMatter;
+import com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup;
 import com.yunxin.cb.insurance.entity.InsuranceOrderCode;
+import com.yunxin.cb.insurance.service.IInsuranceInformedMatterGroupService;
 import com.yunxin.cb.insurance.service.IInsuranceInformedMatterService;
 import com.yunxin.cb.insurance.service.IInsuranceOrderCodeService;
 import com.yunxin.cb.mall.web.util.ExcelUtils;
@@ -18,6 +20,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Date;
 import java.util.List;
 
@@ -31,11 +34,12 @@ public class InsuranceInformedMatterController {
 
     @Resource
     private IInsuranceInformedMatterService insuranceInformedMatterService;
-
+    @Resource
+    private IInsuranceInformedMatterGroupService insuranceInformedMatterGroupService;
 
     @RequestMapping(value = "insuranceInformedMatters")
     public String insuranceordercodes(ModelMap modelMap) {
-        return "insuranceInformedMatter/insuranceInformedMatters";
+        return "insuranceinformedmatter/insuranceinformedmatters";
     }
 
     /**
@@ -46,7 +50,7 @@ public class InsuranceInformedMatterController {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Page<InsuranceInformedMatter> pageInsuranceOrderCode(@RequestBody PageSpecification<InsuranceInformedMatter> query) {
+    public Page<InsuranceInformedMatter> pageInsuranceInformedMatter(@RequestBody PageSpecification<InsuranceInformedMatter> query) {
         return insuranceInformedMatterService.pageInsuranceInformedMatter(query);
     }
 
@@ -55,20 +59,75 @@ public class InsuranceInformedMatterController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String toAdd(){
-            return "insuranceInformedMatter/addmetter";
+    public String toAddMatter(@ModelAttribute("InsuranceInformedMatter") InsuranceInformedMatter insuranceInformedMatter, ModelMap modelMap){
+        modelMap.addAttribute("insuranceInformedMatter",insuranceInformedMatter);
+        modelMap.addAttribute("groups",insuranceInformedMatterGroupService.findList(1));
+        return "insuranceinformedmatter/addinsuranceinformedmatter";
     }
 
     /**
      *
-     * @param metterId
+     * @param matterId
      * @param modelMap
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String toEdit(@RequestParam("metterId") int metterId, ModelMap modelMap){
-        InsuranceInformedMatter insuranceInformedMatter=insuranceInformedMatterService.getInsuranceInformedMatter(metterId);
+    public String toEditMatter(@RequestParam("matterId") int matterId, ModelMap modelMap){
+        InsuranceInformedMatter insuranceInformedMatter=insuranceInformedMatterService.getInsuranceInformedMatter(matterId);
         modelMap.addAttribute("insuranceInformedMatter",insuranceInformedMatter);
-        return "insuranceInformedMatter/editmetter";
+        modelMap.addAttribute("metterType",insuranceInformedMatter.getMatterType());
+        modelMap.addAttribute("groupId",insuranceInformedMatter.getMatterGroup().getGroupId());
+        modelMap.addAttribute("groups",insuranceInformedMatterGroupService.findList(1));
+        return "insuranceinformedmatter/editinsuranceinformedmatter";
+    }
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public String addInsuranceInformedMatter(@ModelAttribute("insuranceInformedMatter") InsuranceInformedMatter insuranceInformedMatter,@ModelAttribute("groupId")int groupId) {
+        insuranceInformedMatter.setCreateTime(new Date());
+        if(groupId>0){
+            InsuranceInformedMatterGroup group=new InsuranceInformedMatterGroup();
+            group.setGroupId(groupId);
+            insuranceInformedMatter.setMatterGroup(group);
+        }
+        insuranceInformedMatterService.addInsuranceInformedMatter(insuranceInformedMatter);
+        return "redirect:../common/success.do?reurl=insuranceInformedMatter/insuranceInformedMatters.do";
+    }
+
+    /**
+     *
+     * @param insuranceInformedMatter
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public String updateinsuranceInformedMatter(@ModelAttribute("insuranceInformedMatter") InsuranceInformedMatter insuranceInformedMatter,@ModelAttribute("groupId")int groupId,@ModelAttribute("matterType")int matterType) {
+        if(groupId>0){
+            InsuranceInformedMatterGroup group=new InsuranceInformedMatterGroup();
+            group.setGroupId(groupId);
+            insuranceInformedMatter.setMatterGroup(group);
+        }
+        insuranceInformedMatter.setMatterType(matterType);
+        insuranceInformedMatterService.update(insuranceInformedMatter);
+        return "redirect:../common/success.do?reurl=insuranceInformedMatter/insuranceInformedMatters.do";
+    }
+
+    /**
+     *
+     * @param matterId
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public boolean removeById(@RequestParam("matterId") int matterId) {
+        try{
+            insuranceInformedMatterService.removeById(matterId);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
     }
 }
