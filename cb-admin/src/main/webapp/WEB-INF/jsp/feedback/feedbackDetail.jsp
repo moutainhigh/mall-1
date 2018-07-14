@@ -338,7 +338,7 @@
             <h2>反馈详情</h2>
           </div>
           <div class="pull-right">
-            <a class="btn btn-default" href="brands.do"><i class="fa fa-reply"></i></a>
+            <a class="btn btn-default" href="feedbacks.do"><i class="fa fa-reply"></i></a>
           </div>
         </div>
         <!-- End .inner-padding -->

@@ -107,6 +107,22 @@ public class InsuranceController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    public String prints3(@RequestParam("orderId") int orderId, ModelMap modelMap) {
+        InsuranceOrder InsuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
+        modelMap.addAttribute("insuranceOrder", InsuranceOrder);
+        modelMap.addAttribute("matterList", iInsuranceOrderService.findMatter(orderId));
+        return "insurance/thirdPages";
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String prints4(@RequestParam("orderId") int orderId, ModelMap modelMap) {
+        InsuranceOrder InsuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
+        modelMap.addAttribute("insuranceOrder", InsuranceOrder);
+        modelMap.addAttribute("matterList", iInsuranceOrderService.findMatter(orderId));
+        return "insurance/fourthPages";
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
     public void downloadPdf(@RequestParam("orderId") int orderId, HttpServletResponse response) throws Exception {
         response.setHeader("Content-Disposition", "attachment; filename=\"insurance-" + orderId + ".pdf\"");
         response.setContentType("application/octet-stream;charset=UTF-8");
