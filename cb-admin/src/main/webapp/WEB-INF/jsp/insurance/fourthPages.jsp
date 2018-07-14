@@ -47,28 +47,9 @@
         <header id="header-sec">
         </header>
         <div class="window">
-            <div class="actionbar">
-                <div class="pull-left">
-                    <ul class="ext-tabs">
-                        <li class="active">
-                            <a class="btn btn-default pull-right"
-                               href="javascript:void(0);" onclick="daYin()">打印</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="pull-right">
-                    <a class="btn" href="#" id="lockscreen-slider-trigger">
-                        <i class="fa fa-lock"></i>
-                    </a>
-                    <a data-toggle-sidebar="right" class="btn small-toggle-btn" href="#"></a>
-                </div>
-            </div><!-- End .actionbar-->
-
-
-            <div class="th-tab" id="prints">
                 <!-- Start .第四页第二层-->
                 <!-- Start .第二层-->
-                <div style="position: absolute;z-index: 20;padding-left: px;margin-top: 12px;">
+                <div style="position: absolute;z-index: 20;padding-left: 0px;margin-top: 12px;">
                     <!-- Start .第一行-->
                     <div class="al-tab">
                         <div class="al-line">
@@ -589,119 +570,119 @@
 
                 </div>
 
-                <div style="padding-left: 420px;">
+                <div style="padding-left: 420px;padding-top: 30px;padding-bottom: 10px;">
                     <h3><span style="font-size: 25px;">附&nbsp;件&nbsp;签&nbsp;收&nbsp;栏</span></h3></div>
                 <div class="div-tab">
                     <div class="div-line">
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="b-body-font">附件名称</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="b-body-font">种类</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="b-body-font">页数</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="b-body-font">接收人签名</span></div>
                         </div>
                     </div>
                     <div class="div-line">
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
                     </div>
                     <div class="div-line">
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
                     </div>
                     <div class="div-line">
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
                     </div>
                     <div class="div-line">
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
                     </div>
                     <div class="div-line">
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 30px;">
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">原件</span>
                                 <input class="i-cb" type="checkbox" /> <span class="a-body-font">复印件</span>
                             </div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="a-body-font">&nbsp;</span></div>
                         </div>
                     </div>
                     <div class="div-line">
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;&nbsp;&nbsp;总计</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title " style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
                         </div>
-                        <div class="div-line-con-four div-row-2">
+                        <div class="div-line-con-four div-win-2">
                             <div class="title" style="padding-left: 60px;"><span class="d-body-font">&nbsp;</span></div>
                         </div>
                     </div>
@@ -711,8 +692,6 @@
                     <span style="font-size: 25px;">全国统一热线：&nbsp;&nbsp;&nbsp;95535/4008-200-035</span>
                 </div>
                 <!-- End .第一层-->
-
-            </div>
         </div>
         <!-- End #content -->
     </div>
