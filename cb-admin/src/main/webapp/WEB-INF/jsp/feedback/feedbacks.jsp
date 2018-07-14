@@ -22,6 +22,14 @@
                 parseFormats: ["yyyy-MM-dd"]
             });
         });
+
+        function checkTime()
+        {
+           if($('#createTime').val()>$('#createTimes').val()&&''!=$('#createTimes').val()){
+               alert("开始时间不能大于结束时间")
+               $('#createTimes').val('')
+           }
+        }
         function detailItem(){
             debugger;
             var dataItem = getSelectedGridItem("grid");
@@ -113,20 +121,20 @@
                                 <strong>反馈帐户手机号:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="customer.mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
+                                <input type="text"  data-filter="customer.mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                                <input name="createTime" onchange="checkTime()" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
                             </div>
 
                             <div class="toolbar-field">
                                 <strong>-</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
+                                <input name="createTime" onchange="checkTime()"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
                             </div>
                         </div>
                         <!-- End .pull-left -->
@@ -167,10 +175,10 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="反馈用户手机号" field="customer.mobile" template="<a href='feedBackDetail.do?id=#= id#' style='color:blue'>#= customer.mobile#</a>" width="100px"/>
-                            <kendo:grid-column title="反馈帐户" field="customer.accountName" width="100px"/>
-                            <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
-                            <kendo:grid-column title="反馈内容" field="content" width="100px"/>
+                            <kendo:grid-column title="反馈用户手机号" filterable="false" field="customer.mobile" template="<a href='feedBackDetail.do?id=#= id#' style='color:blue'>#= customer.mobile#</a>" width="100px"/>
+                            <kendo:grid-column title="反馈帐户" filterable="false" field="customer.accountName" width="100px"/>
+                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
+                            <kendo:grid-column title="反馈内容" filterable="false" field="content" width="100px" />
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
