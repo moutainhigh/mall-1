@@ -241,7 +241,7 @@
 
               <div class="btn-group">
                 <a href="javascript:void(0);"  onclick="orderPrint()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印保单</a>
-                <a href="javascript:void(0);"  onclick="orderPrintSurvey()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印问券</a>
+                <a href="javascript:void(0);"  onclick="orderPrintSurvey()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印问卷</a>
 
               </div>
             </div>

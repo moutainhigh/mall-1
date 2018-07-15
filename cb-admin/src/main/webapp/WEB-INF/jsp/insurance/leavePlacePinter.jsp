@@ -27,8 +27,8 @@
 <div id="content">
 <div class="background">
     <div class="head">
-        <div class="logo"><img src="/images/files/logo.png"></div>
-        <div class="barcode"><img src="/images/files/barcode2.png" height="70px"></div>
+        <div class="logo"><img src="../images/files/logo.png"></div>
+        <div class="barcode"><img src="../images/files/barcode2.png" height="70px"></div>
     </div>
     <div class="cleanfx"></div>
     <div class="title">
