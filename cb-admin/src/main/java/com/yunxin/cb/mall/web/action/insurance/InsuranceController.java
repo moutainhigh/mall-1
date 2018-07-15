@@ -137,13 +137,13 @@ public class InsuranceController {
                 }
 
                     try {
-                       int age= CalendarUtils.getAge(birthday);
-                        map.put("age",age);
-                        if(null!=insuredCardPeriod){
-                            map.put("insurance_p_year",insuredCardPeriod.substring(0,4));
-                            map.put("insurance_p_month",insuredCardPeriod.substring(5,7));
-                            map.put("insurance_p_day",insuredCardPeriod.substring(8,10));
-                        }
+//                       int age= CalendarUtils.getAge(birthday);
+//                        map.put("age",age);
+//                        if(null!=insuredCardPeriod){
+//                            map.put("insurance_p_year",insuredCardPeriod.substring(0,4));
+//                            map.put("insurance_p_month",insuredCardPeriod.substring(5,7));
+//                            map.put("insurance_p_day",insuredCardPeriod.substring(8,10));
+//                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -183,6 +183,18 @@ public class InsuranceController {
         modelMap.addAttribute("insuranceOrder", insuranceOrder);
         //modelMap.addAttribute("matterList", iInsuranceOrderService.findMatter(orderId));
         return "insurance/orderDetailPrint";
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String printsSurvey(@RequestParam("orderId") int orderId, ModelMap modelMap) {
+        InsuranceOrder insuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
+
+
+        modelMap.addAttribute("insuranceOrder", insuranceOrder);
+        modelMap.addAttribute("orderOffsite", insuranceOrder.getInsuranceOrderOffsite());
+
+        return "insurance/leavePlacePinter";
     }
 
     @RequestMapping(method = RequestMethod.GET)

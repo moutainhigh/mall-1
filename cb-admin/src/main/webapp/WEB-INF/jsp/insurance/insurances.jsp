@@ -44,6 +44,13 @@
               window.location.href = "prints.do?orderId=" + dataItem.orderId;
           }
       }
+      function orderPrintSurvey(){
+          var dataItem = getSelectedGridItem("grid");
+          if (dataItem) {
+             // window.location.href = "printsSurvey.do?orderId=" + dataItem.orderId;
+              window.open("printsSurvey.do?orderId=" + dataItem.orderId);
+          }
+      }
 
       function orderPrint3(){
           var dataItem = getSelectedGridItem("grid");
@@ -233,7 +240,9 @@
             <div class="pull-right">
 
               <div class="btn-group">
-                <a href="javascript:void(0);"  onclick="orderPrint()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印</a>
+                <a href="javascript:void(0);"  onclick="orderPrint()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印保单</a>
+                <a href="javascript:void(0);"  onclick="orderPrintSurvey()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印问券</a>
+
               </div>
             </div>
 
