@@ -39,7 +39,7 @@
                 },
 				"groupRequired": {
                     "regex": "none",
-                    "alertText": "* 你必需選填其中一個欄位"
+                    "alertText": "* 你必须選填其中一個欄位"
                 },
                 "min": {
                     "regex": "none",
