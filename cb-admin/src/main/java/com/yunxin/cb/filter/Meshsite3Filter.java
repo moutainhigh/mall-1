@@ -15,6 +15,7 @@ public class Meshsite3Filter extends ConfigurableSiteMeshFilter {
         builder.addDecoratorPath("*.do", "/layouts/default")//拦截规则，/decorator/default 会被转发
             .addExcludedPath("/index.do**") //白名单
             .addExcludedPath("/media/chooseMedias.do*")
-            .addExcludedPath("/insurance/prints.do*");
+            .addExcludedPath("/insurance/prints.do*")
+            .addExcludedPath("/insurance/printsSurvey.do*");
     }
 }

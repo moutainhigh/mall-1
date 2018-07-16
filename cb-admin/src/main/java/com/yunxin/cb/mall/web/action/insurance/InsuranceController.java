@@ -35,7 +35,7 @@ public class InsuranceController {
     @Resource
     private IInsuranceOrderService iInsuranceOrderService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "insurances", method = RequestMethod.GET)
     public String insurances() {
         return "insurance/insurances";
     }
@@ -46,7 +46,7 @@ public class InsuranceController {
      * @param query
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageInsuranceOrder", method = RequestMethod.POST)
     @ResponseBody
     public Page<InsuranceOrder> pageInsuranceOrder(@RequestBody PageSpecification<InsuranceOrder> query) {
         Page<InsuranceOrder> page = iInsuranceOrderService.pageInsuranceOrder(query);
@@ -61,7 +61,7 @@ public class InsuranceController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "insuranceOrderDetail", method = RequestMethod.GET)
     public String insuranceOrderDetail(@RequestParam("orderId") int orderId, ModelMap modelMap) throws Exception {
         InsuranceOrder InsuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
         modelMap.addAttribute("insuranceOrder", InsuranceOrder);
@@ -77,7 +77,7 @@ public class InsuranceController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "updInsuranceOrderState", method = RequestMethod.GET)
     public boolean updInsuranceOrderState(@RequestParam("orderId") int orderId, @RequestParam("orderState") InsuranceOrderState orderState) {
         return iInsuranceOrderService.updInsuranceOrderState(orderId, orderState);
     }
@@ -106,7 +106,7 @@ public class InsuranceController {
         return "redirect:insurances.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "prints", method = RequestMethod.GET)
     public String prints(@RequestParam("orderId") int orderId, ModelMap modelMap) {
         InsuranceOrder insuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
 
@@ -186,7 +186,7 @@ public class InsuranceController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "printsSurvey", method = RequestMethod.GET)
     public String printsSurvey(@RequestParam("orderId") int orderId, ModelMap modelMap) {
         InsuranceOrder insuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
 
@@ -197,7 +197,7 @@ public class InsuranceController {
         return "insurance/leavePlacePinter";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "downloadPdf", method = RequestMethod.GET)
     public void downloadPdf(@RequestParam("orderId") int orderId, HttpServletResponse response) throws Exception {
         response.setHeader("Content-Disposition", "attachment; filename=\"insurance-" + orderId + ".pdf\"");
         response.setContentType("application/octet-stream;charset=UTF-8");

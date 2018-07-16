@@ -1,5 +1,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
     $(document).ready(function(){
@@ -19,7 +21,7 @@
                         <%--<span class="indicator-pill">32</span>--%>
                     </a>
                 </li>
-                <c:forEach var="resc" items="${userRescs}">
+                <c:forEach var="resc" items="${userPrivileges}">
                     <c:if test="${resc.type=='MENU'}">
                         <li  <c:if test="${navUrl.contains(resc.value)}">class="page-arrow active-page"</c:if>>
                             <a href="#"><i class="${resc.cssClass}"></i> ${resc.name} <i class="fa fa-caret-left pull-right"></i></a>
