@@ -1,0 +1,252 @@
+body,div,span,table,tr,td{
+    margin: 0;
+    padding: 0;
+}
+td,th
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.cleanfx{
+    width: 936px;
+    height: 0px;
+    clear: none;
+}
+table{
+    font-size: 22px;
+    font-family: \5B8B\4F53;
+}
+body{
+    width: 936px;
+}
+.background{
+    margin: 0 auto;
+    width: 936px;
+}
+.hide_div{
+    display: none;
+}
+.head{
+    height: 70px;
+    width: 100%;
+}
+.logo{
+    display: block;
+    float: left;
+    margin-left: 16px;
+}
+.barcode{
+    display: block;
+    float: right;
+    margin-right: 68px;
+}
+.title{
+    display: block;
+    terxt-align: center;
+    width: 936px;
+    height: 30px;
+}
+.title span{
+    display: block;
+    margin:0 auto;
+    width: 210px;
+    height: 30px;
+    font-size: 28px;
+    font-family: \5B8B\4F53;
+    font-weight: bold;
+}
+.content{
+    width: 936px;
+    margin-top: 20px;
+}
+.t1{
+    width: 936px;
+    height: 134px;
+}
+.t1_head{
+    height: 64px;
+    width: 936px;
+    font-size: 21px;
+    font-weight: bold;
+}
+.t1_head span{
+    display: block;
+    margin-top: 20px;
+}
+.border_bottom{
+    border-bottom: 1px solid #000;
+}
+.border_left{
+    border-left: 1px solid #000;
+}
+.border_right{
+    border-right: 1px solid #000;
+}
+.border_top{
+    border-top: 1px solid #000;
+}
+.border_all{
+    border: 1px solid #000;
+}
+.t1_head_col1{
+    height: 64px;
+    width: 300px;
+    float: left;
+}
+.t1_head_col1_name{
+    height: 64px;
+    width: 120px;
+    float: left;
+    text-align: center;
+}
+.t1_head_col1_role{
+    height: 64px;
+    width: 170px;
+    float: left;
+}
+.t1_head_col1_role div{
+    height: 30px;
+    width: 180px;
+    float: left;
+}
+.t1_head_col2{
+    height: 64px;
+    width: 300px;
+    float: left;
+    text-align: center;
+}
+.t1_head_col3{
+    height: 64px;
+    width: 330px;
+    float: left;
+    text-align: center;
+}
+.t1_body{
+    height: 64px;
+    width: 936px;
+    font-size: 21px;
+}
+.t1_body div{
+    height: 69px;
+    width: 300px;
+    float: left;
+}
+.t1_body span{
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+}
+.t3{
+    width: 926px;
+    margin: 0 auto;
+}
+.t3_title{
+    margin-top: 21px;
+    width: 926px;
+    font-size: 21px;
+}
+.t3_questions{
+    width: 926px;
+    height: 780px;
+    font-size: 21px;
+}
+.t3_questions div{
+    padding-left: 5px;
+    padding-right: 10px;
+}
+.t5{
+    padding: 0 12px;
+}
+.declare{
+    font-size: 21px;
+}
+.declare_text{
+    text-indent: 2em;
+    font-size: 21px;
+}
+.autograph{
+    margin-top: 46px;
+    width: 926px;
+    height: 110px;
+    font-size: 24px;
+}
+.autograph span{
+    margin-top: 12px;
+    font-size: 18px;
+    display: block;
+    float: none;
+}
+.autograph1{
+    width: 460px;
+    height: 110px;
+    float: left;
+}
+.autograph2{
+    width: 460px;
+    height: 110px;
+    float: left;
+}
+.firstLine{
+    height: 66px;
+    margin-bottom: 10px;
+}
+.indent{
+    text-indent: 2em;
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6em;
+    font-family: \9ED1\4F53;
+    height: 90px;
+    word-wrap:break-word;
+    word-break:break-all;
+    overflow:hidden;
+}
+.foreground{
+    position: absolute;
+    top: 0px;
+    left: 0;
+    z-index: 1;
+}
+.noorderOffsite{
+    width: 300px;
+    height: 200px;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 21px;
+}
+.btn{
+    position: fixed;
+    left: 946px;
+    top: 0;
+    width: 60px;
+    height: 120px;
+
+}
+.btn button {
+    background: #768d87;
+    background-image: -webkit-linear-gradient(top, #768d87, #6c7c7c);
+    background-image: -moz-linear-gradient(top, #768d87, #6c7c7c);
+    background-image: -ms-linear-gradient(top, #768d87, #6c7c7c);
+    background-image: -o-linear-gradient(top, #768d87, #6c7c7c);
+    background-image: linear-gradient(to bottom, #768d87, #6c7c7c);
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    border-radius: 5px;
+    text-shadow: 0px -1px 0px #2b665e;
+    -webkit-box-shadow: inset 0px 1px 3px 0px #91b8b3;
+    -moz-box-shadow: inset 0px 1px 3px 0px #91b8b3;
+    box-shadow: inset 0px 1px 3px 0px #91b8b3;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 12px 30px 12px 30px;
+    border: solid #566963 1px;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.btn button:hover {
+    color: #ffffff;
+    background: #6c7c7c;
+    text-decoration: none;
+}
