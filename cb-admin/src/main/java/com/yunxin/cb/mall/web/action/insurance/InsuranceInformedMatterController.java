@@ -48,7 +48,7 @@ public class InsuranceInformedMatterController {
      * @param
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageInsuranceInformedMatter",method = RequestMethod.POST)
     @ResponseBody
     public Page<InsuranceInformedMatter> pageInsuranceInformedMatter(@RequestBody PageSpecification<InsuranceInformedMatter> query) {
         return insuranceInformedMatterService.pageInsuranceInformedMatter(query);
@@ -58,7 +58,7 @@ public class InsuranceInformedMatterController {
      *
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddMatter",method = RequestMethod.GET)
     public String toAddMatter(@ModelAttribute("InsuranceInformedMatter") InsuranceInformedMatter insuranceInformedMatter, ModelMap modelMap){
         modelMap.addAttribute("insuranceInformedMatter",insuranceInformedMatter);
         modelMap.addAttribute("groups",insuranceInformedMatterGroupService.findList(1));
@@ -71,7 +71,7 @@ public class InsuranceInformedMatterController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditMatter",method = RequestMethod.GET)
     public String toEditMatter(@RequestParam("matterId") int matterId, ModelMap modelMap){
         InsuranceInformedMatter insuranceInformedMatter=insuranceInformedMatterService.getInsuranceInformedMatter(matterId);
         modelMap.addAttribute("insuranceInformedMatter",insuranceInformedMatter);
@@ -85,7 +85,7 @@ public class InsuranceInformedMatterController {
      *
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addInsuranceInformedMatter",method = RequestMethod.POST)
     public String addInsuranceInformedMatter(@ModelAttribute("insuranceInformedMatter") InsuranceInformedMatter insuranceInformedMatter,@ModelAttribute("groupId")int groupId) {
         insuranceInformedMatter.setCreateTime(new Date());
         if(groupId>0){
@@ -102,7 +102,7 @@ public class InsuranceInformedMatterController {
      * @param insuranceInformedMatter
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "updateinsuranceInformedMatter",method = RequestMethod.POST)
     public String updateinsuranceInformedMatter(@ModelAttribute("insuranceInformedMatter") InsuranceInformedMatter insuranceInformedMatter,@ModelAttribute("groupId")int groupId,@ModelAttribute("matterType")int matterType) {
         if(groupId>0){
             InsuranceInformedMatterGroup group=new InsuranceInformedMatterGroup();
@@ -119,7 +119,7 @@ public class InsuranceInformedMatterController {
      * @param matterId
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeById(@RequestParam("matterId") int matterId) {
         try{

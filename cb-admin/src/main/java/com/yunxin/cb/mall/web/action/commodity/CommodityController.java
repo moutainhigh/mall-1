@@ -90,7 +90,7 @@ public class CommodityController implements ServletContextAware {
 
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "choosePagedCommodities",method = RequestMethod.POST)
     public Page<Commodity> choosePagedCommodities(@RequestBody PageSpecification<Commodity> commodityQuery, HttpServletRequest request) {
         Page<Commodity> page = commodityService.choosePagedCommodities(commodityQuery);
         return page;
@@ -193,7 +193,7 @@ public class CommodityController implements ServletContextAware {
         return "redirect:../common/success.do?reurl=commodity/commodities.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeCommodityById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeCommodityById(@RequestParam("commodityId") int commodityId, HttpServletRequest request) {
         try {
@@ -217,12 +217,12 @@ public class CommodityController implements ServletContextAware {
 
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "upOrDownShelvesCommodity",method = RequestMethod.GET)
     public boolean upOrDownShelvesCommodity(@RequestParam("commodityId") int commodityId, @RequestParam("publishState") PublishState publishState) {
         return commodityService.upOrDownShelvesCommodity(commodityId, publishState);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "commodityDetail",method = RequestMethod.GET)
     public String commodityDetail(@RequestParam("commodityId") int commodityId, ModelMap modelMap) throws Exception {
         Commodity commodity = commodityService.getCommodityDetailById(commodityId);
         modelMap.addAttribute("commodity", commodity);
@@ -255,20 +255,20 @@ public class CommodityController implements ServletContextAware {
         return "commodity/commoditySaleVos";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getCombinationsByCommodityId",method = RequestMethod.GET)
     @ResponseBody
     public List<Combination> getCombinationsByCommodityId(@RequestParam("commodityId") int commodityId) {
         return commodityService.getCombinationCommoditiesByCommodityId(commodityId);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toCombinations",method = RequestMethod.GET)
     public String toCombinations(@ModelAttribute("combination") Combination combination, @RequestParam("commodityId") int commodityId, ModelMap modelMap) {
         modelMap.addAttribute("commodity", commodityService.findByCommodityId(commodityId));
         modelMap.addAttribute("combinations", commodityService.getCombinationCommoditiesByCommodityId(commodityId));
         return "commodity/combinations";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addCombinationCommodities",method = RequestMethod.POST)
     @ResponseBody
     public boolean addCombinationCommodities(@RequestParam("commodityId") int commodityId, @RequestParam("selectedCommodityId") int[] selectedCommodityId) {
         try {
@@ -280,7 +280,7 @@ public class CommodityController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeCombinationById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeCombinationById(@RequestParam("combinationId") int combinationId) {
         try {
@@ -292,7 +292,7 @@ public class CommodityController implements ServletContextAware {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "commodityAudit",method = RequestMethod.GET)
     @ResponseBody
     public boolean commodityAudit(@RequestParam("commodityId") int commodityId, @RequestParam("commodityState") CommodityState commodityState, @RequestParam("auditRemark") String auditRemark) {
         try {

@@ -48,13 +48,13 @@ public class AttributeGroupController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddAttributeGroup", method = RequestMethod.GET)
     public String toAddAttributeGroup(@RequestParam("commodityId") int commodityId, @ModelAttribute("attributeGroup") AttributeGroup attributeGroup, ModelMap modelMap) {
         attributeGroup.setCommodity(new Commodity(commodityId));
         return "commodity/addAttributeGroup";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addAttributeGroup", method = RequestMethod.POST)
     public String addAttributeGroup(@Valid @ModelAttribute("attributeGroup") AttributeGroup attributeGroup, BindingResult result, ModelMap modelMap) throws IOException {
         if (result.hasErrors()) {
             return toAddAttributeGroup(attributeGroup.getCommodity().getCommodityId(), attributeGroup, modelMap);
@@ -84,7 +84,7 @@ public class AttributeGroupController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditAttributeGroup", method = RequestMethod.GET)
     public String toEditAttributeGroup(@RequestParam("groupId") int groupId, ModelMap modelMap) {
         AttributeGroup attributeGroup = attributeService.getAttributeGroupById(groupId);
         modelMap.addAttribute("attributeGroup", attributeGroup);
@@ -95,7 +95,7 @@ public class AttributeGroupController implements ServletContextAware {
         return "commodity/editAttributeGroup";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editAttributeGroup", method = RequestMethod.POST)
     public String editAttributeGroup(@Valid @ModelAttribute("attributeGroup") AttributeGroup attributeGroup, BindingResult result,
                                      ModelMap modelMap) throws IOException {
         if (result.hasErrors()) {
@@ -136,7 +136,7 @@ public class AttributeGroupController implements ServletContextAware {
         return "redirect:editProducts.do?commodityId=" + attributeGroup.getCommodity().getCommodityId();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "removeAttributeGroupById", method = RequestMethod.POST)
     @ResponseBody
     public ResponseResult removeAttributeGroupById(@RequestParam("groupId") int groupId) {
         ResponseResult responseResult = new ResponseResult();

@@ -47,12 +47,12 @@ public class SupplierController {
     private MessageSource messageSource;
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "suppliers",method = RequestMethod.GET)
     public String suppliers() {
         return "supplier/suppliers";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageSuppliers",method = RequestMethod.POST)
     @ResponseBody
     public Page<Supplier> pageSuppliers(@RequestBody PageSpecification<Supplier> query) {
         Page<Supplier> page = supplierService.pageSuppliers(query);
@@ -65,7 +65,7 @@ public class SupplierController {
      * @param supplier
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddSupplier",method = RequestMethod.GET)
     public String toAddSupplier(@ModelAttribute("supplier") Supplier supplier, ModelMap modelMap) {
         return "supplier/addSupplier";
     }
@@ -80,7 +80,7 @@ public class SupplierController {
      * @param locale
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addSupplier",method = RequestMethod.POST)
     public String addSupplier(@Valid @ModelAttribute("supplier") Supplier supplier, ModelMap modelMap, HttpServletRequest request, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return toAddSupplier(supplier, modelMap);
@@ -104,7 +104,7 @@ public class SupplierController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditSupplier",method = RequestMethod.GET)
     public String toEditSupplier(@RequestParam("supplierId") int supplierId, ModelMap modelMap) {
         Supplier supplier = supplierService.getSupplierById(supplierId);
         modelMap.addAttribute("supplier", supplier);
@@ -118,7 +118,7 @@ public class SupplierController {
      * @param request
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editSupplier",method = RequestMethod.POST)
     public String editSupplier(@ModelAttribute("supplier") Supplier supplier, HttpServletRequest request, ModelMap modelMap, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return suppliers();
@@ -135,7 +135,7 @@ public class SupplierController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeSupplierById",method = RequestMethod.GET)
     @ResponseBody
     public int removeSupplierById(@RequestParam("supplierId") int supplierId) {
         supplierService.removeSupplierById(supplierId);

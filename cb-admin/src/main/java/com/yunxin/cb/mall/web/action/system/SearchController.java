@@ -25,35 +25,35 @@ public class SearchController {
     @Resource
     private ISearchService searchService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "searchEngine",method = RequestMethod.GET)
     public String searchEngine(ModelMap modelMap) {
 
         return "system/searchEngine";
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "startIndex",method = RequestMethod.POST)
     @ResponseBody
     public int startIndex( ) {
         searchService.indexAllCommodities();
         return 1;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "searchCommodities",method = RequestMethod.POST)
     @ResponseBody
     public List<Commodity> searchCommodities(@RequestParam("text") String text) {
         List<Commodity> commodities = searchService.searchCommodities(text);
         return commodities;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "startArticleIndex",method = RequestMethod.POST)
     @ResponseBody
     public int startArticleIndex( ) {
         searchService.indexAllArticles();
         return 1;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "searchArticles",method = RequestMethod.POST)
     @ResponseBody
     public List<Article> searchArticles(@RequestParam("text") String text) {
         List<Article> articles = searchService.searchArticles(text);

@@ -50,7 +50,7 @@ public class InsuranceOrderCodeController {
      * @param
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageInsuranceOrderCode",method = RequestMethod.POST)
     @ResponseBody
     public Page<InsuranceOrderCode> pageInsuranceOrderCode(@RequestBody PageSpecification<InsuranceOrderCode> query) {
         return insuranceOrderCodeService.pageInsuranceOrderCode(query);

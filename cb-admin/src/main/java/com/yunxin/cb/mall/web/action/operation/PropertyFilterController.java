@@ -31,28 +31,28 @@ public class PropertyFilterController {
     private IFilterService filterService;
 
 
-    @RequestMapping(  method = RequestMethod.GET)
+    @RequestMapping( value = "propertyFilters",method = RequestMethod.GET)
     public String propertyFilters(ModelMap modelMap) {
         TreeViewItem categoryTree = categoryService.getCategoryTree();
         modelMap.addAttribute("categoryTree", categoryTree.getItems());
         return "operation/propertyFilters";
     }
 
-    @RequestMapping(  method = RequestMethod.POST)
+    @RequestMapping(  value = "pagePropertyFilters",method = RequestMethod.POST)
     @ResponseBody
     public Page<PropertyFilter> pagePropertyFilters(@RequestBody PageSpecification<PropertyFilter> query) {
         Page<PropertyFilter> pageFilterItem = filterService.pagePropertyFilters(query);
         return pageFilterItem;
     }
 
-    @RequestMapping(  method = RequestMethod.GET)
+    @RequestMapping( value = "toAddPropertyFilter",method = RequestMethod.GET)
     public String toAddPropertyFilter(@ModelAttribute("filter") PropertyFilter propertyFilter,ModelMap modelMap) {
         TreeViewItem categoryTree = categoryService.getCategoryTree();
         modelMap.addAttribute("categoryTree", Arrays.asList(categoryTree));
         return "operation/addPropertyFilter";
     }
 
-    @RequestMapping( method = RequestMethod.POST)
+    @RequestMapping(value = "addPropertyFilter",method = RequestMethod.POST)
     public String addPropertyFilter(@ModelAttribute("filter") PropertyFilter propertyFilter, BindingResult result, ModelMap modelMap) {
         if (result.hasErrors()){
             return toAddPropertyFilter(propertyFilter,modelMap);
@@ -65,7 +65,7 @@ public class PropertyFilterController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditPropertyFilter",method = RequestMethod.GET)
     public String toEditPropertyFilter(@RequestParam("filterId") int filterId,  ModelMap modelMap) {
         PropertyFilter propertyFilter=filterService.getPropertyFilterById(filterId);
         modelMap.addAttribute("filter", propertyFilter);
@@ -74,7 +74,7 @@ public class PropertyFilterController {
         return toEditPropertyFilter(modelMap);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "propertyFilterDetail",method = RequestMethod.GET)
     public String propertyFilterDetail(@RequestParam("filterId") int filterId,  ModelMap modelMap) {
         PropertyFilter propertyFilter=filterService.getPropertyFilterById(filterId);
         modelMap.addAttribute("filter", propertyFilter);
@@ -88,7 +88,7 @@ public class PropertyFilterController {
         return "operation/editPropertyFilter";
     }
 
-    @RequestMapping( method = RequestMethod.POST)
+    @RequestMapping( value = "editPropertyFilter",method = RequestMethod.POST)
     public String editPropertyFilter(@ModelAttribute("filter") PropertyFilter propertyFilter, BindingResult result, ModelMap modelMap) {
         if (result.hasErrors()){
             return toEditPropertyFilter(modelMap);
@@ -102,7 +102,7 @@ public class PropertyFilterController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removePropertyFilterById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removePropertyFilterById(@RequestParam("filterId") int filterId) {
         try{

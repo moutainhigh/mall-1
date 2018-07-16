@@ -48,14 +48,14 @@ public class CustomerController {
         return "customer/customers";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageCustomers",method = RequestMethod.POST)
     @ResponseBody
     public Page<Customer> pageCustomers(@RequestBody PageSpecification<Customer> specification) {
         Page<Customer> page = customerService.pageCustomers(specification);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "customerDetail",method = RequestMethod.GET)
     public String customerDetail(@ModelAttribute("customerId") int customerId, ModelMap modelMap) {
         modelMap.addAttribute("customer", customerService.getCustomerById(customerId));
         List<DeliveryAddress> deliveryAddresses = addressService.getAllAddressesByCustomerId(customerId);
@@ -63,13 +63,13 @@ public class CustomerController {
         return "customer/customerDetail";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddCustomer",method = RequestMethod.GET)
     public String toAddCustomer(@ModelAttribute("customer") Customer customer, ModelMap modelMap, HttpServletRequest request) {
         modelMap.addAttribute("ranks", rankService.getAllRanks());
         return "customer/addCustomer";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addCustomer",method = RequestMethod.POST)
     public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, HttpServletRequest request, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return customers();
@@ -84,14 +84,14 @@ public class CustomerController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditCustomer",method = RequestMethod.GET)
     public String toEditCustomer(@RequestParam("customerId") int customerId, ModelMap modelMap) {
         modelMap.addAttribute("customer",customerService.getCustomerById(customerId));
         return "customer/editCustomer";
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editCustomer",method = RequestMethod.POST)
     public String editCustomer(@Valid @ModelAttribute("customer") Customer customer, HttpServletRequest request, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return customers();
@@ -108,7 +108,7 @@ public class CustomerController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "updateCustomerStatusById",method = RequestMethod.GET)
     public String updateCustomerStatusById(@RequestParam("enable") boolean enable, @RequestParam("customerId") int customerId, HttpServletRequest request) {
         Customer customer = customerService.getCustomerById(customerId);
         customer.setEnabled(enable);
@@ -122,7 +122,7 @@ public class CustomerController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeCustomerById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeCustomerById(@RequestParam("customerId") int customerId) {
         try {
@@ -135,7 +135,7 @@ public class CustomerController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "resetCustomerPwd",method = RequestMethod.GET)
     @ResponseBody
     public boolean resetCustomerPwd(@RequestParam("customerId") int customerId) {
         try {

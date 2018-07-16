@@ -38,7 +38,7 @@ public class InsuranceInformedMatterGroupController {
      * @param
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageInsuranceInformedMatterGroup",method = RequestMethod.POST)
     @ResponseBody
     public Page<InsuranceInformedMatterGroup> pageInsuranceInformedMatterGroup(@RequestBody PageSpecification<InsuranceInformedMatterGroup> query) {
         return insuranceInformedMatterGroupService.pageInsuranceInformedMatterGroup(query);
@@ -48,7 +48,7 @@ public class InsuranceInformedMatterGroupController {
      *
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddGroup",method = RequestMethod.GET)
     public String toAddGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup, ModelMap modelMap){
         modelMap.addAttribute("insuranceInformedMatterGroup",insuranceInformedMatterGroup);
         return "imattergroup/addgroup";
@@ -60,7 +60,7 @@ public class InsuranceInformedMatterGroupController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditGroup",method = RequestMethod.GET)
     public String toEditGroup(@RequestParam("groupId") int groupId, ModelMap modelMap){
         InsuranceInformedMatterGroup insuranceInformedMatterGroup=insuranceInformedMatterGroupService.getInsuranceInformedMatterGroup(groupId);
         modelMap.addAttribute("insuranceInformedMatterGroup",insuranceInformedMatterGroup);
@@ -71,7 +71,7 @@ public class InsuranceInformedMatterGroupController {
      *
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addinsuranceInformedMatterGroup",method = RequestMethod.POST)
     public String addinsuranceInformedMatterGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup) {
         insuranceInformedMatterGroup.setEnabled(0);
         insuranceInformedMatterGroup.setCreateTime(new Date());
@@ -84,7 +84,7 @@ public class InsuranceInformedMatterGroupController {
      * @param insuranceInformedMatterGroup
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "updateinsuranceInformedMatterGroup",method = RequestMethod.POST)
     public String updateinsuranceInformedMatterGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup) {
         insuranceInformedMatterGroupService.update(insuranceInformedMatterGroup);
         return "redirect:../common/success.do?reurl=insuranceInformedMatterGroup/insuranceInformedMatterGroups.do";
@@ -95,7 +95,7 @@ public class InsuranceInformedMatterGroupController {
      * @param groupId
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeById(@RequestParam("groupId") int groupId) {
         try{

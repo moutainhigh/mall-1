@@ -40,36 +40,36 @@ public class StatisticsController {
     private IStatisticsMoneyService statisticsMoneyService;
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "orderStatistics",method = RequestMethod.GET)
     public String orderStatistics() {
         return "statistics/orderStatistics";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "moneyStatistics",method = RequestMethod.GET)
     public String moneyStatistics() {
         return "statistics/moneyStatistics";
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "productStatistics",method = RequestMethod.GET)
     public String productStatistics() {
         return "statistics/productStatistics";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "customerStatistics",method = RequestMethod.GET)
     public String customerStatistics() {
         return "statistics/customerStatistics";
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getDayOrder",method = RequestMethod.GET)
     @ResponseBody
     public List<StatisticsDayOrderView> getDayOrder(@RequestParam("year") int year, @RequestParam("month") int month) {
         List<StatisticsDayOrderView> statisticsOrderDayViews = statisticsOrderService.getDayOrder(year, month);
         return statisticsOrderDayViews;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getDayOrderPaid",method = RequestMethod.GET)
     @ResponseBody
     public List<StatisticsDayOrderPaidView> getDayOrderPaid(@RequestParam("year") int year, @RequestParam("month") int month) {
         List<StatisticsDayOrderPaidView> statisticsPaidOrderDayViews = statisticsOrderService.getDayOrderPaid(year, month);
@@ -77,14 +77,14 @@ public class StatisticsController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getMonthOrder",method = RequestMethod.GET)
     @ResponseBody
     public List<StatisticsMonthOrderView> getMonthOrder(@RequestParam("year") int year) {
         List<StatisticsMonthOrderView> statisticsOrderMonthViews = statisticsOrderService.getMonthOrder(year);
         return statisticsOrderMonthViews;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getMonthOrderPaid",method = RequestMethod.GET)
     @ResponseBody
     public List<StatisticsMonthOrderPaidView> getMonthOrderPaid(@RequestParam("year") int year) {
         List<StatisticsMonthOrderPaidView> statisticsPaidOrderMonthViews = statisticsOrderService.getMonthOrderPaid(year);
@@ -92,14 +92,14 @@ public class StatisticsController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getDayMoney",method = RequestMethod.GET)
     @ResponseBody
     public List<StatisticsDayMoneyView> getDayMoney(@RequestParam("year") int year, @RequestParam("month") int month) {
         List<StatisticsDayMoneyView> statisticsDayMoneyViews = statisticsMoneyService.getDayMoney(year, month);
         return statisticsDayMoneyViews;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getDayMoneyPaid",method = RequestMethod.GET)
     @ResponseBody
     public List<StatisticsDayMoneyPaidView> getDayMoneyPaid(@RequestParam("year") int year, @RequestParam("month") int month) {
         List<StatisticsDayMoneyPaidView> statisticsDayMoneyPaidViews = statisticsMoneyService.getDayMoneyPaid(year, month);
@@ -107,14 +107,14 @@ public class StatisticsController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getMonthMoney",method = RequestMethod.GET)
     @ResponseBody
     public List<StatisticsMonthMoneyView> getMonthMoney(@RequestParam("year") int year) {
         List<StatisticsMonthMoneyView> statisticsMonthMoneyViews = statisticsMoneyService.getMonthMoney(year);
         return statisticsMonthMoneyViews;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getMonthMoneyPaid",method = RequestMethod.GET)
     @ResponseBody
     public List<StatisticsMonthMoneyPaidView> getMonthMoneyPaid(@RequestParam("year") int year) {
         List<StatisticsMonthMoneyPaidView> statisticsMonthMoneyPaidViews = statisticsMoneyService.getMonthMoneyPaid(year);

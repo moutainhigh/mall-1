@@ -46,7 +46,7 @@ public class CategoryController implements ServletContextAware {
         this.servletContext = servletContext;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "categories",method = RequestMethod.GET)
     public String categories(ModelMap modelMap, HttpServletRequest request) {
         List<Category> categories = categoryService.getAllCategories();
         categories.stream().forEach(p -> {
@@ -63,14 +63,14 @@ public class CategoryController implements ServletContextAware {
         return "operation/categories";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddCategory",method = RequestMethod.GET)
     public String toAddCategory(@ModelAttribute("category") Category category, ModelMap modelMap) {
         TreeViewItem categoryTree = categoryService.getCategoryTree();
         modelMap.addAttribute("categoryTree", Arrays.asList(categoryTree));
         return "operation/addCategory";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addCategory",method = RequestMethod.POST)
     public String addCategory(@Valid @ModelAttribute("category") Category category, BindingResult result, Locale locale,  ModelMap modelMap) {
         if (result.hasErrors()) {
             return toAddCategory(category, modelMap);
@@ -88,7 +88,7 @@ public class CategoryController implements ServletContextAware {
         return "redirect:../common/success.do?reurl=operation/categories.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditCategory",method = RequestMethod.GET)
     public String toEditCategory(@RequestParam("categoryId") int categoryId, ModelMap modelMap) {
         Category category = categoryService.getCategoryById(categoryId);
         modelMap.addAttribute("category", category);
@@ -101,7 +101,7 @@ public class CategoryController implements ServletContextAware {
         return "operation/editCategory";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editCategory",method = RequestMethod.POST)
     public String editCategory(@Valid @ModelAttribute("category") Category category, BindingResult result,Locale locale,
                                ModelMap modelMap) {
         if (result.hasErrors()) {
@@ -131,7 +131,7 @@ public class CategoryController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeCategoryById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeCategoryById(@RequestParam("categoryId") int categoryId) {
         try {

@@ -25,12 +25,12 @@ public class ComplaintController {
     @Resource
     private IComplaintService complaintService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "complaints",method = RequestMethod.GET)
     public String complaints() {
         return "operation/complaints";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageComplaints",method = RequestMethod.POST)
     @ResponseBody
     public Page<Complaint> pageComplaints(@RequestBody PageSpecification<Complaint> query) {
         Page<Complaint> page = complaintService.pageComplaints(query);
@@ -38,12 +38,12 @@ public class ComplaintController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddComplaint",method = RequestMethod.GET)
     public String toAddComplaint(@ModelAttribute("complaint") Complaint complaint) {
         return "operation/addComplaint";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addComplaint",method = RequestMethod.POST)
     public String addComplaint(@Valid @ModelAttribute("complaint") Complaint complaint, HttpServletRequest request, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return toAddComplaint(complaint);
@@ -53,7 +53,7 @@ public class ComplaintController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "updateComplaintStatusById",method = RequestMethod.GET)
     public String updateComplaintStatusById(@RequestParam("enable") boolean enable, @RequestParam("complaintId") int complaintId, HttpServletRequest request) {
         complaintService.logicDeleteByArticleId(complaintId);
         return "redirect:../common/success.do?reurl=operation/complaints.do";

@@ -41,7 +41,7 @@ public class SpecController {
     private MessageSource messageSource;
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "catalogSpecs",method = RequestMethod.GET)
     public String catalogSpecs(@RequestParam("catalogId") int catalogId, @ModelAttribute("spec") Spec spec, ModelMap modelMap) {
         Catalog catalog = catalogService.getCategoryById(catalogId);
         modelMap.addAttribute("catalog", catalog);
@@ -53,7 +53,7 @@ public class SpecController {
         return "commodity/catalogSpecs";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addSpec",method = RequestMethod.POST)
     public String addSpec(@Valid @ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return catalogSpecs(spec.getCatalog().getCatalogId(), spec, modelMap);
@@ -69,7 +69,7 @@ public class SpecController {
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editSpec",method = RequestMethod.POST)
     public String editSpec(@ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap) {
         try {
             spec = commodityService.updateSpec(spec);
@@ -80,13 +80,13 @@ public class SpecController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getSpecsByCatalogId",method = RequestMethod.GET)
     public List<Spec> getSpecsByCatalogId(@RequestParam("catalogId") int catalogId) {
         return commodityService.getSpecsByCatalogId(catalogId);
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeSpecById",method = RequestMethod.GET)
     public boolean removeSpecById(@RequestParam("specId") int specId) {
         try {
             commodityService.removeSpecById(specId);

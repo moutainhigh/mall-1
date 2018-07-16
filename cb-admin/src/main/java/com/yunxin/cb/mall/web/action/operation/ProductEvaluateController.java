@@ -47,25 +47,25 @@ public class ProductEvaluateController {
     @Resource
     private MessageSource messageSource;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "productEvaluates",method = RequestMethod.GET)
     public String productEvaluates() {
         return "operation/productEvaluates";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageProductEvaluates",method = RequestMethod.POST)
     @ResponseBody
     public Page<ProductEvaluate> pageProductEvaluates(@RequestBody PageSpecification<ProductEvaluate> query) {
         Page<ProductEvaluate> pages = commodityEvaluateService.pageProductEvaluates(query);
         return pages;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddProductEvaluate",method = RequestMethod.GET)
     public String toAddProductEvaluate(@ModelAttribute("productEvaluate") ProductEvaluate productEvaluate,
                                        ModelMap modelMap) {
         return "operation/addEvaluate";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addProductEvaluate",method = RequestMethod.POST)
     public String addProductEvaluate(@Valid @ModelAttribute("productEvaluate") ProductEvaluate productEvaluate, ModelMap modelMap, HttpServletRequest request, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return toAddProductEvaluate(productEvaluate, modelMap);
@@ -82,13 +82,13 @@ public class ProductEvaluateController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditProductEvaluate",method = RequestMethod.GET)
     public String toEditProductEvaluate(@RequestParam("evaluateId") int evaluateId, ModelMap modelMap) {
         modelMap.addAttribute("productEvaluate", commodityEvaluateService.getEvaluateById(evaluateId));
         return "operation/addEvaluate";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editProductEvaluate",method = RequestMethod.POST)
     public String editProductEvaluate(@Valid @ModelAttribute("productEvaluate") ProductEvaluate productEvaluate, HttpServletRequest request, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return productEvaluates();
@@ -105,14 +105,14 @@ public class ProductEvaluateController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeProductEvaluateById",method = RequestMethod.GET)
     @ResponseBody
     public int removeProductEvaluateById(@RequestParam("evaluateId") int evaluateId) {
         commodityEvaluateService.removeProductEvaluateById(evaluateId);
         return evaluateId;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "evaluateDetails",method = RequestMethod.GET)
     public String evaluateDetails(@RequestParam("evaluateId") int evaluateId, ModelMap modelMap) {
         modelMap.addAttribute("evaluate", commodityEvaluateService.getEvaluateById(evaluateId));
         modelMap.addAttribute("productEvaluateReplies", commodityEvaluateService.getProductEvaluateReplysByEvaluateId(evaluateId));
@@ -120,7 +120,7 @@ public class ProductEvaluateController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "productEvaluateReply",method = RequestMethod.POST)
     @ResponseBody
     public boolean productEvaluateReply(@RequestParam("evaluateId") int evaluateId,@RequestParam("replyContent") String replyContent,HttpServletRequest request) {
         try {
@@ -139,7 +139,7 @@ public class ProductEvaluateController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeProductEvaluateReplyById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeProductEvaluateReplyById(@RequestParam("replyId") int replyId) {
         try {

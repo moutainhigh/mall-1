@@ -67,7 +67,7 @@ public class OrderController {
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getOrderDetailById",method = RequestMethod.GET)
     public String getOrderDetailById(@RequestParam("orderId") int orderId,ModelMap modelMap){
         Order order = orderService.getOrderDetailById(orderId);
         if(null != order){
@@ -81,7 +81,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "changeOrderPrice",method = RequestMethod.POST)
     public boolean changeOrderPrice(@RequestParam("orderId") int orderId,double changePrice) {
         Order order =orderService.changeOrderPrice(orderId, changePrice);
         if(null != order){
@@ -92,7 +92,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "changeDelivery",method = RequestMethod.POST)
     public boolean changeDelivery(int orderId,DeliveryAddress deliveryAddress) {
         Order order =orderService.changeOrderDelivery(orderId, deliveryAddress);
         if(null != order){
@@ -110,7 +110,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editOrderLogistic",method = RequestMethod.POST)
     public boolean editOrderLogistic(@RequestParam("orderId") int orderId,@RequestParam("logisticId") int logisticId,@RequestParam("courierNumber") String courierNumber) {
 
         Order order= orderService.editOrderLogistic(orderId,logisticId,courierNumber);
@@ -120,7 +120,7 @@ public class OrderController {
         return false;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "returnOrders",method = RequestMethod.GET)
     public String returnOrders(HttpSession session,ModelMap modelMap) {
         Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
         modelMap.put("seller",seller);
@@ -128,14 +128,14 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageReturnOrders",method = RequestMethod.POST)
     public Page<ProductReturn> pageReturnOrders(@RequestBody PageSpecification query, HttpServletRequest request) {
 
         Page<ProductReturn> page = orderService.pageReturnOrders(query);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "barterOrders",method = RequestMethod.GET)
     public String barterOrders(HttpSession session,ModelMap modelMap) {
         Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
         modelMap.put("seller",seller);
@@ -143,7 +143,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageBarterOrders",method = RequestMethod.POST)
     public Page<ProductBarter> pageBarterOrders(@RequestBody PageSpecification query, HttpServletRequest request) {
         Page<ProductBarter> page = orderService.pageBarterOrders(query);
         return page;
@@ -151,7 +151,7 @@ public class OrderController {
 
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "confirmReceivedBarterProduct",method = RequestMethod.GET)
     public JsonResult confirmReceivedBarterProduct(@RequestParam("barterId") int barterId) {
         JsonResult jsonResult =new JsonResult();
         try {
@@ -164,7 +164,7 @@ public class OrderController {
         return jsonResult;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "productBarterAudit",method = RequestMethod.GET)
     @ResponseBody
     public boolean productBarterAudit(@RequestParam("barterId") int barterId, @RequestParam("auditState") AuditState auditState, @RequestParam("auditRemark") String auditRemark) {
         try {
@@ -175,7 +175,7 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "productBarter",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult productBarter(@RequestParam("orderItemId") int orderItemId){
         JsonResult jsonResult=new JsonResult();
@@ -193,7 +193,7 @@ public class OrderController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "productReturnAudit",method = RequestMethod.GET)
     @ResponseBody
     public boolean productReturnAudit(@RequestParam("returnId") int returnId, @RequestParam("auditState") AuditState auditState,@RequestParam("auditRemark") String auditRemark) {
         try {
@@ -206,7 +206,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "confirmReceivedReturnProduct",method = RequestMethod.GET)
     public JsonResult confirmReceivedReturnProduct(@RequestParam("returnId") int returnId) {
         JsonResult jsonResult =new JsonResult();
         try {
@@ -220,14 +220,14 @@ public class OrderController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toReturnRefundOrder",method = RequestMethod.GET)
     public String toReturnRefundOrder(@RequestParam("returnCode") String returnCode,ModelMap modelMap) {
         ProductReturn productReturn = orderService.getProductReturnByReturnCode(returnCode);
         modelMap.put("productReturn", productReturn);
         return "sale/returnOrder";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "returnRefundOrder",method = RequestMethod.POST)
     public String returnRefundOrder(@Valid @ModelAttribute("productReturn") ProductReturn productReturn, BindingResult result, ModelMap modelMap, HttpServletRequest request, Locale locale) {
         if (result.hasErrors()) {
             return toReturnRefundOrder(productReturn.getReturnCode(), modelMap);

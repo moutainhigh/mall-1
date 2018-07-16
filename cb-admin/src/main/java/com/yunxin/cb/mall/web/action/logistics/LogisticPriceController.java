@@ -37,7 +37,7 @@ public class LogisticPriceController {
     private ProvinceConfig provinceConfig;
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "logisticPrice",method = RequestMethod.GET)
     public String logisticPrice(@RequestParam("logisticId") int logisticId, ModelMap modelMap) {
         Logistic logistic = logisticsService.findById(logisticId);
         modelMap.addAttribute("logistic", logistic);
@@ -46,7 +46,7 @@ public class LogisticPriceController {
         return "logistic/logisticPrice";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddLogisticPrice",method = RequestMethod.GET)
     public String toAddLogisticPrice(@RequestParam("logisticId") int logisticId, @ModelAttribute("logisticPrice") LogisticPrice logisticPrice, ModelMap modelMap) {
         logisticPrice.setLogistic(new Logistic(logisticId));
         List<Province> provinces = provinceConfig.getProvinces();
@@ -58,7 +58,7 @@ public class LogisticPriceController {
         return "logistic/addLogisticPrice";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addLogisticPrice",method = RequestMethod.POST)
     public String addLogisticPrice(@Valid @ModelAttribute("logisticPrice") LogisticPrice logisticPrice, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return toAddLogisticPrice(logisticPrice);
@@ -73,7 +73,7 @@ public class LogisticPriceController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditLogisticPrice",method = RequestMethod.GET)
     public String toEditLogisticPrice(@RequestParam("priceId") int priceId,@RequestParam("logisticId") int logisticId, ModelMap modelMap) {
         LogisticPrice logisticPrice = logisticsService.getLogisticPriceById(priceId);
 
@@ -88,7 +88,7 @@ public class LogisticPriceController {
         return "logistic/editLogisticPrice";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editLogisticPrice",method = RequestMethod.POST)
     public String editLogisticPrice(@Valid @ModelAttribute("logisticPrice") LogisticPrice logisticPrice, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return toEditLogisticPrice(logisticPrice);
@@ -102,7 +102,7 @@ public class LogisticPriceController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeLogisticPriceById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeLogisticPriceById(@RequestParam("priceId") int priceId) {
         try {

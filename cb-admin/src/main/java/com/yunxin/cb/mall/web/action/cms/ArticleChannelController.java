@@ -36,34 +36,34 @@ public class ArticleChannelController {
     private MessageSource messageSource;
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "channelProgramas",method = RequestMethod.GET)
     public String channelProgramas(ModelMap modelMAap) {
         return "cms/channelProgramas";
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "getArticleChannels", method = RequestMethod.POST)
     @ResponseBody
     public List<ArticleChannel> getArticleChannels() {
         List<ArticleChannel> page = programaService.getArticleChannels();
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "getProgramasByChannelId", method = RequestMethod.POST)
     @ResponseBody
     public List<Programa> getProgramasByChannelId(@RequestBody PageSpecification pageRequest) {
         String channelId = (String) pageRequest.getData().get("channelId");
         return programaService.getProgramasByChannelId(Integer.parseInt(channelId));
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddArticleChannel", method = RequestMethod.GET)
     public String toAddArticleChannel(@ModelAttribute("channel") ArticleChannel channel, ModelMap modelMap) {
 //        List<ArticleChannelCategory> articleChannelCategories = programaService.getAllArticleChannelCategories();
 //        modelMap.addAttribute("articleChannelCategories", articleChannelCategories);
         return "cms/addArticleChannel";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addArticleChannel", method = RequestMethod.POST)
     public String addArticleChannel(@ModelAttribute("channel") ArticleChannel channel, BindingResult result, ModelMap modelMap) {
         if (result.hasErrors()) {
             return toAddArticleChannel(channel, modelMap);
@@ -77,7 +77,7 @@ public class ArticleChannelController {
         return "redirect:../common/success.do?reurl=cms/channelProgramas.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditArticleChannel", method = RequestMethod.GET)
     public String toEditArticleChannel(@RequestParam("channelId") int channelId, ModelMap modelMap) {
 
         ArticleChannel channel = programaService.getArticleChannelById(channelId);
@@ -85,7 +85,7 @@ public class ArticleChannelController {
         return "cms/editArticleChannel";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editArticleChannel", method = RequestMethod.POST)
     public String editArticleChannel(@Valid @ModelAttribute("channel") ArticleChannel channel, BindingResult result,
                                      ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
@@ -100,7 +100,7 @@ public class ArticleChannelController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeArticleChannel", method = RequestMethod.GET)
     @ResponseBody
     public String removeArticleChannel(@RequestParam("channelId") int channelId) {
         try {

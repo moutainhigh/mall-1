@@ -52,7 +52,7 @@ public class CommodityCategoryController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "categoryCommodities",method = RequestMethod.GET)
     public String categoryCommodities(@RequestParam("categoryId") int categoryId, ModelMap modelMap) {
         Category category = categoryService.getCategoryById(categoryId);
         TreeViewItem categoryTree = categoryService.getCategoryTree();
@@ -64,14 +64,14 @@ public class CommodityCategoryController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageCommodityCategories",method = RequestMethod.POST)
     @ResponseBody
     public Page<CommodityCategory> pageCommodityCategories(@RequestBody PageSpecification<CommodityCategory> commodityQuery) {
         Page<CommodityCategory> page = categoryService.pageCommodityCategories(commodityQuery);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addCategoryCommodities",method = RequestMethod.POST)
     @ResponseBody
     public boolean addCategoryCommodities(@RequestParam("categoryId") int categoryId, @RequestParam("selectedCommodityId") int[] selectedCommodityId) {
         try{
@@ -82,14 +82,14 @@ public class CommodityCategoryController implements ServletContextAware {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeCommodityCategoryById",method = RequestMethod.GET)
     @ResponseBody
     public int removeCommodityCategoryById(@RequestParam("cocaId") int cocaId) {
         categoryService.removeCommodityCategoryById(cocaId);
         return cocaId;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getFilterItemsByCommodityCommodity",method = RequestMethod.GET)
     @ResponseBody
     public List<PropertyFilter> getFilterItemsByCommodityCommodity(@RequestParam("cocaId") int cocaId) {
         CommodityCategory commodityCategory = categoryService.getCommodityCategoryById(cocaId);
@@ -106,14 +106,14 @@ public class CommodityCategoryController implements ServletContextAware {
         return propertyFilters;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "saveCategoryCommodityFilterItems",method = RequestMethod.POST)
     @ResponseBody
     public int saveCategoryCommodityFilterItems(@RequestParam("cocaId") int cocaId, @RequestParam("itemId") int[] itemId) {
         categoryService.saveCategoryCommodityFilterItems(cocaId, itemId);
         return cocaId;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "saveCommodityLogisticPrices",method = RequestMethod.POST)
     @ResponseBody
     public boolean saveCommodityLogisticPrices(@RequestParam("commodityId") int commodityId, @RequestParam("priceId") int[] priceId) {
         try{

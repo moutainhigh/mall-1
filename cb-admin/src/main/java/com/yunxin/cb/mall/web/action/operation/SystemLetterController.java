@@ -33,24 +33,24 @@ public class SystemLetterController {
     @Resource
     private MessageSource messageSource;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "systemLetters",method = RequestMethod.GET)
     public String systemLetters() {
         return "operation/systemLetters";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageSystemLetters",method = RequestMethod.POST)
     @ResponseBody
     public Page<SystemLetter> pageSystemLetters(@RequestBody PageSpecification<SystemLetter> query) {
         Page<SystemLetter> systemLetterPages = letterService.pageSystemLetters(query);
         return systemLetterPages;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddSystemLetter",method = RequestMethod.GET)
     public String toAddSystemLetter(@ModelAttribute("systemLetter") SystemLetter systemLetter, ModelMap modelMap) {
         return "operation/addSystemLetter";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addSystemLetter",method = RequestMethod.POST)
     public String addSystemLetter(@Valid @ModelAttribute("systemLetter") SystemLetter systemLetter, BindingResult result, HttpServletRequest request, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return toAddSystemLetter(systemLetter, modelMap);
@@ -67,7 +67,7 @@ public class SystemLetterController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toSystemLetterDetail",method = RequestMethod.GET)
     public String toSystemLetterDetail(HttpServletRequest request, ModelMap modelMap) {
         int letterId = Integer.valueOf(request.getParameter("letterId"));
 //		SystemLetter systemLetterNew = letterService.findLetterDetailByLetterId(letterId);
@@ -76,13 +76,13 @@ public class SystemLetterController {
         return "operation/systemLetterDetail";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditSystemLetter",method = RequestMethod.GET)
     public String toEditSystemLetter(@RequestParam("letterId") int letterId, ModelMap modelMap) {
         modelMap.addAttribute("systemLetter", letterService.getSystemLetterById(letterId));
         return "operation/editSystemLetter";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editSystemLetter",method = RequestMethod.POST)
     public String editSystemLetter(@Valid @ModelAttribute("systemLetter") SystemLetter systemLetter, BindingResult result, HttpServletRequest request, ModelMap modelMap, Locale locale) {
 
         if (result.hasErrors()) {
@@ -100,7 +100,7 @@ public class SystemLetterController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "publishSystemLetter",method = RequestMethod.GET)
     @ResponseBody
     public String publishSystemLetter(@RequestParam("letterId") int letterId, @RequestParam("published") boolean published) {
 
@@ -120,7 +120,7 @@ public class SystemLetterController {
         return "success";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeSystemLetterById",method = RequestMethod.GET)
     @ResponseBody
     public int removeSystemLetterById(@RequestParam("letterId") int letterId) {
         letterService.deleteSystemLetterById(letterId);

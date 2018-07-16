@@ -46,7 +46,7 @@ public class ArticleController implements ServletContextAware {
         this.servletContext = servletContext;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "articles", method = RequestMethod.GET)
     public String articles(ModelMap modelMap) {
         List<Programa> programas = programaService.getProgramas(true);
         List<ArticleChannel> articleChannels = programaService.getArticleChannels(true);
@@ -57,14 +57,14 @@ public class ArticleController implements ServletContextAware {
         return "cms/articles";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageArticles", method = RequestMethod.POST)
     @ResponseBody
     public Page<Article> pageArticles(@RequestBody PageSpecification<Article> query) {
         Page<Article> page = articleService.pageArticles(query);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddArticle", method = RequestMethod.GET)
     public String toAddArticle(@ModelAttribute("article") Article article, ModelMap modelMap) {
         List<Programa> programas = programaService.getProgramas(true);
         List<ArticleChannel> articleChannels = programaService.getArticleChannels(true);
@@ -73,7 +73,7 @@ public class ArticleController implements ServletContextAware {
         return "cms/addArticle";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addArticle", method = RequestMethod.POST)
     public String addArticle(@Valid @ModelAttribute("article") Article article, BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return toAddArticle(article,modelMap);
@@ -91,7 +91,7 @@ public class ArticleController implements ServletContextAware {
         return "redirect:../common/success.do?reurl=cms/articles.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditArticle", method = RequestMethod.GET)
     public String toEditArticle(@RequestParam("articleId") int articleId, ModelMap modelMap) {
         Article article = articleService.getArticleById(articleId);
         modelMap.addAttribute("article", article);
@@ -108,7 +108,7 @@ public class ArticleController implements ServletContextAware {
         return "cms/editArticle";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editArticle", method = RequestMethod.POST)
     public String editArticle(@Valid @ModelAttribute("article") Article article, BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return toEditArticle(article.getArticleId(),modelMap);
@@ -129,13 +129,13 @@ public class ArticleController implements ServletContextAware {
         return "redirect:../common/success.do?reurl=cms/articles.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeArticleById", method = RequestMethod.GET)
     @ResponseBody
     public int removeArticleById(@RequestParam("articleId") int articleId) {
         return articleService.removeArticleById(articleId);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "enableArticleById", method = RequestMethod.GET)
     @ResponseBody
     public int enableArticleById(@RequestParam("articleId") int articleId, @RequestParam("enabled") boolean enabled) {
         articleService.enableArticleById(articleId, enabled);

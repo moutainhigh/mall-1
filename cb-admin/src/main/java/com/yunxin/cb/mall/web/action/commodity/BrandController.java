@@ -53,7 +53,7 @@ public class BrandController {
      * @param brandQuery
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageBrands", method = RequestMethod.POST)
     @ResponseBody
     public Page<Brand> pageBrands(@RequestBody PageSpecification<Brand> brandQuery) {
         return brandService.pageBrands(brandQuery);
@@ -66,7 +66,7 @@ public class BrandController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddBrand", method = RequestMethod.GET)
     public String toAddBrand(@ModelAttribute("brand") Brand brand, ModelMap modelMap) {
         TreeViewItem categoryTree = categoryService.getCategoryTree();
         modelMap.addAttribute("categoryTree", Arrays.asList(categoryTree));
@@ -79,7 +79,7 @@ public class BrandController {
      * @param brand
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addBrand", method = RequestMethod.POST)
     public String addBrand(@ModelAttribute("brand") Brand brand,BindingResult result, ModelMap modelMap,Locale locale) {
 
         try {
@@ -99,7 +99,7 @@ public class BrandController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditBrand", method = RequestMethod.GET)
     public String toEditBrand(@RequestParam("brandId") int brandId,ModelMap modelMap) {
         Brand brand = brandService.getBrandById(brandId);
         modelMap.addAttribute("brand", brand);
@@ -115,7 +115,7 @@ public class BrandController {
      * @param request
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editBrand", method = RequestMethod.POST)
     public String editBrand(@ModelAttribute("brand") Brand brand,BindingResult result,HttpServletRequest request,ModelMap modelMap,Locale locale) {
 
         try {
@@ -134,7 +134,7 @@ public class BrandController {
      * @param brandId
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeBrandById", method = RequestMethod.GET)
     @ResponseBody
     public boolean removeBrandById(@RequestParam("brandId") int brandId) {
         try{
@@ -153,13 +153,13 @@ public class BrandController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "brandDetail", method = RequestMethod.GET)
     public String brandDetail(@RequestParam("brandId") int brandId, ModelMap modelMap) {
         modelMap.addAttribute("brand", brandService.getBrandById(brandId));
         return "commodity/brandDetail";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "enableBrandById", method = RequestMethod.GET)
     @ResponseBody
     public String enableBrandById(@RequestParam("brandId") int brandId, @RequestParam("enabled") boolean enabled) {
         try {

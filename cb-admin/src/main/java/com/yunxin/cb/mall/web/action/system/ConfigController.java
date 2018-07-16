@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/system")
 public class ConfigController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "configs",method = RequestMethod.GET)
     public String configs(ModelMap modelMap ){
         return "system/configs";
     }

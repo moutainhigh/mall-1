@@ -36,7 +36,7 @@ public class UserController {
     @Resource
     private ISecurityService securityService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "users",method = RequestMethod.GET)
     public String users(ModelMap modelMap) {
         return "security/users";
     }

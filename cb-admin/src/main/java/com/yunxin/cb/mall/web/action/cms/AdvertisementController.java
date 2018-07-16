@@ -34,25 +34,25 @@ public class AdvertisementController {
     @Resource
     private MessageSource messageSource;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "advertisements", method = RequestMethod.GET)
     public String advertisements(ModelMap modelMap) {
         return "cms/advertisements";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageAdvertisements", method = RequestMethod.POST)
     @ResponseBody
     public Page<Advertisement> pageAdvertisements(@RequestBody PageSpecification<Advertisement> query) {
         Page<Advertisement> page = advertisementService.pageAdvertisements(query);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddAdvertisement", method = RequestMethod.GET)
     public String toAddAdvertisement(@ModelAttribute("advertisement") Advertisement advertisement, ModelMap modelMap) {
 
         return "cms/addAdvertisement";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addAdvertisement", method = RequestMethod.POST)
     public String addAdvertisement(@Valid @ModelAttribute("advertisement") Advertisement advertisement, BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return toAddAdvertisement(advertisement, modelMap);
@@ -69,7 +69,7 @@ public class AdvertisementController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditAdvertisement", method = RequestMethod.GET)
     public String toEditAdvertisement(@RequestParam("advertId") int advertId, ModelMap modelMap) {
         Advertisement advertisement = advertisementService.getAdvertisementById(advertId);
         modelMap.addAttribute("advertisement", advertisement);
@@ -80,7 +80,7 @@ public class AdvertisementController {
         return "cms/editAdvertisement";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editAdvertisement", method = RequestMethod.POST)
     public String editAdvertisement(@Valid @ModelAttribute("advertisement") Advertisement advertisement, BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return toEditAdvertisement(advertisement.getAdvertId(), modelMap);
@@ -95,7 +95,7 @@ public class AdvertisementController {
         return "redirect:../common/success.do?reurl=cms/advertisements.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeAdvertisementById", method = RequestMethod.GET)
     @ResponseBody
     public boolean removeAdvertisementById(@RequestParam("advertId") int advertId) {
         try {
@@ -107,7 +107,7 @@ public class AdvertisementController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "enableAdvertisementById", method = RequestMethod.GET)
     @ResponseBody
     public int enableAdvertisementById(@RequestParam("advertId") int advertId, @RequestParam("enabled") boolean enabled) {
         advertisementService.enableByAdvertisementId(enabled, advertId);

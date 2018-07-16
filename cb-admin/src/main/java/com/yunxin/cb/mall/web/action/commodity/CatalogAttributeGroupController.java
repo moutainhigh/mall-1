@@ -52,7 +52,7 @@ public class CatalogAttributeGroupController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "catalogAttributeGroups", method = RequestMethod.GET)
     public String catalogAttributeGroups(ModelMap modelMap) {
         TreeViewItem catalog = catalogService.getCatalogTree();
         modelMap.addAttribute("catalogItem", catalog);
@@ -60,7 +60,7 @@ public class CatalogAttributeGroupController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageCatalogAttributeGroups",method = RequestMethod.POST)
     @ResponseBody
     public Page<CatalogAttributeGroup> pageCatalogAttributeGroups(@RequestBody PageSpecification<CatalogAttributeGroup> query) {
         Page<CatalogAttributeGroup> page = attributeService.pageCatalogAttributeGroups(query);
@@ -74,14 +74,14 @@ public class CatalogAttributeGroupController implements ServletContextAware {
         return attributeService.findAttributeByGroupId(Integer.parseInt(groupId));
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddCatalogAttributeGroup",method = RequestMethod.GET)
     public String toAddCatalogAttributeGroup(@ModelAttribute("attributeGroup") CatalogAttributeGroup attributeGroup, BindingResult result, ModelMap modelMap) {
         TreeViewItem catalogTree = catalogService.getCatalogTree();
         modelMap.addAttribute("catalogTree", Arrays.asList(catalogTree));
         return "commodity/addCatalogAttributeGroup";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addCatalogAttributeGroup",method = RequestMethod.POST)
     public String addCatalogAttributeGroup(@Valid @ModelAttribute("attributeGroup") CatalogAttributeGroup attributeGroup, BindingResult result, ModelMap modelMap) throws IOException {
         if (result.hasErrors()) {
             return toAddCatalogAttributeGroup(attributeGroup, result, modelMap);
@@ -110,7 +110,7 @@ public class CatalogAttributeGroupController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditCatalogAttributeGroup",method = RequestMethod.GET)
     public String toEditCatalogAttributeGroup(@RequestParam("groupId") int groupId, ModelMap modelMap) {
         CatalogAttributeGroup attributeGroup = attributeService.getCatalogAttributeGroupById(groupId);
         modelMap.addAttribute("attributeGroup", attributeGroup);
@@ -123,7 +123,7 @@ public class CatalogAttributeGroupController implements ServletContextAware {
         return "commodity/editCatalogAttributeGroup";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editCatalogAttributeGroup",method = RequestMethod.POST)
     public String editCatalogAttributeGroup(@Valid @ModelAttribute("attributeGroup") CatalogAttributeGroup attributeGroup, BindingResult result,
                                             ModelMap modelMap) throws IOException {
         if (result.hasErrors()) {
@@ -154,7 +154,7 @@ public class CatalogAttributeGroupController implements ServletContextAware {
         return "redirect:../common/success.do?reurl=commodity/catalogAttributeGroups.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeCatalogAttributeGroup",method = RequestMethod.GET)
     @ResponseBody
     public String removeCatalogAttributeGroup(@RequestParam("groupId") int groupId) {
         try {
@@ -180,7 +180,7 @@ public class CatalogAttributeGroupController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getCatalogAttributeGroupsByCatalogId",method = RequestMethod.GET)
     @ResponseBody
     public List<CatalogAttributeGroup> getCatalogAttributeGroupsByCatalogId(@RequestParam("catalogId") int catalogId) {
         List<CatalogAttributeGroup> attributeGroups = attributeService.getAttributeGroupsByCatalogId(catalogId);

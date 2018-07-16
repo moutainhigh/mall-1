@@ -38,7 +38,7 @@ public class CatalogController {
     private MessageSource messageSource;
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "catalogs",method = RequestMethod.GET)
     public String catalogs(ModelMap modelMap, HttpServletRequest request) {
         List<Catalog> catalogs = catalogService.getAllCatalogs();
         catalogs.stream().forEach(p -> {
@@ -53,14 +53,14 @@ public class CatalogController {
         return "commodity/catalogs";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddCatalog",method = RequestMethod.GET)
     public String toAddCatalog(@ModelAttribute("catalog") Catalog catalog, ModelMap modelMap) {
         TreeViewItem catalogTree = catalogService.getCatalogTree();
         modelMap.addAttribute("catalogTree", Arrays.asList(catalogTree));
         return "commodity/addCatalog";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addCatalog",method = RequestMethod.POST)
     public String addCatalog(@Valid @ModelAttribute("catalog") Catalog catalog,
                              BindingResult result, ModelMap modelMap, HttpServletRequest request, Locale locale) {
         if (result.hasErrors()) {
@@ -82,7 +82,7 @@ public class CatalogController {
         return BuildCommonURL.buildSuccessURL("commodity/catalogs.do");
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditCatalog",method = RequestMethod.GET)
     public String toEditCatalog(@RequestParam("catalogId") int catalogId,
                                 ModelMap modelMap, HttpServletRequest request) {
         Catalog catalog = catalogService.getCategoryById(catalogId);
@@ -96,7 +96,7 @@ public class CatalogController {
         return "commodity/editCatalog";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editCatalog",method = RequestMethod.POST)
     public String editCatalog(@Valid @ModelAttribute("catalog") Catalog catalog,
                               BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
@@ -114,7 +114,7 @@ public class CatalogController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeCatalogById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeCatalogById(@RequestParam("catalogId") int catalogId) {
         try {
@@ -126,7 +126,7 @@ public class CatalogController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "enableCatalogById",method = RequestMethod.GET)
     @ResponseBody
     public String enableCatalogById(@RequestParam("catalogId") int catalogId, @RequestParam("enabled") boolean enabled) {
         try {

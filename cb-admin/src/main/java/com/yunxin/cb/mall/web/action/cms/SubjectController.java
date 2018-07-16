@@ -46,7 +46,7 @@ public class SubjectController {
     @Resource
     private MessageSource messageSource;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "specialSubjects", method = RequestMethod.GET)
     public String specialSubjects(ModelMap modelMap) {
         List<Programa> programas = programaService.getProgramas(true);
         List<ArticleChannel> articleChannels = programaService.getArticleChannels(true);
@@ -55,14 +55,14 @@ public class SubjectController {
         return "cms/specialSubjects";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageSpecialSubjects", method = RequestMethod.POST)
     @ResponseBody
     public Page<SpecialSubject> pageSpecialSubjects(@RequestBody PageSpecification<SpecialSubject> query) {
         Page<SpecialSubject> page = programaService.pageSpecialSubjects(query);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddSpecialSubject", method = RequestMethod.GET)
     public String toAddSpecialSubject(@ModelAttribute("subject") SpecialSubject subject, ModelMap modelMap) {
         List<Programa> programas = programaService.getProgramas(true);
         List<ArticleChannel> articleChannels = programaService.getArticleChannels(true);
@@ -71,7 +71,7 @@ public class SubjectController {
         return "cms/addSpecialSubject";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addSpecialSubject", method = RequestMethod.POST)
     public String addSpecialSubject(@Valid @ModelAttribute("subject") SpecialSubject subject, BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return toAddSpecialSubject(subject, modelMap);
@@ -85,7 +85,7 @@ public class SubjectController {
         return "redirect:../common/success.do?reurl=cms/specialSubjects.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditSpecialSubject", method = RequestMethod.GET)
     public String toEditSpecialSubject(@RequestParam("subjectId") int subjectId, ModelMap modelMap) {
         SpecialSubject subject = programaService.getSpecialSubjectById(subjectId);
         modelMap.addAttribute("subject", subject);
@@ -100,7 +100,7 @@ public class SubjectController {
         return "cms/editSpecialSubject";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editSpecialSubject", method = RequestMethod.POST)
     public String editSpecialSubject(@Valid @ModelAttribute("subject") SpecialSubject subject, BindingResult result, HttpServletRequest request, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return toEditSpecialSubject(subject.getSubjectId(), modelMap);
@@ -114,21 +114,21 @@ public class SubjectController {
         return "redirect:../common/success.do?reurl=cms/specialSubjects.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeSpecialSubjectById", method = RequestMethod.GET)
     @ResponseBody
     public int removeSpecialSubjectById(@RequestParam("subjectId") int subjectId) {
         programaService.removeSpecialSubjectById(subjectId);
         return subjectId;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "enableSpecialSubjectById", method = RequestMethod.GET)
     @ResponseBody
     public int enableSpecialSubjectById(@RequestParam("subjectId") int subjectId, @RequestParam("enabled") boolean enabled) {
         programaService.enableSpecialSubjectById(subjectId, enabled);
         return subjectId;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "getSpecialSubjectsByProgramaId", method = RequestMethod.GET)
     @ResponseBody
     public List<SpecialSubject> getSpecialSubjectsByProgramaId(@RequestParam("programaId") int programaId) {
         return programaService.getSpecialSubjectsByProgramaId(programaId);

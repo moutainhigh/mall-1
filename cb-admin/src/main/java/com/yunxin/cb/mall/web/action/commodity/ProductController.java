@@ -79,7 +79,7 @@ public class ProductController {
         return "commodity/editProducts";
     }
 
-    @RequestMapping(  method = RequestMethod.POST)
+    @RequestMapping( value = "addCommodityAttributeGroups",method = RequestMethod.POST)
     public String addCommodityAttributeGroups(@RequestParam("commodityId") int commodityId,@RequestParam("groupId") int[] groupId) {
         if (groupId!=null&&groupId.length>0){
             try{
@@ -138,7 +138,7 @@ public class ProductController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditProduct",method = RequestMethod.GET)
     public String toEditProduct(@RequestParam("productId") int productId, ModelMap modelMap) {
         Product p = productService.getProductDetailById(productId);
         modelMap.addAttribute("product", p);
@@ -160,7 +160,7 @@ public class ProductController {
         return "redirect:editProducts.do?commodityId="+commodityId;
     }
 
-    @RequestMapping(  method = RequestMethod.POST)
+    @RequestMapping( value = "removeProductById",method = RequestMethod.POST)
     @ResponseBody
     public ResponseResult removeProductById(@RequestParam("productId") int productId) {
         ResponseResult responseResult = new ResponseResult();
@@ -202,7 +202,7 @@ public class ProductController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "upOrDownShelvesProduct",method = RequestMethod.GET)
     public boolean upOrDownShelvesProduct(@RequestParam("productId") int productId, @RequestParam("publishState") PublishState publishState) {
         return productService.upOrDownShelvesProduct(productId, publishState);
     }

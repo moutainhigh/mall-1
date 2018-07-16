@@ -42,7 +42,7 @@ public class FeedbackController {
      * @param
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageFeedback",method = RequestMethod.POST)
     @ResponseBody
     public Page<Feedback> pageFeedback(@RequestBody PageSpecification<Feedback> feedBackQuery) {
         return feedbackService.pageFeedback(feedBackQuery);
@@ -57,7 +57,7 @@ public class FeedbackController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "feedBackDetail",method = RequestMethod.GET)
     public String feedBackDetail(@RequestParam("id") int id,ModelMap modelMap) {
         Feedback feedback = feedbackService.getFeedbackByid(id);
         List<String> list=new ArrayList<String>();

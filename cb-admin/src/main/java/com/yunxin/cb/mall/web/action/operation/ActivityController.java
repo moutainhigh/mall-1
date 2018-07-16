@@ -65,12 +65,12 @@ public class ActivityController implements ServletContextAware {
         this.servletContext = servletContext;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "activities",method = RequestMethod.GET)
     private String activities(ModelMap modelMap) {
         return "operation/activities";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageActivities",method = RequestMethod.POST)
     @ResponseBody
     public Page<Activity> pageActivities(@RequestBody PageSpecification activityQuery, ModelMap modelMap) {
 
@@ -78,14 +78,14 @@ public class ActivityController implements ServletContextAware {
         return activityPage;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddActivity",method = RequestMethod.GET)
     public String toAddActivity(@ModelAttribute("activity") Activity activity, ModelMap modelMap) {
         modelMap.put("activityRules", ruleConditionService.getRuleConditionsLikeCode("ACTIVITY_"));
         modelMap.addAttribute("categoryTree", categoryService.getAllCategories());
         return "operation/addActivity";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addActivity",method = RequestMethod.POST)
     public String addActivity(@Valid @ModelAttribute("activity") Activity activity, BindingResult result, Locale locale, HttpServletRequest request) {
         try {
             Activity activityDb = activityService.addActivity(activity);
@@ -101,7 +101,7 @@ public class ActivityController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeActivityById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeActivityById(@RequestParam("activityId") int activityId, HttpServletRequest request) {
         try {
@@ -114,7 +114,7 @@ public class ActivityController implements ServletContextAware {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditActivity",method = RequestMethod.GET)
     public String toEditActivity(@RequestParam("activityId") int activityId, ModelMap modelMap) {
         modelMap.put("activityRules", ruleConditionService.getRuleConditionsLikeCode("ACTIVITY_"));
         modelMap.addAttribute("activity", activityService.findByActivityId(activityId));
@@ -122,7 +122,7 @@ public class ActivityController implements ServletContextAware {
         return "operation/editActivity";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editActivity",method = RequestMethod.POST)
     public String editActivity(@Valid @ModelAttribute("activity") Activity activity, BindingResult result, Locale locale, HttpServletRequest request, ModelMap modelMap) {
         if (result.hasErrors()) {
             return toEditActivity(activity.getActivityId(), modelMap);
@@ -144,7 +144,7 @@ public class ActivityController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "updateActivityStatus",method = RequestMethod.GET)
     @ResponseBody
     public String updateActivityStatus(@RequestParam("activityId") int activityId,
                                        @RequestParam("status") ActivityState status, HttpServletRequest request) {
@@ -217,7 +217,7 @@ public class ActivityController implements ServletContextAware {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "effectOrDiscontinueActivity",method = RequestMethod.GET)
     public boolean effectOrDiscontinueActivity(@RequestParam("activityId") int activityId, @RequestParam("activityState") ActivityState activityState) {
         try {
             return activityService.effectOrDiscontinueActivity(activityId, activityState);
@@ -227,7 +227,7 @@ public class ActivityController implements ServletContextAware {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toActivityCommodities",method = RequestMethod.GET)
     public String toActivityCommodities(@RequestParam("activityId") int activityId, ModelMap modelMap) {
         modelMap.addAttribute("activity", activityService.findByActivityId(activityId));
 
@@ -235,7 +235,7 @@ public class ActivityController implements ServletContextAware {
         return "operation/activityCommoditys";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addActivityCommodities",method = RequestMethod.POST)
     public String addActivityCommodities(@RequestParam("activityId") int activityId, @RequestParam("selectedCommodityId") int[] selectedCommodityId, @RequestParam("limitAmountSize") int[] limitAmountSize) {
         try {
             boolean flag = activityService.addActivityCommodities(activityId, selectedCommodityId, limitAmountSize);

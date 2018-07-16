@@ -38,25 +38,25 @@ public class SellerController {
     @Resource
     private MessageSource messageSource;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "sellers",method = RequestMethod.GET)
     public String sellers() {
         return "seller/sellers";
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageSellers",method = RequestMethod.POST)
     @ResponseBody
     public Page<Seller> pageSellers(@RequestBody PageSpecification<Seller> query) {
         Page<Seller> page = sellerService.pageSellers(query);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddSeller",method = RequestMethod.GET)
     public String toAddSeller(@ModelAttribute("seller") Seller seller, ModelMap modelMap) {
         return "seller/addSeller";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addSeller",method = RequestMethod.POST)
     public String addSeller(@Valid @ModelAttribute("seller") Seller seller, BindingResult result, ModelMap modelMap, HttpServletRequest request, Locale locale) {
         if (result.hasErrors()) {
             return toAddSeller(seller, modelMap);
@@ -71,13 +71,13 @@ public class SellerController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditSeller",method = RequestMethod.GET)
     public String toEditSeller(@RequestParam("sellerId") int sellerId, ModelMap modelMap) {
         modelMap.addAttribute("seller", sellerService.getSellerById(sellerId));
         return "seller/editSeller";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editSeller",method = RequestMethod.POST)
     public String editSeller(@Valid @ModelAttribute("seller") Seller seller, BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return sellers();
@@ -92,13 +92,13 @@ public class SellerController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "sellerDetail",method = RequestMethod.GET)
     public String sellerDetail(@RequestParam("sellerId") int sellerId, ModelMap modelMap) {
         modelMap.addAttribute("seller", sellerService.getSellerById(sellerId));
         return "seller/sellerDetail";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "enableSellerById",method = RequestMethod.GET)
     @ResponseBody
     public int enableSellerById(@RequestParam("sellerId") int sellerId, @RequestParam("enabled") boolean enabled) {
         sellerService.enableSellerById(sellerId, enabled);
@@ -106,7 +106,7 @@ public class SellerController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeSellerById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeSellerById(@RequestParam("sellerId") int sellerId) {
         try {

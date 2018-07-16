@@ -47,31 +47,31 @@ public class ConcentController {
     private IDeviceService deviceService;
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "concents",method = RequestMethod.GET)
     public String concents() {
         return "concent/concents";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageConcents",method = RequestMethod.POST)
     @ResponseBody
     public Page<Concent> pageConcents(@RequestBody PageSpecification<Concent> query) {
         Page<Concent> page = concentService.pageConcents(query);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "getDevicesByConcentId",method = RequestMethod.POST)
     @ResponseBody
     public List<Device> getDevicesByConcentId(@RequestBody PageSpecification pageRequest) {
         String concentId = (String) pageRequest.getData().get("concentId");
         return concentService.getDevicesByConcentId(Integer.parseInt(concentId));
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddConcent",method = RequestMethod.GET)
     public String toAddConcent(@ModelAttribute("concent") Concent concent, ModelMap modelMap) {
         return "concent/addConcent";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addConcent",method = RequestMethod.POST)
     public String addConcent(@ModelAttribute("concent") Concent concent, BindingResult result, ModelMap modelMap) {
         if (result.hasErrors()) {
             return toAddConcent(concent, modelMap);
@@ -85,7 +85,7 @@ public class ConcentController {
         return "redirect:../common/success.do?concent=concent/concents.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditConcent",method = RequestMethod.GET)
     public String toEditConcent(@RequestParam("concentId") int concentId, ModelMap modelMap) {
 
         Concent concent = concentService.getConcentById(concentId);
@@ -93,7 +93,7 @@ public class ConcentController {
         return "concent/editConcent";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editConcent",method = RequestMethod.POST)
     public String editConcent(@Valid @ModelAttribute("concent") Concent concent, BindingResult result,
                                      ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
@@ -108,7 +108,7 @@ public class ConcentController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeConcentById",method = RequestMethod.GET)
     @ResponseBody
     public String removeConcentById(@RequestParam("concentId") int concentId) {
         try {
@@ -120,7 +120,7 @@ public class ConcentController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "concentAudit",method = RequestMethod.GET)
     @ResponseBody
     public boolean concentAudit(@RequestParam("concentId") int concentId, @RequestParam("padState") PadState padState, @RequestParam("remark") String remark) {
         try {
@@ -132,14 +132,14 @@ public class ConcentController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "devices",method = RequestMethod.GET)
     public String devices(ModelMap modelMap) {
         List<Concent> concents = concentService.getAllConcents();
         modelMap.addAttribute("concents", concents);
         return "concent/devices";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageDevices",method = RequestMethod.POST)
     @ResponseBody
     public Page<Device> pageDevices(@RequestBody PageSpecification<Device> query,HttpSession session) {
         User user =(User)session.getAttribute(SecurityConstants.LOGIN_SESSION);
@@ -169,14 +169,14 @@ public class ConcentController {
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddDevice",method = RequestMethod.GET)
     public String toAddDevice(@ModelAttribute("device") Device device, ModelMap modelMap) {
         List<Concent> concents = concentService.getAllConcents();
         modelMap.addAttribute("concents", concents);
         return "concent/addDevice";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addDevice",method = RequestMethod.POST)
     public String addDevice(@ModelAttribute("device") Device device, BindingResult result, ModelMap modelMap,HttpSession session) {
         Seller seller =(Seller)session.getAttribute(SecurityConstants.LOGIN_SELLER);
         try {
@@ -189,7 +189,7 @@ public class ConcentController {
         return "redirect:../common/success.do?reurl=concent/devices.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditDevice",method = RequestMethod.GET)
     public String toEditDevice(@RequestParam("deviceId") int deviceId, ModelMap modelMap) {
         List<Concent> concents = concentService.getAllConcents();
         modelMap.addAttribute("concents", concents);
@@ -197,7 +197,7 @@ public class ConcentController {
         return "concent/editDevice";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editDevice",method = RequestMethod.POST)
     public String editDevice(@ModelAttribute("device") Device device, BindingResult result, ModelMap modelMap,HttpSession session) {
         try {
             deviceService.editDevice(device);

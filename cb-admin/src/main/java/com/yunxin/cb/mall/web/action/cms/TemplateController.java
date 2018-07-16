@@ -1,5 +1,7 @@
 package com.yunxin.cb.mall.web.action.cms;
 
+import com.yunxin.cb.mall.web.vo.Template;
+import com.yunxin.cb.mall.web.vo.TemplateNode;
 import com.yunxin.core.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,18 +34,18 @@ public class TemplateController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "templates", method = RequestMethod.GET)
     public String templates(ModelMap modelMap) {
         return "cms/templates";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddTemplate", method = RequestMethod.GET)
     public String toAddTemplate(@ModelAttribute("template") Template template, ModelMap modelMap) {
         template.setTemplatePath("/");
         return "cms/addTemplate";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addTemplate", method = RequestMethod.POST)
     public String addTemplate(@ModelAttribute("template") Template template, HttpServletRequest request) throws IOException {
         String path = servletContext.getRealPath(BASE_PATH + template.getTemplatePath());
         if (!path.endsWith("/")) {
@@ -71,7 +73,7 @@ public class TemplateController implements ServletContextAware {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditTemplate", method = RequestMethod.GET)
     public String toEditTemplate(@RequestParam("templatePath") String templatePath, ModelMap modelMap) throws IOException{
         String path = servletContext.getRealPath(BASE_PATH + templatePath);
         File file = new File(path);
@@ -83,7 +85,7 @@ public class TemplateController implements ServletContextAware {
         return "cms/editTemplate";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editTemplate", method = RequestMethod.POST)
     public String editTemplate(@ModelAttribute("template") Template template, ModelMap modelMap) throws IOException {
         String path = servletContext.getRealPath(BASE_PATH + template.getTemplatePath());
         FileUtils.writerFileByFilePathAndContent(path,template.getContent());

@@ -36,24 +36,24 @@ public class LogisticsController {
     @Resource
     private MessageSource messageSource;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "logistics",method = RequestMethod.GET)
     public String logistics() {
         return "logistic/logistics";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageLogistics",method = RequestMethod.POST)
     @ResponseBody
     public Page<Logistic> pageLogistics(@RequestBody PageSpecification<Logistic> query) {
         Page<Logistic> page = logisticsService.pageLogistics(query);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddLogistic",method = RequestMethod.GET)
     public String toAddLogistic(@ModelAttribute("logistic") Logistic logistic) {
         return "logistic/addLogistic";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addLogistic",method = RequestMethod.POST)
     public String addLogistic(@Valid @ModelAttribute("logistic") Logistic logistic, HttpServletRequest request, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return toAddLogistic(logistic);
@@ -69,14 +69,14 @@ public class LogisticsController {
         return "redirect:../common/success.do?reurl=logistic/logistics.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditLogistic",method = RequestMethod.GET)
     public String toEditLogistic(@RequestParam("logisticId") int logisticsId, ModelMap modelMap) {
         Logistic logistic = logisticsService.findById(logisticsId);
         modelMap.addAttribute("logistic", logistic);
         return "logistic/editLogistic";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editLogistic",method = RequestMethod.POST)
     public String editLogistic(@Valid @ModelAttribute("logistic") Logistic logistic, BindingResult result, ModelMap modelMap) {
         if (result.hasErrors()) {
             return logistics();
@@ -90,7 +90,7 @@ public class LogisticsController {
         return "redirect:../common/success.do?reurl=logistic/logistics.do";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeLogisticById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeLogisticById(@RequestParam("logisticId") int logisticId) {
         try {
@@ -102,7 +102,7 @@ public class LogisticsController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "updateLogisticStatusById",method = RequestMethod.GET)
     public String updateLogisticStatusById(@RequestParam("enable") boolean enable, @RequestParam("logisticId") int logisticsId, HttpServletRequest request) {
         Logistic logistic = logisticsService.findById(logisticsId);
         logistic.setEnabled(enable);
@@ -116,13 +116,13 @@ public class LogisticsController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "findLogisticsByEnable",method = RequestMethod.POST)
     @ResponseBody
     public List<Logistic> findLogisticsByEnable(){
         return logisticsService.findByEnable(true);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "enableLogisticById",method = RequestMethod.GET)
     @ResponseBody
     public boolean enableLogisticById(@RequestParam("logisticId") int logisticId, @RequestParam("enabled") boolean enabled) {
         try {

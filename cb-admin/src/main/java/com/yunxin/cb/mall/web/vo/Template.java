@@ -1,4 +1,4 @@
-package com.yunxin.cb.mall.web.action.cms;
+package com.yunxin.cb.mall.web.vo;
 
 public class Template {
 

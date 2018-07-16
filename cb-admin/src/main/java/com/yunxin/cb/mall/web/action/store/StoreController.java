@@ -39,25 +39,25 @@ public class StoreController {
     @Resource
     private MessageSource messageSource;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "stores",method = RequestMethod.GET)
     public String stores() {
         return "store/stores";
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageStores",method = RequestMethod.POST)
     @ResponseBody
     public Page<Store> pageStores(@RequestBody PageSpecification<Store> query) {
         Page<Store> page = storeService.pageStores(query);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddStore",method = RequestMethod.GET)
     public String toAddStore(@ModelAttribute("store") Store store) {
         return "store/addStore";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addStore",method = RequestMethod.POST)
     public String addStore(@Valid @ModelAttribute("store") Store store, HttpServletRequest request, BindingResult result, Locale locale) {
         if (result.hasErrors()) {
             return toAddStore(store);
@@ -72,13 +72,13 @@ public class StoreController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditStore",method = RequestMethod.GET)
     public String toEditStore(@RequestParam("storeId") int storeId, ModelMap modelMap) {
         modelMap.addAttribute("store", storeService.getStoreById(storeId));
         return "store/editStore";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editStore",method = RequestMethod.POST)
     public String editStore(@Valid @ModelAttribute("store") Store store, BindingResult result, HttpServletRequest request, Locale locale) {
         if (result.hasErrors()) {
             return stores();
@@ -95,7 +95,7 @@ public class StoreController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "updateStoreStatusById",method = RequestMethod.GET)
     public String updateStoreStatusById(@RequestParam("enable") boolean enable, @RequestParam("storeId") int storeId, HttpServletRequest request) {
 //        Store store = storeService.getStoreById(storeId);
 //        store.setEnabled(enable);
@@ -110,7 +110,7 @@ public class StoreController {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeStoreById",method = RequestMethod.GET)
     @ResponseBody
     public boolean removeStoreById(@RequestParam("storeId") int storeId) {
         try {

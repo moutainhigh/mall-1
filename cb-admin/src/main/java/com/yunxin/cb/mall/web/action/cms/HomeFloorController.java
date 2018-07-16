@@ -59,19 +59,19 @@ public class HomeFloorController implements ServletContextAware {
         this.servletContext = servletContext;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "homeFloors", method = RequestMethod.GET)
     public String homeFloors(ModelMap modelMap) {
         return "cms/homeFloors";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "pageHomeFloors", method = RequestMethod.POST)
     @ResponseBody
     public Page<HomeFloor> pageHomeFloors(@RequestBody PageSpecification<HomeFloor> query) {
         Page<HomeFloor> page = floorService.pageServiceRulesForClean(query);
         return page;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toAddHomeFloor", method = RequestMethod.GET)
     public String toAddHomeFloor(@ModelAttribute("homeFloor") HomeFloor homeFloor, ModelMap modelMap) {
         homeFloor.setEnabled(true);
         homeFloor.setFloorLayout(FloorLayout.HORIZONTAL);
@@ -80,7 +80,7 @@ public class HomeFloorController implements ServletContextAware {
         return "cms/addHomeFloor";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "addHomeFloor", method = RequestMethod.POST)
     public String addHomeFloor(@ModelAttribute HomeFloor homeFloor, HttpServletRequest request) {
         compressImage(homeFloor);
         compressIcon(homeFloor);
@@ -122,7 +122,7 @@ public class HomeFloorController implements ServletContextAware {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "toEditHomeFloor", method = RequestMethod.GET)
     public String toEditHomeFloor(@RequestParam("floorId") int floorId, ModelMap modelMap, Locale locale) {
         HomeFloor homeFloor = floorService.getHomeFloorFetchAllById(floorId);
         modelMap.addAttribute("homeFloor", homeFloor);
@@ -131,7 +131,7 @@ public class HomeFloorController implements ServletContextAware {
         return "cms/editHomeFloor";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "editHomeFloor", method = RequestMethod.POST)
     public String editHomeFloor(@Valid @ModelAttribute("homeFloor") HomeFloor homeFloor,
                                 BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
@@ -154,7 +154,7 @@ public class HomeFloorController implements ServletContextAware {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "removeHomeFloorById", method = RequestMethod.GET)
     @ResponseBody
     public int removeHomeFloorById(@RequestParam("floorId") int floorId, HttpServletRequest request) {
         try {
@@ -165,7 +165,7 @@ public class HomeFloorController implements ServletContextAware {
         return floorId;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "enableHomeFloorById", method = RequestMethod.GET)
     @ResponseBody
     public String enableHomeFloorById(@RequestParam("floorId") int floorId, @RequestParam("enabled") boolean enabled) {
         try {
