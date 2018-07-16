@@ -1,8 +1,8 @@
 package com.yunxin.cb.sns.meta;
 
 public enum CustomerFriendState {
-    NORMAL(1),//正常
-    BLACKLIST(2)//黑名单
+    NORMAL(0),//正常
+    BLACKLIST(1)//黑名单
     ;
 
     public int getState() {

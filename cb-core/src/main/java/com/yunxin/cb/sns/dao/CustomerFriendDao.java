@@ -16,9 +16,9 @@ import java.util.List;
  */
 public interface CustomerFriendDao extends JpaRepository<CustomerFriend, CustomerFriendId>, JpaSpecificationExecutor<CustomerFriend> {
 
-    @Query("select cf from CustomerFriend cf left join fetch cf.friend where cf.customer.customerId = ?1")
+    @Query("select cf from CustomerFriend cf left join fetch cf.friend left join fetch cf.customer where cf.customer.customerId = ?1")
     List<CustomerFriend> findCustomerFriendByCustomerCustomerId(int customerId);
 
-    @Query("select cf from CustomerFriend cf left join fetch cf.friend where cf.customer.customerId = ?1 and cf.state=?2")
+    @Query("select cf from CustomerFriend cf left join fetch cf.friend left join fetch cf.customer where cf.customer.customerId = ?1 and cf.state=?2")
     List<CustomerFriend> findCustomerFriendByCustomerCustomerIdAndState(int customerId,CustomerFriendState state);
 }

@@ -10,6 +10,7 @@ import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
+import com.yunxin.cb.sns.meta.CustomerFriendState;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import io.rong.models.response.BlackListResult;
@@ -77,6 +78,7 @@ public class CustomerResource extends BaseResource {
         customerFriend.setCustomer(myself);
         customerFriend.setFriend(customer);
         customerFriend.setCreateTime(new Date());
+        customerFriend.setState(CustomerFriendState.NORMAL);
         customerService.addFriend(customerFriend);
 
         //双向加好友
@@ -88,6 +90,7 @@ public class CustomerResource extends BaseResource {
         customerFriend.setCustomer(customer);
         customerFriend.setFriend(myself);
         customerFriend.setCreateTime(new Date());
+        customerFriend.setState(CustomerFriendState.NORMAL);
         customerService.addFriend(customerFriend);
 
 
@@ -125,6 +128,11 @@ public class CustomerResource extends BaseResource {
         CustomerFriendId customerFriendId = new CustomerFriendId();
         customerFriendId.setCustomerId(customerId);
         customerFriendId.setFriendId(friendId);
+        customerService.delFriendById(customerFriendId);
+
+        customerFriendId = new CustomerFriendId();
+        customerFriendId.setCustomerId(friendId);
+        customerFriendId.setFriendId(customerId);
         customerService.delFriendById(customerFriendId);
         return new ResponseResult(Result.SUCCESS);
     }

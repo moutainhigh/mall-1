@@ -185,6 +185,18 @@ public class InsuranceController {
         return "insurance/orderDetailPrint";
     }
 
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String printsSurvey(@RequestParam("orderId") int orderId, ModelMap modelMap) {
+        InsuranceOrder insuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
+
+
+        modelMap.addAttribute("insuranceOrder", insuranceOrder);
+        modelMap.addAttribute("orderOffsite", insuranceOrder.getInsuranceOrderOffsite());
+
+        return "insurance/leavePlacePinter";
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public void downloadPdf(@RequestParam("orderId") int orderId, HttpServletResponse response) throws Exception {
         response.setHeader("Content-Disposition", "attachment; filename=\"insurance-" + orderId + ".pdf\"");
