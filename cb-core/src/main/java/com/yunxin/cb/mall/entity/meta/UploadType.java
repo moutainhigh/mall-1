@@ -11,5 +11,6 @@ package com.yunxin.cb.mall.entity.meta;
 public enum UploadType {
     RESOURCE,//("资源")
     PAPERWORK,//("证件"),
-    OTHER//("其他")
+    OTHER,//("其他")
+    INSURANCEPRODUCT//("保险产品")
 }

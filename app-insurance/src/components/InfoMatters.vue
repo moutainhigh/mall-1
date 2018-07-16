@@ -868,7 +868,7 @@
           }
         )
       }
-      //判断投保人周岁是否大于2周岁
+      //判断被保人周岁是否大于2周岁
       let insured = storage.fetch("insured");
       let newDate = new Date();
       let birthday = new Date(insured.insuredBirthday.replace(/-/, "/"));

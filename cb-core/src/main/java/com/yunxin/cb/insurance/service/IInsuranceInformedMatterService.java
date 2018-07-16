@@ -48,5 +48,16 @@ public interface IInsuranceInformedMatterService {
      */
     public InsuranceInformedMatter update(InsuranceInformedMatter insuranceInformedMatter);
 
+    /**
+     *
+     * @return
+     */
+    public List<InsuranceInformedMatter> getInsuranceInformedMatterList();
 
+    /**
+     *
+     * @param matterDescription
+     * @return
+     */
+    public List<InsuranceInformedMatter> getListByName(String matterDescription);
 }

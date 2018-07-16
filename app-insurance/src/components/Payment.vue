@@ -66,8 +66,9 @@
       <!--</div>-->
       <!--</div>-->
       <div class="input-ver">
-        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 70%;padding-left: 0;" v-model="code"></x-input>
+        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 70%;padding-left: 0;" v-model="code" v-bind:class="{'errorInput': $v.code.$error}" @input="$v.code.$touch()"></x-input>
         <div class="input-vile" @click.prevent="getVerifyCode">{{computedTime === 0? "获取验证码" : computedTime +"s"}}</div>
+        <div class="error" v-if="!$v.code.required && $v.code.$dirty">验证码不能为空</div>
       </div>
       <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     </group>
@@ -123,7 +124,9 @@
         accountType: {required},
         accountNo: {required, minLength: minLength(16), maxLength: maxLength(19), numeric}
       },
-      address: {required}
+      address: {required},
+      code: {required}
+
     },
     methods: {
       submit() {
