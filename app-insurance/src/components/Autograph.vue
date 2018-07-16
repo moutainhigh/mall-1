@@ -17,7 +17,7 @@
       <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
       <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign1"
             @click="clear1">清除</span>
-      <div class="sign" v-if="!clickSign1" @click="checkSign1">点击签名
+      <div class="sign" v-if="!clickSign1" @click="checkSign1">点击签名（请用正楷进行签名）
       </div>
       <div v-if="clickSign1">
         <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
@@ -41,7 +41,7 @@
       <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
       <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign"
             @click="clear">清除</span>
-      <div class="sign" v-if="!clickSign" @click="checkSign">点击签名
+      <div class="sign" v-if="!clickSign" @click="checkSign">点击签名（请用正楷进行签名）
       </div>
       <div v-if="clickSign">
         <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
