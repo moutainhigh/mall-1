@@ -15,12 +15,17 @@
     <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保提示书签名</div>
     <div class="canvas">
       <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-      <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign1"
-            @click="clear1">清除</span>
-      <div class="sign" v-if="!clickSign1" @click="checkSign1">点击签名（请用正楷进行签名）
+      <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1">点击签名（请用正楷进行签名）
       </div>
-      <div v-if="clickSign1">
-        <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
+      <div class="popContainer" v-if="clickSign1 && !show1">
+        <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign1"
+              @click="clear1">清除</span>
+        <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'60vh'"></Signature>
+        <button class="doneButton" @click="doneButton1">完成</button>
+      </div>
+
+      <div class="sign" style="background: #f3f5f7;height: 20vh" @click="checkShow1" v-if="clickSign1 && show1">
+        <img class="sign" style="height: 20vh; width: auto; margin-left: 10vw" :src="submissionSign">
       </div>
     </div>
 
@@ -39,12 +44,17 @@
 
     <div class="canvas">
       <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
+      <div class="sign" v-if="!clickSign && !show" @click="checkSign">点击签名（请用正楷进行签名）
+      </div>
+      <div class="popContainer" v-if="clickSign && !show">
       <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign"
             @click="clear">清除</span>
-      <div class="sign" v-if="!clickSign" @click="checkSign">点击签名（请用正楷进行签名）
+        <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'60vh'"></Signature>
+        <button class="doneButton" @click="doneButton">完成</button>
       </div>
-      <div v-if="clickSign">
-        <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
+
+      <div class="sign" style="background: #f3f5f7;height: 20vh" @click="checkShow" v-if="clickSign && show">
+        <img class="sign" style="height: 20vh; width: auto; margin-left: 10vw" :src="policyholderSign">
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
@@ -78,6 +88,10 @@
         },
         toastText: '',
         showPositionValue: false,
+        submissionSign: '',
+        policyholderSign: '',
+        show1: false,
+        show: false,
       }
     },
     components: {Signature, Toast},
@@ -129,8 +143,36 @@
       checkSign() {
         this.clickSign = !this.clickSign;
       },
+      checkShow() {
+        this.show = !this.show;
+      },
       checkSign1() {
         this.clickSign1 = !this.clickSign1;
+      },
+      checkShow1() {
+        this.show1 = !this.show1;
+      },
+      doneButton() {
+        var _this = this;
+        var jpeg = _this.$refs.signature.save('image/jpeg').split(',')[1];
+        uploadImage(jpeg).then(function (result) {
+          let holder = storage.fetch("holder");
+          _this.policyholderSign = result.data;
+          holder.policyholderSign = result.data;
+          storage.save("holder", holder);
+        });
+        this.show = !this.show;
+      },
+      doneButton1() {
+        var _this = this;
+        var jpeg1 = _this.$refs.signature1.save('image/jpeg').split(',')[1];
+        uploadImage(jpeg1).then(function (result) {
+          let holder = storage.fetch("holder");
+          _this.submissionSign = result.data;
+          holder.submissionSign = result.data;
+          storage.save("holder", holder);
+        });
+        this.show1 = !this.show1;
       },
       save() {
         var _this = this;
@@ -328,7 +370,7 @@
   .sign {
     background: #f3f5f7;
     width: 92%;
-    height: 20vh;
+    height: auto;
     border-radius: 10px;
     margin: 0 15px;
     text-align: center;
@@ -344,5 +386,30 @@
     border: 1px solid #dcdcdc;
     background: #EDEDED;
     margin-top: -2px
+  }
+
+  .popContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    padding-top: 20px;
+  }
+
+  .doneButton {
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: none;
+    border: 2px solid #f5ca1d;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    margin-left: 43%;
+    margin-top: 20px;
+    color: #f5ca1d;
   }
 </style>
