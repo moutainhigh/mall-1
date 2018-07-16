@@ -91,9 +91,9 @@
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 60px;" >
+    <div style="height: 60px;">
       <div class="i-footer">
-        <button  @click="next" >
+        <button @click="next">
           <div>下一步</div>
         </button>
       </div>
@@ -266,14 +266,14 @@
           return false;
         }
         let holder = storage.fetch("holder");
-        if (holder.policyholderCity !== '440300') {
-          this.$router.push("differentPlaces");
-        }else {
-          let order = storage.fetch("order");
-          order.insuranceOrderOffsite = null;
-          storage.save("order",order);
-          this.$router.push("payment")
-        }
+        // if (holder.policyholderCity !== '440300') {
+        //   this.$router.push("differentPlaces");
+        // }else {
+        let order = storage.fetch("order");
+        order.insuranceOrderOffsite = null;
+        storage.save("order", order);
+        this.$router.push("payment")
+        // }
       },
     },
     created: function () {
