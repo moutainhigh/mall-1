@@ -643,7 +643,8 @@
             <img v-if="matters[29].insuredResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[29].insuredResult" v-model="matters[29].insuredRemark" maxlength="100"
+        <textarea class="content-text" v-if="matters[29].insuredResult" v-model="matters[29].insuredRemark"
+                  maxlength="100"
                   placeholder="被保人"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -735,16 +736,15 @@
         twoYear: true,
         showPositionValue: false,
         toastText: '',
+        enableSumit: true
       }
     },
     methods: {
       changeInsuredState(index) {
         this.matters[index].insuredResult = !this.matters[index].insuredResult;
-        console.log(this.matters[index].insuredResult);
       },
       changeHolderState(index) {
         this.matters[index].policyholderResult = !this.matters[index].policyholderResult;
-        console.log(this.matters[index].policyholderResult);
       },
       changeFalse() {
         this.matters.forEach(function (matter) {
@@ -763,8 +763,16 @@
           alert("怀孕周数长度不大于3");
           return false;
         }
+        if (this.values11 === '0') {
+          alert("怀孕周数不能为0");
+          return false;
+        }
         if (this.values12[0].length > 3 || this.values12[1].length > 3 || this.values12[2].length > 3) {
           alert("婴儿信息栏填写长度不大于3");
+          return false;
+        }
+        if (this.values12[0] === '0' || this.values12[1] === '0' || this.values12[2] === '0') {
+          alert("婴儿信息栏填写不能为0");
           return false;
         }
         if (this.matters[29].insuredResult) {
@@ -772,6 +780,24 @@
             alert("请输入第12条被保人告知事项");
             return false;
           }
+        }
+        this.enableSumit = true;
+        for (let i = 0; i < this.matters.length; i++) {
+          if (this.matters[i].insuredResult) {
+            if (this.matters[i].insuredRemark === '') {
+              this.enableSumit = false;
+            }
+          }
+          if (this.matters[i].policyholderResult) {
+            if (this.matters[i].policyholderRemark === '') {
+              this.enableSumit = false;
+            }
+          }
+        }
+        console.log(this.enableSumit);
+        if (!this.enableSumit) {
+          alert("请完善被保人或投保人告知事项");
+          return false;
         }
         if (this.state) {
           this.$router.push('autograph');
@@ -783,7 +809,7 @@
     watch: {
       values12: {
         handler(newVal, oldVal) {
-          if (this.matters.length != 0) {
+          if (this.matters.length !== 0) {
             this.matters[29].collectValues = JSON.stringify(newVal);
           }
           if (newVal[0].length > 3) {
@@ -798,21 +824,25 @@
             this.showPositionValue = true;
             this.toastText = "输入长度不得大于3位";
           }
-          if (newVal[0] === '0' || newVal[0] === '0' || newVal[0] === '0') {
-
+          if (newVal[0] === '0' || newVal[1] === '0' || newVal[2] === '0') {
+            this.showPositionValue = true;
+            this.toastText = "请输入大于0的整数";
           }
-          // console.log(newVal[0] === '0');
         },
         immediate: true,
         deep: true
       },
       values11: function (newVal, oldVal) {
-        if (this.matters.length != 0) {
+        if (this.matters.length !== 0) {
           this.matters[28].collectValues = newVal;
         }
         if (newVal.length > 3) {
           this.showPositionValue = true;
           this.toastText = "输入长度不得大于3位";
+        }
+        if (newVal === '0') {
+          this.showPositionValue = true;
+          this.toastText = "请输入大于0的整数";
         }
       },
       matters: {
@@ -846,7 +876,6 @@
       if (time < 24 * 60 * 60 * 1000 * 365 * 2) {
         this.twoYear = false;
       }
-      console.log(this.twoYear);
     }
   }
 </script>

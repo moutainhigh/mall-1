@@ -21,21 +21,21 @@
                @input="$v.bank.bankMobile.$touch()"></x-input>
       <div class="error" v-if="!$v.bank.bankMobile.mobile">请输入正确的手机号码</div>
 
-      <popup-picker title="开户行" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank"
+      <popup-picker title="开户行" style="margin-right: 15px" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank"
                     v-bind:class="{'errorInput': $v.bank.accountBank.$error}"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountBank.required && $v.bank.accountBank.$dirty">
         开户行不能为空
       </div>
 
-      <x-address title="开户行位置" placeholder="请选择开户行位置" :list="cities" v-model="address" hide-district
+      <x-address title="开户行位置" style="margin-right: 15px" placeholder="请选择开户行位置" :list="cities" v-model="address" hide-district
                  value-text-align="left" v-bind:class="{'errorInput': $v.address.$error}"></x-address>
       <div class="error"
            v-if="!$v.address.required && $v.address.$dirty">
         开户行位置不能为空
       </div>
 
-      <popup-picker title="账户类型" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"
+      <popup-picker title="账户类型" style="margin-right: 15px" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"
                     v-bind:class="{'errorInput': $v.bank.accountType.$error}"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountType.required && $v.bank.accountType.$dirty">

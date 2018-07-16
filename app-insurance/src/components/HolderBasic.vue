@@ -1,14 +1,14 @@
 <template>
-  <div style="background: #fff; height: 100vh">
-    <group label-width="6rem" label-align="left" style="font-size: 15px;margin-bottom: 7px;">
-      <datetime title="出生日期" v-model="birthday" startDate="1950-01-01" :endDate="startDate"
+  <div style="background: #fff">
+    <group label-width="6rem" label-align="left" style="font-size: 15px;">
+      <datetime title="出生日期" style="margin-right: 15px" v-model="birthday" startDate="1950-01-01" :endDate="startDate"
                 placeholder="请选择出生日期"
                 value-text-align="left" v-bind:class="{'errorInput': $v.birthday.$error}"></datetime>
       <div class="error" v-if="!$v.birthday.required && $v.birthday.$dirty">
         出生日期不能为空
       </div>
 
-      <div class="i-input" style="padding: 0 15px 0 0; border-top: 1px solid #d9d9d9; margin-left: 15px">
+      <div class="i-input" style="padding: 0 15px 0 0; border-top: 1px solid #ececec; margin-left: 15px; margin-right: 15px">
         <div class="i-input-item" style="width: 6rem">性别</div>
         <div class="i-input-radio" style="top: 0;">
           <div class="radio-div" style="margin-right: 0" @click="changeGender(true)">
@@ -22,12 +22,13 @@
         </div>
       </div>
 
-      <x-input class="x-input-over" title="被保人职业" placeholder="请选择职业" v-model="career"
+      <x-input class="x-input-over" style="margin-right: 15px" title="被保人职业" placeholder="请选择职业" v-model="career"
                v-bind:class="{'errorInput': $v.career.$error}"
                @input="$v.career.$touch()"></x-input>
       <div style="position:absolute;width: 100%;height: 42px;margin-top: -42px;" @click="goToSelect"></div>
       <div class="error" v-if="!$v.career.required && $v.career.$dirty">请选择职业</div>
     </group>
+    <div style="width: 100%; height: 10px; background: #f5f5f5"></div>
 
 
     <!--</div>-->
@@ -36,7 +37,7 @@
         {{title}}
         <div class="i-list-right">
           <img src="../assets/img/risk.png" height="18">
-          <span>主险</span>
+          <span style="color: #333">主险</span>
         </div>
       </div>
       <div class="i-input">
@@ -81,18 +82,18 @@
         </div>
       </div>
     </div>
-    <div style="height: 1px; margin: 0 15px; background: #d9d9d9"></div>
-    <div class="i-card">
+    <div style="height: 1px; margin: 0 15px; background: #ececec"></div>
+    <div class="i-card" style="height: 190px">
       <div style="font-size: 15px;color: #333;">
         投保须知
       </div>
       <div class="i-message" @click="state = !state">
         <img v-if="!state" class="checkIcon" src="../assets/img/unselect.png">
         <img v-if="state" class="checkIcon" src="../assets/img/selected.png">
-        <div>欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
+        <div><p>欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</p></div>
       </div>
     </div>
-    <div style="height: 60px;" >
+    <div style="height: 60px">
       <div class="i-footer">
         <button  @click="submit" >
           <div>完善投保信息</div>
@@ -233,9 +234,9 @@
       this.title = query.title;
       this.proId = query.id;
       let order = this.Admin.order;
-      if (storage.fetch('order').length != 0){
-        order = storage.fetch('order');
-      }
+      // if (storage.fetch('order').length != 0){
+      //   order = storage.fetch('order');
+      // }
       order.insuranceProduct.prodId = this.proId;
       if (this.proId == 1) {
         order.insuranceProductPrice.priceId = 1;
@@ -277,11 +278,11 @@
 
   .i-input .i-input-item {
     width: 6rem;
-    font-size: 15px !important;
+    font-size: 16px !important;
   }
 
   .i-input .i-input-val {
-    font-size: 15px !important;
+    font-size: 16px !important;
   }
 
   a {

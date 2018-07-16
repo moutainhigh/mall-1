@@ -143,14 +143,14 @@
                                 <br/>2、您必须在此投保单上真实填写一切有关事实，并亲笔签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。
                                 <br/>3、富德生命人寿保险股份有限公司承诺未经客户同意，不会将客户信息用于人身保险公司和第三方机构的销售活动。
                             </div>
-                            <div style="float: right;color: darkgreen;margin-top: 35px;font-weight: bold;">绿色栏由业务员填写。
+                            <div style="float: right;color: green;margin-top: 35px;">绿色栏由业务员填写。
                             </div>
                         </div>
                         <div style="margin-left: 5px;font-weight: bold;font-size: 18px;">A.基本资料</div>
                         <div class="div-title">被保险人资料</div>
                     </div>
                 </div>
-                    <div style="position: absolute;z-index: 20;">
+                    <div style="position: absolute;z-index: 20;" >
                         <div class="al-tab">
                             <div class="al-line">
                                 <div class="al-font div-row-2">
@@ -237,7 +237,7 @@
                                     </div>
                                 </div>
                                 <div class="al-font" >
-                                    <div class="card-num"  style="letter-spacing:17.5px;margin-left: 100px;">
+                                    <div class="card-num"  style="letter-spacing:18.5px;margin-left: 100px;">
                                         ${insuranceOrder.insuranceOrderInsured.insuredCardNo}</div>
                                 </div>
                             </div>
@@ -262,15 +262,17 @@
                                         </c:otherwise>
                                     </c:choose>
 
+
+
                                 </div>
 
                                 <div class="al-font div-row-3" style="position: absolute">
-                                    <div style="margin-left: 120px;position: absolute;margin-top: 10px;"> ${insuranceOrder.insuranceOrderInsured.insuredCountry}</div>
+                                    <div style="margin-left: 130px;position: absolute;margin-top: 10px;"> ${insuranceOrder.insuranceOrderInsured.insuredCountry}</div>
                                 </div>
-                                <div class="al-font" style="margin-left: 340px;position: absolute;margin-top: 10px;">
+                                <div class="al-font" style="margin-left: 350px;position: absolute;margin-top: 10px;">
                                     ${insuranceOrder.insuranceOrderInsured.insuredHeight}
                                 </div>
-                                <div class="al-font" style="margin-left: 457px;position: absolute;margin-top: 10px;">
+                                <div class="al-font" style="margin-left: 474px;position: absolute;margin-top: 10px;">
                                     ${insuranceOrder.insuranceOrderInsured.insuredBodyWeight}
                                 </div>
 
@@ -520,33 +522,51 @@
                             </div>
 
 
-                            <div class="al-line">
-                                <div class="al-font div-row-5" style="margin-top: 3px;">
-                                    <c:choose>
-                                        <c:when test="${map.policy_p_year!=null&&map.policy_p_year!=''}">
-                                            <div style="margin-left: 110px;float: left;">√</div>
-                                            <div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">${map.policy_p_year}</div>
-                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_month}</div>
-                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_day}</div>
-                                            <div style="margin-left: 35px;float: left;">&nbsp;</div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div style="margin-left: 105px;float: left;">&nbsp;</div>
-                                            <div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
-                                            <div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>
-                                            <div style="margin-left: 35px;float: left;">√</div>
-                                        </c:otherwise>
-                                    </c:choose>
+                            <div class="al-line" >
+                                <div class="al-font div-row-5" style="margin-top: 3px;position: absolute">
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${map.policy_p_year!=null&&map.policy_p_year!=''}">--%>
+                                            <%--<div style="margin-left: 110px;float: left;">√</div>--%>
+                                            <%--<div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">${map.policy_p_year}</div>--%>
+                                            <%--<div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_month}</div>--%>
+                                            <%--<div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">${map.policy_p_day}</div>--%>
+                                            <%--<div style="margin-left: 35px;float: left;">&nbsp;</div>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:otherwise>--%>
+                                            <%--<div style="margin-left: 105px;float: left;">&nbsp;</div>--%>
+                                            <%--<div style="float: left;margin-left: 60px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>--%>
+                                            <%--<div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>--%>
+                                            <%--<div style="float: left;margin-left: 30px;font-size: 13px;margin-top: 2px;">&nbsp;&nbsp;</div>--%>
+                                            <%--<div style="margin-left: 35px;float: left;">√</div>--%>
+                                        <%--</c:otherwise>--%>
+                                    <%--</c:choose>--%>
+                                        <c:choose>
+                                            <c:when test="${map.policy_p_year!=null&&map.policy_p_year!=''}">
+                                                <div style="margin-left: 115px;position:absolute;">√</div>
+                                                <div style="position:absolute;margin-left: 180px;font-size: 13px;margin-top: 2px;">${map.policy_p_year}</div>
+                                                <div style="position:absolute;margin-left: 230px;font-size: 13px;margin-top: 2px;">${map.policy_p_month}</div>
+                                                <div style="position:absolute;margin-left: 275px;font-size: 13px;margin-top: 2px;">${map.policy_p_day}</div>
+                                                <div style="margin-left: 340px;float: left;">&nbsp;</div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div style="margin-left: 115px;position:absolute;">&nbsp;</div>
+                                                <div style="position:absolute;margin-left: 180px;font-size: 13px;margin-top: 2px;">&nbsp;</div>
+                                                <div style="position:absolute;margin-left: 230px;font-size: 13px;margin-top: 2px;">&nbsp;</div>
+                                                <div style="position:absolute;margin-left: 275px;font-size: 13px;margin-top: 2px;">&nbsp;</div>
+                                                <div style="margin-left: 340px;float: left;">√</div>
+
+                                            </c:otherwise>
+                                        </c:choose>
+
                                 </div>
 
                                 <div class="al-font div-row-3" style="position: absolute">
-                                    <div style="margin-left: 110px;position: absolute;margin-top: 12px;"> ${insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}</div>
+                                    <div style="margin-left: 535px;position: absolute;margin-top: 15px;">  ${insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}</div>
                                 </div>
-                                <div class="al-font" style="margin-left: 350px;position: absolute;margin-top: 12px;">
+                                <div class="al-font" style="margin-left: 790px;position: absolute;margin-top: 15px;">
                                     ${insuranceOrder.insuranceOrderPolicyholder.policyholderHeight}
                                 </div>
-                                <div class="al-font" style="margin-left: 465px;position: absolute;margin-top: 12px;">
+                                <div class="al-font" style="margin-left: 905px;position: absolute;margin-top: 15px;">
                                     ${insuranceOrder.insuranceOrderPolicyholder.policyholderBodyWeight}
                                 </div>
 
@@ -786,7 +806,7 @@
                                     <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType=='长期'}">
                                         √</c:if>
                                     </div>
-                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -3px;font-size: 10px;">
+                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -1px;font-size: 10px;">
                                     <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardType!='长期'}">
                                         <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[0].beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>  </c:if></div>
                                 <div class="al-font" style="position: absolute;margin-left: 390px;margin-top: 18px;">
@@ -801,7 +821,7 @@
                         </div>
 
                         <div class="al-tab" style="margin-top: 460px;position: absolute">
-                    <c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[1].beneficiaryName}">
+                    <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[1].beneficiaryName}">
                             <div class="al-line">
                                 <div class="al-font">
                                     <div style="position: absolute;margin-left: 5px;">${map.beneficiaryList.beneficiaryList[1].beneficiaryName}</div>
@@ -833,7 +853,7 @@
                                     <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType=='长期'}">
                                         √</c:if>
                                 </div>
-                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -3px;font-size: 10px;">
+                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -1px;font-size: 10px;">
                                     <c:if test="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardType!='长期'}">
 
                                         <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[1].beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
@@ -850,7 +870,7 @@
 
 
                         <div class="al-tab" style="margin-top: 520px;position: absolute">
-<c:if test="${map.beneficiaryList.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[0].beneficiaryName}">
+                    <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList.beneficiaryList[2].beneficiaryName}">
                             <div class="al-line">
                                 <div class="al-font">
                                     <div style="position: absolute;margin-left: 5px;">${map.beneficiaryList.beneficiaryList[2].beneficiaryName}</div>
@@ -881,7 +901,7 @@
                                     <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType=='长期'}">
                                         √</c:if>
                                 </div>
-                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -3px;font-size: 10px;">
+                                <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -1px;font-size: 10px;">
                                     <c:if test="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardType!='长期'}">
                                         <fmt:formatDate value="${map.beneficiaryList.beneficiaryList[2].beneficiaryCardPeroid}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/> </c:if></div>
                                 <div class="al-font" style="position: absolute;margin-left: 390px;margin-top: 18px;">
@@ -1040,7 +1060,7 @@
                             </div>
                             <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                 邮编
-                                <div style="margin-left: 20px;font-size: 0">
+                                <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
@@ -1079,7 +1099,7 @@
                             </div>
                             <div class="div-line-con div-postcode"  style="margin-right: 40px;">
                                 邮编
-                                <div style="margin-left: 20px;font-size: 0">
+                                <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
@@ -1229,8 +1249,8 @@
                                 </div>
                             </div>
                             <div class="div-line-con div-row-3">
-                                <div class="title">A 31.固定电话（<span style="font-size: 1px">区号<input class="b-input"
-                                                                                                   type="text"/></span>)-(<input
+                                <div class="title">A 31.固定电话（<sub>区号<input class="b-input"
+                                                                                                   type="text"/></sub>)-(<input
                                         class="mobile-input" type="text"/></span>)
                                 </div>
                             </div>
@@ -1255,7 +1275,7 @@
                             </div>
                             <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                 邮编
-                                <div style="margin-left: 20px;font-size: 0">
+                                <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
@@ -1294,7 +1314,7 @@
                             </div>
                             <div class="div-line-con div-postcode"  style="margin-right: 40px;">
                                 邮编
-                                <div style="margin-left: 20px;font-size: 0">
+                                <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
@@ -1334,7 +1354,7 @@
                             </div>
                             <div class="div-line-con div-postcode" style="margin-right:  35px;">
                                 邮编
-                                <div style="margin-left: 20px;font-size: 0">
+                                <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
                                     <input class="i-cert-code" style="border: #000000 solid 1px !important"/>
@@ -1393,8 +1413,8 @@
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
-                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;text-align: left">
-                                    <div class="t-line-cert"></div>
+                                <div style="display: inline-block;height: 30px;font-size: 0;border-top: #000000 solid 1px;width: 100%;margin:0 -1px;text-align: left">
+                                    <div class="t-line-cert" style="border: 0"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
@@ -1434,8 +1454,8 @@
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
-                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;text-align: left">
-                                    <div class="t-line-cert"></div>
+                                <div style="display: inline-block;height: 30px;font-size: 0;border-top: #000000 solid 1px;border-left: 0;width: 100%;margin:0 -1px;text-align: left">
+                                    <div class="t-line-cert" style="border: 0"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
@@ -1475,8 +1495,8 @@
                                 长期
                             </div>
                             <div class="t-line" style="display: block;height: 31px;">
-                                <div style="display: inline-block;height: 30px;font-size: 0;border: #000000 solid 1px;width: 100%;margin-left: -2px;text-align: left">
-                                    <div class="t-line-cert"></div>
+                                <div style="display: inline-block;height: 30px;font-size: 0;border-top: #000000 solid 1px;width: 100%;margin:0 -1px;text-align: left">
+                                    <div class="t-line-cert" style="border: 0"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
                                     <div class="t-line-cert"></div>
@@ -1518,29 +1538,30 @@
                         <%--B1--%>
                         <div class="a-div-line-con" style="width: 480px;height: 40px;">
                             <div>
-                                <div class="a-tick" style="margin-left: 95px;margin-top: 8px;">√</div>
-                                <div class="a-tick" style="margin-left: 160px;margin-top: 8px;">√</div>
-                                <div class="a-tick" style="margin-left: 223px;margin-top: 8px;">√</div>
+                                <div class="a-tick" style="margin-left: 95px;margin-top: 8px;"><!--√--></div>
+                                <div class="a-tick" style="margin-left: 160px;margin-top: 8px;"><!--√--></div>
+                                <div class="a-tick" style="margin-left: 223px;margin-top: 8px;"><!--√--></div>
                                 <div class="a-tick" style="margin-left: 305px;margin-top: 8px;">√</div>
-                                <div class="a-tick" style="margin-left: 368px;margin-top: 8px;">√</div>
+                                <div class="a-tick" style="margin-left: 368px;margin-top: 8px;"><!--√--></div>
                             </div>
                         </div>
                         <%--B2--%>
                         <div class="a-div-line-con" style="width: 520px;height: 40px;">
-                            <div class="a-tick" style="margin-left: 93px;margin-top: 6px;">√</div>
+                            <div class="a-tick" style="margin-left: 93px;margin-top: 6px;"><!--√--></div>
                             <div class="a-tick" style="margin-left: 93px;margin-top: 20px;">√</div>
                         </div>
+                            <br>
                             <%--B3--%>
                         <div class="a-div-line-con" style="width: 480px;height: 40px;">
                             <div>
                                 <div class="a-tick" style="margin-left: 145px;">√</div>
-                                <div class="a-tick" style="margin-left: 207px;">√</div>
+                                <div class="a-tick" style="margin-left: 207px;"><!--√--></div>
                             </div>
                         </div>
                         <%--B4--%>
                         <div class="a-div-line-con" style="width: 520px;height: 40px;">
                             <div class="a-tick" style="margin-left: 160px;">√</div>
-                            <div class="a-tick" style="margin-left: 223px;">√</div>
+                            <div class="a-tick" style="margin-left: 223px;"><!--√--></div>
                         </div>
                     </div>
                     <%--表格层--%>
@@ -1581,54 +1602,54 @@
                     <div class="a-table-line" style="height: 60px;margin-top: 50px;">
                         <%--B5--%>
                         <div class="a-div-table-2" style="width: 210px;">
-                            <div class="a-tick al-font" style="margin-left: 2px;">haha</div>
+                            <div class="a-tick al-font" style="margin-left: 2px;">${insuranceOrder.insuranceProduct.prodName}</div>
                         </div>
                             <%--B6--%>
                         <div class="a-div-table-2" style="width: 128px;">
-                            <div class="a-tick" style="margin-left: 11px;">√<span style="padding-left: 15px;">10</span></div>
-                            <div class="a-tick" style="margin-left: 11px;margin-top: 20px;">√ <span style="padding-left: 25px;">10</span></div>
+                            <div class="a-tick" style="margin-left: 11px;"><!--√--><span style="padding-left: 15px;"><!--√--></span></div>
+                            <div class="a-tick" style="margin-left: 11px;margin-top: 20px;"><!--√--> <span style="padding-left: 25px;"><!--√--></span></div>
                             <div class="a-tick" style="margin-left: 11px;margin-top: 40px">√</div>
                         </div>
                             <%--B7--%>
                         <div class="a-div-table-2" style="width: 226px;">
-                            <div class="a-tick" style="margin-left: 60px;">√<span style="padding-left: 15px;">10</span></div>
-                            <div class="a-tick" style="margin-left: 60px;margin-top: 20px;">√ <span style="padding-left: 25px;">10</span></div>
+                            <div class="a-tick" style="margin-left: 60px;"><!--√--><span style="padding-left: 15px;"><!--√--></span></div>
+                            <div class="a-tick" style="margin-left: 60px;margin-top: 20px;"><!--√--> <span style="padding-left: 25px;"><!--√--></span></div>
                             <div class="a-tick" style="margin-left: 60px;margin-top: 40px">√</div>
                         </div>
                             <%--B8--%>
                         <div class="a-div-table-2" style="width: 138px;">
-                            <div class="a-tick al-font" style="margin-left: 2px;">基本保险金额或</div>
+                            <div class="a-tick al-font" style="margin-left: 2px;"><!--√--></div>
                         </div>
                             <%--B9--%>
                         <div class="a-div-table-2" style="width: 145px;">
                             <div class="a-tick" style="margin-left: 37px;">√</div>
-                            <div class="a-tick" style="margin-left: 37px;margin-top: 20px">√</div>
+                            <div class="a-tick" style="margin-left: 37px;margin-top: 20px"><!--√--></div>
                         </div>
                             <%--B10--%>
                         <div class="a-div-table-2" style="width: 153px;">
-                            <div class="a-tick al-font" style="margin-left: 2px;">每期标准</div>
+                            <div class="a-tick al-font" style="margin-left: 2px;"><!--√--></div>
                         </div>
                     </div>
                         <div class="a-table-line" style="height: 60px;margin-top: 170px;">
                             <%--领取时间--%>
                             <div class="a-div-table-2" style="width: 210px;">
-                                <div class="a-tick" style="margin-left: 11px;margin-top: 20px;">√</div>
-                                <div class="a-tick" style="margin-left: 11px;margin-top: 50px;">√</div>
-                                <div class="a-tick" style="margin-left: 11px;margin-top: 75px;">√<span style="padding-left: 90px;">10</span></div>
+                                <div class="a-tick" style="margin-left: 11px;margin-top: 16px;"><!--√--></div>
+                                <div class="a-tick" style="margin-left: 11px;margin-top: 46px;"><!--√--></div>
+                                <div class="a-tick" style="margin-left: 11px;margin-top: 75px;"><!--√--><span style="padding-left: 90px;"><!--√--></span></div>
                             </div>
                             <%--领取方式--%>
                             <div class="a-div-table-2" style="width: 128px;">
-                                <div class="a-tick" style="margin-left: 11px;">√</div>
-                                <div class="a-tick" style="margin-left: 11px;margin-top: 30px;">√</div>
-                                <div class="a-tick" style="margin-left: 11px;margin-top: 55px">√<span style="padding-left: 30px;font-size: 14px;">打钱</span></div>
-                                <div class="a-tick" style="margin-left: 11px;margin-top: 85px">√</div>
+                                <div class="a-tick" style="margin-left: 11px;"><!--√--></div>
+                                <div class="a-tick" style="margin-left: 11px;margin-top: 30px;"><!--√--></div>
+                                <div class="a-tick" style="margin-left: 11px;margin-top: 55px"><!--√--><span style="padding-left: 30px;font-size: 14px;"><!--√--></span></div>
+                                <div class="a-tick" style="margin-left: 11px;margin-top: 85px"><!--√--></div>
                             </div>
                             <%--给付方式--%>
                             <div class="a-div-table-2" style="width: 226px;">
-                                <div class="a-tick" style="margin-left: 10px;margin-top: 2px;">√<span style="padding-left: 225px;">10</span></div>
-                                <div class="a-tick" style="margin-left: 10px;margin-top: 20px;">√</div>
-                                <div class="a-tick" style="margin-left: 10px;margin-top: 40px">√<span style="position:absolute;padding-left: 265px;">√ </span><span style="position:absolute;padding-left: 310px;">√ </span></div>
-                                <div class="a-tick" style="margin-left: 10px;margin-top: 60px">√<span style="padding-left: 25px;font-size: 14px;">其他方法是</span></div>
+                                <div class="a-tick" style="margin-left: 10px;margin-top: 2px;"><!--√--><span style="padding-left: 225px;"><!--√--></span></div>
+                                <div class="a-tick" style="margin-left: 10px;margin-top: 20px;"><!--√--></div>
+                                <div class="a-tick" style="margin-left: 10px;margin-top: 40px"><!--√--><span style="position:absolute;padding-left: 265px;"><!--√--> </span><span style="position:absolute;padding-left: 310px;"><!--√--> </span></div>
+                                <div class="a-tick" style="margin-left: 10px;margin-top: 60px"><!--√--><span style="padding-left: 25px;font-size: 14px;"><!--√--></span></div>
                             </div>
                         </div>
                         <%--主保险合同 end--%>
@@ -1700,7 +1721,7 @@
                         </div>
                         <div class="div-table-2" style="width: 790px;height: 120px;vertical-align: top">
                             <div style="height: 82px;width: 790px;border-bottom: #000000 1px solid;">
-                                <div style="width: 129px;height: 82px;border-right: #000000 2px solid;box-sizing: border-box;text-align: left;">
+                                <div style="width: 129px;height: 82px;border-right: #000000 1px solid;box-sizing: border-box;text-align: left;">
                                     <div class="div-block" style="margin-left:10px; padding: 4px 0;"><input
                                             type="checkbox"/>年领
                                     </div>
@@ -1742,23 +1763,23 @@
                         <div class="a-table-line" style="height: 40px;margin-top: 30px;">
                             <%--B12--%>
                             <div class="a-div-table-2" style="width: 338px;">
-                                <div class="a-tick al-font" style="margin-left: 2px;">附加合同</div>
+                                <div class="a-tick al-font" style="margin-left: 2px;">&nbsp;</div>
                             </div>
                             <%--B13--%>
                             <div class="a-div-table-2" style="width: 156px;">
-                                <div class="a-tick al-font" style="margin-left: 2px;">交费期限</div>
+                                <div class="a-tick al-font" style="margin-left: 2px;">&nbsp;</div>
                             </div>
                             <%--B14--%>
                             <div class="a-div-table-2" style="width: 156px;">
-                                <div class="a-tick al-font" style="margin-left: 2px;">保险期间</div>
+                                <div class="a-tick al-font" style="margin-left: 2px;">&nbsp;</div>
                             </div>
                             <%--B15--%>
                             <div class="a-div-table-2" style="width: 175px;">
-                                <div class="a-tick al-font" style="margin-left: 2px;">基本保险金额</div>
+                                <div class="a-tick al-font" style="margin-left: 2px;">&nbsp;</div>
                             </div>
                             <%--B16--%>
                             <div class="a-div-table-2" style="width: 175px;">
-                                <div class="a-tick al-font" style="margin-left: 2px;">每期标准保险费</div>
+                                <div class="a-tick al-font" style="margin-left: 2px;">&nbsp;</div>
                             </div>
                         </div>
                     <%--附加保险合同 end--%>
@@ -1802,8 +1823,8 @@
                 <div class="div-tab" style="margin-top: 10px;">
                     <%--B17 start--%>
                     <div style="position: absolute">
-                        <div class="a-price"><span>壹</span><span style="margin-left: 60px;">贰</span><span style="margin-left: 130px;">叁</span><span style="margin-left: 190px;">肆</span><span style="margin-left: 260px;">伍</span><span style="margin-left: 320px;">陆</span><span style="margin-left: 400px;">柒</span><span style="margin-left: 470px;">捌</span><span style="margin-left: 550px;">200000.00</span></div>
-                        <div class="a-price" style="margin-top: 40px;"><span>壹</span><span style="margin-left: 60px;">贰</span><span style="margin-left: 130px;">叁</span><span style="margin-left: 190px;">肆</span><span style="margin-left: 260px;">伍</span><span style="margin-left: 320px;">陆</span><span style="margin-left: 400px;">柒</span><span style="margin-left: 470px;">捌</span><span style="margin-left: 550px;">200000.00</span></div>
+                        <div class="a-price"><span>&nbsp;</span><span style="margin-left: 60px;">&nbsp;</span><span style="margin-left: 130px;">&nbsp;</span><span style="margin-left: 190px;">&nbsp;</span><span style="margin-left: 260px;">&nbsp;</span><span style="margin-left: 320px;">&nbsp;</span><span style="margin-left: 400px;">&nbsp;</span><span style="margin-left: 470px;">&nbsp;</span><span style="margin-left: 550px;">&nbsp;</span></div>
+                        <div class="a-price" style="margin-top: 40px;"><span>&nbsp;</span><span style="margin-left: 60px;">&nbsp;</span><span style="margin-left: 130px;">&nbsp;</span><span style="margin-left: 190px;">&nbsp;</span><span style="margin-left: 260px;">&nbsp;</span><span style="margin-left: 320px;">&nbsp;</span><span style="margin-left: 400px;">&nbsp;</span><span style="margin-left: 470px;">&nbsp;</span><span style="margin-left: 550px;">&nbsp;</span></div>
                     </div>
                         <%--B17 end--%>
                     <div class="div-line">
@@ -1833,54 +1854,159 @@
                 <div>C.可保资料告知</div>
                 <div class="div-title">请投保人告知被保险人的健康状况并对被保险人栏中的答案进行勾选；如保险条款中涉及对投保人承担保险责任事项、投保人栏也须填写:</div>
                 <div class="div-tab">
+                    <%--可保资料告知 start--%>
+                    <div style="position: absolute">
+                        <div class="a-table-line" style="position:relative;height: 54px;margin-top: 40px;">
+                            <%--B12--%>
+                            <div class="a-tick" style="margin-left: 645px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[0].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[0].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[0].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[0].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[0].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[0].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 53px;">
+                            <%--B12--%>
+
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[1].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[1].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[1].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[1].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[1].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[1].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 53px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[2].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[2].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[2].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[2].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[2].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[2].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 25px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 5px;"><c:if test="${map.beneficiaryList.insurance_matterList[3].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;;margin-top: 5px;"><c:if test="${map.beneficiaryList.insurance_matterList[3].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;;margin-top: 5px;"><c:if test="${map.beneficiaryList.insurance_matterList[3].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;"><c:if test="${map.beneficiaryList.insurance_matterList[3].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[3].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[3].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 60px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[4].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[4].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[4].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[4].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[4].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[4].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 30px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;"><c:if test="${map.beneficiaryList.insurance_matterList[5].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[5].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;"><c:if test="${map.beneficiaryList.insurance_matterList[5].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;"><c:if test="${map.beneficiaryList.insurance_matterList[5].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[5].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[5].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 30px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;"><c:if test="${map.beneficiaryList.insurance_matterList[6].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[6].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;"><c:if test="${map.beneficiaryList.insurance_matterList[6].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;"><c:if test="${map.beneficiaryList.insurance_matterList[6].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[6].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[6].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 60px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[7].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[7].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[7].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[7].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[7].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[7].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 160px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 65px;"><c:if test="${map.beneficiaryList.insurance_matterList[8].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 65px;"><c:if test="${map.beneficiaryList.insurance_matterList[8].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 65px;"><c:if test="${map.beneficiaryList.insurance_matterList[8].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 65px;"><c:if test="${map.beneficiaryList.insurance_matterList[8].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[8].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[8].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 53px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 645px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[9].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[9].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 730px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[9].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 765px;margin-top: 15px;"><c:if test="${map.beneficiaryList.insurance_matterList[9].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 805px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[9].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[9].policyholderRemark}
+                                </div>
+                        </div>
+                    </div>
+                    <%--可保资料告知 end--%>
                     <div class="table-line" style="height: 40px;">
                         <div class="div-table-2" style="width: 636px;height: 40px;">问题及健康告知</div>
                         <div class="div-table-2" style="width: 83px;height: 40px;">被保险人</div>
                         <div class="div-table-2" style="width: 83px;height: 40px;">投保人</div>
                         <div class="div-table-2" style="width: 198px;height: 40px;text-align: left;">若“是”请说明<span class="tip">(原因、日期、医院名称及诊治结果等。)</span></div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C1.</div><div style="display: inline-block;width: 600px;">您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承包公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和。住院每日补贴日额及保险合同生效日期。</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 53px;">
+                        <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C1.</div><div style="display: inline-block;width: 600px;">您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承包公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和。住院每日补贴日额及保险合同生效日期。</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C2.</div><div style="display: inline-block;width: 600px;">您的人寿保险、人身意外或健康保险的投保申请是否曾被拒保、推迟、加费、或作限制保障权益？是否有解除保险合同？是否曾向任何保险公司提出索赔申请？若“是”，请说明。</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 53px;">
+                        <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C2.</div><div style="display: inline-block;width: 600px;">您的人寿保险、人身意外或健康保险的投保申请是否曾被拒保、推迟、加费、或作限制保障权益？是否有解除保险合同？是否曾向任何保险公司提出索赔申请？若“是”，请说明。</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C3.</div><div style="display: inline-block;width: 600px;">是否计划出国或改变居住地或工作地点？正在试图参加私人性质飞行，或携带氧气瓶潜水、或登山、或从事危险性的运动？若“是”，请填妥相关问卷，连同此投保单一并交回本公司。</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 53px;">
+                        <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C3.</div><div style="display: inline-block;width: 600px;">是否计划出国或改变居住地或工作地点？正在试图参加私人性质飞行，或携带氧气瓶潜水、或登山、或从事危险性的运动？若“是”，请填妥相关问卷，连同此投保单一并交回本公司。</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 30px;">
-                        <div class="div-table-2" style="width: 636px;height: 30px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C4.</div><div style="display: inline-block;width: 600px;">是否持有有效摩托车驾照？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 25px;">
+                        <div class="div-table-2" style="width: 636px;height: 25px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C4.</div><div style="display: inline-block;width: 600px;">是否持有有效摩托车驾照？</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 25px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 60px;">
                         <div class="div-table-2" style="width: 636px;height: 60px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C5.</div><div style="display: inline-block;width: 600px;">a.是否吸烟?若“是”，吸烟__年__支/天；若现在已停止吸烟，停止吸烟原因及时间__。b.是否饮酒？若“是”，饮酒__年，种类____，数量__（两/周）；若现在已停止饮酒，停止饮酒原因及时间____。</div></div>
                         <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 60px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 30px;">
                         <div class="div-table-2" style="width: 636px;height: 30px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C6.</div><div style="display: inline-block;width: 600px;">您是否曾经或正在使用麻醉剂、可成瘾药物、毒品或接受戒毒、戒酒治疗？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 30px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 30px;">
                         <div class="div-table-2" style="width: 636px;height: 30px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C7.</div><div style="display: inline-block;width: 600px;">最近六个月内是否有医生建议您服药、住院、手术或其他医疗方案？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 30px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C8.</div><div style="display: inline-block;width: 600px;">最近五年内，您是否曾经作下列之一的检查且结果异常：核磁共振(MRI)、心电图、胃镜、纤维结肠镜、气管镜、CT、超声波、X光、眼底检查、脑电图、肝功能、肾功能、病理活检及其它特殊检查？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                    <div class="table-line" style="height: 60px;">
+                        <div class="div-table-2" style="width: 636px;height: 60px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C8.</div><div style="display: inline-block;width: 600px;">最近五年内，您是否曾经作下列之一的检查且结果异常：核磁共振(MRI)、心电图、胃镜、纤维结肠镜、气管镜、CT、超声波、X光、眼底检查、脑电图、肝功能、肾功能、病理活检及其它特殊检查？</div></div>
+                        <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 60px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 180px;">
-                        <div class="div-table-2" style="width: 636px;height: 180px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C9.</div><div style="display: inline-block;width: 600px;">您是否有下列身体残障状况：
+                    <div class="table-line" style="height: 160px;">
+                        <div class="div-table-2" style="width: 636px;height: 160px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C9.</div><div style="display: inline-block;width: 600px;">您是否有下列身体残障状况：
                             <br>a 脊柱、胸廓、四肢、手指或手掌、足趾或足部缺损畸形、两上肢或两下肢长度不等、跛行？
                             b 眼、耳、鼻、舌或其它颜面部软组织缺损畸形？牙齿脱落、上下颌骨缺失、颞下颌关节强直？肋骨骨折或缺失？颈部或腰部活动受限？肢体肌力下降？
                             c 睾丸萎缩或缺失？阴茎缺失？输精管闭锁或缺失？（男性）
@@ -1888,27 +2014,189 @@
                             e 视力、听力、语言、咀嚼、吞咽、嗅觉、触觉等功能障碍或中枢神经系统障碍？
                             f 精神、智能障碍或性格行为异常？
                             g 脾、肺、胃、小肠、结肠、直肠、胰腺、肝、肾、膀胱切除？心脏的结构损伤或功能障碍？输尿管闭锁或缺失？其它内脏或身体器官缺损、摘除或移植？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 180px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 180px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 160px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 160px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
-                    <div class="table-line" style="height: 55px;">
-                        <div class="div-table-2" style="width: 636px;height: 55px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C10.</div><div style="display: inline-block;width: 600px;">a 您及您的配偶是否曾接受或试图接受与艾滋病(AIDS)有关的医疗咨询、检验或治疗，或艾滋病病毒(HIV)呈阳性反应？
+                    <div class="table-line" style="height: 53px;">
+                        <div class="div-table-2" style="width: 636px;height: 53px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C10.</div><div style="display: inline-block;width: 600px;">a 您及您的配偶是否曾接受或试图接受与艾滋病(AIDS)有关的医疗咨询、检验或治疗，或艾滋病病毒(HIV)呈阳性反应？
                             b 是否曾经验血而得知为乙肝表面抗原(HbsAg)阳性反应或不宜献血？</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 55px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                 </div>
 
                     <%--第三页--%>
-                <div class="div-tab" style="margin-top: 5px;">
+                <div class="div-tab" style="margin-top: 60px;">
+                    <div style="position: absolute">
+                        <div class="a-table-line" style="position:relative;height: 58px;">
+                            <%--B12--%>
+                            <div class="a-tick" style="margin-left: 650px;margin-top: 20px;"><c:if test="${map.beneficiaryList.insurance_matterList[10].insuredResult=='true'}">√</c:if></div>
+                            <div class="a-tick" style="margin-left: 685px;margin-top: 20px;"><c:if test="${map.beneficiaryList.insurance_matterList[10].insuredResult=='false'}">√</c:if></div>
+                            <div class="a-tick" style="margin-left: 733px;margin-top: 20px;"><c:if test="${map.beneficiaryList.insurance_matterList[10].policyholderResult=='true'}">√</c:if></div>
+                            <div class="a-tick" style="margin-left: 770px;margin-top: 20px;"><c:if test="${map.beneficiaryList.insurance_matterList[10].policyholderResult=='false'}">√</c:if></div>
+                            <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                ${map.beneficiaryList.insurance_matterList[10].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[10].policyholderRemark}
+                            </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 465px;">
+                            <%--B12--%>
+                            <div style="position: absolute;margin-top: 25px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[11].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[11].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[11].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[11].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[11].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[11].policyholderRemark}
+                                </div>
+                            </div>
+                            <div style="position: absolute;margin-top: 165px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[12].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[12].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[12].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[12].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[12].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[12].policyholderRemark}
+                                </div>
+                            </div>
+                                <div style="position: absolute;margin-top: 185px;">
+                                    <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[13].insuredResult=='true'}">√</c:if></div>
+                                    <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[13].insuredResult=='false'}">√</c:if></div>
+                                    <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[13].policyholderResult=='true'}">√</c:if></div>
+                                    <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[13].policyholderResult=='false'}">√</c:if></div>
+                                    <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                        ${map.beneficiaryList.insurance_matterList[13].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[13].policyholderRemark}
+                                    </div>
+                                </div><div style="position: absolute;margin-top: 220px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[14].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[14].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[14].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[14].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[14].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[14].policyholderRemark}
+                                </div>
+                            </div><div style="position: absolute;margin-top: 238px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[15].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[15].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[15].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[15].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[15].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[15].policyholderRemark}
+                                </div>
+                            </div><div style="position: absolute;margin-top: 275px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[16].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[16].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[16].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[16].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[16].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[16].policyholderRemark}
+                                </div>
+                            </div><div style="position: absolute;margin-top: 305px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[17].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[17].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[17].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[17].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[17].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[17].policyholderRemark}
+                                </div>
+                            </div><div style="position: absolute;margin-top: 325px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[18].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[18].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[18].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[18].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[18].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[18].policyholderRemark}
+                                </div>
+                            </div><div style="position: absolute;margin-top: 345px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[19].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[19].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[19].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[19].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[19].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[19].policyholderRemark}
+                                </div>
+                            </div><div style="position: absolute;margin-top: 380px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[20].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[20].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[20].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[20].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[20].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[20].policyholderRemark}
+                                </div>
+                            </div><div style="position: absolute;margin-top: 400px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[21].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[21].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[21].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[21].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[21].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[21].policyholderRemark}
+                                </div>
+                            </div><div style="position: absolute;margin-top: 415px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[22].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[22].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[22].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[22].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[22].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[22].policyholderRemark}
+                                </div>
+                            </div><div style="position: absolute;margin-top: 435px;">
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[23].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[23].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[23].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[23].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[23].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[23].policyholderRemark}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 40px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 650px;margin-top: 5px;"><c:if test="${map.beneficiaryList.insurance_matterList[24].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 5px;"><c:if test="${map.beneficiaryList.insurance_matterList[24].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;margin-top: 5px;"><c:if test="${map.beneficiaryList.insurance_matterList[24].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;margin-top: 5px;"><c:if test="${map.beneficiaryList.insurance_matterList[24].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;margin-top: 5px;">
+                                    ${map.beneficiaryList.insurance_matterList[24].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[24].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 197px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 650px;margin-top: 85px;"><c:if test="${map.beneficiaryList.insurance_matterList[25].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;margin-top: 85px;"><c:if test="${map.beneficiaryList.insurance_matterList[25].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;margin-top: 85px;"><c:if test="${map.beneficiaryList.insurance_matterList[25].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;margin-top: 85px;"><c:if test="${map.beneficiaryList.insurance_matterList[25].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;margin-top: 50px;">
+                                    ${map.beneficiaryList.insurance_matterList[25].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[25].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 28px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[26].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[26].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[26].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[26].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[26].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[26].policyholderRemark}
+                                </div>
+                        </div>
+                        <div class="a-table-line" style="position:relative;height: 28px;">
+                            <%--B12--%>
+                                <div class="a-tick" style="margin-left: 650px;"><c:if test="${map.beneficiaryList.insurance_matterList[27].insuredResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 685px;"><c:if test="${map.beneficiaryList.insurance_matterList[27].insuredResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 733px;"><c:if test="${map.beneficiaryList.insurance_matterList[27].policyholderResult=='true'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 770px;"><c:if test="${map.beneficiaryList.insurance_matterList[27].policyholderResult=='false'}">√</c:if></div>
+                                <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
+                                    ${map.beneficiaryList.insurance_matterList[27].insuredRemark}&nbsp;${map.beneficiaryList.insurance_matterList[27 ].policyholderRemark}
+                                </div>
+                        </div>
+                    </div>
                     <div class="table-line" style="height: 58px;">
-                        <div class="div-table-2" style="width: 641px;height:58px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C11.</div><div style="display: inline-block;width: 600px;">您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？怀孕___ 周数？
+                        <div class="div-table-2" style="width: 639px;height:58px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C11.</div><div style="display: inline-block;width: 600px;">您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？怀孕___ 周数？
                             b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？d.母亲、姐妹中是否患有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？</div></div>
                         <div class="div-table-2" style="width: 83px;height:58px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height:58px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height:58px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 465px;">
-                        <div class="div-table-2" style="width: 641px;height: 465px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C12.</div><div style="display: inline-block;width: 600px;line-height: 1.3;">是否患有或曾经患有一下疾病：
+                        <div class="div-table-2" style="width: 639px;height: 465px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C12.</div><div style="display: inline-block;width: 600px;line-height: 1.3;">是否患有或曾经患有一下疾病：
                             <br>a.最近六个月内，是否有下列疾患或自觉症状?
                             <br>不明原因皮肤出血点或瘀斑、鼻衄、反复齿龈出血?
                             <br>不明原因的声嘶、关节红肿酸痛、难以愈合的舌、皮肤溃疡，持续低热，体重显著减轻(短期内5公斤以上)，痣的形态、大小或颜色改变、黄疸?
@@ -1928,16 +2216,44 @@
                             <br>k.先天性疾病、遗传性疾病?
                             <br>l.身体是否有瘢痕？
                             <br>m.除上述以外的其它疾病、症状或意外受伤史?</div></div>
-                        <div class="div-table-2" style="width: 83px;height: 465px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 465px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 465px;vertical-align: top">
+                            <div style="display: block;margin-top:25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:125px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:0;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        </div>
+                        <div class="div-table-2" style="width: 83px;height: 465px;vertical-align: top;border-right:#000000 1px solid;">
+                            <div style="display: block;margin-top:25px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:125px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:0;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;margin-top:15px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                            <div style="display: block;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        </div>
                     </div>
                     <div class="table-line" style="height: 40px;">
-                        <div class="div-table-2" style="width: 641px;height: 40px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">直系亲属中，是否患有或曾经患有高血压、肾病、心脏病、肝炎、肝肾囊肿、肝硬化、糖尿病、精神病、癌症或早于60周岁因病身故者？</div></div>
+                        <div class="div-table-2" style="width: 639px;height: 40px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">直系亲属中，是否患有或曾经患有高血压、肾病、心脏病、肝炎、肝肾囊肿、肝硬化、糖尿病、精神病、癌症或早于60周岁因病身故者？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 40px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 40px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 40px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 197px;">
-                        <div class="div-table-2" style="width: 641px;height: 197px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C14.</div><div style="display: inline-block;width: 600px;">您若为2周岁(不含)以下婴儿，请告知：
+                        <div class="div-table-2" style="width: 639px;height: 197px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C14.</div><div style="display: inline-block;width: 600px;">您若为2周岁(不含)以下婴儿，请告知：
                             <br>a 出生时身长__厘米(cm)，体重__公斤(kg)，出生时留院天数__天，如超过7天，请详细说明
                             <br>b 出生时是否有早产、难产、窒息等情况？是否使用产钳等辅助器械？
                             <br>c 出生时是否有抢救史？
@@ -1948,17 +2264,17 @@
                             <br>h是否曾患疝气？
                             <br>i是否曾出现“高热惊厥”</div></div>
                         <div class="div-table-2" style="width: 83px;height: 197px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 197px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 197px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 28px;">
-                        <div class="div-table-2" style="width: 641px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否参加公费医疗或社会医疗保险？</div></div>
+                        <div class="div-table-2" style="width: 639px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否参加公费医疗或社会医疗保险？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 28px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                     <div class="table-line" style="height: 28px;">
-                        <div class="div-table-2" style="width: 641px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否有其他事项告知本公司？</div></div>
+                        <div class="div-table-2" style="width: 639px;height: 28px;text-align: left;vertical-align: middle"><div style="display: inline-block;vertical-align: top;">C13.</div><div style="display: inline-block;width: 600px;">您是否有其他事项告知本公司？</div></div>
                         <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
-                        <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
+                        <div class="div-table-2" style="width: 83px;height: 28px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>
                     </div>
                 </div>
                     <%--<div style="position: absolute;z-index: 20;padding-left: 19px;padding-top: 37px;">--%>

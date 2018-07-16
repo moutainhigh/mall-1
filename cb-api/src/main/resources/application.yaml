@@ -10,10 +10,11 @@ server:
 spring:
   profiles:
     active: dev
-  multipart:
-    enabled: true
-    max-file-size: 20mb
-    max-request-size: 20mb
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 20mb
+      max-request-size: 20mb
 
 
 
