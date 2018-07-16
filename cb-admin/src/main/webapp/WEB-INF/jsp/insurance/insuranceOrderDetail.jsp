@@ -749,11 +749,11 @@
                             <div class="col-sm-8">
                                 <table id="specTable" class="table table-bordered table-striped">
                                     <thead id="attribute-table-th">
-                                    <th scope="col" width="700">问题及健康告知</th>
-                                    <th scope="col"  width="100">被保人</th>
-                                    <th scope="col">被保人备注</th>
-                                    <th scope="col"  width="100">投保人</th>
-                                    <th scope="col">投保人备注</th>
+                                    <th scope="col" width="60%">问题及健康告知</th>
+                                    <th scope="col"  width="8%">被保人</th>
+                                    <th scope="col" width="13%">被保人备注</th>
+                                    <th scope="col"  width="8%">投保人</th>
+                                    <th scope="col" width="13%">投保人备注</th>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${matterList}" var="matterLists">
@@ -807,7 +807,9 @@
                     <div class="subheading">
                         <h3>异地投保</h3>
                     </div>
-                        <c:if test="${insuranceOrder.insuranceOrderOffsite!=null}">
+                        <c:choose>
+                            <c:when test="${insuranceOrder.insuranceOrderOffsite!=null}">
+
                     <div class="inner-padding">
                         <div class="spacer-30">1、您的户籍所在地是哪里？
                         </div>
@@ -871,8 +873,15 @@
                                     <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.otherMatter}</label>
                             </div>
                         </div>
-                        </c:if>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="inner-padding">
+                                    <div class="spacer-30" style="color: red;">无异地投保
+                                    </div>
+                                </div>
 
+                            </c:otherwise>
+                        </c:choose>
                 </div><!-- End .inner-padding -->
 
 
