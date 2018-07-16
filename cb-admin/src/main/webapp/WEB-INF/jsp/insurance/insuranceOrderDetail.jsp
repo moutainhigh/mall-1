@@ -64,6 +64,22 @@
             }
         });
 
+        function changeOtherMatter(flag) {
+            if(flag){
+                $("#otherMatterDiv").show();
+            }else {
+                $("#otherMatterDiv").hide();
+            }
+        }
+
+        function submitForm() {
+            var flag = $("input[name='otherMatter']:checked").val();
+            if(flag=="false"){
+                $("#insuranceOrderOffsite_otherMatter").val("");
+            }
+            return true;
+        }
+
     </script>
 </head>
 <body>
@@ -804,17 +820,22 @@
 
                 <div id="content-tab-3" class="tab-pane">
                     <div class="inner-padding">
+                    <%--@elvariable id="insuranceOrderOffsite" type="JDOMAbout"--%>
+                    <form:form id="validateSubmitForm" action="editInsuranceOrderOffsite.do" cssClass="form-horizontal" method="post" commandName="insuranceOrder" onsubmit="return submitForm();">
+
                     <div class="subheading">
                         <h3>异地投保</h3>
                     </div>
                         <c:choose>
                             <c:when test="${insuranceOrder.insuranceOrderOffsite!=null}">
-
+                                <form:hidden path="insuranceOrderOffsite.offsiteId"/>
+                                <form:hidden path="orderId"/>
                     <div class="inner-padding">
                         <div class="spacer-30">1、您的户籍所在地是哪里？
                         </div>
                         <div style="float: left;margin-left: 10px">
-                                <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.sensue}</label>
+                                <%--<label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.sensue}</label>--%>
+                                    <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.sensue" maxlength="255"></form:textarea>
                         </div>
 
                     </div>
@@ -825,7 +846,8 @@
                                 2、您目前工作所在城市或地区名？单位名称？工作单位所属行业？您的职务？
                             </div>
                             <div style="float: left;margin-left: 10px">
-                                    <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.workplace}</label>
+                                    <%--<label><span class="asterisk"></span>${insuranceOrder.workplace}</label>--%>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.workplace" maxlength="255"></form:textarea>
                             </div>
                         </div>
 
@@ -836,7 +858,8 @@
                                 3、请说明您离开投保地的原因？前往何地？出行目的？（如是工作或学习，请提供单位或学校的名称和地址，并详细告知工作内容）
                             </div>
                             <div  style="float: left;margin-left: 10px">
-                                    <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.leaveReason}</label>
+                                    <%--<label><span class="asterisk"></span>${insuranceOrder.leaveReason}</label>--%>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.leaveReason" maxlength="255"></form:textarea>
                             </div>
                         </div>
 
@@ -847,7 +870,8 @@
                                 4、您一年中平均在投保地逗留的时间多长？每次回投保地的时间间隔多久？您往来投保地和上述异地之间经常乘坐的交通工具是什么？
                             </div>
                             <div  style="float: left;margin-left: 10px">
-                                    <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.stayTime}</label>
+                                    <%--<label><span class="asterisk"></span>${insuranceOrder.stayTime}</label>--%>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.stayTime" maxlength="255"></form:textarea>
                             </div>
                         </div>
 
@@ -858,7 +882,10 @@
                                 5、您在投保地或异地是否已落实居住住所？如已落实请简述居住地址、环境？
                             </div>
                             <div style="float: left;margin-left: 10px">
-                                    <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.offsiteAddress}</label>
+                                <%--<label><span class="asterisk"></span>${offsiteAddress}</label>--%>
+                                <%--<label><input>${offsiteAddress}</input></label>--%>
+                                    <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.offsiteAddress" maxlength="255"></form:textarea>
+                                        <%--<label><input type="text" name="lname" value=${offsiteAddress}></label>--%>
                             </div>
                         </div>
 
@@ -868,10 +895,15 @@
                             <hr>
                             <div class="spacer-30">
                                 6、是否有其他需要说明事项：
+                                <input type="radio"  name="otherMatter" value="true" <c:if test="${not empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> checked</c:if> onclick="changeOtherMatter(true);"/> 是&nbsp;&nbsp;
+                                <input type="radio"  name="otherMatter" value="false" <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}" > checked </c:if> onclick="changeOtherMatter(false);"/> 否
                             </div>
-                            <div  style="float: left;margin-left: 10px">
-                                    <label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.otherMatter}</label>
-                            </div>
+                                    <div id="otherMatterDiv" style='float: left;margin-left: 10px; <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> display:none;</c:if>' >
+                                            <%--<label><span class="asterisk"></span>${otherMatter}</label>--%>
+                                        <form:textarea id="insuranceOrderOffsite_otherMatter" rows="10" cols="101" path="insuranceOrderOffsite.otherMatter" maxlength="255"></form:textarea>
+                                            <%--<label><textarea>${insuranceOrder.otherMatter}</textarea></label>--%>
+                                    </div>
+
                         </div>
                             </c:when>
                             <c:otherwise>
@@ -882,6 +914,7 @@
 
                             </c:otherwise>
                         </c:choose>
+
                 </div><!-- End .inner-padding -->
 
 
@@ -903,7 +936,15 @@
                                 <a class="btn btn-default pull-right" href="javascript:void(0);" onclick="updInsuranceOrderState('${insuranceOrder.orderId}','ON_PAID')">确认支付</a></c:if>
                             <c:if test="${insuranceOrder.orderState=='UN_SURRENDER'}">
                                 <a class="btn btn-default pull-right" href="javascript:void(0);" onclick="updInsuranceOrderState('${insuranceOrder.orderId}','ON_SURRENDER')">确认退保</a></c:if>
-                        </div>
+                            </div>
+                    </div>
+                    <div class="col-sm-2">
+
+                        <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
+                        <%--<div class="btn-group pull-right">
+                            <c:if test="${insuranceOrder.orderState=='UN_PAID'}">
+                                <a class="btn btn-default pull-right" href="javascript:void(0);" onclick="updInsuranceOrderState('${insuranceOrder.orderId}','ON_PAID')">确认修改</a></c:if>
+                        </div>--%>
                     </div>
                     <div class="col-sm-2">
                         <div class="btn-group pull-right">
@@ -925,6 +966,7 @@
                 </div>
             </div>
         </div>
+        </form:form>
 
         <jsp:include page="../layouts/footer.jsp"/>
     </div>

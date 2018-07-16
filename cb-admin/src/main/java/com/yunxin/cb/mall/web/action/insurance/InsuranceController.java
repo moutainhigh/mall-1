@@ -2,8 +2,10 @@ package com.yunxin.cb.mall.web.action.insurance;
 
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.entity.InsuranceOrderInsured;
+import com.yunxin.cb.insurance.entity.InsuranceOrderOffsite;
 import com.yunxin.cb.insurance.entity.InsuranceOrderPolicyholder;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
+import com.yunxin.cb.insurance.service.IInsuranceOrderOffsiteService;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.util.HttpsUtils;
 import com.yunxin.core.persistence.PageSpecification;
@@ -35,6 +37,9 @@ public class InsuranceController {
     @Resource
     private IInsuranceOrderService iInsuranceOrderService;
 
+    @Resource
+    private IInsuranceOrderOffsiteService InsuranceOrderOffsiteService;
+
     @RequestMapping(value = "insurances", method = RequestMethod.GET)
     public String insurances() {
         return "insurance/insurances";
@@ -65,6 +70,7 @@ public class InsuranceController {
     public String insuranceOrderDetail(@RequestParam("orderId") int orderId, ModelMap modelMap) throws Exception {
         InsuranceOrder InsuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
         modelMap.addAttribute("insuranceOrder", InsuranceOrder);
+
         modelMap.addAttribute("matterList", iInsuranceOrderService.findMatter(orderId));
         return "insurance/insuranceOrderDetail";
     }
@@ -80,6 +86,18 @@ public class InsuranceController {
     @RequestMapping(value = "updInsuranceOrderState", method = RequestMethod.GET)
     public boolean updInsuranceOrderState(@RequestParam("orderId") int orderId, @RequestParam("orderState") InsuranceOrderState orderState) {
         return iInsuranceOrderService.updInsuranceOrderState(orderId, orderState);
+    }
+
+    /**
+     * 修改异地投保
+     *
+     * @return
+     */
+
+    @RequestMapping(value = "editInsuranceOrderOffsite", method = RequestMethod.POST)
+    public String editInsuranceOrderOffsite(@ModelAttribute("insuranceOrder") InsuranceOrder insuranceOrder) {
+         InsuranceOrderOffsiteService.upInsuranceOrderOffsite(insuranceOrder.getInsuranceOrderOffsite());
+        return "redirect:insuranceOrderDetail.do?orderId="+insuranceOrder.getOrderId();
     }
 
     @RequestMapping(value = "excelInsuranceOrder", method = RequestMethod.GET)
