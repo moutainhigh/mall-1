@@ -83,7 +83,7 @@
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
                     <li><a href="#">保单管理 </a></li>
-                    <li><a href="#">保险告知事项</a></li>
+                    <li><a href="#">保险产品管理</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -97,7 +97,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>保险告知事项</h2>
+                    <h2>保险产品管理</h2>
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
@@ -167,7 +167,7 @@
                 <div class="toolbar responsive-helper">
                     <header>
                         <div class="pull-left">
-                            <h3>保险告知事项</h3>
+                                        <h3>保险产品管理</h3>
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
@@ -195,7 +195,7 @@
                             <kendo:grid-column title="保险期间" field="insurePeriod"  width="50px"/>
                             <kendo:grid-column title="保障年限" field="protectionYear" width="50px"/>
                             <kendo:grid-column title="投保须知" field="instruction"  width="100px"/>
-                            <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
+                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">

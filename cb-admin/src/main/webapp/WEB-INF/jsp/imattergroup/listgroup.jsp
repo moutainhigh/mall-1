@@ -192,8 +192,8 @@
                             <kendo:grid-column title="事项组ID" field="groupId" template="<a href='toEditGroup.do?groupId=#= groupId#' style='color:blue'>#= groupId#</a>" width="100px"/>
                             <kendo:grid-column title="事项组描述" field="description" width="50px"/>
                             <kendo:grid-column title="排序" field="serNo" width="50px"/>
-                            <kendo:grid-column title="是否启用" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
-                            <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
+                            <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
+                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">

@@ -177,7 +177,7 @@
                         <kendo:grid-columns>
                             <kendo:grid-column title="订单编号" field="codeNo" width="100px"/>
                             <kendo:grid-column title="是否使用" field="useed" width="100px" template="#= useed ? '是' : '否' #"/>
-                            <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100"/>
+                            <kendo:grid-column filterable="false" title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
