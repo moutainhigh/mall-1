@@ -22,7 +22,7 @@
     }
     </script>
 </head>
-<body><c:choose><c:when test="${orderOffsite==null}"><div class="noorderOffsite">离投保地问券为空，<br/>无需打印，请核实 </div></c:when><c:otherwise>
+<body><c:choose><c:when test="${orderOffsite==null}"><div class="noorderOffsite">异地投保问卷为空，<br/>无需打印，请核实 </div></c:when><c:otherwise>
     <div class="btn"><button onclick="foreground()">填空打印</button><button onclick="printAll()">完全打印</button></div>
 <div id="content">
 <div class="background">
