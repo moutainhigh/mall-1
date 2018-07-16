@@ -14,9 +14,28 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>反馈详情</title>
+    <title>保险产品详情</title>
 
     <script type="text/javascript">
+        $(document).ready(function() {
+            $("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true, scroll: false, showOneMessage: true
+            });
+
+        });
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null;
+            if (window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+
         $(function () {
             $('img[name="viewImg"]').click(function () {
                 var width = $(this).width();
@@ -29,12 +48,72 @@
                     $(this).height(200);
                 }
             });
-        });
-        $(document).ready(function() {
-            $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+
+            $("#headPic").click(function () {
+                $("#upload").click(); //隐藏了input:file样式后，点击头像就可以本地上传
+                $("#upload").on("change", function () {
+                    var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+                    if (objUrl) {
+                        $("#headPic").attr("src", objUrl); //将图片路径存入src中，显示出图片
+                    }
+                });
             });
 
+            $("#headPic1").click(function () {
+                $("#upload1").click(); //隐藏了input:file样式后，点击头像就可以本地上传
+                $("#upload1").on("change", function () {
+                    var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+                    if (objUrl) {
+                        $("#headPic1").attr("src", objUrl); //将图片路径存入src中，显示出图片
+                    }
+                });
+            });
+
+            //图片上传
+            $("#upload_img").click(function () {
+                var formData = new FormData();
+                formData.append("file", $('#upload')[0].files[0]);
+                $.ajax({
+                    url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
+                    type: 'POST',
+                    cache: false,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        debugger;
+                        alert(result.info);
+                        if (result.code == 0) {
+                            $('#prodImg').val(result.url);
+                        }
+                    },
+                    error: function (err) {
+                    }
+                });
+            });
+
+
+            //图片上传
+            $("#upload_img1").click(function () {
+                var formData = new FormData();
+                formData.append("file", $('#upload')[0].files[0]);
+                $.ajax({
+                    url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
+                    type: 'POST',
+                    cache: false,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        alert(result.info);
+                        if (result.code == 0) {
+                            $('#descriptionImg').val(result.url);
+                        }
+                    },
+                    error: function (err) {
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -319,7 +398,7 @@
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
                     <li><a href="#">保单管理 </a></li>
-                    <li><a href="#">事项组</a></li>
+                    <li><a href="#">保险产品管理</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -343,7 +422,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>事项组</h2>
+                    <h2>保险产品</h2>
                 </div>
             </div>
             <!-- End .inner-padding -->
@@ -372,23 +451,90 @@
             <div class="inner-padding">
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
-                    <legend>事项组</legend>
-                    <form:form id="validateSubmitForm" action="addinsuranceInformedMatterGroup.do" cssClass="form-horizontal" method="post"
-                               commandName="insuranceInformedMatterGroup">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>序号：</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <form:input path="serNo"  cssClass="form-control validate[required,minSize[1]]" maxlength="32"/>
-                            </div>
+                    <legend>保险产品</legend>
+                    <form:form id="validateSubmitForm" action="addInsuranceProduct.do" cssClass="form-horizontal"
+                               method="post"
+                               commandName="insuranceProduct">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label><span class="asterisk">*</span>产品名称：</label>
                         </div>
+                        <div class="col-sm-3">
+                            <form:input path="prodName" value="" cssClass="form-control validate[required,minSize[1]]"
+                                        maxlength="32"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <label><span class="asterisk">*</span>保障年限：</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <form:input path="protectionYear" cssClass="form-control validate[required,minSize[1]]"/>
+                        </div>
+                    </div>
+                    <div class="spacer-10"></div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label><span class="asterisk">*</span>保险期间：</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <form:input path="insurePeriod" cssClass="form-control validate[required,minSize[1]]"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>标签：</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <form:input path="tags" cssClass="form-control validate[required,minSize[1]]"/>
+                        </div>
+                    </div>
+                    <div class="spacer-10"></div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label><span class="asterisk">*</span>投保须知：</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <form:textarea path="instruction" cssClass="form-control validate[required,minSize[1]]"/>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>产品描述：</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <form:textarea path="description" cssClass="form-control validate[required,minSize[1]]"/>
+                        </div>
+                    </div>
+                    <div class="spacer-10"></div>
+                    <div class="spacer-10"></div>
+
+                    <div class="row">
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>事项组描述：</label>
+                                <label>图片：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea path="description" cssClass="form-control validate[required,minSize[1]]"/>
+                                <div style="float: left">
+                                    <div style="padding-left: 5px"><span>产品图片</span></div>
+                                    <div>
+                                        <img id="headPic" src="${insuranceProduct.prodImg}" width="150px" height="150px"
+                                             style="padding: 5px">
+                                        <input id="upload" name="file" multiple="multiple" accept="image/*" type="file"
+                                               style="display: none"/>
+                                    </div>
+                                    <div style="margin-top: 10px;padding-left: 5px">
+                                        <button id="upload_img" type="button">确定上传</button>
+                                    </div>
+                                    <form:hidden path="prodImg" id="prodImg"/>
+                                </div>
+                                <div style="float: left;margin-left: 20px">
+                                    <div style="padding-left: 5px"><span>产品详情图片</span></div>
+                                    <div>
+                                        <img id="headPic1" src="${insuranceProduct.descriptionImg}" width="150px"
+                                             height="150px" style="padding: 5px">
+                                        <input id="upload1" name="file" multiple="multiple" accept="image/*" type="file"
+                                               style="display: none"/>
+                                    </div>
+                                    <div style="margin-top: 10px;padding-left: 5px">
+                                        <button id="upload_img1" type="button">确定上传</button>
+                                    </div>
+                                    <form:hidden path="descriptionImg" id="descriptionImg"/>
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -397,12 +543,14 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
-                                    <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;
+                                    </button>
+                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </form:form>
+                        </form:form>
                 </fieldset>
                 <div class="spacer-40"></div>
                 <div class="hr-totop"><span>Top</span></div>

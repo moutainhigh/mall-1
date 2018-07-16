@@ -37,4 +37,29 @@ public interface IInsuranceProductService {
      */
     public InsuranceProduct updateInsuranceProduct(InsuranceProduct insuranceProduct);
 
+
+    /**
+     *
+     * @param prodId
+     * @return
+     */
+    public InsuranceProduct getInsuranceProductById(int prodId);
+
+    /**
+     *
+     * @param prodId
+     */
+    public void removeById(int prodId);
+
+    /**
+     *
+     * @param
+     * @param matterId
+     * @return
+     */
+    public InsuranceProduct removeInsuranceProductMatter(int prodId,int matterId);
+
+
+    public InsuranceProduct addInsuranceProductMatter(int prodId,int matterId);
+
 }
