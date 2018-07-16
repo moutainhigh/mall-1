@@ -81,7 +81,6 @@
                     processData: false,
                     contentType: false,
                     success: function (result) {
-                        debugger;
                         alert(result.info);
                         if (result.code == 0) {
                             $('#prodImg').val(result.url);

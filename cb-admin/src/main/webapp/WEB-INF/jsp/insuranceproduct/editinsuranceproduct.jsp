@@ -16,7 +16,6 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
     <title>保险产品详情</title>
     <style>
         table {
@@ -59,7 +58,6 @@
         function addMatter(prodId,matterId) {
             bootbox.confirm("确认添加吗？", function (result) {
                 if (result) {
-                    debugger;
                     var formData = new FormData();
                     formData.append("prodId", prodId);
                     formData.append("matterId", matterId);
@@ -88,7 +86,6 @@
         function removeMatter(matterId, prodId) {
             bootbox.confirm("确认删除吗？", function (result) {
                 if (result) {
-                    debugger;
                     var formData = new FormData();
                     formData.append("prodId", prodId);
                     formData.append("matterId", matterId);
@@ -146,7 +143,6 @@
             });
         }
         $(function () {
-
             $('#addproductMatter').on('click', function() {
                 var openNewLink = window.open('/admin/insuranceproduct/toaddMatter.do?prodId=${insuranceProduct.prodId}',
                     '添加', 'height=700, width=1500, top=100, left=200, toolbar=no, menubar=no, scrollbars=no, resizable=false, location=no, status=no'); //参数： url, 名称, 窗体样式
@@ -193,14 +189,13 @@
                 var formData = new FormData();
                 formData.append("file", $('#upload')[0].files[0]);
                 $.ajax({
-                    url: "/uploads/upload/INSURANCEPRODUCT.do",
+                    url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
                     type: 'POST',
                     cache: false,
                     data: formData,
                     processData: false,
                     contentType: false,
                     success: function (result) {
-                        debugger;
                         alert(result.info);
                         if (result.code == 0) {
                             $('#prodImg').val(result.url);
@@ -217,7 +212,7 @@
                 var formData = new FormData();
                 formData.append("file", $('#upload')[0].files[0]);
                 $.ajax({
-                    url: "/uploads/upload/INSURANCEPRODUCT.do",
+                    url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
                     type: 'POST',
                     cache: false,
                     data: formData,
@@ -738,7 +733,7 @@
                                             <c:if test="${1 eq matter.matterType}">填空题</c:if>
                                         </td>
                                         <td>
-                                            <a href='/insuranceInformedMatter/toEditMatter.do?matterId=${matter.matterId}'
+                                            <a href='/admin/insuranceInformedMatter/toEditMatter.do?matterId=${matter.matterId}'
                                                style='color:blue'>查看</a>
                                             <a href="javascript:void(0);"
                                                onclick="removeMatter('${matter.matterId}','${insuranceProduct.prodId}')"

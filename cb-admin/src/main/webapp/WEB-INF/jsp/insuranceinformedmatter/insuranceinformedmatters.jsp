@@ -23,7 +23,6 @@
             });
         });
         function detailItem(){
-            debugger;
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
                 window.location.href = "toEditMatter.do?matterId=" + dataItem.matterId;
@@ -172,9 +171,8 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;详情</a>
+                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="toAddMatter.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
-                                <a href="javascript:editItem();"  class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
                                 <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
                         </div>
@@ -194,10 +192,10 @@
                             <kendo:grid-column title="事项ID" field="matterId" template="<a href='toEditMatter.do?matterId=#= matterId#' style='color:blue'>#= matterId#</a>" width="100px"/>
                             <kendo:grid-column title="序号" field="serNo" width="50px"/>
                             <kendo:grid-column title="事项描述" field="matterDescription" width="50px"/>
-                            <kendo:grid-column title="类型" field="matterType" template="#= matterType ?  '填空题' : '是否题' #" width="50px"/>
-                            <kendo:grid-column title="所属组" field="matterGroup.description" width="50px"/>
-                            <kendo:grid-column title="是否启用" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
-                            <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
+                            <kendo:grid-column title="类型" filterable="false" field="matterType" template="#= matterType ?  '填空题' : '是否题' #" width="50px"/>
+                            <kendo:grid-column title="所属组" filterable="false" field="matterGroup.description" width="50px"/>
+                            <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
+                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
