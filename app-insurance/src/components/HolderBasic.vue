@@ -1,7 +1,7 @@
 <template>
-  <div style="background: #fff; height: 100vh">
+  <div style="background: #fff">
     <group label-width="6rem" label-align="left" style="font-size: 15px;">
-      <datetime title="出生日期" v-model="birthday" startDate="1950-01-01" :endDate="startDate"
+      <datetime title="出生日期" style="margin-right: 15px" v-model="birthday" startDate="1950-01-01" :endDate="startDate"
                 placeholder="请选择出生日期"
                 value-text-align="left" v-bind:class="{'errorInput': $v.birthday.$error}"></datetime>
       <div class="error" v-if="!$v.birthday.required && $v.birthday.$dirty">
@@ -83,17 +83,17 @@
       </div>
     </div>
     <div style="height: 1px; margin: 0 15px; background: #ececec"></div>
-    <div class="i-card">
+    <div class="i-card" style="height: 190px">
       <div style="font-size: 15px;color: #333;">
         投保须知
       </div>
       <div class="i-message" @click="state = !state">
         <img v-if="!state" class="checkIcon" src="../assets/img/unselect.png">
         <img v-if="state" class="checkIcon" src="../assets/img/selected.png">
-        <div>欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</div>
+        <div><p>欢迎使用富德生命投保，请您仔细阅读人身保险投保提示书、产品说明书及保险条款，如实填写各项投保信息并确保为本人签名。保险合同将以此为依据，否则可能影响所签合同的法律效力。</p></div>
       </div>
     </div>
-    <div style="height: 60px;" >
+    <div style="height: 60px">
       <div class="i-footer">
         <button  @click="submit" >
           <div>完善投保信息</div>
@@ -234,9 +234,9 @@
       this.title = query.title;
       this.proId = query.id;
       let order = this.Admin.order;
-      if (storage.fetch('order').length != 0){
-        order = storage.fetch('order');
-      }
+      // if (storage.fetch('order').length != 0){
+      //   order = storage.fetch('order');
+      // }
       order.insuranceProduct.prodId = this.proId;
       if (this.proId == 1) {
         order.insuranceProductPrice.priceId = 1;

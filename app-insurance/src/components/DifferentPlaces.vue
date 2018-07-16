@@ -4,7 +4,7 @@
       异地投保说明
     </div>
     <div class="content" style="height: auto">
-      <p>1、您的户籍所在地是哪里？？</p>
+      <p>1、您的户籍所在地是哪里？</p>
       <textarea class="content-text" v-model="insuranceOrderOffsite.sensue" maxlength="60"></textarea>
       <div class="borderBottom"></div>
     </div>

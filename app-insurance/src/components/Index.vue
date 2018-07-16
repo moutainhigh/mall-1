@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div><button @click="clear">清除缓存</button></div>
+    <!--<div><button @click="clear">清除缓存</button></div>-->
   </div>
 </template>
 
