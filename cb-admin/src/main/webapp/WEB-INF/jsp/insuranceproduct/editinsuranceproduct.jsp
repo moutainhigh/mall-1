@@ -59,7 +59,6 @@
         function addMatter(prodId,matterId) {
             bootbox.confirm("确认添加吗？", function (result) {
                 if (result) {
-                    debugger;
                     var formData = new FormData();
                     formData.append("prodId", prodId);
                     formData.append("matterId", matterId);
@@ -88,7 +87,6 @@
         function removeMatter(matterId, prodId) {
             bootbox.confirm("确认删除吗？", function (result) {
                 if (result) {
-                    debugger;
                     var formData = new FormData();
                     formData.append("prodId", prodId);
                     formData.append("matterId", matterId);
@@ -200,7 +198,6 @@
                     processData: false,
                     contentType: false,
                     success: function (result) {
-                        debugger;
                         alert(result.info);
                         if (result.code == 0) {
                             $('#prodImg').val(result.url);

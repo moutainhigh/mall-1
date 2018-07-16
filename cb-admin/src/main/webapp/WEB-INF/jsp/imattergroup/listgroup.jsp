@@ -23,7 +23,6 @@
             });
         });
         function detailItem(){
-            debugger;
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
                 window.location.href = "toEditGroup.do?groupId=" + dataItem.groupId;
@@ -172,9 +171,8 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;详情</a>
+                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="toAddGroup.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
-                                <a href="javascript:editItem();"  class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
                                 <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
                         </div>
