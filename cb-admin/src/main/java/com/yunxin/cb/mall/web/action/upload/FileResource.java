@@ -16,8 +16,7 @@ import java.util.Map;
 
 
 /**
- * 公共文件上传接口
- * create by dengchenggang
+ * 七牛云文件上传
  */
 @Controller
 @RequestMapping(value = "/uploads")

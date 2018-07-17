@@ -1,5 +1,7 @@
 package com.yunxin.cb.mall.web.action.security;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yunxin.cb.console.entity.Permission;
 import com.yunxin.cb.console.entity.Role;
 import com.yunxin.cb.console.entity.User;
@@ -7,11 +9,13 @@ import com.yunxin.cb.console.service.ISecurityService;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.cb.mall.web.vo.TreeNode;
+import com.yunxin.cb.security.IPermission;
 import com.yunxin.cb.security.Privilege;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.cb.security.SecurityProvider;
 import com.yunxin.core.exception.EntityExistException;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,6 +29,8 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,7 +43,6 @@ import java.util.Set;
  */
 @Controller
 @RequestMapping(value="/security")
-@SessionAttributes(SecurityConstants.LOGIN_SELLER)
 public class RoleController  implements ServletContextAware {
 	
 	@Resource
@@ -76,16 +81,16 @@ public class RoleController  implements ServletContextAware {
 	}
 	
 	@RequestMapping(value = "toAddRole", method = RequestMethod.GET)
-	public String toAddRole(@ModelAttribute("role") Role role,@ModelAttribute(SecurityConstants.LOGIN_SELLER) Seller seller,ModelMap modelMap) {
-//		Set<RoleResc> roleRescs = new HashSet<>();
-//		List<com.yunxin.cb.security.Resource> resources = (List<com.yunxin.cb.security.Resource>) servletContext.getAttribute(SecurityConstants.RESOURCES);
-//		List<TreeViewItem> viewItems = getResourceTree(resources, roleRescs);
-//		modelMap.addAttribute("roleRescTree", viewItems);
+	public String toAddRole(@ModelAttribute("role") Role role,@ModelAttribute(SecurityConstants.LOGIN_SELLER) Seller seller,ModelMap modelMap) throws Exception {
+		Set<Permission> roleRescs = new HashSet<>();
+		List<Privilege> resources = loadPrivileges();
+		List<TreeViewItem> viewItems = buildResourceTree(resources, roleRescs);
+		modelMap.addAttribute("roleRescTree", viewItems);
 		return "security/addRole";
 	}
 
 	@RequestMapping(value = "addRole", method = RequestMethod.POST)
-	public String addRole(@Valid @ModelAttribute("role") Role role,BindingResult result,HttpSession session,ModelMap modelMap) {
+	public String addRole(@Valid @ModelAttribute("role") Role role,BindingResult result,HttpSession session,ModelMap modelMap)throws Exception {
 		Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
 		role.setSeller(seller);
 		try {
@@ -99,18 +104,18 @@ public class RoleController  implements ServletContextAware {
 	}
 	
 	@RequestMapping(value = "toEditRole", method = RequestMethod.GET)
-	public String toEditRole(@RequestParam("roleId") int roleId,@ModelAttribute(SecurityConstants.LOGIN_SELLER) Seller seller,ModelMap modelMap) {
-//		Role role = securityService.getRoleById(roleId);
-//		modelMap.addAttribute("role", role);
-//		List<Permission> roleRescs = securityService.getPermissionsByRole(role);
-//		List<Privilege> resources = null;
-//		List<TreeViewItem> viewItems = buildResourceTree(role.getRoleId(), true);
-//		modelMap.addAttribute("roleRescTree", viewItems);
+	public String toEditRole(@RequestParam("roleId") int roleId,@ModelAttribute(SecurityConstants.LOGIN_SELLER) Seller seller,ModelMap modelMap) throws Exception {
+		Role role = securityService.getRoleById(roleId);
+		modelMap.addAttribute("role", role);
+		List<Permission> roleRescs = securityService.getPermissionsByRole(role);
+		List<Privilege> resources = loadPrivileges();
+		List<TreeViewItem> viewItems = buildResourceTree(resources, new HashSet(roleRescs));
+		modelMap.addAttribute("roleRescTree", viewItems);
 		return "security/editRole";
 	}
 
 	@RequestMapping(value = "editRole", method = RequestMethod.POST)
-	public String editRole(@Valid @ModelAttribute("role") Role role,BindingResult result,HttpSession session,ModelMap modelMap) {
+	public String editRole(@Valid @ModelAttribute("role") Role role,BindingResult result,HttpSession session,ModelMap modelMap) throws Exception {
 		Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
 		role.setSeller(seller);
 		try {
@@ -134,55 +139,32 @@ public class RoleController  implements ServletContextAware {
 		}
 	}
 
-	private List<TreeNode> getResourceTree(Integer roleId,boolean editSate) {
-		List<String> roleRescCodes = null;
-		if (roleId != null) {
-			roleRescCodes = securityService.getPrivilegeCodesByRoleId(roleId);
-		}
-		List<TreeNode> treeNodes = new ArrayList<>();
-		try {
-			List<Privilege> resources = ((SecurityProvider) securityService).getAllPrivileges();
-			if(null!=resources){
-				for (Privilege privilege : resources) {
-					boolean hasChildren = CollectionUtils.isNotEmpty(privilege.getChildren());
 
-					TreeNode treeNode = new TreeNode(privilege);
-					if (!hasChildren
-							&& roleRescCodes != null
-							&& roleRescCodes.contains(privilege.getCode())) {
-						treeNode.getState().setSelected(true);
-						treeNode.getState().setChecked(true);
-					}
-					treeNode.getState().setDisabled(editSate);
-					treeNodes.add(treeNode);
-					buildResourceTree(treeNode, privilege.getChildren(), roleRescCodes,editSate);
+	public List<TreeViewItem> buildResourceTree(List<com.yunxin.cb.security.Privilege> resources, Set<Permission> roleRescs) {
+		List<TreeViewItem> viewItems = new ArrayList<>();
+		for (com.yunxin.cb.security.Privilege resource : resources) {
+			TreeViewItem viewItem = new TreeViewItem(resource.getCode(), resource.getName(), true, resource.getType().toString(), true, true);
+			List<com.yunxin.cb.security.Privilege> children = resource.getChildren();
+			if (children != null && children.size() > 0) {
+				List<TreeViewItem> childItems = buildResourceTree(children, roleRescs);
+				if (childItems.size() > 0) {
+					viewItem.setHasChildren(true);
 				}
+				viewItem.setItems(childItems);
 			}
-		}catch (Exception e){
-			e.printStackTrace();
+			//是否已经授权
+			boolean checked = roleRescs.stream().anyMatch(p -> p.getPrivilegeCode().equals(resource.getCode()));
+			viewItem.setChecked(checked);
+			viewItems.add(viewItem);
 		}
-
-		return treeNodes;
+		return viewItems;
 	}
 
-	private void buildResourceTree(TreeNode parentNode, List<Privilege> resources, List<String> roleRescCodes,boolean editSate) {
-		if (CollectionUtils.isEmpty(resources)) {
-			return;
-		}
-		parentNode.getState().setOpened(true);
-		for (Privilege resource : resources) {
-			TreeNode treeNode = new TreeNode(resource);
-			boolean hasChildren = CollectionUtils.isNotEmpty(resource.getChildren());
-
-			if (!hasChildren&&roleRescCodes != null
-					&& roleRescCodes.contains(resource.getCode())) {
-				treeNode.getState().setSelected(true);
-				treeNode.getState().setChecked(true);
-			}
-			treeNode.getState().setDisabled(editSate);
-			parentNode.addChildNode(treeNode);
-			buildResourceTree(treeNode, resource.getChildren(), roleRescCodes,editSate);
-		}
+	private List<Privilege> loadPrivileges() throws IOException {
+		ClassPathResource resource = new ClassPathResource("resources.json");
+		List<Privilege> allPrivileges = (List)(new Gson()).fromJson(new InputStreamReader(resource.getInputStream(), "UTF-8"), (new TypeToken<List<Privilege>>() {
+		}).getType());
+		 return allPrivileges;
 	}
 
 

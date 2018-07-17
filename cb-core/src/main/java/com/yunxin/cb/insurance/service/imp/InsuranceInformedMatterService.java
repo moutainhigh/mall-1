@@ -126,7 +126,7 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
 
     @Override
     public List<InsuranceInformedMatter> getListByName(String matterDescription){
-        matterDescription="%"+matterDescription+"%";
+        matterDescription=matterDescription+"%";
         return insuranceInformedMatterDao.getListByName(matterDescription);
     }
 }
