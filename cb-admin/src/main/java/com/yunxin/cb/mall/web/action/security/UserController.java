@@ -30,6 +30,7 @@ import java.security.NoSuchAlgorithmException;
 
 @Controller
 @RequestMapping(value = "/security")
+@SessionAttributes(SecurityConstants.LOGIN_SELLER)
 public class UserController {
 
     @Resource
