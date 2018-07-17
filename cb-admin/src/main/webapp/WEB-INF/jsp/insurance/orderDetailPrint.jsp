@@ -34,7 +34,7 @@
         policyholderCity = policyholderCity.replace("市", "");
         var policyholderDistrict = $.citySelector.getDistrict(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
         policyholderDistrict = policyholderDistrict.replace("区", "").replace("县", "");
-        var insuredCareer = $.profession.getProfession('${map.insuranceOrder.insuranceOrderInsured.insuredCareer}');
+        var insuredCareer = $.profession.getProfession('${map.insinsuredProvinceuranceOrder.insuranceOrderInsured.insuredCareer}');
         var policyholderCareer = $.profession.getProfession('${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}');
         //  $(document).ready(function () {
         $(function () {
@@ -333,13 +333,13 @@
                             <div class="al-font div-row-7" style="margin-top: 13px;">
 
                                 <div style="margin-left:75px;position: absolute">
-                                    <div id="insuredProvince"></div>
+                                    <div id="insuredProvince" style="width: 50px;"></div>
                                 </div>
                                 <div style="margin-left:135px;position: absolute">
-                                    <div id="insuredCity"></div>
+                                    <div id="insuredCity"  style="width: 50px;"></div>
                                 </div>
                                 <div style="margin-left:200px;position: absolute">
-                                    <div id="insuredDistrict"></div>
+                                    <div id="insuredDistrict" style="width: 50px;"></div>
                                 </div>
                                 <div style="margin-left:320px;position: absolute">
                                     ${map.insuranceOrder.insuranceOrderInsured.insuredAddress}
@@ -556,7 +556,7 @@
                             </div>
 
                             <div class="al-font div-row-3" style="position: absolute">
-                                <div style="margin-left: 535px;position: absolute;margin-top: 15px;"> ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}</div>
+                                <div style="margin-left: 535px;position: absolute;margin-top: 15px;width: 200px;"> ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}</div>
                             </div>
                             <div class="al-font" style="margin-left: 790px;position: absolute;margin-top: 15px;">
                                 ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderHeight}
@@ -1475,10 +1475,10 @@
                                     test="${map.insurance_matterList[26].insuredResult=='true'}">√</c:if></div>
                             <div class="a-tick" style="margin-left: 685px;"><c:if
                                     test="${map.insurance_matterList[26].insuredResult=='false'}">√</c:if></div>
-                            <div class="a-tick" style="margin-left: 733px;"><c:if
-                                    test="${map.insurance_matterList[26].policyholderResult=='true'}">√</c:if></div>
-                            <div class="a-tick" style="margin-left: 770px;"><c:if
-                                    test="${map.insurance_matterList[26].policyholderResult=='false'}">√</c:if></div>
+                            <%--<div class="a-tick" style="margin-left: 733px;"><c:if--%>
+                                    <%--test="${map.insurance_matterList[26].policyholderResult=='true'}">√</c:if></div>--%>
+                            <%--<div class="a-tick" style="margin-left: 770px;"><c:if--%>
+                                    <%--test="${map.insurance_matterList[26].policyholderResult=='false'}">√</c:if></div>--%>
                             <div class="a-tick" style="margin-left: 810px;width:180px;font-size: 13px;">
                                 ${map.insurance_matterList[26].insuredRemark}&nbsp;${map.insurance_matterList[26].policyholderRemark}
                             </div>
