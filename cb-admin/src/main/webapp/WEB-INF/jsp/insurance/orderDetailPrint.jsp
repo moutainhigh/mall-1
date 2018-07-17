@@ -7,10 +7,14 @@
 <html class="no-js">                       <!--<![endif]-->
 <head>
     <!--<script src="../js/zoomify/zoomify.js"></script>-->
-    <script src="../js/zoomify/jquery-1.4.4.min.js"></script>
-    <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
+
+    <script src="../js/libs/jquery-1.11.0.min.js"></script>
+    <script src="../js/libs/jquery-ui.min.js"></script>
+
     <script src="../js/district/district.js" type="text/javascript"></script>
     <script src="../js/profession/profession.js" type="text/javascript"></script>
+    <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="stylesheet" type="text/css" href="../css/insurance.css">
@@ -18,39 +22,46 @@
     <title></title>
 
     <script type="text/javascript">
-        function jqPrints() {
-            $(".prints").jqprint();
-        }
-        $(document).ready(function () {
+        var insuredProvince= $.citySelector.getProvince('${map.insuranceOrder.insuranceOrderInsured.insuredProvince}');
+        insuredProvince=insuredProvince.replace("省","").replace("市","");
+        var insuredCity= $.citySelector.getCity(${map.insuranceOrder.insuranceOrderInsured.insuredCity});
+        insuredCity=insuredCity.replace("市","");
+        var insuredDistrict= $.citySelector.getDistrict(${map.insuranceOrder.insuranceOrderInsured.insuredDistrict});
+        insuredDistrict=insuredDistrict.replace("区","").replace("县","");
+        var policyholderProvince= $.citySelector.getProvince(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderProvince});
+        policyholderProvince=policyholderProvince.replace("省","").replace("市","");
+        var policyholderCity=  $.citySelector.getCity(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCity});
+        policyholderCity =policyholderCity.replace("市","");
+        var policyholderDistrict=  $.citySelector.getDistrict(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
+        policyholderDistrict=policyholderDistrict.replace("区","").replace("县","");
+        var insuredCareer =$.profession.getProfession('${map.insuranceOrder.insuranceOrderInsured.insuredCareer}');
+        var policyholderCareer =$.profession.getProfession('${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}');
+      //  $(document).ready(function () {
+      $(function() {
 
-            var insuredProvince= $.citySelector.getProvince(${map.insuranceOrder.insuranceOrderInsured.insuredProvince});
-            insuredProvince=insuredProvince.replace("省","").replace("市","");
             $("#insuredProvince").html(insuredProvince);
-            var insuredCity= $.citySelector.getCity(${map.insuranceOrder.insuranceOrderInsured.insuredCity});
-            insuredCity=insuredCity.replace("市","");
+
             $("#insuredCity").html(insuredCity);
-            var insuredDistrict= $.citySelector.getDistrict(${map.insuranceOrder.insuranceOrderInsured.insuredDistrict});
-            insuredDistrict=insuredDistrict.replace("区","").replace("县","");
+
             $("#insuredDistrict").html(insuredDistrict);
-            var policyholderProvince= $.citySelector.getProvince(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderProvince});
-            policyholderProvince=policyholderProvince.replace("省","").replace("市","");
-            var policyholderCity=  $.citySelector.getCity(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCity});
-            policyholderCity =policyholderCity.replace("市","");
-            var policyholderDistrict=  $.citySelector.getDistrict(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
-            policyholderDistrict=policyholderDistrict.replace("区","").replace("县","");
-            $("#policyholderProvince").html(policyholderProvince);
+
+            $("#policyholderProvince").text(policyholderProvince);
             $("#policyholderCity").html(policyholderCity);
             $("#policyholderDistrict").html(policyholderDistrict);
 
             $("#policyholderProvinces").html(policyholderProvince);
             $("#policyholderCitys").html(policyholderCity);
             $("#policyholderDistricts").html(policyholderDistrict);
-            var insuredCareer =$.profession.getProfession('${map.insuranceOrder.insuranceOrderInsured.insuredCareer}');
-            $("#insuredCareer").html(insuredCareer);
-            var policyholderCareer =$.profession.getProfession('${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}');
-            $("#policyholderCareer").html(policyholderCareer);
 
-        });
+            $("#insuredCareer").html(insuredCareer);
+
+            $("#policyholderCareer").html(policyholderCareer);
+      });
+       // });
+        function jqPrints() {
+
+            $(".prints").jqprint();
+        }
     </script>
 </head>
 <body>
@@ -102,7 +113,7 @@
 
 
 
-                    <div>
+                    <div class="">
                         <div style="height: 356px;width: 100%;z-index: 20;position: absolute;"></div>
                         <div style="position: absolute;z-index: 20;margin-top: 356px;" >
                             <div class="al-tab">
@@ -370,7 +381,7 @@
                                     </div>
                                     <div class="al-font div-postcode" style="margin-top: 15px;margin-right: 35px;">
 
-                                        <div style="margin-right : 10px;letter-spacing:13px;">518000</div>
+                                        <div style="letter-spacing:19px;">518000</div>
                                     </div>
                                 </div>
 
@@ -613,14 +624,14 @@
                                 <div class="al-line" style="margin-top: 2px;">
                                     <div class="al-font div-row-7" style="margin-top: 13px;position: absolute">
 
-                                        <div style="margin-left:90px;position: absolute">
-                                            <div id="policyholderProvince">fdsf</div>
+                                        <div style="margin-left:90px;position: absolute" >
+                                            <div id="policyholderProvince" style="width: 40px;"></div>
                                         </div>
                                         <div style="margin-left:180px;position: absolute">
-                                            <div id="policyholderCity">wewe</div>
+                                            <div id="policyholderCity"  style="width: 40px;"></div>
                                         </div>
                                         <div style="margin-left:250px;position: absolute">
-                                            <div id="policyholderDistrict">fdsfsd</div>
+                                            <div id="policyholderDistrict"  style="width: 40px;"></div>
                                         </div>
                                         <div style="margin-left:355px;position: absolute">
                                             ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
@@ -629,7 +640,7 @@
                                     </div>
                                     <div class="al-font div-postcode" style="margin-top: 13px;margin-right: 35px;">
 
-                                        <div style="margin-right : 10px;letter-spacing:13px;">518000</div>
+                                        <div style="letter-spacing:19px;">518000</div>
                                     </div>
                                 </div>
 
@@ -641,7 +652,7 @@
 
                                     </div>
                                     <div class="al-font div-row-3">
-                                        <div style="margin-left: 110px;"><div id="policyholderCareer">fsdfds</div></div>
+                                        <div style="margin-left: 110px;"><div id="policyholderCareer"></div></div>
 
                                     </div>
                                     <div class="al-font div-row-3" style="position: absolute">
@@ -667,9 +678,9 @@
                                         </div>
 
                                     </div>
-                                    <div class="al-font div-postcode" style="margin-top: 15px;margin-left: 545px;position: absolute">
+                                    <div class="al-font div-postcode" style="margin-top: 15px;margin-left: 520px;position: absolute">
 
-                                        <div style="position: absolute;letter-spacing:13px;">618001</div>
+                                        <div style="position: absolute;letter-spacing:19px;">618001</div>
                                     </div>
                                 </div>
 
@@ -698,13 +709,13 @@
                                         <div style="margin-left:0px;position: absolute">
                                             <div id=""></div>
                                         </div>
-                                        <div style="position: absolute;margin-left:130px">
+                                        <div style="position: absolute;margin-left:130px;width: 40px;">
                                             <div id="policyholderProvinces"></div>
                                         </div>
-                                        <div style="margin-left:225px;position: absolute">
+                                        <div style="margin-left:225px;position: absolute;width: 40px;">
                                             <div id="policyholderCitys"></div>
                                         </div>
-                                        <div style="margin-left:300px;position: absolute">
+                                        <div style="margin-left:300px;position: absolute;width: 40px;">
                                             <div id="policyholderDistricts"></div>
                                         </div>
                                         <div style="margin-left:395px;position: absolute">
@@ -713,9 +724,9 @@
 
                                     </div>
 
-                                    <div class="al-font div-postcode" style="margin-top: 38px;position: absolute;margin-left: 660px;">
+                                    <div class="al-font div-postcode" style="margin-top: 38px;position: absolute;margin-left: 650px;">
 
-                                        <div style="margin-left: 20px;letter-spacing:13px;">518000</div>
+                                        <div style="letter-spacing:19px;">518000</div>
 
                                     </div>
                                     <div class="al-font div-postcode" style="position: absolute;margin-top: 38px;margin-left: 880px;">
@@ -770,14 +781,14 @@
                                             </div>
                                             <div class="al-font" style="position: absolute;margin-left: 510px;margin-top: -6px;">
                                                 <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='身份证'}">
-                                                    √</c:if>√</div>
+                                                    √</c:if></div>
 
                                             <div class="al-font" style="position: absolute;margin-left: 590px;margin-top: -6px;">
                                                 <c:if test="${map.beneficiaryList[0].beneficiaryCardType!='身份证'}">
                                                     √</c:if></div>
                                             <div class="al-font" style="position: absolute;margin-left: 945px;margin-top: -6px;font-size: 10px;">
                                                 <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='长期'}">
-                                                    √</c:if>√
+                                                    √</c:if>
                                             </div>
                                             <div class="al-font" style="position: absolute;margin-left: 840px;margin-top: -6px;font-size: 10px;">
                                                 <c:if test="${map.beneficiaryList[0].beneficiaryCardType!='长期'}">
