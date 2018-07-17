@@ -2,11 +2,12 @@ package com.yunxin.cb.insurance.service.imp;
 
 import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.*;
-import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
+import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.util.CodeGenerator;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.CalendarUtils;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -150,7 +151,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     put("no","2");
                                 }else{
                                     String description=insuranceInformedMatter.getMatterDescription();
-                                        String[] str={"{0}","{1}","{2}","{3}"};
+                                        String[] str={"{0}","{1}","{2}","{3}","{4}","{5}","{6}"};
                                         if(null!=list.getCollectValues()&&!"".equals(list.getCollectValues())){
                                             String[] strValue=list.getCollectValues().replace("[","").replace("]","").replace("\"","") .split(",");
                                             for (int j=0;j<strValue.length;j++)
@@ -239,26 +240,123 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         /**
          * 获取保单详情
          */
-        InsuranceOrder insuranceOrder = getInsuranceOrderDetailById(orderId);
+        final InsuranceOrder insuranceOrder = getInsuranceOrderDetailById(orderId);
         /**
          * 获取事项
          */
-        List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList =  insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
+        final List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList =  insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
+        SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
         return new HashMap<String,Object>(){
             {
+
+                if(null!=insuranceOrder){
+
                     put("insuranceOrder",insuranceOrder);
+                    /**
+                     * 被保人
+                     */
+                    InsuranceOrderInsured insuranceOrderInsured= insuranceOrder.getInsuranceOrderInsured();
+                    if(null!=insuranceOrderInsured&& Hibernate.isInitialized(insuranceOrderInsured)){
+
+                        Date birthday=insuranceOrderInsured.getInsuredBirthday();
+                        String insuredBirthday= simpleDateFormats.format(birthday);
+                        String insuredCardPeriod= simpleDateFormats.format(insuranceOrderInsured.getInsuredCardPeriod());
+
+                        put("insurance_b_year",insuredBirthday.substring(0,4));
+                        put("insurance_b_month",insuredBirthday.substring(5,7));
+                        put("insurance_b_day",insuredBirthday.substring(8,insuredBirthday.length()-1));
+
+                        if(null!=insuranceOrderInsured.getInsuredTel()&&!"".equals(insuranceOrderInsured.getInsuredTel())){
+                            put("insurance_q_tel",insuranceOrderInsured.getInsuredTel().substring(0,4));
+                            put("insurance_h_tel",insuranceOrderInsured.getInsuredTel().substring(4,insuranceOrderInsured.getInsuredTel().length()-1));
+                        }
+
+                        try {
+                            int age= CalendarUtils.getAge(birthday);
+                            put("age",age);
+                            if(null!=insuredCardPeriod){
+                                put("insurance_p_year",insuredCardPeriod.substring(0,4));
+                                put("insurance_p_month",insuredCardPeriod.substring(5,7));
+                                put("insurance_p_day",insuredCardPeriod.substring(8,insuredCardPeriod.length()-1));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    /**
+                     * 投保人
+                     */
+                    InsuranceOrderPolicyholder insuranceOrderPolicyholder= insuranceOrder.getInsuranceOrderPolicyholder();
+                    if(null!=insuranceOrderPolicyholder&&Hibernate.isInitialized(insuranceOrderPolicyholder)){
+
+                        Date birthday=insuranceOrderPolicyholder.getPolicyholderBirthday();
+                        String policyholderBirthday= simpleDateFormats.format(birthday);
+                        String policyholderCardPeriod= simpleDateFormats.format(insuranceOrderPolicyholder.getPolicyholderCardPeroid());
+                        put("policy_b_year",policyholderBirthday.substring(0,4));
+                        put("policy_b_month",policyholderBirthday.substring(5,7));
+                        put("policy_b_day",policyholderBirthday.substring(8,policyholderBirthday.length()-1));
+
+                        if(null!=insuranceOrderPolicyholder.getPolicyholderTel()&&!"".equals(insuranceOrderPolicyholder.getPolicyholderTel())){
+                            put("policy_q_tel",insuranceOrderInsured.getInsuredTel().substring(0,4));
+                            put("policy_h_tel",insuranceOrderInsured.getInsuredTel().substring(4,insuranceOrderInsured.getInsuredTel().length()-1));
+                        }
+                        if(null!=policyholderCardPeriod){
+                            put("policy_p_year",policyholderCardPeriod.substring(0,4));
+                            put("policy_p_month",policyholderCardPeriod.substring(5,7));
+                            put("policy_p_day",policyholderCardPeriod.substring(8,policyholderCardPeriod.length()-1));
+                        }
+
+                    }
+
                 /**
                  * 受益人
                  */
                 Set<InsuranceOrderBeneficiary> beneficiary=insuranceOrder.getInsuranceOrderBeneficiarys();
 
                 if(null!=beneficiary&&Hibernate.isInitialized(beneficiary)&&beneficiary.size()>0){
+
                     List<InsuranceOrderBeneficiary> list=new ArrayList<>(beneficiary);
                     List<InsuranceOrderBeneficiary> beneficiaryList= sortIntMethod(list);
                     put("beneficiaryList",beneficiaryList);
 
                 }
+               // List<List<String>>
+                    /**
+                     * 告知事项填空
+                     */
+                    put("insurance_matter_value",new ArrayList<Map<String,Object>>(){{
+
+                        for (InsuranceOrderInformedMatter insuranceOrderInformedMatter:insuranceOrderInformedMatterList
+                                ) {
+                            InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(insuranceOrderInformedMatter.getInsuranceInformedMatter().getMatterId());
+
+                            if(null!=insuranceInformedMatter) {
+
+                                if(insuranceInformedMatter.getMatterType()==1){
+                                    add(new HashMap<String,Object>(){
+                                        {
+                                            String collectValues=insuranceOrderInformedMatter.getCollectValues();
+
+                                            if(null!=collectValues&&!"".equals(collectValues)){
+                                                String[] strValue=collectValues.replace("[","").replace("]","").replace("\"","") .split(",");
+                                                for (int j=0;j<strValue.length;j++)
+                                                    put("m_value"+j,strValue[j]);
+
+
+                                            }
+                                        }
+                                    });
+
+                                }
+                            }
+                        }
+
+                    }});
                     put("insurance_matterList",insuranceOrderInformedMatterList);
+
+                }
 
             }
 

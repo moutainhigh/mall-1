@@ -1,16 +1,11 @@
 package com.yunxin.cb.mall.web.action.insurance;
 
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
-import com.yunxin.cb.insurance.entity.InsuranceOrderInsured;
-import com.yunxin.cb.insurance.entity.InsuranceOrderOffsite;
-import com.yunxin.cb.insurance.entity.InsuranceOrderPolicyholder;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.insurance.service.IInsuranceOrderOffsiteService;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.util.HttpsUtils;
 import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.core.util.CalendarUtils;
-import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,9 +16,6 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -124,82 +116,17 @@ public class InsuranceController {
         return "redirect:insurances.do";
     }
 
+    /**
+     * 保单打印
+     * @param orderId
+     * @param modelMap
+     * @return
+     */
     @RequestMapping(value = "prints", method = RequestMethod.GET)
     public String prints(@RequestParam("orderId") int orderId, ModelMap modelMap) {
-        InsuranceOrder insuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
-
-        if(insuranceOrder!=null){
-            /**
-             * 被保人
-             */
-            InsuranceOrderInsured insuranceOrderInsured= insuranceOrder.getInsuranceOrderInsured();
-            /**
-             * 投保人
-             */
-            InsuranceOrderPolicyholder insuranceOrderPolicyholder= insuranceOrder.getInsuranceOrderPolicyholder();
-            Map<String,Object> map=new HashMap<String,Object>();
-            SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
-
-            if(null!=insuranceOrderInsured&& Hibernate.isInitialized(insuranceOrderInsured)){
-                Date birthday=insuranceOrderInsured.getInsuredBirthday();
-                String insuredBirthday= simpleDateFormats.format(birthday);
-                String insuredCardPeriod= simpleDateFormats.format(insuranceOrderInsured.getInsuredCardPeriod());
-
-                map.put("insurance_b_year",insuredBirthday.substring(0,4));
-                map.put("insurance_b_month",insuredBirthday.substring(5,7));
-                map.put("insurance_b_day",insuredBirthday.substring(8,10));
-
-                if(null!=insuranceOrderInsured.getInsuredTel()&&!"".equals(insuranceOrderInsured.getInsuredTel())){
-                    map.put("insurance_q_tel",insuranceOrderInsured.getInsuredTel().substring(0,4));
-                    map.put("insurance_h_tel",insuranceOrderInsured.getInsuredTel().substring(4,7));
-                }
-
-                    try {
-                       int age= CalendarUtils.getAge(birthday);
-                        map.put("age",age);
-                        if(null!=insuredCardPeriod){
-                            map.put("insurance_p_year",insuredCardPeriod.substring(0,4));
-                            map.put("insurance_p_month",insuredCardPeriod.substring(5,7));
-                            map.put("insurance_p_day",insuredCardPeriod.substring(8,10));
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-            }
-
-            if(null!=insuranceOrderPolicyholder&&Hibernate.isInitialized(insuranceOrderPolicyholder)){
-
-                Date birthday=insuranceOrderPolicyholder.getPolicyholderBirthday();
-                String policyholderBirthday= simpleDateFormats.format(birthday);
-                String policyholderCardPeriod= simpleDateFormats.format(insuranceOrderPolicyholder.getPolicyholderCardPeroid());
-                map.put("policy_b_year",policyholderBirthday.substring(0,4));
-                map.put("policy_b_month",policyholderBirthday.substring(5,7));
-                map.put("policy_b_day",policyholderBirthday.substring(8,10));
-
-                if(null!=insuranceOrderPolicyholder.getPolicyholderTel()&&!"".equals(insuranceOrderPolicyholder.getPolicyholderTel())){
-                    map.put("policy_q_tel",insuranceOrderInsured.getInsuredTel().substring(0,4));
-                    map.put("policy_h_tel",insuranceOrderInsured.getInsuredTel().substring(4,7));
-                }
-                if(null!=policyholderCardPeriod){
-                    map.put("policy_p_year",policyholderCardPeriod.substring(0,4));
-                    map.put("policy_p_month",policyholderCardPeriod.substring(5,7));
-                    map.put("policy_p_day",policyholderCardPeriod.substring(8,10));
-                }
-
-            }
-
-            /**
-             * 受益人
-             */
-            Map<String,Object> maps= iInsuranceOrderService.insuranceOrder(orderId);
-            if(null!=maps)
-                map.put("beneficiaryList",maps);
+            Map<String,Object> map= iInsuranceOrderService.insuranceOrder(orderId);
+            System.out.println("insurance_matter_value==="+map.get("insurance_matter_value"));
             modelMap.addAttribute("map", map);
-        }
-
-        modelMap.addAttribute("insuranceOrder", insuranceOrder);
-        //modelMap.addAttribute("matterList", iInsuranceOrderService.findMatter(orderId));
         return "insurance/orderDetailPrint";
     }
 
