@@ -2,8 +2,7 @@ package com.yunxin.cb.im;
 
 import com.yunxin.cb.mall.entity.Customer;
 import io.rong.RongCloud;
-import io.rong.messages.TxtMessage;
-import io.rong.methods.message.Message;
+import io.rong.messages.ContactNtfMessage;
 import io.rong.methods.user.User;
 import io.rong.models.Result;
 import io.rong.models.message.SystemMessage;
@@ -36,10 +35,10 @@ public class RongCloudService {
                 .setPortrait(customer.getAvatarUrl());
 
         TokenResult result = User.register(user);
-        if(result.getCode() == 200){
+        if (result.getCode() == 200) {
             logger.info("getRongCloudToken:  " + result.toString());
             return result.getToken();
-        }else {
+        } else {
             throw new Exception(result.getMsg());
         }
     }
@@ -53,35 +52,35 @@ public class RongCloudService {
                 .setPortrait(customer.getAvatarUrl());
 
         Result result = User.update(user);
-        if(result.getCode() != 200){
+        if (result.getCode() != 200) {
             throw new Exception(result.getMsg());
         }
     }
 
-    public void sendMessage(Customer customer,Customer friend,String requestMessage) throws Exception {
+    public void sendMessage(Customer customer, Customer friend, String requestMessage) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
-        String content=customer.getNickName()+"请求加您为好友";
-        TxtMessage txtMessage = new TxtMessage(content,"");
+        String content = customer.getNickName() + "请求加您为好友";
+        ContactNtfMessage txtMessage = new ContactNtfMessage("Request", customer.getNickName(), customer.getAccountName(), friend.getAccountName(), content);
         SystemMessage systemMessage = new SystemMessage()
                 .setSenderId(customer.getMobile())
                 .setTargetId(new String[]{friend.getMobile()})
                 .setObjectName(txtMessage.getType())
                 .setContent(txtMessage)
                 .setPushContent(content)
-                .setPushData("{'pushData':'"+requestMessage+"'}")
+                .setPushData("{'pushData':'" + requestMessage + "'}")
                 .setIsPersisted(0)
                 .setIsCounted(0)
                 .setContentAvailable(0);
         ResponseResult result = rongCloud.message.system.send(systemMessage);
 
 
-        if(result.getCode() != 200){
+        if (result.getCode() != 200) {
             throw new Exception(result.getMsg());
         }
     }
 
-    public void addBlacklist(String customer,String friend) throws Exception {
+    public void addBlacklist(String customer, String friend) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
 
         UserModel blackUser = new UserModel().setId(friend);
@@ -90,14 +89,14 @@ public class RongCloudService {
                 .setId(customer)
                 .setBlacklist(blacklist);
 
-        Result result = (Result)rongCloud.user.blackList.add(user);
+        Result result = (Result) rongCloud.user.blackList.add(user);
 
-        if(result.getCode() != 200){
+        if (result.getCode() != 200) {
             throw new Exception(result.getMsg());
         }
     }
 
-    public void removeBlacklist(String customer,String friend) throws Exception {
+    public void removeBlacklist(String customer, String friend) throws Exception {
 
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         UserModel blackUser = new UserModel().setId(friend);
@@ -105,9 +104,9 @@ public class RongCloudService {
         UserModel user = new UserModel()
                 .setId(customer)
                 .setBlacklist(blacklist);
-        Result result = (Result)rongCloud.user.blackList.remove(user);
+        Result result = (Result) rongCloud.user.blackList.remove(user);
 
-        if(result.getCode() != 200){
+        if (result.getCode() != 200) {
             throw new Exception(result.getMsg());
         }
     }
