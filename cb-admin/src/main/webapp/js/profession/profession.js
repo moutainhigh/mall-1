@@ -1,8 +1,4 @@
-/*
 
-description: 省市区三级(二级)联动
-*/
-//$(function(){
 $.profession = function () {
     var data = {
         jsonProfession : "../js/profession/json-profession.js",
@@ -35,5 +31,4 @@ $.profession = function () {
         }
     };
 } ();
-//    citySelector.init();
-//});
+

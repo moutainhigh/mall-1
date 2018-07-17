@@ -41,7 +41,7 @@
       <div class="headPhoto" v-if="imgUrl === '' || imgUrl === undefined || imgUrl === null" @click.stop="addPic">
         <div class="carmerBorder"></div>
         <img src="../assets/img/headPhotograph.png"/>
-        <p style="font-size: 13px">拍摄或上传投保人正面头像</p>
+        <p style="font-size: 13px">上传投保人正面头像</p>
       </div>
       <button class="clearButton" v-if="imgUrl !== undefined && imgUrl !== ''" @click='delImage'>清除</button>
       <input id="image" type="file" accept="image/*" @change="onFileChange"
