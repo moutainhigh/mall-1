@@ -5,11 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
     <title>品牌管理</title>
-
     <script type="text/javascript">
-
         $(document).ready(function () {
             $("#createTime").kendoDatePicker({
                 format: "yyyy-MM-dd",
@@ -25,13 +22,12 @@
 
         function checkTime()
         {
-           if($('#createTime').val()>$('#createTimes').val()&&''!=$('#createTimes').val().){
-               alert("开始时间不能大于结束时间")
-               $('#createTimes').val('')
-           }
+            if($('#createTime').val()>$('#createTimes').val()&&''!=$('#createTimes').val()){
+                alert("开始时间不能大于结束时间")
+                $('#createTimes').val('')
+            }
         }
         function detailItem(){
-            debugger;
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
                 window.location.href = "feedBackDetail.do?id=" + dataItem.id;
@@ -40,20 +36,15 @@
     </script>
 </head>
 <body>
-
 <jsp:include page="../layouts/left.jsp"/>
-
 <jsp:include page="../layouts/sidebarRight.jsp"/>
 <div id="main" class="clearfix">
     <header id="header-main">
         <div class="header-main-top">
             <div class="pull-left">
-                <!-- * This is the responsive logo * -->
                 <a href="#" id="logo-small"><h4></h4><h5></h5></a>
             </div>
             <div class="pull-right">
-                <!-- * This is the trigger that will show/hide the menu * -->
-                <!-- * if the layout is in responsive mode              * -->
                 <a href="#" id="responsive-menu-trigger">
                     <i class="fa fa-bars"></i>
                 </a>
@@ -127,7 +118,7 @@
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime"  onchange="checkTime()" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                                <input name="createTime" onchange="checkTime()" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
                             </div>
 
                             <div class="toolbar-field">
