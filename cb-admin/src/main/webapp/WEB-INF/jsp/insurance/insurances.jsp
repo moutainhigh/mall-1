@@ -72,6 +72,13 @@
               $('#createTimes').val('')
           }
       }
+
+      function orderPDF(){
+          var dataItem = getSelectedGridItem("grid");
+          if (dataItem) {
+              window.location.href = "downloadPdf.do?orderId=" + dataItem.orderId;
+          }
+      }
   </script>
 </head>
 <body>
@@ -242,6 +249,7 @@
               <div class="btn-group">
                 <a href="javascript:void(0);"  onclick="orderPrint()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印保单</a>
                 <a href="javascript:void(0);"  onclick="orderPrintSurvey()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;打印问卷</a>
+                <a href="javascript:void(0);"  onclick="orderPDF()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;PDF</a>
 
               </div>
             </div>

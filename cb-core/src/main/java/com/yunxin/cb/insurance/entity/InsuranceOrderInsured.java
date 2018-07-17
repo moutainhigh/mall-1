@@ -7,7 +7,7 @@ package com.yunxin.cb.insurance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
+import com.yunxin.core.web.json.serializer.JsonDateSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
@@ -187,7 +187,7 @@ public class InsuranceOrderInsured implements Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonSerialize(using = JsonTimestampSerializer.class)
+    @JsonSerialize(using =JsonDateSerializer.class)
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
     public Date getInsuredBirthday() {
         return this.insuredBirthday;
@@ -243,7 +243,7 @@ public class InsuranceOrderInsured implements Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonSerialize(using = JsonTimestampSerializer.class)
+    @JsonSerialize(using =JsonDateSerializer.class)
     @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
     public Date getInsuredCardPeriod() {
         return this.insuredCardPeriod;
