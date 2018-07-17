@@ -211,4 +211,15 @@ public class MainResource extends BaseResource {
         }
         return responseResult;
     }
+
+    @ApiOperation(value ="重置密码")
+    @PostMapping(value = "resetPwd/{mobile}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "mobile", value = "用户手机号码", required = true, paramType = "path", dataType = "String"),
+            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String")
+    })
+    public ResponseResult resetPwd(@PathVariable String mobile, @RequestParam String code) {
+
+        return new ResponseResult(Result.SUCCESS);
+    }
 }
