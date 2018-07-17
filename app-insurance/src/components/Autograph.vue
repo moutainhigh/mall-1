@@ -30,10 +30,12 @@
       <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保提示书签名</div>
       <div class="canvas">
         <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-        <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1">点击签名（请用正楷进行签名）
+        <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1">
+          <p>点击签名（请用正楷进行签名）</p>
+          <!--<img v-if="submissionSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="submissionSign">-->
         </div>
-        <div class="sign" style="background: #f3f5f7;height: 20vh" @click="checkShow1" v-if="clickSign1 && show1">
-          <img class="sign" style="height: 20vh; width: auto; margin-left: 10vw" :src="submissionSign">
+        <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow1" v-if="clickSign1 && show1">
+          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="submissionSign">
         </div>
       </div>
 
@@ -55,8 +57,8 @@
         <div class="sign" v-if="!clickSign && !show" @click="checkSign">点击签名（请用正楷进行签名）
         </div>
 
-        <div class="sign" style="background: #f3f5f7;height: 20vh" @click="checkShow" v-if="clickSign && show">
-          <img class="sign" style="height: 20vh; width: auto; margin-left: 10vw" :src="policyholderSign">
+        <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow" v-if="clickSign && show">
+          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw" :src="policyholderSign">
         </div>
       </div>
       <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
@@ -91,8 +93,8 @@
         },
         toastText: '',
         showPositionValue: false,
-        submissionSign: '',
-        policyholderSign: '',
+        submissionSign: storage.fetch("holder").submissionSign,
+        policyholderSign: storage.fetch("holder").policyholderSign,
         show1: false,
         show: false,
       }

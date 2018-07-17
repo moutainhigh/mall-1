@@ -94,13 +94,10 @@
         type="number" class="value-input" v-model="values5[1]"/>支/天；若现在已停止吸烟，停止吸烟原因及时间<input
         type="text" maxlength="24" class="value-input" v-model="values5[2]"/>。</p>
       <p style="padding: 15px 0">b.是否饮酒？若“是”，饮酒<input type="number" class="value-input" v-model="values5[3]"/>年，种类<input
-        type="number"
-        class="value-input"
-        v-model="values5[4]"/>，数量<input
-        type="number" class="value-input" v-model="values5[5]"/>（两/周）；若现在已停止饮酒，停止饮酒原因及时间<input type="number"
-                                                                                               class="value-input"
-                                                                                               style="width: 10rem"
-                                                                                               v-model="values5[6]"/>。
+        type="text" class="value-input" maxlength="24" v-model="values5[4]"/>，数量<input type="number" class="value-input"
+                                                                                       v-model="values5[5]"/>
+        （两/周）；若现在已停止饮酒，停止饮酒原因及时间<input type="text" class="value-input" maxlength="64" style="width: 10rem"
+                                       v-model="values5[6]"/>。
       </p>
       <div class="content-state">
         <p class="recognizee">被保人</p>
@@ -666,10 +663,10 @@
     data() {
       return {
         state: false,
-        matters: [],
-        values5: ['', '', '', '', '', ''],
-        values11: '',
-        values12: ['', '', '', ''],
+        matters: storage.fetch("matters"),
+        values5: JSON.parse(storage.fetch("matters")[4].collectValues),
+        values11: storage.fetch("matters")[10].collectValues,
+        values12: JSON.parse(storage.fetch("matters")[25].collectValues),
         twoYear: true,
         showPositionValue: false,
         toastText: '',
@@ -690,6 +687,22 @@
         });
       },
       next() {
+        //吸烟校验
+        if (this.matters[4].insuredResult || this.matters[4].policyholderResult) {
+          if (this.values5[0] === '' || this.values5[1] === '' || this.values5[2] === '' || this.values5[3] === '' || this.values5[4] === '' || this.values5[5] === '') {
+            alert("请完善吸烟和饮酒的信息");
+            return false;
+          }
+        }
+        if (this.values5[0].length > 3 || this.values5[1].length > 3 || this.values5[3].length > 3 || this.values5[5].length > 3) {
+          alert("输入长度不得大于3位");
+          return false;
+        }
+        if (this.values5[0] === '0' || this.values5[1] === '0' || this.values5[3] === '0' || this.values5[5] === '0') {
+          alert("请输入大于0的整数");
+          return false;
+        }
+
         if (this.twoYear === false) {
           if (this.values12[0] === '' || this.values12[1] === '' || this.values12[2] === '' || this.values12[3] === '') {
             alert("被保人小于2周岁，请填写第12项额外信息");
@@ -755,7 +768,11 @@
             this.showPositionValue = true;
             this.toastText = "输入长度不得大于3位";
           }
-          if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0') {
+          if (newVal[5].length > 3) {
+            this.showPositionValue = true;
+            this.toastText = "输入长度不得大于3位";
+          }
+          if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0' || newVal[5] === '0') {
             this.showPositionValue = true;
             this.toastText = "请输入大于0的整数";
           }
@@ -810,20 +827,21 @@
       }
     },
     created: function () {
-      for (let i = 1; i <= 28; i++) {
-        this.matters.push(
-          {
-            insuranceInformedMatter: {
-              matterId: i
-            },
-            insuredResult: false,
-            policyholderResult: false,
-            collectValues: '',
-            insuredRemark: '',
-            policyholderRemark: '',
-          }
-        )
-      }
+      // for (let i = 1; i <= 28; i++) {
+      //   this.matters.push(
+      //     {
+      //       insuranceInformedMatter: {
+      //         matterId: i
+      //       },
+      //       insuredResult: false,
+      //       policyholderResult: false,
+      //       collectValues: '',
+      //       insuredRemark: '',
+      //       policyholderRemark: '',
+      //     }
+      //   )
+      // }
+
       //判断被保人周岁是否大于2周岁
       let insured = storage.fetch("insured");
       let newDate = new Date();
