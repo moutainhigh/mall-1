@@ -19,10 +19,10 @@ public class CarCommodityResource extends BaseResource {
 
     @ApiOperation(value = "通过商品ID查询商品详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "form", dataType = "int")
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")
     })
-    @PostMapping(value = "addFriendNotice/{commodityId}")
-    public ResponseResult getCommdity(@PathVariable("commodityId") int commodityId){
+    @GetMapping(value = "getCommdity/{commodityId}")
+    public ResponseResult getCommdity(@PathVariable(value = "commodityId") int commodityId){
        return new ResponseResult(new Commodity());
     }
 }
