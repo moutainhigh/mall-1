@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface DemandCommentMapper {
+public interface CommodityMapper {
 	
 	@Select("SELECT "
 			+ "a.id as 'id',a.create_date as 'createDate',a.content as 'content',"
