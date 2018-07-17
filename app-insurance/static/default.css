@@ -221,7 +221,7 @@ button a {
 
 .r-frame {
   position: absolute;
-  top: 100px;
+  top: 10vh;
   left: 0;
   right: 0;
   text-align: center;

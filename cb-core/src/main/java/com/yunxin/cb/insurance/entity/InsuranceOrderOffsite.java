@@ -43,7 +43,6 @@ public class InsuranceOrderOffsite implements Serializable {
     /**
      * 工作相关
      */
-    @NotBlank
     @Length(max = 512)
     private String workplace;
     /**
@@ -103,7 +102,7 @@ public class InsuranceOrderOffsite implements Serializable {
         this.sensue = sensue;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 512)
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 512)
     public String getWorkplace() {
         return this.workplace;
     }

@@ -1,6 +1,7 @@
 <%@ taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lte9 lte8 lte7 no-js"> <![endif]-->
 <!--[if IE 7]> <html class="ie ie7 lte9 lte8 lte7 no-js"> <![endif]-->
@@ -16,7 +17,6 @@
   <title>客户详情</title>
   <script type="text/javascript">
     $(document).ready(function() {
-
       var p = $.citySelector.getProvince("${customer.province}");
       var c = $.citySelector.getCity("${customer.city}");
       var d = $.citySelector.getDistrict("${customer.district}");
@@ -334,7 +334,7 @@
           </ul><!-- End .ext-tabs -->
           <div class="tab-content">
             <div id="content-tab-6-a" class="tab-pane active">
-              <div class="inner-padding">
+              <div class="inner-padding" style="margin-left: -20px">
                   <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                   <fieldset>
                     <legend>客户详情</legend>
@@ -343,14 +343,14 @@
                         <div class="col-sm-2">
                           <label>账户名：<span class="asterisk"></span></label>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2 col-label">
                           ${customer.accountName}
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
                           <label>手机号：<span class="asterisk"></span></label>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2 col-label">
                           ${customer.mobile}
                         </div>
                         <div class="col-sm-1"></div>
@@ -364,14 +364,14 @@
                         <div class="col-sm-2">
                           <label>邮箱：<span class="asterisk"></span></label>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2 col-label">
                           ${customer.email}
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
                           <label>真实姓名：<span class="asterisk"></span></label>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2 col-label">
                           ${customer.realName}
                         </div>
                         <div class="col-sm-1"></div>
@@ -385,14 +385,14 @@
                         <div class="col-sm-2">
                           <label>邮编：<span class="asterisk"></span></label>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2 col-label">
                           ${customer.postCode}
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
                           <label>固定电话：<span class="asterisk"></span></label>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2 col-label">
                           ${customer.telephone}
                         </div>
                         <div class="col-sm-1"></div>
@@ -408,14 +408,14 @@
                         <div class="col-sm-2">
                           <label>出生日期：<span class="asterisk"></span></label>
                         </div>
-                        <div class="col-sm-3">
-                          ${customer.birthday}
+                        <div class="col-sm-2 col-label">
+                           ${fn:substring(customer.birthday, 0, 10)}
                           </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
                           <label>性别：<span class="asterisk"></span></label>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2 col-label">
                           ${customer.sex==true?'男':'女'}
                         </div>
                         <div class="col-sm-1"></div>
@@ -437,7 +437,7 @@
                       <div class="col-sm-2">
                         <label>详细地址：<span class="asterisk"></span></label>
                       </div>
-                      <div class="col-sm-9">
+                      <div class="col-sm-2 col-label">
                         ${customer.address}
                       </div>
 
@@ -451,7 +451,7 @@
                       <div class="col-sm-2">
                         <label>备注</label>
                       </div>
-                      <div class="col-sm-9">
+                      <div class="col-sm-2 col-label">
                         ${customer.remark}
                       </div>
                       <div class="col-sm-1"></div>
