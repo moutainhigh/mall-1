@@ -27,39 +27,66 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: Index
+      component: Index,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/pro-detail',
       name: 'pro-detail',
-      component: ProDetail
+      component: ProDetail,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/holder-basic',
       name: 'holder-basic',
-      component: HolderBasic
+      component: HolderBasic,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/holder-detail',
       name: 'holder-detail',
-      component: HolderDetail
+      component: HolderDetail,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/autograph',
       name: 'autograph',
-      component: Autograph
+      component: Autograph,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/upload-data',
       name: 'upload-data',
-      component: UploadData
+      component: UploadData,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/infoMatters',
       name: 'info-matters',
-      component: InfoMatters
+      component: InfoMatters,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/payment',
       name: 'payment',
-      component: Payment
+      component: Payment,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/policy',
       name: 'policy',
-      component: Policy
+      component: Policy,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/my-orders',
       name: 'my-orders',
@@ -70,27 +97,45 @@ export default new Router({
     }, {
       path: '/insured',
       name: 'insured',
-      component: Insured
+      component: Insured,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/differentPlaces',
       name: 'differentPlaces',
-      component: DifferentPlaces
+      component: DifferentPlaces,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/insurancePolicy',
       name: 'insurancePolicy',
-      component: InsurancePolicy
+      component: InsurancePolicy,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/lifeLongClause',
       name: 'lifeLongClause',
-      component: LifeLongClause
+      component: LifeLongClause,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/clause',
       name: 'clause',
-      component: Clause
+      component: Clause,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/insureNote',
       name: 'insureNote',
-      component: InsureNote
+      component: InsureNote,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/careerSelect',
       name: 'careerSelect',
