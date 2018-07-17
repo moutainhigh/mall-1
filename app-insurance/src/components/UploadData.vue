@@ -170,6 +170,7 @@
         await lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
           uploadImage(rst.base64).then(function (result) {
+            let holder = storage.fetch("holder");
             switch (e.target.id) {
               case 'image1' :
                 vm.imgUrls.image1 = result.data;
@@ -179,33 +180,28 @@
                 break;
               case 'image2' :
                 vm.imgUrls.image2 = result.data;
-                let holder1 = storage.fetch("holder");
-                holder1.cardPositiveImg = result.data;
-                storage.save("holder", holder1);
+                holder.cardPositiveImg = result.data;
+                storage.save("holder", holder);
                 break;
               case 'image3' :
                 vm.imgUrls.image3 = result.data;
-                let holder2 = storage.fetch("holder");
-                holder2.cardNegativeImg = result.data;
-                storage.save("holder", holder2);
+                holder.cardNegativeImg = result.data;
+                storage.save("holder", holder);
                 break;
               case 'image4' :
                 vm.imgUrls.image4 = result.data;
-                let holder3 = storage.fetch("holder");
-                holder3.otherImg1 = result.data;
-                storage.save("holder", holder3);
+                holder.otherImg1 = result.data;
+                storage.save("holder", holder);
                 break;
               case 'image5' :
                 vm.imgUrls.image5 = result.data;
-                let holder4 = storage.fetch("holder");
-                holder4.otherImg2 = result.data;
-                storage.save("holder", holder4);
+                holder.otherImg2 = result.data;
+                storage.save("holder", holder);
                 break;
               case 'image6' :
                 vm.imgUrls.image6 = result.data;
-                let holder5 = storage.fetch("holder");
-                holder5.otherImg3 = result.data;
-                storage.save("holder", holder5);
+                holder.otherImg3 = result.data;
+                storage.save("holder", holder);
                 break;
             }
           });
@@ -220,6 +216,8 @@
       //删除图片
       delImage: function (index) {
         let vm = this;
+        let holder = storage.fetch("holder");
+        let order = storage.fetch("order");
         switch (index) {
           case 1:
             vm.imgUrls.image1 = '';
@@ -227,23 +225,23 @@
             break;
           case 2:
             vm.imgUrls.image2 = '';
-            holder.cardPositiveImg = true;
+            holder.cardPositiveImg = '';
             break;
           case 3:
             vm.imgUrls.image3 = '';
-            holder.cardNegativeImg = true;
+            holder.cardNegativeImg = '';
             break;
           case 4:
             vm.imgUrls.image4 = '';
-            holder.otherImg1 = true;
+            holder.otherImg1 = '';
             break;
           case 5:
             vm.imgUrls.image5 = '';
-            holder.otherImg2 = true;
+            holder.otherImg2 = '';
             break;
           case 6:
             vm.imgUrls.image6 = '';
-            holder.otherImg3 = true;
+            holder.otherImg3 = '';
             break;
         }
         storage.save("holder", holder);
@@ -265,15 +263,7 @@
           this.toastText = "请上传身份证背面图片";
           return false;
         }
-        let holder = storage.fetch("holder");
-        // if (holder.policyholderCity !== '440300') {
-        //   this.$router.push("differentPlaces");
-        // }else {
-        let order = storage.fetch("order");
-        order.insuranceOrderOffsite = null;
-        storage.save("order", order);
-        this.$router.push("payment")
-        // }
+        this.$router.push("payment");
       },
     },
     created: function () {
