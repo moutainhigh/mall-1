@@ -60,9 +60,9 @@
         });
 
         function jqPrints() {
-            $(".hidden-prints").css("display", "none");
+            // $(".hidden-prints").css("display", "none");
             $(".prints").jqprint();
-            $(".hidden-prints").css("display", "block");
+            // $(".hidden-prints").css("display", "block");
         }
     </script>
 </head>
@@ -633,21 +633,21 @@
 
                         </div>
 
-                        <div class="al-line" style="margin-top: 2px;">
-                            <div class="al-font div-row-7" style="margin-top: 13px;position: absolute">
+                                <div class="al-line" style="margin-top: 2px;">
+                                    <div class="al-font div-row-7" style="margin-top: 13px;position: absolute">
 
-                                <div style="margin-left:90px;position: absolute">
-                                    <div id="policyholderProvince" style="width: 40px;"></div>
-                                </div>
-                                <div style="margin-left:180px;position: absolute">
-                                    <div id="policyholderCity" style="width: 40px;"></div>
-                                </div>
-                                <div style="margin-left:250px;position: absolute">
-                                    <div id="policyholderDistrict" style="width: 40px;"></div>
-                                </div>
-                                <div style="margin-left:355px;position: absolute">
-                                    ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
-                                </div>
+                                        <div style="margin-left:90px;position: absolute" >
+                                            <div id="policyholderProvince" style="width: 40px;"></div>
+                                        </div>
+                                        <div style="margin-left:180px;position: absolute">
+                                            <div id="policyholderCity"  style="width: 40px;"></div>
+                                        </div>
+                                        <div style="margin-left:250px;position: absolute">
+                                            <div id="policyholderDistrict"  style="width: 40px;"></div>
+                                        </div>
+                                        <div style="margin-left:355px;position: absolute;width: 360px;">
+                                            ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
+                                        </div>
 
                             </div>
                             <div class="al-font div-postcode" style="margin-top: 13px;margin-right: 35px;">
@@ -719,21 +719,21 @@
                         <div class="al-line" style="position: absolute;margin-top: 100px">
                             <div class="al-font div-row-7" style="margin-top: 38px;position: absolute">
 
-                                <div style="margin-left:0px;position: absolute">
-                                    <div id=""></div>
-                                </div>
-                                <div style="position: absolute;margin-left:130px;width: 40px;">
-                                    <div id="policyholderProvinces"></div>
-                                </div>
-                                <div style="margin-left:225px;position: absolute;width: 40px;">
-                                    <div id="policyholderCitys"></div>
-                                </div>
-                                <div style="margin-left:300px;position: absolute;width: 40px;">
-                                    <div id="policyholderDistricts"></div>
-                                </div>
-                                <div style="margin-left:395px;position: absolute">
-                                    ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
-                                </div>
+                                        <div style="margin-left:0px;position: absolute">
+                                            <div id=""></div>
+                                        </div>
+                                        <div style="position: absolute;margin-left:130px;width: 40px;">
+                                            <div id="policyholderProvinces"></div>
+                                        </div>
+                                        <div style="margin-left:225px;position: absolute;width: 40px;">
+                                            <div id="policyholderCitys"></div>
+                                        </div>
+                                        <div style="margin-left:300px;position: absolute;width: 40px;">
+                                            <div id="policyholderDistricts"></div>
+                                        </div>
+                                        <div style="margin-left:395px;position: absolute;width: 200px;">
+                                            ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
+                                        </div>
 
                             </div>
 
