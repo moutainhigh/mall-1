@@ -666,9 +666,9 @@
       return {
         state: false,
         matters: storage.fetch("matters"),
-        values5: ['', '', '', '', '', ''],
+        values5: '',
         values11: '',
-        values12: ['', '', '', ''],
+        values12: '',
         twoYear: true,
         showPositionValue: false,
         toastText: '',
@@ -755,28 +755,32 @@
     watch: {
       values5: {
         handler(newVal, oldVal) {
-          if (this.matters.length !== 0) {
-            this.matters[4].collectValues = JSON.stringify(newVal);
-          }
-          if (newVal[0].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[1].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[3].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[5].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0' || newVal[5] === '0') {
-            this.showPositionValue = true;
-            this.toastText = "请输入大于0的整数";
+          if (newVal) {
+            if (this.matters.length !== 0) {
+              this.matters[4].collectValues = JSON.stringify(newVal);
+            }
+            if (newVal[0].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[1].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[3].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[5].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0' || newVal[5] === '0') {
+              this.showPositionValue = true;
+              this.toastText = "请输入大于0的整数";
+            }
+          } else {
+            this.values5 = ['', '', '', '', '', ''];
           }
         },
         immediate: true,
@@ -784,24 +788,28 @@
       },
       values12: {
         handler(newVal, oldVal) {
-          if (this.matters.length !== 0) {
-            this.matters[25].collectValues = JSON.stringify(newVal);
-          }
-          if (newVal[0].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[1].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[3].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0') {
-            this.showPositionValue = true;
-            this.toastText = "请输入大于0的整数";
+          if (newVal) {
+            if (this.matters.length !== 0) {
+              this.matters[25].collectValues = JSON.stringify(newVal);
+            }
+            if (newVal[0].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[1].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[3].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0') {
+              this.showPositionValue = true;
+              this.toastText = "请输入大于0的整数";
+            }
+          } else {
+            this.values12 = ['', '', '', ''];
           }
         },
         immediate: true,
