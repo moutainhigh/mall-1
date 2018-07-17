@@ -406,13 +406,16 @@
                v-if="!$v.beneficiary2.insuredRelation.required && $v.beneficiary2.insuredRelation.$dirty">
             与被保人关系不能为空
           </div>
+          <div style="height: 10px; width: 100%"></div>
         </div>
       </group>
     </div>
+    <div v-if="insuredSixteenYear && holderSixteenYear">
     <div class="title-add" @click="addBene" v-if="!addBene1 || !addBene2">
       <div>
         <img src="../assets/img/add.png"/>新增受益人
       </div>
+    </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <!--<div style="height: 50px;">-->
@@ -494,7 +497,9 @@
         valiOrderB1: 1,
         valiOrderB2: null,
         valiProportion: false,
-        valiProportion2: 0
+        valiProportion2: 0,
+        insuredSixteenYear: true,
+        holderSixteenYear: true
       }
     },
     validations() {
@@ -739,6 +744,12 @@
         }
       },
       changeLegal() {
+        if (!this.insuredSixteenYear || !this.holderSixteenYear) {
+          this.legalBeneficiary = true;
+          this.showPositionValue = true;
+          this.toastText = "当被保人或投保人小于16周岁时，受益人只能为法定受益人";
+          return false;
+        }
         this.legalBeneficiary = !this.legalBeneficiary;
         let order = storage.fetch("order");
         order.legalBeneficiary = this.legalBeneficiary;
@@ -804,6 +815,28 @@
             }
           }
           storage.save('holder', newVal);
+          //判断投保人是否小于16周岁
+          if (newVal.policyholderBirthday !== '') {
+            let newDate = new Date();
+            let birthday = new Date(newVal.policyholderBirthday.replace(/-/, "/"));
+            let time = (newDate.valueOf() - birthday.valueOf());
+            //如果小于16周岁，设为false
+            if (time < 24 * 60 * 60 * 1000 * 365 * 16) {
+              this.holderSixteenYear = false;
+            } else {
+              this.holderSixteenYear = true;
+            }
+            if (!this.insuredSixteenYear || !this.holderSixteenYear) {
+              this.legalBeneficiary = true;
+            }
+            if (this.legalBeneficiary) {
+              this.addBene1 = false;
+              this.addBene2 = false;
+            } else {
+              this.addBene1 = true;
+              this.addBene2 = true;
+            }
+          }
         },
         immediate: true,
         deep: true
@@ -969,6 +1002,18 @@
       if (!this.legalBeneficiary) {
         this.addBene1 = true;
         this.addBene2 = true;
+      }
+      //判断被保人周岁是否大于16周岁
+      let insured = storage.fetch("insured");
+      let newDate = new Date();
+      let birthday = new Date(insured.insuredBirthday.replace(/-/, "/"));
+      let time = (newDate.valueOf() - birthday.valueOf());
+      //如果小于16周岁，设为false
+      if (time < 24 * 60 * 60 * 1000 * 365 * 16) {
+        this.insuredSixteenYear = false;
+        this.legalBeneficiary = true;
+      } else {
+        this.insuredSixteenYear = true;
       }
     },
     mounted() {

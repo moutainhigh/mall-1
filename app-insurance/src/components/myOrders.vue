@@ -9,20 +9,23 @@
       <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
         <g>
           <circle cx="16" cy="32" stroke-width="0" r="3">
-            <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5" repeatCount="indefinite"></animate>
+            <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                     repeatCount="indefinite"></animate>
             <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
           </circle>
           <circle cx="32" cy="32" stroke-width="0" r="3.09351">
-            <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5" repeatCount="indefinite"></animate>
+            <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                     repeatCount="indefinite"></animate>
             <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
           </circle>
           <circle cx="48" cy="32" stroke-width="0" r="4.09351">
-            <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6" repeatCount="indefinite"></animate>
+            <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                     repeatCount="indefinite"></animate>
             <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
           </circle>
         </g>
       </svg>
-      <div class="i-list" style="margin-top: 10px" v-for="order in orders">
+      <div class="i-list" style="margin-top: 10px" v-for="order in orders" @click="detail(order.orderId)">
         <div class="list-title">
           <div style="margin-left: 16px">保单号：{{order.orderCode}}</div>
           <div style="float: right;margin-right: 16px;color: #c01212;" v-text="orderState(order.orderState)"></div>
@@ -40,7 +43,7 @@
                 2万/5万/10万
               </div>
               <!--<button>-->
-                <!--立即投保-->
+              <!--立即投保-->
               <!--</button>-->
             </div>
           </div>
@@ -50,15 +53,18 @@
       <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
         <g>
           <circle cx="16" cy="32" stroke-width="0" r="3">
-            <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5" repeatCount="indefinite"></animate>
+            <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                     repeatCount="indefinite"></animate>
             <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
           </circle>
           <circle cx="32" cy="32" stroke-width="0" r="3.09351">
-            <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5" repeatCount="indefinite"></animate>
+            <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                     repeatCount="indefinite"></animate>
             <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
           </circle>
           <circle cx="48" cy="32" stroke-width="0" r="4.09351">
-            <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6" repeatCount="indefinite"></animate>
+            <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                     repeatCount="indefinite"></animate>
             <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
           </circle>
         </g>
@@ -80,10 +86,10 @@
     data() {
       return {
         orders: [],
-        pageQuery:{
-          page:1,
-          pageSize:10,
-          total:1
+        pageQuery: {
+          page: 1,
+          pageSize: 10,
+          total: 1
         },
         isInfinite: true
       }
@@ -91,7 +97,7 @@
     methods: {
       refresh(done) {
         this.pageQuery.page = 1;
-        getOrders(this.pageQuery).then(res=>{
+        getOrders(this.pageQuery).then(res => {
           if (res.result == 'SUCCESS') {
             this.orders = res.data.content;
             this.pageQuery.total = res.data.totalPages;
@@ -108,8 +114,8 @@
         }
         this.getOrders(done);
       },
-      getOrders(done){
-        getOrders(this.pageQuery).then(res=>{
+      getOrders(done) {
+        getOrders(this.pageQuery).then(res => {
           console.log(res);
           if (res.status == 401) {
             this.isInfinite = false;
@@ -118,13 +124,13 @@
             this.orders = this.orders.concat(res.data.content);
             this.pageQuery.total = res.data.totalPages;
             this.pageQuery.page++;
-          }else {
+          } else {
             done(true);
           }
-            done()
+          done()
         });
       },
-      orderState(state){
+      orderState(state) {
         switch (state) {
           case "UN_PAID":
             return "待支付";
@@ -137,11 +143,14 @@
           case "ON_SURRENDER":
             return "已退保";
         }
+      },
+      detail(orderId) {
+        window.location.href = "http://mall.999shuijingqiu.com//admin/insurance/prints.do?orderId=" + orderId;
       }
     },
-    created(){
-      if (this.$route.query.token){
-        storage.save("token",this.$route.query.token);
+    created() {
+      if (this.$route.query.token) {
+        storage.save("token", this.$route.query.token);
       }
     }
   }

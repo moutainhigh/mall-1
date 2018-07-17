@@ -1,58 +1,71 @@
 <template>
-  <div style="position: relative">
-
-    <div class="title">投保单资料签署</div>
-    <div id="page1"></div>
-    <div>
-      <img v-if="!state" @click="check" class="checkIcon" src="../assets/img/unselect.png">
-      <img v-if="state" @click="check" class="checkIcon" src="../assets/img/selected.png">
-      <div class="tip">
-        <p>本人已阅读并理解<span @click="imsurancePolicy">《投保须知》</span><span @click="loadclause">《保险条款》</span><span
-          @click="insureNote">《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
-      </div>
+  <div>
+    <!--投保提示书签名-->
+    <div class="popContainer" v-if="clickSign1 && !show1">
+        <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign1"
+              @click="clear1">清除</span>
+      <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'60vh'"></Signature>
+      <button class="doneButton" @click="doneButton1">完成</button>
+    </div>
+    <!--投保单签名-->
+    <div class="popContainer" v-if="clickSign && !show">
+           <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign"
+                 @click="clear">清除</span>
+      <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'60vh'"></Signature>
+      <button class="doneButton" @click="doneButton">完成</button>
     </div>
 
-    <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保提示书签名</div>
-    <div class="canvas">
-      <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-      <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign1"
-            @click="clear1">清除</span>
-      <div class="sign" v-if="!clickSign1" @click="checkSign1">点击签名
+    <!--页面主体-->
+    <div v-bind:class="{'animateGraph': (clickSign1 && !show1) || (clickSign && !show)}" style="position: relative">
+      <div class="title">投保单资料签署</div>
+      <div id="page1"></div>
+      <div>
+        <img v-if="!state" @click="check" class="checkIcon" src="../assets/img/unselect.png">
+        <img v-if="state" @click="check" class="checkIcon" src="../assets/img/selected.png">
+        <div class="tip">
+          <p>本人已阅读并理解<span @click="imsurancePolicy">《投保须知》</span><span @click="loadclause">《保险条款》</span><span
+            @click="insureNote">《投保提示书》</span>，已充分了解并认可保险责任、责任免除、保险范围、理赔程序、退保等相关条款。</p>
+        </div>
       </div>
-      <div v-if="clickSign1">
-        <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
+      <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保提示书签名</div>
+      <div class="canvas">
+        <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
+        <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1">点击签名（请用正楷进行签名）
+        </div>
+        <div class="sign" style="background: #f3f5f7;height: 20vh" @click="checkShow1" v-if="clickSign1 && show1">
+          <img class="sign" style="height: 20vh; width: auto; margin-left: 10vw" :src="submissionSign">
+        </div>
       </div>
-    </div>
 
-    <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保单签名</div>
-    <div class="headPhoto" v-if="imgUrl === '' || imgUrl === undefined || imgUrl === null" @click.stop="addPic">
-      <div class="carmerBorder"></div>
-      <img src="../assets/img/headPhotograph.png"/>
-      <p style="font-size: 13px">拍摄或上传投保人正面头像</p>
-    </div>
-    <button class="clearButton" v-if="imgUrl !== undefined && imgUrl !== ''" @click='delImage'>清除</button>
-    <input id="image" type="file" accept="image/*" @change="onFileChange"
-           style="display: none;">
-    <div v-if="imgUrl !== undefined && imgUrl !== ''">
-      <img class="headPhoto-img" :src="imgUrl">
-    </div>
+      <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保单签名</div>
+      <div class="headPhoto" v-if="imgUrl === '' || imgUrl === undefined || imgUrl === null" @click.stop="addPic">
+        <div class="carmerBorder"></div>
+        <img src="../assets/img/headPhotograph.png"/>
+        <p style="font-size: 13px">拍摄或上传投保人正面头像</p>
+      </div>
+      <button class="clearButton" v-if="imgUrl !== undefined && imgUrl !== ''" @click='delImage'>清除</button>
+      <input id="image" type="file" accept="image/*" @change="onFileChange"
+             style="display: none;">
+      <div v-if="imgUrl !== undefined && imgUrl !== ''">
+        <img class="headPhoto-img" :src="imgUrl">
+      </div>
 
-    <div class="canvas">
-      <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-      <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign"
-            @click="clear">清除</span>
-      <div class="sign" v-if="!clickSign" @click="checkSign">点击签名
+      <div class="canvas">
+        <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
+        <div class="sign" v-if="!clickSign && !show" @click="checkSign">点击签名（请用正楷进行签名）
+        </div>
+
+        <div class="sign" style="background: #f3f5f7;height: 20vh" @click="checkShow" v-if="clickSign && show">
+          <img class="sign" style="height: 20vh; width: auto; margin-left: 10vw" :src="policyholderSign">
+        </div>
       </div>
-      <div v-if="clickSign">
-        <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'20vh'"></Signature>
-      </div>
-    </div>
-    <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
-    <div style="height: 60px;">
-      <div class="i-footer">
-        <button @click="next">
-          <div>下一步</div>
-        </button>
+      <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
+      <div style="height: 60px;">
+        <div class="i-footer">
+          <button @click="next">
+            <div>下一步</div>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -78,6 +91,10 @@
         },
         toastText: '',
         showPositionValue: false,
+        submissionSign: '',
+        policyholderSign: '',
+        show1: false,
+        show: false,
       }
     },
     components: {Signature, Toast},
@@ -129,8 +146,36 @@
       checkSign() {
         this.clickSign = !this.clickSign;
       },
+      checkShow() {
+        this.show = !this.show;
+      },
       checkSign1() {
         this.clickSign1 = !this.clickSign1;
+      },
+      checkShow1() {
+        this.show1 = !this.show1;
+      },
+      doneButton() {
+        var _this = this;
+        var jpeg = _this.$refs.signature.save('image/jpeg').split(',')[1];
+        uploadImage(jpeg).then(function (result) {
+          let holder = storage.fetch("holder");
+          _this.policyholderSign = result.data;
+          holder.policyholderSign = result.data;
+          storage.save("holder", holder);
+        });
+        this.show = !this.show;
+      },
+      doneButton1() {
+        var _this = this;
+        var jpeg1 = _this.$refs.signature1.save('image/jpeg').split(',')[1];
+        uploadImage(jpeg1).then(function (result) {
+          let holder = storage.fetch("holder");
+          _this.submissionSign = result.data;
+          holder.submissionSign = result.data;
+          storage.save("holder", holder);
+        });
+        this.show1 = !this.show1;
       },
       save() {
         var _this = this;
@@ -180,7 +225,7 @@
           this.toastText = "请签署投保提示书签名";
           return false;
         }
-        this.save();
+        // this.save();
         this.$router.push("upload-data")
       },
       imsurancePolicy() {
@@ -328,11 +373,11 @@
   .sign {
     background: #f3f5f7;
     width: 92%;
-    height: 20vh;
+    height: auto;
     border-radius: 10px;
     margin: 0 15px;
     text-align: center;
-    line-height: 20vh;
+    line-height: 30vh;
     color: #bfbfbf;
     font-size: 14px;
   }
@@ -344,5 +389,36 @@
     border: 1px solid #dcdcdc;
     background: #EDEDED;
     margin-top: -2px
+  }
+
+  .popContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    padding-top: 20px;
+  }
+
+  .doneButton {
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: none;
+    border: 2px solid #f5ca1d;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    margin-left: 43%;
+    margin-top: 20px;
+    color: #f5ca1d;
+  }
+
+  /*签名动态样式*/
+  .animateGraph {
+    transition: transform .5s cubic-bezier(.2, 1, .3, 1), -webkit-transform .5s cubic-bezier(.2, 1, .3, 1);
+    transform: perspective(1000px) translate3d(0, 60vh, 0) rotate3d(1, 0, 0, 30deg);
   }
 </style>

@@ -57,6 +57,7 @@ public class QiniuStorageService implements IStorageService {
         String domain = null;
         switch (type) {
             case RESOURCE:
+            case INSURANCEPRODUCT:
             case OTHER:
                 bucket = bucket_1;
                 domain = domain_1;

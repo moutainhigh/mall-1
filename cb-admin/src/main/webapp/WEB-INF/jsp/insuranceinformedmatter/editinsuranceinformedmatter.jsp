@@ -30,6 +30,12 @@
                 }
             });
         });
+        $(document).ready(function() {
+            $("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true, scroll: false, showOneMessage: true
+            });
+
+        });
     </script>
 </head>
 <body>

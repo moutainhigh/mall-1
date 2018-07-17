@@ -118,4 +118,15 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
         oldMatter.setMatterGroup(insuranceInformedMatter.getMatterGroup());
         return oldMatter;
     }
+
+    @Override
+    public List<InsuranceInformedMatter> getInsuranceInformedMatterList(){
+        return insuranceInformedMatterDao.findAll();
+    }
+
+    @Override
+    public List<InsuranceInformedMatter> getListByName(String matterDescription){
+        matterDescription="%"+matterDescription+"%";
+        return insuranceInformedMatterDao.getListByName(matterDescription);
+    }
 }

@@ -125,6 +125,7 @@
         <div class="error" v-if="!$v.insured.insuredRelation.required && $v.insured.insuredRelation.$dirty">
           投保关系不能为空
         </div>
+        <div style="height: 10px; width: 100%"></div>
       </div>
     </group>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>

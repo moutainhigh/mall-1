@@ -10,14 +10,180 @@
 <!--[if gt IE 9]> <html class="no-js"> <![endif]-->
 <!--[if !IE]><!-->
 <html class="no-js">                       <!--<![endif]-->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>保险产品详情</title>
+    <style>
+        table {
+            border: solid 1px;
+        }
 
-    <title>反馈详情</title>
+        table tr {
+            border: solid 1px;
+        }
 
+        table td {
+            text-align: center;
+            border: solid 1px;
+            padding: 10px;
+        }
+    </style>
     <script type="text/javascript">
+        $(document).ready(function() {
+            $("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true, scroll: false, showOneMessage: true
+            });
+        });
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null;
+            if (window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+
+        function closeInfo(){
+            history.go(0);
+        }
+
+        /**
+         *添加事项组
+         */
+        function addMatter(prodId,matterId) {
+            bootbox.confirm("确认添加吗？", function (result) {
+                if (result) {
+                    var formData = new FormData();
+                    formData.append("prodId", prodId);
+                    formData.append("matterId", matterId);
+                    $.ajax({
+                        url: "addMetterById.do",
+                        type: 'GET',
+                        data: {
+                            "prodId": prodId,
+                            "matterId": matterId
+                        },
+                        success: function (data) {
+                            if (data) {
+                                bootbox.alert("成功");
+                                loadData();
+                            } else {
+                                bootbox.alert("失败");
+                            }
+                        },
+                        error: function (err) {
+                        }
+                    });
+                }
+            });
+        }
+
+        /**
+         *删除事项组
+         */
+        function removeMatter(matterId, prodId) {
+            bootbox.confirm("确认删除吗？", function (result) {
+                if (result) {
+                    var formData = new FormData();
+                    formData.append("prodId", prodId);
+                    formData.append("matterId", matterId);
+                    $.ajax({
+                        url: "removeMetterById.do",
+                        type: 'GET',
+                        data: {
+                            "prodId": prodId,
+                            "matterId": matterId
+                        },
+                        success: function (data) {
+                            if (data) {
+                                bootbox.alert("成功");
+                                history.go(0)
+                            } else {
+                                bootbox.alert("失败");
+                            }
+                        },
+                        error: function (err) {
+                        }
+                    });
+                }
+            });
+        }
+
+        /**
+         *上传图片
+         */
+        function onchangeImg(imgId){
+            var formData = new FormData();
+            formData.append("file", $('#upload')[0].files[0]);
+            $.ajax({
+                url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    alert(result.info);
+                    if (result.code == 0) {
+                        $('#'+imgId).val(result.url);
+                    }
+                },
+                error: function (err) {
+                }
+            });
+        }
+
+        /**
+         * 加载事项组数据
+         */
+        function loadData(){
+            var matterDescription=$('#matterDescription').val();
+            $.ajax({
+                url: "getmatterList.do",
+                type: 'GET',
+                data: {
+                    "prodId": ${insuranceProduct.prodId},
+                    "matterDescription":matterDescription
+                },
+                success: function (data) {
+                    var html='';
+                    for (var i=0;i<data.length;i++)
+                    {
+                        var type='';
+                        if(data[i].matterType==0){
+                            type="是否题";
+                        }else if(data[i].matterType==0){
+                            type="填空题";
+                        }
+                        html+="<tr><td>"+data[i].matterId+"</td>"
+                            +"<td>"+data[i].matterDescription+"</td>"
+                            +"<td>"+type+"</td>"
+                            +"<td><a href='javascript:void(0);' onclick='addMatter(${insuranceProduct.prodId},"+data[i].matterId+")' style='color:blue'>添加</a></td></tr>";
+                    }
+                    $("#thb").html(html);
+                },
+                error: function (err) {
+                }
+            });
+        }
         $(function () {
+            $('#addproductMatter').on('click', function() {
+                var openNewLink = window.open('/admin/insuranceproduct/toaddMatter.do?prodId=${insuranceProduct.prodId}',
+                    '添加', 'height=700, width=1500, top=100, left=200, toolbar=no, menubar=no, scrollbars=no, resizable=false, location=no, status=no'); //参数： url, 名称, 窗体样式
+                if(window.focus) {
+                    openNewLink.focus();
+                }
+                return false;
+            })
+
             $('img[name="viewImg"]').click(function () {
                 var width = $(this).width();
                 if (width == 200) {
@@ -29,12 +195,26 @@
                     $(this).height(200);
                 }
             });
-        });
-        $(document).ready(function() {
-            $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+
+            $("#headPic").click(function () {
+                $("#upload").click(); //隐藏了input:file样式后，点击头像就可以本地上传
+                $("#upload").on("change", function () {
+                    var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+                    if (objUrl) {
+                        $("#headPic").attr("src", objUrl); //将图片路径存入src中，显示出图片
+                    }
+                });
             });
 
+            $("#headPic1").click(function () {
+                $("#upload1").click(); //隐藏了input:file样式后，点击头像就可以本地上传
+                $("#upload1").on("change", function () {
+                    var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+                    if (objUrl) {
+                        $("#headPic1").attr("src", objUrl); //将图片路径存入src中，显示出图片
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -50,6 +230,7 @@
      ******************************************** -->
 
 <jsp:include page="../layouts/left.jsp"/>
+<jsp:include page="../layouts/sidebarRight.jsp"/>
 <!-- End aside -->
 
 <!-- ********************************************
@@ -319,7 +500,7 @@
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
                     <li><a href="#">保单管理 </a></li>
-                    <li><a href="#">保险告知事项</a></li>
+                    <li><a href="#">保险产品管理</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -343,7 +524,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>保险告知事项</h2>
+                    <h2>保险产品</h2>
                 </div>
             </div>
             <!-- End .inner-padding -->
@@ -355,7 +536,7 @@
              *                                          *
              * the part which contains the main content *
              ******************************************** -->
-
+        <div style="display: none" id="matterDiv"></div>
         <div class="window">
             <div class="actionbar">
                 <div class="pull-left">
@@ -371,66 +552,181 @@
             <!-- End .actionbar-->
             <div class="inner-padding">
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
-                <fieldset>
-                    <legend>事项组</legend>
-                    <form:form id="validateSubmitForm" action="addInsuranceInformedMatter.do" cssClass="form-horizontal" method="post"
-                               commandName="insuranceInformedMatter">
+
+                <form:form id="validateSubmitForm" action="updateInsuranceProduct.do" cssClass="form-horizontal"
+                           method="post"
+                           commandName="insuranceProduct">
+                    <fieldset>
+                        <legend>保险产品</legend>
+                        <form:hidden path="prodId"/>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>序号：</label>
+                                <label><span class="asterisk">*</span>产品名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="serNo" value=""  cssClass="form-control validate[required,minSize[1]]" maxlength="32"/>
+                                <form:input path="prodName" value="" cssClass="form-control validate[required,minSize[2]]"
+                                            maxlength="32"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>保障年限：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input path="protectionYear"
+                                            cssClass="form-control validate[required,minSize[1]]"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>事项描述：</label>
+                                <label><span class="asterisk">*</span>保险期间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea path="matterDescription" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:input path="insurePeriod" cssClass="form-control validate[required,minSize[1]]"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>标签：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input path="tags" cssClass="form-control validate[required,minSize[1]]"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>类型：</label>
+                                <label><span class="asterisk">*</span>投保须知：</label>
                             </div>
                             <div class="col-sm-3">
-                                <select name="matterType">
-                                    <option value="0">是否题</option>
-                                    <option value="1">填空题</option>
-                                </select>
+                                <form:input path="instruction" cssClass="form-control validate[required,minSize[2]]"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>产品描述：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:textarea path="description" cssClass="form-control validate[required,minSize[2]]"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
+                        <div class="spacer-10"></div>
+
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>事项组：</label>
+                                <label>图片：</label>
                             </div>
                             <div class="col-sm-3">
-                                <select name="groupId">
-                                    <option value="0">-不选-</option>
-                                    <c:forEach items="${groups}"  var="group">
-                                        <option value="${group.groupId}" >${group.description}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="spacer-30"></div>
-                        <hr>
-                        <div class="spacer-30"></div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="btn-group pull-right">
-                                    <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                <div style="float: left">
+                                    <div style="padding-left: 5px"><span>产品图片</span></div>
+                                    <div>
+                                        <img id="headPic" src="${insuranceProduct.prodImg}" width="150px" height="150px"
+                                             style="padding: 5px">
+                                        <input id="upload" onchange="onchangeImg('prodImg')" name="file" multiple="multiple" accept="image/*" type="file"
+                                               style="display: none"/>
+                                    </div>
+                                    <form:hidden path="prodImg" id="prodImg"/>
+                                </div>
+                                <div style="float: left;margin-left: 20px">
+                                    <div style="padding-left: 5px"><span>产品详情图片</span></div>
+                                    <div>
+                                        <img id="headPic1" src="${insuranceProduct.descriptionImg}" width="150px"
+                                             height="150px" style="padding: 5px">
+                                        <input onchange="onchangeImg('descriptionImg')" id="upload1" name="file" multiple="multiple" accept="image/*" type="file"
+                                               style="display: none"/>
+                                    </div>
+                                    <form:hidden path="descriptionImg" id="descriptionImg"/>
+                                </div>
+
+                                <div class="spacer-30"></div>
+                                <hr>
+                                <div class="spacer-30"></div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="btn-group pull-right">
+                                            <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;
+                                            </button>
+                                            <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </form:form>
-                </fieldset>
+                    </fieldset>
+                    <fieldset>
+
+                        <legend>产品告知事项</legend>
+                        <div class="row" style="margin-left: 15px;">
+                            <button type="button" onclick="loadData()" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                添加告知事项
+                            </button>
+                            <!-- 模态框 -->
+                            <div class="modal fade" id="myModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="width: 1700px;margin-left: -540px">
+                                        <!-- 模态框头部 -->
+                                        <div class="modal-header">
+                                            <button type="button" class="close" onclick="closeInfo()" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <!-- 模态框主体 -->
+                                        <div class="modal-body">
+                                            <div class="row" style="margin-top: 20px">
+                                                <div class="col-sm-2">
+                                                    <label>事项描述：</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="texr"  id="matterDescription" ></input>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <button type="button" class="btn btn-default" onclick="loadData()"><i class="fa fa-search"></i>查询</button>
+                                                </div>
+
+                                            </div>
+                                            <table style="margin-top: 5px">
+                                                <tr>
+                                                    <td style="width: 100px">事项Id</td>
+                                                    <td>事项描述</td>
+                                                    <td style="width: 100px">事项类型</td>
+                                                    <td style="width: 100px">操作</td>
+                                                </tr>
+                                                <tbody id="thb">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px;margin-left: 15px;;">
+                            <table>
+                                <tr>
+                                    <td>事项Id</td>
+                                    <td style="width: 900px">事项描述</td>
+                                    <td>事项类型</td>
+                                    <td>操作</td>
+                                </tr>
+                                <c:forEach items="${insuranceProduct.insuranceInformedMatters}" var="matter">
+                                    <tr>
+                                        <td>${matter.matterId}</td>
+                                        <td>
+                                                ${matter.matterDescription}
+                                        </td>
+                                        <td>
+                                            <c:if test="${0 eq matter.matterType}">是否题</c:if>
+                                            <c:if test="${1 eq matter.matterType}">填空题</c:if>
+                                        </td>
+                                        <td>
+                                            <a href='/admin/insuranceInformedMatter/toEditMatter.do?matterId=${matter.matterId}'
+                                               style='color:blue'>查看</a>
+                                            <a href="javascript:void(0);"
+                                               onclick="removeMatter('${matter.matterId}','${insuranceProduct.prodId}')"
+                                               style='color:blue'>删除</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                    </fieldset>
+                </form:form>
+
                 <div class="spacer-40"></div>
                 <div class="hr-totop"><span>Top</span></div>
                 <div class="spacer-40"></div>
