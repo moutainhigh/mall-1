@@ -55,6 +55,9 @@
             history.go(0);
         }
 
+        /**
+         *添加事项组
+         */
         function addMatter(prodId,matterId) {
             bootbox.confirm("确认添加吗？", function (result) {
                 if (result) {
@@ -83,6 +86,9 @@
             });
         }
 
+        /**
+         *删除事项组
+         */
         function removeMatter(matterId, prodId) {
             bootbox.confirm("确认删除吗？", function (result) {
                 if (result) {
@@ -111,7 +117,33 @@
             });
         }
 
+        /**
+         *上传图片
+         */
+        function onchangeImg(imgId){
+            var formData = new FormData();
+            formData.append("file", $('#upload')[0].files[0]);
+            $.ajax({
+                url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    alert(result.info);
+                    if (result.code == 0) {
+                        $('#'+imgId).val(result.url);
+                    }
+                },
+                error: function (err) {
+                }
+            });
+        }
 
+        /**
+         * 加载事项组数据
+         */
         function loadData(){
             var matterDescription=$('#matterDescription').val();
             $.ajax({
@@ -180,51 +212,6 @@
                     var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
                     if (objUrl) {
                         $("#headPic1").attr("src", objUrl); //将图片路径存入src中，显示出图片
-                    }
-                });
-            });
-
-            //图片上传
-            $("#upload_img").click(function () {
-                var formData = new FormData();
-                formData.append("file", $('#upload')[0].files[0]);
-                $.ajax({
-                    url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
-                    type: 'POST',
-                    cache: false,
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (result) {
-                        alert(result.info);
-                        if (result.code == 0) {
-                            $('#prodImg').val(result.url);
-                        }
-                    },
-                    error: function (err) {
-                    }
-                });
-            });
-
-
-            //图片上传
-            $("#upload_img1").click(function () {
-                var formData = new FormData();
-                formData.append("file", $('#upload')[0].files[0]);
-                $.ajax({
-                    url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
-                    type: 'POST',
-                    cache: false,
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (result) {
-                        alert(result.info);
-                        if (result.code == 0) {
-                            $('#descriptionImg').val(result.url);
-                        }
-                    },
-                    error: function (err) {
                     }
                 });
             });
@@ -631,11 +618,8 @@
                                     <div>
                                         <img id="headPic" src="${insuranceProduct.prodImg}" width="150px" height="150px"
                                              style="padding: 5px">
-                                        <input id="upload" name="file" multiple="multiple" accept="image/*" type="file"
+                                        <input id="upload" onchange="onchangeImg('prodImg')" name="file" multiple="multiple" accept="image/*" type="file"
                                                style="display: none"/>
-                                    </div>
-                                    <div style="margin-top: 10px;padding-left: 5px">
-                                        <button id="upload_img" type="button">确定上传</button>
                                     </div>
                                     <form:hidden path="prodImg" id="prodImg"/>
                                 </div>
@@ -644,11 +628,8 @@
                                     <div>
                                         <img id="headPic1" src="${insuranceProduct.descriptionImg}" width="150px"
                                              height="150px" style="padding: 5px">
-                                        <input id="upload1" name="file" multiple="multiple" accept="image/*" type="file"
+                                        <input onchange="onchangeImg('descriptionImg')" id="upload1" name="file" multiple="multiple" accept="image/*" type="file"
                                                style="display: none"/>
-                                    </div>
-                                    <div style="margin-top: 10px;padding-left: 5px">
-                                        <button id="upload_img1" type="button">确定上传</button>
                                     </div>
                                     <form:hidden path="descriptionImg" id="descriptionImg"/>
                                 </div>

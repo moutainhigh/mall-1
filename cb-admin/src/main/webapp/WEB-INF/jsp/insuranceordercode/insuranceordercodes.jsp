@@ -23,6 +23,7 @@
                 culture:"zh-CN",
                 parseFormats: ["yyyy-MM-dd"]
             });
+
             $("#add-key").click(function(){
                 $("#add-key").createModal({
                     background: "#000",//设定弹窗之后的覆盖层的颜色

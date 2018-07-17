@@ -29,13 +29,6 @@
             }
         }
 
-        function editItem() {
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                indow.location.href = "toEditProduct.do?prodId=" + dataItem.prodId;
-            }
-        }
-
         function removeItem() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
