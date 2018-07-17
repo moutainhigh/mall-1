@@ -18,7 +18,7 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")
     })
     @GetMapping(value = "saveOrder/{commodityId}")
-    public ResponseResult saveOrder(@(value = "commodityId") int commodityId, @ModelAttribute("customerId") int customerId){
+    public ResponseResult saveOrder(@PathVariable(value = "commodityId") int commodityId, @ModelAttribute("customerId") int customerId){
         return new ResponseResult(null);
     }
 
