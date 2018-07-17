@@ -94,13 +94,10 @@
         type="number" class="value-input" v-model="values5[1]"/>支/天；若现在已停止吸烟，停止吸烟原因及时间<input
         type="text" maxlength="24" class="value-input" v-model="values5[2]"/>。</p>
       <p style="padding: 15px 0">b.是否饮酒？若“是”，饮酒<input type="number" class="value-input" v-model="values5[3]"/>年，种类<input
-        type="number"
-        class="value-input"
-        v-model="values5[4]"/>，数量<input
-        type="number" class="value-input" v-model="values5[5]"/>（两/周）；若现在已停止饮酒，停止饮酒原因及时间<input type="number"
-                                                                                               class="value-input"
-                                                                                               style="width: 10rem"
-                                                                                               v-model="values5[6]"/>。
+        type="text" class="value-input" maxlength="24" v-model="values5[4]"/>，数量<input type="number" class="value-input"
+                                                                                       v-model="values5[5]"/>
+        （两/周）；若现在已停止饮酒，停止饮酒原因及时间<input type="text" class="value-input" maxlength="64" style="width: 10rem"
+                                       v-model="values5[6]"/>。
       </p>
       <div class="content-state">
         <p class="recognizee">被保人</p>
@@ -123,7 +120,7 @@
     </div>
 
     <div class="content">
-      <p>6.您是否曾经或正在使用麻醉剂、可成瘾药物、毒品或接受戒毒、戒酒治疗？</p>
+      <p>6.是否曾经或正在使用镇静安眠剂、可成瘾药物、麻醉剂，或接受戒毒、戒酒治疗？</p>
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(5)">
@@ -189,13 +186,14 @@
     </div>
 
     <div class="content">
-      <p style="padding: 15px 0">9.a 脊柱、胸廓、四肢、手指或手掌、足趾或足部缺损畸形、两上肢或两下肢长度不等、跛行？（男性）</p>
-      <p style="padding: 15px 0">b 眼、耳、鼻、舌或其它颜面部软组织缺损畸形？牙齿脱落、上下颌骨缺失、颞下颌关节强直？肋骨骨折或缺失？颈部或腰部活动受限？肢体肌力下降？</p>
-      <p style="padding: 15px 0">c 睾丸萎缩或缺失？阴茎缺失？输精管闭锁或缺失？</p>
-      <p style="padding: 15px 0">d 子宫切除？阴道闭锁？乳房切除？（女性）</p>
-      <p style="padding: 15px 0">e 视力、听力、语言、咀嚼、吞咽、嗅觉、触觉等功能障碍或中枢神经系统障碍？</p>
-      <p style="padding: 15px 0">f 精神、智能障碍或性格行为异常？</p>
-      <p style="padding: 15px 0">g 脾、肺、胃、小肠、结肠、直肠、胰腺、肝、肾、膀胱切除？心脏的结构损伤或功能障碍？输尿管闭锁或缺失？其它内脏或身体器官缺损、摘除或移植？</p>
+      <p>9.是否有下列身体残障情况：</p>
+      <p style="padding: 15px 0">a.脊柱、胸廓、四肢、手指或手掌、足趾或足部缺损畸形、两上肢或两下肢长度不等、跛行？</p>
+      <p style="padding: 15px 0">b.眼、耳、鼻、舌或其它颜面部软组织缺损畸形？牙齿脱落、上下颌骨缺失、颞下颌关节强直？肋骨骨折或缺失？颈部或腰部活动受限？肢体肌力下降？</p>
+      <p style="padding: 15px 0">c.睾丸萎缩或缺失？阴茎缺失？输精管闭锁或缺失？（男性）</p>
+      <p style="padding: 15px 0">d.子宫切除？阴道闭锁？乳房切除？（女性）</p>
+      <p style="padding: 15px 0">e.视力、听力、语言、咀嚼、吞咽、嗅觉、触觉等功能障碍或中枢神经系统障碍？</p>
+      <p style="padding: 15px 0">f.精神、智能障碍或性格行为异常？</p>
+      <p style="padding: 15px 0">g.脾、肺、胃、小肠、结肠、直肠、胰腺、肝、肾、膀胱切除？心脏的结构损伤或功能障碍？输尿管闭锁或缺失？其它内脏或身体器官缺损、摘除或移植？</p>
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(8)">
@@ -240,7 +238,7 @@
     </div>
 
     <div class="content">
-      <p style="padding: 15px 0">11.您若为16周岁(含)以上女性，请告知：a.目前是否怀孕？若是，怀孕<input class="value-input" type="number"
+      <p style="padding: 15px 0">11.若为16周岁(含)以上女性，请告知：a.目前是否怀孕？若是，已怀孕<input class="value-input" type="number"
                                                                             v-model="values11"/>周？</p>
       <p style="padding: 15px 0">b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？</p>
       <p style="padding: 15px 0">c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？</p>
@@ -266,7 +264,7 @@
     </div>
 
     <div class="content">
-      <p style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">12.您是否患有或曾经患有以下疾病：</p>
+      <p style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">12.是否患有或曾经患有以下疾病：</p>
       <div style="border-bottom: 1px solid #f3f3f3; padding-bottom: 10px">
         <p style="padding: 15px 0">a.最近六个月内，是否有下列疾患或自觉症状?</p>
         <p style="padding: 15px 0">.不明原因皮肤出血点或瘀斑、鼻衄、反复齿龈出血?</p>
@@ -572,13 +570,13 @@
     </div>
 
     <div class="content">
-      <p style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">14.您若为2周岁(不含)以下婴儿，请告知：</p>
+      <p style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">14.若为2周岁(不含)以下婴儿，请告知：</p>
       <div style="border-bottom: 1px solid #f3f3f3; padding-bottom: 10px">
         <p style="padding: 15px 0; margin-bottom: 0">a.被保险人出生时身长<input type="number" class="value-input"
                                                                        v-model="values12[0]"/>厘米，体重<input
           class="value-input" type="number" v-model="values12[1]"/>公斤，出生医院<input type="text" class="value-input"
                                                                                  v-model="values12[2]"/>
-          ，出生时留院天数<input class="value-input" type="number" v-model="values12[3]"/>天，如超过7天，请详细说明</p>
+          ，出生时留院天数<input class="value-input" type="number" v-model="values12[3]"/>天，如超过7天，请详细说明。</p>
         <p style="padding: 15px 0">b.出生时是否有早产、难产、窒息等情况？是否使用产钳等辅助器械？</p>
         <p style="padding: 15px 0">c.出生时是否有抢救史？</p>
         <p style="padding: 15px 0">d.是否未按要求接受预防接种？</p>
@@ -586,6 +584,7 @@
         <p style="padding: 15px 0">f.是否经常患腹痛、婴幼儿腹泻等消化系统疾病？</p>
         <p style="padding: 15px 0">g.是否曾患哮喘、肺炎、扁桃体炎等呼吸系统疾病？</p>
         <p style="padding: 15px 0">h.是否曾患疝气？i是否曾出现“高热惊厥”</p>
+        <p style="padding: 15px 0">i.是否曾出现“高热惊厥”？</p>
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(25)">
@@ -600,7 +599,7 @@
     </div>
 
     <div class="content">
-      <p>15.是否参加公费医疗或社会医疗保险。</p>
+      <p>15.是否已参加公费医疗或社会医疗保险。</p>
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(26)">
@@ -666,7 +665,7 @@
     data() {
       return {
         state: false,
-        matters: [],
+        matters: storage.fetch("matters"),
         values5: ['', '', '', '', '', ''],
         values11: '',
         values12: ['', '', '', ''],
@@ -690,6 +689,22 @@
         });
       },
       next() {
+        //吸烟校验
+        if (this.matters[4].insuredResult || this.matters[4].policyholderResult) {
+          if (this.values5[0] === '' || this.values5[1] === '' || this.values5[2] === '' || this.values5[3] === '' || this.values5[4] === '' || this.values5[5] === '') {
+            alert("请完善吸烟和饮酒的信息");
+            return false;
+          }
+        }
+        if (this.values5[0].length > 3 || this.values5[1].length > 3 || this.values5[3].length > 3 || this.values5[5].length > 3) {
+          alert("输入长度不得大于3位");
+          return false;
+        }
+        if (this.values5[0] === '0' || this.values5[1] === '0' || this.values5[3] === '0' || this.values5[5] === '0') {
+          alert("请输入大于0的整数");
+          return false;
+        }
+
         if (this.twoYear === false) {
           if (this.values12[0] === '' || this.values12[1] === '' || this.values12[2] === '' || this.values12[3] === '') {
             alert("被保人小于2周岁，请填写第12项额外信息");
@@ -755,7 +770,11 @@
             this.showPositionValue = true;
             this.toastText = "输入长度不得大于3位";
           }
-          if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0') {
+          if (newVal[5].length > 3) {
+            this.showPositionValue = true;
+            this.toastText = "输入长度不得大于3位";
+          }
+          if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0' || newVal[5] === '0') {
             this.showPositionValue = true;
             this.toastText = "请输入大于0的整数";
           }
@@ -810,6 +829,7 @@
       }
     },
     created: function () {
+
       for (let i = 1; i <= 28; i++) {
         this.matters.push(
           {
@@ -824,6 +844,16 @@
           }
         )
       }
+      if (storage.fetch("matters").length !== 0) {
+        if (storage.fetch("matters")[4].collectValues) {
+          this.values5 = JSON.parse(storage.fetch("matters")[4].collectValues);
+        }
+        this.values11 = storage.fetch("matters")[10].collectValues;
+        if (storage.fetch("matters")[25].collectValues) {
+          this.values12 = JSON.parse(storage.fetch("matters")[25].collectValues);
+        }
+      }
+
       //判断被保人周岁是否大于2周岁
       let insured = storage.fetch("insured");
       let newDate = new Date();

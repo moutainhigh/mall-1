@@ -46,7 +46,7 @@
       </div>
       <div class="i-input">
         <div class="i-input-item">保障年限</div>
-        <div class="i-input-val">终身</div>
+        <div class="i-input-val">十年</div>
       </div>
       <div class="i-input">
         <div class="i-input-item">基本保额</div>
