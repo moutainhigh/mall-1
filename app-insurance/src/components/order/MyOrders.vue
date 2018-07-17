@@ -75,8 +75,8 @@
 </template>
 
 <script>
-  import {getOrders} from "../service/getData";
-  import storage from "../store/storage";
+  import {getOrders} from "../../service/getData";
+  import storage from "../../store/storage";
 
   export default {
     name: "myOrders",
