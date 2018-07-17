@@ -16,7 +16,6 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.util.Map;
 
 
 /**
@@ -124,9 +123,7 @@ public class InsuranceController {
      */
     @RequestMapping(value = "prints", method = RequestMethod.GET)
     public String prints(@RequestParam("orderId") int orderId, ModelMap modelMap) {
-            Map<String,Object> map= iInsuranceOrderService.insuranceOrder(orderId);
-            System.out.println("insurance_matter_value==="+map.get("insurance_matter_value"));
-            modelMap.addAttribute("map", map);
+            modelMap.addAttribute("map", iInsuranceOrderService.insuranceOrder(orderId));
         return "insurance/orderDetailPrint";
     }
 
