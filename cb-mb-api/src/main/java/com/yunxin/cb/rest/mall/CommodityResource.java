@@ -19,7 +19,7 @@ public class CommodityResource extends BaseResource {
     })
     @GetMapping(value = "getCommdity/{commodityId}")
     public ResponseResult getCommdity(@PathVariable(value = "commodityId") int commodityId){
-        return new ResponseResult(Result.SUCCESS);
+        return new ResponseResult(null);
     }
 
     @ApiOperation(value = "获取用户收藏夹")
@@ -28,7 +28,7 @@ public class CommodityResource extends BaseResource {
     })
     @PostMapping(value = "getCustomerFavorite")
     public ResponseResult getCustomerFavorite(@RequestParam(value = "customerId") int commodityId){
-        return new ResponseResult(Result.SUCCESS);
+        return new ResponseResult(null);
     }
 
     @ApiOperation(value = "商品添加收藏夹")
@@ -38,7 +38,7 @@ public class CommodityResource extends BaseResource {
     })
     @PostMapping(value = "addFavorite")
     public ResponseResult addFavorite(@RequestParam(value = "commodityId") int commodityId,@RequestParam(value = "customerId") int customerId){
-        return new ResponseResult(Result.SUCCESS);
+        return new ResponseResult(null);
     }
 
     @ApiOperation(value = "商品移出收藏夹")
@@ -48,7 +48,7 @@ public class CommodityResource extends BaseResource {
     })
     @PostMapping(value = "delFavorite")
     public ResponseResult delFavorite(@RequestParam(value = "commodityId") int commodityId,@RequestParam(value = "customerId") int customerId){
-        return new ResponseResult(Result.SUCCESS);
+        return new ResponseResult(null);
     }
 
 }
