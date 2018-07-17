@@ -15,12 +15,10 @@ public class PayResource extends BaseResource {
 
     @ApiOperation(value = "根据订单id选择支付方式")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "payType", value = "支付类型", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "payVo", value = "支付Vo", required = true, paramType = "post", dataType = "Object"),
     })
-    @GetMapping(value = "payOrder/{orderId}-{payType}")
-    public ResponseResult payOrder(@PathVariable(value = "orderId") int orderId, @PathVariable(value = "payType") int payType
-            , @ModelAttribute("customerId") int customerId){
+    @PostMapping(value = "payOrder")
+    public ResponseResult payOrder(@RequestBody Object  payVo , @ModelAttribute("customerId") int customerId){
         return new ResponseResult(null);
     }
 
