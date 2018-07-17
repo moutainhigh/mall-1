@@ -24,7 +24,17 @@
                 <c:forEach var="resc" items="${userPrivileges}">
                     <c:if test="${resc.type=='MENU'}">
                         <li  <c:if test="${navUrl.contains(resc.value)}">class="page-arrow active-page"</c:if>>
-                            <a href="#"><i class="${resc.cssClass}"></i> ${resc.name} <i class="fa fa-caret-left pull-right"></i></a>
+                            <a href="#"><i class="${resc.cssClass}"></i> ${resc.name}
+                            <c:choose>
+                                <c:when test="${navUrl.contains(resc.value)}">
+                                    <i class="fa fa-caret-down pull-right"></i>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="fa fa-caret-left pull-right"></i>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
 
                             <c:if test="${resc.hasChildrenMenu}">
 
