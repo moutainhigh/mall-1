@@ -50,6 +50,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         session.setAttribute(USER_LAST_TIME, user.getLastTime());
         session.setAttribute(USER_IP, ipAddr);
         session.setAttribute(USER_CREATE_TIME, user.getCreateTime());
+        session.setAttribute(SecurityConstants.LOGIN_SELLER,user.getSeller());
 
         setAlwaysUseDefaultTargetUrl(true);
         setDefaultTargetUrl("/console/dashboard.do");

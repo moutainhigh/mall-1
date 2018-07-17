@@ -43,6 +43,7 @@ import java.util.Set;
  */
 @Controller
 @RequestMapping(value="/security")
+@SessionAttributes(SecurityConstants.LOGIN_SELLER)
 public class RoleController  implements ServletContextAware {
 	
 	@Resource
