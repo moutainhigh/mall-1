@@ -168,5 +168,275 @@ public class Commodity implements java.io.Serializable {
         this.commodityId = commodityId;
     }
 
+    public int getCommodityId() {
+        return commodityId;
+    }
 
+    public void setCommodityId(int commodityId) {
+        this.commodityId = commodityId;
+    }
+
+    public Catalog getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(Catalog catalog) {
+        this.catalog = catalog;
+    }
+
+    public String getCommodityCode() {
+        return commodityCode;
+    }
+
+    public void setCommodityCode(String commodityCode) {
+        this.commodityCode = commodityCode;
+    }
+
+    public String getCommodityName() {
+        return commodityName;
+    }
+
+    public void setCommodityName(String commodityName) {
+        this.commodityName = commodityName;
+    }
+
+    public String getCommodityPYName() {
+        return commodityPYName;
+    }
+
+    public void setCommodityPYName(String commodityPYName) {
+        this.commodityPYName = commodityPYName;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    public String getCommodityTitle() {
+        return commodityTitle;
+    }
+
+    public void setCommodityTitle(String commodityTitle) {
+        this.commodityTitle = commodityTitle;
+    }
+
+    public double getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(double costPrice) {
+        this.costPrice = costPrice;
+    }
+
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public double getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(double marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDefaultPicPath() {
+        return defaultPicPath;
+    }
+
+    public void setDefaultPicPath(String defaultPicPath) {
+        this.defaultPicPath = defaultPicPath;
+    }
+
+    public String getSeoKey() {
+        return seoKey;
+    }
+
+    public void setSeoKey(String seoKey) {
+        this.seoKey = seoKey;
+    }
+
+    public String getSeoTitle() {
+        return seoTitle;
+    }
+
+    public void setSeoTitle(String seoTitle) {
+        this.seoTitle = seoTitle;
+    }
+
+    public String getSeoDescription() {
+        return seoDescription;
+    }
+
+    public void setSeoDescription(String seoDescription) {
+        this.seoDescription = seoDescription;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public boolean isPopular() {
+        return popular;
+    }
+
+    public void setPopular(boolean popular) {
+        this.popular = popular;
+    }
+
+    public boolean isSpecial() {
+        return special;
+    }
+
+    public void setSpecial(boolean special) {
+        this.special = special;
+    }
+
+    public boolean isRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(boolean recommend) {
+        this.recommend = recommend;
+    }
+
+    public boolean isGiveaway() {
+        return giveaway;
+    }
+
+    public void setGiveaway(boolean giveaway) {
+        this.giveaway = giveaway;
+    }
+
+    public boolean isBarter() {
+        return barter;
+    }
+
+    public void setBarter(boolean barter) {
+        this.barter = barter;
+    }
+
+    public boolean isPreSell() {
+        return preSell;
+    }
+
+    public void setPreSell(boolean preSell) {
+        this.preSell = preSell;
+    }
+
+    public boolean isForbidAirCargo() {
+        return forbidAirCargo;
+    }
+
+    public void setForbidAirCargo(boolean forbidAirCargo) {
+        this.forbidAirCargo = forbidAirCargo;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public int getSaleNum() {
+        return saleNum;
+    }
+
+    public void setSaleNum(int saleNum) {
+        this.saleNum = saleNum;
+    }
+
+    public String getPackingList() {
+        return packingList;
+    }
+
+    public void setPackingList(String packingList) {
+        this.packingList = packingList;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getVolume() {
+        return volume;
+    }
+
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
+    public int[] getSpecId() {
+        return specId;
+    }
+
+    public void setSpecId(int[] specId) {
+        this.specId = specId;
+    }
+
+    public String[] getSpecValue() {
+        return specValue;
+    }
+
+    public void setSpecValue(String[] specValue) {
+        this.specValue = specValue;
+    }
+
+    public String[] getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String[] imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getAuditRemark() {
+        return auditRemark;
+    }
+
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
+    }
 }
