@@ -29,13 +29,6 @@
             }
         }
 
-        function editItem() {
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                indow.location.href = "toEditGroup.do?groupId=" + dataItem.groupId;
-            }
-        }
-
         function removeItem() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
