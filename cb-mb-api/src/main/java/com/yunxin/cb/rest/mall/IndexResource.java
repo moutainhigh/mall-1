@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-@Api(description = "首页banner接口")
+@Api(description = "商城首页")
 @RestController
-@RequestMapping(value = "/mall/banner")
+@RequestMapping(value = "/mall/index")
 @SessionAttributes("customerId")
-public class BannerResource extends BaseResource {
-    @ApiOperation(value = "首页banner列表")
-    @GetMapping(value = "getBanner")
-    public ResponseResult getBanner(){
+public class IndexResource extends BaseResource {
+    @ApiOperation(value = "商城首页")
+    @GetMapping(value = "getIndex")
+    public ResponseResult index(){
         return new ResponseResult(Result.SUCCESS);
     }
 }

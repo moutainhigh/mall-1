@@ -20,8 +20,13 @@ public class DeliveryAddressResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "path", dataType = "int")
     })
-    @GetMapping(value = "getDeliveryAddress/{customerId}")
-    public ResponseResult getDeliveryAddress(@PathVariable(value = "customerId") int customerId){
+    @GetMapping(value = "getDeliveryAddressList")
+    public ResponseResult getDeliveryAddress(@ModelAttribute(value = "customerId") int customerId){
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @GetMapping(value = "getDeliveryAddress/{address_id}")
+    public ResponseResult getDeliveryAddressDetail(@ModelAttribute(value = "customerId") int customerId){
         return new ResponseResult(Result.SUCCESS);
     }
 
