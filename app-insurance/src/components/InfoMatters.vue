@@ -837,29 +837,32 @@
       }
     },
     created: function () {
-
-      for (let i = 1; i <= 28; i++) {
-        this.matters.push(
-          {
-            insuranceInformedMatter: {
-              matterId: i
-            },
-            insuredResult: false,
-            policyholderResult: false,
-            collectValues: '',
-            insuredRemark: '',
-            policyholderRemark: '',
-          }
-        )
-      }
       if (storage.fetch("matters").length !== 0) {
         if (storage.fetch("matters")[4].collectValues) {
+          console.log("111")
           this.values5 = JSON.parse(storage.fetch("matters")[4].collectValues);
         }
         this.values11 = storage.fetch("matters")[10].collectValues;
         if (storage.fetch("matters")[25].collectValues) {
           this.values12 = JSON.parse(storage.fetch("matters")[25].collectValues);
         }
+      } else {
+        let matters =[];
+        for (let i = 1; i <= 28; i++) {
+          matters.push(
+            {
+              insuranceInformedMatter: {
+                matterId: i
+              },
+              insuredResult: false,
+              policyholderResult: false,
+              collectValues: '',
+              insuredRemark: '',
+              policyholderRemark: '',
+            }
+          )
+        }
+        this.matters = matters;
       }
 
       //判断被保人周岁是否大于2周岁
