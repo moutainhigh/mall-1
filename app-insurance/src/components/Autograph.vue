@@ -31,8 +31,8 @@
       <div class="canvas">
         <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
         <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1">
-          <p>点击签名（请用正楷进行签名）</p>
-          <!--<img v-if="submissionSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="submissionSign">-->
+          <p style="padding-top: 15vh" v-if="submissionSign === ''">点击签名（请用正楷进行签名）</p>
+          <img v-if="submissionSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="submissionSign">
         </div>
         <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow1" v-if="clickSign1 && show1">
           <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="submissionSign">
@@ -41,8 +41,10 @@
 
       <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保单签名</div>
       <div class="headPhoto" v-if="imgUrl === '' || imgUrl === undefined || imgUrl === null" @click.stop="addPic">
+        <div style="position: relative">
         <div class="carmerBorder"></div>
         <img src="../assets/img/headPhotograph.png"/>
+        </div>
         <p style="font-size: 13px">上传投保人正面头像</p>
       </div>
       <button class="clearButton" v-if="imgUrl !== undefined && imgUrl !== ''" @click='delImage'>清除</button>
@@ -54,7 +56,9 @@
 
       <div class="canvas">
         <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-        <div class="sign" v-if="!clickSign && !show" @click="checkSign">点击签名（请用正楷进行签名）
+        <div class="sign" v-if="!clickSign && !show" @click="checkSign">
+          <p style="padding-top: 15vh" v-if="policyholderSign === ''">点击签名（请用正楷进行签名）</p>
+          <img v-if="policyholderSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="policyholderSign">
         </div>
 
         <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow" v-if="clickSign && show">
@@ -313,14 +317,14 @@
   }
 
   .headPhoto img {
-    width: 23vw;
-    padding-top: 3vh;
-    margin-left: 38%;
+    width: 15vw;
+    padding-top: 5vh;
+    margin-left: 42%;
     margin-bottom: 10px;
   }
 
   .headPhoto p {
-    padding: 4vh 0 2vh 0;
+    padding: 6vh 0 2vh 0;
     text-align: center;
   }
 
@@ -345,7 +349,7 @@
   .carmerBorder {
     position: absolute;
     border: 1px solid #dddddd;
-    width: 50%;
+    width: 55%;
     left: 0;
     right: 0;
     margin: auto;
@@ -374,11 +378,11 @@
   .sign {
     background: #f3f5f7;
     width: 92%;
-    height: auto;
+    height: 30vh;
     border-radius: 10px;
     margin: 0 15px;
     text-align: center;
-    line-height: 30vh;
+    /*line-height: 30vh;*/
     color: #bfbfbf;
     font-size: 14px;
   }
@@ -407,7 +411,7 @@
     left: 0;
     right: 0;
     margin: auto;
-    background: none;
+    background: #fff;
     border: 2px solid #f5ca1d;
     border-radius: 50px;
     width: 50px;

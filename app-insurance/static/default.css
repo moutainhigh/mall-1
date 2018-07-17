@@ -98,7 +98,7 @@ button a {
 .i-footer {
   position: fixed;
   bottom: 0;
-  height: 68px;
+  height: 72px;
   width: 100%;
   text-align: center;
   background-color: #ffffff;
@@ -299,4 +299,12 @@ p {
   margin-right: -10px !important;
   height: 10px !important;
   width: 10px!important;
+}
+
+.dp-header .dp-item.dp-right {
+  color: #f5ca1d !important;
+}
+
+.vux-popup-header-right {
+  color: #f5ca1d !important;
 }
