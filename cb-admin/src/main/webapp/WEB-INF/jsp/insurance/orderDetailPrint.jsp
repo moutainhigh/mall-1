@@ -254,7 +254,7 @@
                             <div class="al-font" style="margin-left: 350px;position: absolute;margin-top: 10px;">
                                 ${map.insuranceOrder.insuranceOrderInsured.insuredHeight}
                             </div>
-                            <div class="al-font" style="margin-left: 474px;position: absolute;margin-top: 10px;">
+                            <div class="al-font" style="margin-left: 465px;position: absolute;margin-top: 10px;">
                                 ${map.insuranceOrder.insuranceOrderInsured.insuredBodyWeight}
                             </div>
 
@@ -359,7 +359,7 @@
                             </div>
                             <div class="al-font div-row-3" style="position: absolute;margin-left: 10px;">
                                 <div style="margin-left: 60px;position: absolute;margin-top: 15px;">
-                                    <div id="insuredCareer"></div>
+                                    <div id="insuredCareer" style="width: 200px;"></div>
                                 </div>
 
                             </div>
@@ -663,8 +663,8 @@
 
                             </div>
                             <div class="al-font div-row-3">
-                                <div style="margin-left: 110px;">
-                                    <div id="policyholderCareer"></div>
+                                <div style="margin-left: 70px;">
+                                    <div id="policyholderCareer" style="width: 200px;"></div>
                                 </div>
 
                             </div>
