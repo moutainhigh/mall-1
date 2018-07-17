@@ -1,20 +1,17 @@
-package com.yunxin.cb.rest.carmall;
+package com.yunxin.cb.rest.mall;
 
 
 import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.vo.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
-@Api(description = "汽车商城商品接口")
+@Api(description = "商城商品接口")
 @RestController
-@RequestMapping(value = "/mall/car")
+@RequestMapping(value = "/mall/commodity")
 @SessionAttributes("customerId")
-public class CarCommodityResource extends BaseResource {
+public class CommodityResource extends BaseResource {
 
 
     @ApiOperation(value = "通过商品ID查询商品详情")
