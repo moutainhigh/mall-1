@@ -25,7 +25,7 @@
 
         function checkTime()
         {
-           if($('#createTime').val()>$('#createTimes').val()&&''!=$('#createTimes').val()){
+           if($('#createTime').val()>$('#createTimes').val()&&''!=$('#createTimes').val().){
                alert("开始时间不能大于结束时间")
                $('#createTimes').val('')
            }
@@ -127,7 +127,7 @@
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" onchange="checkTime()" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                                <input name="createTime"  onchange="checkTime()" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
                             </div>
 
                             <div class="toolbar-field">
