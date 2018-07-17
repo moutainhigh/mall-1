@@ -22,4 +22,32 @@ public class CommodityResource extends BaseResource {
     public ResponseResult getCommodity(@PathVariable(value = "commodityId") int commodityId){
        return new ResponseResult(new Commodity());
     }
+
+    @ApiOperation(value = "获取用户收藏夹")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "客户ID", required = true, paramType = "path", dataType = "int")
+    })
+    @GetMapping(value = "getCustomerFavorite/{customerId}")
+    public ResponseResult delFavorite(@PathVariable(value = "customerId") int commodityId){
+        return new ResponseResult(new Commodity());
+    }
+
+    @ApiOperation(value = "商品添加收藏夹")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")
+    })
+    @GetMapping(value = "addFavorite/{commodityId}")
+    public ResponseResult addFavorite(@PathVariable(value = "commodityId") int commodityId){
+        return new ResponseResult(new Commodity());
+    }
+
+    @ApiOperation(value = "商品移出收藏夹")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")
+    })
+    @GetMapping(value = "delFavorite/{commodityId}")
+    public ResponseResult delFavorite(@PathVariable(value = "commodityId") int commodityId){
+        return new ResponseResult(new Commodity());
+    }
+
 }

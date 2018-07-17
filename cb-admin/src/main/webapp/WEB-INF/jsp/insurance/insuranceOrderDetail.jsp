@@ -166,7 +166,7 @@
                                 <label><span class="asterisk"></span> 出生日期：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                <fmt:formatDate value="${insuranceOrder.insuranceOrderPolicyholder.policyholderBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
+                                <fmt:formatDate value="${insuranceOrder.insuranceOrderInsured.policyholderBirthday}" pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
 
                             </div>
                             <div class="col-sm-2">
@@ -174,7 +174,7 @@
                             </div>
                             <div class="col-sm-2 col-label">
                                 <c:choose>
-                                    <c:when test="${insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='false'}">
+                                    <c:when test="${insuranceOrder.insuranceOrderInsured.policyholderGender=='false'}">
                                         女
                                     </c:when>
                                     <c:otherwise>男</c:otherwise>
