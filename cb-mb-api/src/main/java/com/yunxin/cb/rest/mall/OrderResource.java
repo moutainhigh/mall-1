@@ -24,7 +24,7 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "查询用户订单列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderStatus", value = "订单状态", required = true, paramType = "get", dataType = "int")
+            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "get", dataType = "int")
     })
     @GetMapping(value = "listOrder")
     public ResponseResult listOrder(@RequestParam(value = "orderStatus") int orderStatus, @ModelAttribute("customerId") int customerId){
