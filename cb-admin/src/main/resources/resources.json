@@ -181,7 +181,7 @@
     ]
   },
   {
-    "name": "保单管理", "code": "15", "type": "MENU", "cssClass": "fa fa-phone", "value": "concent", "childrenCssClass": "children",
+    "name": "保单管理", "code": "15", "type": "MENU", "cssClass": "fa fa-phone", "value": "insurance", "childrenCssClass": "children",
     "children": [
       {
         "name": "保单列表", "code": "151", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/insurances.do"
@@ -190,9 +190,8 @@
         "name": "保险合同编号", "code": "152", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceordercode/insuranceordercodes.do"
       },
       {
-        "name": "事项组管理", "code": "153", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceInformedMatterGroup/insuranceInformedMatterGroups.do"
-      },
-      {
+        "name": "事项组管理", "code": "153", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceInformedGroup/insuranceInformedGroups.do"
+      },{
         "name": "事项管理", "code": "154", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceInformedMatter/insuranceInformedMatters.do"
       },
       {
@@ -201,7 +200,7 @@
     ]
   },
   {
-    "name": "反馈信息", "code": "16", "type": "MENU", "cssClass": "fa fa-phone", "value": "concent", "childrenCssClass": "children",
+    "name": "反馈信息", "code": "16", "type": "MENU", "cssClass": "fa fa-phone", "value": "feedback", "childrenCssClass": "children",
     "children": [
       {
         "name": "用户反馈管理", "code": "161", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../feedback/feedbacks.do"

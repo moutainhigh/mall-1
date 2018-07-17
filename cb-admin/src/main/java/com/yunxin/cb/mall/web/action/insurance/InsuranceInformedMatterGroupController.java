@@ -19,7 +19,7 @@ import java.util.Date;
  * @author likang
  */
 @Controller
-@RequestMapping(value = "/insuranceInformedMatterGroup")
+@RequestMapping(value = "/insuranceInformedGroup")
 @SessionAttributes({SecurityConstants.LOGIN_SESSION})
 public class InsuranceInformedMatterGroupController {
 
@@ -27,9 +27,9 @@ public class InsuranceInformedMatterGroupController {
     private IInsuranceInformedMatterGroupService insuranceInformedMatterGroupService;
 
 
-    @RequestMapping(value = "insuranceInformedMatterGroups")
+    @RequestMapping(value = "insuranceInformedGroups")
     public String insuranceordercodes(ModelMap modelMap) {
-        return "imattergroup/listgroup";
+        return "insuranceinformedgroup/insuranceInformedGroups";
     }
 
     /**
@@ -51,7 +51,7 @@ public class InsuranceInformedMatterGroupController {
     @RequestMapping(value = "toAddGroup",method = RequestMethod.GET)
     public String toAddGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup, ModelMap modelMap){
         modelMap.addAttribute("insuranceInformedMatterGroup",insuranceInformedMatterGroup);
-        return "imattergroup/addgroup";
+        return "insuranceinformedgroup/addinsuranceInformedGroup";
     }
 
     /**
@@ -64,7 +64,7 @@ public class InsuranceInformedMatterGroupController {
     public String toEditGroup(@RequestParam("groupId") int groupId, ModelMap modelMap){
         InsuranceInformedMatterGroup insuranceInformedMatterGroup=insuranceInformedMatterGroupService.getInsuranceInformedMatterGroup(groupId);
         modelMap.addAttribute("insuranceInformedMatterGroup",insuranceInformedMatterGroup);
-        return "imattergroup/editgroup";
+        return "insuranceinformedgroup/editinsuranceInformedGroup";
     }
 
     /**

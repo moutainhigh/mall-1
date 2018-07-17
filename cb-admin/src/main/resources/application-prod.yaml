@@ -16,6 +16,14 @@ spring:
       properties:
           hibernate.format_sql: true
           hibernate.search.default.indexBase: /opt/www/cb/admin/index
+  resources:
+      #资源缓存时间，单位秒
+      cache-period: 604800
+      chain:
+          #开启gzip压缩
+          gzipped: true
+          #启用缓存
+          cache: true
 #7牛云存储
 qiniu:
   accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
