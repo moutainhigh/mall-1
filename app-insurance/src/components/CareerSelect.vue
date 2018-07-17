@@ -7,7 +7,7 @@
       <div class="cancel" @click="cancel">取消</div>
     </div>
     <div class="search-list">
-      <div class="search-item" v-if="defaultCareer.key.length != 0" @click="changeCareer(career)">
+      <div class="search-item" v-if="defaultCareer.key.length != 0">
         <div>{{defaultCareer.value}}</div>
         <img src="../assets/img/selected.png" class="select">
       </div>

@@ -25,7 +25,7 @@
           </circle>
         </g>
       </svg>
-      <div class="i-list" style="margin-top: 10px" v-for="order in orders" @click="detail(order.orderId)">
+      <div class="i-list" style="margin-top: 10px" v-for="order in orders" @click="detail(order.orderCode)">
         <div class="list-title">
           <div style="margin-left: 16px">保单号：{{order.orderCode}}</div>
           <div style="float: right;margin-right: 16px;color: #c01212;" v-text="orderState(order.orderState)"></div>
@@ -144,8 +144,14 @@
             return "已退保";
         }
       },
-      detail(orderId) {
-        window.location.href = "http://mall.999shuijingqiu.com//admin/insurance/prints.do?orderId=" + orderId;
+      detail(orderCode) {
+        // window.location.href = "http://mall.999shuijingqiu.com//admin/insurance/prints.do?orderId=" + orderId;
+        this.$router.push({
+          path:'/order-detail',
+          query:{
+            orderCode:orderCode
+          }
+        })
       }
     },
     created() {

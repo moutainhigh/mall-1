@@ -9,7 +9,7 @@ import UploadData from '../components/UploadData'
 import InfoMatters from '../components/InfoMatters'
 import Payment from '../components/Payment'
 import Policy from '../components/Policy'
-import myOrders from '../components/myOrders'
+import MyOrders from '../components/MyOrders'
 import Insured from '../components/Insured'
 import DifferentPlaces from '../components/DifferentPlaces'
 import CareerSelect from '../components/CareerSelect'
@@ -17,6 +17,7 @@ import InsurancePolicy from '../components/InsurancePolicy'
 import InsureNote from '../components/InsureNote'
 import LifeLongClause from '../components/LifeLongClause'
 import Clause from '../components/Clause'
+import OrderDetail from '../components/OrderDetail'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -66,7 +67,7 @@ export default new Router({
       meta: {
         title: '我的保单'
       },
-      component: myOrders
+      component: MyOrders
     }, {
       path: '/insured',
       name: 'insured',
@@ -98,6 +99,13 @@ export default new Router({
         title: '选择职业'
       },
       component: CareerSelect
+    }, {
+      path: '/order-detail',
+      name: 'order-detail',
+      meta: {
+        title: '保单详情'
+      },
+      component: OrderDetail
     },{ /* Not Found 路由，必须是最后一个路由 */
       path: '*',
       // component: NotFound,

@@ -248,20 +248,20 @@
         storage.save("order", order);
       },
       next() {
-        if (this.imgUrls.image1 === '') {
+        if (!this.imgUrls.image1) {
           this.showPositionValue = true;
           this.toastText = "请上传银行卡正面图片";
-          return false;
+          return ;
         }
-        if (this.imgUrls.image1 === '') {
+        if (!this.imgUrls.image2) {
           this.showPositionValue = true;
           this.toastText = "请上传身份证正面图片";
-          return false;
+          return ;
         }
-        if (this.imgUrls.image1 === '') {
+        if (!this.imgUrls.image3) {
           this.showPositionValue = true;
           this.toastText = "请上传身份证背面图片";
-          return false;
+          return ;
         }
         this.$router.push("payment");
       },
