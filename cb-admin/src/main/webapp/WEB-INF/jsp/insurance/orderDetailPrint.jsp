@@ -20,7 +20,6 @@
     <link rel="stylesheet" type="text/css" href="../css/insurance.css">
 
     <title></title>
-
     <script type="text/javascript">
         var insuredProvince = $.citySelector.getProvince('${map.insuranceOrder.insuranceOrderInsured.insuredProvince}');
         insuredProvince = insuredProvince.replace("省", "").replace("市", "");
@@ -37,6 +36,7 @@
         var insuredCareer = $.profession.getProfession('${map.insuranceOrder.insuranceOrderInsured.insuredCareer}');
         var policyholderCareer = $.profession.getProfession('${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}');
         //  $(document).ready(function () {
+
         $(function () {
 
             $("#insuredProvince").html(insuredProvince);
@@ -58,6 +58,7 @@
             $("#policyholderCareer").html(policyholderCareer);
 
         });
+
 
         function jqPrints() {
             // $(".hidden-prints").css("display", "none");
