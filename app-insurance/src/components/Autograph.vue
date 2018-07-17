@@ -116,7 +116,6 @@
         });
         await lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
-          console.log(rst.base64);
           uploadImage(rst.base64).then(function (result) {
             vm.imgUrl = result.data;
             let holder = storage.fetch("holder");

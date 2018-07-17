@@ -9,7 +9,7 @@ import UploadData from '../components/UploadData'
 import InfoMatters from '../components/InfoMatters'
 import Payment from '../components/Payment'
 import Policy from '../components/Policy'
-import myOrders from '../components/myOrders'
+import MyOrders from '../components/MyOrders'
 import Insured from '../components/Insured'
 import DifferentPlaces from '../components/DifferentPlaces'
 import CareerSelect from '../components/CareerSelect'
@@ -17,6 +17,7 @@ import InsurancePolicy from '../components/InsurancePolicy'
 import InsureNote from '../components/InsureNote'
 import LifeLongClause from '../components/LifeLongClause'
 import Clause from '../components/Clause'
+import OrderDetail from '../components/OrderDetail'
 import Vuex from 'vuex'
 
 Vue.use(Router)
@@ -27,70 +28,115 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: Index
+      component: Index,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/pro-detail',
       name: 'pro-detail',
-      component: ProDetail
+      component: ProDetail,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/holder-basic',
       name: 'holder-basic',
-      component: HolderBasic
+      component: HolderBasic,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/holder-detail',
       name: 'holder-detail',
-      component: HolderDetail
+      component: HolderDetail,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/autograph',
       name: 'autograph',
-      component: Autograph
+      component: Autograph,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/upload-data',
       name: 'upload-data',
-      component: UploadData
+      component: UploadData,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/infoMatters',
       name: 'info-matters',
-      component: InfoMatters
+      component: InfoMatters,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/payment',
       name: 'payment',
-      component: Payment
+      component: Payment,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/policy',
       name: 'policy',
-      component: Policy
+      component: Policy,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/my-orders',
       name: 'my-orders',
       meta: {
         title: '我的保单'
       },
-      component: myOrders
+      component: MyOrders
     }, {
       path: '/insured',
       name: 'insured',
-      component: Insured
+      component: Insured,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/differentPlaces',
       name: 'differentPlaces',
-      component: DifferentPlaces
+      component: DifferentPlaces,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/insurancePolicy',
       name: 'insurancePolicy',
-      component: InsurancePolicy
+      component: InsurancePolicy,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/lifeLongClause',
       name: 'lifeLongClause',
-      component: LifeLongClause
+      component: LifeLongClause,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/clause',
       name: 'clause',
-      component: Clause
+      component: Clause,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/insureNote',
       name: 'insureNote',
-      component: InsureNote
+      component: InsureNote,
+      meta: {
+        title: '保险'
+      },
     }, {
       path: '/careerSelect',
       name: 'careerSelect',
@@ -98,6 +144,13 @@ export default new Router({
         title: '选择职业'
       },
       component: CareerSelect
+    }, {
+      path: '/order-detail',
+      name: 'order-detail',
+      meta: {
+        title: '保单详情'
+      },
+      component: OrderDetail
     },{ /* Not Found 路由，必须是最后一个路由 */
       path: '*',
       // component: NotFound,

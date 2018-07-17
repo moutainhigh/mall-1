@@ -35,3 +35,7 @@ export const uploadImage = function (base64) {
 export const getOrders = function (query) {
   return fetch('/insurance/order/getOrders', query, 'POST','fetch');
 };
+
+export const getOrderDetail = function (orderCode) {
+  return fetch('/insurance/order/getOrder/'+orderCode ,{}, 'POST','fetch');
+}

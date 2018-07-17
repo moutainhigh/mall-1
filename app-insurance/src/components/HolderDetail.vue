@@ -968,7 +968,7 @@
       let order = storage.fetch("order");
       let beneficiary1 = storage.fetch("beneficiary1");
       let beneficiary2 = storage.fetch("beneficiary2");
-      if (beneficiary1) {
+      if (!beneficiary1) {
         this.beneficiary1 = {
           beneficiaryName: '',
           beneficiaryGender: true,
@@ -983,7 +983,7 @@
         };
         storage.save('beneficiary1', this.beneficiary1);
       }
-      if (beneficiary2) {
+      if (!beneficiary2) {
         this.beneficiary2 = {
           beneficiaryName: '',
           beneficiaryGender: true,
