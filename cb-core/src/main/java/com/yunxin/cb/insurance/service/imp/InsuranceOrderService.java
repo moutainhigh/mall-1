@@ -8,6 +8,7 @@ import com.yunxin.cb.util.CodeGenerator;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CalendarUtils;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -262,19 +263,32 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                         String insuredBirthday= simpleDateFormats.format(birthday);
                         String insuredCardPeriod= simpleDateFormats.format(insuranceOrderInsured.getInsuredCardPeriod());
 
-                        put("insurance_b_year",insuredBirthday.substring(0,4));
-                        put("insurance_b_month",insuredBirthday.substring(5,7));
-                        put("insurance_b_day",insuredBirthday.substring(8,insuredBirthday.length()-1));
+                        if( StringUtils.isNotBlank(insuredBirthday)){
+                            put("insurance_b_year",insuredBirthday.substring(0,4));
+                            put("insurance_b_month",insuredBirthday.substring(5,7));
+                            put("insurance_b_day",insuredBirthday.substring(8,insuredBirthday.length()-1));
+                        }
 
-                        if(null!=insuranceOrderInsured.getInsuredTel()&&!"".equals(insuranceOrderInsured.getInsuredTel())){
-                            put("insurance_q_tel",insuranceOrderInsured.getInsuredTel().substring(0,4));
-                            put("insurance_h_tel",insuranceOrderInsured.getInsuredTel().substring(4,insuranceOrderInsured.getInsuredTel().length()-1));
+                        String insuredTel=insuranceOrderInsured.getInsuredTel();
+                        if(StringUtils.isNotBlank(insuredTel)){
+                            String insured=insuredTel.substring(1,2);
+                            String insuranceqtel="";
+                            String insurancehtel="";
+                            if(insured.equals("1")||insured.equals("2")){
+                                insuranceqtel=insuredTel.substring(0,3);
+                                insurancehtel=insuredTel.substring(3,insuredTel.length()-1);
+                            }else{
+                                insuranceqtel=insuredTel.substring(0,4);
+                                insurancehtel=insuredTel.substring(4,insuredTel.length()-1);
+                            }
+                            put("insurance_q_tel",insuranceqtel);
+                            put("insurance_h_tel",insurancehtel);
                         }
 
                         try {
                             int age= CalendarUtils.getAge(birthday);
                             put("age",age);
-                            if(null!=insuredCardPeriod){
+                            if(StringUtils.isNotBlank(insuredCardPeriod)){
                                 put("insurance_p_year",insuredCardPeriod.substring(0,4));
                                 put("insurance_p_month",insuredCardPeriod.substring(5,7));
                                 put("insurance_p_day",insuredCardPeriod.substring(8,insuredCardPeriod.length()-1));
@@ -294,15 +308,31 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                         Date birthday=insuranceOrderPolicyholder.getPolicyholderBirthday();
                         String policyholderBirthday= simpleDateFormats.format(birthday);
                         String policyholderCardPeriod= simpleDateFormats.format(insuranceOrderPolicyholder.getPolicyholderCardPeroid());
-                        put("policy_b_year",policyholderBirthday.substring(0,4));
-                        put("policy_b_month",policyholderBirthday.substring(5,7));
-                        put("policy_b_day",policyholderBirthday.substring(8,policyholderBirthday.length()-1));
 
-                        if(null!=insuranceOrderPolicyholder.getPolicyholderTel()&&!"".equals(insuranceOrderPolicyholder.getPolicyholderTel())){
-                            put("policy_q_tel",insuranceOrderInsured.getInsuredTel().substring(0,4));
-                            put("policy_h_tel",insuranceOrderInsured.getInsuredTel().substring(4,insuranceOrderInsured.getInsuredTel().length()-1));
+                        if(StringUtils.isNotBlank(policyholderBirthday)) {
+                            put("policy_b_year", policyholderBirthday.substring(0, 4));
+                            put("policy_b_month", policyholderBirthday.substring(5, 7));
+                            put("policy_b_day", policyholderBirthday.substring(8, policyholderBirthday.length() - 1));
                         }
-                        if(null!=policyholderCardPeriod){
+                        String policyholderTel=insuranceOrderPolicyholder.getPolicyholderTel();
+
+                        if(StringUtils.isNotBlank(policyholderTel)){
+
+                            String policyholderT=policyholderTel.substring(1,2);
+                            String policyqtel="";
+                            String policyhtel="";
+                            if(policyholderT.equals("1")||policyholderT.equals("2")){
+                                policyqtel=policyholderTel.substring(0,3);
+                                policyhtel=policyholderTel.substring(3,policyholderTel.length()-1);
+                            }else{
+                                policyqtel=policyholderTel.substring(0,4);
+                                policyhtel=policyholderTel.substring(4,policyholderTel.length()-1);
+                            }
+                            put("policy_q_tel",policyqtel);
+                            put("policy_h_tel",policyhtel);
+                        }
+
+                        if(StringUtils.isNotBlank(policyholderCardPeriod)){
                             put("policy_p_year",policyholderCardPeriod.substring(0,4));
                             put("policy_p_month",policyholderCardPeriod.substring(5,7));
                             put("policy_p_day",policyholderCardPeriod.substring(8,policyholderCardPeriod.length()-1));
@@ -322,7 +352,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                     put("beneficiaryList",beneficiaryList);
 
                 }
-               // List<List<String>>
                     /**
                      * 告知事项填空
                      */
