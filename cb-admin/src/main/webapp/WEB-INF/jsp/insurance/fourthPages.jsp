@@ -402,7 +402,7 @@
 
                     <div class="div-line" style="border-bottom: solid 0px;">
                         <div class="div-line-con-four">
-                            <div class="title"><span class="body-font"> &nbsp;3.&nbsp;&nbsp;&nbsp;据本人了解，被保险人目前是否呈病态，有生理缺陷或因疾病，外伤而治疗中：</span>
+                            <div class="title"><span class="body-font"> &nbsp;3.&nbsp;&nbsp;&nbsp;据本人观察，被保险人目前是否呈病态、有生理缺陷或因疾病、外伤而治疗中：</span>
                             </div>
                             <div>
                                 <input class="i-cb" type="checkbox"/><span class="body-font"> 是</span>
