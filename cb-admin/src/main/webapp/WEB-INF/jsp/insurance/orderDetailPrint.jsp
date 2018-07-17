@@ -34,7 +34,7 @@
         policyholderCity = policyholderCity.replace("市", "");
         var policyholderDistrict = $.citySelector.getDistrict(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
         policyholderDistrict = policyholderDistrict.replace("区", "").replace("县", "");
-        var insuredCareer = $.profession.getProfession('${map.insinsuredProvinceuranceOrder.insuranceOrderInsured.insuredCareer}');
+        var insuredCareer = $.profession.getProfession('${map.insuranceOrder.insuranceOrderInsured.insuredCareer}');
         var policyholderCareer = $.profession.getProfession('${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}');
         //  $(document).ready(function () {
         $(function () {
@@ -127,7 +127,7 @@
                                             √
                                         </c:when>
                                         <c:otherwise>
-                                            &nbsp;
+                                            &nbsp;&nbsp;
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
@@ -139,7 +139,7 @@
                                             √
                                         </c:when>
                                         <c:otherwise>
-                                            &nbsp;
+                                            &nbsp;&nbsp;
                                         </c:otherwise>
                                     </c:choose>
 
@@ -161,7 +161,7 @@
                                 <div class="al-row-cardType" style="margin-top: 0px;">
                                     <div style="margin-left: -20px;">
                                         <c:choose>
-                                            <c:when test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='身份证'}">
+                                            <c:when test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='居民身份证'}">
                                                 √
                                             </c:when>
                                             <c:otherwise>
@@ -194,7 +194,7 @@
                                     </div>
                                     <div style="margin-left: 65px">
                                         <c:choose>
-                                            <c:when test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='军官证'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='护照'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='身份证'}">
+                                            <c:when test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='军官证'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='护照'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='居民身份证'}">
                                                 √
                                             </c:when>
                                             <c:otherwise>
@@ -461,7 +461,7 @@
                                 <div class="al-row-cardType" style="margin-top: 0px;position: absolute">
                                     <div style="margin-left: -10px;position: absolute">
                                         <c:choose>
-                                            <c:when test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='身份证'}">
+                                            <c:when test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='居民身份证'}">
                                                 √
                                             </c:when>
                                             <c:otherwise>
@@ -493,7 +493,7 @@
                                     </div>
                                     <div style="margin-left: 200px;position: absolute">
                                         <c:choose>
-                                            <c:when test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='军官证'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='护照'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='身份证'}">
+                                            <c:when test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='军官证'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='护照'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='居民身份证'}">
                                                 √
                                             </c:when>
                                             <c:otherwise>
@@ -798,13 +798,13 @@
                                     </div>
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 510px;margin-top: -6px;">
-                                        <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='身份证'}">
+                                        <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='居民身份证'}">
                                             √</c:if>√
                                     </div>
 
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 590px;margin-top: -6px;">
-                                        <c:if test="${map.beneficiaryList[0].beneficiaryCardType!='身份证'}">
+                                        <c:if test="${map.beneficiaryList[0].beneficiaryCardType!='居民身份证'}">
                                             √</c:if></div>
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 945px;margin-top: -6px;font-size: 10px;">
@@ -856,12 +856,12 @@
                                     </div>
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 510px;margin-top: -3px;">
-                                        <c:if test="${map.beneficiaryList[1].beneficiaryCardType=='身份证'}">
+                                        <c:if test="${map.beneficiaryList[1].beneficiaryCardType=='居民身份证'}">
                                             √</c:if></div>
 
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 590px;margin-top: -3px;">
-                                        <c:if test="${map.beneficiaryList[1].beneficiaryCardType!='身份证'}">
+                                        <c:if test="${map.beneficiaryList[1].beneficiaryCardType!='居民身份证'}">
                                             √</c:if></div>
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 945px;margin-top: -1px;font-size: 10px;">
@@ -911,12 +911,12 @@
                                     </div>
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 510px;margin-top: -3px;">
-                                        <c:if test="${map.beneficiaryList[2].beneficiaryCardType=='身份证'}">
+                                        <c:if test="${map.beneficiaryList[2].beneficiaryCardType=='居民身份证'}">
                                             √</c:if></div>
 
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 590px;margin-top: -3px;">
-                                        <c:if test="${map.beneficiaryList[2].beneficiaryCardType!='身份证'}">
+                                        <c:if test="${map.beneficiaryList[2].beneficiaryCardType!='居民身份证'}">
                                             √</c:if></div>
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 945px;margin-top: -1px;font-size: 10px;">
@@ -2048,7 +2048,7 @@
                             </div>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 11.固定电话（<sub style="font-size: 1px">区号<input class="b-input"
+                            <div class="title">A 11.固定电话（<sub style="font-size: 1px">&nbsp;<input class="b-input"
                                                                                               type="text"/></sub>)-(<input
                                     class="mobile-input" type="text"/></span>)
                             </div>
@@ -2263,7 +2263,7 @@
                             </div>
                         </div>
                         <div class="div-line-con div-row-3">
-                            <div class="title">A 31.固定电话（<sub>区号<input class="b-input"
+                            <div class="title">A 31.固定电话（<sub>&nbsp;<input class="b-input"
                                                                        type="text"/></sub>)-(<input
                                     class="mobile-input" type="text"/></span>)
                             </div>
