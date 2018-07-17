@@ -18,8 +18,8 @@ public class CommodityResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")
     })
-    @GetMapping(value = "getCommdity/{commodityId}")
-    public ResponseResult getCommdity(@PathVariable(value = "commodityId") int commodityId){
+    @GetMapping(value = "getCommodity/{commodityId}")
+    public ResponseResult getCommodity(@PathVariable(value = "commodityId") int commodityId){
        return new ResponseResult(new Commodity());
     }
 }

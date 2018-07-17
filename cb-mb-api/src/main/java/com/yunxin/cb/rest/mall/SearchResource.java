@@ -1,7 +1,6 @@
 package com.yunxin.cb.rest.mall;
 
 
-import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.vo.ResponseResult;
@@ -33,8 +32,8 @@ public class SearchResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "keyword", value = "搜索关键字", required = true, paramType = "post", dataType = "String")
     })
-    @PostMapping(value = "categorySearch")
-    public ResponseResult categorySearch(@RequestParam(value = "keyword") String keyword){
+    @PostMapping(value = "keywordSearch")
+    public ResponseResult keywordSearch(@RequestParam(value = "keyword") String keyword){
         return new ResponseResult(Result.SUCCESS);
     }
 
