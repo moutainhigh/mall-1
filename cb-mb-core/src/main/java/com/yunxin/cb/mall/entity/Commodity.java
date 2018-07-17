@@ -3,11 +3,10 @@
  */
 package com.yunxin.cb.mall.entity;
 
-import com.sun.org.apache.xml.internal.resolver.Catalog;
 
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
+
 
 /**
  * @author z001075  商品
@@ -22,10 +21,7 @@ public class Commodity implements java.io.Serializable {
      * 商品ID
      */
     private int commodityId;
-    /**
-     * 商品分类
-     */
-    private Catalog catalog;
+
 
 
     /**
@@ -174,14 +170,6 @@ public class Commodity implements java.io.Serializable {
 
     public void setCommodityId(int commodityId) {
         this.commodityId = commodityId;
-    }
-
-    public Catalog getCatalog() {
-        return catalog;
-    }
-
-    public void setCatalog(Catalog catalog) {
-        this.catalog = catalog;
     }
 
     public String getCommodityCode() {
