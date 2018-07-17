@@ -15,7 +15,7 @@ public class PayResource extends BaseResource {
 
     @ApiOperation(value = "根据订单id选择支付方式")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "payVo", value = "支付Vo", required = true, paramType = "post", dataType = "Object"),
+            @ApiImplicitParam(name = "payVo", value = "支付Vo", required = true, paramType = "post", dataType = "Object")
     })
     @PostMapping(value = "payOrder")
     public ResponseResult payOrder(@RequestBody Object  payVo , @ModelAttribute("customerId") int customerId){
