@@ -305,3 +305,40 @@ export const dateFormat = function (date,fmt) { //author: meizz
   console.log(fmt);
   return fmt;
 };
+
+export const arrayContain = function (compareVal,array,key) {
+  let length = array.length;
+  while (length > 0) {
+    if (key){
+      if (array[length - 1][key] == compareVal) {
+        return array[length - 1];
+      }
+    }else {
+      if (array[length - 1] == compareVal) {
+        return array[length - 1];
+      }
+    }
+    length-- ;
+  }
+};
+
+export const ageYear = function (birthday) {
+  let birthDate = new Date(birthday);
+  let nowDate = new Date();
+  let yearBirth = birthDate.getFullYear();
+  let monthBirth = birthDate.getMonth();
+  let dayBirth = birthDate.getDay();
+
+  let age = nowDate.getFullYear() - yearBirth;
+
+  if (nowDate.getMonth() <= monthBirth) {
+    if (nowDate.getMonth() == monthBirth) {
+      if (nowDate.getDate() < dayBirth) {
+        age--;
+      }
+    }else {
+      age--;
+    }
+  }
+  return age;
+}

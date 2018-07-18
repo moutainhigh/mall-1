@@ -58,7 +58,7 @@
         }else {
           let dbCareers = [];
           careerCode.forEach(career=>{
-            if (career.value.indexOf(value) > 0) {
+            if (career.value.indexOf(value) >= 0) {
               dbCareers.push(career);
             }
           });
