@@ -3,10 +3,7 @@ package com.yunxin.cb.insurance.dao;
 
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 
 /**
  * Created by wangteng
