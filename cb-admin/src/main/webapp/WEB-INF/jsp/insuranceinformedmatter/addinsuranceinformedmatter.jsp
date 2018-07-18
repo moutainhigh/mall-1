@@ -30,7 +30,7 @@
                 }
             });
         });
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
@@ -60,234 +60,6 @@
      * much more.                               *
      ******************************************** -->
 
-<div id="sidebar-sec" class="sidebar">
-
-    <div class="sidebar-sec-top"></div>
-
-    <!-- ********** -->
-    <!-- NEW MODULE -->
-    <!-- ********** -->
-
-    <div class="sidebar-module">
-        <form class="input-group">
-            <input type="text" name="" class="form-control" placeholder="Type A head..." id="typeahead-sidebar-search"/>
-
-            <div class="input-group-btn">
-                <!-- can NOT be used with typeahead
-                <a href="#" class="clear-input"><i class="fa fa-times-circle"></i></a>
-                -->
-                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-            </div>
-        </form>
-    </div>
-    <!-- End .sidebar-module -->
-
-    <div class="sidebar-line"><!-- A seperator line --></div>
-
-    <!-- * Tabs can be removed, if so dont forget * -->
-    <!-- * to remove the .tab-pane divs(wrapper). * -->
-
-    <ul class="ext-tabs-sidebar">
-        <li class="active">
-            <a href="#sidebar-tab-3"><i class="fa fa-group"></i> Users</a>
-        </li>
-        <li>
-            <a href="#sidebar-tab-4"><i class="fa fa-check"></i> ToDo</a>
-        </li>
-    </ul>
-    <!-- End .ext-tabs-sidebar -->
-    <div class="tab-content">
-        <div id="sidebar-tab-3" class="tab-pane active">
-
-            <!-- ********** -->
-            <!-- NEW MODULE -->
-            <!-- ********** -->
-
-            <div class="sidebar-module">
-                <ul class="mini-list">
-                    <li>
-                        <img src="../images/users/user-1.jpg" id="" alt="" class="avatar"/>
-                        <ul>
-                            <li><a href="#" class="bold">Steven Watson</a></li>
-                            <li><a href="#">dummyemail@mail.com</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <img src="../images/users/user-2.jpg" alt="" class="avatar"/>
-                        <ul>
-                            <li><a href="#" class="bold">Maris Bradley</a></li>
-                            <li><a href="#">dummyemail@mail.com</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <img src="../images/users/user-3.jpg" alt="" class="avatar"/>
-                        <ul>
-                            <li><a href="#" class="bold">Wyatt Brooke</a></li>
-                            <li><a href="#">dummyemail@mail.com</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <img src="../images/users/user-4.jpg" alt="" class="avatar"/>
-                        <ul>
-                            <li><a href="#" class="bold">Elly Martel</a></li>
-                            <li><a href="#">dummyemail@mail.com</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <img src="../images/users/user-5.jpg" alt="" class="avatar"/>
-                        <ul>
-                            <li><a href="#" class="bold">Martin Gardenar</a></li>
-                            <li><a href="#">dummyemail@mail.com</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <img src="../images/users/user-6.jpg" alt="" class="avatar"/>
-                        <ul>
-                            <li><a href="#" class="bold">Debra Hopper</a></li>
-                            <li><a href="#">dummyemail@mail.com</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <img src="../images/users/user-7.jpg" alt="" class="avatar"/>
-                        <ul>
-                            <li><a href="#" class="bold">Nathan Rupertson</a></li>
-                            <li><a href="#">dummyemail@mail.com</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- End .mini-list -->
-            </div>
-            <!-- End .sidebar-module -->
-        </div>
-        <div id="sidebar-tab-4" class="tab-pane">
-
-            <!-- ********** -->
-            <!-- NEW MODULE -->
-            <!-- ********** -->
-
-            <div class="sidebar-module">
-                <div class="sidebar-todo">
-                    <div class="sidebar-todo-day">
-                        <h5>Due Today</h5>
-                        <ul>
-                            <li>
-                                <label class="line-through">Start project X <input type="checkbox" name=""
-                                                                                   checked/><span></span></label>
-                            </li>
-                            <li>
-                                <label>Email the invoice<input type="checkbox" name=""/><span></span></label>
-                            </li>
-                            <li>
-                                <label>Call client T<input type="checkbox" name=""/><span></span></label>
-                            </li>
-                            <li>
-                                <label>Take a coffe break<input type="checkbox" name=""/><span></span></label>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- End .sidebar-todo-day -->
-                    <div class="sidebar-todo-day">
-                        <h5>Due Tomorrow <span class="indicator-pill">32</span></h5>
-                        <ul>
-                            <li>
-                                <label>Meeting with client T<input type="checkbox" name=""/><span></span></label>
-                            </li>
-                            <li>
-                                <label>Meeting with client X<input type="checkbox" name=""/><span></span></label>
-                            </li>
-                            <li>
-                                <label class="line-through">Buy new apple<input type="checkbox" name=""
-                                                                                checked/><span></span></label>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- End .sidebar-todo-day -->
-                    <div class="sidebar-todo-day">
-                        <h5>Due Next Week</h5>
-                        <ul>
-                            <li>
-                                <label>Start project T<input type="checkbox" name=""/><span></span></label>
-                            </li>
-                            <li>
-                                <label>Buy new headphones<input type="checkbox" name=""/><span></span></label>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- End .sidebar-todo-day -->
-                </div>
-                <!-- End .sidebar-todo -->
-            </div>
-            <!-- End .sidebar-module -->
-        </div>
-    </div>
-    <!-- End .tab-content -->
-
-    <div class="sidebar-line"><!-- A seperator line --></div>
-
-    <!-- ********** -->
-    <!-- NEW MODULE -->
-    <!-- ********** -->
-
-    <div class="sidebar-module">
-        <div class="circular-stats">
-            <div class="circular-stats-inner">
-                <div class="circular-stats-data">
-                    <strong>2779</strong>
-                    <span>+ 31%</span>
-                </div>
-                <input class="knob" data-width="100" data-cursor="false" data-fgColor="#aaaaaa" data-bgColor="#cccccc"
-                       data-thickness=".20"
-                       value="31" data-readOnly="true" data-angleOffset="-0" data-displayInput="false">
-            </div>
-        </div>
-        <!-- End .circular-stats -->
-        <div class="circular-stats-infobox">
-            <strong>This day</strong>
-            <span>Lorem ipsum</span>
-            <a href="#" class="btn btn-default">View</a>
-        </div>
-        <!-- End .circular-stats-infobox -->
-        <div class="spacer-20"></div>
-        <div class="circular-stats">
-            <div class="circular-stats-inner">
-                <div class="circular-stats-data">
-                    <strong>12899</strong>
-                    <span>+ 77%</span>
-                </div>
-                <input class="knob" data-width="100" data-cursor="false" data-fgColor="#aaaaaa" data-bgColor="#cccccc"
-                       data-thickness=".20"
-                       value="77" data-readOnly="true" data-angleOffset="-0" data-displayInput="false">
-            </div>
-        </div>
-        <!-- End .circular-stats -->
-        <div class="circular-stats-infobox">
-            <strong>This month</strong>
-            <span>Lorem ipsum</span>
-            <a href="#" class="btn btn-default">View</a>
-        </div>
-        <!-- End .circular-stats-infobox -->
-        <div class="spacer-20"></div>
-        <div class="circular-stats">
-            <div class="circular-stats-inner">
-                <div class="circular-stats-data">
-                    <strong>82229</strong>
-                    <span>+ 89%</span>
-                </div>
-                <input class="knob" data-width="100" data-cursor="false" data-fgColor="#aaaaaa" data-bgColor="#cccccc"
-                       data-thickness=".20"
-                       value="89" data-readOnly="true" data-angleOffset="-0" data-displayInput="false">
-            </div>
-        </div>
-        <!-- End .circular-stats -->
-        <div class="circular-stats-infobox">
-            <strong>This year</strong>
-            <span>Lorem ipsum</span>
-            <a href="#" class="btn btn-default">View</a>
-        </div>
-        <!-- End .circular-stats-infobox -->
-    </div>
-    <!-- End .sidebar-module -->
-</div>
 <!-- End #sidebar-sec -->
 
 <div id="main" class="clearfix">
@@ -373,14 +145,16 @@
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
                     <legend>事项组</legend>
-                    <form:form id="validateSubmitForm" action="addInsuranceInformedMatter.do" cssClass="form-horizontal" method="post"
+                    <form:form id="validateSubmitForm" action="addinsuranceInformedMatter.do"
+                               cssClass="form-horizontal" method="post"
                                commandName="insuranceInformedMatter">
                         <div class="row">
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>序号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="serNo" value=""  cssClass="form-control validate[required,minSize[1]]" maxlength="32"/>
+                                <form:input path="serNo" value="" cssClass="form-control validate[required,minSize[1]]"
+                                            maxlength="32"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -389,7 +163,8 @@
                                 <label><span class="asterisk">*</span>事项描述：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea path="matterDescription" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:textarea path="matterDescription"
+                                               cssClass="form-control validate[required,minSize[1]]"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -398,9 +173,9 @@
                                 <label>类型：</label>
                             </div>
                             <div class="col-sm-3">
-                                <select name="matterType">
-                                    <option value="0">是否题</option>
-                                    <option value="1">填空题</option>
+                                <select class="form-control simpleselect grid-filter" name="matterType">
+                                    <option value="0" <c:if test="${0 eq metterType}">selected</c:if>>是否题</option>
+                                    <option value="1" <c:if test="${1 eq metterType}">selected</c:if>>填空题</option>
                                 </select>
                             </div>
                         </div>
@@ -410,12 +185,25 @@
                                 <label>事项组：</label>
                             </div>
                             <div class="col-sm-3">
-                                <select name="groupId">
+                                <select class="form-control simpleselect grid-filter" name="groupId">
                                     <option value="0">-不选-</option>
-                                    <c:forEach items="${groups}"  var="group">
-                                        <option value="${group.groupId}" >${group.description}</option>
+                                    <c:forEach items="${groups}" var="group">
+                                        <option value="0">-不选-</option>
+                                        <option value="${group.groupId}">${group.description}</option>
                                     </c:forEach>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>是否启用：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="inline-labels">
+                                    <form:radiobutton path="enabled" value="1"/>是
+                                    <form:radiobutton path="enabled" value="0"/>否
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -424,8 +212,10 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
-                                    <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;
+                                    </button>
+                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
+                                    </button>
                                 </div>
                             </div>
                         </div>

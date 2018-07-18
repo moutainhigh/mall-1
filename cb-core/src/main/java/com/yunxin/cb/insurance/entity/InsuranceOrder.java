@@ -52,6 +52,10 @@ public class InsuranceOrder implements Serializable {
     @Length(max = 32)
     private String orderCode;
     /**
+     * 条形码 base64
+     */
+    private String barCode;
+    /**
      * 合同编号
      */
     @Length(max = 32)
@@ -141,6 +145,16 @@ public class InsuranceOrder implements Serializable {
 
     public void setOrderCode(String orderCode) {
         this.orderCode = orderCode;
+    }
+
+    @Lob
+    @Column
+    public String getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
     }
 
     @Column(length = 32)

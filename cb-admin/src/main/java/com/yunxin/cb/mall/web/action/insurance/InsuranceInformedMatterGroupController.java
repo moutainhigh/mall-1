@@ -99,7 +99,7 @@ public class InsuranceInformedMatterGroupController {
         insuranceInformedMatterGroup.setEnabled(0);
         insuranceInformedMatterGroup.setCreateTime(new Date());
         insuranceInformedMatterGroupService.addInsuranceInformedMatterGroup(insuranceInformedMatterGroup);
-        return "redirect:../common/success.do?reurl=insuranceInformedMatterGroup/insuranceInformedMatterGroups.do";
+        return "redirect:../common/success.do?reurl=insuranceInformedGroup/insuranceInformedGroups.do";
     }
 
     /**
@@ -113,7 +113,7 @@ public class InsuranceInformedMatterGroupController {
     @RequestMapping(value = "updateinsuranceInformedMatterGroup",method = RequestMethod.POST)
     public String updateinsuranceInformedMatterGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup) {
         insuranceInformedMatterGroupService.update(insuranceInformedMatterGroup);
-        return "redirect:../common/success.do?reurl=insuranceInformedMatterGroup/insuranceInformedMatterGroups.do";
+        return "redirect:../common/success.do?reurl=insuranceInformedGroup/insuranceInformedGroups.do";
     }
 
     /**

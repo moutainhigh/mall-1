@@ -308,9 +308,9 @@
             <img v-if="matters[12].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[17].insuredResult" v-model="matters[17].insuredRemark"
+        <textarea class="content-text" v-if="matters[12].insuredResult" v-model="matters[12].insuredRemark"
                   placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[17].policyholderResult" v-model="matters[17].policyholderRemark"
+        <textarea class="content-text" v-if="matters[12].policyholderResult" v-model="matters[12].policyholderRemark"
                   placeholder="投保人"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -497,9 +497,9 @@
             <img v-if="matters[21].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[26].insuredResult" v-model="matters[26].insuredRemark"
+        <textarea class="content-text" v-if="matters[21].insuredResult" v-model="matters[21].insuredRemark"
                   placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[26].policyholderResult" v-model="matters[26].policyholderRemark"
+        <textarea class="content-text" v-if="matters[21].policyholderResult" v-model="matters[21].policyholderRemark"
                   placeholder="投保人"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">

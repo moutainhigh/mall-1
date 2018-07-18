@@ -34,8 +34,6 @@ public class InsuranceProductController {
 
     @Resource
     private IInsuranceProductService insuranceProductService;
-    @Resource
-    private IInsuranceInformedMatterService insuranceInformedMatterService;
 
     /**
      * @Description:    跳转到保险产品页面
@@ -61,39 +59,6 @@ public class InsuranceProductController {
         Page<InsuranceProduct> page = insuranceProductService.pageInsuranceProduct(query);
         return page;
     }
-
-    /**
-     * 加载事项列表
-     * @author      likang
-     * @param matterDescription
-    * @param prodId
-    * @param modelMap
-     * @return      java.util.List<com.yunxin.cb.insurance.entity.InsuranceInformedMatter>
-     * @exception
-     * @date        2018/7/17 21:03
-     */
-    @RequestMapping(value = "getmatterList")
-    @ResponseBody
-    public List<InsuranceInformedMatter> getmatterList(@RequestParam("matterDescription") String matterDescription,@RequestParam("prodId") int prodId, ModelMap modelMap) {
-        List<InsuranceInformedMatter> list = insuranceInformedMatterService.getListByName(matterDescription);
-        InsuranceProduct insuranceProduct = insuranceProductService.getInsuranceProductById(prodId);
-        Set<InsuranceInformedMatter> insuranceInformedMatters = insuranceProduct.getInsuranceInformedMatters();
-        Set<Integer> setId=new HashSet<Integer>();
-        /**
-         * 筛选出已经存在的事项，(后期再优化)
-         */
-        for (InsuranceInformedMatter matters:insuranceInformedMatters) {
-            setId.add(matters.getMatterId());
-        }
-        List<InsuranceInformedMatter> result=new ArrayList<InsuranceInformedMatter>();
-        for (InsuranceInformedMatter insuranceInformedMatter : list) {
-             if(!setId.contains(insuranceInformedMatter.getMatterId())){
-                 result.add(insuranceInformedMatter);
-             }
-        }
-        return result;
-    }
-
 
     /**
      * 跳转保险产品详情页面
@@ -177,43 +142,4 @@ public class InsuranceProductController {
 
     }
 
-    /**
-     * 在保险产品下删除事项
-     * @author      likang
-     * @param prodId
-    * @param matterId
-     * @return      boolean
-     * @exception
-     * @date        2018/7/17 21:07
-     */
-    @RequestMapping(value = "removeMetterById", method = RequestMethod.GET)
-    @ResponseBody
-    public boolean removeMetterById(@RequestParam("prodId") int prodId, @RequestParam("matterId") int matterId) {
-        try {
-            insuranceProductService.removeInsuranceProductMatter(prodId, matterId);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
-     * 在产品下添加事项
-     * @author      likang
-     * @param prodId
-    * @param matterId
-     * @return      boolean
-     * @exception
-     * @date        2018/7/17 21:07
-     */
-    @RequestMapping(value = "addMetterById", method = RequestMethod.GET)
-    @ResponseBody
-    public boolean addMetterById(@RequestParam("prodId") int prodId, @RequestParam("matterId") int matterId) {
-        try {
-            insuranceProductService.addInsuranceProductMatter(prodId, matterId);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 }
