@@ -14,6 +14,9 @@
       <div class="error" v-if="!$v.bank.bankName.minLength">账户姓名最少为 {{$v.bank.bankName.$params.minLength.min}}
         个字符
       </div>
+      <div class="error" v-if="!$v.bank.bankName.maxLength">账户姓名最多为 {{$v.bank.bankName.$params.maxLength.max}}
+        个字符
+      </div>
 
       <x-input class="price" title="交易金额(元)" :placeholder="price + '.00'" readonly></x-input>
       <x-input title="手机号码" placeholder="请输入手机号码" v-model="bank.bankMobile"
@@ -122,7 +125,7 @@
     },
     validations: {
       bank: {
-        bankName: {required, minLength: minLength(2)},
+        bankName: {required, minLength: minLength(2), maxLength: maxLength(30)},
         bankMobile: {required, mobile},
         accountBank: {required},
         accountType: {required},

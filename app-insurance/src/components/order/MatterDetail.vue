@@ -8,15 +8,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[0].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[0].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[0].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[0].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[0].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[0].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[0].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[0].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[0].insuredResult">
@@ -32,15 +32,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[1].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[1].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[1].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[1].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[1].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[1].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[1].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[1].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[1].insuredResult">
@@ -56,15 +56,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[2].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[2].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[2].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[2].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[2].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[2].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[2].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[2].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[2].insuredResult">
@@ -80,15 +80,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[3].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[3].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[3].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[3].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[3].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[3].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[3].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[3].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[3].insuredResult">
@@ -109,15 +109,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[4].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[4].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[4].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[4].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[4].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[4].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[4].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[4].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[4].insuredResult">
@@ -133,15 +133,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[5].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[5].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[5].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[5].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[5].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[5].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[5].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[5].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[5].insuredResult">
@@ -157,15 +157,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[6].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[6].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[6].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[6].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[6].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[6].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[6].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[6].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[6].insuredResult">
@@ -181,15 +181,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[7].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[7].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[7].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[7].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[7].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[7].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[7].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[7].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[7].insuredResult">
@@ -212,15 +212,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[8].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[8].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[8].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[8].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[8].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[8].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[8].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[8].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[8].insuredResult">
@@ -237,15 +237,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[9].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[9].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[9].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[9].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[9].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[9].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[9].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[9].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[9].insuredResult">
@@ -265,15 +265,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[10].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[10].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[10].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[10].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[10].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[10].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[10].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[10].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[10].insuredResult">
@@ -297,15 +297,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[11].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[11].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[11].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[11].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[11].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[11].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[11].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[11].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[11].insuredResult">
@@ -320,15 +320,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[12].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[12].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[12].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[12].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[12].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[12].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[12].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[12].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[12].insuredResult">
@@ -343,15 +343,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[13].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[13].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[13].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[13].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[13].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[13].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[13].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[13].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[13].insuredResult">
@@ -366,15 +366,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[14].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[14].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[14].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[14].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[14].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[14].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[14].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[14].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[14].insuredResult">
@@ -389,15 +389,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[15].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[15].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[15].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[15].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[15].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[15].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[15].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[15].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[15].insuredResult">
@@ -412,15 +412,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[16].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[16].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[16].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[16].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[16].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[16].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[16].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[16].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[16].insuredResult">
@@ -435,15 +435,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[17].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[17].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[17].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[17].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[17].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[17].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[17].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[17].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[17].insuredResult">
@@ -458,15 +458,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[18].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[18].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[18].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[18].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[18].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[18].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[18].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[18].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[18].insuredResult">
@@ -481,15 +481,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[19].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[19].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[19].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[19].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[19].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[19].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[19].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[19].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[19].insuredResult">
@@ -504,15 +504,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[20].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[20].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[20].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[20].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[20].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[20].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[20].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[20].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[20].insuredResult">
@@ -527,15 +527,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[21].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[21].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[21].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[21].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[21].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[21].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[21].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[21].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[21].insuredResult">
@@ -550,15 +550,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[22].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[22].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[22].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[22].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[22].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[22].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[22].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[22].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[22].insuredResult">
@@ -574,15 +574,15 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[23].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[23].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[23].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[23].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline">
-            <img v-if="!matters[23].policyholderResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[23].policyholderResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[23].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[23].policyholderResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[23].insuredResult">
@@ -599,15 +599,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[24].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[24].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[24].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[24].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[24].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[24].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[24].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[24].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[24].insuredResult">
@@ -635,8 +635,8 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline">
-            <img v-if="!matters[25].insuredResult" src="../../assets/img/switch-off.png">
-            <img v-if="matters[25].insuredResult" src="../../assets/img/switch-on.png">
+            <img v-if="!matters[25].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[25].insuredResult" src="../../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-val" v-if="matters[25].insuredResult">
@@ -650,8 +650,8 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[26].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[26].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[26].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[26].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[26].insuredResult">
@@ -664,15 +664,15 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline">
-          <img v-if="!matters[27].insuredResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[27].insuredResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[27].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[27].insuredResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline">
-          <img v-if="!matters[27].policyholderResult" src="../../assets/img/switch-off.png">
-          <img v-if="matters[27].policyholderResult" src="../../assets/img/switch-on.png">
+          <img v-if="!matters[27].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[27].policyholderResult" src="../../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-val" v-if="matters[27].insuredResult">

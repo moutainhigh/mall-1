@@ -657,6 +657,7 @@
 <script>
   import storage from "../store/storage";
   import {Toast} from 'vux'
+  import {emoji} from "../admin/validate";
 
   export default {
     components: {Toast},
@@ -688,6 +689,14 @@
         });
       },
       next() {
+        // let test = document.getElementsByTagName("textarea");
+        // for (let i = 0; i< test.length; i++ ) {
+        //   console.log(test[i].value);
+        //   if(emoji.test(test[i].value)){
+        //
+        //   }
+        // }
+        // return false;
         //吸烟校验
         if (this.matters[4].insuredResult || this.matters[4].policyholderResult) {
           if (this.values5[0] === '' || this.values5[1] === '' || this.values5[2] === '' || this.values5[3] === '' || this.values5[4] === '' || this.values5[5] === '') {
