@@ -78,7 +78,21 @@ public class InsuranceController {
     public boolean updInsuranceOrderState(@RequestParam("orderId") int orderId, @RequestParam("orderState") InsuranceOrderState orderState) {
         return iInsuranceOrderService.updInsuranceOrderState(orderId, orderState);
     }
-
+    /**
+     * 获取异地投保详情
+     *
+     * @param orderId
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "toEditInsuranceOrderOffsite", method = RequestMethod.GET)
+    public String toEditInsuranceOrderOffsite(@RequestParam("orderId") int orderId, ModelMap modelMap) throws Exception {
+        InsuranceOrder InsuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
+        modelMap.addAttribute("insuranceOrder", InsuranceOrder);
+        modelMap.addAttribute("matterList", iInsuranceOrderService.findMatter(orderId));
+        return "insurance/toEditInsuranceOrderOffsite";
+    }
     /**
      * 修改异地投保
      *

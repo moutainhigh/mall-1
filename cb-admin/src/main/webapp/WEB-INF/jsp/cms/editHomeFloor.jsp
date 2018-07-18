@@ -17,14 +17,14 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if(valid){
-                        if (null == $("#iconPath").val() || "" == $("#iconPath").val()) {
+                        /*if (null == $("#iconPath").val() || "" == $("#iconPath").val()) {
                             bootbox.alert("请选择图标!");
                             return false;
                         }
                         if (null == $("#imagePath").val() || "" == $("#imagePath").val()) {
                             bootbox.alert("请选择宣传图片!");
                             return false;
-                        }
+                        }*/
                         if ($('input[name="commodityId"]').length==0) {
                             bootbox.alert("请至少添加一个商品!");
                             return false;
@@ -236,6 +236,37 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
+                                <label>商品列表：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-8">
+                                <table id="brandTable" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">品牌名称</th>
+                                        <th scope="col" width="140">排序</th>
+                                        <th scope="col" width="80">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="fc" items="${homeFloor.floorBrands}">
+                                        <tr id='brand${homeFloor.floorId}${fc.brand.brandId}'>
+                                            <td><input type='hidden' name='brandId' class='form-control' value='${fc.brand.brandId}'/>${fc.brand.brandName}</td>
+                                            <td><input type='text' name='brandOrder' class='form-control' value='${fc.sortOrder}'/></td>
+                                            <td class='text-center'><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(${homeFloor.floorId}${fc.brand.brandId})'><i class='fa fa-minus-circle'></i></a></td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="button" onclick="showBrandDialog();" title="添加" class="btn btn-default">
+                                    <i class="fa fa-plus-circle"></i>添加品牌
+                                </button>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
                                 <label>备注：</label>
                             </div>
                             <div class="col-sm-8">
@@ -427,5 +458,59 @@
         }
     </script>
 </div>
+<div class="modal fade" id="brandDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择品牌</h4>
+            </div>
+            <div class="modal-body">
+                <jsp:include page="../commodity/chooseBrand.jsp"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary pull-right" onclick="chooseBrand();">确认</button>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript">
+        var idcIndex = 0;
+
+        function showBrandDialog() {
+            $('#brandDialog').modal();
+        }
+
+        function chooseBrand() {
+            debugger;
+            var selectedBrandIds=$("#brandGrid input[type='checkbox'][name='selectedBrandId']:checked");
+            if(selectedBrandIds!=null&&selectedBrandIds.length>0){
+                $.each(selectedBrandIds,function(n,selectedBox) {
+                    var gridData = $("#brandGrid").data("kendoGrid").dataSource;
+                    var selectedBrandId=$(selectedBox).attr('value');
+                    $.each(gridData.data(),function(i,dataItem){
+                        if(dataItem.brandId==selectedBrandId){
+                            var newRow = "<tr id='brand" + idcIndex + "'><td><input type='hidden' name='brandId' value='"+selectedBrandId+"'/>"+dataItem.brandName+"</td><td><input type='text' name='brandOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
+                            $("#brandTable tr:last").after(newRow);
+                            idcIndex++;
+                            return ;
+                        }
+                    });
+                });
+            }else{
+                alert("请选择品牌");
+                return ;
+            }
+            clearCheck();
+            $('#brandDialog').modal("hide");
+        }
+        function removeBrand(indx) {
+            $("#brand" + indx).remove();
+            idcIndex--;
+        }
+    </script>
+</div>
+
+
 </body>
 </html>

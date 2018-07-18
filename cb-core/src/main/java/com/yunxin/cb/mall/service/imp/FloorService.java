@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.service.imp;
 
+import com.yunxin.cb.mall.dao.FloorBrandDao;
 import com.yunxin.cb.mall.dao.FloorCategoryDao;
 import com.yunxin.cb.mall.dao.FloorCommodityDao;
 import com.yunxin.cb.mall.dao.HomeFloorDao;
@@ -34,6 +35,9 @@ public class FloorService implements IFloorService {
     @Resource
     private FloorCategoryDao floorCategoryDao;
 
+    @Resource
+    private FloorBrandDao floorBrandDao;
+
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -53,12 +57,14 @@ public class FloorService implements IFloorService {
         int[] categoryOrder = homeFloor.getCategoryOrder();
         int[] commodityId = homeFloor.getCommodityId();
         int[] commodityOrder = homeFloor.getCommodityOrder();
+        int[] brandId = homeFloor.getBrandId();
+        int[] brandOrder = homeFloor.getBrandOrder();
         homeFloor = homeFloorDao.save(homeFloor);
-        batchAddFloorCategoryAndCommodity(homeFloor, categoryId, categoryOrder, commodityId, commodityOrder);
+        batchAddFloorCategoryAndCommodity(homeFloor, categoryId, categoryOrder, commodityId, commodityOrder,brandId,brandOrder);
         return homeFloor;
     }
 
-    private void batchAddFloorCategoryAndCommodity(HomeFloor homeFloor, int[] categoryId, int[] categoryOrder, int[] commodityId, int[] commodityOrder) {
+    private void batchAddFloorCategoryAndCommodity(HomeFloor homeFloor, int[] categoryId, int[] categoryOrder, int[] commodityId, int[] commodityOrder,int[] brandId,int[] brandOrder) {
         if (categoryId != null) {
             for (int i = 0; i < categoryId.length; i++) {
                 FloorCategoryId id = new FloorCategoryId(homeFloor.getFloorId(), categoryId[i]);
@@ -82,6 +88,18 @@ public class FloorService implements IFloorService {
                 floorCommodityDao.save(floorCommodity);
             }
             homeFloor.setCommodityAmount(commodityId.length);
+        }
+        if(brandId != null){
+            for (int i = 0; i < brandId.length; i++) {
+                FloorBrandId id = new FloorBrandId(homeFloor.getFloorId(), brandId[i]);
+                FloorBrand floorBrand = new FloorBrand();
+                floorBrand.setId(id);
+                floorBrand.setBrand(new Brand(brandId[i]));
+                floorBrand.setHomeFloor(homeFloor);
+                floorBrand.setSortOrder(brandOrder[i]);
+                floorBrandDao.save(floorBrand);
+            }
+            homeFloor.setBrandAmount(brandId.length);
         }
     }
 
@@ -121,9 +139,12 @@ public class FloorService implements IFloorService {
         int[] categoryOrder = homeFloor.getCategoryOrder();
         int[] commodityId = homeFloor.getCommodityId();
         int[] commodityOrder = homeFloor.getCommodityOrder();
+        int[] brandId = homeFloor.getBrandId();
+        int[] brandOrder = homeFloor.getBrandOrder();
         floorCategoryDao.emptyByHomeFloor(dbhomeFloor);
         floorCommodityDao.emptyByHomeFloor(dbhomeFloor);
-        batchAddFloorCategoryAndCommodity(dbhomeFloor, categoryId, categoryOrder, commodityId, commodityOrder);
+        floorBrandDao.emptyByHomeFloor(dbhomeFloor);
+        batchAddFloorCategoryAndCommodity(dbhomeFloor, categoryId, categoryOrder, commodityId, commodityOrder,brandId, brandOrder);
         return dbhomeFloor;
     }
 
