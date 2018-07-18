@@ -32,6 +32,7 @@ public class OrderResource extends BaseResource {
     public ResponseResult saveOrder(@RequestBody OrderVo orderVo, @ModelAttribute("customerId") int customerId){
         try {
             Order order = new Order();
+            order.setCustomerId(customerId);
             order.setPaymentType(orderVo.getPaymentType());
             Order result = orderService.createOrder(orderVo.getProductId(), order);
             if (result == null) {
