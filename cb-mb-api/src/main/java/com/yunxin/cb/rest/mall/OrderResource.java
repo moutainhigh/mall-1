@@ -15,19 +15,19 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "订单确认")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "orderVo", value = "订单确认对象", required = true, paramType = "post", dataType = "Object")
     })
-    @GetMapping(value = "saveOrder/{commodityId}")
-    public ResponseResult saveOrder(@PathVariable(value = "commodityId") int commodityId, @ModelAttribute("customerId") int customerId){
+    @PostMapping(value = "saveOrder")
+    public ResponseResult saveOrder(@RequestBody Object orderVo, @ModelAttribute("customerId") int customerId){
         return new ResponseResult(null);
     }
 
     @ApiOperation(value = "查询用户订单列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderStatus", value = "订单状态", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "get", dataType = "int")
     })
-    @GetMapping(value = "listOrder/{orderStatus}")
-    public ResponseResult listOrder(@PathVariable(value = "orderStatus") int orderStatus, @ModelAttribute("customerId") int customerId){
+    @GetMapping(value = "listOrder")
+    public ResponseResult listOrder(@RequestParam(value = "orderStatus") int orderStatus, @ModelAttribute("customerId") int customerId){
         return new ResponseResult(null);
     }
 

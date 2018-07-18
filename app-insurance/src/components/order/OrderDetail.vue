@@ -242,12 +242,17 @@
     <div v-if="tab == 'place'">
       <place insuranceOrderOffsite="" :en-show="holder.policyholderCity !== '440300'"></place>
     </div>
+
+    <div v-if="tab === 'matter'">
+      <MatterDetail :matters ="order.insuranceOrderInformedMatters"></MatterDetail>
+    </div>
   </div>
 </template>
 
 <script>
   import {getOrderDetail} from "../../service/getData";
   import {ChinaAddressData} from 'vux'
+  import MatterDetail from './MatterDetail'
   import { ButtonTab,ButtonTabItem} from 'vux'
   import {arrayContain,ageYear} from "../../config/mUtils";
   import {careerCode} from "../../admin/career";
@@ -258,7 +263,8 @@
     components:{
       Place,
       ButtonTab,
-      ButtonTabItem
+      ButtonTabItem,
+      MatterDetail
     },
     data(){
       return {
