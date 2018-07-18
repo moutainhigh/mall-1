@@ -40,6 +40,7 @@ public interface OrderItemMapper {
         "#{activityId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, ",
         "#{productId,jdbcType=INTEGER})"
     })
+    @Options(useGeneratedKeys=true, keyProperty="itemId", keyColumn="ITEM_ID")
     int insert(OrderItem record);
 
     /**

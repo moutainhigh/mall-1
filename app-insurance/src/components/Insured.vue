@@ -163,7 +163,8 @@
     int,
     fixedTel,
     mobile,
-    mail
+    mail,
+    emoji
   } from "../admin/validate";
 
   export default {
@@ -220,6 +221,14 @@
         this.$router.back();
       },
       next() {
+        let input = document.getElementsByTagName("input");
+        for (let i = 0; i < input.length; i++) {
+          if (emoji.test(input[i].value)) {
+            alert("输入信息不得带表情");
+            return false;
+          }
+        }
+
         this.$v.$touch();
         if (this.insured.insuredTel === '' && this.insured.insuredMobile === '') {
           this.showPositionValue = true;
