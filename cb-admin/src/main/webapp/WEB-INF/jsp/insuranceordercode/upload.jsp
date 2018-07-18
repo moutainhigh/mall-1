@@ -50,31 +50,6 @@
          * dropdown menus, toggle sidebar button    *
          ******************************************** -->
 
-    <header id="header-main">
-      <div class="header-main-top">
-        <div class="pull-left">
-          <!-- * This is the responsive logo * -->
-          <a href="#" id="logo-small"><h4></h4><h5></h5></a>
-        </div>
-        <div class="pull-right">
-          <!-- * This is the trigger that will show/hide the menu * -->
-          <!-- * if the layout is in responsive mode              * -->
-          <a href="#" id="responsive-menu-trigger">
-            <i class="fa fa-bars"></i>
-          </a>
-        </div>
-      </div>
-      <!-- End #header-main-top -->
-      <div class="header-main-bottom">
-        <div class="pull-left">
-          <!-- End .breadcrumb -->
-        </div>
-        <div class="pull-right">
-          <p>Version 1.0.0</p>
-        </div>
-      </div>
-      <!-- End #header-main-bottom -->
-    </header>
     <!-- End #header-main -->
 
     <div id="content" class="clearfix">

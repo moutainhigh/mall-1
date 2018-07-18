@@ -1,4 +1,5 @@
 <%@ taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html class="no-js">                       <!--<![endif]-->
@@ -134,6 +135,30 @@
             <div class="inner-padding">
                 <div class="toolbar responsive-helper">
                     <form style="width: 100%">
+
+                        <div class="pull-left">
+                            <div class="toolbar-field">
+                                <strong>事项描述:</strong>
+                            </div>
+                            <div class="toolbar-field">
+                                <input type="text" data-filter="matterDescription" data-operator="contains" class="form-control grid-filter" placeholder="事项描述"/>
+                            </div>
+                        </div>
+
+                        <%--<div class="pull-left">--%>
+                            <%--<div class="toolbar-field">--%>
+                                <%--<strong>事项组:</strong>--%>
+                            <%--</div>--%>
+                            <%--<div class="toolbar-field">--%>
+                                <%--<select class="form-control simpleselect grid-filter" name="matterGroup.groupId">--%>
+                                    <%--<option value="0">-不选-</option>--%>
+                                    <%--<c:forEach items="${groups}" var="group">--%>
+                                        <%--<option value="${group.groupId}">${group.description}</option>--%>
+                                    <%--</c:forEach>--%>
+                                <%--</select>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>创建时间:</strong>
@@ -149,6 +174,7 @@
                                 <input name="createTime"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
                             </div>
                         </div>
+
                         <!-- End .pull-left -->
                         <div class="pull-right">
                             <div class="toolbar-field">
@@ -171,8 +197,8 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="toAddMatter.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
+                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
                         </div>
@@ -189,13 +215,13 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="事项ID" field="matterId" template="<a href='toEditMatter.do?matterId=#= matterId#' style='color:blue'>#= matterId#</a>" width="100px"/>
-                            <kendo:grid-column title="序号" field="serNo" width="50px"/>
-                            <kendo:grid-column title="事项描述" field="matterDescription" width="50px"/>
-                            <kendo:grid-column title="类型" filterable="false" field="matterType" template="#= matterType ?  '填空题' : '是否题' #" width="50px"/>
+                            <kendo:grid-column title="事项ID" field="matterId" template="<a href='toEditMatter.do?matterId=#= matterId#' style='color:blue'>#= matterId#</a>" width="30px"/>
+                            <kendo:grid-column title="序号" field="serNo" width="20px"/>
+                            <kendo:grid-column title="事项描述" field="matterDescription" width="200px"/>
+                            <kendo:grid-column title="类型" filterable="false" field="matterType" template="#= matterType ?  '填空题' : '是否题' #" width="20px"/>
                             <kendo:grid-column title="所属组" filterable="false" field="matterGroup.description" width="50px"/>
-                            <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
-                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
+                            <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="25px"/>
+                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="30px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">

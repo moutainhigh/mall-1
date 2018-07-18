@@ -111,6 +111,7 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
         InsuranceInformedMatterGroup oldGroup = insuranceInformedMatterGroupDao.findOne(insuranceInformedMatterGroup.getGroupId());
         oldGroup.setDescription(insuranceInformedMatterGroup.getDescription());
         oldGroup.setSerNo(insuranceInformedMatterGroup.getSerNo());
+        oldGroup.setEnabled(insuranceInformedMatterGroup.getEnabled());
         return oldGroup;
     }
 
