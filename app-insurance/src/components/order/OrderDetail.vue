@@ -245,7 +245,7 @@
     </div>
 
     <div v-if="tab == 'place'">
-      <place insuranceOrderOffsite="order.insuranceOrderOffsite" :en-show="holder.policyholderCity !== '440300'"></place>
+      <place :insuranceOrderOffsite="order.insuranceOrderOffsite" :en-show="holder.policyholderCity !== '440300'"></place>
     </div>
 
     <div v-if="tab === 'matter'">

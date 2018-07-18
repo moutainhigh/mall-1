@@ -19,10 +19,12 @@
           <img v-if="matters[0].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[0].insuredResult" v-model="matters[0].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[0].policyholderResult" v-model="matters[0].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[0].insuredResult">
+        <p>被保人：{{matters[0].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[0].policyholderResult">
+        <p>投保人：{{matters[0].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -41,10 +43,12 @@
           <img v-if="matters[1].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[1].insuredResult" v-model="matters[1].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[1].policyholderResult" v-model="matters[1].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[1].insuredResult">
+        <p>被保人：{{matters[1].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[1].policyholderResult">
+        <p>投保人：{{matters[1].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -63,10 +67,12 @@
           <img v-if="matters[2].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[2].insuredResult" v-model="matters[2].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[2].policyholderResult" v-model="matters[2].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[2].insuredResult">
+        <p>被保人：{{matters[2].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[2].policyholderResult">
+        <p>投保人：{{matters[2].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -85,25 +91,20 @@
           <img v-if="matters[3].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[3].insuredResult" v-model="matters[3].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[3].policyholderResult" v-model="matters[3].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[3].insuredResult">
+        <p>被保人：{{matters[3].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[3].policyholderResult">
+        <p>投保人：{{matters[3].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
-      <p style="padding: 15px 0">5.a.是否吸烟?若“是”，吸烟<input type="number" class="value-input" v-model="values5[0]"
-                                                        readonly/>年<input
-        type="number" class="value-input" v-model="values5[1]" readonly/>支/天；若现在已停止吸烟，停止吸烟原因及时间<input
-        type="text" maxlength="24" class="value-input" v-model="values5[2]" readonly/>。</p>
-      <p style="padding: 15px 0">b.是否饮酒？若“是”，饮酒<input type="number" class="value-input" v-model="values5[3]"
-                                                      readonly/>年，种类<input
-        type="text" class="value-input" maxlength="24" v-model="values5[4]" readonly/>，数量<input type="number"
-                                                                                                class="value-input"
-                                                                                                v-model="values5[5]"
-                                                                                                readonly/>
-        （两/周）；若现在已停止饮酒，停止饮酒原因及时间<input type="text" class="value-input" maxlength="64" style="width: 10rem"
-                                       v-model="values5[6]" readonly/>。
+      <p style="padding: 15px 0">5.a.是否吸烟?若“是”，吸烟<span class="pack">{{values5[0]}}</span>年<span class="pack">{{values5[1]}}</span>
+        支/天；若现在已停止吸烟，停止吸烟原因及时间<span class="pack">{{values5[2]}}</span>。</p>
+      <p style="padding: 15px 0">b.是否饮酒？若“是”，饮酒<span class="pack">{{values5[3]}}</span>年，种类<span class="pack">{{values5[4]}}</span>，数量<span
+        class="pack">{{values5[5]}}</span>
+        （两/周）；若现在已停止饮酒，停止饮酒原因及时间<span class="pack">{{values5[6]}}</span>。
       </p>
       <div class="content-state">
         <p class="recognizee">被保人</p>
@@ -119,10 +120,12 @@
           <img v-if="matters[4].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[4].insuredResult" v-model="matters[4].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[4].policyholderResult" v-model="matters[4].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[4].insuredResult">
+        <p>被保人：{{matters[4].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[4].policyholderResult">
+        <p>投保人：{{matters[4].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -141,10 +144,12 @@
           <img v-if="matters[5].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[5].insuredResult" v-model="matters[5].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[5].policyholderResult" v-model="matters[5].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[5].insuredResult">
+        <p>被保人：{{matters[5].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[5].policyholderResult">
+        <p>投保人：{{matters[5].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -163,10 +168,12 @@
           <img v-if="matters[6].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[6].insuredResult" v-model="matters[6].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[6].policyholderResult" v-model="matters[6].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[6].insuredResult">
+        <p>被保人：{{matters[6].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[6].policyholderResult">
+        <p>投保人：{{matters[6].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -185,10 +192,12 @@
           <img v-if="matters[7].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[7].insuredResult" v-model="matters[7].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[7].policyholderResult" v-model="matters[7].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[7].insuredResult">
+        <p>被保人：{{matters[7].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[7].policyholderResult">
+        <p>投保人：{{matters[7].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -214,10 +223,12 @@
           <img v-if="matters[8].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[8].insuredResult" v-model="matters[8].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[8].policyholderResult" v-model="matters[8].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[8].insuredResult">
+        <p>被保人：{{matters[8].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[8].policyholderResult">
+        <p>投保人：{{matters[8].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -237,15 +248,17 @@
           <img v-if="matters[9].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[9].insuredResult" v-model="matters[9].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[9].policyholderResult" v-model="matters[9].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[9].insuredResult">
+        <p>被保人：{{matters[9].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[9].policyholderResult">
+        <p>投保人：{{matters[9].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
       <p style="padding: 15px 0">11.若为16周岁(含)以上女性，请告知：a.目前是否怀孕？若是，已怀孕<input class="value-input" type="number"
-                                                                            v-model="values11"/>周？</p>
+                                                                            v-model="values11" readonly/>周？</p>
       <p style="padding: 15px 0">b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？</p>
       <p style="padding: 15px 0">c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？</p>
       <p style="padding: 15px 0">d.母亲、姐妹中是否有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？</p>
@@ -263,10 +276,12 @@
           <img v-if="matters[10].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[10].insuredResult" v-model="matters[10].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[10].policyholderResult" v-model="matters[10].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[10].insuredResult">
+        <p>被保人：{{matters[10].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[10].policyholderResult">
+        <p>投保人：{{matters[10].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -293,10 +308,12 @@
             <img v-if="matters[11].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[11].insuredResult" v-model="matters[11].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[11].policyholderResult" v-model="matters[11].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[11].insuredResult">
+          <p>被保人：{{matters[11].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[11].policyholderResult">
+          <p>投保人：{{matters[11].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">b.视神经病变、白内障、青光眼、视网膜出血或剥离、近视800度以上?</p>
@@ -314,10 +331,12 @@
             <img v-if="matters[12].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[17].insuredResult" v-model="matters[17].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[17].policyholderResult" v-model="matters[17].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[12].insuredResult">
+          <p>被保人：{{matters[12].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[12].policyholderResult">
+          <p>投保人：{{matters[12].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">c.脑脊液鼻漏或耳漏、脑血管意外及后遗症、蛛网膜下腔出血、癫痫病、帕金森氏综合症、精神病、神经麻痹、心脏病、高血压、高脂血症、血管瘤、血管疾病?</p>
@@ -335,10 +354,12 @@
             <img v-if="matters[13].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[13].insuredResult" v-model="matters[13].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[13].policyholderResult" v-model="matters[13].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[13].insuredResult">
+          <p>被保人：{{matters[13].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[13].policyholderResult">
+          <p>投保人：{{matters[13].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">d.胸膜炎、肺炎、哮喘、肺结核、慢性支气管炎、支气管扩张症、肺气肿、气胸、尘肺、矽肺?</p>
@@ -356,10 +377,12 @@
             <img v-if="matters[14].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[14].insuredResult" v-model="matters[14].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[14].policyholderResult" v-model="matters[14].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[14].insuredResult">
+          <p>被保人：{{matters[14].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[14].policyholderResult">
+          <p>投保人：{{matters[14].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">e. 慢性胃肠炎、结肠炎、消化性溃疡、消化道出血穿孔、胰腺炎、肝炎、脂肪肝、肝硬化、肝脓肿、胆道结石、胆囊炎、腹膜炎、脾肿大、肛肠疾病?</p>
@@ -377,10 +400,12 @@
             <img v-if="matters[15].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[15].insuredResult" v-model="matters[15].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[15].policyholderResult" v-model="matters[15].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[15].insuredResult">
+          <p>被保人：{{matters[15].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[15].policyholderResult">
+          <p>投保人：{{matters[15].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">f.肾炎、肾病综合症、尿毒症、急性肾功能衰竭、尿路结石、尿道狭窄、肾囊肿、肾下垂、反复尿路感染、性病?</p>
@@ -398,10 +423,12 @@
             <img v-if="matters[16].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[16].insuredResult" v-model="matters[16].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[16].policyholderResult" v-model="matters[16].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[16].insuredResult">
+          <p>被保人：{{matters[16].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[16].policyholderResult">
+          <p>投保人：{{matters[16].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">g.糖尿病、垂体、甲状腺、肾上腺疾病等内分泌系统疾病?</p>
@@ -419,10 +446,12 @@
             <img v-if="matters[17].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[17].insuredResult" v-model="matters[17].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[17].policyholderResult" v-model="matters[17].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[17].insuredResult">
+          <p>被保人：{{matters[17].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[17].policyholderResult">
+          <p>投保人：{{matters[17].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">h.贫血、再生障碍性贫血、白血病、紫癜症、血友病?</p>
@@ -440,10 +469,12 @@
             <img v-if="matters[18].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[18].insuredResult" v-model="matters[18].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[18].policyholderResult" v-model="matters[18].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[18].insuredResult">
+          <p>被保人：{{matters[18].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[18].policyholderResult">
+          <p>投保人：{{matters[18].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">i.风湿热、 关节炎、类风湿性关节炎、 痛风、颈椎病、椎间盘突出症、 红斑狼疮、硬皮病、皮肌炎、重症肌无力、肌肉萎缩症、 其他结缔组织疾病?</p>
@@ -461,10 +492,12 @@
             <img v-if="matters[19].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[19].insuredResult" v-model="matters[19].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[19].policyholderResult" v-model="matters[19].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[19].insuredResult">
+          <p>被保人：{{matters[19].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[19].policyholderResult">
+          <p>投保人：{{matters[19].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">j.肿瘤(包括任何良性、恶性或尚未定性的肿瘤)、息肉、囊肿或增生物?</p>
@@ -482,10 +515,12 @@
             <img v-if="matters[20].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[20].insuredResult" v-model="matters[20].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[20].policyholderResult" v-model="matters[20].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[20].insuredResult">
+          <p>被保人：{{matters[20].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[20].policyholderResult">
+          <p>投保人：{{matters[20].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">k.先天性疾病、遗传性疾病?</p>
@@ -503,10 +538,12 @@
             <img v-if="matters[21].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[26].insuredResult" v-model="matters[26].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[26].policyholderResult" v-model="matters[26].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[21].insuredResult">
+          <p>被保人：{{matters[21].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[21].policyholderResult">
+          <p>投保人：{{matters[21].policyholderRemark}}</p>
+        </div>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">l.身体是否有瘢痕？</p>
@@ -524,10 +561,12 @@
             <img v-if="matters[22].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[22].insuredResult" v-model="matters[22].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[22].policyholderResult" v-model="matters[22].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[22].insuredResult">
+          <p>被保人：{{matters[22].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[22].policyholderResult">
+          <p>投保人：{{matters[22].policyholderRemark}}</p>
+        </div>
       </div>
 
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -546,10 +585,12 @@
             <img v-if="matters[23].policyholderResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[23].insuredResult" v-model="matters[23].insuredRemark"
-                  placeholder="被保人" readonly/>
-        <textarea class="content-text" v-if="matters[23].policyholderResult" v-model="matters[23].policyholderRemark"
-                  placeholder="投保人" readonly/>
+        <div class="content-val" v-if="matters[23].insuredResult">
+          <p>被保人：{{matters[23].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[23].policyholderResult">
+          <p>投保人：{{matters[23].policyholderRemark}}</p>
+        </div>
       </div>
     </div>
 
@@ -569,22 +610,20 @@
           <img v-if="matters[24].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[24].insuredResult" v-model="matters[24].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[24].policyholderResult" v-model="matters[24].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[24].insuredResult">
+        <p>被保人：{{matters[24].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[24].policyholderResult">
+        <p>投保人：{{matters[24].policyholderRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
       <p style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">14.若为2周岁(不含)以下婴儿，请告知：</p>
       <div style="border-bottom: 1px solid #f3f3f3; padding-bottom: 10px">
-        <p style="padding: 15px 0; margin-bottom: 0">a.被保险人出生时身长<input type="number" class="value-input"
-                                                                       v-model="values12[0]" readonly/>厘米，体重<input
-          class="value-input" type="number" v-model="values12[1]" readonly/>公斤，出生医院<input type="text"
-                                                                                          class="value-input"
-                                                                                          v-model="values12[2]"
-                                                                                          readonly/>
-          ，出生时留院天数<input class="value-input" type="number" v-model="values12[3]" readonly/>天，如超过7天，请详细说明。</p>
+        <p style="padding: 15px 0; margin-bottom: 0">a.被保险人出生时身长<span class="pack">{{values12[0]}}</span>厘米，体重<span
+          class="pack">{{values12[1]}}</span>公斤，出生医院<span class="pack">{{values12[2]}}</span>
+          ，出生时留院天数<span class="pack">{{values12[3]}}</span>天，如超过7天，请详细说明。</p>
         <p style="padding: 15px 0">b.出生时是否有早产、难产、窒息等情况？是否使用产钳等辅助器械？</p>
         <p style="padding: 15px 0">c.出生时是否有抢救史？</p>
         <p style="padding: 15px 0">d.是否未按要求接受预防接种？</p>
@@ -600,9 +639,9 @@
             <img v-if="matters[25].insuredResult" src="../../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[25].insuredResult" v-model="matters[25].insuredRemark"
-                  maxlength="100"
-                  placeholder="被保人" readonly/>
+        <div class="content-val" v-if="matters[25].insuredResult">
+          <p>被保人：{{matters[25].insuredRemark}}</p>
+        </div>
       </div>
     </div>
 
@@ -615,8 +654,9 @@
           <img v-if="matters[26].insuredResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[26].insuredResult" v-model="matters[26].insuredRemark"
-                placeholder="被保人" readonly/>
+      <div class="content-val" v-if="matters[26].insuredResult">
+        <p>被保人：{{matters[26].insuredRemark}}</p>
+      </div>
     </div>
 
     <div class="content">
@@ -635,10 +675,12 @@
           <img v-if="matters[27].policyholderResult" src="../../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[27].insuredResult" v-model="matters[27].insuredRemark"
-                placeholder="被保人" readonly/>
-      <textarea class="content-text" v-if="matters[27].policyholderResult" v-model="matters[27].policyholderRemark"
-                placeholder="投保人" readonly/>
+      <div class="content-val" v-if="matters[27].insuredResult">
+        <p>被保人：{{matters[27].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[27].policyholderResult">
+        <p>投保人：{{matters[27].policyholderRemark}}</p>
+      </div>
     </div>
 
   </div>
@@ -665,6 +707,7 @@
           this.values5 = JSON.parse(this.matters[4].collectValues);
         }
         this.values11 = this.matters[10].collectValues;
+        console.log(this.values11)
         if (this.matters[25].collectValues) {
           this.values12 = JSON.parse(this.matters[25].collectValues);
         }
@@ -732,6 +775,19 @@
     outline: none;
     font-size: 14px;
     cursor: pointer;
+  }
+
+  .content-val {
+    font-size: 15px;
+    background-color: #ffffff;
+    padding: 15px;
+    color: #c5c5c5;
+    word-break: break-word;
+  }
+
+  .pack {
+    border-bottom: 1px solid #000;
+    padding: 0 10px;
   }
 
   .checkIcon {
