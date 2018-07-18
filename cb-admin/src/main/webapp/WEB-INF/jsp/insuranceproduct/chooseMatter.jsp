@@ -45,7 +45,7 @@
                 </kendo:grid-filterable-operators>
             </kendo:grid-filterable>
             <kendo:grid-columns>
-                <kendo:grid-column title="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' id='checkall'/>" field="matterId" width="20" template="<input type='checkbox' id='#: matterId #' name='selectedCommodityId' value='#: matterId #' />" sortable="false" filterable="false"/>
+                <kendo:grid-column title="&nbsp;&nbsp;All&nbsp;&nbsp;<input type='checkbox' id='checkall'/>" field="matterId" width="20" template="<input type='checkbox' id='#: matterId #' name='selectedCommodityId' value='#: matterId #' />" sortable="false" filterable="false"/>
                 <kendo:grid-column title="事项描述" filterable="false" field="matterDescription" width="180"/>
                 <kendo:grid-column title="事项类型" filterable="false" field="matterType" template="#= matterType ? '是否题' : '填空题' #" width="40"/>
             </kendo:grid-columns>
