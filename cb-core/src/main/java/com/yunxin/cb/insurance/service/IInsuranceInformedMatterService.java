@@ -56,10 +56,4 @@ public interface IInsuranceInformedMatterService {
      */
     public List<InsuranceInformedMatter> getInsuranceInformedMatterList();
 
-    /**
-     *
-     * @param matterDescription
-     * @return
-     */
-    public List<InsuranceInformedMatter> getListByName(String matterDescription);
 }

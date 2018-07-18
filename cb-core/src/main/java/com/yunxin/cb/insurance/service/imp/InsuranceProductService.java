@@ -148,9 +148,12 @@ public class InsuranceProductService implements IInsuranceProductService {
     }
 
     /**
-     *
+     * 根据id获取保险产品
+     * @author      likang
      * @param prodId
-     * @return
+     * @return      com.yunxin.cb.insurance.entity.InsuranceProduct
+     * @exception
+     * @date        2018/7/18 20:17
      */
     @Override
     public InsuranceProduct getInsuranceProductById(int prodId){
@@ -158,46 +161,16 @@ public class InsuranceProductService implements IInsuranceProductService {
     }
 
     /**
-     *
+     * 根据id删除产品
+     * @author      likang
      * @param prodId
+     * @return      void
+     * @exception
+     * @date        2018/7/18 20:18
      */
     @Override
     public void removeById(int prodId){
         insuranceProductDao.delete(prodId);
     }
 
-    /**
-     *
-     * @param matterId
-     * @param matterId
-     * @return
-     */
-    @Override
-    @Transactional
-    public InsuranceProduct removeInsuranceProductMatter(int prodId,int matterId){
-        InsuranceProduct oldProduct = insuranceProductDao.getInsuranceProductById(prodId);
-        Set<InsuranceInformedMatter> insuranceInformedMatters=oldProduct.getInsuranceInformedMatters();
-        for (InsuranceInformedMatter insuranceInformedMatter: insuranceInformedMatters ) {
-            if(insuranceInformedMatter.getMatterId()==matterId){
-                insuranceInformedMatters.remove(insuranceInformedMatter);
-            }
-        }
-        return oldProduct;
-    }
-
-    /**
-     *
-     * @param prodId
-     * @param matterId
-     * @return
-     */
-    @Override
-    @Transactional
-    public InsuranceProduct addInsuranceProductMatter(int prodId,int matterId){
-        InsuranceProduct oldProduct = insuranceProductDao.getInsuranceProductById(prodId);
-        InsuranceInformedMatter insuranceInformedMatter=insuranceInformedMatterDao.findOne(matterId);
-        Set<InsuranceInformedMatter> insuranceInformedMatters=oldProduct.getInsuranceInformedMatters();
-        insuranceInformedMatters.add(insuranceInformedMatter);
-        return oldProduct;
-    }
 }
