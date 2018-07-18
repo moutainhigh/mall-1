@@ -95,7 +95,7 @@
   import XAddress from "vux/src/components/x-address/index";
   import {getVaildData, submitOrder} from '../service/getData'
   import {required, minLength, maxLength, helpers, numeric} from 'vuelidate/lib/validators'
-  import {mobile} from "../admin/validate";
+  import {mobile,emoji} from "../admin/validate";
 
   export default {
     name: "Payment",
@@ -137,6 +137,15 @@
     },
     methods: {
       submit() {
+        //判断表情输入
+        let input = document.getElementsByTagName("input");
+        for (let i = 0; i < input.length; i++) {
+          if (emoji.test(input[i].value)) {
+            alert("输入信息不得带表情");
+            return false;
+          }
+        }
+
         this.$v.$touch();
         if (this.$v.$invalid) {
           this.showPositionValue = true;
