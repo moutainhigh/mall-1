@@ -19,7 +19,7 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
-        String loginPathString = "/login";
+        String loginPathString = "/index.do";
         super.setDefaultFailureUrl(loginPathString);
         super.onAuthenticationFailure(request, response, handleLoginDisableMessage(exception));
     }

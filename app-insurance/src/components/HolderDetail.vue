@@ -46,7 +46,8 @@
           出生日期不能为空
         </div>
 
-        <popup-picker id="cardType" title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType" :data="cardTypes"
+        <popup-picker id="cardType" title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType"
+                      :data="cardTypes"
                       value-text-align="left"
                       v-bind:class="{'errorInput': $v.holder.policyholderCardType.$error}"></popup-picker>
         <div class="error" v-if="!$v.holder.policyholderCardType.required && $v.holder.policyholderCardType.$dirty">
@@ -120,7 +121,8 @@
         <div class="error" v-if="!$v.holder.policyholderIncome.int">请输入年收入，单位万元（正整数）</div>
         <div class="error" v-if="!$v.holder.policyholderIncome.maxLength">最大不超过6位数</div>
 
-        <popup-picker id="marriage" title="婚姻状况" v-model="holder.policyholderMarriage" placeholder="请选择婚姻状况" :data="maritalStatus"
+        <popup-picker id="marriage" title="婚姻状况" v-model="holder.policyholderMarriage" placeholder="请选择婚姻状况"
+                      :data="maritalStatus"
                       value-text-align="left"
                       v-bind:class="{'errorInput': $v.holder.policyholderMarriage.$error}"></popup-picker>
         <div class="error" v-if="!$v.holder.policyholderMarriage.required && $v.holder.policyholderMarriage.$dirty">
@@ -171,7 +173,8 @@
           <div class="error" v-if="!$v.holder.policyholderAddress.maxLength">详细地址最多不超过255位数</div>
         </div>
 
-        <popup-picker id="relation" title="涉税人信息" v-model="holder.policyholderTaxRelated" placeholder="请选择涉税人信息" :data="taxRelates"
+        <popup-picker id="relation" title="涉税人信息" v-model="holder.policyholderTaxRelated" placeholder="请选择涉税人信息"
+                      :data="taxRelates"
                       value-text-align="left"
                       v-bind:class="{'errorInput': $v.holder.policyholderTaxRelated.$error, 'taxRelated': this.holder.unifyAddr}"></popup-picker>
         <div class="error" v-if="!$v.holder.policyholderTaxRelated.required && $v.holder.policyholderTaxRelated.$dirty">
@@ -227,7 +230,8 @@
           </div>
           <div class="error" v-if="!$v.beneficiary1.beneficiaryCountry.maxLength">国籍最多不超过64位数</div>
 
-          <popup-picker id="order1" title="受益顺序" placeholder="请选择受益顺序" :data="orders" v-model="beneficiary1.beneficiaryOrder"
+          <popup-picker id="order1" title="受益顺序" placeholder="请选择受益顺序" :data="orders"
+                        v-model="beneficiary1.beneficiaryOrder"
                         value-text-align="left"
                         v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryOrder.$error || (valiOrderB1 === valiOrderB2 && addBene2)}"></popup-picker>
           <div class="error"
@@ -288,7 +292,8 @@
             证件有效期不能为空
           </div>
 
-          <popup-picker id="relation1" title="是被保人的" placeholder="请选择关系" v-model="beneficiary1.insuredRelation" value-text-align="left"
+          <popup-picker id="relation1" title="是被保人的" placeholder="请选择关系" v-model="beneficiary1.insuredRelation"
+                        value-text-align="left"
                         :data="relates"
                         v-bind:class="{'errorInput': $v.beneficiary1.insuredRelation.$error}"></popup-picker>
           <div class="error" v-if="!$v.beneficiary1.insuredRelation.required && $v.beneficiary1.insuredRelation.$dirty">
@@ -336,7 +341,8 @@
           </div>
           <div class="error" v-if="!$v.beneficiary2.beneficiaryCountry.maxLength">国籍最多不超过32位数</div>
 
-          <popup-picker id="order2" title="受益顺序" placeholder="请选择受益顺序" :data="orders" v-model="beneficiary2.beneficiaryOrder"
+          <popup-picker id="order2" title="受益顺序" placeholder="请选择受益顺序" :data="orders"
+                        v-model="beneficiary2.beneficiaryOrder"
                         value-text-align="left"
                         v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryOrder.$error || (valiOrderB1 === valiOrderB2 && addBene1)}"></popup-picker>
           <div class="error"
@@ -369,7 +375,8 @@
             不能为空
           </div>
 
-          <popup-picker id="cardType2" title="证件类型" placeholder="请选择证件类型" :data="cardTypes" v-model="beneficiary2.beneficiaryCardType"
+          <popup-picker id="cardType2" title="证件类型" placeholder="请选择证件类型" :data="cardTypes"
+                        v-model="beneficiary2.beneficiaryCardType"
                         value-text-align="left"
                         v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardType.$error}"></popup-picker>
           <div class="error"
@@ -399,7 +406,8 @@
             证件有效期不能为空
           </div>
 
-          <popup-picker id="relation2" title="是被保人的" placeholder="请选择关系" v-model="beneficiary2.insuredRelation" value-text-align="left"
+          <popup-picker id="relation2" title="是被保人的" placeholder="请选择关系" v-model="beneficiary2.insuredRelation"
+                        value-text-align="left"
                         :data="relates"
                         v-bind:class="{'errorInput': $v.beneficiary2.insuredRelation.$error}"></popup-picker>
           <div class="error"
@@ -411,11 +419,11 @@
       </group>
     </div>
     <div v-if="insuredSixteenYear && holderSixteenYear">
-    <div class="title-add" @click="addBene" v-if="!addBene1 || !addBene2">
-      <div>
-        <img src="../assets/img/add.png"/>新增受益人
+      <div class="title-add" @click="addBene" v-if="!addBene1 || !addBene2">
+        <div>
+          <img src="../assets/img/add.png"/>新增受益人
+        </div>
       </div>
-    </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <!--<div style="height: 50px;">-->
@@ -426,7 +434,7 @@
     <!--<div>下一步</div>-->
     <!--</button>-->
     <!--</div>-->
-    <div style="height: 60px;">
+    <div style="height: 70px;">
       <div class="i-footer">
         <button @click="next">
           <div>下一步</div>
@@ -497,7 +505,7 @@
         valiOrderB1: 1,
         valiOrderB2: null,
         valiProportion: false,
-        valiProportion2: 0,
+        valiProportion2: false,
         insuredSixteenYear: true,
         holderSixteenYear: true
       }
@@ -684,6 +692,7 @@
             beneficiaryProportion: '',
             beneficiaryCountry: ''
           };
+          storage.save("beneficiary1", beneficiary1);
           document.getElementById("addBene1").scroll(0, 0);
         } else if (this.addBene1 === true && this.addBene2 === false) {
           this.addBene2 = true;
@@ -699,6 +708,7 @@
             beneficiaryProportion: '',
             beneficiaryCountry: ''
           };
+          storage.save("beneficiary2", beneficiary2);
           document.getElementById("addBene2").scroll(0, 0);
         }
         this.legalBeneficiary = false;
@@ -843,6 +853,7 @@
       },
       beneficiary1: {
         handler(newVal, oldVal) {
+          console.log(newVal)
           if (newVal.beneficiaryCardType) {
             switch (newVal.beneficiaryCardType[0]) {
               case '居民身份证' :
@@ -888,6 +899,7 @@
           }
           //判断受益份额
           if (newVal.beneficiaryProportion) {
+            console.log(newVal.beneficiaryProportion)
             if (parseInt(newVal.beneficiaryProportion) + parseInt(this.beneficiary2.beneficiaryProportion) === 100 || this.beneficiary2.beneficiaryProportion === '') {
               this.valiProportion = false;
             } else {
@@ -968,7 +980,7 @@
       let order = storage.fetch("order");
       let beneficiary1 = storage.fetch("beneficiary1");
       let beneficiary2 = storage.fetch("beneficiary2");
-      if (!beneficiary1) {
+      if (beneficiary1 instanceof Array) {
         this.beneficiary1 = {
           beneficiaryName: '',
           beneficiaryGender: true,
@@ -983,7 +995,7 @@
         };
         storage.save('beneficiary1', this.beneficiary1);
       }
-      if (!beneficiary2) {
+      if (beneficiary2 instanceof Array) {
         this.beneficiary2 = {
           beneficiaryName: '',
           beneficiaryGender: true,
