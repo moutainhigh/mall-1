@@ -24,8 +24,10 @@ import java.util.*;
 
 
 /**
- * @author likang
- */
+* @Description:    保险产品控制器
+* @Author:         likang
+* @CreateDate:     2018/7/17 21:01
+*/
 @Controller
 @RequestMapping(value = "/insuranceproduct")
 public class InsuranceProductController {
@@ -35,16 +37,23 @@ public class InsuranceProductController {
     @Resource
     private IInsuranceInformedMatterService insuranceInformedMatterService;
 
+    /**
+     * @Description:    跳转到保险产品页面
+     * @Author:         likang
+     * @CreateDate:     2018/7/17 21:02
+     */
     @RequestMapping(value = "insuranceproducts", method = RequestMethod.GET)
     public String insuranceproducts() {
         return "insuranceproduct/insuranceproducts";
     }
 
     /**
-     * 分页列表
-     *
+     * 保险产品的分页列表
+     * @author      likang
      * @param query
-     * @return
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.insurance.entity.InsuranceProduct>
+     * @exception
+     * @date        2018/7/17 21:03
      */
     @RequestMapping(value = "pageInsuranceProduct", method = RequestMethod.POST)
     @ResponseBody
@@ -54,15 +63,18 @@ public class InsuranceProductController {
     }
 
     /**
-     * 加载事项列表(此处得优化)
-     *
-     * @param prodId
-     * @return
+     * 加载事项列表
+     * @author      likang
+     * @param matterDescription
+    * @param prodId
+    * @param modelMap
+     * @return      java.util.List<com.yunxin.cb.insurance.entity.InsuranceInformedMatter>
+     * @exception
+     * @date        2018/7/17 21:03
      */
     @RequestMapping(value = "getmatterList")
     @ResponseBody
     public List<InsuranceInformedMatter> getmatterList(@RequestParam("matterDescription") String matterDescription,@RequestParam("prodId") int prodId, ModelMap modelMap) {
-
         List<InsuranceInformedMatter> list = insuranceInformedMatterService.getListByName(matterDescription);
         InsuranceProduct insuranceProduct = insuranceProductService.getInsuranceProductById(prodId);
         Set<InsuranceInformedMatter> insuranceInformedMatters = insuranceProduct.getInsuranceInformedMatters();
@@ -82,25 +94,15 @@ public class InsuranceProductController {
         return result;
     }
 
-    /**
-     * 加载事项列表
-     *
-     * @param prodId
-     * @return
-     */
-    @RequestMapping(value = "toaddMatter")
-    public String toaddMatter(@RequestParam("prodId") int prodId, ModelMap modelMap) {
-        modelMap.addAttribute("prodId", prodId);
-        return "insuranceproduct/getmatterList";
-    }
 
     /**
-     * 获取详情
-     *
+     * 跳转保险产品详情页面
+     * @author      likang
      * @param prodId
-     * @param modelMap
-     * @return
-     * @throws Exception
+    * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:05
      */
     @RequestMapping(value = "toEditProduct", method = RequestMethod.GET)
     public String toEditProduct(@RequestParam("prodId") int prodId, ModelMap modelMap) throws Exception {
@@ -110,9 +112,13 @@ public class InsuranceProductController {
     }
 
     /**
+     * 跳转到保险产品添加页面
+     * @author      likang
      * @param insuranceProduct
-     * @param modelMap
-     * @return
+    * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:05
      */
     @RequestMapping(value = "toAddProduct", method = RequestMethod.GET)
     public String toAddProduct(@ModelAttribute("insuranceProduct") InsuranceProduct insuranceProduct, ModelMap modelMap) {
@@ -122,8 +128,12 @@ public class InsuranceProductController {
 
 
     /**
+     * 添加保险产品
+     * @author      likang
      * @param insuranceProduct
-     * @return
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:06
      */
     @RequestMapping(value = "addInsuranceProduct", method = RequestMethod.POST)
     public String addInsuranceProduct(@ModelAttribute("InsuranceProduct") InsuranceProduct insuranceProduct) {
@@ -134,8 +144,12 @@ public class InsuranceProductController {
 
 
     /**
+     * 更新保险产品
+     * @author      likang
      * @param insuranceProduct
-     * @return
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:09
      */
     @RequestMapping(value = "updateInsuranceProduct", method = RequestMethod.POST)
     public String updateInsuranceProduct(@ModelAttribute("insuranceProduct") InsuranceProduct insuranceProduct) {
@@ -144,8 +158,12 @@ public class InsuranceProductController {
     }
 
     /**
+     * 根据id删除保险产品
+     * @author      likang
      * @param prodId
-     * @return
+     * @return      boolean
+     * @exception
+     * @date        2018/7/17 21:08
      */
     @RequestMapping(value = "removeById", method = RequestMethod.GET)
     @ResponseBody
@@ -160,8 +178,13 @@ public class InsuranceProductController {
     }
 
     /**
+     * 在保险产品下删除事项
+     * @author      likang
      * @param prodId
-     * @return
+    * @param matterId
+     * @return      boolean
+     * @exception
+     * @date        2018/7/17 21:07
      */
     @RequestMapping(value = "removeMetterById", method = RequestMethod.GET)
     @ResponseBody
@@ -175,9 +198,13 @@ public class InsuranceProductController {
     }
 
     /**
+     * 在产品下添加事项
+     * @author      likang
      * @param prodId
-     * @param matterId
-     * @return
+    * @param matterId
+     * @return      boolean
+     * @exception
+     * @date        2018/7/17 21:07
      */
     @RequestMapping(value = "addMetterById", method = RequestMethod.GET)
     @ResponseBody
