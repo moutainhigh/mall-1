@@ -1577,6 +1577,9 @@
                             </div>
 
                             <div style="margin-left: 37px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 16, 17)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 17, 18)}
                             </div>
                             <div style="margin-left: 10px;float: left;">
@@ -1585,11 +1588,11 @@
                             <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 19, 20)}
                             </div>
-                            <div style="margin-left: 10px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 20, 21)}
-                            </div>
 
                             <div style="margin-left: 35px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 20, 21)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 21, 22)}
                             </div>
                             <div style="margin-left: 10px;float: left;">
@@ -1597,9 +1600,6 @@
                             </div>
                             <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 23, 24)}
-                            </div>
-                            <div style="margin-left: 10px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 24, 25)}
                             </div>
                         </div>
                         <!-- End .第四行-->

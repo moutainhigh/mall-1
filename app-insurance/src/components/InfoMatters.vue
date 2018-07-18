@@ -6,20 +6,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(0)">
-          <img v-if="!matters[0].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[0].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[0].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[0].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(0)">
-          <img v-if="!matters[0].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[0].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[0].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[0].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[0].insuredResult" v-model="matters[0].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[0].policyholderResult" v-model="matters[0].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[0].policyholderResult"
+                v-model="matters[0].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -28,20 +29,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(1)">
-          <img v-if="!matters[1].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[1].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[1].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[1].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(1)">
-          <img v-if="!matters[1].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[1].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[1].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[1].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[1].insuredResult" v-model="matters[1].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[1].policyholderResult" v-model="matters[1].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[1].policyholderResult"
+                v-model="matters[1].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -50,20 +52,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(2)">
-          <img v-if="!matters[2].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[2].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[2].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[2].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(2)">
-          <img v-if="!matters[2].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[2].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[2].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[2].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[2].insuredResult" v-model="matters[2].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[2].policyholderResult" v-model="matters[2].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[2].policyholderResult"
+                v-model="matters[2].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -72,20 +75,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(3)">
-          <img v-if="!matters[3].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[3].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[3].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[3].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(3)">
-          <img v-if="!matters[3].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[3].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[3].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[3].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[3].insuredResult" v-model="matters[3].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[3].policyholderResult" v-model="matters[3].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[3].policyholderResult"
+                v-model="matters[3].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -102,20 +106,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(4)">
-          <img v-if="!matters[4].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[4].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[4].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[4].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(4)">
-          <img v-if="!matters[4].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[4].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[4].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[4].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[4].insuredResult" v-model="matters[4].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[4].policyholderResult" v-model="matters[4].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[4].policyholderResult"
+                v-model="matters[4].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -124,20 +129,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(5)">
-          <img v-if="!matters[5].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[5].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[5].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[5].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(5)">
-          <img v-if="!matters[5].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[5].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[5].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[5].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[5].insuredResult" v-model="matters[5].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[5].policyholderResult" v-model="matters[5].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[5].policyholderResult"
+                v-model="matters[5].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -146,20 +152,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(6)">
-          <img v-if="!matters[6].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[6].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[6].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[6].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(6)">
-          <img v-if="!matters[6].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[6].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[6].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[6].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[6].insuredResult" v-model="matters[6].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[6].policyholderResult" v-model="matters[6].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[6].policyholderResult"
+                v-model="matters[6].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -168,20 +175,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(7)">
-          <img v-if="!matters[7].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[7].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[7].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[7].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(7)">
-          <img v-if="!matters[7].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[7].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[7].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[7].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[7].insuredResult" v-model="matters[7].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[7].policyholderResult" v-model="matters[7].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[7].policyholderResult"
+                v-model="matters[7].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -197,20 +205,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(8)">
-          <img v-if="!matters[8].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[8].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[8].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[8].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(8)">
-          <img v-if="!matters[8].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[8].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[8].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[8].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[8].insuredResult" v-model="matters[8].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[8].policyholderResult" v-model="matters[8].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[8].policyholderResult"
+                v-model="matters[8].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -220,20 +229,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(9)">
-          <img v-if="!matters[9].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[9].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[9].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[9].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(9)">
-          <img v-if="!matters[9].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[9].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[9].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[9].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[9].insuredResult" v-model="matters[9].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[9].policyholderResult" v-model="matters[9].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[9].policyholderResult"
+                v-model="matters[9].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -246,20 +256,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(10)">
-          <img v-if="!matters[10].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[10].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[10].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[10].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(10)">
-          <img v-if="!matters[10].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[10].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[10].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[10].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[10].insuredResult" v-model="matters[10].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[10].policyholderResult" v-model="matters[10].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[10].policyholderResult"
+                v-model="matters[10].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -276,20 +287,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(11)">
-            <img v-if="!matters[11].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[11].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[11].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[11].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(11)">
-            <img v-if="!matters[11].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[11].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[11].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[11].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[11].insuredResult" v-model="matters[11].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[11].policyholderResult" v-model="matters[11].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[11].policyholderResult"
+                  v-model="matters[11].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -297,20 +309,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(12)">
-            <img v-if="!matters[12].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[12].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[12].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[12].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(12)">
-            <img v-if="!matters[12].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[12].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[12].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[12].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[12].insuredResult" v-model="matters[12].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[12].policyholderResult" v-model="matters[12].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[12].policyholderResult"
+                  v-model="matters[12].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -318,20 +331,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(13)">
-            <img v-if="!matters[13].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[13].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[13].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[13].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(13)">
-            <img v-if="!matters[13].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[13].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[13].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[13].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[13].insuredResult" v-model="matters[13].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[13].policyholderResult" v-model="matters[13].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[13].policyholderResult"
+                  v-model="matters[13].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -339,20 +353,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(14)">
-            <img v-if="!matters[14].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[14].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[14].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[14].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(14)">
-            <img v-if="!matters[14].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[14].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[14].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[14].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[14].insuredResult" v-model="matters[14].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[14].policyholderResult" v-model="matters[14].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[14].policyholderResult"
+                  v-model="matters[14].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -360,20 +375,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(15)">
-            <img v-if="!matters[15].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[15].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[15].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[15].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(15)">
-            <img v-if="!matters[15].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[15].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[15].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[15].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[15].insuredResult" v-model="matters[15].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[15].policyholderResult" v-model="matters[15].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[15].policyholderResult"
+                  v-model="matters[15].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -381,20 +397,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(16)">
-            <img v-if="!matters[16].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[16].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[16].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[16].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(16)">
-            <img v-if="!matters[16].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[16].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[16].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[16].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[16].insuredResult" v-model="matters[16].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[16].policyholderResult" v-model="matters[16].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[16].policyholderResult"
+                  v-model="matters[16].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -402,20 +419,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(17)">
-            <img v-if="!matters[17].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[17].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[17].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[17].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(17)">
-            <img v-if="!matters[17].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[17].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[17].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[17].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[17].insuredResult" v-model="matters[17].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[17].policyholderResult" v-model="matters[17].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[17].policyholderResult"
+                  v-model="matters[17].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -423,20 +441,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(18)">
-            <img v-if="!matters[18].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[18].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[18].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[18].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(18)">
-            <img v-if="!matters[18].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[18].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[18].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[18].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[18].insuredResult" v-model="matters[18].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[18].policyholderResult" v-model="matters[18].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[18].policyholderResult"
+                  v-model="matters[18].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -444,20 +463,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(19)">
-            <img v-if="!matters[19].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[19].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[19].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[19].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(19)">
-            <img v-if="!matters[19].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[19].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[19].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[19].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[19].insuredResult" v-model="matters[19].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[19].policyholderResult" v-model="matters[19].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[19].policyholderResult"
+                  v-model="matters[19].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -465,20 +485,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(20)">
-            <img v-if="!matters[20].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[20].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[20].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[20].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(20)">
-            <img v-if="!matters[20].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[20].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[20].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[20].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[20].insuredResult" v-model="matters[20].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[20].policyholderResult" v-model="matters[20].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[20].policyholderResult"
+                  v-model="matters[20].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -486,20 +507,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(21)">
-            <img v-if="!matters[21].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[21].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[21].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[21].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(21)">
-            <img v-if="!matters[21].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[21].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[21].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[21].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[21].insuredResult" v-model="matters[21].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[21].policyholderResult" v-model="matters[21].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[21].policyholderResult"
+                  v-model="matters[21].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -507,20 +529,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(22)">
-            <img v-if="!matters[22].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[22].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[22].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[22].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(22)">
-            <img v-if="!matters[22].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[22].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[22].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[22].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[22].insuredResult" v-model="matters[22].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[22].policyholderResult" v-model="matters[22].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[22].policyholderResult"
+                  v-model="matters[22].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
 
@@ -529,20 +552,21 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(23)">
-            <img v-if="!matters[23].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[23].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[23].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[23].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <div class="content-state">
           <p class="recognizee">投保人</p>
           <div style="display: inline" @click="changeHolderState(23)">
-            <img v-if="!matters[23].policyholderResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[23].policyholderResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[23].policyholderResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[23].policyholderResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[23].insuredResult" v-model="matters[23].insuredRemark"
                   placeholder="被保人" maxlength="250"/>
-        <textarea class="content-text" type="text" v-if="matters[23].policyholderResult" v-model="matters[23].policyholderRemark"
+        <textarea class="content-text" type="text" v-if="matters[23].policyholderResult"
+                  v-model="matters[23].policyholderRemark"
                   placeholder="投保人" maxlength="250"/>
       </div>
     </div>
@@ -552,20 +576,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(24)">
-          <img v-if="!matters[24].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[24].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[24].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[24].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(24)">
-          <img v-if="!matters[24].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[24].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[24].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[24].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[24].insuredResult" v-model="matters[24].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[24].policyholderResult" v-model="matters[24].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[24].policyholderResult"
+                v-model="matters[24].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -588,8 +613,8 @@
         <div class="content-state">
           <p class="recognizee">被保人</p>
           <div style="display: inline" @click="changeInsuredState(25)">
-            <img v-if="!matters[25].insuredResult" src="../assets/img/switch-off.png">
-            <img v-if="matters[25].insuredResult" src="../assets/img/switch-on.png">
+            <img v-if="!matters[25].insuredResult" src="../assets/img/switch-off-1.png">
+            <img v-if="matters[25].insuredResult" src="../assets/img/switch-on-1.png">
           </div>
         </div>
         <textarea class="content-text" type="text" v-if="matters[25].insuredResult" v-model="matters[25].insuredRemark"
@@ -602,8 +627,8 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(26)">
-          <img v-if="!matters[26].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[26].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[26].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[26].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[26].insuredResult" v-model="matters[26].insuredRemark"
@@ -615,20 +640,21 @@
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(27)">
-          <img v-if="!matters[27].insuredResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[27].insuredResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[27].insuredResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[27].insuredResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <div class="content-state">
         <p class="recognizee">投保人</p>
         <div style="display: inline" @click="changeHolderState(27)">
-          <img v-if="!matters[27].policyholderResult" src="../assets/img/switch-off.png">
-          <img v-if="matters[27].policyholderResult" src="../assets/img/switch-on.png">
+          <img v-if="!matters[27].policyholderResult" src="../assets/img/switch-off-1.png">
+          <img v-if="matters[27].policyholderResult" src="../assets/img/switch-on-1.png">
         </div>
       </div>
       <textarea class="content-text" type="text" v-if="matters[27].insuredResult" v-model="matters[27].insuredRemark"
                 placeholder="被保人" maxlength="250"/>
-      <textarea class="content-text" type="text" v-if="matters[27].policyholderResult" v-model="matters[27].policyholderRemark"
+      <textarea class="content-text" type="text" v-if="matters[27].policyholderResult"
+                v-model="matters[27].policyholderRemark"
                 placeholder="投保人" maxlength="250"/>
     </div>
 
@@ -689,14 +715,21 @@
         });
       },
       next() {
-        // let test = document.getElementsByTagName("textarea");
-        // for (let i = 0; i< test.length; i++ ) {
-        //   console.log(test[i].value);
-        //   if(emoji.test(test[i].value)){
-        //
-        //   }
-        // }
-        // return false;
+        //判断表情输入
+        let textatea = document.getElementsByTagName("textarea");
+        let input = document.getElementsByTagName("input");
+        for (let i = 0; i < textatea.length; i++) {
+          if (emoji.test(textatea[i].value)) {
+            alert("输入信息不得带表情");
+            return false;
+          }
+        }
+        for (let i = 0; i < input.length; i++) {
+          if (emoji.test(input[i].value)) {
+            alert("输入信息不得带表情");
+            return false;
+          }
+        }
         //吸烟校验
         if (this.matters[4].insuredResult || this.matters[4].policyholderResult) {
           if (this.values5[0] === '' || this.values5[1] === '' || this.values5[2] === '' || this.values5[3] === '' || this.values5[4] === '' || this.values5[5] === '') {

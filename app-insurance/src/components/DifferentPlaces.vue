@@ -63,6 +63,7 @@
 <script>
   import storage from "../store/storage";
   import {Toast} from 'vux'
+  import {emoji} from "../admin/validate";
 
   export default {
     components: {Toast},
@@ -80,6 +81,15 @@
       //   this.isOther = !this.isOther;
       // },
       next() {
+        //判断表情输入
+        let textatea = document.getElementsByTagName("textarea");
+        for (let i = 0; i < textatea.length; i++) {
+          if (emoji.test(textatea[i].value)) {
+            alert("输入信息不得带表情");
+            return false;
+          }
+        }
+
         if (this.insuranceOrderOffsite.sensue === '' || this.insuranceOrderOffsite.leaveReason === '' || this.insuranceOrderOffsite.stayTime === '' || this.insuranceOrderOffsite.offsiteAddress === '') {
           this.showPositionValue = true;
           this.toastText = "请完善异地投保信息";
