@@ -7,10 +7,7 @@
 <html class="no-js">                       <!--<![endif]-->
 <head>
     <!--<script src="../js/zoomify/zoomify.js"></script>-->
-
-    <script src="../js/libs/jquery-1.11.0.min.js"></script>
-    <script src="../js/libs/jquery-ui.min.js"></script>
-
+    <script src="../js/zoomify/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="../js/district/district.js" type="text/javascript"></script>
     <script src="../js/profession/profession.js" type="text/javascript"></script>
     <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
