@@ -10,9 +10,9 @@
     </div>
 
     <!--<div class="content" style="height: auto">-->
-      <!--<p>2、您目前工作所在城市或地区名？单位名称？工作单位所属行业？您的职务？（例：深圳；深圳市前海水晶球文化传播有限公司；商业服务/内勤人员）</p>-->
-      <!--<textarea class="content-text" v-model="insuranceOrderOffsite.workplace" maxlength="510"></textarea>-->
-      <!--<div class="borderBottom"></div>-->
+    <!--<p>2、您目前工作所在城市或地区名？单位名称？工作单位所属行业？您的职务？（例：深圳；深圳市前海水晶球文化传播有限公司；商业服务/内勤人员）</p>-->
+    <!--<textarea class="content-text" v-model="insuranceOrderOffsite.workplace" maxlength="510"></textarea>-->
+    <!--<div class="borderBottom"></div>-->
     <!--</div>-->
 
     <div class="content" style="height: auto">
@@ -34,20 +34,20 @@
     </div>
 
     <!--<div class="content" style="height: auto;">-->
-      <!--<p style="text-align: left">6、是否有其他需要说明事项：-->
-        <!--<span style="margin-left: 5vw">是</span>-->
-        <!--<img style="height: 3vh; margin-bottom: -5px;" v-if="isOther" src="../assets/img/selected.png"-->
-             <!--@click="clickIsOther">-->
-        <!--<img style="height: 3vh; margin-bottom: -5px;" v-if="!isOther" src="../assets/img/unselect.png"-->
-             <!--@click="clickIsOther">-->
-        <!--<span style="margin-left: 5vw">否</span>-->
-        <!--<img style="height: 3vh; margin-bottom: -5px;" v-if="isOther" src="../assets/img/unselect.png"-->
-             <!--@click="clickIsOther">-->
-        <!--<img style="height: 3vh; margin-bottom: -5px;" v-if="!isOther" src="../assets/img/selected.png"-->
-             <!--@click="clickIsOther">-->
-      <!--</p>-->
-      <!--<textarea class="content-text" v-if="isOther" v-model="insuranceOrderOffsite.otherMatter" maxlength="510"></textarea>-->
-      <!--<div class="borderBottom" v-if="isOther"></div>-->
+    <!--<p style="text-align: left">6、是否有其他需要说明事项：-->
+    <!--<span style="margin-left: 5vw">是</span>-->
+    <!--<img style="height: 3vh; margin-bottom: -5px;" v-if="isOther" src="../assets/img/selected.png"-->
+    <!--@click="clickIsOther">-->
+    <!--<img style="height: 3vh; margin-bottom: -5px;" v-if="!isOther" src="../assets/img/unselect.png"-->
+    <!--@click="clickIsOther">-->
+    <!--<span style="margin-left: 5vw">否</span>-->
+    <!--<img style="height: 3vh; margin-bottom: -5px;" v-if="isOther" src="../assets/img/unselect.png"-->
+    <!--@click="clickIsOther">-->
+    <!--<img style="height: 3vh; margin-bottom: -5px;" v-if="!isOther" src="../assets/img/selected.png"-->
+    <!--@click="clickIsOther">-->
+    <!--</p>-->
+    <!--<textarea class="content-text" v-if="isOther" v-model="insuranceOrderOffsite.otherMatter" maxlength="510"></textarea>-->
+    <!--<div class="borderBottom" v-if="isOther"></div>-->
     <!--</div>-->
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 60px;">
@@ -69,7 +69,7 @@
     name: "differentPlaces",
     data() {
       return {
-        insuranceOrderOffsite: null,
+        insuranceOrderOffsite: storage.fetch("order").insuranceOrderOffsite,
         // isOther: false,
         showPositionValue: false,
         toastText: '',
@@ -104,14 +104,16 @@
       }
     },
     created: function () {
-      this.insuranceOrderOffsite = {
-        sensue: '',
-        workplace: '',
-        leaveReason: '',
-        stayTime: '',
-        offsiteAddress: '',
-        otherMatter: null
-      };
+      if (!storage.fetch("order").insuranceOrderOffsite || storage.fetch("order").insuranceOrderOffsite.length === 0) {
+        this.insuranceOrderOffsite = {
+          sensue: '',
+          workplace: '',
+          leaveReason: '',
+          stayTime: '',
+          offsiteAddress: '',
+          otherMatter: null
+        };
+      }
     },
     watch: {
       insuranceOrderOffsite: {

@@ -5,6 +5,7 @@ import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.util.CodeGenerator;
+import com.yunxin.cb.util.ZxingUtils;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CalendarUtils;
@@ -60,7 +61,9 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
         insuranceOrder.setOrderCode(CodeGenerator.getInsuranceCode());
         insuranceOrder.setCreateTime(new Date());
-
+        //生成条形码
+        String barCode = ZxingUtils.encodeBarCodeToBase64(insuranceOrder.getOrderCode(), 150, 50);
+        insuranceOrder.setBarCode(barCode);
         InsuranceOrderInsured insuranceOrderInsured= insuranceOrder.getInsuranceOrderInsured();
         insuranceOrderInsuredDao.save(insuranceOrderInsured);
 

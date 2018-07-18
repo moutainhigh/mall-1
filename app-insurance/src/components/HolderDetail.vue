@@ -425,6 +425,7 @@
         </div>
       </div>
     </div>
+    <div style="width: 100%; height: 5px; background: #fff"></div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <!--<div style="height: 50px;">-->
     <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #f5ca1d" @click="comeBack">-->

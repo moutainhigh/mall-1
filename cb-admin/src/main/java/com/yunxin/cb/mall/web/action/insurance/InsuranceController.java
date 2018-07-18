@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.web.action.insurance;
 
+import com.itextpdf.text.pdf.BaseFont;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.insurance.service.IInsuranceOrderOffsiteService;
@@ -145,7 +146,7 @@ public class InsuranceController {
         response.setContentType("application/octet-stream;charset=UTF-8");
         ITextRenderer renderer = new ITextRenderer();
         ITextFontResolver fontResolver = renderer.getFontResolver();
-//        fontResolver.addFont("/Users/hehe/share/Fonts/simsun.ttc", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+        fontResolver.addFont("/C://Windows//Fonts", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
         OutputStream os = response.getOutputStream();
         try {
             String htmlstr = HttpsUtils.doGet("http://localhost:8080/admin/insurance/prints.do?orderId=" + orderId);//HttpHandler.sendGet只是单纯获得指定网页的html字符串内容
