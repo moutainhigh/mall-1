@@ -700,7 +700,7 @@
           alert("输入长度不得大于3位");
           return false;
         }
-        if (this.values5[0] === '0' || this.values5[1] === '0' || this.values5[3] === '0' || this.values5[5] === '0') {
+        if (parseInt(this.values5[0]) <= 0 || parseInt(this.values5[1]) <= 0 || parseInt(this.values5[3]) <= 0 || parseInt(this.values5[5]) <= 0) {
           alert("请输入大于0的整数");
           return false;
         }
@@ -715,16 +715,16 @@
           alert("怀孕周数长度不大于3");
           return false;
         }
-        if (this.values11 === '0') {
-          alert("怀孕周数不能为0");
+        if (parseInt(this.values11) <= 0) {
+          alert("怀孕周数不能小于0");
           return false;
         }
         if (this.values12[0].length > 3 || this.values12[1].length > 3 || this.values12[3].length > 3) {
           alert("婴儿信息栏填写长度不大于3");
           return false;
         }
-        if (this.values12[0] === '0' || this.values12[1] === '0' || this.values12[3] === '0') {
-          alert("婴儿信息栏填写不能为0");
+        if (parseInt(this.values12[0]) <= 0 || parseInt(this.values12[1]) <= 0 || parseInt(this.values12[3]) <= 0) {
+          alert("婴儿信息栏填写数据需大于0");
           return false;
         }
         this.enableSumit = true;
@@ -775,7 +775,7 @@
               this.showPositionValue = true;
               this.toastText = "输入长度不得大于3位";
             }
-            if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0' || newVal[5] === '0') {
+            if (parseInt(newVal[0]) <= 0 || parseInt(newVal[1]) <= 0 || parseInt(newVal[3]) <= 0 || parseInt(newVal[5]) <= 0) {
               this.showPositionValue = true;
               this.toastText = "请输入大于0的整数";
             }
@@ -804,7 +804,7 @@
               this.showPositionValue = true;
               this.toastText = "输入长度不得大于3位";
             }
-            if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0') {
+            if (parseInt(newVal[0]) <= 0 || parseInt(newVal[1]) <= 0 || parseInt(newVal[3]) <= 0) {
               this.showPositionValue = true;
               this.toastText = "请输入大于0的整数";
             }
@@ -823,7 +823,7 @@
           this.showPositionValue = true;
           this.toastText = "输入长度不得大于3位";
         }
-        if (newVal === '0') {
+        if (parseInt(newVal) <= 0) {
           this.showPositionValue = true;
           this.toastText = "请输入大于0的整数";
         }
@@ -839,7 +839,6 @@
     created: function () {
       if (storage.fetch("matters").length !== 0) {
         if (storage.fetch("matters")[4].collectValues) {
-          console.log("111")
           this.values5 = JSON.parse(storage.fetch("matters")[4].collectValues);
         }
         this.values11 = storage.fetch("matters")[10].collectValues;
@@ -847,7 +846,7 @@
           this.values12 = JSON.parse(storage.fetch("matters")[25].collectValues);
         }
       } else {
-        let matters =[];
+        let matters = [];
         for (let i = 1; i <= 28; i++) {
           matters.push(
             {
