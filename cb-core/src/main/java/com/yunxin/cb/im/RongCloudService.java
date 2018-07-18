@@ -10,6 +10,7 @@ import io.rong.models.response.BlackListResult;
 import io.rong.models.response.ResponseResult;
 import io.rong.models.response.TokenResult;
 import io.rong.models.user.UserModel;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,9 +47,10 @@ public class RongCloudService {
     public void update(Customer customer) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         User User = rongCloud.user;
+        String nickName = StringUtils.isNotBlank(customer.getNickName())?customer.getNickName():customer.getAccountName();
         UserModel user = new UserModel()
                 .setId(customer.getAccountName())
-                .setName(customer.getNickName())
+                .setName(nickName)
                 .setPortrait(customer.getAvatarUrl());
 
         Result result = User.update(user);
