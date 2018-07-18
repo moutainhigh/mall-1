@@ -1,9 +1,9 @@
-# 生产环境配置
+# 测试环境配置
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/skc?useUnicode=true&autoReconnect=true&characterEncoding=utf-8
     username: root
-    password: Yunxin1234
+    password: Yunxin@2018!#%
   session:
      store-type: none
   jpa:
@@ -15,7 +15,7 @@ spring:
       open-in-view: false
       properties:
           hibernate.format_sql: true
-          hibernate.search.default.indexBase: /opt/www/cb/admin/index
+          hibernate.search.default.indexBase: /data/webapps/admin/temp/index
   resources:
       #资源缓存时间，单位秒
       cache-period: 604800
@@ -24,6 +24,13 @@ spring:
           gzipped: true
           #启用缓存
           cache: true
+  mvc:
+      view:
+          # 页面默认前缀目录
+          prefix: /WEB-INF/jsp/
+          # 响应页面默认后缀
+          suffix: .jsp
+
 #7牛云存储
 qiniu:
   accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
@@ -42,4 +49,4 @@ rongcloud:
 application:
   default:
     avatarUrl: http://pb9sg55i7.bkt.clouddn.com/avatar.png
-  uploadPath: /opt/www
+  uploadPath: /data/webapps/admin/temp/images
