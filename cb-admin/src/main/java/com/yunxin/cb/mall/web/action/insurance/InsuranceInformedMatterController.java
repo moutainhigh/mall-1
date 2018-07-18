@@ -81,7 +81,6 @@ public class InsuranceInformedMatterController {
     @RequestMapping(value = "pageaddMatter",method = RequestMethod.POST)
     @ResponseBody
     public Page<InsuranceInformedMatter> pageaddMatter(@RequestBody PageSpecification<InsuranceInformedMatter> query,@RequestParam("prodId") String prodId) {
-        query.setPageSize(6);
 //        List<InsuranceInformedMatter> list = insuranceInformedMatterService.pageaddMatter(query).getContent();
 //        int pros=Integer.parseInt(prodId);
 //        InsuranceProduct insuranceProduct = insuranceProductService.getInsuranceProductById(pros);

@@ -35,8 +35,8 @@
         </header>
     </div>
     <div class="table-wrapper">
-        <kendo:grid name="commodityGrid" pageable="true" sortable="true" filterable="true" selectable="true" height="350">
-            <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="10"/>
+        <kendo:grid name="commodityGrid" pageable="true" sortable="true" filterable="true" selectable="true" height="500">
+            <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="8"/>
             <kendo:grid-filterable extra="false">
                 <kendo:grid-filterable-messages filter="查询" clear="清除" info="请输入查询条件:"/>
                 <kendo:grid-filterable-operators>
@@ -45,8 +45,9 @@
                 </kendo:grid-filterable-operators>
             </kendo:grid-filterable>
             <kendo:grid-columns>
-                <kendo:grid-column title="&nbsp;&nbsp;All&nbsp;&nbsp;<input type='checkbox' id='checkall'/>" field="matterId" width="20" template="<input type='checkbox' id='#: matterId #' name='selectedCommodityId' value='#: matterId #' />" sortable="false" filterable="false"/>
+                <kendo:grid-column title="All&nbsp;<input type='checkbox' id='checkall'/>" field="matterId" width="20" template="<input type='checkbox' id='#: matterId #' name='selectedCommodityId' value='#: matterId #' />" sortable="false" filterable="false"/>
                 <kendo:grid-column title="事项描述" filterable="false" field="matterDescription" width="180"/>
+                <kendo:grid-column title="事项组描述" filterable="false" field="matterGroup.description" width="80"/>
                 <kendo:grid-column title="事项类型" filterable="false" field="matterType" template="#= matterType ? '是否题' : '填空题' #" width="40"/>
             </kendo:grid-columns>
             <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
