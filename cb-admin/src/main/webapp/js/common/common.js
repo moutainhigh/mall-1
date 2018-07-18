@@ -1,3 +1,9 @@
+$(function () {
+    bootbox.setDefaults({
+        locale:"zh_CN"
+    });
+});
+
 /**
  * Created by Aidy_He on 16/1/16.
  */
