@@ -74,7 +74,8 @@ const order = {
     bankCity: '',
     accountType: [],
     accountNo: '',
-    bankCardImg: ''
+    bankCardImg: '',
+    bankPc: []
   },
   insuranceOrderOffsite: null,
   legalBeneficiary: true,

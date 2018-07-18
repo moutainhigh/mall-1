@@ -42,7 +42,7 @@
       <div class="title">
         被保人信息
       </div>
-      <div class="d-card">
+      <div class="d-card" v-if="insured">
         <div class="d-cell">
           <div class="d-cell-item">姓名</div>
           <div class="d-cell-val">{{insured.insuredName}}</div>
@@ -57,7 +57,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">年龄</div>
-          <div class="d-cell-val">{{insured.insuredBirthday}}</div>
+          <div class="d-cell-val">{{ageYear(insured.insuredBirthday)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">证件类型</div>
@@ -78,10 +78,12 @@
         <div class="d-cell">
           <div class="d-cell-item">身高</div>
           <div class="d-cell-val">{{insured.insuredHeight}}</div>
+          <div class="d-cell-end">cm</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">体重</div>
           <div class="d-cell-val">{{insured.insuredBodyWeight}}</div>
+          <div class="d-cell-end">kg</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">婚姻状况</div>
@@ -97,7 +99,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">住址</div>
-          <div class="d-cell-val">小明</div>
+          <div class="d-cell-val">{{district(insured.insuredProvince,insured.insuredCity,insured.insuredDistrict)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">详细住址</div>
@@ -105,7 +107,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">职业</div>
-          <div class="d-cell-val">小明</div>
+          <div class="d-cell-val">{{career(insured.insuredCareer)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">年收入</div>
@@ -117,7 +119,7 @@
       <div class="title">
         投保人信息
       </div>
-      <div class="d-card">
+      <div class="d-card" v-if="holder">
         <div class="d-cell">
           <div class="d-cell-item">姓名</div>
           <div class="d-cell-val">{{holder.policyholderName}}</div>
@@ -132,7 +134,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">年龄</div>
-          <div class="d-cell-val">小明</div>
+          <div class="d-cell-val">{{ageYear(holder.policyholderBirthday)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">证件类型</div>
@@ -153,10 +155,12 @@
         <div class="d-cell">
           <div class="d-cell-item">身高</div>
           <div class="d-cell-val">{{holder.policyholderHeight}}</div>
+          <div class="d-cell-end">cm</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">体重</div>
           <div class="d-cell-val">{{holder.policyholderBodyWeight}}</div>
+          <div class="d-cell-end">kg</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">婚姻状况</div>
@@ -176,7 +180,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">住址</div>
-          <div class="d-cell-val">小明</div>
+          <div class="d-cell-val">{{district(holder.policyholderProvince,holder.policyholderCity,holder.policyholderDistrict)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">详细住址</div>
@@ -184,11 +188,12 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">职业</div>
-          <div class="d-cell-val">{{holder.policyholderCareer}}</div>
+          <div class="d-cell-val">{{career(holder.policyholderCareer)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">年收入</div>
           <div class="d-cell-val">{{holder.policyholderIncome}}</div>
+          <div class="d-cell-end">万元</div>
         </div>
       </div>
 
@@ -238,18 +243,33 @@
         </div>
       </div>
     </div>
+
+    <div v-if="tab == 'place'">
+      <place insuranceOrderOffsite="order.insuranceOrderOffsite" :en-show="holder.policyholderCity !== '440300'"></place>
+    </div>
+
+    <div v-if="tab === 'matter'">
+      <MatterDetail :matters ="order.insuranceOrderInformedMatters"></MatterDetail>
+    </div>
   </div>
 </template>
 
 <script>
   import {getOrderDetail} from "../../service/getData";
+  import {ChinaAddressData} from 'vux'
+  import MatterDetail from './MatterDetail'
   import { ButtonTab,ButtonTabItem} from 'vux'
+  import {arrayContain,ageYear} from "../../config/mUtils";
+  import {careerCode} from "../../admin/career";
+  import Place from "./Place";
 
   export default {
     name: "orderDetail",
     components:{
+      Place,
       ButtonTab,
-      ButtonTabItem
+      ButtonTabItem,
+      MatterDetail
     },
     data(){
       return {
@@ -257,7 +277,8 @@
         insured:'',
         holder:'',
         beneficiaries:[],
-        order:''
+        order:'',
+        addr:ChinaAddressData
       }
     },
     methods:{
@@ -274,9 +295,25 @@
           case "ON_SURRENDER":
             return "已退保";
         }
+      },
+      district(province,city,district){
+        let result = '';
+        result = result + arrayContain(province,this.addr,"value")['name'] + " ";
+        result = result + arrayContain(city,this.addr,"value")['name'] + " ";
+        result = result + arrayContain(district,this.addr,"value")['name'] + " ";
+        return result;
+      },
+      career(code){
+        return arrayContain(code,careerCode,"key");
+      },
+      ageYear(birthday){
+        return ageYear(birthday);
       }
     },
     created() {
+      this.$vux.loading.show({
+        text: '加载中...'
+      });
       let _this = this;
       let order;
       let orderCode = this.$route.query.orderCode;
@@ -287,6 +324,7 @@
           _this.insured = res.data.insuranceOrderInsured;
           _this.holder = res.data.insuranceOrderPolicyholder;
           _this.beneficiaries = res.data.insuranceOrderBeneficiarys;
+          this.$vux.loading.hide();
         })
       }
     }
@@ -311,6 +349,7 @@
   }
 
   .d-cell {
+    display: flex;
     border-bottom: #ececec 1px solid;
     padding: 10px 0;
     margin-bottom: -1px;
@@ -318,17 +357,20 @@
 
   .d-cell .d-cell-item {
     display: inline-block;
-    width: 7rem;
+    flex: 0 0 7rem;
   }
 
   .d-cell .d-cell-val {
     display: inline-block;
     color: #c5c5c5;
+    flex: auto;
   }
 
   .d-cell .d-cell-end {
     float: right;
-    right: 10px;
+    margin-right: 5px;
+    color: #c5c5c5;
+    font-size: 15px;
   }
 
   .vux-button-group > a.vux-button-group-current {

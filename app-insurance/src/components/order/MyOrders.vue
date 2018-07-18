@@ -40,7 +40,7 @@
           <div class="dt-price">
             <div>
               <div class="dt-price-pro">
-                2万/5万/10万
+                ￥{{order.insuranceProductPrice.price}}
               </div>
               <!--<button>-->
               <!--立即投保-->
@@ -145,7 +145,6 @@
         }
       },
       detail(orderCode) {
-        // window.location.href = "http://mall.999shuijingqiu.com//admin/insurance/prints.do?orderId=" + orderId;
         this.$router.push({
           path:'/order-detail',
           query:{
