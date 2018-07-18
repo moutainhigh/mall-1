@@ -38,4 +38,4 @@ export const getOrders = function (query) {
 
 export const getOrderDetail = function (orderCode) {
   return fetch('/insurance/order/getOrder/'+orderCode ,{}, 'POST','fetch');
-}
+};

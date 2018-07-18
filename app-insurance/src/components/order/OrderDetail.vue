@@ -42,7 +42,7 @@
       <div class="title">
         被保人信息
       </div>
-      <div class="d-card">
+      <div class="d-card" v-if="insured">
         <div class="d-cell">
           <div class="d-cell-item">姓名</div>
           <div class="d-cell-val">{{insured.insuredName}}</div>
@@ -57,7 +57,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">年龄</div>
-          <div class="d-cell-val">{{insured.insuredBirthday}}</div>
+          <div class="d-cell-val">{{ageYear(insured.insuredBirthday)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">证件类型</div>
@@ -97,7 +97,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">住址</div>
-          <div class="d-cell-val">小明</div>
+          <div class="d-cell-val">{{district(insured.insuredProvince,insured.insuredCity,insured.insuredDistrict)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">详细住址</div>
@@ -105,7 +105,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">职业</div>
-          <div class="d-cell-val">小明</div>
+          <div class="d-cell-val">{{career(insured.insuredCareer)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">年收入</div>
@@ -117,7 +117,7 @@
       <div class="title">
         投保人信息
       </div>
-      <div class="d-card">
+      <div class="d-card" v-if="holder">
         <div class="d-cell">
           <div class="d-cell-item">姓名</div>
           <div class="d-cell-val">{{holder.policyholderName}}</div>
@@ -132,7 +132,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">年龄</div>
-          <div class="d-cell-val">小明</div>
+          <div class="d-cell-val">{{ageYear(holder.policyholderBirthday)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">证件类型</div>
@@ -176,7 +176,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">住址</div>
-          <div class="d-cell-val">小明</div>
+          <div class="d-cell-val">{{district(holder.policyholderProvince,holder.policyholderCity,holder.policyholderDistrict)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">详细住址</div>
@@ -184,7 +184,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">职业</div>
-          <div class="d-cell-val">{{holder.policyholderCareer}}</div>
+          <div class="d-cell-val">{{career(holder.policyholderCareer)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">年收入</div>
@@ -238,16 +238,25 @@
         </div>
       </div>
     </div>
+
+    <div v-if="tab == 'place'">
+      <place insuranceOrderOffsite="" :en-show="holder.policyholderCity !== '440300'"></place>
+    </div>
   </div>
 </template>
 
 <script>
   import {getOrderDetail} from "../../service/getData";
+  import {ChinaAddressData} from 'vux'
   import { ButtonTab,ButtonTabItem} from 'vux'
+  import {arrayContain,ageYear} from "../../config/mUtils";
+  import {careerCode} from "../../admin/career";
+  import Place from "./Place";
 
   export default {
     name: "orderDetail",
     components:{
+      Place,
       ButtonTab,
       ButtonTabItem
     },
@@ -257,7 +266,8 @@
         insured:'',
         holder:'',
         beneficiaries:[],
-        order:''
+        order:'',
+        addr:ChinaAddressData
       }
     },
     methods:{
@@ -274,9 +284,25 @@
           case "ON_SURRENDER":
             return "已退保";
         }
+      },
+      district(province,city,district){
+        let result = '';
+        result = result + arrayContain(province,this.addr,"value")['name'] + " ";
+        result = result + arrayContain(city,this.addr,"value")['name'] + " ";
+        result = result + arrayContain(district,this.addr,"value")['name'] + " ";
+        return result;
+      },
+      career(code){
+        return arrayContain(code,careerCode,"key");
+      },
+      ageYear(birthday){
+        return ageYear(birthday);
       }
     },
     created() {
+      this.$vux.loading.show({
+        text: '加载中...'
+      });
       let _this = this;
       let order;
       let orderCode = this.$route.query.orderCode;
@@ -287,6 +313,7 @@
           _this.insured = res.data.insuranceOrderInsured;
           _this.holder = res.data.insuranceOrderPolicyholder;
           _this.beneficiaries = res.data.insuranceOrderBeneficiarys;
+          this.$vux.loading.hide();
         })
       }
     }

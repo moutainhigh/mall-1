@@ -139,7 +139,7 @@
 
         let _this = this;
         this.$vux.loading.show({
-          text: 'Loading'
+          text: '加载中...'
         });
         submitOrder(this.code).then(function (res) {
           if (res.result === 'SUCCESS') {

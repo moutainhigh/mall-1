@@ -40,7 +40,7 @@
           <div class="dt-price">
             <div>
               <div class="dt-price-pro">
-                2万/5万/10万
+                ￥{{order.insuranceProductPrice.price}}
               </div>
               <!--<button>-->
               <!--立即投保-->
