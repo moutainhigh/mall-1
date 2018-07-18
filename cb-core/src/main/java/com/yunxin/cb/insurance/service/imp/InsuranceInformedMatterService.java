@@ -64,11 +64,51 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
         Page<InsuranceInformedMatter> page = insuranceInformedMatterDao.findAll(query, query.getPageRequest());
         List<InsuranceInformedMatter> listmatter=page.getContent();
         for (InsuranceInformedMatter matter:listmatter){
-              if(null==matter.getMatterGroup()){
-                  InsuranceInformedMatterGroup group =new InsuranceInformedMatterGroup();
-                  group.setDescription("");
-                  matter.setMatterGroup(group);
-              }
+            if(null==matter.getMatterGroup()){
+                InsuranceInformedMatterGroup group =new InsuranceInformedMatterGroup();
+                group.setDescription("");
+                matter.setMatterGroup(group);
+            }
+        }
+        return page;
+    }
+
+    @Override
+    public Page<InsuranceInformedMatter> pageaddMatter(PageSpecification<InsuranceInformedMatter> query){
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
+        for (PageSpecification.FilterDescriptor filterDescriptor:list
+                ) {
+            if("createTime".equals(filterDescriptor.getField())){
+                Date createTime= null;
+                SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
+                    String createTimes=simpleDateFormat.format(dates);
+                    filterDescriptor.setValue(createTimes);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        query.setCustomSpecification(new CustomSpecification<InsuranceInformedMatter>() {
+            @Override
+            public void buildFetch(Root<InsuranceInformedMatter> root) {
+                root.fetch(InsuranceInformedMatter_.matterGroup, JoinType.LEFT);
+            }
+            @Override
+            public void addConditions(Root<InsuranceInformedMatter> root, CriteriaQuery<?> query,
+                                      CriteriaBuilder builder, List<Predicate> predicates) {
+            }
+        });
+        Page<InsuranceInformedMatter> page = insuranceInformedMatterDao.findAll(query, query.getPageRequest());
+        List<InsuranceInformedMatter> listmatter=page.getContent();
+        for (InsuranceInformedMatter matter:listmatter){
+            if(null==matter.getMatterGroup()){
+                InsuranceInformedMatterGroup group =new InsuranceInformedMatterGroup();
+                group.setDescription("");
+                matter.setMatterGroup(group);
+            }
         }
         return page;
     }

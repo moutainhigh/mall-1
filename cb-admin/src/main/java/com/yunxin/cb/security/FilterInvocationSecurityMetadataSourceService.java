@@ -50,6 +50,7 @@ public class FilterInvocationSecurityMetadataSourceService implements FilterInvo
             "/kendo/**",
             "/templates/**",
             "/upload/**",
+            "/insurance/prints.do**",
             "/app/**",
     };
 
