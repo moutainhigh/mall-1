@@ -240,7 +240,7 @@
     </div>
 
     <div v-if="tab === 'matter'">
-      <MatterDetail></MatterDetail>
+      <MatterDetail :matters ="order.insuranceOrderInformedMatters"></MatterDetail>
     </div>
   </div>
 </template>
