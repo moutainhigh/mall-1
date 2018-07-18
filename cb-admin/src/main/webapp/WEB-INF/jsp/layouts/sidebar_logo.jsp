@@ -11,7 +11,7 @@
     <%--<span class="indicator-dot">2</span>--%>
     <ul class="sidebar-profile-list">
       <li><h3>Hi, ${sessionScope.loginSession.userName}</h3></li>
-      <li> <a href="<c:url value="../index.do" />">退出</a></li>
+      <li> <a href="<c:url value="../logout" />">退出</a></li>
     </ul>
   </div>
 </div>
