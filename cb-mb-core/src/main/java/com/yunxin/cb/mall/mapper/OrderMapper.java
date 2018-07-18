@@ -72,6 +72,7 @@ public interface OrderMapper {
         "#{customerId,jdbcType=INTEGER}, #{logisticId,jdbcType=INTEGER}, ",
         "#{sellerId,jdbcType=INTEGER})"
     })
+    @Options(useGeneratedKeys=true, keyProperty="orderId", keyColumn="ORDER_ID")
     int insert(Order record);
 
     /**

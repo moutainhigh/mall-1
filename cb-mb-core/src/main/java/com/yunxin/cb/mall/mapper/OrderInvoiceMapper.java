@@ -41,6 +41,7 @@ public interface OrderInvoiceMapper {
         "#{registerPhone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, ",
         "#{taxpayerNo,jdbcType=VARCHAR}, #{orderId,jdbcType=INTEGER})"
     })
+    @Options(useGeneratedKeys=true, keyProperty="invoiceId", keyColumn="INVOICE_ID")
     int insert(OrderInvoice record);
 
     /**
