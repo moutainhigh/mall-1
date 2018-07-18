@@ -28,8 +28,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author likang
- */
+* @Description:    保险合同编号
+* @Author:         likang
+* @CreateDate:     2018/7/17 20:59
+*/
 @Controller
 @RequestMapping(value = "/insuranceordercode")
 @SessionAttributes({SecurityConstants.LOGIN_SESSION})
@@ -38,17 +40,26 @@ public class InsuranceOrderCodeController {
     @Resource
     private IInsuranceOrderCodeService insuranceOrderCodeService;
 
-
+    /**
+     * 跳转页面
+     * @author      likang
+     * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 20:59
+     */
     @RequestMapping(value = "insuranceordercodes")
     public String insuranceordercodes(ModelMap modelMap) {
         return "insuranceordercode/insuranceordercodes";
     }
 
     /**
-     * InsuranceOrderCode分页
-     *
-     * @param
-     * @return
+     * 分页
+     * @author      likang
+     * @param query
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.insurance.entity.InsuranceOrderCode>
+     * @exception
+     * @date        2018/7/17 21:00
      */
     @RequestMapping(value = "pageInsuranceOrderCode",method = RequestMethod.POST)
     @ResponseBody
@@ -58,9 +69,12 @@ public class InsuranceOrderCodeController {
 
 
     /**
-     *
+     * 跳转到导入页面
+     * @author      likang
      * @param modelMap
-     * @return
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:00
      */
     @RequestMapping(value = "upload")
     public String upload(ModelMap modelMap) {
@@ -68,12 +82,14 @@ public class InsuranceOrderCodeController {
     }
 
     /**
-     * 导入excel
+     * 导入EXCEL
+     * @author      likang
      * @param request
-     * @param response
-     * @param session
-     * @return
-     * @throws Exception
+    * @param response
+    * @param session
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:01
      */
     @RequestMapping(value = "uploadPayerCreditInfoExcel")
     public String uploadPayerCreditInfoExcel(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {

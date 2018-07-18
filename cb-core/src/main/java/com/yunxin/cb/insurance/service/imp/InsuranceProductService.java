@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -48,6 +49,16 @@ public class InsuranceProductService implements IInsuranceProductService {
     @Transactional
     public InsuranceProduct addInsuranceProduct(InsuranceProduct insuranceProduct) {
         insuranceProduct.setCreateTime(new Date());
+        int[] matterIds=insuranceProduct.getMatterIds();
+        Set<InsuranceInformedMatter> insuranceInformedMatters=insuranceProduct.getInsuranceInformedMatters();
+        insuranceInformedMatters.clear();
+        if (matterIds != null) {
+            for (int i = 0; i < matterIds.length; i++) {
+                InsuranceInformedMatter matter=insuranceInformedMatterDao.findOne(matterIds[i]);
+                insuranceInformedMatters.add(matter);
+            }
+        }
+        insuranceProduct.setInsuranceInformedMatters(insuranceInformedMatters);
         return insuranceProductDao.save(insuranceProduct);
     }
 
@@ -98,6 +109,16 @@ public class InsuranceProductService implements IInsuranceProductService {
     @Transactional
     public InsuranceProduct updateInsuranceProduct(InsuranceProduct insuranceProduct){
         InsuranceProduct oldProduct = insuranceProductDao.findOne(insuranceProduct.getProdId());
+        int[] matterIds=insuranceProduct.getMatterIds();
+        Set<InsuranceInformedMatter> insuranceInformedMatters=insuranceProduct.getInsuranceInformedMatters();
+        insuranceInformedMatters.clear();
+        if (matterIds != null) {
+            for (int i = 0; i < matterIds.length; i++) {
+                InsuranceInformedMatter matter=insuranceInformedMatterDao.findOne(matterIds[i]);
+                insuranceInformedMatters.add(matter);
+            }
+        }
+        oldProduct.setInsuranceInformedMatters(insuranceInformedMatters);
         oldProduct.setDescription(insuranceProduct.getDescription());
         oldProduct.setProdName(insuranceProduct.getProdName());
         oldProduct.setProtectionYear(insuranceProduct.getProtectionYear());
