@@ -839,7 +839,6 @@
     created: function () {
       if (storage.fetch("matters").length !== 0) {
         if (storage.fetch("matters")[4].collectValues) {
-          console.log("111")
           this.values5 = JSON.parse(storage.fetch("matters")[4].collectValues);
         }
         this.values11 = storage.fetch("matters")[10].collectValues;

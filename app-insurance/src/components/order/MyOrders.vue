@@ -145,7 +145,6 @@
         }
       },
       detail(orderCode) {
-        // window.location.href = "http://mall.999shuijingqiu.com//admin/insurance/prints.do?orderId=" + orderId;
         this.$router.push({
           path:'/order-detail',
           query:{

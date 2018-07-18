@@ -107,6 +107,16 @@ public class InsuranceProduct implements Serializable {
     private Set<InsuranceInformedMatter> insuranceInformedMatters = new HashSet(0);
     //columns END
 
+    private int[] matterIds;
+
+    @Transient
+    public int[] getMatterIds() {
+        return matterIds;
+    }
+
+    public void setMatterIds(int[] matterIds) {
+        this.matterIds = matterIds;
+    }
 
     public InsuranceProduct() {
     }

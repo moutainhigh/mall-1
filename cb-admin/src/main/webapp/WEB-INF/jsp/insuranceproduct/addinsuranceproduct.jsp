@@ -13,15 +13,27 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
     <title>保险产品详情</title>
+    <style>
+        table {
+            border: solid 1px;
+        }
 
+        table tr {
+            border: solid 1px;
+        }
+
+        table td {
+            text-align: center;
+            border: solid 1px;
+            padding: 10px;
+        }
+    </style>
     <script type="text/javascript">
         $(document).ready(function() {
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
-
         });
         //建立一個可存取到該file的url
         function getObjectURL(file) {
@@ -36,19 +48,31 @@
             return url;
         }
 
-        $(function () {
-            $('img[name="viewImg"]').click(function () {
-                var width = $(this).width();
-                if (width == 200) {
-                    $(this).width(600);
-                    $(this).height(600);
-                }
-                else {
-                    $(this).width(200);
-                    $(this).height(200);
+
+
+        /**
+         *上传图片
+         */
+        function onchangeImg(imgId){
+            var formData = new FormData();
+            formData.append("file", $('#upload')[0].files[0]);
+            $.ajax({
+                url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result.code == 0) {
+                        $('#'+imgId).val(result.url);
+                    }
+                },
+                error: function (err) {
                 }
             });
-
+        }
+        $(function () {
             $("#headPic").click(function () {
                 $("#upload").click(); //隐藏了input:file样式后，点击头像就可以本地上传
                 $("#upload").on("change", function () {
@@ -68,52 +92,49 @@
                     }
                 });
             });
-
-            //图片上传
-            $("#upload_img").click(function () {
-                var formData = new FormData();
-                formData.append("file", $('#upload')[0].files[0]);
-                $.ajax({
-                    url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
-                    type: 'POST',
-                    cache: false,
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (result) {
-                        alert(result.info);
-                        if (result.code == 0) {
-                            $('#prodImg').val(result.url);
-                        }
-                    },
-                    error: function (err) {
-                    }
-                });
-            });
-
-
-            //图片上传
-            $("#upload_img1").click(function () {
-                var formData = new FormData();
-                formData.append("file", $('#upload')[0].files[0]);
-                $.ajax({
-                    url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
-                    type: 'POST',
-                    cache: false,
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (result) {
-                        alert(result.info);
-                        if (result.code == 0) {
-                            $('#descriptionImg').val(result.url);
-                        }
-                    },
-                    error: function (err) {
-                    }
-                });
-            });
         });
+
+        var idcIndex = 0;
+
+        function removeCommodity(indx) {
+            $("#commodity" + indx).remove();
+            idcIndex--;
+        }
+
+        function showCommodityDialog() {
+            $('#commodityDialog').modal();
+        }
+
+        function chooseCommodity() {
+            var selectedCommodityIds=$("#commodityGrid input[type='checkbox'][name='selectedCommodityId']:checked");
+            if(selectedCommodityIds!=null&&selectedCommodityIds.length>0){
+                $.each(selectedCommodityIds,function(n,selectedBox) {
+                    var gridData = $("#commodityGrid").data("kendoGrid").dataSource;
+                    var selectedCommodityId=$(selectedBox).attr('value');
+                    $.each(gridData.data(),function(i,dataItem){
+                        if(dataItem.matterId==selectedCommodityId){
+                            var matterType='';
+                            if(dataItem.matterType==0){
+                                matterType="是否题";
+                            }else{
+                                matterType="填空题";
+                            }
+                            var newRow = "<tr id='commodity" + idcIndex + "'><td><input type='hidden' name='matterIds' value='"+selectedCommodityId+"'/>"+dataItem.matterDescription+"</td>" +
+                                "<td>"+matterType+"</td>" +
+                                "<td><a type='button' title='删除' class='btn btn-default' href='javascript:removeCommodity(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
+                            $("#commodityTable tr:last").after(newRow);
+                            idcIndex++;
+                            return ;
+                        }
+                    });
+                });
+            }else{
+                alert("请选择商品");
+                return ;
+            }
+            clearCheck();
+            $('#commodityDialog').modal("hide");
+        }
     </script>
 </head>
 <body>
@@ -128,6 +149,7 @@
      ******************************************** -->
 
 <jsp:include page="../layouts/left.jsp"/>
+<jsp:include page="../layouts/sidebarRight.jsp"/>
 <!-- End aside -->
 
 <!-- ********************************************
@@ -433,7 +455,7 @@
              *                                          *
              * the part which contains the main content *
              ******************************************** -->
-
+        <div style="display: none" id="matterDiv"></div>
         <div class="window">
             <div class="actionbar">
                 <div class="pull-left">
@@ -449,60 +471,61 @@
             <!-- End .actionbar-->
             <div class="inner-padding">
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
-                <fieldset>
-                    <legend>保险产品</legend>
-                    <form:form id="validateSubmitForm" action="addInsuranceProduct.do" cssClass="form-horizontal"
-                               method="post"
-                               commandName="insuranceProduct">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label><span class="asterisk">*</span>产品名称：</label>
-                        </div>
-                        <div class="col-sm-3">
-                            <form:input path="prodName" value="" cssClass="form-control validate[required,minSize[1]]"
-                                        maxlength="32"/>
-                        </div>
-                        <div class="col-sm-2">
-                            <label><span class="asterisk">*</span>保障年限：</label>
-                        </div>
-                        <div class="col-sm-3">
-                            <form:input path="protectionYear" cssClass="form-control validate[required,minSize[1]]"/>
-                        </div>
-                    </div>
-                    <div class="spacer-10"></div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label><span class="asterisk">*</span>保险期间：</label>
-                        </div>
-                        <div class="col-sm-3">
-                            <form:input path="insurePeriod" cssClass="form-control validate[required,minSize[1]]"/>
-                        </div>
-                        <div class="col-sm-2">
-                            <label>标签：</label>
-                        </div>
-                        <div class="col-sm-3">
-                            <form:input path="tags" cssClass="form-control validate[required,minSize[1]]"/>
-                        </div>
-                    </div>
-                    <div class="spacer-10"></div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label><span class="asterisk">*</span>投保须知：</label>
-                        </div>
-                        <div class="col-sm-3">
-                            <form:textarea path="instruction" cssClass="form-control validate[required,minSize[1]]"/>
-                        </div>
-                        <div class="col-sm-2">
-                            <label>产品描述：</label>
-                        </div>
-                        <div class="col-sm-3">
-                            <form:textarea path="description" cssClass="form-control validate[required,minSize[1]]"/>
-                        </div>
-                    </div>
-                    <div class="spacer-10"></div>
-                    <div class="spacer-10"></div>
 
-                    <div class="row">
+                <form:form id="validateSubmitForm" action="addInsuranceProduct.do" cssClass="form-horizontal"
+                           method="post"
+                           commandName="insuranceProduct">
+                    <fieldset>
+                        <legend>保险产品</legend>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>产品名称：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input path="prodName" value="" cssClass="form-control validate[required,minSize[2]]"
+                                            maxlength="32"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>保障年限：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input path="protectionYear"
+                                            cssClass="form-control validate[required,minSize[1]]"/>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>保险期间：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input path="insurePeriod" cssClass="form-control validate[required,minSize[1]]"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>标签：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input path="tags" cssClass="form-control validate[required,minSize[1]]"/>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>投保须知：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input path="instruction" cssClass="form-control validate[required,minSize[2]]"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>产品描述：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:textarea path="description" cssClass="form-control validate[required,minSize[2]]"/>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="spacer-10"></div>
+
                         <div class="row">
                             <div class="col-sm-2">
                                 <label>图片：</label>
@@ -513,11 +536,8 @@
                                     <div>
                                         <img id="headPic" src="${insuranceProduct.prodImg}" width="150px" height="150px"
                                              style="padding: 5px">
-                                        <input id="upload" name="file" multiple="multiple" accept="image/*" type="file"
+                                        <input id="upload" onchange="onchangeImg('prodImg')" name="file" multiple="multiple" accept="image/*" type="file"
                                                style="display: none"/>
-                                    </div>
-                                    <div style="margin-top: 10px;padding-left: 5px">
-                                        <button id="upload_img" type="button">确定上传</button>
                                     </div>
                                     <form:hidden path="prodImg" id="prodImg"/>
                                 </div>
@@ -526,31 +546,82 @@
                                     <div>
                                         <img id="headPic1" src="${insuranceProduct.descriptionImg}" width="150px"
                                              height="150px" style="padding: 5px">
-                                        <input id="upload1" name="file" multiple="multiple" accept="image/*" type="file"
+                                        <input onchange="onchangeImg('descriptionImg')" id="upload1" name="file" multiple="multiple" accept="image/*" type="file"
                                                style="display: none"/>
-                                    </div>
-                                    <div style="margin-top: 10px;padding-left: 5px">
-                                        <button id="upload_img1" type="button">确定上传</button>
                                     </div>
                                     <form:hidden path="descriptionImg" id="descriptionImg"/>
                                 </div>
+
+                                <div class="spacer-30"></div>
+                                <hr>
+                                <div class="spacer-30"></div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="btn-group pull-right">
+                                            <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;
+                                            </button>
+                                            <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="spacer-30"></div>
-                        <hr>
-                        <div class="spacer-30"></div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="btn-group pull-right">
-                                    <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;
-                                    </button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
+                    </fieldset>
+                    <fieldset>
+
+                        <legend>产品告知事项</legend>
+                        <div class="row" style="margin-left: 15px;">
+                            <div class="spacer-30"></div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <table id="commodityTable" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">事项描述</th>
+                                            <th scope="col" width="140">事项类型</th>
+                                            <th scope="col" width="80">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach var="fc" items="${insuranceProduct.insuranceInformedMatters}">
+                                            <tr id='commodity${fc.matterId}'>
+                                                <td><input type='hidden' name='matterIds' class='form-control' value='${fc.matterId}'/>${fc.matterDescription}</td>
+                                                <td><c:if test="${0 eq fc.matterType}">是否题</c:if>
+                                                    <c:if test="${1 eq fc.matterType}">填空题</c:if></td>
+                                                <td class='text-center'><a type='button' title='删除' class='btn btn-default' href='javascript:removeCommodity(${fc.matterId})'><i class='fa fa-minus-circle'></i></a></td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" onclick="showCommodityDialog();" title="添加" class="btn btn-default">
+                                        <i class="fa fa-plus-circle"></i>添加事项
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        </form:form>
-                </fieldset>
+
+                    </fieldset>
+                </form:form>
+                <div class="modal fade" id="commodityDialog" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" style="width: 1000px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">事项</h4>
+                            </div>
+                            <div class="modal-body">
+                                <jsp:include page="../insuranceproduct/chooseMatter.jsp?prodId=${insuranceProduct.prodId}"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button class="btn btn-primary pull-right" onclick="chooseCommodity();">确认</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="spacer-40"></div>
                 <div class="hr-totop"><span>Top</span></div>
                 <div class="spacer-40"></div>

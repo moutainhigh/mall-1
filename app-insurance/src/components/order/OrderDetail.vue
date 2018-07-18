@@ -238,18 +238,24 @@
         </div>
       </div>
     </div>
+
+    <div v-if="tab === 'matter'">
+      <MatterDetail :matters ="order.insuranceOrderInformedMatters"></MatterDetail>
+    </div>
   </div>
 </template>
 
 <script>
   import {getOrderDetail} from "../../service/getData";
+  import MatterDetail from './MatterDetail'
   import { ButtonTab,ButtonTabItem} from 'vux'
 
   export default {
     name: "orderDetail",
     components:{
       ButtonTab,
-      ButtonTabItem
+      ButtonTabItem,
+      MatterDetail
     },
     data(){
       return {

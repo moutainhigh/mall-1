@@ -1,7 +1,6 @@
 package com.yunxin.cb.mall.web.action.feedback;
 
 import com.yunxin.cb.mall.entity.Feedback;
-import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IFeedbackService;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.persistence.PageSpecification;
@@ -12,14 +11,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * @author likang
- */
+* @Description:    用户反馈
+* @Author:         likang
+* @CreateDate:     2018/7/17 19:46
+*/
 @Controller
 @RequestMapping(value = "/feedback")
 @SessionAttributes({SecurityConstants.LOGIN_SESSION})
@@ -28,19 +27,27 @@ public class FeedbackController {
     @Resource
     private IFeedbackService feedbackService;
 
-    private ICustomerService customerService;
 
-
+    /**
+     * 页面跳转
+     * @author      likang
+     * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 20:21
+     */
     @RequestMapping(value = "feedbacks")
     public String feedbacks(ModelMap modelMap) {
         return "feedback/feedbacks";
     }
 
     /**
-     * Feedback分页
-     *
-     * @param
-     * @return
+     * 分页
+     * @author      likang
+     * @param feedBackQuery
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.mall.entity.Feedback>
+     * @exception
+     * @date        2018/7/17 19:48
      */
     @RequestMapping(value = "pageFeedback",method = RequestMethod.POST)
     @ResponseBody
@@ -49,13 +56,14 @@ public class FeedbackController {
     }
 
 
-
     /**
-     * Feedback详情
-     *
+     * 去用户反馈详情页面
+     * @author      likang
      * @param id
      * @param modelMap
-     * @return
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 20:20
      */
     @RequestMapping(value = "feedBackDetail",method = RequestMethod.GET)
     public String feedBackDetail(@RequestParam("id") int id,ModelMap modelMap) {
