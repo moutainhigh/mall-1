@@ -15,9 +15,9 @@
     <script src="../js/profession/profession.js" type="text/javascript"></script>
     <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="stylesheet" type="text/css" href="../css/insurance.css">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link rel="stylesheet" type="text/css" href="../css/insurance.css"/>
 
     <title></title>
     <script type="text/javascript">
@@ -961,7 +961,7 @@
                             <div class="a-tick" style="margin-left: 93px;margin-top: 6px;"><!--√--></div>
                             <div class="a-tick" style="margin-left: 93px;margin-top: 20px;">√</div>
                         </div>
-                        <br>
+                        <br/>
                         <%--B3--%>
                         <div class="a-div-line-con" style="width: 480px;height: 40px;">
                             <div>
@@ -1610,7 +1610,7 @@
                         <div class="al-row-2" style="margin-top: 15px;height: 30px;">
                             <div name="policyholderSign" style="margin-left: 20px;position: absolute;">
                                 <img style="width: 100px;height: 20px;"
-                                     src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt="">
+                                     src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
                             </div>
                             <div style="margin-left: 450px;position: absolute;">&nbsp;</div>
                             <div style="margin-left: 690px;position: absolute;">&nbsp;</div>
@@ -1897,7 +1897,7 @@
                 </div>
                 <div class="hidden-prints" style="height:3751px;">
                     <div class="header">
-                        <img src="../images/orderHeader/logo.png">
+                        <img src="../images/orderHeader/newlogo.png" width="729px" height="92px"/>
                         <%--<h1 style="font-size: 40px">富德生命人寿保险股份有限公司</h1>--%>
                         <%--<h2>FUNDE SINO LIFE INSUANCE CO.,LTD.</h2>--%>
                         <h2>个人保险投保单（经代渠道）</h2>
@@ -2411,7 +2411,7 @@
                         </div>
                     </div>
                     <div class="div-title" style="line-height: 1.5;"><span>身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险年金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充告知，则视剩余养老保险年金受益人与身故保险金受益人为同一人）
-                        <br>说明：1.指定受益人时，同一受益顺序的受益份额合计必须等于100%。2.后一受益顺序的受益人只有在前一受益顺序所有受益人丧失或放弃受益权后才能享有受益权。3.若未填写受益份额，同一顺序的保险金受益人按照相等份额享有保险金。4.若未指定受益人，或者受益人指定不明无法确定的，保险金将作为被保险人的遗产按照《中华人民共和国继承法》的规定进行分配。5.投保无身故保险利益的保险产品时无需填写本栏，填写亦视为无效。
+                        <br/>说明：1.指定受益人时，同一受益顺序的受益份额合计必须等于100%。2.后一受益顺序的受益人只有在前一受益顺序所有受益人丧失或放弃受益权后才能享有受益权。3.若未填写受益份额，同一顺序的保险金受益人按照相等份额享有保险金。4.若未指定受益人，或者受益人指定不明无法确定的，保险金将作为被保险人的遗产按照《中华人民共和国继承法》的规定进行分配。5.投保无身故保险利益的保险产品时无需填写本栏，填写亦视为无效。
                     </div>
                     <div class="div-tab" style="height: 240px;width: 1000px;">
                         <div class="table-line">
@@ -2419,15 +2419,15 @@
                             <div class="div-table-1">A 45.性别</div>
                             <div class="div-table-1">
                                 <div style="display: inline-block;vertical-align: top;">A 46.</div>
-                                <div style="display: inline-block;">受益<br>顺序</div>
+                                <div style="display: inline-block;">受益<br/>顺序</div>
                             </div>
                             <div class="div-table-1">
                                 <div style="display: inline-block;vertical-align: top;">A 47.</div>
-                                <div style="display: inline-block;">受益<br>份额</div>
+                                <div style="display: inline-block;">受益<br/>份额</div>
                             </div>
                             <div class="div-table-1">
                                 <div style="display: inline-block;vertical-align: top;">A 48.</div>
-                                <div style="display: inline-block;">出生<br>日期</div>
+                                <div style="display: inline-block;">出生<br/>日期</div>
                             </div>
                             <div class="div-table-1" style="width: 100px;">A 49.是被保险人的<span
                                     style="font-size: 10px;">（关系）</span></div>
@@ -2561,7 +2561,7 @@
                         注：当受益人为被保险人法定继承人以外的指定受益人时，须在C16项勾选“是”，并填写身故受益人的姓名、国籍、职业名称、联系方式、住址地或者工作单位地址。
                     </div>
 
-                    <%--第二页--%><br><br><br>
+                    <%--第二页--%><br/><br/><br/>
                     <div>B.投保内容</div>
                     <div class="div-title" style="display: inline-block">
                         <div style="display: inline-block;vertical-align: top">注意:</div>
@@ -2917,7 +2917,7 @@
                                  style="width: 636px;height: 160px;text-align: left;vertical-align: middle">
                                 <div style="display: inline-block;vertical-align: top;">C9.</div>
                                 <div style="display: inline-block;width: 600px;">是否有下列身体残障状况：
-                                    <br>a 脊柱、胸廓、四肢、手指或手掌、足趾或足部缺损畸形、两上肢或两下肢长度不等、跛行？
+                                    <br/>a 脊柱、胸廓、四肢、手指或手掌、足趾或足部缺损畸形、两上肢或两下肢长度不等、跛行？
                                     b 眼、耳、鼻、舌或其它颜面部软组织缺损畸形？牙齿脱落、上下颌骨缺失、颞下颌关节强直？肋骨骨折或缺失？颈部或腰部活动受限？肢体肌力下降？
                                     c 睾丸萎缩或缺失？阴茎缺失？输精管闭锁或缺失？（男性）
                                     d 子宫切除？阴道闭锁？乳房切除？（女性）
@@ -2976,25 +2976,25 @@
                                  style="width: 639px;height: 465px;text-align: left;vertical-align: middle">
                                 <div style="display: inline-block;vertical-align: top;">C12.</div>
                                 <div style="display: inline-block;width: 600px;line-height: 1.3;">是否患有或曾经患有以下疾病：
-                                    <br>a.最近六个月内，是否有下列疾患或自觉症状?
-                                    <br>.不明原因皮肤出血点或瘀斑、鼻衄、反复齿龈出血?
-                                    <br>.不明原因的声嘶、关节红肿酸痛、难以愈合的舌、皮肤溃疡，持续低热，体重显著减轻(短期内5公斤以上)，痣的形态、大小或颜色改变、黄疸?
-                                    <br>.咳嗽、痰中有血块或血丝?眼睛胀痛、视力或听力明显下降、视物不清?
-                                    <br>.持续一周以上的吞咽困难、食欲不振、盗汗、腹泻、腹部不适?
-                                    <br>.紫绀、胸闷、心慌、气急、心前区疼痛、反复头痛、头晕?
-                                    <br>.小便困难、蛋白尿、血尿、便血、黑便、粘液便?
-                                    <br>b.视神经病变、白内障、青光眼、视网膜出血或剥离、近视800度以上?
-                                    <br>C.脑脊液鼻漏或耳漏、脑血管意外及后遗症、蛛网膜下腔出血、癫痫病、帕金森氏综合症、精神病、神经麻痹、心脏病、高血压、高脂血症、血管瘤、血管疾病?
-                                    <br>d.胸膜炎、肺炎、哮喘、肺结核、慢性支气管炎、支气管扩张症、肺气肿、气胸、尘肺、矽肺?
-                                    <br>e. 慢性胃肠炎、结肠炎、消化性溃疡、消化道出血穿孔、胰腺炎、肝炎、脂肪肝、肝硬化、肝脓肿、胆道结石、胆囊炎、腹膜炎、脾肿大、肛肠疾病?
-                                    <br>f.肾炎、肾病综合症、尿毒症、急性肾功能衰竭、尿路结石、尿道狭窄、肾囊肿、肾下垂、反复尿路感染、性病?
-                                    <br>g.糖尿病、垂体、甲状腺、肾上腺疾病等内分泌系统疾病?
-                                    <br>h.贫血、再生障碍性贫血、白血病、紫癜症、血友病?
-                                    <br>i.风湿热、 关节炎、类风湿性关节炎、 痛风、颈椎病、椎间盘突出症、 红斑狼疮、硬皮病、皮肌炎、重症肌无力、肌肉萎缩症、 其他结缔组织疾病?
-                                    <br>j.肿瘤(包括任何良性、恶性或尚未定性的肿瘤)、息肉、囊肿或增生物?
-                                    <br>k.先天性疾病、遗传性疾病?
-                                    <br>l.身体是否有瘢痕？
-                                    <br>m.除上述以外的其它疾病、症状或意外受伤史?
+                                    <br/>a.最近六个月内，是否有下列疾患或自觉症状?
+                                    <br/>.不明原因皮肤出血点或瘀斑、鼻衄、反复齿龈出血?
+                                    <br/>.不明原因的声嘶、关节红肿酸痛、难以愈合的舌、皮肤溃疡，持续低热，体重显著减轻(短期内5公斤以上)，痣的形态、大小或颜色改变、黄疸?
+                                    <br/>.咳嗽、痰中有血块或血丝?眼睛胀痛、视力或听力明显下降、视物不清?
+                                    <br/>.持续一周以上的吞咽困难、食欲不振、盗汗、腹泻、腹部不适?
+                                    <br/>.紫绀、胸闷、心慌、气急、心前区疼痛、反复头痛、头晕?
+                                    <br/>.小便困难、蛋白尿、血尿、便血、黑便、粘液便?
+                                    <br/>b.视神经病变、白内障、青光眼、视网膜出血或剥离、近视800度以上?
+                                    <br/>C.脑脊液鼻漏或耳漏、脑血管意外及后遗症、蛛网膜下腔出血、癫痫病、帕金森氏综合症、精神病、神经麻痹、心脏病、高血压、高脂血症、血管瘤、血管疾病?
+                                    <br/>d.胸膜炎、肺炎、哮喘、肺结核、慢性支气管炎、支气管扩张症、肺气肿、气胸、尘肺、矽肺?
+                                    <br/>e. 慢性胃肠炎、结肠炎、消化性溃疡、消化道出血穿孔、胰腺炎、肝炎、脂肪肝、肝硬化、肝脓肿、胆道结石、胆囊炎、腹膜炎、脾肿大、肛肠疾病?
+                                    <br/>f.肾炎、肾病综合症、尿毒症、急性肾功能衰竭、尿路结石、尿道狭窄、肾囊肿、肾下垂、反复尿路感染、性病?
+                                    <br/>g.糖尿病、垂体、甲状腺、肾上腺疾病等内分泌系统疾病?
+                                    <br/>h.贫血、再生障碍性贫血、白血病、紫癜症、血友病?
+                                    <br/>i.风湿热、 关节炎、类风湿性关节炎、 痛风、颈椎病、椎间盘突出症、 红斑狼疮、硬皮病、皮肌炎、重症肌无力、肌肉萎缩症、 其他结缔组织疾病?
+                                    <br/>j.肿瘤(包括任何良性、恶性或尚未定性的肿瘤)、息肉、囊肿或增生物?
+                                    <br/>k.先天性疾病、遗传性疾病?
+                                    <br/>l.身体是否有瘢痕？
+                                    <br/>m.除上述以外的其它疾病、症状或意外受伤史?
                                 </div>
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 465px;vertical-align: top">
@@ -3114,14 +3114,14 @@
                                  style="width: 639px;height: 197px;text-align: left;vertical-align: middle">
                                 <div style="display: inline-block;vertical-align: top;">C14.</div>
                                 <div style="display: inline-block;width: 600px;">若为2周岁(不含)以下婴儿，请告知：
-                                    <br>a. &nbsp;&nbsp;被保险人出生时身长_________厘米，&nbsp;&nbsp;&nbsp;体重__________公斤，&nbsp;&nbsp;&nbsp;出生医院_______________，出生时留院天数_____天，如超过7天，请详细说明
-                                    <br>b. 出生时是否有早产、难产、窒息等情况？是否使用产钳等辅助器械？
-                                    <br>c. 出生时是否有抢救史？
-                                    <br>d. 是否未按要求接受预防接种？
-                                    <br>e.是否曾进行婴幼儿体检且结果异常？
-                                    <br>f.是否经常患腹痛、婴幼儿腹泻等消化系统疾病？
-                                    <br>g.是否曾患哮喘、肺炎、扁桃体炎等呼吸系统疾病？
-                                    <br>h.是否曾患疝气？
+                                    <br/>a. &nbsp;&nbsp;被保险人出生时身长_________厘米，&nbsp;&nbsp;&nbsp;体重__________公斤，&nbsp;&nbsp;&nbsp;出生医院_______________，出生时留院天数_____天，如超过7天，请详细说明
+                                    <br/>b. 出生时是否有早产、难产、窒息等情况？是否使用产钳等辅助器械？
+                                    <br/>c. 出生时是否有抢救史？
+                                    <br/>d. 是否未按要求接受预防接种？
+                                    <br/>e.是否曾进行婴幼儿体检且结果异常？
+                                    <br/>f.是否经常患腹痛、婴幼儿腹泻等消化系统疾病？
+                                    <br/>g.是否曾患哮喘、肺炎、扁桃体炎等呼吸系统疾病？
+                                    <br/>h.是否曾患疝气？
                                     i.是否曾出现“高热惊厥”？
                                 </div>
                             </div>
