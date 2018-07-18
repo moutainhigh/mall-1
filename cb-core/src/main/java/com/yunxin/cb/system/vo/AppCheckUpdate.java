@@ -1,14 +1,26 @@
-package com.yunxin.cb.vo;
+package com.yunxin.cb.system.vo;
 
 public class AppCheckUpdate {
 
-    private int versionCode = 1;
+    private int versionCode;
 
-    private String versionName = "1.0.0";
+    private String versionName;
 
-    private String name = "水晶球";
+    private String name;
 
-    private String url = "http://www.baidu.com";
+    private String url;
+
+    public AppCheckUpdate(){
+
+    }
+
+    public AppCheckUpdate(int versionCode, String versionName, String name, String url, String description) {
+        this.versionCode = versionCode;
+        this.versionName = versionName;
+        this.name = name;
+        this.url = url;
+        this.description = description;
+    }
 
     private String description;
 
