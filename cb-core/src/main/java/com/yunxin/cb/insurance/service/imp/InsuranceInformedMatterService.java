@@ -39,7 +39,6 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
         for (PageSpecification.FilterDescriptor filterDescriptor:list
                 ) {
             if("createTime".equals(filterDescriptor.getField())){
-
                 Date createTime= null;
                 SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
                 try {
@@ -156,6 +155,7 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
         oldMatter.setMatterDescription(insuranceInformedMatter.getMatterDescription());
         oldMatter.setSerNo(insuranceInformedMatter.getSerNo());
         oldMatter.setMatterGroup(insuranceInformedMatter.getMatterGroup());
+        oldMatter.setEnabled(insuranceInformedMatter.getEnabled());
         return oldMatter;
     }
 

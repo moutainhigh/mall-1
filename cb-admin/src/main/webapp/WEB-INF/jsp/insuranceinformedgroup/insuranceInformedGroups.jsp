@@ -129,6 +129,15 @@
                     <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
+                                <strong>事项组描述:</strong>
+                            </div>
+                            <div class="toolbar-field">
+                                <input type="text" data-filter="description" data-operator="contains" class="form-control grid-filter" placeholder="事项描述"/>
+                            </div>
+                        </div>
+
+                        <div class="pull-left">
+                            <div class="toolbar-field">
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
@@ -164,8 +173,8 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="toAddGroup.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
+                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
                         </div>
@@ -182,11 +191,11 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="事项组ID" field="groupId" template="<a href='toEditGroup.do?groupId=#= groupId#' style='color:blue'>#= groupId#</a>" width="100px"/>
-                            <kendo:grid-column title="事项组描述" field="description" width="50px"/>
-                            <kendo:grid-column title="排序" field="serNo" width="50px"/>
-                            <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
-                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
+                            <kendo:grid-column title="事项组ID" field="groupId" template="<a href='toEditGroup.do?groupId=#= groupId#' style='color:blue'>#= groupId#</a>" width="25px"/>
+                            <kendo:grid-column title="事项组描述" field="description" width="150px"/>
+                            <kendo:grid-column title="排序" field="serNo" width="20px"/>
+                            <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="30px"/>
+                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="30px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">

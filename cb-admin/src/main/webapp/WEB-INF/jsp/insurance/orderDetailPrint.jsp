@@ -7,10 +7,7 @@
 <html class="no-js">                       <!--<![endif]-->
 <head>
     <!--<script src="../js/zoomify/zoomify.js"></script>-->
-
-    <script src="../js/libs/jquery-1.11.0.min.js"></script>
-    <script src="../js/libs/jquery-ui.min.js"></script>
-
+    <script src="../js/zoomify/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="../js/district/district.js" type="text/javascript"></script>
     <script src="../js/profession/profession.js" type="text/javascript"></script>
     <script src="../js/zoomify/jquery.jqprint-0.3.js"></script>
@@ -800,7 +797,7 @@
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 510px;margin-top: -6px;">
                                         <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='居民身份证'}">
-                                            √</c:if>√
+                                            √</c:if>
                                     </div>
 
                                     <div class="al-font"
@@ -1902,6 +1899,7 @@
                         <%--<h2>FUNDE SINO LIFE INSUANCE CO.,LTD.</h2>--%>
                         <h2>个人保险投保单（经代渠道）</h2>
                         <div class="header-contract">
+                            <div  style="width: 400px;float: left;display: inline-block;margin-top: 10px;"></div>
                             <div class="contract" style="width: 450px;"></div>
                             <div class="contract">
                                 <p>（本单所示金额单位：人民币元）</p>
