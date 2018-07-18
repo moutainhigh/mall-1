@@ -234,9 +234,9 @@
       this.title = query.title;
       this.proId = query.id;
       let order = this.Admin.order;
-      // if (storage.fetch('order').length != 0){
-      //   order = storage.fetch('order');
-      // }
+      if (storage.fetch('order').length != 0){
+        order = storage.fetch('order');
+      }
       order.insuranceProduct.prodId = this.proId;
       if (this.proId == 1) {
         order.insuranceProductPrice.priceId = 1;
