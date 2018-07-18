@@ -1899,6 +1899,7 @@
                         <%--<h2>FUNDE SINO LIFE INSUANCE CO.,LTD.</h2>--%>
                         <h2>个人保险投保单（经代渠道）</h2>
                         <div class="header-contract">
+                            <div  style="width: 400px;float: left;display: inline-block;margin-top: 10px;"></div>
                             <div class="contract" style="width: 450px;"></div>
                             <div class="contract">
                                 <p>（本单所示金额单位：人民币元）</p>
