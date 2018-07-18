@@ -245,7 +245,7 @@
 
     <div class="content">
       <p style="padding: 15px 0">11.若为16周岁(含)以上女性，请告知：a.目前是否怀孕？若是，已怀孕<input class="value-input" type="number"
-                                                                            v-model="values11"/>周？</p>
+                                                                            v-model="values11" readonly/>周？</p>
       <p style="padding: 15px 0">b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？</p>
       <p style="padding: 15px 0">c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？</p>
       <p style="padding: 15px 0">d.母亲、姐妹中是否有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？</p>
@@ -665,6 +665,7 @@
           this.values5 = JSON.parse(this.matters[4].collectValues);
         }
         this.values11 = this.matters[10].collectValues;
+        console.log(this.values11)
         if (this.matters[25].collectValues) {
           this.values12 = JSON.parse(this.matters[25].collectValues);
         }
