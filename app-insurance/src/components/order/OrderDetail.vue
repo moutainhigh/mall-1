@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div style="padding: 10px;background-color: #ffffff;">
-      <button-tab>
+    <div style="padding: 10px;background-color: #ffffff; position: relative; width: 100%; height: 50px">
+      <button-tab style="position: fixed;width: 95%;top: 10px; background: #fff; padding: 10px 10px; left: 0; right: 0">
         <button-tab-item :selected="tab == 'order'" @on-item-click="tab='order'">基本资料</button-tab-item>
         <button-tab-item :selected="tab == 'matter'" @on-item-click="tab='matter'">告知事项</button-tab-item>
         <button-tab-item :selected="tab == 'place'" @on-item-click="tab='place'">异地投保</button-tab-item>
@@ -251,6 +251,8 @@
     <div v-if="tab === 'matter'">
       <MatterDetail :matters ="order.insuranceOrderInformedMatters"></MatterDetail>
     </div>
+
+    <img src="../../assets/img/top.png" style="position:fixed;right:10px;bottom:10px;width: 10vw" @click="returnTop"/>
   </div>
 </template>
 
@@ -304,10 +306,15 @@
         return result;
       },
       career(code){
-        return arrayContain(code,careerCode,"key");
+        if (arrayContain(code,careerCode,"key")){
+          return arrayContain(code,careerCode,"key").value;
+        }
       },
       ageYear(birthday){
         return ageYear(birthday);
+      },
+      returnTop() {
+        scrollTo(0,0);
       }
     },
     created() {
