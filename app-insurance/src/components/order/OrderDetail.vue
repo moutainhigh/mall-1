@@ -78,10 +78,12 @@
         <div class="d-cell">
           <div class="d-cell-item">身高</div>
           <div class="d-cell-val">{{insured.insuredHeight}}</div>
+          <div class="d-cell-end">cm</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">体重</div>
           <div class="d-cell-val">{{insured.insuredBodyWeight}}</div>
+          <div class="d-cell-end">kg</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">婚姻状况</div>
@@ -153,10 +155,12 @@
         <div class="d-cell">
           <div class="d-cell-item">身高</div>
           <div class="d-cell-val">{{holder.policyholderHeight}}</div>
+          <div class="d-cell-end">cm</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">体重</div>
           <div class="d-cell-val">{{holder.policyholderBodyWeight}}</div>
+          <div class="d-cell-end">kg</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">婚姻状况</div>
@@ -189,6 +193,7 @@
         <div class="d-cell">
           <div class="d-cell-item">年收入</div>
           <div class="d-cell-val">{{holder.policyholderIncome}}</div>
+          <div class="d-cell-end">万元</div>
         </div>
       </div>
 
@@ -240,7 +245,7 @@
     </div>
 
     <div v-if="tab == 'place'">
-      <place insuranceOrderOffsite="" :en-show="holder.policyholderCity !== '440300'"></place>
+      <place insuranceOrderOffsite="order.insuranceOrderOffsite" :en-show="holder.policyholderCity !== '440300'"></place>
     </div>
 
     <div v-if="tab === 'matter'">
@@ -344,6 +349,7 @@
   }
 
   .d-cell {
+    display: flex;
     border-bottom: #ececec 1px solid;
     padding: 10px 0;
     margin-bottom: -1px;
@@ -351,17 +357,20 @@
 
   .d-cell .d-cell-item {
     display: inline-block;
-    width: 7rem;
+    flex: 0 0 7rem;
   }
 
   .d-cell .d-cell-val {
     display: inline-block;
     color: #c5c5c5;
+    flex: auto;
   }
 
   .d-cell .d-cell-end {
     float: right;
-    right: 10px;
+    margin-right: 5px;
+    color: #c5c5c5;
+    font-size: 15px;
   }
 
   .vux-button-group > a.vux-button-group-current {
