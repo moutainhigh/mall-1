@@ -1523,88 +1523,88 @@
 
                         <!-- End .第三行-->
                         <!-- Start .第四行-->
-                        <div class="al-row-2" style="height: 20px;margin-top: 0;">
+                        <div class="al-row-2" style="height: 20px;margin-top: 5px;">
                             <div style="margin-left: 150px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 0, 1)}
                             </div>
-                            <div style="margin-left: 12.5px;float: left;">
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 1, 2)}
                             </div>
-                            <div style="margin-left: 12.5px;float: left;">
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 2, 3)}
                             </div>
-                            <div style="margin-left: 12.5px;float: left;">
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 3, 4)}
                             </div>
 
-                            <div style="margin-left: 33px;float: left;">
+                            <div style="margin-left: 32px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 4, 5)}
                             </div>
-                            <div style="margin-left: 12.5px;float: left;">
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 5, 6)}
                             </div>
-                            <div style="margin-left: 12.5px;float: left;">
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 6, 7)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 7, 8)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 8, 9)}
-                            </div>
-
-                            <div style="margin-left: 35px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 9, 10)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 10, 11)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 11, 12)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 12, 13)}
-                            </div>
-
-                            <div style="margin-left: 37px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 13, 14)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 14, 15)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 15, 16)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 16, 17)}
-                            </div>
-
-                            <div style="margin-left: 36px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 17, 18)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 18, 19)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 19, 20)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 20, 21)}
                             </div>
 
                             <div style="margin-left: 34px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 8, 9)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 9, 10)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 10, 11)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 11, 12)}
+                            </div>
+
+                            <div style="margin-left: 36px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 12, 13)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 13, 14)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 14, 15)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 15, 16)}
+                            </div>
+
+                            <div style="margin-left: 37px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 16, 17)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 17, 18)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 18, 19)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 19, 20)}
+                            </div>
+
+                            <div style="margin-left: 35px;float: left;">
+                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 20, 21)}
+                            </div>
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 21, 22)}
                             </div>
-                            <div style="margin-left: 12.5px;float: left;">
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 22, 23)}
                             </div>
-                            <div style="margin-left: 12.5px;float: left;">
+                            <div style="margin-left: 10px;float: left;">
                                 ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 23, 24)}
-                            </div>
-                            <div style="margin-left: 12.5px;float: left;">
-                                ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 24, 25)}
                             </div>
                         </div>
                         <!-- End .第四行-->
                         <!-- Start .第五行-->
-                        <div class="al-row-2" style="margin-top: 15px;height: 30px;">
+                        <div class="al-row-2" style="margin-top: 20px;height: 30px;">
                             <div name="policyholderSign" style="margin-left: 20px;position: absolute;">
                                 <img style="width: 100px;height: 20px;"
                                      src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
@@ -1632,7 +1632,7 @@
                             <div class="al-line">
                                 <div class="al-font">
                                     <div class="al-row-2"
-                                         style="margin-top: 140px;margin-left: 150px;">${map.insuranceOrder.insuranceOrderInsured.insuredName}
+                                         style="margin-top: 145px;margin-left: 150px;">${map.insuranceOrder.insuranceOrderInsured.insuredName}
                                     </div>
                                     <div style="margin-left: 300px;">
                                         <div class="al-row-sex">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderName}</div>
@@ -1785,7 +1785,7 @@
                         <div class="al-tab">
                             <div class="al-line">
                                 <div class="al-font">
-                                    <div class="al-row-2" style="margin-left: 50px;">
+                                    <div class="al-row-2" style="margin-left: 50px;margin-top: 20px">
                                         <div style="margin-left: 105px;position: absolute;">${insuranceOrder.insuranceOrderInsured.insuredIncome}</div>
                                         <div style="margin-left: 350px;position: absolute;">${insuranceOrder.insuranceOrderPolicyholder.policyholderIncome}</div>
                                         <div style="margin-left: 600px;position: absolute;">&nbsp;</div>

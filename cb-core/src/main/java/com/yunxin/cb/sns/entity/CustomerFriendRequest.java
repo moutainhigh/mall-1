@@ -44,14 +44,10 @@ public class CustomerFriendRequest implements Serializable {
     /**
      * 请求添加好友客户
      */
-    @NotNull
-    @Max(9999999999L)
     private Customer customer;
     /**
      * 邀请添加好友
      */
-    @NotNull
-    @Max(9999999999L)
     private Customer friendCustomer;
     /**
      *

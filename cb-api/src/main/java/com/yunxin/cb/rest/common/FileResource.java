@@ -47,12 +47,10 @@ public class FileResource {
 
     @ApiOperation(value = "base64图片上传")
     @PostMapping(value = "uploadBase64/{type}")
-    public ResponseResult uploadBase64(@RequestBody String base64, @PathVariable(value = "type") UploadType type) {
+    public ResponseResult uploadBase64(@RequestParam("base64") String base64, @PathVariable(value = "type") UploadType type) {
         if (StringUtils.isNotBlank(base64)) {
             try {
-                base64 = base64.substring(base64.indexOf("\"") + 1,base64.lastIndexOf("\""));
                 byte[] imgBytes = Base64.getDecoder().decode(base64);//Base64转换成byte数组
-
                 String url = qiniuStorageService.put(imgBytes, type);
                 return new ResponseResult(url);
             } catch (Exception e) {

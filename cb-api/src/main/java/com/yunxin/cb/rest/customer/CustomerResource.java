@@ -10,11 +10,14 @@ import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
+import com.yunxin.cb.sns.meta.CustomerFriendRequestState;
 import com.yunxin.cb.sns.meta.CustomerFriendState;
+import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
-import io.rong.models.response.BlackListResult;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +44,9 @@ public class CustomerResource extends BaseResource {
     @Resource
     private RongCloudService rongCloudService;
 
+    @Resource
+    private ICustomerFriendRequestService customerFriendRequestService;
+
     @ApiOperation(value = "我的好友")
     @GetMapping(value = "myFriends")
     public ResponseResult myFriends(@ModelAttribute("customerId") int customerId) {
@@ -65,10 +71,11 @@ public class CustomerResource extends BaseResource {
     public ResponseResult addFriend(@RequestParam("mobile") String mobile, @ModelAttribute("customerId") int customerId) {
         Customer myself = customerService.getCustomerById(customerId);
         Customer customer = customerService.getCustomerByMobile(mobile);
-
         if (customer == null) {
             return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
         }
+        //修改添加好友记录为已同意
+        customerFriendRequestService.updateCustomerFriendRequestState(customer.getCustomerId(),myself.getCustomerId(),CustomerFriendRequestState.AGREE.getState());
 
         CustomerFriend customerFriend = new CustomerFriend();
         CustomerFriendId customerFriendId = new CustomerFriendId();
@@ -93,8 +100,24 @@ public class CustomerResource extends BaseResource {
         customerFriend.setState(CustomerFriendState.NORMAL);
         customerService.addFriend(customerFriend);
 
-
         return new ResponseResult(Result.SUCCESS);
+    }
+
+    /**
+     * 根据邀请添加好友ID查询所有添加记录
+     * @author      likang
+     * @param friendId
+     * @return      com.yunxin.cb.vo.ResponseResult
+     * @exception
+     * @date        2018/7/18 20:03
+     */
+    @ApiOperation(value = "根据邀请添加好友ID查询所有添加记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "friendId", value = "邀请添加好友", required = true, paramType = "form", dataType = "int")
+    })
+    @PostMapping(value = "getCustomerFriendRequestByfriendId")
+    public ResponseResult getCustomerFriendRequestByfriendId(int friendId){
+        return new ResponseResult(customerFriendRequestService.getCustomerFriendRequestByFriendId(friendId));
     }
 
     @ApiOperation(value = "添加好友通知")
@@ -107,8 +130,9 @@ public class CustomerResource extends BaseResource {
             if (friend == null) {
                 return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
             }
-
             rongCloudService.sendMessage(myself, friend, requestMessage);
+            //添加好友请求记录
+            customerFriendRequestService.addCustomerFriendRequest(myself,friend,requestMessage);
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("addFriendNotice failed", e);

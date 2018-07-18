@@ -245,6 +245,7 @@ public class InsuranceProduct implements Serializable {
 
     @ManyToMany(targetEntity = InsuranceInformedMatter.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "insurance_product_informed_matter", joinColumns = {@JoinColumn(name = "PROD_ID", nullable = false, updatable = false)}, inverseJoinColumns = {@JoinColumn(name = "MATTER_ID", nullable = false, updatable = false)})
+    @OrderBy(value = "matterId asc")
     public Set<InsuranceInformedMatter> getInsuranceInformedMatters() {
         return insuranceInformedMatters;
     }

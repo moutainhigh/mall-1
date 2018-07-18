@@ -1,11 +1,19 @@
 package com.yunxin.cb.rest.mall;
 
 
-import com.yunxin.cb.mall.entity.Commodity;
+import com.yunxin.cb.mall.entity.Order;
+import com.yunxin.cb.mall.service.OrderService;
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.vo.OrderVo;
 import com.yunxin.cb.vo.ResponseResult;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 @Api(description = "商城订单接口")
 @RestController
@@ -13,13 +21,27 @@ import org.springframework.web.bind.annotation.*;
 @SessionAttributes("customerId")
 public class OrderResource extends BaseResource {
 
+    @Resource
+    private OrderService orderService;
+
     @ApiOperation(value = "订单确认")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderVo", value = "订单确认对象", required = true, paramType = "post", dataType = "Object")
+            @ApiImplicitParam(name = "orderVo", value = "订单确认对象", required = true, paramType = "post", dataType = "OrderVo")
     })
     @PostMapping(value = "saveOrder")
-    public ResponseResult saveOrder(@RequestBody Object orderVo, @ModelAttribute("customerId") int customerId){
-        return new ResponseResult(null);
+    public ResponseResult saveOrder(@RequestBody OrderVo orderVo, @ModelAttribute("customerId") int customerId){
+        try {
+            Order order = new Order();
+            order.setCustomerId(customerId);
+            order.setPaymentType(orderVo.getPaymentType());
+            Order result = orderService.createOrder(orderVo.getProductId(), order);
+            if (result == null) {
+                return new ResponseResult(Result.FAILURE);
+            }
+        }catch (Exception e){
+            return new ResponseResult(Result.FAILURE);
+        }
+        return new ResponseResult(Result.SUCCESS);
     }
 
     @ApiOperation(value = "查询用户订单列表")
