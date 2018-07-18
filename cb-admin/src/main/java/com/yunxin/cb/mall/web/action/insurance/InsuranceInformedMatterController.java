@@ -52,6 +52,7 @@ public class InsuranceInformedMatterController {
      */
     @RequestMapping(value = "insuranceInformedMatters")
     public String insuranceInformedMatters(ModelMap modelMap) {
+        modelMap.addAttribute("groups",insuranceInformedMatterGroupService.findList(1));
         return "insuranceinformedmatter/insuranceinformedmatters";
     }
 

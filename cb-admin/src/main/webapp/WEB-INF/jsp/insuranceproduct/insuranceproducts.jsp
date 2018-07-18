@@ -160,12 +160,12 @@
                 <div class="toolbar responsive-helper">
                     <header>
                         <div class="pull-left">
-                                        <h3>保险产品管理</h3>
+                           <h3>保险产品管理</h3>
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="toAddProduct.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
+                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
                         </div>
@@ -182,13 +182,13 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="产品ID" field="prodId" template="<a href='toEditProduct.do?prodId=#= prodId#' style='color:blue'>#= prodId#</a>" width="100px"/>
+                            <kendo:grid-column title="产品ID" field="prodId" template="<a href='toEditProduct.do?prodId=#= prodId#' style='color:blue'>#= prodId#</a>" width="20px"/>
                             <kendo:grid-column title="产品名称" field="prodName" template="<a href='toEditProduct.do?prodId=#= prodId#' style='color:blue'>#= prodName#</a>" width="50px"/>
                             <kendo:grid-column title="产品描述" field="description" width="50px"/>
                             <kendo:grid-column title="保险期间" field="insurePeriod"  width="50px"/>
                             <kendo:grid-column title="保障年限" field="protectionYear" width="50px"/>
                             <kendo:grid-column title="投保须知" field="instruction"  width="100px"/>
-                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
+                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="30px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">

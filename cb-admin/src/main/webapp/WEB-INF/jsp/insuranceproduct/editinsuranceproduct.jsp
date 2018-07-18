@@ -582,15 +582,15 @@
                                         <tr>
                                             <th scope="col">事项描述</th>
                                             <th scope="col" width="140">事项组描述</th>
-                                            <th scope="col" width="140">事项类型</th>
-                                            <th scope="col" width="80">操作</th>
+                                            <th scope="col" width="75">事项类型</th>
+                                            <th scope="col" width="60">操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach var="fc" items="${insuranceProduct.insuranceInformedMatters}">
                                             <tr id='commodity${fc.matterId}'>
                                                 <td><input type='hidden' name='matterIds' class='form-control' value='${fc.matterId}'/>${fc.matterDescription}</td>
-                                                <td></td>
+                                                <td>${fc.matterGroup.description}</td>
                                                 <td><c:if test="${0 eq fc.matterType}">是否题</c:if>
                                                     <c:if test="${1 eq fc.matterType}">填空题</c:if></td>
                                                 <td class='text-center'><a type='button' title='删除' class='btn btn-default' href='javascript:removeCommodity(${fc.matterId})'><i class='fa fa-minus-circle'></i></a></td>
