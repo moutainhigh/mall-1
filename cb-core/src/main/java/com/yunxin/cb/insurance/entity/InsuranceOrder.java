@@ -174,7 +174,7 @@ public class InsuranceOrder implements Serializable {
 
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceOrder")
-    @OrderBy(value = "collectId asc")
+    @OrderBy(value = "insuranceInformedMatter.matterId asc")
     public Set<InsuranceOrderInformedMatter> getInsuranceOrderInformedMatters() {
         return insuranceOrderInformedMatters;
     }
