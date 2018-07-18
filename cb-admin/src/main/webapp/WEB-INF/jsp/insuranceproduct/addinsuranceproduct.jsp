@@ -130,7 +130,7 @@
                     });
                 });
             }else{
-                alert("请选择商品");
+                alert("请选择事项");
                 return ;
             }
             clearCheck();
@@ -140,26 +140,9 @@
 </head>
 <body>
 
-
-<!-- ********************************************
-     * SIDEBAR MAIN:                            *
-     *                                          *
-     * the part which contains the main         *
-     * navigation, logo, search and more...     *
-     * (parts can be in both sidebars).         *
-     ******************************************** -->
-
 <jsp:include page="../layouts/left.jsp"/>
 <jsp:include page="../layouts/sidebarRight.jsp"/>
 <!-- End aside -->
-
-<!-- ********************************************
-     * SIDEBAR SEC:                             *
-     *                                          *
-     * the part which contains things like      *
-     * calendar, users, lists, blocks and       *
-     * much more.                               *
-     ******************************************** -->
 
 <div id="sidebar-sec" class="sidebar">
 

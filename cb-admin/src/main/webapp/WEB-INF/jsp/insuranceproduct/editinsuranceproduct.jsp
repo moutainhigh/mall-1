@@ -130,7 +130,7 @@
                     });
                 });
             }else{
-                alert("请选择商品");
+                alert("请选择事项");
                 return ;
             }
             clearCheck();

@@ -170,7 +170,7 @@
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
                             <kendo:grid-column title="订单编号" field="codeNo" width="100px"/>
-                            <kendo:grid-column title="是否使用" field="useed" width="100px"
+                            <kendo:grid-column filterable="false" title="是否使用" field="useed" width="100px"
                                                template="#= useed ? '是' : '否' #"/>
                             <kendo:grid-column filterable="false" title="创建时间" field="createTime"
                                                format="{0:yyyy-MM-dd HH:mm}" width="100"/>
@@ -218,15 +218,14 @@
                     <div class="modal-body" style="padding-bottom: 80px">
                         <form id="uploadForm" action="uploadPayerCreditInfoExcel.do" enctype="multipart/form-data"
                               method="post">
-                            <input id="upfile" type="file" name="upfile">
-                            <button class="btn btn-primary" type="submit">导入</button>
+                            <div style="float: left">
+                                <input id="upfile" type="file" name="upfile">
+                            </div>
+                            <div style="float: left;margin-left: 50px">
+                                <button class="btn btn-primary" type="submit">导入</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal">关闭</button>
-
-                    </div>
-
                 </div>
                 <script type="application/javascript">
                     var selectType = "icon";
@@ -237,15 +236,6 @@
                         });
                         e.preventDefault();
                     });
-
-                    $('#chooseIconBtn').click(function (e) {
-                        selectType = "icon";
-                        $('#imageDialog').modal().css({
-                            width: 'auto'
-                        });
-                        e.preventDefault();
-                    });
-
                 </script>
             </div>
         </div>
