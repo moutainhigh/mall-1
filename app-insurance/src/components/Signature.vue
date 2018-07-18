@@ -76,6 +76,10 @@
 			},
 			save(format){
 				var _this = this;
+				if (_this.sig.isEmpty()) {
+				  alert("请签名后点击完成");
+				  return false;
+        }
 				return format ? _this.sig.toDataURL(format) :  _this.sig.toDataURL()
 				// signaturePad.toDataURL(); // save image as PNG
 				// signaturePad.toDataURL("image/jpeg"); // save image as JPEG
