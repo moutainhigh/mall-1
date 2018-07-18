@@ -48,71 +48,7 @@
             return url;
         }
 
-        function closeInfo(){
-            history.go(0);
-        }
 
-        /**
-         *添加事项组
-         */
-        function addMatter(prodId,matterId) {
-            bootbox.confirm("确认添加吗？", function (result) {
-                if (result) {
-                    var formData = new FormData();
-                    formData.append("prodId", prodId);
-                    formData.append("matterId", matterId);
-                    $.ajax({
-                        url: "addMetterById.do",
-                        type: 'GET',
-                        data: {
-                            "prodId": prodId,
-                            "matterId": matterId
-                        },
-                        success: function (data) {
-                            if (data) {
-                                bootbox.alert("成功");
-                                loadData();
-                            } else {
-                                bootbox.alert("失败");
-                            }
-                        },
-                        error: function (err) {
-                        }
-                    });
-                }
-            });
-        }
-
-        /**
-         *删除事项组
-         */
-        function removeMatter(matterId, prodId) {
-            bootbox.confirm("确认删除吗？", function (result) {
-                if (result) {
-                    var formData = new FormData();
-                    formData.append("prodId", prodId);
-                    formData.append("matterId", matterId);
-                    $.ajax({
-                        url: "removeMetterById.do",
-                        type: 'GET',
-                        data: {
-                            "prodId": prodId,
-                            "matterId": matterId
-                        },
-                        success: function (data) {
-                            if (data) {
-                                bootbox.alert("成功");
-                                history.go(0)
-                            } else {
-                                bootbox.alert("失败");
-                            }
-                        },
-                        error: function (err) {
-                        }
-                    });
-                }
-            });
-        }
 
         /**
          *上传图片
@@ -128,44 +64,9 @@
                 processData: false,
                 contentType: false,
                 success: function (result) {
-                    alert(result.info);
                     if (result.code == 0) {
                         $('#'+imgId).val(result.url);
                     }
-                },
-                error: function (err) {
-                }
-            });
-        }
-
-        /**
-         * 加载事项组数据
-         */
-        function loadData(){
-            var matterDescription=$('#matterDescription').val();
-            $.ajax({
-                url: "getmatterList.do",
-                type: 'GET',
-                data: {
-                    "prodId": ${insuranceProduct.prodId},
-                    "matterDescription":matterDescription
-                },
-                success: function (data) {
-                    var html='';
-                    for (var i=0;i<data.length;i++)
-                    {
-                        var type='';
-                        if(data[i].matterType==0){
-                            type="是否题";
-                        }else if(data[i].matterType==0){
-                            type="填空题";
-                        }
-                        html+="<tr><td>"+data[i].matterId+"</td>"
-                            +"<td>"+data[i].matterDescription+"</td>"
-                            +"<td>"+type+"</td>"
-                            +"<td><a href='javascript:void(0);' onclick='addMatter(${insuranceProduct.prodId},"+data[i].matterId+")' style='color:blue'>添加</a></td></tr>";
-                    }
-                    $("#thb").html(html);
                 },
                 error: function (err) {
                 }

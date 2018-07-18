@@ -49,6 +49,16 @@ public class InsuranceProductService implements IInsuranceProductService {
     @Transactional
     public InsuranceProduct addInsuranceProduct(InsuranceProduct insuranceProduct) {
         insuranceProduct.setCreateTime(new Date());
+        int[] matterIds=insuranceProduct.getMatterIds();
+        Set<InsuranceInformedMatter> insuranceInformedMatters=insuranceProduct.getInsuranceInformedMatters();
+        insuranceInformedMatters.clear();
+        if (matterIds != null) {
+            for (int i = 0; i < matterIds.length; i++) {
+                InsuranceInformedMatter matter=insuranceInformedMatterDao.findOne(matterIds[i]);
+                insuranceInformedMatters.add(matter);
+            }
+        }
+        insuranceProduct.setInsuranceInformedMatters(insuranceInformedMatters);
         return insuranceProductDao.save(insuranceProduct);
     }
 
