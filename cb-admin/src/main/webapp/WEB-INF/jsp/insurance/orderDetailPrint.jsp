@@ -797,7 +797,7 @@
                                     <div class="al-font"
                                          style="position: absolute;margin-left: 510px;margin-top: -6px;">
                                         <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='居民身份证'}">
-                                            √</c:if>√
+                                            √</c:if>
                                     </div>
 
                                     <div class="al-font"
