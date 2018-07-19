@@ -28,8 +28,15 @@ export const submitOrder = function (code) {
   return fetch('/insurance/order/saveOrder?code='+ code, insuranceOrder,"POST");
 };
 
-export const uploadImage = function (base64) {
+export const uploadImage = function (base) {
+  let base64 = {
+    data:base
+  };
   return fetch('/common/file/uploadBase64/PAPERWORK', base64, 'POST','fetch');
+};
+
+export const getProducts = function () {
+  return fetch('/insurance/product/getInsuranceProducts', 'GET');
 };
 
 export const getOrders = function (query) {

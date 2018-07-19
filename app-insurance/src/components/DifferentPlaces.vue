@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%">
     <div class="title" style="text-align: left;margin-top: 0;">
       异地投保说明
     </div>

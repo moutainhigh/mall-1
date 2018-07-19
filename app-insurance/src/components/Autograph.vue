@@ -32,9 +32,11 @@
         <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
         <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1">
           <p style="padding-top: 15vh" v-if="submissionSign === ''">点击签名（请用正楷进行签名）</p>
-          <img v-if="submissionSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="submissionSign">
+          <img v-if="submissionSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;"
+               :src="submissionSign">
         </div>
-        <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow1" v-if="clickSign1 && show1">
+        <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow1"
+             v-if="clickSign1 && show1">
           <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="submissionSign">
         </div>
       </div>
@@ -42,8 +44,8 @@
       <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保单签名</div>
       <div class="headPhoto" v-if="imgUrl === '' || imgUrl === undefined || imgUrl === null" @click.stop="addPic">
         <div style="position: relative">
-        <div class="carmerBorder"></div>
-        <img src="../assets/img/headPhotograph.png"/>
+          <div class="carmerBorder"></div>
+          <img src="../assets/img/headPhotograph.png"/>
         </div>
         <p style="font-size: 13px">上传投保人正面头像</p>
       </div>
@@ -58,10 +60,12 @@
         <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
         <div class="sign" v-if="!clickSign && !show" @click="checkSign">
           <p style="padding-top: 15vh" v-if="policyholderSign === ''">点击签名（请用正楷进行签名）</p>
-          <img v-if="policyholderSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="policyholderSign">
+          <img v-if="policyholderSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;"
+               :src="policyholderSign">
         </div>
 
-        <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow" v-if="clickSign && show">
+        <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow"
+             v-if="clickSign && show">
           <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw" :src="policyholderSign">
         </div>
       </div>

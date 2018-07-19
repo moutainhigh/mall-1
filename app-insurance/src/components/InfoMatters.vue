@@ -764,6 +764,15 @@
           alert("婴儿信息栏填写长度不大于3");
           return false;
         }
+        let kongge = /\s+/g;
+        if (kongge.test(this.values12[2])) {
+          alert("请不要输入空格");
+          return false;
+        }
+        if (this.values12[2].length > 24 || this.values12[2].length < 1) {
+          alert("婴儿信息栏填写医院名长度不大于24");
+          return false;
+        }
         if (parseInt(this.values12[0]) <= 0 || parseInt(this.values12[1]) <= 0 || parseInt(this.values12[3]) <= 0) {
           alert("婴儿信息栏填写数据需大于0");
           return false;
@@ -871,6 +880,16 @@
       },
       matters: {
         handler(newVal, oldVal) {
+          for (let i = 0; i < newVal.length; i++) {
+            if (!newVal[i].insuredResult) {
+              newVal[i].insuredRemark = '';
+              this.matters[i].insuredRemark = '';
+            }
+            if (!newVal[i].policyholderResult) {
+              newVal[i].policyholderRemark = '';
+              this.matters[i].policyholderRemark = '';
+            }
+          }
           storage.save("matters", newVal);
         },
         immediate: true,
