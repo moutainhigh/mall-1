@@ -28,7 +28,7 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "orderVo", value = "订单确认对象", required = true, paramType = "post", dataType = "OrderVo")
     })
     @PostMapping(value = "saveOrder")
-    public ResponseResult saveOrder(@RequestBody OrderVo orderVo){
+    public ResponseResult saveOrder(@ModelAttribute("orderVo")OrderVo orderVo){
         try {
             Order order = new Order();
             order.setCustomerId(getCustomerId());
@@ -65,9 +65,13 @@ public class OrderResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")
     })
-    @GetMapping(value = "cancelOrder/{orderId}")
-    public ResponseResult cancelOrder(@PathVariable(value = "orderId") int orderId){
-        return new ResponseResult(null);
+    @PostMapping(value = "cancelOrder")
+    public ResponseResult cancelOrder(@RequestParam(value = "orderId") int orderId){
+        Order result = orderService.cancelOrder(orderId);
+        if (result == null) {
+            return new ResponseResult(Result.FAILURE);
+        }
+        return new ResponseResult(Result.SUCCESS);
     }
 
 }

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface OrderMapper {
@@ -138,7 +139,9 @@ public interface OrderMapper {
         @Result(column="WEIGHT_TOTAL", property="weightTotal", jdbcType=JdbcType.DOUBLE),
         @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
         @Result(column="LOGISTIC_ID", property="logisticId", jdbcType=JdbcType.INTEGER),
-        @Result(column="SELLER_ID", property="sellerId", jdbcType=JdbcType.INTEGER)
+        @Result(column="SELLER_ID", property="sellerId", jdbcType=JdbcType.INTEGER),
+        @Result(column="ORDER_ID", property="orderItems", javaType=Set.class,
+            many=@Many(select="com.yunxin.cb.mall.mapper.OrderItemMapper.selectByOrderId"))
     })
     Order selectByPrimaryKey(Integer orderId);
 

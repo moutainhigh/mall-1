@@ -11,4 +11,11 @@ public interface OrderService {
      * @return
      */
     public Order createOrder(Integer productId, Order order) throws Exception;
+
+    /***
+     * 取消订单
+     * @param orderId
+     * @return
+     */
+    public Order cancelOrder(Integer orderId);
 }

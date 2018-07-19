@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Set;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -68,12 +69,35 @@ public class OrderServiceImpl implements OrderService {
         orderItem.setOrderItemPrice(product.getSalePrice());
         orderItem.setProductId(product.getProductId());
         orderItem.setSalePrice(product.getSalePrice());
+        orderItem.setEvaluate(false);
+        orderItem.setProductNum(1);
         //orderItem.setProductImg();
         orderItem.setCreateTime(createTime);
         orderItemMapper.insert(orderItem);
         //减少库存
         product.setStoreNum(product.getStoreNum() - 1);
         productMapper.updateByPrimaryKey(product);
+        return order;
+    }
+
+    @Override
+    public Order cancelOrder(Integer orderId) {
+        //更改订单为取消状态
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        if (order != null){
+            Set<OrderItem> orderItems = order.getOrderItems();
+            if (orderItems != null && !orderItems.isEmpty()) {
+                for (OrderItem orderItem : orderItems) {
+                    //更新库存
+                    Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
+                    //增加库存
+                    product.setStoreNum(product.getStoreNum() + 1);
+                    productMapper.updateByPrimaryKey(product);
+                }
+            } else {
+                return null;
+            }
+        }
         return order;
     }
 }
