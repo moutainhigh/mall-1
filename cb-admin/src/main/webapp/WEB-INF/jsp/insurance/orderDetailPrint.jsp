@@ -768,7 +768,7 @@ debugger;
                                         <div>身份证</div>
                                         <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList[0].beneficiaryName&&map.beneficiaryList[0].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                         <div>其他</div>
-                                        <div style="margin:0 60px;margin-left: 130px;">有效期至
+                                        <div style="margin:0 60px;">有效期至
                                             <c:if test="${map.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList[0].beneficiaryName&&map.beneficiaryList[0].beneficiaryCardType!='长期'}">
                                                 <fmt:formatDate value="${map.beneficiaryList[0].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                             </c:if>
@@ -819,7 +819,7 @@ debugger;
                                         <div>身份证</div>
                                         <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList[1].beneficiaryName&&map.beneficiaryList[1].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                         <div>其他</div>
-                                        <div style="margin:0 60px;margin-left: 130px;">有效期至
+                                        <div style="margin:0 60px;">有效期至
                                             <c:if test="${map.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList[1].beneficiaryName&&map.beneficiaryList[1].beneficiaryCardType!='长期'}">
                                                 <fmt:formatDate value="${map.beneficiaryList[1].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                             </c:if>
@@ -871,7 +871,7 @@ debugger;
                                         <div>身份证</div>
                                         <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList[2].beneficiaryName&&map.beneficiaryList[2].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                         <div>其他</div>
-                                        <div style="margin:0 60px;margin-left: 130px;">有效期至
+                                        <div style="margin:0 60px;">有效期至
                                             <c:if test="${map.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList[2].beneficiaryName&&map.beneficiaryList[2].beneficiaryCardType!='长期'}">
                                                 <fmt:formatDate value="${map.beneficiaryList[2].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                             </c:if>
@@ -910,8 +910,6 @@ debugger;
                             注：当受益人为被保险人法定继承人以外的指定受益人时，须在C16项勾选“是”，并填写身故受益人的姓名、国籍、职业名称、联系方式、住址地或者工作单位地址。
                         </div>
                     </div>
-
-
                     <%--第二页--%>
                     <div style="height:1465px;">
                         <div>B.投保内容</div>
@@ -2273,7 +2271,7 @@ debugger;
                             <div class="header">
                                 <img src="../images/orderHeader/newlogo.png" width="650px"/>
                                 <h2 style="margin-top: 20px;">
-                                    <div style="position:absolute;margin-left: 60px;">131313</div>
+                                    <div style="position:absolute;margin-left: 60px;"></div>
                                     <div style="display: inline-block;letter-spacing: 8px;">
                                         投保或合同变更补充声明
                                     </div>
@@ -2293,7 +2291,7 @@ debugger;
                                 <div>
                                     <div class="s-contact-title">投保单编号/保险合同号码</div>
                                     <div class="s-contact-num">
-                                        <div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div>1</div><div style="padding-right: 5px;">1</div>
+                                        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div style="padding-right: 5px;"></div>
                                     </div>
                                 </div>
 
@@ -2332,8 +2330,8 @@ debugger;
                                                         <%--</div>--%>
                                                 </div>
                                             </div>
+                                            </c:forEach>
                                         </div>
-                                        </c:forEach>
                                     </div>
                                 </div>
 
