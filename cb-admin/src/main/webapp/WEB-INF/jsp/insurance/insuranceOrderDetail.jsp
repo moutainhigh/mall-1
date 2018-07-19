@@ -824,6 +824,9 @@
                             </div>
                         </div>
                     </div><!-- End .inner-padding -->
+                    <div class="btn-group"  style="margin-left: 150px;">
+                        <a class="btn btn-default pull-right" href="insurances.do">返回</a>
+                    </div>
                 </div>
 
                 <div id="content-tab-3" class="tab-pane">
@@ -843,7 +846,7 @@
                         </div>
                         <div style="float: left;margin-left: 10px">
                                 <%--<label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.sensue}</label>--%>
-                                    <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.sensue" maxlength="255"></form:textarea>
+                                    <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.sensue" maxlength="255" readonly="true"></form:textarea>
                         </div>
 
                     </div>
@@ -855,7 +858,7 @@
                             </div>
                             <div style="float: left;margin-left: 10px">
                                     <%--<label><span class="asterisk"></span>${insuranceOrder.workplace}</label>--%>
-                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.workplace" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.workplace" maxlength="255"  readonly="true"></form:textarea>
                             </div>
                         </div>
 
@@ -867,7 +870,7 @@
                             </div>
                             <div  style="float: left;margin-left: 10px">
                                     <%--<label><span class="asterisk"></span>${insuranceOrder.leaveReason}</label>--%>
-                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.leaveReason" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.leaveReason" maxlength="255"  readonly="true"></form:textarea>
                             </div>
                         </div>
 
@@ -879,7 +882,7 @@
                             </div>
                             <div  style="float: left;margin-left: 10px">
                                     <%--<label><span class="asterisk"></span>${insuranceOrder.stayTime}</label>--%>
-                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.stayTime" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.stayTime" maxlength="255"  readonly="true"></form:textarea>
                             </div>
                         </div>
 
@@ -892,7 +895,7 @@
                             <div style="float: left;margin-left: 10px">
                                 <%--<label><span class="asterisk"></span>${offsiteAddress}</label>--%>
                                 <%--<label><input readonly="true">${offsiteAddress}</input></label>--%>
-                                    <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.offsiteAddress" maxlength="255"></form:textarea>
+                                    <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.offsiteAddress" maxlength="255"  readonly="true"></form:textarea>
                                         <%--<label><input type="text" name="lname" value=${offsiteAddress}></label>--%>
                             </div>
                         </div>
@@ -908,7 +911,7 @@
                             </div>
                                     <div id="otherMatterDiv" style='float: left;margin-left: 10px; <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> display:none;</c:if>' >
                                             <%--<label><span class="asterisk"></span>${otherMatter}</label>--%>
-                                        <form:textarea id="insuranceOrderOffsite_otherMatter" rows="10" cols="101" path="insuranceOrderOffsite.otherMatter" maxlength="255"></form:textarea>
+                                        <form:textarea id="insuranceOrderOffsite_otherMatter" rows="10" cols="101" path="insuranceOrderOffsite.otherMatter" maxlength="255"  readonly="true"></form:textarea>
                                             <%--<label><textarea>${insuranceOrder.otherMatter}</textarea></label>--%>
                                     </div>
 
@@ -925,10 +928,15 @@
 
                 </div><!-- End .inner-padding -->
 
-
-
-
-
+                    <div class="btn-group" style="margin-left: 50px;">
+                    <c:if test="${insuranceOrder.insuranceOrderOffsite!=null}">
+                        <%--<button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>--%>
+                        <a href="javascript:void(0);" onclick="editItem('${insuranceOrder.orderId}')" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                    </c:if>
+                        <div class="btn-group"  style="margin-left: 150px;">
+                            <a class="btn btn-default pull-right" href="insurances.do">返回</a>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -944,19 +952,14 @@
                             </div>
                     </div>
                     <div class="col-sm-2">
-                        <c:if test="${insuranceOrder.insuranceOrderOffsite!=null}">
-                            <%--<button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>--%>
-                            <a href="javascript:void(0);" onclick="editItem('${insuranceOrder.orderId}')" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
-                        </c:if>
+
                         <%--<div class="btn-group pull-right">
                             <c:if test="${insuranceOrder.orderState=='UN_PAID'}">
                                 <a class="btn btn-default pull-right" href="javascript:void(0);" onclick="updInsuranceOrderState('${insuranceOrder.orderId}','ON_PAID')">确认修改</a></c:if>
                         </div>--%>
                     </div>
                     <div class="col-sm-2">
-                        <div class="btn-group pull-right">
-                            <a class="btn btn-default pull-right" href="insurances.do">返回</a>
-                        </div>
+
                     </div>
                 </div>
 
