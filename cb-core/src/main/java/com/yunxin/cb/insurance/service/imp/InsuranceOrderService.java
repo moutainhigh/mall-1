@@ -167,7 +167,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     put("matter",description);
                                     put("insured",list.getInsuredResult());
                                     put("insured_remark",list.getInsuredRemark());
-                                    put("no","1");
+                                    put("no","2");
                                 }
 
                             }
@@ -249,6 +249,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
          * 获取事项
          */
         final List<InsuranceOrderInformedMatter> insuranceOrderInformedMatterList =  insuranceOrderInformedMatterDao.getInsuranceOrderInformedMatter(orderId);
+
         SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
         return new HashMap<String,Object>(){
             {
@@ -369,15 +370,24 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 if(insuranceInformedMatter.getMatterType()==1){
                                     add(new HashMap<String,Object>(){
                                         {
+
                                             String collectValues=insuranceOrderInformedMatter.getCollectValues();
-
-                                            if(null!=collectValues&&!"".equals(collectValues)){
-                                                String[] strValue=collectValues.replace("[","").replace("]","").replace("\"","") .split(",");
-                                                for (int j=0;j<strValue.length;j++)
-                                                    put("m_value"+j,strValue[j]);
-
-
+                                            Integer matterType= insuranceOrderInformedMatter.getInsuranceInformedMatter().getMatterType();
+                                            if(matterType==1){
+                                                if(StringUtils.isNotBlank(collectValues)){
+                                                    String[] strValue=collectValues.replace("[","").replace("]","").replace("\"","") .split(",");
+                                                    for (int j=0;j<strValue.length;j++)
+                                                        put("m_value"+j,"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;"+strValue[j]+"&nbsp;&nbsp;</p>");
+                                                }else{
+                                                    String[] strCollectValues={"{0}","{1}","{2}","{3}","{4}","{5}","{6}"};
+                                                    for (int i=0;i<strCollectValues.length;i++)
+                                                        put("m_value"+i,"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>");
+                                                }
                                             }
+
+
+
+
                                         }
                                     });
 
