@@ -31,8 +31,8 @@ public interface OrderService {
 
     /***
      *
-     * @param orderId
+     * @param order
      * @return
      */
-    public Order cancelOrder(Integer orderId);
+    public Order cancelOrder(Order order);
 }

@@ -115,9 +115,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order cancelOrder(Integer orderId) {
+    public Order cancelOrder(Order order) {
         //更改订单为取消状态
-        Order order = orderMapper.selectByPrimaryKey(orderId);
+        order = orderMapper.selectByOrderIdAndCustomerId(order.getOrderId(), order.getCustomerId());
         if (order != null){
             Set<OrderItem> orderItems = order.getOrderItems();
             if (orderItems != null && !orderItems.isEmpty()) {

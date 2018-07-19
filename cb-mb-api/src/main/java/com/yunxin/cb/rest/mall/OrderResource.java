@@ -50,7 +50,7 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "int")})
     @PostMapping(value = "pageOrder")
-    public ResponseResult pageOrder(@ModelAttribute("q")Query q, @ModelAttribute("orderVo")Order order){
+    public ResponseResult pageOrder(@ModelAttribute("q")Query q, @ModelAttribute("order")Order order){
         order.setCustomerId(getCustomerId());
         q.setData(order);
         PageFinder<Order> pageFinder = orderService.pageOrder(q);
@@ -70,8 +70,9 @@ public class OrderResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
     @PostMapping(value = "cancelOrder")
-    public ResponseResult cancelOrder(@RequestParam(value = "orderId") int orderId){
-        Order result = orderService.cancelOrder(orderId);
+    public ResponseResult cancelOrder( @ModelAttribute("order")Order order){
+        order.setCustomerId(getCustomerId());
+        Order result = orderService.cancelOrder(order);
         if (result == null) {
             return new ResponseResult(Result.FAILURE);
         }
