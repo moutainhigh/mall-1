@@ -20,6 +20,8 @@ public interface IInsuranceInformedMatterService {
      */
     Page<InsuranceInformedMatter> pageInsuranceInformedMatter(PageSpecification<InsuranceInformedMatter> query);
 
+
+    Page<InsuranceInformedMatter> pageaddMatter(PageSpecification<InsuranceInformedMatter> query);
     /**
      * 获取详情
      * @param metterId

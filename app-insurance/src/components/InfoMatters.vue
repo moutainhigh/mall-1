@@ -17,10 +17,10 @@
           <img v-if="matters[0].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[0].insuredResult" v-model="matters[0].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[0].policyholderResult" v-model="matters[0].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[0].insuredResult" v-model="matters[0].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[0].policyholderResult" v-model="matters[0].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -39,10 +39,10 @@
           <img v-if="matters[1].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[1].insuredResult" v-model="matters[1].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[1].policyholderResult" v-model="matters[1].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[1].insuredResult" v-model="matters[1].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[1].policyholderResult" v-model="matters[1].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -61,10 +61,10 @@
           <img v-if="matters[2].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[2].insuredResult" v-model="matters[2].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[2].policyholderResult" v-model="matters[2].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[2].insuredResult" v-model="matters[2].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[2].policyholderResult" v-model="matters[2].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -83,10 +83,10 @@
           <img v-if="matters[3].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[3].insuredResult" v-model="matters[3].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[3].policyholderResult" v-model="matters[3].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[3].insuredResult" v-model="matters[3].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[3].policyholderResult" v-model="matters[3].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -113,10 +113,10 @@
           <img v-if="matters[4].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[4].insuredResult" v-model="matters[4].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[4].policyholderResult" v-model="matters[4].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[4].insuredResult" v-model="matters[4].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[4].policyholderResult" v-model="matters[4].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -135,10 +135,10 @@
           <img v-if="matters[5].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[5].insuredResult" v-model="matters[5].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[5].policyholderResult" v-model="matters[5].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[5].insuredResult" v-model="matters[5].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[5].policyholderResult" v-model="matters[5].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -157,10 +157,10 @@
           <img v-if="matters[6].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[6].insuredResult" v-model="matters[6].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[6].policyholderResult" v-model="matters[6].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[6].insuredResult" v-model="matters[6].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[6].policyholderResult" v-model="matters[6].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -179,10 +179,10 @@
           <img v-if="matters[7].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[7].insuredResult" v-model="matters[7].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[7].policyholderResult" v-model="matters[7].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[7].insuredResult" v-model="matters[7].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[7].policyholderResult" v-model="matters[7].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -208,10 +208,10 @@
           <img v-if="matters[8].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[8].insuredResult" v-model="matters[8].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[8].policyholderResult" v-model="matters[8].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[8].insuredResult" v-model="matters[8].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[8].policyholderResult" v-model="matters[8].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -231,10 +231,10 @@
           <img v-if="matters[9].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[9].insuredResult" v-model="matters[9].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[9].policyholderResult" v-model="matters[9].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[9].insuredResult" v-model="matters[9].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[9].policyholderResult" v-model="matters[9].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -257,10 +257,10 @@
           <img v-if="matters[10].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[10].insuredResult" v-model="matters[10].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[10].policyholderResult" v-model="matters[10].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[10].insuredResult" v-model="matters[10].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[10].policyholderResult" v-model="matters[10].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -287,10 +287,10 @@
             <img v-if="matters[11].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[11].insuredResult" v-model="matters[11].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[11].policyholderResult" v-model="matters[11].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[11].insuredResult" v-model="matters[11].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[11].policyholderResult" v-model="matters[11].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">b.视神经病变、白内障、青光眼、视网膜出血或剥离、近视800度以上?</p>
@@ -308,10 +308,10 @@
             <img v-if="matters[12].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[17].insuredResult" v-model="matters[17].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[17].policyholderResult" v-model="matters[17].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[12].insuredResult" v-model="matters[12].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[12].policyholderResult" v-model="matters[12].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">c.脑脊液鼻漏或耳漏、脑血管意外及后遗症、蛛网膜下腔出血、癫痫病、帕金森氏综合症、精神病、神经麻痹、心脏病、高血压、高脂血症、血管瘤、血管疾病?</p>
@@ -329,10 +329,10 @@
             <img v-if="matters[13].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[13].insuredResult" v-model="matters[13].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[13].policyholderResult" v-model="matters[13].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[13].insuredResult" v-model="matters[13].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[13].policyholderResult" v-model="matters[13].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">d.胸膜炎、肺炎、哮喘、肺结核、慢性支气管炎、支气管扩张症、肺气肿、气胸、尘肺、矽肺?</p>
@@ -350,10 +350,10 @@
             <img v-if="matters[14].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[14].insuredResult" v-model="matters[14].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[14].policyholderResult" v-model="matters[14].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[14].insuredResult" v-model="matters[14].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[14].policyholderResult" v-model="matters[14].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">e. 慢性胃肠炎、结肠炎、消化性溃疡、消化道出血穿孔、胰腺炎、肝炎、脂肪肝、肝硬化、肝脓肿、胆道结石、胆囊炎、腹膜炎、脾肿大、肛肠疾病?</p>
@@ -371,10 +371,10 @@
             <img v-if="matters[15].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[15].insuredResult" v-model="matters[15].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[15].policyholderResult" v-model="matters[15].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[15].insuredResult" v-model="matters[15].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[15].policyholderResult" v-model="matters[15].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">f.肾炎、肾病综合症、尿毒症、急性肾功能衰竭、尿路结石、尿道狭窄、肾囊肿、肾下垂、反复尿路感染、性病?</p>
@@ -392,10 +392,10 @@
             <img v-if="matters[16].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[16].insuredResult" v-model="matters[16].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[16].policyholderResult" v-model="matters[16].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[16].insuredResult" v-model="matters[16].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[16].policyholderResult" v-model="matters[16].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">g.糖尿病、垂体、甲状腺、肾上腺疾病等内分泌系统疾病?</p>
@@ -413,10 +413,10 @@
             <img v-if="matters[17].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[17].insuredResult" v-model="matters[17].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[17].policyholderResult" v-model="matters[17].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[17].insuredResult" v-model="matters[17].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[17].policyholderResult" v-model="matters[17].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">h.贫血、再生障碍性贫血、白血病、紫癜症、血友病?</p>
@@ -434,10 +434,10 @@
             <img v-if="matters[18].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[18].insuredResult" v-model="matters[18].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[18].policyholderResult" v-model="matters[18].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[18].insuredResult" v-model="matters[18].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[18].policyholderResult" v-model="matters[18].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">i.风湿热、 关节炎、类风湿性关节炎、 痛风、颈椎病、椎间盘突出症、 红斑狼疮、硬皮病、皮肌炎、重症肌无力、肌肉萎缩症、 其他结缔组织疾病?</p>
@@ -455,10 +455,10 @@
             <img v-if="matters[19].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[19].insuredResult" v-model="matters[19].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[19].policyholderResult" v-model="matters[19].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[19].insuredResult" v-model="matters[19].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[19].policyholderResult" v-model="matters[19].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">j.肿瘤(包括任何良性、恶性或尚未定性的肿瘤)、息肉、囊肿或增生物?</p>
@@ -476,10 +476,10 @@
             <img v-if="matters[20].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[20].insuredResult" v-model="matters[20].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[20].policyholderResult" v-model="matters[20].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[20].insuredResult" v-model="matters[20].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[20].policyholderResult" v-model="matters[20].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">k.先天性疾病、遗传性疾病?</p>
@@ -497,10 +497,10 @@
             <img v-if="matters[21].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[26].insuredResult" v-model="matters[26].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[26].policyholderResult" v-model="matters[26].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[21].insuredResult" v-model="matters[21].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[21].policyholderResult" v-model="matters[21].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
         <p style="padding: 15px 0">l.身体是否有瘢痕？</p>
@@ -518,10 +518,10 @@
             <img v-if="matters[22].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[22].insuredResult" v-model="matters[22].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[22].policyholderResult" v-model="matters[22].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[22].insuredResult" v-model="matters[22].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[22].policyholderResult" v-model="matters[22].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
 
       <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
@@ -540,10 +540,10 @@
             <img v-if="matters[23].policyholderResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[23].insuredResult" v-model="matters[23].insuredRemark"
-                  placeholder="被保人"/>
-        <textarea class="content-text" v-if="matters[23].policyholderResult" v-model="matters[23].policyholderRemark"
-                  placeholder="投保人"/>
+        <textarea class="content-text" type="text" v-if="matters[23].insuredResult" v-model="matters[23].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
+        <textarea class="content-text" type="text" v-if="matters[23].policyholderResult" v-model="matters[23].policyholderRemark"
+                  placeholder="投保人" maxlength="250"/>
       </div>
     </div>
 
@@ -563,10 +563,10 @@
           <img v-if="matters[24].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[24].insuredResult" v-model="matters[24].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[24].policyholderResult" v-model="matters[24].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[24].insuredResult" v-model="matters[24].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[24].policyholderResult" v-model="matters[24].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -592,9 +592,8 @@
             <img v-if="matters[25].insuredResult" src="../assets/img/switch-on.png">
           </div>
         </div>
-        <textarea class="content-text" v-if="matters[25].insuredResult" v-model="matters[25].insuredRemark"
-                  maxlength="100"
-                  placeholder="被保人"/>
+        <textarea class="content-text" type="text" v-if="matters[25].insuredResult" v-model="matters[25].insuredRemark"
+                  placeholder="被保人" maxlength="250"/>
       </div>
     </div>
 
@@ -607,8 +606,8 @@
           <img v-if="matters[26].insuredResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[26].insuredResult" v-model="matters[26].insuredRemark"
-                placeholder="被保人"/>
+      <textarea class="content-text" type="text" v-if="matters[26].insuredResult" v-model="matters[26].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -627,10 +626,10 @@
           <img v-if="matters[27].policyholderResult" src="../assets/img/switch-on.png">
         </div>
       </div>
-      <textarea class="content-text" v-if="matters[27].insuredResult" v-model="matters[27].insuredRemark"
-                placeholder="被保人"/>
-      <textarea class="content-text" v-if="matters[27].policyholderResult" v-model="matters[27].policyholderRemark"
-                placeholder="投保人"/>
+      <textarea class="content-text" type="text" v-if="matters[27].insuredResult" v-model="matters[27].insuredRemark"
+                placeholder="被保人" maxlength="250"/>
+      <textarea class="content-text" type="text" v-if="matters[27].policyholderResult" v-model="matters[27].policyholderRemark"
+                placeholder="投保人" maxlength="250"/>
     </div>
 
     <div class="content">
@@ -658,6 +657,7 @@
 <script>
   import storage from "../store/storage";
   import {Toast} from 'vux'
+  import {emoji} from "../admin/validate";
 
   export default {
     components: {Toast},
@@ -666,9 +666,9 @@
       return {
         state: false,
         matters: storage.fetch("matters"),
-        values5: ['', '', '', '', '', ''],
+        values5: '',
         values11: '',
-        values12: ['', '', '', ''],
+        values12: '',
         twoYear: true,
         showPositionValue: false,
         toastText: '',
@@ -689,6 +689,14 @@
         });
       },
       next() {
+        // let test = document.getElementsByTagName("textarea");
+        // for (let i = 0; i< test.length; i++ ) {
+        //   console.log(test[i].value);
+        //   if(emoji.test(test[i].value)){
+        //
+        //   }
+        // }
+        // return false;
         //吸烟校验
         if (this.matters[4].insuredResult || this.matters[4].policyholderResult) {
           if (this.values5[0] === '' || this.values5[1] === '' || this.values5[2] === '' || this.values5[3] === '' || this.values5[4] === '' || this.values5[5] === '') {
@@ -700,7 +708,7 @@
           alert("输入长度不得大于3位");
           return false;
         }
-        if (this.values5[0] === '0' || this.values5[1] === '0' || this.values5[3] === '0' || this.values5[5] === '0') {
+        if (parseInt(this.values5[0]) <= 0 || parseInt(this.values5[1]) <= 0 || parseInt(this.values5[3]) <= 0 || parseInt(this.values5[5]) <= 0) {
           alert("请输入大于0的整数");
           return false;
         }
@@ -715,16 +723,16 @@
           alert("怀孕周数长度不大于3");
           return false;
         }
-        if (this.values11 === '0') {
-          alert("怀孕周数不能为0");
+        if (parseInt(this.values11) <= 0) {
+          alert("怀孕周数不能小于0");
           return false;
         }
         if (this.values12[0].length > 3 || this.values12[1].length > 3 || this.values12[3].length > 3) {
           alert("婴儿信息栏填写长度不大于3");
           return false;
         }
-        if (this.values12[0] === '0' || this.values12[1] === '0' || this.values12[3] === '0') {
-          alert("婴儿信息栏填写不能为0");
+        if (parseInt(this.values12[0]) <= 0 || parseInt(this.values12[1]) <= 0 || parseInt(this.values12[3]) <= 0) {
+          alert("婴儿信息栏填写数据需大于0");
           return false;
         }
         this.enableSumit = true;
@@ -755,28 +763,32 @@
     watch: {
       values5: {
         handler(newVal, oldVal) {
-          if (this.matters.length !== 0) {
-            this.matters[4].collectValues = JSON.stringify(newVal);
-          }
-          if (newVal[0].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[1].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[3].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[5].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0' || newVal[5] === '0') {
-            this.showPositionValue = true;
-            this.toastText = "请输入大于0的整数";
+          if (newVal) {
+            if (this.matters.length !== 0) {
+              this.matters[4].collectValues = JSON.stringify(newVal);
+            }
+            if (newVal[0].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[1].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[3].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[5].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (parseInt(newVal[0]) <= 0 || parseInt(newVal[1]) <= 0 || parseInt(newVal[3]) <= 0 || parseInt(newVal[5]) <= 0) {
+              this.showPositionValue = true;
+              this.toastText = "请输入大于0的整数";
+            }
+          } else {
+            this.values5 = ['', '', '', '', '', ''];
           }
         },
         immediate: true,
@@ -784,24 +796,28 @@
       },
       values12: {
         handler(newVal, oldVal) {
-          if (this.matters.length !== 0) {
-            this.matters[25].collectValues = JSON.stringify(newVal);
-          }
-          if (newVal[0].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[1].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[3].length > 3) {
-            this.showPositionValue = true;
-            this.toastText = "输入长度不得大于3位";
-          }
-          if (newVal[0] === '0' || newVal[1] === '0' || newVal[3] === '0') {
-            this.showPositionValue = true;
-            this.toastText = "请输入大于0的整数";
+          if (newVal) {
+            if (this.matters.length !== 0) {
+              this.matters[25].collectValues = JSON.stringify(newVal);
+            }
+            if (newVal[0].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[1].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (newVal[3].length > 3) {
+              this.showPositionValue = true;
+              this.toastText = "输入长度不得大于3位";
+            }
+            if (parseInt(newVal[0]) <= 0 || parseInt(newVal[1]) <= 0 || parseInt(newVal[3]) <= 0) {
+              this.showPositionValue = true;
+              this.toastText = "请输入大于0的整数";
+            }
+          } else {
+            this.values12 = ['', '', '', ''];
           }
         },
         immediate: true,
@@ -815,7 +831,7 @@
           this.showPositionValue = true;
           this.toastText = "输入长度不得大于3位";
         }
-        if (newVal === '0') {
+        if (parseInt(newVal) <= 0) {
           this.showPositionValue = true;
           this.toastText = "请输入大于0的整数";
         }
@@ -829,21 +845,6 @@
       }
     },
     created: function () {
-
-      for (let i = 1; i <= 28; i++) {
-        this.matters.push(
-          {
-            insuranceInformedMatter: {
-              matterId: i
-            },
-            insuredResult: false,
-            policyholderResult: false,
-            collectValues: '',
-            insuredRemark: '',
-            policyholderRemark: '',
-          }
-        )
-      }
       if (storage.fetch("matters").length !== 0) {
         if (storage.fetch("matters")[4].collectValues) {
           this.values5 = JSON.parse(storage.fetch("matters")[4].collectValues);
@@ -852,6 +853,23 @@
         if (storage.fetch("matters")[25].collectValues) {
           this.values12 = JSON.parse(storage.fetch("matters")[25].collectValues);
         }
+      } else {
+        let matters = [];
+        for (let i = 1; i <= 28; i++) {
+          matters.push(
+            {
+              insuranceInformedMatter: {
+                matterId: i
+              },
+              insuredResult: false,
+              policyholderResult: false,
+              collectValues: '',
+              insuredRemark: '',
+              policyholderRemark: '',
+            }
+          )
+        }
+        this.matters = matters;
       }
 
       //判断被保人周岁是否大于2周岁

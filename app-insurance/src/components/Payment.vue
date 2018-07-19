@@ -14,6 +14,9 @@
       <div class="error" v-if="!$v.bank.bankName.minLength">账户姓名最少为 {{$v.bank.bankName.$params.minLength.min}}
         个字符
       </div>
+      <div class="error" v-if="!$v.bank.bankName.maxLength">账户姓名最多为 {{$v.bank.bankName.$params.maxLength.max}}
+        个字符
+      </div>
 
       <x-input class="price" title="交易金额(元)" :placeholder="price + '.00'" readonly></x-input>
       <x-input title="手机号码" placeholder="请输入手机号码" v-model="bank.bankMobile"
@@ -21,21 +24,24 @@
                @input="$v.bank.bankMobile.$touch()"></x-input>
       <div class="error" v-if="!$v.bank.bankMobile.mobile">请输入正确的手机号码</div>
 
-      <popup-picker title="开户行" style="margin-right: 15px" placeholder="请选择开户行" :data="list" value-text-align="left" v-model="bank.accountBank"
+      <popup-picker title="开户行" style="margin-right: 15px" placeholder="请选择开户行" :data="list" value-text-align="left"
+                    v-model="bank.accountBank"
                     v-bind:class="{'errorInput': $v.bank.accountBank.$error}"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountBank.required && $v.bank.accountBank.$dirty">
         开户行不能为空
       </div>
 
-      <x-address title="开户行位置" style="margin-right: 15px" placeholder="请选择开户行位置" :list="cities" v-model="address" hide-district
-                 value-text-align="left" v-bind:class="{'errorInput': $v.address.$error}"></x-address>
+      <x-address title="开户行位置" style="margin-right: 15px" placeholder="请选择开户行位置" :list="cities" v-model="bank.bankPc"
+                 hide-district
+                 value-text-align="left" v-bind:class="{'errorInput': $v.bank.bankPc.$error}"></x-address>
       <div class="error"
-           v-if="!$v.address.required && $v.address.$dirty">
+           v-if="!$v.bank.bankPc.required && $v.bank.bankPc.$dirty">
         开户行位置不能为空
       </div>
 
-      <popup-picker title="账户类型" style="margin-right: 15px" placeholder="请选择账户类型" v-model="bank.accountType" :data="types" value-text-align="left"
+      <popup-picker title="账户类型" style="margin-right: 15px" placeholder="请选择账户类型" v-model="bank.accountType"
+                    :data="types" value-text-align="left"
                     v-bind:class="{'errorInput': $v.bank.accountType.$error}"></popup-picker>
       <div class="error"
            v-if="!$v.bank.accountType.required && $v.bank.accountType.$dirty">
@@ -66,15 +72,16 @@
       <!--</div>-->
       <!--</div>-->
       <div class="input-ver">
-        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 70%;padding-left: 0;" v-model="code" v-bind:class="{'errorInput': $v.code.$error}" @input="$v.code.$touch()"></x-input>
+        <x-input title="验证码" placeholder="请输入验证码" :max="6" style="width: 70%;padding-left: 0;" v-model="code"
+                 v-bind:class="{'errorInput': $v.code.$error}" @input="$v.code.$touch()"></x-input>
         <div class="input-vile" @click.prevent="getVerifyCode">{{computedTime === 0? "获取验证码" : computedTime +"s"}}</div>
         <div class="error" v-if="!$v.code.required && $v.code.$dirty">验证码不能为空</div>
       </div>
       <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     </group>
-    <div style="height: 60px;" >
+    <div style="height: 60px;">
       <div class="i-footer">
-        <button  @click="submit" style="background-color: #c01212">
+        <button @click="submit" style="background-color: #c01212">
           <div>确认提交</div>
         </button>
       </div>
@@ -108,7 +115,7 @@
         types: [['银行卡', '存折']],
         insured: storage.fetch("insured"),
         bank: storage.fetch('order').insuranceOrderPolicyholderBank,
-        address: [],
+        // address: [],
         toastText: '',
         showPositionValue: false,
         validate_token: '',
@@ -118,13 +125,13 @@
     },
     validations: {
       bank: {
-        bankName: {required, minLength: minLength(2)},
+        bankName: {required, minLength: minLength(2), maxLength: maxLength(30)},
         bankMobile: {required, mobile},
         accountBank: {required},
         accountType: {required},
-        accountNo: {required, minLength: minLength(16), maxLength: maxLength(19), numeric}
+        accountNo: {required, minLength: minLength(16), maxLength: maxLength(19), numeric},
+        bankPc: {required},
       },
-      address: {required},
       code: {required}
 
     },
@@ -139,7 +146,7 @@
 
         let _this = this;
         this.$vux.loading.show({
-          text: 'Loading'
+          text: '加载中...'
         });
         submitOrder(this.code).then(function (res) {
           if (res.result === 'SUCCESS') {
@@ -193,6 +200,10 @@
     watch: {
       bank: {
         handler(newVal, oldVal) {
+          if (newVal.bankPc && newVal.bankPc.length === 2) {
+            this.bank.bankProvince = newVal.bankPc[0];
+            this.bank.bankCity = newVal.bankPc[1];
+          }
           let order = storage.fetch('order');
           order.insuranceOrderPolicyholderBank = newVal;
           storage.save('order', order);
@@ -200,16 +211,19 @@
         immediate: true,
         deep: true
       },
-      address: {
-        handler(newVal, oldVal) {
-          if (newVal.length != 0) {
-            this.bank.bankProvince = newVal[0];
-            this.bank.bankCity = newVal[1];
-          }
-        },
-        immediate: true,
-        deep: true
-      }
+      // address: {
+      //   handler(newVal, oldVal) {
+      //     if (newVal.length != 0) {
+      //       this.bank.bankProvince = newVal[0];
+      //       this.bank.bankCity = newVal[1];
+      //     }
+      //     let order = storage.fetch('order');
+      //     order.insuranceOrderPolicyholderBank.bankPc = newVal;
+      //     storage.save('order', order);
+      //   },
+      //   immediate: true,
+      //   deep: true
+      // }
     },
     created: function () {
       this.bank.amount = storage.fetch('order').insuranceProductPrice.price;

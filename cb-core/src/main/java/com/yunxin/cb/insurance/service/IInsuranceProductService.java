@@ -10,7 +10,7 @@ public interface IInsuranceProductService {
 
 
     /**
-     *
+     * 
      * @param query
      * @return
      */

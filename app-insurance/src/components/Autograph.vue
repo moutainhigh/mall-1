@@ -220,16 +220,18 @@
           this.toastText = "请拍摄投保人正面头像";
           return false;
         }
-        if (this.clickSign === false) {
+        let holder = storage.fetch("holder");
+        if (!holder.policyholderSign) {
           this.showPositionValue = true;
           this.toastText = "请签署投保单签名";
           return false;
         }
-        if (this.clickSign1 === false) {
+        if (!holder.submissionSign) {
           this.showPositionValue = true;
           this.toastText = "请签署投保提示书签名";
           return false;
         }
+
         // this.save();
         this.$router.push("upload-data")
       },

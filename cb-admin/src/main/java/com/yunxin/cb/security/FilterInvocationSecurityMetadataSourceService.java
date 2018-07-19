@@ -36,8 +36,9 @@ public class FilterInvocationSecurityMetadataSourceService implements FilterInvo
 
 
     private final String[] ignoredUrls = {
-            "/index.do**",
-            "/login.do**",
+            "/",
+            "/index**",
+            "/login**",
             "/ajax/**",
             "/bootstrap/**",
             "/css/**",
@@ -50,6 +51,7 @@ public class FilterInvocationSecurityMetadataSourceService implements FilterInvo
             "/kendo/**",
             "/templates/**",
             "/upload/**",
+            "/insurance/prints.do**",
             "/app/**",
     };
 

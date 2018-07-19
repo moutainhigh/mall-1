@@ -34,7 +34,7 @@
       <img src="../assets/img/detail2/img16.jpg" width="100%"/>
       <img src="../assets/img/detail2/img17.jpg" width="100%"/>
     </div>
-    <div style="height: 60px;">
+    <div style="height: 75px;">
       <div class="i-footer">
         <button @click="next">
           <div>立即投保</div>

@@ -3,9 +3,11 @@ package com.yunxin.cb.mall.web.action.insurance;
 import com.yunxin.cb.insurance.entity.InsuranceInformedMatter;
 import com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup;
 import com.yunxin.cb.insurance.entity.InsuranceOrderCode;
+import com.yunxin.cb.insurance.entity.InsuranceProduct;
 import com.yunxin.cb.insurance.service.IInsuranceInformedMatterGroupService;
 import com.yunxin.cb.insurance.service.IInsuranceInformedMatterService;
 import com.yunxin.cb.insurance.service.IInsuranceOrderCodeService;
+import com.yunxin.cb.insurance.service.IInsuranceProductService;
 import com.yunxin.cb.mall.web.util.ExcelUtils;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.persistence.PageSpecification;
@@ -21,12 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.plaf.synth.SynthOptionPaneUI;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
- * @author likang
- */
+* @Description:    事项控制器
+* @Author:         likang
+* @CreateDate:     2018/7/17 21:16
+*/
 @Controller
 @RequestMapping(value = "/insuranceInformedMatter")
 @SessionAttributes({SecurityConstants.LOGIN_SESSION})
@@ -36,18 +39,31 @@ public class InsuranceInformedMatterController {
     private IInsuranceInformedMatterService insuranceInformedMatterService;
     @Resource
     private IInsuranceInformedMatterGroupService insuranceInformedMatterGroupService;
+    @Resource
+    private IInsuranceProductService insuranceProductService;
 
+    /**
+     * 跳转到事项页面
+     * @author      likang
+     * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:17
+     */
     @RequestMapping(value = "insuranceInformedMatters")
-    public String insuranceordercodes(ModelMap modelMap) {
+    public String insuranceInformedMatters(ModelMap modelMap) {
+        modelMap.addAttribute("groups",insuranceInformedMatterGroupService.findList(1));
         return "insuranceinformedmatter/insuranceinformedmatters";
     }
 
 
     /**
-     * InsuranceInformedMatter分页
-     *
-     * @param
-     * @return
+     * 事项分页列表
+     * @author      likang
+     * @param query
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.insurance.entity.InsuranceInformedMatter>
+     * @exception
+     * @date        2018/7/17 21:17
      */
     @RequestMapping(value = "pageInsuranceInformedMatter",method = RequestMethod.POST)
     @ResponseBody
@@ -56,8 +72,43 @@ public class InsuranceInformedMatterController {
     }
 
     /**
-     *
-     * @return
+     * 事项分页列表
+     * @author      likang
+     * @param query
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.insurance.entity.InsuranceInformedMatter>
+     * @exception
+     * @date        2018/7/17 21:17
+     */
+    @RequestMapping(value = "pageaddMatter",method = RequestMethod.POST)
+    @ResponseBody
+    public Page<InsuranceInformedMatter> pageaddMatter(@RequestBody PageSpecification<InsuranceInformedMatter> query,@RequestParam("prodId") String prodId) {
+//        List<InsuranceInformedMatter> list = insuranceInformedMatterService.pageaddMatter(query).getContent();
+//        int pros=Integer.parseInt(prodId);
+//        InsuranceProduct insuranceProduct = insuranceProductService.getInsuranceProductById(pros);
+//        Set<InsuranceInformedMatter> insuranceInformedMatters = insuranceProduct.getInsuranceInformedMatters();
+//        Set<Integer> setId=new HashSet<Integer>();
+//        /**
+//         * 筛选出已经存在的事项，(后期再优化)
+//         */
+//        for (InsuranceInformedMatter matters:insuranceInformedMatters) {
+//            setId.add(matters.getMatterId());
+//        }
+//        for (InsuranceInformedMatter insuranceInformedMatter : list) {
+//            if(!setId.contains(insuranceInformedMatter.getMatterId())){
+//                list.remove(insuranceInformedMatter);
+//            }
+//        }
+        return insuranceInformedMatterService.pageaddMatter(query);
+    }
+
+    /**
+     * 跳转到事项添加页面
+     * @author      likang
+     * @param insuranceInformedMatter
+    * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:18
      */
     @RequestMapping(value = "toAddMatter",method = RequestMethod.GET)
     public String toAddMatter(@ModelAttribute("InsuranceInformedMatter") InsuranceInformedMatter insuranceInformedMatter, ModelMap modelMap){
@@ -67,10 +118,13 @@ public class InsuranceInformedMatterController {
     }
 
     /**
-     *
+     * 跳转到事项修改页面
+     * @author      likang
      * @param matterId
-     * @param modelMap
-     * @return
+    * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:19
      */
     @RequestMapping(value = "toEditMatter",method = RequestMethod.GET)
     public String toEditMatter(@RequestParam("matterId") int matterId, ModelMap modelMap){
@@ -87,8 +141,13 @@ public class InsuranceInformedMatterController {
     }
 
     /**
-     *
-     * @return
+     * 方法实现说明
+     * @author      likang
+     * @param insuranceInformedMatter
+    * @param groupId
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:19
      */
     @RequestMapping(value = "addInsuranceInformedMatter",method = RequestMethod.POST)
     public String addInsuranceInformedMatter(@ModelAttribute("insuranceInformedMatter") InsuranceInformedMatter insuranceInformedMatter,@ModelAttribute("groupId")int groupId) {
@@ -103,9 +162,14 @@ public class InsuranceInformedMatterController {
     }
 
     /**
-     *
+     * 修改事项
+     * @author      likang
      * @param insuranceInformedMatter
-     * @return
+    * @param groupId
+    * @param matterType
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:21
      */
     @RequestMapping(value = "updateinsuranceInformedMatter",method = RequestMethod.POST)
     public String updateinsuranceInformedMatter(@ModelAttribute("insuranceInformedMatter") InsuranceInformedMatter insuranceInformedMatter,@ModelAttribute("groupId")int groupId,@ModelAttribute("matterType")int matterType) {
@@ -120,9 +184,12 @@ public class InsuranceInformedMatterController {
     }
 
     /**
-     *
+     * 通过id删除事项
+     * @author      likang
      * @param matterId
-     * @return
+     * @return      boolean
+     * @exception
+     * @date        2018/7/17 21:22
      */
     @RequestMapping(value = "removeById",method = RequestMethod.GET)
     @ResponseBody

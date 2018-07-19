@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,9 +31,14 @@ public class InsuranceProductService implements IInsuranceProductService {
 
     @Resource
     private InsuranceInformedMatterDao insuranceInformedMatterDao;
+
     /**
-     * 查询保险产品列表
-     * @return
+     * 获取所有保险产品列表
+     * @author      likang
+     * @param
+     * @return      java.util.List<com.yunxin.cb.insurance.entity.InsuranceProduct>
+     * @exception
+     * @date        2018/7/18 16:02
      */
     @Override
     public List<InsuranceProduct> getInsuranceProducts() {
@@ -41,20 +47,39 @@ public class InsuranceProductService implements IInsuranceProductService {
 
     /**
      * 添加保险产品
+     * @author      likang
      * @param insuranceProduct
-     * @return
+     * @return      com.yunxin.cb.insurance.entity.InsuranceProduct
+     * @exception
+     * @date        2018/7/18 16:03
      */
     @Override
     @Transactional
     public InsuranceProduct addInsuranceProduct(InsuranceProduct insuranceProduct) {
         insuranceProduct.setCreateTime(new Date());
+        //保存事项id的数组
+        int[] matterIds=insuranceProduct.getMatterIds();
+        Set<InsuranceInformedMatter> insuranceInformedMatters=insuranceProduct.getInsuranceInformedMatters();
+        //先清除所有事项
+        insuranceInformedMatters.clear();
+        //添加事项
+        if (matterIds != null) {
+            for (int i = 0; i < matterIds.length; i++) {
+                InsuranceInformedMatter matter=insuranceInformedMatterDao.findOne(matterIds[i]);
+                insuranceInformedMatters.add(matter);
+            }
+        }
+        insuranceProduct.setInsuranceInformedMatters(insuranceInformedMatters);
         return insuranceProductDao.save(insuranceProduct);
     }
 
     /**
-     *
+     * 获取保险产品的分页Page
+     * @author      likang
      * @param query
-     * @return
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.insurance.entity.InsuranceProduct>
+     * @exception
+     * @date        2018/7/18 16:04
      */
     @Override
     public Page<InsuranceProduct> pageInsuranceProduct(PageSpecification<InsuranceProduct> query){
@@ -90,14 +115,27 @@ public class InsuranceProductService implements IInsuranceProductService {
     }
 
     /**
-     *
+     * 更新保险产品
+     * @author      likang
      * @param insuranceProduct
-     * @return
+     * @return      com.yunxin.cb.insurance.entity.InsuranceProduct
+     * @exception
+     * @date        2018/7/18 16:05
      */
     @Override
     @Transactional
     public InsuranceProduct updateInsuranceProduct(InsuranceProduct insuranceProduct){
         InsuranceProduct oldProduct = insuranceProductDao.findOne(insuranceProduct.getProdId());
+        int[] matterIds=insuranceProduct.getMatterIds();
+        Set<InsuranceInformedMatter> insuranceInformedMatters=insuranceProduct.getInsuranceInformedMatters();
+        insuranceInformedMatters.clear();
+        if (matterIds != null) {
+            for (int i = 0; i < matterIds.length; i++) {
+                InsuranceInformedMatter matter=insuranceInformedMatterDao.findOne(matterIds[i]);
+                insuranceInformedMatters.add(matter);
+            }
+        }
+        oldProduct.setInsuranceInformedMatters(insuranceInformedMatters);
         oldProduct.setDescription(insuranceProduct.getDescription());
         oldProduct.setProdName(insuranceProduct.getProdName());
         oldProduct.setProtectionYear(insuranceProduct.getProtectionYear());

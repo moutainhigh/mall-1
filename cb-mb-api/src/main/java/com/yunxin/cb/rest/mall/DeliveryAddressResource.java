@@ -17,7 +17,7 @@ import java.util.List;
 @Api(description = "收货地址接口")
 @RestController
 @RequestMapping(value = "/mall/deliveryAddress")
-@SessionAttributes("customerId")
+//@SessionAttributes("customerId")
 public class DeliveryAddressResource extends BaseResource {
 
     @Resource
@@ -26,15 +26,15 @@ public class DeliveryAddressResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "path", dataType = "int")
     })
-    @GetMapping(value = "getDeliveryAddressList")
+    @PostMapping(value = "getDeliveryAddressList")
     public ResponseResult getDeliveryAddress(@ModelAttribute(value = "customerId") int customerId){
         List<DeliveryAddress> list = deliveryAddressService.selectByCustomerId(customerId);
         return new ResponseResult(list);
     }
     @ApiOperation(value = "收货地址详情")
-    @GetMapping(value = "getDeliveryAddress/{address_id}")
-    public ResponseResult getDeliveryAddressDetail(@PathVariable(value = "address_id") int address_id,@ModelAttribute(value = "customerId") int customerId){
-        DeliveryAddress deliveryAddress = deliveryAddressService.selectByPrimaryKey(address_id);
+    @PostMapping(value = "getDeliveryAddress")
+    public ResponseResult getDeliveryAddressDetail(@RequestParam(value = "addressId") int addressId,@ModelAttribute(value = "customerId") int customerId){
+        DeliveryAddress deliveryAddress = deliveryAddressService.selectByPrimaryKey(addressId);
         return new ResponseResult(deliveryAddress);
     }
 
@@ -50,11 +50,11 @@ public class DeliveryAddressResource extends BaseResource {
 
     @ApiOperation(value = "删除收货地址")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "address_id", value = "地址ID", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
     })
-    @GetMapping(value = "delectDeliveryAddress/{address_id}")
-    public ResponseResult delectDeliveryAddress(@PathVariable(value = "address_id") int address_id,@ModelAttribute("customerId") int customerId){
-        int delete_sunm = deliveryAddressService.deleteByPrimaryKey(address_id);
+    @GetMapping(value = "delectDeliveryAddress/{addressId}")
+    public ResponseResult delectDeliveryAddress(@PathVariable(value = "addressId") int addressId,@ModelAttribute("customerId") int customerId){
+        int delete_sunm = deliveryAddressService.deleteByPrimaryKey(addressId);
         if(delete_sunm <= 0){
             return new ResponseResult(Result.FAILURE);
         }

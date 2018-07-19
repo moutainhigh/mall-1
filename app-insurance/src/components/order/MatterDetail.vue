@@ -1,0 +1,796 @@
+<template>
+  <div>
+    <div class="title">
+      告知事项
+    </div>
+    <div class="content" style="height: auto">
+      <p>1.您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承包公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和。住院每日补贴日额及保险合同生效日期。</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[0].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[0].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[0].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[0].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[0].insuredResult">
+        <p>被保人：{{matters[0].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[0].policyholderResult">
+        <p>投保人：{{matters[0].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>2.您的人寿保险、人身意外或健康保险的投保申请是否曾被拒保、推迟、加费、或作限制保障权益？是否有解除保险合同？是否曾向任何保险公司提出索赔申请？若“是”，请说明。</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[1].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[1].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[1].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[1].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[1].insuredResult">
+        <p>被保人：{{matters[1].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[1].policyholderResult">
+        <p>投保人：{{matters[1].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>3.是否计划出国或改变居住地或工作地点？正在试图参加私人性质飞行，或携带氧气瓶潜水、或登山、或从事危险性的运动？若“是”，请填妥相关问卷，连同此投保单一并交回本公司。</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[2].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[2].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[2].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[2].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[2].insuredResult">
+        <p>被保人：{{matters[2].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[2].policyholderResult">
+        <p>投保人：{{matters[2].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>4.是否持有有效摩托车驾照？</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[3].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[3].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[3].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[3].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[3].insuredResult">
+        <p>被保人：{{matters[3].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[3].policyholderResult">
+        <p>投保人：{{matters[3].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p style="padding: 15px 0">5.a.是否吸烟?若“是”，吸烟<span class="pack">{{values5[0]}}</span>年<span class="pack">{{values5[1]}}</span>
+        支/天；若现在已停止吸烟，停止吸烟原因及时间<span class="pack">{{values5[2]}}</span>。</p>
+      <p style="padding: 15px 0">b.是否饮酒？若“是”，饮酒<span class="pack">{{values5[3]}}</span>年，种类<span class="pack">{{values5[4]}}</span>，数量<span
+        class="pack">{{values5[5]}}</span>
+        （两/周）；若现在已停止饮酒，停止饮酒原因及时间<span class="pack">{{values5[6]}}</span>。
+      </p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[4].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[4].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[4].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[4].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[4].insuredResult">
+        <p>被保人：{{matters[4].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[4].policyholderResult">
+        <p>投保人：{{matters[4].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>6.是否曾经或正在使用镇静安眠剂、可成瘾药物、麻醉剂，或接受戒毒、戒酒治疗？</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[5].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[5].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[5].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[5].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[5].insuredResult">
+        <p>被保人：{{matters[5].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[5].policyholderResult">
+        <p>投保人：{{matters[5].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>7.最近六个月内是否有医生建议您服药、住院、接受诊疗、手术或其他医疗方案？</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[6].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[6].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[6].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[6].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[6].insuredResult">
+        <p>被保人：{{matters[6].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[6].policyholderResult">
+        <p>投保人：{{matters[6].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>8.最近五年内，是否曾经作下列之一的检查，有无异常？ 核磁共振(MRI)、心电图、胃镜、纤维结肠镜、气管镜、CT、超声波、X光、眼底检查、脑电图、肝功能、肾功能、病理活检及其它特殊检查。</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[7].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[7].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[7].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[7].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[7].insuredResult">
+        <p>被保人：{{matters[7].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[7].policyholderResult">
+        <p>投保人：{{matters[7].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>9.是否有下列身体残障情况：</p>
+      <p style="padding: 15px 0">a.脊柱、胸廓、四肢、手指或手掌、足趾或足部缺损畸形、两上肢或两下肢长度不等、跛行？</p>
+      <p style="padding: 15px 0">b.眼、耳、鼻、舌或其它颜面部软组织缺损畸形？牙齿脱落、上下颌骨缺失、颞下颌关节强直？肋骨骨折或缺失？颈部或腰部活动受限？肢体肌力下降？</p>
+      <p style="padding: 15px 0">c.睾丸萎缩或缺失？阴茎缺失？输精管闭锁或缺失？（男性）</p>
+      <p style="padding: 15px 0">d.子宫切除？阴道闭锁？乳房切除？（女性）</p>
+      <p style="padding: 15px 0">e.视力、听力、语言、咀嚼、吞咽、嗅觉、触觉等功能障碍或中枢神经系统障碍？</p>
+      <p style="padding: 15px 0">f.精神、智能障碍或性格行为异常？</p>
+      <p style="padding: 15px 0">g.脾、肺、胃、小肠、结肠、直肠、胰腺、肝、肾、膀胱切除？心脏的结构损伤或功能障碍？输尿管闭锁或缺失？其它内脏或身体器官缺损、摘除或移植？</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[8].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[8].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[8].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[8].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[8].insuredResult">
+        <p>被保人：{{matters[8].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[8].policyholderResult">
+        <p>投保人：{{matters[8].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p style="padding: 15px 0">10.a 您及您的配偶是否曾接受或试图接受与艾滋病(AIDS)有关的医疗咨询、检验或治疗，或艾滋病病毒(HIV)呈阳性反应？</p>
+      <p style="padding: 15px 0">b 是否曾经验血而得知为乙肝表面抗原(HbsAg)阳性反应或不宜献血？</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[9].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[9].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[9].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[9].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[9].insuredResult">
+        <p>被保人：{{matters[9].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[9].policyholderResult">
+        <p>投保人：{{matters[9].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p style="padding: 15px 0">11.若为16周岁(含)以上女性，请告知：a.目前是否怀孕？若是，已怀孕<input class="value-input" type="number"
+                                                                            v-model="values11" readonly/>周？</p>
+      <p style="padding: 15px 0">b.（曾）患子宫、卵巢、乳房或其他生殖器官疾病？</p>
+      <p style="padding: 15px 0">c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？</p>
+      <p style="padding: 15px 0">d.母亲、姐妹中是否有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[10].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[10].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[10].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[10].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[10].insuredResult">
+        <p>被保人：{{matters[10].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[10].policyholderResult">
+        <p>投保人：{{matters[10].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">12.是否患有或曾经患有以下疾病：</p>
+      <div style="border-bottom: 1px solid #f3f3f3; padding-bottom: 10px">
+        <p style="padding: 15px 0">a.最近六个月内，是否有下列疾患或自觉症状?</p>
+        <p style="padding: 15px 0">.不明原因皮肤出血点或瘀斑、鼻衄、反复齿龈出血?</p>
+        <p style="padding: 15px 0">.不明原因的声嘶、关节红肿酸痛、难以愈合的舌、皮肤溃疡，持续低热，体重显著减轻(短期内5公斤以上)，痣的形态、大小或颜色改变、黄疸?</p>
+        <p style="padding: 15px 0">.咳嗽、痰中有血块或血丝?眼睛胀痛、视力或听力明显下降、视物不清?</p>
+        <p style="padding: 15px 0">.持续一周以上的吞咽困难、食欲不振、盗汗、腹泻、腹部不适?</p>
+        <p style="padding: 15px 0">.紫绀、胸闷、心慌、气急、心前区疼痛、反复头痛、头晕?</p>
+        <p style="padding: 15px 0">.小便困难、蛋白尿、血尿、便血、黑便、粘液便?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[11].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[11].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[11].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[11].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[11].insuredResult">
+          <p>被保人：{{matters[11].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[11].policyholderResult">
+          <p>投保人：{{matters[11].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">b.视神经病变、白内障、青光眼、视网膜出血或剥离、近视800度以上?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[12].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[12].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[12].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[12].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[12].insuredResult">
+          <p>被保人：{{matters[12].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[12].policyholderResult">
+          <p>投保人：{{matters[12].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">c.脑脊液鼻漏或耳漏、脑血管意外及后遗症、蛛网膜下腔出血、癫痫病、帕金森氏综合症、精神病、神经麻痹、心脏病、高血压、高脂血症、血管瘤、血管疾病?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[13].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[13].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[13].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[13].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[13].insuredResult">
+          <p>被保人：{{matters[13].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[13].policyholderResult">
+          <p>投保人：{{matters[13].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">d.胸膜炎、肺炎、哮喘、肺结核、慢性支气管炎、支气管扩张症、肺气肿、气胸、尘肺、矽肺?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[14].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[14].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[14].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[14].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[14].insuredResult">
+          <p>被保人：{{matters[14].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[14].policyholderResult">
+          <p>投保人：{{matters[14].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">e. 慢性胃肠炎、结肠炎、消化性溃疡、消化道出血穿孔、胰腺炎、肝炎、脂肪肝、肝硬化、肝脓肿、胆道结石、胆囊炎、腹膜炎、脾肿大、肛肠疾病?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[15].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[15].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[15].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[15].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[15].insuredResult">
+          <p>被保人：{{matters[15].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[15].policyholderResult">
+          <p>投保人：{{matters[15].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">f.肾炎、肾病综合症、尿毒症、急性肾功能衰竭、尿路结石、尿道狭窄、肾囊肿、肾下垂、反复尿路感染、性病?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[16].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[16].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[16].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[16].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[16].insuredResult">
+          <p>被保人：{{matters[16].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[16].policyholderResult">
+          <p>投保人：{{matters[16].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">g.糖尿病、垂体、甲状腺、肾上腺疾病等内分泌系统疾病?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[17].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[17].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[17].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[17].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[17].insuredResult">
+          <p>被保人：{{matters[17].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[17].policyholderResult">
+          <p>投保人：{{matters[17].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">h.贫血、再生障碍性贫血、白血病、紫癜症、血友病?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[18].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[18].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[18].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[18].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[18].insuredResult">
+          <p>被保人：{{matters[18].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[18].policyholderResult">
+          <p>投保人：{{matters[18].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">i.风湿热、 关节炎、类风湿性关节炎、 痛风、颈椎病、椎间盘突出症、 红斑狼疮、硬皮病、皮肌炎、重症肌无力、肌肉萎缩症、 其他结缔组织疾病?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[19].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[19].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[19].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[19].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[19].insuredResult">
+          <p>被保人：{{matters[19].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[19].policyholderResult">
+          <p>投保人：{{matters[19].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">j.肿瘤(包括任何良性、恶性或尚未定性的肿瘤)、息肉、囊肿或增生物?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[20].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[20].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[20].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[20].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[20].insuredResult">
+          <p>被保人：{{matters[20].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[20].policyholderResult">
+          <p>投保人：{{matters[20].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">k.先天性疾病、遗传性疾病?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[21].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[21].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[21].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[21].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[21].insuredResult">
+          <p>被保人：{{matters[21].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[21].policyholderResult">
+          <p>投保人：{{matters[21].policyholderRemark}}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">l.身体是否有瘢痕？</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[22].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[22].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[22].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[22].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[22].insuredResult">
+          <p>被保人：{{matters[22].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[22].policyholderResult">
+          <p>投保人：{{matters[22].policyholderRemark}}</p>
+        </div>
+      </div>
+
+      <div style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">
+        <p style="padding: 15px 0">m.除上述以外的其它疾病、症状或意外受伤史?</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[23].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[23].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-state">
+          <p class="recognizee">投保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[23].policyholderResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[23].policyholderResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[23].insuredResult">
+          <p>被保人：{{matters[23].insuredRemark}}</p>
+        </div>
+        <div class="content-val" v-if="matters[23].policyholderResult">
+          <p>投保人：{{matters[23].policyholderRemark}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>13.直系亲属中，是否患有或曾经患有高血压、肾病、心脏病、肝炎、肝肾囊肿、肝硬化、糖尿病、精神病、癌症或早于60周岁因病身故者？</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[24].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[24].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[24].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[24].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[24].insuredResult">
+        <p>被保人：{{matters[24].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[24].policyholderResult">
+        <p>投保人：{{matters[24].policyholderRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p style="border-bottom: 1px solid #f3f3f3;padding: 0 0 15px 0;">14.若为2周岁(不含)以下婴儿，请告知：</p>
+      <div style="border-bottom: 1px solid #f3f3f3; padding-bottom: 10px">
+        <p style="padding: 15px 0; margin-bottom: 0">a.被保险人出生时身长<span class="pack">{{values12[0]}}</span>厘米，体重<span
+          class="pack">{{values12[1]}}</span>公斤，出生医院<span class="pack">{{values12[2]}}</span>
+          ，出生时留院天数<span class="pack">{{values12[3]}}</span>天，如超过7天，请详细说明。</p>
+        <p style="padding: 15px 0">b.出生时是否有早产、难产、窒息等情况？是否使用产钳等辅助器械？</p>
+        <p style="padding: 15px 0">c.出生时是否有抢救史？</p>
+        <p style="padding: 15px 0">d.是否未按要求接受预防接种？</p>
+        <p style="padding: 15px 0">e.是否曾进行婴幼儿体检且结果异常？</p>
+        <p style="padding: 15px 0">f.是否经常患腹痛、婴幼儿腹泻等消化系统疾病？</p>
+        <p style="padding: 15px 0">g.是否曾患哮喘、肺炎、扁桃体炎等呼吸系统疾病？</p>
+        <p style="padding: 15px 0">h.是否曾患疝气？i是否曾出现“高热惊厥”</p>
+        <p style="padding: 15px 0">i.是否曾出现“高热惊厥”？</p>
+        <div class="content-state">
+          <p class="recognizee">被保人</p>
+          <div style="display: inline">
+            <img v-if="!matters[25].insuredResult" src="../../assets/img/switch-off-1.png">
+            <img v-if="matters[25].insuredResult" src="../../assets/img/switch-on-1.png">
+          </div>
+        </div>
+        <div class="content-val" v-if="matters[25].insuredResult">
+          <p>被保人：{{matters[25].insuredRemark}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>15.是否已参加公费医疗或社会医疗保险。</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[26].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[26].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[26].insuredResult">
+        <p>被保人：{{matters[26].insuredRemark}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>16.您是否有其他事项告知本公司？</p>
+      <div class="content-state">
+        <p class="recognizee">被保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[27].insuredResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[27].insuredResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-state">
+        <p class="recognizee">投保人</p>
+        <div style="display: inline">
+          <img v-if="!matters[27].policyholderResult" src="../../assets/img/switch-off-1.png">
+          <img v-if="matters[27].policyholderResult" src="../../assets/img/switch-on-1.png">
+        </div>
+      </div>
+      <div class="content-val" v-if="matters[27].insuredResult">
+        <p>被保人：{{matters[27].insuredRemark}}</p>
+      </div>
+      <div class="content-val" v-if="matters[27].policyholderResult">
+        <p>投保人：{{matters[27].policyholderRemark}}</p>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+  import storage from "../../store/storage";
+
+  export default {
+    name: "matterDetail",
+    props: {
+      matters: null,
+    },
+    data() {
+      return {
+        values5: '',
+        values11: '',
+        values12: '',
+      }
+    },
+    created: function () {
+      if (this.matters.length !== 0) {
+        if (this.matters[4].collectValues) {
+          this.values5 = JSON.parse(this.matters[4].collectValues);
+        }
+        this.values11 = this.matters[10].collectValues;
+        console.log(this.values11)
+        if (this.matters[25].collectValues) {
+          this.values12 = JSON.parse(this.matters[25].collectValues);
+        }
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  .title {
+    font-weight: bold;
+    font-size: 17px;
+    margin: 10px 0;
+    background-color: #ffffff;
+    padding: 15px;
+    color: #f5ca1d;
+  }
+
+  .content {
+    background: #ffffff;
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+
+  .content p {
+    margin: 0 0 15px 0;
+    font-size: 13px;
+    margin: 0;
+  }
+
+  .recognizee {
+    padding-top: 15px;
+    float: left;
+    font-size: 13px;
+    padding-left: 15px;
+  }
+
+  img {
+    width: 15vw;
+    padding-top: 10px;
+    padding-left: 20px;
+  }
+
+  .content-state {
+    width: 45%;
+    display: inline-block;
+  }
+
+  .content-text {
+    margin-left: 10px;
+    border-radius: 8px;
+    display: block;
+    width: 80%;
+    margin-top: 10px;
+    height: 60px;
+    padding: 5px;
+  }
+
+  .value-input {
+    border: unset;
+    border-bottom: #666666 dashed 1px;
+    text-rendering: unset;
+    width: 3rem;
+    text-align: center;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .content-val {
+    font-size: 15px;
+    background-color: #ffffff;
+    padding: 15px;
+    color: #c5c5c5;
+    word-break: break-word;
+  }
+
+  .pack {
+    border-bottom: 1px solid #000;
+    padding: 0 10px;
+  }
+
+  .checkIcon {
+    width: 24px;
+  }
+</style>

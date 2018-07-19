@@ -16,8 +16,10 @@ import javax.annotation.Resource;
 import java.util.Date;
 
 /**
- * @author likang
- */
+* @Description:    事项组控制器
+* @Author:         likang
+* @CreateDate:     2018/7/17 21:09
+*/
 @Controller
 @RequestMapping(value = "/insuranceInformedGroup")
 @SessionAttributes({SecurityConstants.LOGIN_SESSION})
@@ -26,17 +28,26 @@ public class InsuranceInformedMatterGroupController {
     @Resource
     private IInsuranceInformedMatterGroupService insuranceInformedMatterGroupService;
 
-
+    /**
+     * 跳转到事项组页面
+     * @author      likang
+     * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:13
+     */
     @RequestMapping(value = "insuranceInformedGroups")
-    public String insuranceordercodes(ModelMap modelMap) {
+    public String insuranceInformedGroups(ModelMap modelMap) {
         return "insuranceinformedgroup/insuranceInformedGroups";
     }
 
     /**
-     * InsuranceInformedMatter分页
-     *
-     * @param
-     * @return
+     * 事项组分页列表
+     * @author      likang
+     * @param query
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup>
+     * @exception
+     * @date        2018/7/17 21:13
      */
     @RequestMapping(value = "pageInsuranceInformedMatterGroup",method = RequestMethod.POST)
     @ResponseBody
@@ -45,8 +56,13 @@ public class InsuranceInformedMatterGroupController {
     }
 
     /**
-     *
-     * @return
+     * 跳转到事项组添加页面
+     * @author      likang
+     * @param insuranceInformedMatterGroup
+    * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:14
      */
     @RequestMapping(value = "toAddGroup",method = RequestMethod.GET)
     public String toAddGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup, ModelMap modelMap){
@@ -55,10 +71,13 @@ public class InsuranceInformedMatterGroupController {
     }
 
     /**
-     *
+     * 跳转到事项组修改页面
+     * @author      likang
      * @param groupId
-     * @param modelMap
-     * @return
+    * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:14
      */
     @RequestMapping(value = "toEditGroup",method = RequestMethod.GET)
     public String toEditGroup(@RequestParam("groupId") int groupId, ModelMap modelMap){
@@ -68,32 +87,42 @@ public class InsuranceInformedMatterGroupController {
     }
 
     /**
-     *
-     * @return
+     * 添加事项组
+     * @author      likang
+     * @param insuranceInformedMatterGroup
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:15
      */
     @RequestMapping(value = "addinsuranceInformedMatterGroup",method = RequestMethod.POST)
     public String addinsuranceInformedMatterGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup) {
         insuranceInformedMatterGroup.setEnabled(0);
         insuranceInformedMatterGroup.setCreateTime(new Date());
         insuranceInformedMatterGroupService.addInsuranceInformedMatterGroup(insuranceInformedMatterGroup);
-        return "redirect:../common/success.do?reurl=insuranceInformedMatterGroup/insuranceInformedMatterGroups.do";
+        return "redirect:../common/success.do?reurl=insuranceInformedGroup/insuranceInformedGroups.do";
     }
 
     /**
-     *
+     * 更新事项组
+     * @author      likang
      * @param insuranceInformedMatterGroup
-     * @return
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/17 21:15
      */
     @RequestMapping(value = "updateinsuranceInformedMatterGroup",method = RequestMethod.POST)
     public String updateinsuranceInformedMatterGroup(@ModelAttribute("InsuranceInformedMatterGroup") InsuranceInformedMatterGroup insuranceInformedMatterGroup) {
         insuranceInformedMatterGroupService.update(insuranceInformedMatterGroup);
-        return "redirect:../common/success.do?reurl=insuranceInformedMatterGroup/insuranceInformedMatterGroups.do";
+        return "redirect:../common/success.do?reurl=insuranceInformedGroup/insuranceInformedGroups.do";
     }
 
     /**
-     *
+     * 根据id删除事项组
+     * @author      likang
      * @param groupId
-     * @return
+     * @return      boolean
+     * @exception
+     * @date        2018/7/17 21:16
      */
     @RequestMapping(value = "removeById",method = RequestMethod.GET)
     @ResponseBody

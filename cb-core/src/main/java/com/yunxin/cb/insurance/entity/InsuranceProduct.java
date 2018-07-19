@@ -107,6 +107,16 @@ public class InsuranceProduct implements Serializable {
     private Set<InsuranceInformedMatter> insuranceInformedMatters = new HashSet(0);
     //columns END
 
+    private int[] matterIds;
+
+    @Transient
+    public int[] getMatterIds() {
+        return matterIds;
+    }
+
+    public void setMatterIds(int[] matterIds) {
+        this.matterIds = matterIds;
+    }
 
     public InsuranceProduct() {
     }
@@ -235,6 +245,7 @@ public class InsuranceProduct implements Serializable {
 
     @ManyToMany(targetEntity = InsuranceInformedMatter.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "insurance_product_informed_matter", joinColumns = {@JoinColumn(name = "PROD_ID", nullable = false, updatable = false)}, inverseJoinColumns = {@JoinColumn(name = "MATTER_ID", nullable = false, updatable = false)})
+    @OrderBy(value = "matterId asc")
     public Set<InsuranceInformedMatter> getInsuranceInformedMatters() {
         return insuranceInformedMatters;
     }
