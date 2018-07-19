@@ -41,17 +41,14 @@ public interface FavoriteMapper {
     Favorite selectByPrimaryKey(Integer favoriteId);
 
     @Select("<script>"
-            +"select"
-            +"FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID"
-            +"from favorite"
-            +"where 1=1"
+            +"select FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID from favorite where 1=1 "
             + "<if test='customerId!=null'>"
-            + "FAVORITE_ID = #{q.customerId}"
+            + "AND CUSTOMER_ID = #{q.customerId} "
             + "</if>"
             + "<if test='commodityId!=null'>"
-            + "FAVORITE_ID = #{q.commodityId}"
+            + "AND FAVORITE_ID = #{q.commodityId} "
             + "</if>"
-            + "ORDER BY CREATE_TIME DESC"
+            + "ORDER BY CREATE_TIME DESC "
             + "</script>")
     @Results({
             @Result(column="FAVORITE_ID", property="favoriteId", jdbcType=JdbcType.INTEGER, id=true),
@@ -89,17 +86,14 @@ public interface FavoriteMapper {
     int updateByPrimaryKey(Favorite record);
 
     @Select("<script>"
-            +"select"
-            +"FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID"
-            +"from favorite"
-            +"where 1=1"
-            + "<if test='customerId!=null'>"
-            + "FAVORITE_ID = #{q.customerId}"
+            +"select FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID from favorite where 1=1"
+            + "<if test='q.customerId!=null'>"
+            + "AND CUSTOMER_ID = #{q.customerId} "
             + "</if>"
-            + "<if test='commodityId!=null'>"
-            + "FAVORITE_ID = #{q.commodityId}"
+            + "<if test='q.commodityId!=null'>"
+            + "AND FAVORITE_ID = #{q.commodityId} "
             + "</if>"
-            + "ORDER BY CREATE_TIME DESC"
+            + "ORDER BY CREATE_TIME DESC "
             + "LIMIT #{rowIndex},#{pageSize}"
             + "</script>")
     @Results({
@@ -112,15 +106,12 @@ public interface FavoriteMapper {
     List<Favorite> pageList(Query q);
 
     @Select("<script>"
-            +"select"
-            +"count(FAVORITE_ID)"
-            +"from favorite"
-            +"where 1=1"
-            + "<if test='customerId!=null'>"
-            + "FAVORITE_ID = #{q.customerId}"
+            +"select count(FAVORITE_ID) from favorite where 1=1"
+            + "<if test='q.customerId!=null'>"
+            + "AND CUSTOMER_ID = #{q.customerId} "
             + "</if>"
-            + "<if test='commodityId!=null'>"
-            + "FAVORITE_ID = #{q.commodityId}"
+            + "<if test='q.commodityId!=null'>"
+            + "AND FAVORITE_ID = #{q.commodityId} "
             + "</if>"
             + "</script>")
     long count(Query q);
