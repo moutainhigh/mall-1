@@ -40,7 +40,7 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "getCustomerFavorite")
-    public String getCustomerFavorite(Query q){
+    public String getCustomerFavorite(@RequestBody Query q){
         Favorite favorite=new Favorite();
         favorite.setCustomerId(getCustomerId());
         q.setData(favorite);
@@ -52,7 +52,7 @@ public class FavoriteResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "findByCustomerAndCommodity")
-    public ResponseResult findByCustomerAndCommodity(Favorite favorite) {
+    public ResponseResult findByCustomerAndCommodity(@RequestBody Favorite favorite) {
         favorite.setCustomerId(getCustomerId());
         favorite=favoriteService.findByCustomerAndCommodity(favorite);
         if(favorite==null){
@@ -74,7 +74,7 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "salePrice", value = "销售价", required = true, paramType = "post", dataType = "Float")})
     @PostMapping(value = "addFavorite")
-    public ResponseResult addFavorite(Favorite favorite){
+    public ResponseResult addFavorite(@RequestBody Favorite favorite){
         favorite.setCustomerId(getCustomerId());
         favorite=favoriteService.addFavorite(favorite);
         return new ResponseResult(favorite);
@@ -91,7 +91,7 @@ public class FavoriteResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "favoriteId", value = "收藏夹ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "delFavorite")
-    public ResponseResult delFavorite(int favoriteId){
+    public ResponseResult delFavorite(@RequestParam int favoriteId){
         int result=favoriteService.removeFavorite(favoriteId);
         if(result>0){
             return new ResponseResult(true);//成功
