@@ -943,8 +943,8 @@
                     </div>
                     <div class="col-sm-2">
                         <c:if test="${insuranceOrder.insuranceOrderOffsite!=null}">
-                            <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                            <%--<a href="javascript:void(0);" onclick="editItem('${insuranceOrder.orderId}')" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>--%>
+                            <%--<button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>--%>
+                            <a href="javascript:void(0);" onclick="editItem('${insuranceOrder.orderId}')" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
                         </c:if>
                         <%--<div class="btn-group pull-right">
                             <c:if test="${insuranceOrder.orderState=='UN_PAID'}">
