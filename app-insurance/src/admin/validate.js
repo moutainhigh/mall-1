@@ -17,7 +17,7 @@ export const permanentResidenceVali = helpers.regex('permanentResidenceVali', /^
 //小数点后两位校验
 export const int = helpers.regex('int', /^[1-9]\d*$/);
 //固定电话校验
-export const fixedTel = helpers.regex('fixedTel', /([0-9]{3,4}-)?[0-9]{7,8}/);
+export const fixedTel = helpers.regex('fixedTel', /([0-9]{3,4}-)?[0-9]{7,8}$/);
 //手机号码校验
 export const mobile = helpers.regex('mobile', /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/);
 //邮箱校验

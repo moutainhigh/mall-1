@@ -64,9 +64,7 @@
                 processData: false,
                 contentType: false,
                 success: function (result) {
-                    if (result.code == 0) {
                         $('#'+imgId).val(result.url);
-                    }
                 },
                 error: function (err) {
                 }
