@@ -27,7 +27,8 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "订单确认")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderVo", value = "订单确认对象", required = true, paramType = "post", dataType = "OrderVo")})
+            @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "saveOrder")
     public ResponseResult saveOrder(@RequestBody OrderVo orderVo){
         try {
