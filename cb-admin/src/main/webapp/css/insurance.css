@@ -264,6 +264,7 @@ table tr th, table tr td {
     box-sizing: border-box;
     width: 27.5px;
     height: 30px;
+    vertical-align: middle;
 }
 
 .div-checkbox input {
