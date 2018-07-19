@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="padding: 10px;background-color: #ffffff; position: relative; width: 100%; height: 50px">
-      <button-tab style="position: fixed;width: 95%;top: 10px; background: #fff; padding: 10px 10px; left: 0; right: 0">
+      <button-tab style="position: fixed;width: 95%;top: 0; background: #fff; padding: 20px 10px; left: 0; right: 0">
         <button-tab-item :selected="tab == 'order'" @on-item-click="tab='order'">基本资料</button-tab-item>
         <button-tab-item :selected="tab == 'matter'" @on-item-click="tab='matter'">告知事项</button-tab-item>
         <button-tab-item :selected="tab == 'place'" @on-item-click="tab='place'">异地投保</button-tab-item>
@@ -99,7 +99,8 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">住址</div>
-          <div class="d-cell-val">{{district(insured.insuredProvince,insured.insuredCity,insured.insuredDistrict)}}</div>
+          <div class="d-cell-val">{{district(insured.insuredProvince,insured.insuredCity,insured.insuredDistrict)}}
+          </div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">详细住址</div>
@@ -180,7 +181,9 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">住址</div>
-          <div class="d-cell-val">{{district(holder.policyholderProvince,holder.policyholderCity,holder.policyholderDistrict)}}</div>
+          <div class="d-cell-val">
+            {{district(holder.policyholderProvince,holder.policyholderCity,holder.policyholderDistrict)}}
+          </div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">详细住址</div>
@@ -245,14 +248,17 @@
     </div>
 
     <div v-if="tab == 'place'">
-      <place :insuranceOrderOffsite="order.insuranceOrderOffsite" :en-show="holder.policyholderCity !== '440300'"></place>
+      <place :insuranceOrderOffsite="order.insuranceOrderOffsite"
+             :en-show="holder.policyholderCity !== '440300'"></place>
     </div>
 
     <div v-if="tab === 'matter'">
-      <MatterDetail :matters ="order.insuranceOrderInformedMatters"></MatterDetail>
+      <MatterDetail :matters="order.insuranceOrderInformedMatters"></MatterDetail>
     </div>
 
-    <img src="../../assets/img/top.png" style="position:fixed;right:10px;bottom:10px;width: 10vw" @click="returnTop"/>
+    <div>
+      <img id="top1" src="../../assets/img/top.png" style="position:fixed;right:10px;bottom:10px;width: 10vw" @click="returnTop"/>
+    </div>
   </div>
 </template>
 
@@ -260,30 +266,38 @@
   import {getOrderDetail} from "../../service/getData";
   import {ChinaAddressData} from 'vux'
   import MatterDetail from './MatterDetail'
-  import { ButtonTab,ButtonTabItem} from 'vux'
-  import {arrayContain,ageYear} from "../../config/mUtils";
+  import {ButtonTab, ButtonTabItem} from 'vux'
+  import {arrayContain, ageYear} from "../../config/mUtils";
   import {careerCode} from "../../admin/career";
   import Place from "./Place";
 
+  window.onscroll = function () {
+    if (document.documentElement.scrollTop > 500) {
+      document.getElementById("top1").style.display ="block";
+    } else {
+      document.getElementById("top1").style.display ="none";
+    }
+  };
+
   export default {
     name: "orderDetail",
-    components:{
+    components: {
       Place,
       ButtonTab,
       ButtonTabItem,
       MatterDetail
     },
-    data(){
+    data() {
       return {
-        tab:'order',
-        insured:'',
-        holder:'',
-        beneficiaries:[],
-        order:'',
-        addr:ChinaAddressData
+        tab: 'order',
+        insured: '',
+        holder: '',
+        beneficiaries: [],
+        order: '',
+        addr: ChinaAddressData
       }
     },
-    methods:{
+    methods: {
       orderState(state) {
         switch (state) {
           case "UN_PAID":
@@ -298,23 +312,23 @@
             return "已退保";
         }
       },
-      district(province,city,district){
+      district(province, city, district) {
         let result = '';
-        result = result + arrayContain(province,this.addr,"value")['name'] + " ";
-        result = result + arrayContain(city,this.addr,"value")['name'] + " ";
-        result = result + arrayContain(district,this.addr,"value")['name'] + " ";
+        result = result + arrayContain(province, this.addr, "value")['name'] + " ";
+        result = result + arrayContain(city, this.addr, "value")['name'] + " ";
+        result = result + arrayContain(district, this.addr, "value")['name'] + " ";
         return result;
       },
-      career(code){
-        if (arrayContain(code,careerCode,"key")){
-          return arrayContain(code,careerCode,"key").value;
+      career(code) {
+        if (arrayContain(code, careerCode, "key")) {
+          return arrayContain(code, careerCode, "key").value;
         }
       },
-      ageYear(birthday){
+      ageYear(birthday) {
         return ageYear(birthday);
       },
       returnTop() {
-        scrollTo(0,0);
+        scrollTo(0, 0);
       }
     },
     created() {
@@ -334,6 +348,9 @@
           this.$vux.loading.hide();
         })
       }
+    },
+    mounted() {
+
     }
   }
 </script>

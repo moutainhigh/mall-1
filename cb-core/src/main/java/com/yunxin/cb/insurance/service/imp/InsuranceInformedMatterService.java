@@ -28,9 +28,12 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
     private InsuranceInformedMatterDao insuranceInformedMatterDao;
 
     /**
-     * 分页
+     * 事项组分页
+     * @author      likang
      * @param query
-     * @return
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.insurance.entity.InsuranceInformedMatter>
+     * @exception
+     * @date        2018/7/18 20:21
      */
     @Override
     public Page<InsuranceInformedMatter> pageInsuranceInformedMatter(PageSpecification<InsuranceInformedMatter> query){
@@ -72,6 +75,14 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
         return page;
     }
 
+    /**
+     * 分页事项组用于产品添加事项组（防止后期修改，重新写一个分页）
+     * @author      likang
+     * @param query
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.insurance.entity.InsuranceInformedMatter>
+     * @exception
+     * @date        2018/7/18 20:22
+     */
     @Override
     public Page<InsuranceInformedMatter> pageaddMatter(PageSpecification<InsuranceInformedMatter> query){
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -113,9 +124,12 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
     }
 
     /**
-     *
+     * 根据id获取事项
+     * @author      likang
      * @param metterId
-     * @return
+     * @return      com.yunxin.cb.insurance.entity.InsuranceInformedMatter
+     * @exception
+     * @date        2018/7/18 20:23
      */
     @Override
     public InsuranceInformedMatter getInsuranceInformedMatter(int metterId){
@@ -123,9 +137,12 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
     }
 
     /**
-     *
+     * 添加事项
+     * @author      likang
      * @param insuranceInformedMatter
-     * @return
+     * @return      com.yunxin.cb.insurance.entity.InsuranceInformedMatter
+     * @exception
+     * @date        2018/7/18 20:24
      */
     @Override
     public InsuranceInformedMatter addInsuranceInformedMatter(InsuranceInformedMatter insuranceInformedMatter){
@@ -134,8 +151,12 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
     }
 
     /**
-     *
+     * 根据id删除事项组
+     * @author      likang
      * @param metterId
+     * @return      void
+     * @exception
+     * @date        2018/7/18 20:24
      */
     @Override
     public void removeById(int metterId){
@@ -143,9 +164,12 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
     }
 
     /**
-     *
+     * 更新事项
+     * @author      likang
      * @param insuranceInformedMatter
-     * @return
+     * @return      com.yunxin.cb.insurance.entity.InsuranceInformedMatter
+     * @exception
+     * @date        2018/7/18 20:24
      */
     @Override
     @Transactional
@@ -159,14 +183,17 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
         return oldMatter;
     }
 
+    /**
+     * 获取所有事项
+     * @author      likang
+     * @param
+     * @return      java.util.List<com.yunxin.cb.insurance.entity.InsuranceInformedMatter>
+     * @exception
+     * @date        2018/7/18 20:25
+     */
     @Override
     public List<InsuranceInformedMatter> getInsuranceInformedMatterList(){
         return insuranceInformedMatterDao.findAll();
     }
 
-    @Override
-    public List<InsuranceInformedMatter> getListByName(String matterDescription){
-        matterDescription=matterDescription+"%";
-        return insuranceInformedMatterDao.getListByName(matterDescription);
-    }
 }

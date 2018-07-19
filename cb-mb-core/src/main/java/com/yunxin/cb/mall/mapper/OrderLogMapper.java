@@ -34,6 +34,7 @@ public interface OrderLogMapper {
         "#{orderCode,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, ",
         "#{time,jdbcType=TIMESTAMP})"
     })
+    @Options(useGeneratedKeys=true, keyProperty="ordersLogId", keyColumn="ORDERS_LOG_ID")
     int insert(OrderLog record);
 
     /**

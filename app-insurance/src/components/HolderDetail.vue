@@ -463,7 +463,8 @@
     int,
     fixedTel,
     mobile,
-    mail
+    mail,
+    emoji
   } from "../admin/validate";
 
   export default {
@@ -608,6 +609,15 @@
         this.$router.back();
       },
       next() {
+        //判断表情包输入
+        let input = document.getElementsByTagName("input");
+        for (let i = 0; i < input.length; i++) {
+          if (emoji.test(input[i].value)) {
+            alert("输入信息不得带表情");
+            return false;
+          }
+        }
+
         if (this.holder.unifyAddr) {
           let insured = storage.fetch("insured");
           let holder = storage.fetch("holder");

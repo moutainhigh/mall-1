@@ -33,9 +33,12 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
     private InsuranceInformedMatterGroupDao insuranceInformedMatterGroupDao;
 
     /**
-     * 分页
+     * 分页获取事项组信息
+     * @author      likang
      * @param query
-     * @return
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup>
+     * @exception
+     * @date        2018/7/18 20:18
      */
     @Override
     public Page<InsuranceInformedMatterGroup> pageInsuranceInformedMatterGroup(PageSpecification<InsuranceInformedMatterGroup> query){
@@ -72,9 +75,12 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
     }
 
     /**
-     *
+     * 根据id获取事项组
+     * @author      likang
      * @param groupId
-     * @return
+     * @return      com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup
+     * @exception
+     * @date        2018/7/18 20:19
      */
     @Override
     public InsuranceInformedMatterGroup getInsuranceInformedMatterGroup(int groupId){
@@ -82,9 +88,12 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
     }
 
     /**
-     *
+     * 添加事项组
+     * @author      likang
      * @param insuranceInformedMatterGroup
-     * @return
+     * @return      com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup
+     * @exception
+     * @date        2018/7/18 20:19
      */
     @Override
     public InsuranceInformedMatterGroup addInsuranceInformedMatterGroup(InsuranceInformedMatterGroup insuranceInformedMatterGroup){
@@ -93,8 +102,12 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
     }
 
     /**
-     *
+     * 根据id删除事项组
+     * @author      likang
      * @param groupId
+     * @return      void
+     * @exception
+     * @date        2018/7/18 20:20
      */
     @Override
     public void removeById(int groupId){
@@ -102,9 +115,12 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
     }
 
     /**
-     *
+     * 更新事项组
+     * @author      likang
      * @param insuranceInformedMatterGroup
-     * @return
+     * @return      com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup
+     * @exception
+     * @date        2018/7/18 20:20
      */
     @Override
     public InsuranceInformedMatterGroup update(InsuranceInformedMatterGroup insuranceInformedMatterGroup){
@@ -116,9 +132,12 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
     }
 
     /**
-     *
+     * 根据启用状态查询事项组
+     * @author      likang
      * @param enabled
-     * @return
+     * @return      java.util.List<com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup>
+     * @exception
+     * @date        2018/7/18 20:20
      */
     @Override
     public List<InsuranceInformedMatterGroup> findList(int enabled){
