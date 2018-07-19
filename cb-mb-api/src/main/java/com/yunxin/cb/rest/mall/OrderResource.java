@@ -29,7 +29,7 @@ public class OrderResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderVo", value = "订单确认对象", required = true, paramType = "post", dataType = "OrderVo")})
     @PostMapping(value = "saveOrder")
-    public ResponseResult saveOrder(@ModelAttribute("orderVo")OrderVo orderVo){
+    public ResponseResult saveOrder(@RequestBody OrderVo orderVo){
         try {
             Order order = new Order();
             order.setCustomerId(getCustomerId());
@@ -50,7 +50,7 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "int")})
     @PostMapping(value = "pageOrder")
-    public ResponseResult pageOrder(@ModelAttribute("q")Query q, @ModelAttribute("order")Order order){
+    public ResponseResult pageOrder(@RequestBody Query q, @RequestBody Order order){
         order.setCustomerId(getCustomerId());
         q.setData(order);
         PageFinder<Order> pageFinder = orderService.pageOrder(q);
@@ -59,9 +59,9 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "根据订单id查询订单详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
-    @GetMapping(value = "getOrder/{orderId}")
-    public ResponseResult getOrder(@PathVariable(value = "orderId") int orderId){
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "get", dataType = "int")})
+    @GetMapping(value = "getOrder")
+    public ResponseResult getOrder(@RequestParam(value = "orderId") int orderId){
         Order order = orderService.getByOrderIdAndCustomerId(orderId, getCustomerId());
         return new ResponseResult(order);
     }
@@ -70,7 +70,7 @@ public class OrderResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
     @PostMapping(value = "cancelOrder")
-    public ResponseResult cancelOrder( @ModelAttribute("order")Order order){
+    public ResponseResult cancelOrder(@RequestBody Order order){
         order.setCustomerId(getCustomerId());
         Order result = orderService.cancelOrder(order);
         if (result == null) {
