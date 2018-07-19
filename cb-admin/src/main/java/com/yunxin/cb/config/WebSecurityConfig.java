@@ -79,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 自定义登录
         http.formLogin()
-                .loginPage("/index.dovg")
+                .loginPage("/index")
                 .failureUrl("/login?error")
                 .successHandler(loginSuccessHandler)
                 .permitAll()
