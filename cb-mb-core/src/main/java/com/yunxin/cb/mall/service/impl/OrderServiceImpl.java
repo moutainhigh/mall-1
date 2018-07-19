@@ -61,6 +61,23 @@ public class OrderServiceImpl implements OrderService {
         order.setProdQuantity(1);
         order.setTotalPrice(Double.valueOf(product.getSalePrice()));
         order.setFeeTotal(order.getTotalPrice());
+        order.setCouponsFee(0d);
+        order.setDelivery(false);
+        order.setDeliveryFeeTotal(0d);
+        order.setDeliveryState(0);
+        order.setDeliveryType(0);
+        order.setScoreTotal(0);
+
+        order.setProvince("0");
+        order.setCity("0");
+        order.setDistrict("0");
+        order.setConsigneeAddress("");
+        order.setConsigneeName("");
+        order.setEnabled(true);
+
+        //order.setSellerId(0);
+        //order.setLogisticId(0);
+
         orderMapper.insert(order);
         OrderItem orderItem = new OrderItem();
         orderItem.setOrderId(order.getOrderId());
