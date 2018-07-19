@@ -13,7 +13,6 @@ import com.yunxin.cb.util.UUIDGeneratorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -40,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    @Transactional
     public Order createOrder(Integer productId, Order order) throws Exception {
         //根据货品id查询货品
         Product product = productMapper.selectByPrimaryKey(productId);
