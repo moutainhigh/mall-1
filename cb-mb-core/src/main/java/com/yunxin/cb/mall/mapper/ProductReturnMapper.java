@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
-
+@Mapper
 public interface ProductReturnMapper {
     final static String columns = "RETURN_ID, APPLY_TIME, PIC_PATH, PURCHASING_TIME, REASON, RETURN_REFUND_STATE, " +
             " CUSTOMER_ID, ORDER_ID, ITEM_ID, AUDIT_REMARK, AUDIT_STATE, COURIER_NUMBER, DISPOSE_TIME, " +
