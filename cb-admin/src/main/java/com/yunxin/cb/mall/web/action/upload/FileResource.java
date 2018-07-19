@@ -45,11 +45,11 @@ public class FileResource {
                 String url = "";
                 //表示是apk文件，读取版本信息
                 if(type.equals(UploadType.ANDROID)){
-                    String key=file.getName()+".apk";
+                    String key=file.getOriginalFilename().substring(0,file.getOriginalFilename().indexOf('.'))+".apk";
                     url = qiniuStorageService.put(file.getInputStream(), type,key);
-                    Map<String,Object> map=AppParseUtil.readAPK(url);
-                    result.put("versionCode",map.get("versionCode").toString());
-                    result.put("versionName",map.get("versionName").toString());
+//                    Map<String,Object> map=AppParseUtil.readAPK(url);
+//                    result.put("versionCode",map.get("versionCode").toString());
+//                    result.put("versionName",map.get("versionName").toString());
                 }else{
                     url = qiniuStorageService.put(file.getInputStream(), type);
                 }
