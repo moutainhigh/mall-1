@@ -266,26 +266,26 @@ debugger;
                             <div class="div-line-con div-sex">
                                 <div class="title">A 2.性别</div>
                                 <div>
-                                    <input class="i-cb" type="checkbox" style="margin-left: 15px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredGender=='true'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 15px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredGender=='true'}">checked</c:if>/>
                                     男
-                                    <input class="i-cb" style="margin-left: 35px; " type="checkbox"  <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredGender=='false'}">checked</c:if>/>
+                                    <input readonly class="i-cb" style="margin-left: 35px; " type="checkbox"  <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredGender=='false'}">checked</c:if>/>
                                     女
                                 </div>
                             </div>
                             <div class="div-line-con div-row-4">
                                 <div class="title">A 3.出生日期</div>
                                 <div style="padding-left: 40px;margin-left: 30px;">
-                                    <input class="b-input" type="text" value="${map.insurance_b_year}"/>
+                                    <input readonly class="b-input" type="text" value="${map.insurance_b_year}"/>
                                     年
-                                    <input class="b-input" type="text" value="${map.insurance_b_month}"/>
+                                    <input readonly class="b-input" type="text" value="${map.insurance_b_month}"/>
                                     月
-                                    <input class="b-input" type="text" value="${map.insurance_b_day}"/>
+                                    <input readonly class="b-input" type="text" value="${map.insurance_b_day}"/>
                                     日
                                 </div>
                             </div>
                             <div class="div-line-con div-row-2">
                                 <div class="title">A 4.年龄</div>
-                                <input class="c-input" type="text" value="${map.age}"/>
+                                <input readonly class="c-input" type="text" value="${map.age}"/>
                                 <div>周岁</div>
                             </div>
                         </div>
@@ -294,13 +294,13 @@ debugger;
                             <div class="div-line-con div-row-5">
                                 <div class="title">A 5.证件类型</div>
                                 <div>
-                                    <input class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='居民身份证'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='居民身份证'}">checked</c:if>/>
                                     身份证
-                                    <input class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='护照'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='护照'}">checked</c:if>/>
                                     护照
-                                    <input class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='军官证'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='军官证'}">checked</c:if>/>
                                     军官证
-                                    <input class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='军官证'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='护照'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='居民身份证'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='军官证'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='护照'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='居民身份证'}">checked</c:if>/>
                                     其他
                                 </div>
                             </div>
@@ -333,30 +333,30 @@ debugger;
                             <div class="div-line-con div-row-5">
                                 <div class="title">A 7.证件有效期</div>
                                 <div>
-                                    <input class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_p_year!=null&&map.insurance_p_year!=''}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_p_year!=null&&map.insurance_p_year!=''}">checked</c:if>/>
                                     有效期至
                                     <div>
-                                        <input class="c-input" type="text" style="margin-left: 10px;" value="${map.insurance_p_year}"/>
+                                        <input readonly class="c-input" type="text" style="margin-left: 10px;" value="${map.insurance_p_year}"/>
                                         年
-                                        <input class="c-input" type="text" value="${map.insurance_p_month}"/>
+                                        <input readonly class="c-input" type="text" value="${map.insurance_p_month}"/>
                                         月
-                                        <input class="c-input" type="text" value="${map.insurance_p_day}"/>
+                                        <input readonly class="c-input" type="text" value="${map.insurance_p_day}"/>
                                         日
                                     </div>
-                                    <input class="i-cb" style="margin-left: 15px" type="checkbox" ${map.insurance_p_year==null||map.insurance_p_year==''}/>
+                                    <input readonly class="i-cb" style="margin-left: 15px" type="checkbox" ${map.insurance_p_year==null||map.insurance_p_year==''}/>
                                     长期
                                 </div>
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title">A 8.国籍、户籍</div>
-                                <input class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredCountry}"/>
+                                <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredCountry}"/>
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title">A 9.身高</div>
-                                <input class="b-input" type="text" style="margin-left: 10px;" value="${map.insuranceOrder.insuranceOrderInsured.insuredHeight}"/>
+                                <input readonly class="b-input" type="text" style="margin-left: 10px;" value="${map.insuranceOrder.insuranceOrderInsured.insuredHeight}"/>
                                 厘米，
                                 <div class="title">体重</div>
-                                <input class="b-input" type="text" style="margin-left: 5px;" value="${map.insuranceOrder.insuranceOrderInsured.insuredBodyWeight}"/>
+                                <input readonly class="b-input" type="text" style="margin-left: 5px;" value="${map.insuranceOrder.insuranceOrderInsured.insuredBodyWeight}"/>
                                 公斤
                             </div>
                         </div>
@@ -364,24 +364,24 @@ debugger;
                             <div class="div-line-con div-row-5">
                                 <div class="title">A 10.婚姻状况</div>
                                 <div>
-                                    <input class="i-cb" type="checkbox" style="margin-left: 14px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='未婚'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 14px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='未婚'}">checked</c:if>/>
                                     未婚
-                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='已婚'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 20px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='已婚'}">checked</c:if>/>
                                     已婚
-                                    <input class="i-cb" type="checkbox" style="margin-left: 20px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='离异'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 20px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='离异'}">checked</c:if>/>
                                     离异
-                                    <input class="i-cb" type="checkbox" style="margin-left: 25px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='丧偶'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 25px;" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='丧偶'}">checked</c:if>/>
                                     丧偶
                                 </div>
                             </div>
                             <div class="div-line-con div-row-3">
-                                <div class="title">A 11.固定电话（<input class="b-input" type="text" value="${map.insurance_q_tel}"/>)-(<input
+                                <div class="title">A 11.固定电话（<input readonly class="b-input" type="text" value="${map.insurance_q_tel}"/>)-(<input
                                         class="mobile-input" type="text" value="${map.insurance_h_tel}"/></span>)
                                 </div>
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title">A 12.移动电话</div>
-                                <input class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredMobile}"/>
+                                <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredMobile}"/>
                             </div>
                         </div>
 
@@ -389,82 +389,82 @@ debugger;
                             <div class="div-line-con div-row-7">
                                 <div class="title">A 13.住址</div>
                                 <div>
-                                    <input class="b-input" type="text" style="margin-left: 10px;" id="insuredProvince"/>
+                                    <input readonly class="b-input" type="text" style="margin-left: 10px;" id="insuredProvince"/>
                                     省
-                                    <input class="b-input" type="text" style="margin-left: 10px;" id="insuredCity"/>
+                                    <input readonly class="b-input" type="text" style="margin-left: 10px;" id="insuredCity"/>
                                     市
-                                    <input class="b-input" type="text" style="margin-left: 25px;" id="insuredDistrict"/>
+                                    <input readonly class="b-input" type="text" style="margin-left: 25px;" id="insuredDistrict"/>
                                     区/县
-                                    <input class="d-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredAddress}"/>
+                                    <input readonly class="d-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredAddress}"/>
                                 </div>
                             </div>
                             <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                 邮编
                                 <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
                                 </div>
                             </div>
                         </div>
                         <div class="div-line">
                             <div class="div-line-con div-row-5">
                                 <div class="title">A 14.单位名称</div>
-                                <input class="a-input" type="text"/>
+                                <input readonly class="a-input" type="text"/>
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title" style="float: left;">A 15.职业&nbsp;</div>
-                                <%--<input class="a-input" type="text" value="" id=""/>--%>
+                                <%--<input readonly class="a-input" type="text" value="" id=""/>--%>
                                 <div  style="float: left;width: 200px;font-size: 10px;"id="insuredCareer"></div>
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title">A 16.年均收入</div>
-                                <input class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredIncome}"/>
+                                <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredIncome}"/>
                             </div>
                         </div>
                         <div class="div-line">
                             <div class="div-line-con div-row-7">
                                 <div class="title">A 17.单位地址</div>
                                 <div>
-                                    <input class="b-input" type="text"/>
+                                    <input readonly class="b-input" type="text"/>
                                     省
-                                    <input class="b-input" type="text" style="margin-left: 10px;"/>
+                                    <input readonly class="b-input" type="text" style="margin-left: 10px;"/>
                                     市
-                                    <input class="b-input" type="text" style="margin-left: 25px;"/>
+                                    <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
                                     区/县
-                                    <input class="d-input" type="text"/>
+                                    <input readonly class="d-input" type="text"/>
                                 </div>
                             </div>
                             <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                 邮编
                                 <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"  value="1"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"  value="8"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="1"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="8"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
                                 </div>
                             </div>
                         </div>
                         <div class="div-line">
                             <div class="div-line-con div-career">
                                 <div class="title">A 18.职业代码</div>
-                                <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
+                                <input readonly class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
                                 <div class="title" style="margin-left: 25px;">职业类别</div>
                             </div>
                             <div class="div-line-con div-email">
                                 <div class="title">A 19.&nbsp;E-mail</div>
-                                <input class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredEmail}"/>
+                                <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredEmail}"/>
                             </div>
                             <div class="div-line-con div-part-job">
                                 <div class="title">A 20.是否有兼职？</div>
-                                <input class="i-cb" style="margin-left: 15px" type="checkbox"/>
+                                <input readonly class="i-cb" style="margin-left: 15px" type="checkbox"/>
                                 是
-                                <input class="i-cb" style="margin-left: 15px" type="checkbox"/>
+                                <input readonly class="i-cb" style="margin-left: 15px" type="checkbox"/>
                                 否，如是请说明：
                             </div>
                         </div>
@@ -481,26 +481,26 @@ debugger;
                             <div class="div-line-con div-sex">
                                 <div class="title">A 22.性别</div>
                                 <div>
-                                    <input class="i-cb" type="checkbox" style="margin-left: 10px; " <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='true'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 10px; " <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='true'}">checked</c:if>/>
                                     男
-                                    <input class="i-cb" style="margin-left: 30px; " type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='false'}">checked</c:if>/>
+                                    <input readonly class="i-cb" style="margin-left: 30px; " type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderGender=='false'}">checked</c:if>/>
                                     女
                                 </div>
                             </div>
                             <div class="div-line-con div-row-4">
                                 <div class="title">A 23.出生日期</div>
                                 <div style="padding-left: 0; margin-left: 55px;">
-                                    <input class="b-input" type="text" value="${map.policy_b_year}"/>
+                                    <input readonly class="b-input" type="text" value="${map.policy_b_year}"/>
                                     年
-                                    <input class="b-input" type="text" value="${map.policy_b_month}"/>
+                                    <input readonly class="b-input" type="text" value="${map.policy_b_month}"/>
                                     月
-                                    <input class="b-input" type="text" value="${map.policy_b_day}"/>
+                                    <input readonly class="b-input" type="text" value="${map.policy_b_day}"/>
                                     日
                                 </div>
                             </div>
                             <div class="div-line-con div-row-2">
                                 <div class="title">A 24.是被保险人的(<span style="font-size: 8px;">关系</span>)</div>
-                                <input class="c-input" type="text" style="" value="${map.insuranceOrder.insuranceOrderInsured.insuredRelation}"/>
+                                <input readonly class="c-input" type="text" style="" value="${map.insuranceOrder.insuranceOrderInsured.insuredRelation}"/>
                                 <div></div>
                             </div>
                         </div>
@@ -509,13 +509,13 @@ debugger;
                             <div class="div-line-con div-row-5">
                                 <div class="title">A 25.证件类型</div>
                                 <div>
-                                    <input class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='居民身份证'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='居民身份证'}">checked</c:if>/>
                                     身份证
-                                    <input class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='护照'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='护照'}">checked</c:if>/>
                                     护照
-                                    <input class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='军官证'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='军官证'}">checked</c:if>/>
                                     军官证
-                                    <input class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='军官证'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='护照'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='居民身份证'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='军官证'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='护照'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='居民身份证'}">checked</c:if>/>
                                     其他
                                 </div>
                             </div>
@@ -550,30 +550,30 @@ debugger;
                             <div class="div-line-con div-row-5">
                                 <div class="title">A 27.证件有效期</div>
                                 <div>
-                                    <input class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.policy_p_year!=null&&map.policy_p_year!=''}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.policy_p_year!=null&&map.policy_p_year!=''}">checked</c:if>/>
                                     有效期至
                                     <div style="margin-left: 10px;">
-                                        <input class="c-input" type="text" value="${map.policy_p_year}"/>
+                                        <input readonly class="c-input" type="text" value="${map.policy_p_year}"/>
                                         年
-                                        <input class="c-input" type="text" value="${map.policy_p_month}"/>
+                                        <input readonly class="c-input" type="text" value="${map.policy_p_month}"/>
                                         月
-                                        <input class="c-input" type="text" value="${map.policy_p_day}"/>
+                                        <input readonly class="c-input" type="text" value="${map.policy_p_day}"/>
                                         日
                                     </div>
-                                    <input class="i-cb" style="margin-left: 10px" type="checkbox" <c:if test="${map.policy_p_year==null&&map.policy_p_year==''}">checked</c:if>/>
+                                    <input readonly class="i-cb" style="margin-left: 10px" type="checkbox" <c:if test="${map.policy_p_year==null&&map.policy_p_year==''}">checked</c:if>/>
                                     长期
                                 </div>
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title">A 28.国籍、户籍</div>
-                                <input class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}"/>
+                                <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCountry}"/>
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title">A 29.身高</div>
-                                <input class="b-input" type="text" style="margin-left: 10px;" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderHeight}"/>
+                                <input readonly class="b-input" type="text" style="margin-left: 10px;" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderHeight}"/>
                                 厘米，
                                 <div class="title">体重</div>
-                                <input class="b-input" type="text" style="margin-left: 10px;" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderBodyWeight}"/>
+                                <input readonly class="b-input" type="text" style="margin-left: 10px;" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderBodyWeight}"/>
                                 公斤
                             </div>
                         </div>
@@ -581,25 +581,25 @@ debugger;
                             <div class="div-line-con div-row-5">
                                 <div class="title">A 30.婚姻状况</div>
                                 <div>
-                                    <input class="i-cb" type="checkbox" style="margin-left: 15px;" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='未婚'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 15px;" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='未婚'}">checked</c:if>/>
                                     未婚
-                                    <input class="i-cb" type="checkbox" style="margin-left: 23px;" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='已婚'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 23px;" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='已婚'}">checked</c:if>/>
                                     已婚
-                                    <input class="i-cb" type="checkbox" style="margin-left: 23px;" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='离异'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 23px;" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='离异'}">checked</c:if>/>
                                     离异
-                                    <input class="i-cb" type="checkbox" style="margin-left: 23px;" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='丧偶'}">checked</c:if>/>
+                                    <input readonly class="i-cb" type="checkbox" style="margin-left: 23px;" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='丧偶'}">checked</c:if>/>
                                     丧偶
                                 </div>
                             </div>
                             <div class="div-line-con div-row-3">
-                                <div class="title">A 31.固定电话（<input class="b-input"
+                                <div class="title">A 31.固定电话（<input readonly class="b-input"
                                                                                type="text" value="${map.policy_q_tel}"/>)-(<input
                                         class="mobile-input" type="text" id="${map.policy_h_tel}"/></span>)
                                 </div>
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title">A 32.移动电话</div>
-                                <input class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}"/>
+                                <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}"/>
                             </div>
                         </div>
 
@@ -607,31 +607,31 @@ debugger;
                             <div class="div-line-con div-row-7">
                                 <div class="title">A 33.住址</div>
                                 <div>
-                                    <input class="b-input" type="text" style="margin-left:40px; " id="policyholderProvince"/>
+                                    <input readonly class="b-input" type="text" style="margin-left:40px; " id="policyholderProvince"/>
                                     省
-                                    <input class="b-input" type="text" style="margin-left: 30px;" id="policyholderCity"/>
+                                    <input readonly class="b-input" type="text" style="margin-left: 30px;" id="policyholderCity"/>
                                     市
-                                    <input class="b-input" type="text" style="margin-left: 20px;" id="policyholderDistrict"/>
+                                    <input readonly class="b-input" type="text" style="margin-left: 20px;" id="policyholderDistrict"/>
                                     区/县
-                                    <input class="d-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}"/>
+                                    <input readonly class="d-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}"/>
                                 </div>
                             </div>
                             <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                 邮编
                                 <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
                                 </div>
                             </div>
                         </div>
                         <div class="div-line">
                             <div class="div-line-con div-row-5">
                                 <div class="title">A 34.单位名称</div>
-                                <input class="a-input" type="text" value=""/>
+                                <input readonly class="a-input" type="text" value=""/>
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title"  style="float: left">A 35.职业&nbsp;</div>
@@ -639,47 +639,47 @@ debugger;
                             </div>
                             <div class="div-line-con div-row-3">
                                 <div class="title">A 36.年均收入</div>
-                                <input class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderIncome}"/>
+                                <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderIncome}"/>
                             </div>
                         </div>
                         <div class="div-line">
                             <div class="div-line-con div-row-7">
                                 <div class="title">A 37.单位地址</div>
                                 <div>
-                                    <input class="b-input" type="text"/>
+                                    <input readonly class="b-input" type="text"/>
                                     省
-                                    <input class="b-input" type="text" style="margin-left: 10px;"/>
+                                    <input readonly class="b-input" type="text" style="margin-left: 10px;"/>
                                     市
-                                    <input class="b-input" type="text" style="margin-left: 25px;"/>
+                                    <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
                                     区/县
-                                    <input class="d-input" type="text"/>
+                                    <input readonly class="d-input" type="text"/>
                                 </div>
                             </div>
                             <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                 邮编
                                 <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
                                 </div>
                             </div>
                         </div>
                         <div class="div-line">
                             <div class="div-line-con div-career">
                                 <div class="title">A 38.职业代码</div>
-                                <input class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
+                                <input readonly class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
                                 <div class="title" style="margin-left: 25px;">职业类别</div>
                             </div>
                             <div class="div-line-con div-email">
                                 <div class="title">A 39. E-mail</div>
-                                <input class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderEmail}"/>
+                                <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderEmail}"/>
                             </div>
                             <div class="div-line-con div-part-job">
                                 <div class="title">A 40.其它联系电话</div>
-                                <input class="a-input" type="text"/>
+                                <input readonly class="a-input" type="text"/>
                             </div>
                         </div>
                     </div>
@@ -688,9 +688,9 @@ debugger;
                         <div class="div-line">
                             <div class="div-line-con" style="padding: 7px 5px 7px 10px;">
                                 A 41. 信函寄往
-                                <div > <input class="a-input" type="text" id="policyholderProvinces" style="width: 60px;"/>省</div>
-                                <div><input class="a-input" type="text" id="policyholderCitys"  style="width: 80px;"/>市</div>
-                                <div><input class="a-input" type="text" id="policyholderDistricts"  style="width: 70px;"/>区/县</div>
+                                <div > <input readonly class="a-input" type="text" id="policyholderProvinces" style="width: 60px;"/>省</div>
+                                <div><input readonly class="a-input" type="text" id="policyholderCitys"  style="width: 80px;"/>市</div>
+                                <div><input readonly class="a-input" type="text" id="policyholderDistricts"  style="width: 70px;"/>区/县</div>
                                 &nbsp; ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
                             </div>
                             <div class="div-line-con div-postcode" style="margin-right: 120px;">
@@ -699,12 +699,12 @@ debugger;
                             <div class="div-line-con div-postcode" style="margin-right:  35px;">
                                 邮编
                                 <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                    <input class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                    <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
                                 </div>
                             </div>
                         </div>
@@ -715,9 +715,9 @@ debugger;
                             <div class="div-line-con div-row-6" style="padding: 7px 5px 7px 10px;">
                                 A 42. 投保人是否需要短信服务
                                 <div>
-                                    <input class="i-cb" type="checkbox"/>
+                                    <input readonly class="i-cb" type="checkbox"/>
                                     需要
-                                    <input class="i-cb" style="margin-left: 15px; " type="checkbox"/>
+                                    <input readonly class="i-cb" style="margin-left: 15px; " type="checkbox"/>
                                     不需要
                                 </div>
                             </div>
@@ -763,16 +763,16 @@ debugger;
                             <div class="div-table-1" style="width: 100px;">${map.beneficiaryList[0].insuredRelation}</div>
                             <div class="div-table-2">
                                 <div class="t-line" style="padding: 5px 6px;">
-                                    <input type="checkbox" <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='居民身份证'}">checked</c:if>/>
+                                    <input readonly type="checkbox" <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='居民身份证'}">checked</c:if>/>
                                     <div>身份证</div>
-                                    <input type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList[0].beneficiaryName&&map.beneficiaryList[0].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
+                                    <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList[0].beneficiaryName&&map.beneficiaryList[0].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                     <div>其他</div>
                                     <div style="margin:0 60px;margin-left: 130px;">有效期至
                                         <c:if test="${map.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList[0].beneficiaryName&&map.beneficiaryList[0].beneficiaryCardType!='长期'}">
                                             <fmt:formatDate value="${map.beneficiaryList[0].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                         </c:if>
                                     </div>
-                                    <input class="i-cb" style="margin-left: 55px;" type="checkbox" <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='长期'}">checked</c:if>/>
+                                    <input readonly class="i-cb" style="margin-left: 55px;" type="checkbox" <c:if test="${map.beneficiaryList[0].beneficiaryCardType=='长期'}">checked</c:if>/>
                                     长期
                                 </div>
                                 <div class="t-line" style="display: block;height: 31px;">
@@ -814,16 +814,16 @@ debugger;
                             <div class="div-table-1" style="width: 100px;">${map.beneficiaryList[1].insuredRelation}</div>
                             <div class="div-table-2">
                                 <div class="t-line" style="padding: 5px 6px;">
-                                    <input type="checkbox" <c:if test="${map.beneficiaryList[1].beneficiaryCardType=='居民身份证'}">checked</c:if>/>
+                                    <input readonly type="checkbox" <c:if test="${map.beneficiaryList[1].beneficiaryCardType=='居民身份证'}">checked</c:if>/>
                                     <div>身份证</div>
-                                    <input type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList[1].beneficiaryName&&map.beneficiaryList[1].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
+                                    <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList[1].beneficiaryName&&map.beneficiaryList[1].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                     <div>其他</div>
                                     <div style="margin:0 60px;margin-left: 130px;">有效期至
                                         <c:if test="${map.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList[1].beneficiaryName&&map.beneficiaryList[1].beneficiaryCardType!='长期'}">
                                             <fmt:formatDate value="${map.beneficiaryList[1].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                         </c:if>
                                     </div>
-    <input class="i-cb" style="margin-left: 55px;" type="checkbox" <c:if test="${map.beneficiaryList[1].beneficiaryCardType=='长期'}">checked </c:if>/>
+    <input readonly class="i-cb" style="margin-left: 55px;" type="checkbox" <c:if test="${map.beneficiaryList[1].beneficiaryCardType=='长期'}">checked </c:if>/>
                                     长期
                                 </div>
                                 <div class="t-line" style="display: block;height: 31px;">
@@ -866,16 +866,16 @@ debugger;
                             <div class="div-table-1" style="width: 100px;">${map.beneficiaryList[2].insuredRelation}</div>
                             <div class="div-table-2">
                                 <div class="t-line" style="padding: 6px;">
-                                    <input type="checkbox" <c:if test="${map.beneficiaryList[2].beneficiaryCardType=='居民身份证'}">checked</c:if>/>
+                                    <input readonly type="checkbox" <c:if test="${map.beneficiaryList[2].beneficiaryCardType=='居民身份证'}">checked</c:if>/>
                                     <div>身份证</div>
-                                    <input type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList[2].beneficiaryName&&map.beneficiaryList[2].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
+                                    <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList[2].beneficiaryName&&map.beneficiaryList[2].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                     <div>其他</div>
                                     <div style="margin:0 60px;margin-left: 130px;">有效期至
                                         <c:if test="${map.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList[2].beneficiaryName&&map.beneficiaryList[2].beneficiaryCardType!='长期'}">
                                             <fmt:formatDate value="${map.beneficiaryList[2].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                         </c:if>
                                     </div>
-                                    <input class="i-cb" style="margin-left: 55px;" type="checkbox" <c:if test="${map.beneficiaryList[2].beneficiaryCardType=='长期'}">checked </c:if>/>
+                                    <input readonly class="i-cb" style="margin-left: 55px;" type="checkbox" <c:if test="${map.beneficiaryList[2].beneficiaryCardType=='长期'}">checked </c:if>/>
                                     长期
                                 </div>
                                 <div class="t-line" style="display: block;height: 31px;">
@@ -923,15 +923,15 @@ debugger;
                         <%--表格层--%>
                         <div class="div-line">
                             <div class="div-line-con" style="width: 480px;padding: 10px 5px 10px 10px;">
-                                <div class="div-block">B1.交费周期：<input type="checkbox"/>趸交<input
+                                <div class="div-block">B1.交费周期：<input readonly type="checkbox"/>趸交<input
                                         style="margin-left: 25px;"
                                         type="checkbox"/>年交<input
-                                        style="margin-left: 25px;" type="checkbox"/>半年交<input style="margin-left: 30px;"
+                                        style="margin-left: 25px;" type="checkbox"/>半年交<input readonly style="margin-left: 30px;"
                                                                                               type="checkbox"/>季交<input
                                         style="margin-left: 25px;" type="checkbox"/>月交
                                 </div>
                                 <div class="div-block tip">（半年交、季交、月交必须采用银行转账）</div>
-                                <div class="div-block">B3.保险费溢交转下期：<input type="checkbox"/>同意<input
+                                <div class="div-block">B3.保险费溢交转下期：<input readonly type="checkbox"/>同意<input
                                         style="margin-left: 20px;"
                                         type="checkbox"/>不同意<span class="tip">（未选默认为同意）</span>
                                 </div>
@@ -941,12 +941,12 @@ debugger;
                                     <div>
                                         <div style="vertical-align: top">B2.交费方式：</div>
                                         <div>
-                                            <div class="div-block"><input type="checkbox"/>首期自行交费；续期银行转账</div>
-                                            <div class="div-block"><input type="checkbox"/>全部银行转账</div>
+                                            <div class="div-block"><input readonly type="checkbox"/>首期自行交费；续期银行转账</div>
+                                            <div class="div-block"><input readonly type="checkbox"/>全部银行转账</div>
                                         </div>
 
                                     </div>
-                                    <div class="div-block">B4.生存保险金领取方式 <input type="checkbox"/>累积生息<input
+                                    <div class="div-block">B4.生存保险金领取方式 <input readonly type="checkbox"/>累积生息<input
                                             type="checkbox"/>现金领取<span class="tip">（未选默认为累积生息）</span>
                                     </div>
                                 </div>
@@ -974,32 +974,32 @@ debugger;
                             <div class="div-table-2" style="width: 210px;"></div>
                             <div class="div-table-2" style="width: 128px;font-size: 14px">
                                 <div style="text-align: left;display: inline-table;">
-                                    <div class="div-block"><input type="checkbox"><input type="text"
+                                    <div class="div-block"><input readonly type="checkbox"><input readonly type="text"
                                                                                          style="border-bottom: 1px #000000 solid !important;width: 50px;">年
                                     </div>
-                                    <div class="div-block"><input type="checkbox">至<input type="text"
+                                    <div class="div-block"><input readonly type="checkbox">至<input readonly type="text"
                                                                                           style="border-bottom: 1px #000000 solid !important;width: 50px;">周岁
                                     </div>
-                                    <div class="div-block"><input type="checkbox">终身</div>
+                                    <div class="div-block"><input readonly type="checkbox">终身</div>
                                 </div>
                             </div>
                             <div class="div-table-2" style="width: 226px;font-size: 14px">
                                 <div style="text-align: left;display: inline-table;">
-                                    <div class="div-block"><input type="checkbox"><input
+                                    <div class="div-block"><input readonly type="checkbox"><input
                                             style="border-bottom: 1px #000000 solid !important;width: 50px;"
                                             type="text">年
                                     </div>
-                                    <div class="div-block"><input type="checkbox">至<input
+                                    <div class="div-block"><input readonly type="checkbox">至<input
                                             style="border-bottom: 1px #000000 solid !important;width: 50px;"
                                             type="text">周岁
                                     </div>
-                                    <div class="div-block"><input type="checkbox">终身</div>
+                                    <div class="div-block"><input readonly type="checkbox">终身</div>
                                 </div>
                             </div>
                             <div class="div-table-2" style="width: 138px;"></div>
                             <div class="div-table-2" style="width: 145px;">
-                                <div class="div-block"><input type="checkbox">累积生息</div>
-                                <div class="div-block"><input type="checkbox">现金领取</div>
+                                <div class="div-block"><input readonly type="checkbox">累积生息</div>
+                                <div class="div-block"><input readonly type="checkbox">现金领取</div>
                                 <div class="div-block" style="font-size: 13px;color: red;">(未选择默认为积累生息)</div>
                             </div>
                             <div class="div-table-2" style="width: 153px;"></div>
@@ -1044,7 +1044,7 @@ debugger;
                                                 type="checkbox"/>保证给付年限方式<span style="margin-left: 30px;">(保证给付<input
                                                 style="border-bottom: 1px #000000 solid !important;width: 50px;"
                                                 type="text">年)</span></div>
-                                        <div class="div-block" style="margin-left:10px;"><input type="checkbox"/>身故返还本金方式
+                                        <div class="div-block" style="margin-left:10px;"><input readonly type="checkbox"/>身故返还本金方式
                                         </div>
                                         <div class="div-block" style="margin-left:10px;"><input
                                                 type="checkbox"/>保证给付总额方式<span style="margin-left: 30px;">必须选择保证年限<input
@@ -1057,7 +1057,7 @@ debugger;
                                     </div>
                                 </div>
                                 <div style="display: block;vertical-align: middle;text-align: left;margin-left: 10px;margin-top: 2px;">
-                                    <input type="checkbox">一次性给付方式（如为趸交保险费，不得选择一次性给付方式）
+                                    <input readonly type="checkbox">一次性给付方式（如为趸交保险费，不得选择一次性给付方式）
                                 </div>
                             </div>
                         </div>
@@ -1144,12 +1144,12 @@ debugger;
                                     您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承保公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和、住院每日补贴日额及保险合同生效日期。
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox" <c:if test="${map.insurance_matterList[0].insuredResult=='true'}">checked</c:if>  >是
-                                <input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[0].insuredResult=='false'}">checked</c:if>   >否
+                            <div class="div-table-2" style="width: 83px;height: 53px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[0].insuredResult=='true'}">checked</c:if>  >是
+                                <input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[0].insuredResult=='false'}">checked</c:if>   >否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[0].policyholderResult=='true'}">checked</c:if> >是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[0].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[0].policyholderResult=='true'}">checked</c:if> >是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[0].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 53px;">
@@ -1160,12 +1160,12 @@ debugger;
                                     您的人寿保险、人身意外或健康保险的投保申请是否曾被拒保、推迟、加费或作限制保障权益？是否有解除保险合同？是否曾向任何保险公司提出索赔申请？若“是”，请说明。
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox" <c:if test="${map.insurance_matterList[1].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 53px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[1].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[1].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[1].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[1].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[1].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[1].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 53px;">
@@ -1176,12 +1176,12 @@ debugger;
                                     是否计划出国或改变居住地或工作地点？正在或试图参加私人性质飞行，或携带氧气瓶潜水、或登山、或从事危险性的运动？若“是”，请填妥相关问卷，连同此投保单一并交回本公司。
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox" <c:if test="${map.insurance_matterList[2].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 53px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[2].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[2].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[2].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[2].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[2].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[2].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 25px;">
@@ -1190,12 +1190,12 @@ debugger;
                                 <div style="display: inline-block;vertical-align: top;">C4.</div>
                                 <div style="display: inline-block;width: 600px;">是否持有有效摩托车驾照？</div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 25px;"><input type="checkbox" <c:if test="${map.insurance_matterList[3].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 25px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[3].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[3].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 25px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[3].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[3].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[3].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[3].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 60px;">
@@ -1207,12 +1207,12 @@ debugger;
                                     是否饮酒？&nbsp;&nbsp;&nbsp;&nbsp;若“是”，&nbsp;&nbsp;&nbsp;饮酒${map.insurance_matter_value[0].m_value3}年，种类${map.insurance_matter_value[0].m_value4}，数<br/>量${map.insurance_matter_value[0].m_value5}（两/周）；&nbsp;&nbsp;&nbsp;&nbsp;若现已停止饮酒，停止饮酒原因及时间${map.insurance_matter_value[0].m_value6}。
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox" <c:if test="${map.insurance_matterList[4].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 60px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[4].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[4].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 60px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[4].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[4].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[4].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[4].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 30px;">
@@ -1222,12 +1222,12 @@ debugger;
                                 <div style="display: inline-block;width: 600px;">是否曾经或正在使用镇静安眠剂、可成瘾药物、麻醉剂或接受戒毒、戒酒治疗？
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox" <c:if test="${map.insurance_matterList[5].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 30px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[5].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[5].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 30px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[5].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[5].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[5].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[5].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 30px;">
@@ -1237,12 +1237,12 @@ debugger;
                                 <div style="display: inline-block;width: 600px;">最近六个月内是否有医生建议您服药、住院、接受诊疗、手术或其他医疗方案？
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 30px;"><input type="checkbox" <c:if test="${map.insurance_matterList[6].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 30px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[6].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[6].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 30px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[6].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[6].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[6].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[6].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 60px;">
@@ -1253,12 +1253,12 @@ debugger;
                                     核磁共振(MRI)、心电图、胃镜、纤维结肠镜、气管镜、CT、超声波、X光、眼底检查、脑电图、肝功能、肾功能、病理活检及其它特殊检查。
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 60px;"><input type="checkbox" <c:if test="${map.insurance_matterList[7].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 60px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[7].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[7].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 60px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[7].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[7].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[7].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[7].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 160px;">
@@ -1275,11 +1275,11 @@ debugger;
                                     g 脾、肺、胃、小肠、结肠、直肠、胰腺、肝、肾、膀胱切除？心脏的结构损伤或功能障碍？输尿管闭锁或缺失？其它内脏或身体器官缺损、摘除或移植？
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 160px;"><input type="checkbox" <c:if test="${map.insurance_matterList[8].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 160px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[8].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[8].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 160px;border-right:#000000 1px solid;">
-                                <input type="checkbox" <c:if test="${map.insurance_matterList[8].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[8].policyholderResult=='false'}">checked</c:if>>否
+                                <input readonly type="checkbox" <c:if test="${map.insurance_matterList[8].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[8].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 53px;">
@@ -1291,12 +1291,12 @@ debugger;
                                     b 是否曾经验血而得知为乙肝表面抗原(HbsAg)阳性反应或不宜献血？
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 53px;"><input type="checkbox" <c:if test="${map.insurance_matterList[9].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 53px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[9].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[9].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 53px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[9].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[9].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[9].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[9].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                     </div>
@@ -1313,12 +1313,12 @@ debugger;
                                     b.&nbsp;&nbsp;（曾）患子宫、卵巢、乳房或其它生殖器官疾病？c.（曾）异常妊娠、阴道异常出血或接受下腹部手术？d.母亲、姐妹中是否有人（曾）患乳腺、子宫、卵巢等生殖器官恶性肿瘤？
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height:58px;"><input type="checkbox" <c:if test="${map.insurance_matterList[10].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height:58px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[10].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[10].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height:58px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[10].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[10].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[10].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[10].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 465px;">
@@ -1348,97 +1348,97 @@ debugger;
                                 </div>
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 465px;vertical-align: top">
-                                <div style="display: block;margin-top:25px;"><input type="checkbox" <c:if test="${map.insurance_matterList[11].insuredResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:25px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[11].insuredResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[11].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:125px;"><input type="checkbox" <c:if test="${map.insurance_matterList[12].insuredResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:125px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[12].insuredResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[12].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:0;"><input type="checkbox" <c:if test="${map.insurance_matterList[13].insuredResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;margin-top:0;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[13].insuredResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                                          style="margin-left: 10px;" <c:if test="${map.insurance_matterList[13].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:15px;"><input type="checkbox" <c:if test="${map.insurance_matterList[14].insuredResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[14].insuredResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[14].insuredResult=='true'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[15].insuredResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[15].insuredResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[15].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:15px;"><input type="checkbox" <c:if test="${map.insurance_matterList[16].insuredResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[16].insuredResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[16].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:15px;"><input type="checkbox" <c:if test="${map.insurance_matterList[17].insuredResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[17].insuredResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[17].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[18].insuredResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[18].insuredResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[18].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[19].insuredResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[19].insuredResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[19].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:15px;"><input type="checkbox" <c:if test="${map.insurance_matterList[20].insuredResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[20].insuredResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[20].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[21].insuredResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[21].insuredResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[21].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[22].insuredResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[22].insuredResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[22].insuredResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[23].insuredResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[23].insuredResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[23].insuredResult=='false'}">checked</c:if>>否
                                 </div>
                             </div>
                             <div class="div-table-2"
                                  style="width: 83px;height: 465px;vertical-align: top;border-right:#000000 1px solid;">
-                                <div style="display: block;margin-top:25px;"><input type="checkbox" <c:if test="${map.insurance_matterList[11].policyholderResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:25px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[11].policyholderResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px; " <c:if test="${map.insurance_matterList[11].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:125px;"><input type="checkbox" <c:if test="${map.insurance_matterList[12].policyholderResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:125px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[12].policyholderResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[12].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:0;"><input type="checkbox" <c:if test="${map.insurance_matterList[13].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;margin-top:0;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[13].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                                          style="margin-left: 10px;" <c:if test="${map.insurance_matterList[13].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:15px;"><input type="checkbox" <c:if test="${map.insurance_matterList[14].policyholderResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[14].policyholderResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[14].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[15].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[15].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[15].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:15px;"><input type="checkbox" <c:if test="${map.insurance_matterList[16].policyholderResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[16].policyholderResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[16].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:15px;"><input type="checkbox" <c:if test="${map.insurance_matterList[17].policyholderResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[17].policyholderResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[17].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[18].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[18].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[18].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[19].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[19].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[19].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;margin-top:15px;"><input type="checkbox" <c:if test="${map.insurance_matterList[20].policyholderResult=='true'}">checked</c:if>>是<input
+                                <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[20].policyholderResult=='true'}">checked</c:if>>是<input
                                         type="checkbox"
                                         style="margin-left: 10px;" <c:if test="${map.insurance_matterList[20].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[21].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[21].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[21].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[22].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[22].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[22].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
-                                <div style="display: block;"><input type="checkbox" <c:if test="${map.insurance_matterList[23].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox"
+                                <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[23].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                             style="margin-left: 10px;" <c:if test="${map.insurance_matterList[23].policyholderResult=='false'}">checked</c:if>>否
                                 </div>
                             </div>
@@ -1451,12 +1451,12 @@ debugger;
                                     直系亲属中，是否患有或曾经患有高血压、肾病、心脏病、肝炎、肝肾囊肿、肝硬化、糖尿病、精神病、癌症或早于60周岁因病身故者？
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 40px;"><input type="checkbox" <c:if test="${map.insurance_matterList[24].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 40px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[24].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[24].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 40px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[24].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[24].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[24].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[24].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 197px;">
@@ -1475,11 +1475,11 @@ debugger;
                                     i.是否曾出现“高热惊厥”？
                                 </div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 197px;"><input type="checkbox" <c:if test="${map.insurance_matterList[25].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 197px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[25].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[25].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 197px;border-right:#000000 1px solid;">
-                                <input type="checkbox" <c:if test="${map.insurance_matterList[25].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[25].policyholderResult=='false'}">checked</c:if>>否
+                                <input readonly type="checkbox" <c:if test="${map.insurance_matterList[25].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[25].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                         <div class="table-line" style="height: 28px;">
@@ -1488,10 +1488,10 @@ debugger;
                                 <div style="display: inline-block;vertical-align: top;">C15.</div>
                                 <div style="display: inline-block;width: 600px;">是否已参加公费医疗或社会医疗保险。</div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox" <c:if test="${map.insurance_matterList[26].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 28px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[26].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[26].insuredResult=='false'}">checked</c:if>>否
                             </div>
-                            <!--  <div class="div-table-2" style="width: 83px;height: 28px;border-right:#000000 1px solid;"><input type="checkbox">是<input type="checkbox" style="margin-left: 10px;">否</div>-->
+                            <!--  <div class="div-table-2" style="width: 83px;height: 28px;border-right:#000000 1px solid;"><input readonly type="checkbox">是<input readonly type="checkbox" style="margin-left: 10px;">否</div>-->
                         </div>
                         <div class="table-line" style="height: 28px;">
                             <div class="div-table-2"
@@ -1499,12 +1499,12 @@ debugger;
                                 <div style="display: inline-block;vertical-align: top;">C16.</div>
                                 <div style="display: inline-block;width: 600px;">您是否有其他事项告知本公司？</div>
                             </div>
-                            <div class="div-table-2" style="width: 83px;height: 28px;"><input type="checkbox" <c:if test="${map.insurance_matterList[27].insuredResult=='true'}">checked</c:if>>是<input
+                            <div class="div-table-2" style="width: 83px;height: 28px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[27].insuredResult=='true'}">checked</c:if>>是<input
                                     type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[27].insuredResult=='false'}">checked</c:if>>否
                             </div>
                             <div class="div-table-2" style="width: 83px;height: 28px;border-right:#000000 1px solid;">
                                 <input
-                                        type="checkbox" <c:if test="${map.insurance_matterList[27].policyholderResult=='true'}">checked</c:if>>是<input type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[27].policyholderResult=='false'}">checked</c:if>>否
+                                        type="checkbox" <c:if test="${map.insurance_matterList[27].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[27].policyholderResult=='false'}">checked</c:if>>否
                             </div>
                         </div>
                     </div>
@@ -1716,63 +1716,63 @@ debugger;
                                     <div class="div-line-con-three div-postcode">
                                         授权活期账户号码&nbsp;/&nbsp;借记卡号码&nbsp;：&nbsp;
                                         <div style="margin-left: 30px;font-size: 0">
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 0, 1)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 1, 2)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 2, 3)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 3, 4)}"/>
                                         </div>
                                         <div style="margin-left: 20px;font-size: 0">
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 4, 5)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 5, 6)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 6, 7)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 7, 8)}"/>
                                         </div>
                                         <div style="margin-left: 20px;font-size: 0">
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 8, 9)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 9, 10)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 10, 11)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 11, 12)}"/>
                                         </div>
                                         <div style="margin-left: 20px;font-size: 0">
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 12, 13)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 13, 14)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 14, 15)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 15, 16)}"/>
                                         </div>
                                         <div style="margin-left: 20px;font-size: 0">
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 16, 17)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 17, 18)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 18, 19)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2"value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 19, 20)}"/>
                                         </div>
                                         <div style="margin-left: 20px;font-size: 0">
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 20, 21)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 21, 22)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 22, 23)}"/>
-                                            <input class="i-cert-code-three"
+                                            <input readonly class="i-cert-code-three"
                                                    style="border: #000000 solid 1px !important;background-color: #f6f9f2" value="${fn:substring(map.insuranceOrder.insuranceOrderPolicyholderBank.accountNo, 23, 24)}"/>
                                         </div>
                                     </div>
@@ -1897,13 +1897,13 @@ debugger;
                                 <div class="div-line-con-four">
                                     <div class="title"><span class="body-font">&nbsp;1.&nbsp;&nbsp;&nbsp;本人与投保人关系：</span></div>
                                     <div>
-                                        <input class="i-cb" type="checkbox"/><span class="body-font"> 家属</span>
-                                        <input class="i-cb" type="checkbox"/><span class="body-font"> 亲戚</span>
-                                        <input class="i-cb" type="checkbox"/><span class="body-font"> 朋友</span>
-                                        <input class="i-cb" type="checkbox"/><span class="body-font"> 其他：</span>
+                                        <input readonly class="i-cb" type="checkbox"/><span class="body-font"> 家属</span>
+                                        <input readonly class="i-cb" type="checkbox"/><span class="body-font"> 亲戚</span>
+                                        <input readonly class="i-cb" type="checkbox"/><span class="body-font"> 朋友</span>
+                                        <input readonly class="i-cb" type="checkbox"/><span class="body-font"> 其他：</span>
                                     </div>
                                     <div class="a-input-div" style="width: 570px;">
-                                        <input class="l-input" type="text"/>
+                                        <input readonly class="l-input" type="text"/>
                                     </div>
                                 </div>
                             </div>
@@ -1912,13 +1912,13 @@ debugger;
                                 <div class="div-line-con-four">
                                     <div class="title"><span class="body-font"> &nbsp;2.&nbsp;&nbsp;&nbsp;投保经过：</span></div>
                                     <div>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font"> 他人介绍</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font"> 陌生拜访</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font"> 投保人主动投保</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font">  其他：</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font"> 他人介绍</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font"> 陌生拜访</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font"> 投保人主动投保</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font">  其他：</span>
                                     </div>
                                     <div class="a-input-div" style="width: 500px;">
-                                        <input class="l-input" type="text"/>
+                                        <input readonly class="l-input" type="text"/>
                                     </div>
                                 </div>
                             </div>
@@ -1928,8 +1928,8 @@ debugger;
                                     <div class="title"><span class="body-font"> &nbsp;3.&nbsp;&nbsp;&nbsp;据本人观察，被保险人目前是否呈病态、有生理缺陷或因疾病、外伤而治疗中：</span>
                                     </div>
                                     <div>
-                                        <input class="i-cb" type="checkbox"/><span class="body-font"> 是</span>
-                                        <input class="i-cb" type="checkbox"/><span class="body-font"> 否</span>
+                                        <input readonly class="i-cb" type="checkbox"/><span class="body-font"> 是</span>
+                                        <input readonly class="i-cb" type="checkbox"/><span class="body-font"> 否</span>
                                     </div>
                                 </div>
                             </div>
@@ -1938,7 +1938,7 @@ debugger;
                                     <div class="title"><span
                                             class="body-font">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如是，请说明：</span></div>
                                     <div class="a-input-div" style="width: 849px;">
-                                        <input class="l-input" type="text"/>
+                                        <input readonly class="l-input" type="text"/>
                                     </div>
                                 </div>
                             </div>
@@ -1947,13 +1947,13 @@ debugger;
                                     <div class="title"><span class="body-font"> &nbsp;4.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有吸烟、嗜酒或服用成瘾性药物?</span>
                                     </div>
                                     <div>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font">是</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font">是</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
                                     </div>
                                     <div>
                                         <div class="title"><span class="body-font">如是，请说明：</span></div>
                                         <div class="a-input-div" style="width: 390px;">
-                                            <input class="l-input" type="text"/>
+                                            <input readonly class="l-input" type="text"/>
                                         </div>
                                     </div>
                                 </div>
@@ -1963,13 +1963,13 @@ debugger;
                                     <div class="title"><span
                                             class="body-font">&nbsp;5.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有兼职或从事特殊职业?</span></div>
                                     <div>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font">是</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font">是</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
                                     </div>
                                     <div>
                                         <div class="title"><span class="body-font">如是，请说明：</span></div>
                                         <div class="a-input-div" style="width: 445px;">
-                                            <input class="l-input" type="text"/>
+                                            <input readonly class="l-input" type="text"/>
                                         </div>
                                     </div>
                                 </div>
@@ -1979,13 +1979,13 @@ debugger;
                                     <div class="title"><span class="body-font">&nbsp;6.&nbsp;&nbsp;&nbsp;据本人了解，被保险人有从事具有危险性的运动或爱好?</span>
                                     </div>
                                     <div>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font">是</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font">是</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
                                     </div>
                                     <div>
                                         <div class="title"><span class="body-font">如是，请说明：</span></div>
                                         <div class="a-input-div" style="width: 389px;">
-                                            <input class="l-input" type="text"/>
+                                            <input readonly class="l-input" type="text"/>
                                         </div>
                                     </div>
                                 </div>
@@ -1995,13 +1995,13 @@ debugger;
                                     <div class="title"><span class="body-font">&nbsp;7.&nbsp;&nbsp;&nbsp;是否存在其它风险情况?</span>
                                     </div>
                                     <div>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font">是</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font">是</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="body-font">否，</span>
                                     </div>
                                     <div>
                                         <div class="title"><span class="body-font">如是，请说明：</span></div>
                                         <div class="a-input-div" style="width: 584px;">
-                                            <input class="l-input" type="text"/>
+                                            <input readonly class="l-input" type="text"/>
                                         </div>
                                     </div>
                                 </div>
@@ -2012,7 +2012,7 @@ debugger;
                                         <div class="title"><span class="body-font">&nbsp;8.&nbsp;&nbsp;&nbsp;如受益人非被保险人的直系亲属，请向投保人和被保险人了解原因：</span>
                                         </div>
                                         <div class="a-input-div" style="width: 525px;">
-                                            <input class="l-input" type="text"/>
+                                            <input readonly class="l-input" type="text"/>
                                         </div>
                                     </div>
                                 </div>
@@ -2024,28 +2024,28 @@ debugger;
                                         </div>
                                         <div>
                                             <div class="a-input-div" style="width: 75px;">
-                                                <input class="l-input" type="text"/>
+                                                <input readonly class="l-input" type="text"/>
                                             </div>
                                             <span class="body-font">/月，</span>
                                         </div>
                                         <div class="title"><span class="body-font">估计投保人收入：</span></div>
                                         <div>
                                             <div class="a-input-div" style="width: 75px;">
-                                                <input class="l-input" type="text"/>
+                                                <input readonly class="l-input" type="text"/>
                                             </div>
                                             <span class="body-font">/月，</span>
                                         </div>
                                         <div class="title"><span class="body-font">估计被保险人财产值：</span></div>
                                         <div>
                                             <div class="a-input-div" style="width: 75px;">
-                                                <input class="l-input" type="text"/>
+                                                <input readonly class="l-input" type="text"/>
                                             </div>
                                             <span class="body-font">; ，</span>
                                         </div>
                                         <div class="title"><span class="body-font">估计投保人财产值：</span></div>
                                         <div>
                                             <div class="a-input-div" style="width: 85px;">
-                                                <input class="l-input" type="text"/>
+                                                <input readonly class="l-input" type="text"/>
                                             </div>
                                             <span class="body-font">。</span>
                                         </div>
@@ -2143,8 +2143,8 @@ debugger;
                                 </div>
                                 <div class="div-line-con-four div-win-2">
                                     <div class="title " style="padding-left: 30px;">
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                                     </div>
                                 </div>
                                 <div class="div-line-con-four div-win-2">
@@ -2162,8 +2162,8 @@ debugger;
                                 </div>
                                 <div class="div-line-con-four div-win-2">
                                     <div class="title " style="padding-left: 30px;">
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                                     </div>
                                 </div>
                                 <div class="div-line-con-four div-win-2">
@@ -2181,8 +2181,8 @@ debugger;
                                 </div>
                                 <div class="div-line-con-four div-win-2">
                                     <div class="title " style="padding-left: 30px;">
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                                     </div>
                                 </div>
                                 <div class="div-line-con-four div-win-2">
@@ -2200,8 +2200,8 @@ debugger;
                                 </div>
                                 <div class="div-line-con-four div-win-2">
                                     <div class="title " style="padding-left: 30px;">
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                                     </div>
                                 </div>
                                 <div class="div-line-con-four div-win-2">
@@ -2219,8 +2219,8 @@ debugger;
                                 </div>
                                 <div class="div-line-con-four div-win-2">
                                     <div class="title " style="padding-left: 30px;">
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
-                                        <input class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">原件</span>
+                                        <input readonly class="i-cb" type="checkbox"/> <span class="a-body-font">复印件</span>
                                     </div>
                                 </div>
                                 <div class="div-line-con-four div-win-2">

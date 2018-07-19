@@ -384,10 +384,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                                         put("m_value"+i,"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>");
                                                 }
                                             }
-
-
-
-
                                         }
                                     });
 
