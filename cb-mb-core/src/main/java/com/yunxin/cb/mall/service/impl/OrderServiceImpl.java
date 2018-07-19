@@ -51,6 +51,7 @@ public class OrderServiceImpl implements OrderService {
         //判断货品是否存在，且库存足够
         if (product == null || product.getStoreNum() <= 0) {
             //库存不足
+            //throw new Exception("库存不足");
             return null;
         }
         //支付方式
@@ -135,7 +136,7 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderState(OrderState.CANCELED.ordinal());
             orderMapper.updateByPrimaryKey(order);
         } else {
-            //throw new EntityExistException("该订单不可取消");
+            //throw new Exception("该订单不可取消");
         }
         return order;
     }

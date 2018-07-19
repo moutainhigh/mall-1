@@ -39,12 +39,12 @@ public class ProductReturnServiceImpl implements ProductReturnService {
     public ProductReturn applyOrderProductReturn(ProductReturn productReturn) throws Exception {
         ProductReturn dbReturn = productReturnMapper.selectByOrderId(productReturn.getOrderId());
         if (null != dbReturn) {
-            //throw new EntityExistException("该订单已提交退货申请");
+            throw new Exception("该订单已提交退货申请");
         }
         Order order = orderMapper.selectByOrderIdAndCustomerId(productReturn.getOrderId(), productReturn.getCustomerId());
         //判断订单是否是已支付待提货状态
         if (order == null || (order.getOrderState() != OrderState.PAID_PAYMENT.ordinal() && order.getOrderState() != OrderState.OUT_STOCK.ordinal())) {
-            //throw new EntityExistException("该订单不可以退货申请");
+            throw new Exception("该订单不可以退货申请");
         }
         ProductReturn nReturn = new ProductReturn();
         BeanUtils.copyProperties(productReturn, nReturn);

@@ -30,16 +30,12 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "saveOrder")
-    public ResponseResult saveOrder(@RequestBody OrderVo orderVo){
-        try {
-            Order order = new Order();
-            order.setCustomerId(getCustomerId());
-            order.setPaymentType(orderVo.getPaymentType());
-            Order result = orderService.createOrder(orderVo.getProductId(), order);
-            if (result == null) {
-                return new ResponseResult(Result.FAILURE);
-            }
-        }catch (Exception e){
+    public ResponseResult saveOrder(@RequestBody OrderVo orderVo) throws Exception{
+        Order order = new Order();
+        order.setCustomerId(getCustomerId());
+        order.setPaymentType(orderVo.getPaymentType());
+        Order result = orderService.createOrder(orderVo.getProductId(), order);
+        if (result == null) {
             return new ResponseResult(Result.FAILURE);
         }
         return new ResponseResult(Result.SUCCESS);
