@@ -1302,7 +1302,7 @@ debugger;
                     </div>
 
                     <%--第三页--%>
-                    <div style="height: 110px;"></div>
+                    <div style="height: 65px;"></div>
                     <div class="div-tab">
                         <div class="table-line" style="height: 58px;">
                             <div class="div-table-2"
@@ -2257,7 +2257,7 @@ debugger;
                     </div>
 
                     <%--附加页--%>
-                    <div style="height: 300px"></div>
+                    <div style="height: 200px"></div>
                     <div style="font-family: 宋体;font-size: 20px;">
                         <div class="header">
                             <img src="../images/orderHeader/newlogo.png" width="650px"/>
