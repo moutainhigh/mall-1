@@ -100,6 +100,11 @@ public class Brand implements java.io.Serializable {
 
     private Set<Commodity> commodities = new HashSet<>();
 
+    public Brand() {
+    }
+    public Brand(int brandId) {
+        this.brandId = brandId;
+    }
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)

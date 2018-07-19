@@ -51,15 +51,5 @@ public interface IInsuranceProductService {
      */
     public void removeById(int prodId);
 
-    /**
-     *
-     * @param
-     * @param matterId
-     * @return
-     */
-    public InsuranceProduct removeInsuranceProductMatter(int prodId,int matterId);
-
-
-    public InsuranceProduct addInsuranceProductMatter(int prodId,int matterId);
 
 }

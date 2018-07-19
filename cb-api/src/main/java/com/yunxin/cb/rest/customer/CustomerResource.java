@@ -106,18 +106,18 @@ public class CustomerResource extends BaseResource {
     /**
      * 根据邀请添加好友ID查询所有添加记录
      * @author      likang
-     * @param friendId
+     * @param customerId
      * @return      com.yunxin.cb.vo.ResponseResult
      * @exception
      * @date        2018/7/18 20:03
      */
     @ApiOperation(value = "根据邀请添加好友ID查询所有添加记录")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "friendId", value = "邀请添加好友", required = true, paramType = "form", dataType = "int")
+
     })
-    @PostMapping(value = "getCustomerFriendRequestByfriendId")
-    public ResponseResult getCustomerFriendRequestByfriendId(int friendId){
-        return new ResponseResult(customerFriendRequestService.getCustomerFriendRequestByFriendId(friendId));
+    @PostMapping(value = "getCustomerFriendRequestList")
+    public ResponseResult getCustomerFriendRequestList(@ModelAttribute("customerId") int customerId){
+        return new ResponseResult(customerFriendRequestService.getCustomerFriendRequestByFriendId(customerId));
     }
 
     @ApiOperation(value = "添加好友通知")

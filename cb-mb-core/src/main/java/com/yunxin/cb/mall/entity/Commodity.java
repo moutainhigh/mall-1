@@ -1,157 +1,175 @@
+/**
+ *
+ */
 package com.yunxin.cb.mall.entity;
+
+
 
 import java.util.Date;
 
+
 /**
- * @title: 商品实体类
- * @auther: eleven
- * @date: 2018/7/18 17:29
+ * @author z001075  商品
  */
-public class Commodity {
-    /** 商品ID */
-    private Integer commodityId;
 
-    /** 审核备注 */
-    private String auditRemark;
+public class Commodity implements java.io.Serializable {
 
-    /** 是否可换购 false为非换购品 true为换购品 */
-    private Boolean barter;
+    /***/
+    private static final long serialVersionUID = -3113613325145218113L;
 
-    /** 产地市区 */
-    private String city;
+    /**
+     * 商品ID
+     */
+    private int commodityId;
 
-    /** 商品编码 */
+
+
+    /**
+     * 商品编码
+     */
     private String commodityCode;
-
-    /** 商品名 */
+    /**
+     * 商品名
+     */
     private String commodityName;
-
-    /** 商品拼音名 */
-    private String commodityPyname;
-
-    /** 审核状态 0:待审核1:审核通过 2:审核未通过 3:删除 */
-    private Integer commodityState;
-
-    /** 商品标题 */
+    /**
+     * 商品拼音名
+     */
+    private String commodityPYName;
+    /**
+     * 简称
+     */
+    private String shortName;
+    /**
+     * 商品标题
+     */
     private String commodityTitle;
+    /**
+     * 成本价
+     */
+    private double costPrice;
+    /**
+     * 销售价
+     */
+    private double sellPrice;
+    /**
+     * 市场价格
+     */
+    private double marketPrice;
 
-    /** 商品介绍 */
-    private String content;
-
-    /** 成本价 */
-    private Double costPrice;
-
-    /** 创建时间 */
+    /**
+     * 产地省份
+     */
+    private String province;
+    /**
+     * 产地市区
+     */
+    private String city;
+    /**
+     * 默认图片路径
+     */
+    private String defaultPicPath;
+    /**
+     * seo关键字
+     */
+    private String seoKey;
+    /**
+     * seo标题
+     */
+    private String seoTitle;
+    /**
+     * seo描述
+     */
+    private String seoDescription;
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
-    /** 默认图片路径 */
-    private String defaultPicPath;
-
-    /** 配送方式 */
-    private Integer deliveryType;
-
-    /** 描述 */
-    private String description;
-
-    /** 是否禁止空运 */
-    private Boolean forbidAirCargo;
-
-    /** 是否为赠品 false为非赠品 true为赠品 */
-    private Boolean giveaway;
-
-    /** 市场价格 */
-    private Double marketPrice;
-
-    /** 否为热门商品 */
-    private Boolean popular;
-
-    /** 否可预售 false为不可预售 true为可预售 */
-    private Boolean preSell;
-
-    /** 产地省份 */
-    private String province;
-
-    /** 上下架状态 0:待上架 1:上架 2:下架 */
-    private Integer publishState;
-
-    /** 是否为推荐商品 */
-    private Boolean recommend;
-
-    /** 销量 */
-    private Integer saleNum;
-
-    /** 销售价 */
-    private Double sellPrice;
-
-    /** seo描述 */
-    private String seoDescription;
-
-    /** seo关键字 */
-    private String seoKey;
-
-    /** seo标题 */
-    private String seoTitle;
-
-    /** 简称 */
-    private String shortName;
-
-    /** 否为特惠商品 */
-    private Boolean special;
-
-    /** 商品单位 0:件 1:瓶 2:包 3:套 */
-    private Integer unit;
-
-    /** 体积 */
-    private Double volume;
-
-    /** 重量 */
-    private Double weight;
-
-    /** 品牌 */
-    private Integer brandId;
-
-    /** 商品分类 */
-    private Integer catalogId;
-
-    /** 商品所属价格段 */
-    private Integer sectionId;
-
-    /** 供应商 */
-    private Integer sellerId;
-
-    /** 包装清单 */
+    /**
+     * 是否为热门商品
+     */
+    private boolean popular;
+    /**
+     * 是否为特惠商品
+     */
+    private boolean special;
+    /**
+     * 是否为推荐商品
+     */
+    private boolean recommend;
+    /**
+     * 是否为赠品 false为非赠品 true为赠品
+     */
+    private boolean giveaway;
+    /**
+     * 是否可换购 false为非换购品 true为换购品
+     */
+    private boolean barter;
+    /**
+     * 是否可预售 false为不可预售 true为可预售
+     */
+    private boolean preSell;
+    /**
+     * 是否禁止空运
+     */
+    private boolean forbidAirCargo;
+    /**
+     * 商品介绍
+     */
+    private String content;
+    /**
+     * 销量
+     */
+    private int saleNum;
+    /**
+     * 包装清单
+     ***/
     private String packingList;
 
-    public Integer getCommodityId() {
-        return commodityId;
+    /**
+     * 重量
+     */
+    private double weight;
+    /**
+     * 体积
+     */
+    private double volume;
+
+
+
+    /******************form 字段*****************/
+    private int[] specId;
+
+    private String[] specValue;
+
+    /**
+     * 图片字段
+     */
+    private String[] imagePath;
+    /***
+     * 审核备注
+     */
+    private String auditRemark;
+
+
+    public Commodity() {
     }
 
-    public void setCommodityId(Integer commodityId) {
+    public Commodity(int commodityId) {
         this.commodityId = commodityId;
     }
 
-    public String getAuditRemark() {
-        return auditRemark;
+    public int getCommodityId() {
+        return commodityId;
     }
 
-    public void setAuditRemark(String auditRemark) {
-        this.auditRemark = auditRemark == null ? null : auditRemark.trim();
-    }
-
-    public Boolean getBarter() {
-        return barter;
-    }
-
-    public void setBarter(Boolean barter) {
-        this.barter = barter;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city == null ? null : city.trim();
+    public void setCommodityId(int commodityId) {
+        this.commodityId = commodityId;
     }
 
     public String getCommodityCode() {
@@ -159,7 +177,7 @@ public class Commodity {
     }
 
     public void setCommodityCode(String commodityCode) {
-        this.commodityCode = commodityCode == null ? null : commodityCode.trim();
+        this.commodityCode = commodityCode;
     }
 
     public String getCommodityName() {
@@ -167,23 +185,23 @@ public class Commodity {
     }
 
     public void setCommodityName(String commodityName) {
-        this.commodityName = commodityName == null ? null : commodityName.trim();
+        this.commodityName = commodityName;
     }
 
-    public String getCommodityPyname() {
-        return commodityPyname;
+    public String getCommodityPYName() {
+        return commodityPYName;
     }
 
-    public void setCommodityPyname(String commodityPyname) {
-        this.commodityPyname = commodityPyname == null ? null : commodityPyname.trim();
+    public void setCommodityPYName(String commodityPYName) {
+        this.commodityPYName = commodityPYName;
     }
 
-    public Integer getCommodityState() {
-        return commodityState;
+    public String getShortName() {
+        return shortName;
     }
 
-    public void setCommodityState(Integer commodityState) {
-        this.commodityState = commodityState;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public String getCommodityTitle() {
@@ -191,23 +209,87 @@ public class Commodity {
     }
 
     public void setCommodityTitle(String commodityTitle) {
-        this.commodityTitle = commodityTitle == null ? null : commodityTitle.trim();
+        this.commodityTitle = commodityTitle;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    public Double getCostPrice() {
+    public double getCostPrice() {
         return costPrice;
     }
 
-    public void setCostPrice(Double costPrice) {
+    public void setCostPrice(double costPrice) {
         this.costPrice = costPrice;
+    }
+
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public double getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(double marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDefaultPicPath() {
+        return defaultPicPath;
+    }
+
+    public void setDefaultPicPath(String defaultPicPath) {
+        this.defaultPicPath = defaultPicPath;
+    }
+
+    public String getSeoKey() {
+        return seoKey;
+    }
+
+    public void setSeoKey(String seoKey) {
+        this.seoKey = seoKey;
+    }
+
+    public String getSeoTitle() {
+        return seoTitle;
+    }
+
+    public void setSeoTitle(String seoTitle) {
+        this.seoTitle = seoTitle;
+    }
+
+    public String getSeoDescription() {
+        return seoDescription;
+    }
+
+    public void setSeoDescription(String seoDescription) {
+        this.seoDescription = seoDescription;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getCreateTime() {
@@ -218,204 +300,76 @@ public class Commodity {
         this.createTime = createTime;
     }
 
-    public String getDefaultPicPath() {
-        return defaultPicPath;
-    }
-
-    public void setDefaultPicPath(String defaultPicPath) {
-        this.defaultPicPath = defaultPicPath == null ? null : defaultPicPath.trim();
-    }
-
-    public Integer getDeliveryType() {
-        return deliveryType;
-    }
-
-    public void setDeliveryType(Integer deliveryType) {
-        this.deliveryType = deliveryType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
-
-    public Boolean getForbidAirCargo() {
-        return forbidAirCargo;
-    }
-
-    public void setForbidAirCargo(Boolean forbidAirCargo) {
-        this.forbidAirCargo = forbidAirCargo;
-    }
-
-    public Boolean getGiveaway() {
-        return giveaway;
-    }
-
-    public void setGiveaway(Boolean giveaway) {
-        this.giveaway = giveaway;
-    }
-
-    public Double getMarketPrice() {
-        return marketPrice;
-    }
-
-    public void setMarketPrice(Double marketPrice) {
-        this.marketPrice = marketPrice;
-    }
-
-    public Boolean getPopular() {
+    public boolean isPopular() {
         return popular;
     }
 
-    public void setPopular(Boolean popular) {
+    public void setPopular(boolean popular) {
         this.popular = popular;
     }
 
-    public Boolean getPreSell() {
-        return preSell;
-    }
-
-    public void setPreSell(Boolean preSell) {
-        this.preSell = preSell;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province == null ? null : province.trim();
-    }
-
-    public Integer getPublishState() {
-        return publishState;
-    }
-
-    public void setPublishState(Integer publishState) {
-        this.publishState = publishState;
-    }
-
-    public Boolean getRecommend() {
-        return recommend;
-    }
-
-    public void setRecommend(Boolean recommend) {
-        this.recommend = recommend;
-    }
-
-    public Integer getSaleNum() {
-        return saleNum;
-    }
-
-    public void setSaleNum(Integer saleNum) {
-        this.saleNum = saleNum;
-    }
-
-    public Double getSellPrice() {
-        return sellPrice;
-    }
-
-    public void setSellPrice(Double sellPrice) {
-        this.sellPrice = sellPrice;
-    }
-
-    public String getSeoDescription() {
-        return seoDescription;
-    }
-
-    public void setSeoDescription(String seoDescription) {
-        this.seoDescription = seoDescription == null ? null : seoDescription.trim();
-    }
-
-    public String getSeoKey() {
-        return seoKey;
-    }
-
-    public void setSeoKey(String seoKey) {
-        this.seoKey = seoKey == null ? null : seoKey.trim();
-    }
-
-    public String getSeoTitle() {
-        return seoTitle;
-    }
-
-    public void setSeoTitle(String seoTitle) {
-        this.seoTitle = seoTitle == null ? null : seoTitle.trim();
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName == null ? null : shortName.trim();
-    }
-
-    public Boolean getSpecial() {
+    public boolean isSpecial() {
         return special;
     }
 
-    public void setSpecial(Boolean special) {
+    public void setSpecial(boolean special) {
         this.special = special;
     }
 
-    public Integer getUnit() {
-        return unit;
+    public boolean isRecommend() {
+        return recommend;
     }
 
-    public void setUnit(Integer unit) {
-        this.unit = unit;
+    public void setRecommend(boolean recommend) {
+        this.recommend = recommend;
     }
 
-    public Double getVolume() {
-        return volume;
+    public boolean isGiveaway() {
+        return giveaway;
     }
 
-    public void setVolume(Double volume) {
-        this.volume = volume;
+    public void setGiveaway(boolean giveaway) {
+        this.giveaway = giveaway;
     }
 
-    public Double getWeight() {
-        return weight;
+    public boolean isBarter() {
+        return barter;
     }
 
-    public void setWeight(Double weight) {
-        this.weight = weight;
+    public void setBarter(boolean barter) {
+        this.barter = barter;
     }
 
-    public Integer getBrandId() {
-        return brandId;
+    public boolean isPreSell() {
+        return preSell;
     }
 
-    public void setBrandId(Integer brandId) {
-        this.brandId = brandId;
+    public void setPreSell(boolean preSell) {
+        this.preSell = preSell;
     }
 
-    public Integer getCatalogId() {
-        return catalogId;
+    public boolean isForbidAirCargo() {
+        return forbidAirCargo;
     }
 
-    public void setCatalogId(Integer catalogId) {
-        this.catalogId = catalogId;
+    public void setForbidAirCargo(boolean forbidAirCargo) {
+        this.forbidAirCargo = forbidAirCargo;
     }
 
-    public Integer getSectionId() {
-        return sectionId;
+    public String getContent() {
+        return content;
     }
 
-    public void setSectionId(Integer sectionId) {
-        this.sectionId = sectionId;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Integer getSellerId() {
-        return sellerId;
+    public int getSaleNum() {
+        return saleNum;
     }
 
-    public void setSellerId(Integer sellerId) {
-        this.sellerId = sellerId;
+    public void setSaleNum(int saleNum) {
+        this.saleNum = saleNum;
     }
 
     public String getPackingList() {
@@ -423,6 +377,54 @@ public class Commodity {
     }
 
     public void setPackingList(String packingList) {
-        this.packingList = packingList == null ? null : packingList.trim();
+        this.packingList = packingList;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getVolume() {
+        return volume;
+    }
+
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
+    public int[] getSpecId() {
+        return specId;
+    }
+
+    public void setSpecId(int[] specId) {
+        this.specId = specId;
+    }
+
+    public String[] getSpecValue() {
+        return specValue;
+    }
+
+    public void setSpecValue(String[] specValue) {
+        this.specValue = specValue;
+    }
+
+    public String[] getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String[] imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getAuditRemark() {
+        return auditRemark;
+    }
+
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
     }
 }

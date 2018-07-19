@@ -45,6 +45,7 @@ public class HomeFloor implements Serializable {
     private int categoryAmount;
 
     private int commodityAmount;
+    private int brandAmount;
 
     /**
      * 模板ID
@@ -76,6 +77,8 @@ public class HomeFloor implements Serializable {
 
     private Set<FloorCommodity> floorCommodities = new LinkedHashSet<FloorCommodity>();
 
+    private Set<FloorBrand> floorBrands = new LinkedHashSet<>();
+
 
     private int[] categoryId;
     /**
@@ -88,6 +91,12 @@ public class HomeFloor implements Serializable {
      * 商品排序
      */
     private int[] commodityOrder;
+
+    private int[] brandId;
+    /**
+     * 品牌排序
+     */
+    private int[] brandOrder;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -159,6 +168,16 @@ public class HomeFloor implements Serializable {
         this.floorCommodities = floorCommodities;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "homeFloor", cascade = CascadeType.REMOVE)
+    @OrderBy(value = "sortOrder")
+    public Set<FloorBrand> getFloorBrands() {
+        return floorBrands;
+    }
+
+    public void setFloorBrands(Set<FloorBrand> floorBrands) {
+        this.floorBrands = floorBrands;
+    }
+
     @Column(nullable = false, length = 255)
     public String getImagePath() {
         return imagePath;
@@ -203,6 +222,14 @@ public class HomeFloor implements Serializable {
         this.commodityAmount = commodityAmount;
     }
 
+    public int getBrandAmount() {
+        return brandAmount;
+    }
+
+    public void setBrandAmount(int brandAmount) {
+        this.brandAmount = brandAmount;
+    }
+
     @Transient
     public int[] getCategoryId() {
         return categoryId;
@@ -237,5 +264,23 @@ public class HomeFloor implements Serializable {
 
     public void setCommodityOrder(int[] commodityOrder) {
         this.commodityOrder = commodityOrder;
+    }
+
+    @Transient
+    public int[] getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(int[] brandId) {
+        this.brandId = brandId;
+    }
+
+    @Transient
+    public int[] getBrandOrder() {
+        return brandOrder;
+    }
+
+    public void setBrandOrder(int[] brandOrder) {
+        this.brandOrder = brandOrder;
     }
 }

@@ -33,6 +33,9 @@
                 }
            });
         }
+        function editItem(orderId){
+            window.location.href = "toEditInsuranceOrderOffsite.do?orderId=" + orderId;
+        }
         $(document).ready(function () {
             var province=$.citySelector.getProvince(${insuranceOrder.insuranceOrderPolicyholderBank.bankProvince});
            $("#province").html(province);
@@ -883,7 +886,7 @@
                             </div>
                             <div style="float: left;margin-left: 10px">
                                 <%--<label><span class="asterisk"></span>${offsiteAddress}</label>--%>
-                                <%--<label><input>${offsiteAddress}</input></label>--%>
+                                <%--<label><input readonly="true">${offsiteAddress}</input></label>--%>
                                     <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.offsiteAddress" maxlength="255"></form:textarea>
                                         <%--<label><input type="text" name="lname" value=${offsiteAddress}></label>--%>
                             </div>
@@ -939,8 +942,10 @@
                             </div>
                     </div>
                     <div class="col-sm-2">
-
-                        <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
+                        <c:if test="${insuranceOrder.insuranceOrderOffsite!=null}">
+                            <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
+                            <%--<a href="javascript:void(0);" onclick="editItem('${insuranceOrder.orderId}')" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>--%>
+                        </c:if>
                         <%--<div class="btn-group pull-right">
                             <c:if test="${insuranceOrder.orderState=='UN_PAID'}">
                                 <a class="btn btn-default pull-right" href="javascript:void(0);" onclick="updInsuranceOrderState('${insuranceOrder.orderId}','ON_PAID')">确认修改</a></c:if>
