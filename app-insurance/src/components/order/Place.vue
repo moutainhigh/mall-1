@@ -79,7 +79,7 @@
     font-size: 15px;
     background-color: #ffffff;
     padding: 15px;
-    color: #c5c5c5;
+    color: #666;
   }
 
 </style>
