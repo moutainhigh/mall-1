@@ -34,42 +34,15 @@
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
-
+            $('#serNo').val("")
         });
     </script>
 </head>
 <body>
 
-
-<!-- ********************************************
-     * SIDEBAR MAIN:                            *
-     *                                          *
-     * the part which contains the main         *
-     * navigation, logo, search and more...     *
-     * (parts can be in both sidebars).         *
-     ******************************************** -->
-
 <jsp:include page="../layouts/left.jsp"/>
-<!-- End aside -->
-
-<!-- ********************************************
-     * SIDEBAR SEC:                             *
-     *                                          *
-     * the part which contains things like      *
-     * calendar, users, lists, blocks and       *
-     * much more.                               *
-     ******************************************** -->
-
-<!-- End #sidebar-sec -->
 
 <div id="main" class="clearfix">
-
-    <!-- ********************************************
-         * MAIN HEADER:                             *
-         *                                          *
-         * the part which contains the breadcrumbs, *
-         * dropdown menus, toggle sidebar button    *
-         ******************************************** -->
 
     <header id="header-main">
         <div class="header-main-top">
@@ -105,13 +78,6 @@
 
     <div id="content" class="clearfix">
 
-        <!-- ********************************************
-             * HEADER SEC:                              *
-             *                                          *
-             * the part which contains the page title,  *
-             * buttons and dropdowns.                   *
-             ******************************************** -->
-
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
@@ -120,13 +86,6 @@
             </div>
             <!-- End .inner-padding -->
         </header>
-        <!-- End #header-sec -->
-
-        <!-- ********************************************
-             * WINDOW:                                  *
-             *                                          *
-             * the part which contains the main content *
-             ******************************************** -->
 
         <div class="window">
             <div class="actionbar">
@@ -153,7 +112,7 @@
                                 <label><span class="asterisk">*</span>序号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="serNo" value="" cssClass="form-control validate[required,minSize[1]]"
+                                <form:input path="serNo" id="serNo" value="" cssClass="form-control validate[required,minSize[1]]"
                                             maxlength="32"/>
                             </div>
                         </div>
@@ -186,9 +145,8 @@
                             </div>
                             <div class="col-sm-3">
                                 <select class="form-control simpleselect grid-filter" name="groupId">
-                                    <option value="0">-不选-</option>
+                                    <option value="0">不选</option>
                                     <c:forEach items="${groups}" var="group">
-                                        <option value="0">-不选-</option>
                                         <option value="${group.groupId}">${group.description}</option>
                                     </c:forEach>
                                 </select>

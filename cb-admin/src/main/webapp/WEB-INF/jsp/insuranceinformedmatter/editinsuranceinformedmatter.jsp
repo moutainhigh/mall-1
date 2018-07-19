@@ -40,36 +40,9 @@
 </head>
 <body>
 
-
-<!-- ********************************************
-     * SIDEBAR MAIN:                            *
-     *                                          *
-     * the part which contains the main         *
-     * navigation, logo, search and more...     *
-     * (parts can be in both sidebars).         *
-     ******************************************** -->
-
 <jsp:include page="../layouts/left.jsp"/>
-<!-- End aside -->
-
-<!-- ********************************************
-     * SIDEBAR SEC:                             *
-     *                                          *
-     * the part which contains things like      *
-     * calendar, users, lists, blocks and       *
-     * much more.                               *
-     ******************************************** -->
-
-<!-- End #sidebar-sec -->
 
 <div id="main" class="clearfix">
-
-    <!-- ********************************************
-         * MAIN HEADER:                             *
-         *                                          *
-         * the part which contains the breadcrumbs, *
-         * dropdown menus, toggle sidebar button    *
-         ******************************************** -->
 
     <header id="header-main">
         <div class="header-main-top">
@@ -187,7 +160,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <select class="form-control simpleselect grid-filter" name="groupId">
-                                    <option value="0">-不选-</option>
+                                    <option value="0">不选</option>
                                     <c:forEach items="${groups}" var="group">
                                         <option value="${group.groupId}"
                                                 <c:if test="${group.groupId eq groupId}">selected</c:if> >${group.description}</option>
