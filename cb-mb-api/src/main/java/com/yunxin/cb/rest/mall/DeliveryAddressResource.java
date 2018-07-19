@@ -32,17 +32,15 @@ public class DeliveryAddressResource extends BaseResource {
     @ApiOperation(value = "收货地址详情")
     @PostMapping(value = "getDeliveryAddress")
     public ResponseResult getDeliveryAddressDetail(@RequestParam(value = "addressId") int addressId){
-        DeliveryAddress deliveryAddress = deliveryAddressService.selectByPrimaryKey(addressId);
+        int customerId = getCustomerId();
+        DeliveryAddress deliveryAddress = deliveryAddressService.selectByPrimaryKey(addressId,customerId);
         return new ResponseResult(deliveryAddress);
     }
 
     @ApiOperation(value = "添加收货地址")
     @PostMapping(value = "addDeliveryAddress")
     public ResponseResult addDeliveryAddress(@RequestBody DeliveryAddress deliveryAddress){
-        int add_sunm = deliveryAddressService.insert(deliveryAddress);
-        if(add_sunm <= 0){
-            return new ResponseResult(Result.FAILURE);
-        }
+        deliveryAddressService.insert(deliveryAddress);
         return new ResponseResult(Result.SUCCESS);
     }
 
@@ -52,19 +50,13 @@ public class DeliveryAddressResource extends BaseResource {
     })
     @GetMapping(value = "delectDeliveryAddress/{addressId}")
     public ResponseResult delectDeliveryAddress(@PathVariable(value = "addressId") int addressId){
-        int delete_sunm = deliveryAddressService.deleteByPrimaryKey(addressId);
-        if(delete_sunm <= 0){
-            return new ResponseResult(Result.FAILURE);
-        }
+        deliveryAddressService.deleteByPrimaryKey(addressId);
         return new ResponseResult(Result.SUCCESS);
     }
     @ApiOperation(value = "更新收货地址")
     @PostMapping(value = "upDeliveryAddress")
     public ResponseResult upDeliveryAddress(@RequestBody DeliveryAddress deliveryAddress){
-        int update_sunm = deliveryAddressService.updateByPrimaryKey(deliveryAddress);
-        if(update_sunm <= 0){
-            return new ResponseResult(Result.FAILURE);
-        }
+        deliveryAddressService.updateByPrimaryKey(deliveryAddress);
         return new ResponseResult(Result.SUCCESS);
     }
 }

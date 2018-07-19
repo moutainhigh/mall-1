@@ -6,40 +6,49 @@ public class Index implements java.io.Serializable{
 
 
     private static final long serialVersionUID = -5757724781631355830L;
-    private List<Advertisement> adList;
-    private List<Brand> brandList;
-    private List<Category> categoryList;
-    private List<Commodity> commodityList;
+    private List<Advertisement> homeList;
+    private List<Advertisement> milldeList;
+    private FloorInfo brand;
+    private FloorInfo categoryThree;
+    private FloorInfo categoryFive;
 
-    public List<Advertisement> getAdList() {
-        return adList;
+    public List<Advertisement> getHomeList() {
+        return homeList;
     }
 
-    public void setAdList(List<Advertisement> adList) {
-        this.adList = adList;
+    public void setHomeList(List<Advertisement> homeList) {
+        this.homeList = homeList;
     }
 
-    public List<Brand> getBrandList() {
-        return brandList;
+    public List<Advertisement> getMilldeList() {
+        return milldeList;
     }
 
-    public void setBrandList(List<Brand> brandList) {
-        this.brandList = brandList;
+    public void setMilldeList(List<Advertisement> milldeList) {
+        this.milldeList = milldeList;
     }
 
-    public List<Category> getCategoryList() {
-        return categoryList;
+    public FloorInfo getBrand() {
+        return brand;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
+    public void setBrand(FloorInfo brand) {
+        this.brand = brand;
     }
 
-    public List<Commodity> getCommodityList() {
-        return commodityList;
+    public FloorInfo getCategoryThree() {
+        return categoryThree;
     }
 
-    public void setCommodityList(List<Commodity> commodityList) {
-        this.commodityList = commodityList;
+    public void setCategoryThree(FloorInfo categoryThree) {
+        this.categoryThree = categoryThree;
+    }
+
+    public FloorInfo getCategoryFive() {
+        return categoryFive;
+    }
+
+    public void setCategoryFive(FloorInfo categoryFive) {
+        this.categoryFive = categoryFive;
     }
 }

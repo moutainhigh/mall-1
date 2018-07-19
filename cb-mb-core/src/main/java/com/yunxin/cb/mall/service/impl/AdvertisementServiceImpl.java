@@ -13,7 +13,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private AdvertisementMapper advertisementMapper;
 
     @Override
-    public List<Advertisement> selectAll() {
-        return advertisementMapper.selectAll();
+    public List<Advertisement> selectByPlace(Integer advertisementPlace) {
+        return advertisementMapper.selectByPlace(advertisementPlace);
     }
 }
