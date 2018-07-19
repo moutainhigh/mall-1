@@ -23,7 +23,6 @@ import javax.annotation.Resource;
 @Api(description = "商城收藏夹接口")
 @RestController
 @RequestMapping(value = "/mall/favorite")
-@SessionAttributes("customerId")
 public class FavoriteResource extends BaseResource {
 
     @Resource
@@ -41,9 +40,9 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "getCustomerFavorite")
-    public ResponseResult getCustomerFavorite(Query q,@ModelAttribute("customerId") int customerId){
+    public ResponseResult getCustomerFavorite(Query q){
         Favorite favorite=new Favorite();
-        favorite.setCustomerId(customerId);
+        favorite.setCustomerId(getCustomerId());
         q.setQ(favorite);
         PageFinder<Favorite> pageFinder=favoriteService.pageCustomerFavorites(q);
         return new ResponseResult(pageFinder);
@@ -53,8 +52,8 @@ public class FavoriteResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "findByCustomerAndCommodity")
-    public ResponseResult findByCustomerAndCommodity(Favorite favorite,@ModelAttribute("customerId") int customerId) {
-        favorite.setCustomerId(customerId);
+    public ResponseResult findByCustomerAndCommodity(Favorite favorite) {
+        favorite.setCustomerId(getCustomerId());
         favorite=favoriteService.findByCustomerAndCommodity(favorite);
         if(favorite==null){
             return new ResponseResult(Result.SUCCESS);
@@ -74,8 +73,8 @@ public class FavoriteResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "addFavorite")
-    public ResponseResult addFavorite(Favorite favorite,@ModelAttribute("customerId") int customerId){
-        favorite.setCustomerId(customerId);
+    public ResponseResult addFavorite(Favorite favorite){
+        favorite.setCustomerId(getCustomerId());
         favorite=favoriteService.addFavorite(favorite);
         return new ResponseResult(favorite);
     }

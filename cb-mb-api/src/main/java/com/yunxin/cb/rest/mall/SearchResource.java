@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @Api(description = "商城商品搜索接口")
 @RestController
 @RequestMapping(value = "/mall/search")
-@SessionAttributes("customerId")
 public class SearchResource extends BaseResource {
 
 

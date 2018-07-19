@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @Api(description = "商城商品接口")
 @RestController
 @RequestMapping(value = "/mall/commodity")
-@SessionAttributes("customerId")
 public class CommodityResource extends BaseResource {
 
     /**
