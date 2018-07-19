@@ -1,7 +1,5 @@
 package com.yunxin.cb.mall.entity;
 
-import org.springframework.stereotype.Repository;
-
 /**
  * @title: 商品分类关联表实体类
  * @auther: eleven
