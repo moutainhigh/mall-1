@@ -87,6 +87,53 @@ public class QiniuStorageService implements IStorageService {
         return null;
     }
 
+    /**
+     * 上传带文件名的文件
+     * @author      likang
+     * @param inputStream
+    * @param type 文件夹
+    * @param key 文件名
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/19 17:36
+     */
+    @Override
+    public String put(InputStream inputStream, UploadType type,String key) {
+        //默认不指定key的情况下，以文件内容的hash值作为文件名
+        Auth auth = Auth.create(accessKey, secretKey);
+        String bucket = null;
+        String domain = null;
+        switch (type) {
+            case ANDROID:
+            case OTHER:
+                bucket = bucket_1;
+                domain = domain_1;
+                break;
+            case PAPERWORK:
+                bucket = bucket_2;
+                domain = domain_2;
+                break;
+        }
+        String upToken = auth.uploadToken(bucket);
+        try {
+            Response response = uploadManager.put(inputStream, key, upToken, null, null);
+            //解析上传成功的结果
+            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+            String url = domain + putRet.key;
+            logger.info("qiniu put success, url:" + url);
+            return url;
+        } catch (QiniuException ex) {
+            Response r = ex.response;
+            logger.error(r.toString());
+            try {
+                logger.error(r.bodyString());
+            } catch (QiniuException ex2) {
+                //ignore
+            }
+        }
+        return null;
+    }
+
     @Override
     public String put(byte[] data, UploadType type) {
         //默认不指定key的情况下，以文件内容的hash值作为文件名

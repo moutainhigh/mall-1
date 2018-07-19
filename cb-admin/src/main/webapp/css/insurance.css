@@ -118,6 +118,7 @@ h2 {
     width: 26px;
     height: 36px;
     box-sizing: border-box;
+    vertical-align: top;
 }
 
 .div-line .div-line-con .i-cb {
@@ -138,12 +139,12 @@ input {
 
 .c-input {
     text-align: center;
-    width: 25px;
+    width: 28px;
 }
 
 .b-input {
     text-align: center;
-    width: 30px;
+    width: 33px;
 }
 
 .d-input {

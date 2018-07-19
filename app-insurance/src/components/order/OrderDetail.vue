@@ -257,7 +257,7 @@
     </div>
 
     <div>
-      <img id="top1" src="../../assets/img/top.png" style="position:fixed;right:10px;bottom:10px;width: 10vw" @click="returnTop"/>
+      <img v-if="scroll > 500" src="../../assets/img/top.png" style="position:fixed;right:10px;bottom:10px;width: 10vw" @click="returnTop"/>
     </div>
   </div>
 </template>
@@ -286,7 +286,9 @@
         holder: '',
         beneficiaries: [],
         order: '',
-        addr: ChinaAddressData
+        addr: ChinaAddressData,
+        scroll: '',
+
       }
     },
     methods: {
@@ -321,16 +323,12 @@
       },
       returnTop() {
         scrollTo(0, 0);
+      },
+      menu() {
+        this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
       }
     },
     created() {
-      window.onscroll = function () {
-        if (document.documentElement.scrollTop > 500) {
-          document.getElementById("top1").style.display ="block";
-        } else {
-          document.getElementById("top1").style.display ="none";
-        }
-      };
       this.$vux.loading.show({
         text: '加载中...'
       });
@@ -349,8 +347,8 @@
       }
     },
     mounted() {
-
-    }
+      window.addEventListener('scroll', this.menu)
+    },
   }
 </script>
 
@@ -385,7 +383,7 @@
 
   .d-cell .d-cell-val {
     display: inline-block;
-    color: #c5c5c5;
+    color: #666;
     flex: auto;
   }
 

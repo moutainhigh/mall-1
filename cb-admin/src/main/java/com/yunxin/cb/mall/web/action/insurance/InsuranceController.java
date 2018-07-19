@@ -138,6 +138,7 @@ public class InsuranceController {
      */
     @RequestMapping(value = "prints", method = RequestMethod.GET)
     public String prints(@RequestParam("orderId") int orderId, ModelMap modelMap) {
+        System.out.println(iInsuranceOrderService.insuranceOrder(orderId).get("insurance_matter_value"));
             modelMap.addAttribute("map", iInsuranceOrderService.insuranceOrder(orderId));
         return "insurance/orderDetailPrint";
     }
@@ -160,7 +161,7 @@ public class InsuranceController {
         response.setContentType("application/octet-stream;charset=UTF-8");
         ITextRenderer renderer = new ITextRenderer();
         ITextFontResolver fontResolver = renderer.getFontResolver();
-        fontResolver.addFont("/C://Windows//Fonts", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+        fontResolver.addFont("F:\\vistaBold.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
         OutputStream os = response.getOutputStream();
         try {
             String htmlstr = HttpsUtils.doGet("http://localhost:8080/admin/insurance/prints.do?orderId=" + orderId);//HttpHandler.sendGet只是单纯获得指定网页的html字符串内容

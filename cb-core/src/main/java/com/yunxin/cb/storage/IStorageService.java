@@ -16,6 +16,13 @@ public interface IStorageService {
 
     /**
      * 上传文件
+     * @param inputStream
+     * @return
+     */
+    String put(InputStream inputStream, UploadType type,String key);
+
+    /**
+     * 上传文件
      * @param data
      * @return
      */

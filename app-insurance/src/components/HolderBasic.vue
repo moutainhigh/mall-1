@@ -8,7 +8,8 @@
         出生日期不能为空
       </div>
 
-      <div class="i-input" style="padding: 0 15px 0 0; border-top: 1px solid #ececec; margin-left: 15px; margin-right: 15px">
+      <div class="i-input"
+           style="padding: 0 15px 0 0; border-top: 1px solid #ececec; margin-left: 15px; margin-right: 15px">
         <div class="i-input-item" style="width: 6rem">性别</div>
         <div class="i-input-radio" style="top: 0;">
           <div class="radio-div" style="margin-right: 0" @click="changeGender(true)">
@@ -95,7 +96,7 @@
     </div>
     <div style="height: 60px">
       <div class="i-footer">
-        <button  @click="submit" >
+        <button @click="submit">
           <div>完善投保信息</div>
         </button>
       </div>
@@ -182,12 +183,12 @@
           this.$router.push('/insured');
         }
       },
-      goToSelect(){
+      goToSelect() {
         this.$router.push({
-          path:'/careerSelect',
-          query:{
-            type:'insured',
-            key:'insuredCareer'
+          path: '/careerSelect',
+          query: {
+            type: 'insured',
+            key: 'insuredCareer'
           }
         })
       }
@@ -233,18 +234,24 @@
       let query = this.$route.query;
       this.title = query.title;
       this.proId = query.id;
-      let order = this.Admin.order;
-      if (storage.fetch('order').length != 0){
+      let order;
+      if (storage.fetch('order').length != 0) {
         order = storage.fetch('order');
+      } else {
+        order = this.Admin.order
       }
-      order.insuranceProduct.prodId = this.proId;
-      if (this.proId == 1) {
-        order.insuranceProductPrice.priceId = 1;
-        this.priceId = 1;
-      }
-      if (this.proId == 2) {
-        order.insuranceProductPrice.priceId = 4;
-        this.priceId = 4;
+      if (order.insuranceProduct.prodId != this.proId) {
+        order.insuranceProduct.prodId = this.proId;
+        if (this.proId == 1) {
+          order.insuranceProductPrice.priceId = 1;
+          this.priceId = 1;
+        }
+        if (this.proId == 2) {
+          order.insuranceProductPrice.priceId = 4;
+          this.priceId = 4;
+        }
+      } else {
+        this.priceId = order.insuranceProductPrice.priceId;
       }
       storage.save('order', order);
 
@@ -253,7 +260,7 @@
       this.gender = insured.insuredGender;
       this.career = insured.careerName;
     },
-    activated(){
+    activated() {
       let insured = storage.fetch("insured");
       this.career = insured.careerName;
     }

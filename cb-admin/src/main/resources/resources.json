@@ -206,6 +206,14 @@
         "name": "用户反馈管理", "code": "161", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../feedback/feedbacks.do"
       }
     ]
+  },
+  {
+    "name": "系统配置", "code": "17", "type": "MENU", "cssClass": "fa fa-cogs", "value": "system", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "APP版本控制", "code": "171", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"
+      }
+    ]
   }
 
 ]
