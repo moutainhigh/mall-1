@@ -21,6 +21,9 @@ public class Attribute {
     /** 属性组id */
     private Integer groupId;
 
+    //属性组
+    private AttributeGroup attributeGroup;
+
     public Integer getAttributeId() {
         return attributeId;
     }
@@ -59,5 +62,13 @@ public class Attribute {
 
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
+    }
+
+    public AttributeGroup getAttributeGroup() {
+        return attributeGroup;
+    }
+
+    public void setAttributeGroup(AttributeGroup attributeGroup) {
+        this.attributeGroup = attributeGroup;
     }
 }

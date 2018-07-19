@@ -51,6 +51,7 @@ public class OrderServiceImpl implements OrderService {
         //判断货品是否存在，且库存足够
         if (product == null || product.getStoreNum() <= 0) {
             //库存不足
+            //throw new Exception("库存不足");
             return null;
         }
         //支付方式
@@ -116,21 +117,26 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order cancelOrder(Order order) {
-        //更改订单为取消状态
         order = orderMapper.selectByOrderIdAndCustomerId(order.getOrderId(), order.getCustomerId());
-        if (order != null){
+        //待付款订单才可取消
+        if (order != null && order.getOrderState() == OrderState.PENDING_PAYMENT.ordinal()){
             Set<OrderItem> orderItems = order.getOrderItems();
             if (orderItems != null && !orderItems.isEmpty()) {
                 for (OrderItem orderItem : orderItems) {
                     //更新库存
                     Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
                     //增加库存
-                    product.setStoreNum(product.getStoreNum() + 1);
+                    product.setStoreNum(product.getStoreNum() + orderItem.getProductNum());
                     productMapper.updateByPrimaryKey(product);
                 }
             } else {
                 return null;
             }
+            //更改订单为取消状态
+            order.setOrderState(OrderState.CANCELED.ordinal());
+            orderMapper.updateByPrimaryKey(order);
+        } else {
+            //throw new Exception("该订单不可取消");
         }
         return order;
     }

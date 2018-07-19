@@ -68,6 +68,8 @@
             switch (advertisementPlace) {
                 case "HOME":
                     return "首页";
+                case "MIDDLE":
+                    return "中部";
             }
         }
 

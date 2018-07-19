@@ -683,7 +683,7 @@
 <script>
   import storage from "../store/storage";
   import {Toast} from 'vux'
-  import {emoji} from "../admin/validate";
+  import {emoji, space} from "../admin/validate";
 
   export default {
     components: {Toast},
@@ -720,7 +720,11 @@
         let input = document.getElementsByTagName("input");
         for (let i = 0; i < textatea.length; i++) {
           if (emoji.test(textatea[i].value)) {
-            alert("输入信息不得带表情");
+            alert("请不要输入空格");
+            return false;
+          }
+          if (space.test(textatea[i].value)) {
+            alert("请不要输入空格");
             return false;
           }
         }
@@ -752,6 +756,11 @@
             return false;
           }
         }
+        let insuredGender = storage.fetch("insured").insuredGender;
+        if (insuredGender && this.values11 != '') {
+          alert('被保人为男性,不输入怀孕周期');
+          return false;
+        }
         if (this.values11.length > 3) {
           alert("怀孕周数长度不大于3");
           return false;
@@ -764,8 +773,7 @@
           alert("婴儿信息栏填写长度不大于3");
           return false;
         }
-        let kongge = /\s+/g;
-        if (kongge.test(this.values12[2])) {
+        if (space.test(this.values12[2])) {
           alert("请不要输入空格");
           return false;
         }
@@ -866,6 +874,11 @@
         deep: true
       },
       values11: function (newVal, oldVal) {
+        let insuredGender = storage.fetch("insured").insuredGender;
+        if (insuredGender) {
+          alert('被保人为男性');
+          return
+        }
         if (this.matters.length !== 0) {
           this.matters[10].collectValues = newVal;
         }

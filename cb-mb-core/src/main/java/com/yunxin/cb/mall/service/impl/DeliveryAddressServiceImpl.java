@@ -19,8 +19,8 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
     }
 
     @Override
-    public DeliveryAddress selectByPrimaryKey(Integer addressId) {
-        return deliveryAddressMapper.selectByPrimaryKey(addressId);
+    public DeliveryAddress selectByPrimaryKey(Integer addressId,Integer customerId) {
+        return deliveryAddressMapper.selectByPrimaryKey(addressId,customerId);
     }
 
     @Override
