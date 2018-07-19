@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
         order.setProdQuantity(1);
         order.setTotalPrice(Double.valueOf(product.getSalePrice()));
         order.setFeeTotal(order.getTotalPrice());
-        defalutValue(order);//添加默认数据
+        defaultValue(order);//添加默认数据
 
         orderMapper.insert(order);
         OrderItem orderItem = new OrderItem();
@@ -135,7 +135,7 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-    private void defalutValue(Order order) {
+    private void defaultValue(Order order) {
         order.setCouponsFee(0d);
         order.setDelivery(false);
         order.setDeliveryFeeTotal(0d);
