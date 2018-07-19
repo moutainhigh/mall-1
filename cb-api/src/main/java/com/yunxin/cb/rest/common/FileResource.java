@@ -2,6 +2,7 @@ package com.yunxin.cb.rest.common;
 
 import com.yunxin.cb.mall.entity.meta.UploadType;
 import com.yunxin.cb.storage.IStorageService;
+import com.yunxin.cb.vo.ImageBase64;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,10 +48,10 @@ public class FileResource {
 
     @ApiOperation(value = "base64图片上传")
     @PostMapping(value = "uploadBase64/{type}")
-    public ResponseResult uploadBase64(@RequestParam("base64") String base64, @PathVariable(value = "type") UploadType type) {
-        if (StringUtils.isNotBlank(base64)) {
+    public ResponseResult uploadBase64(@RequestBody ImageBase64 base64, @PathVariable(value = "type") UploadType type) {
+        if (StringUtils.isNotBlank(base64.getData())) {
             try {
-                byte[] imgBytes = Base64.getDecoder().decode(base64);//Base64转换成byte数组
+                byte[] imgBytes = Base64.getDecoder().decode(base64.getData());//Base64转换成byte数组
                 String url = qiniuStorageService.put(imgBytes, type);
                 return new ResponseResult(url);
             } catch (Exception e) {
