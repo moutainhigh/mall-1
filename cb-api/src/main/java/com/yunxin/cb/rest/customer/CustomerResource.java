@@ -16,7 +16,6 @@ import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -65,7 +64,6 @@ public class CustomerResource extends BaseResource {
     }
 
 
-
     @ApiOperation(value = "添加好友")
     @PostMapping(value = "addFriend")
     public ResponseResult addFriend(@RequestParam("mobile") String mobile, @ModelAttribute("customerId") int customerId) {
@@ -74,65 +72,42 @@ public class CustomerResource extends BaseResource {
         if (customer == null) {
             return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
         }
-        //修改添加好友记录为已同意
-        customerFriendRequestService.updateCustomerFriendRequestState(customer.getCustomerId(),myself.getCustomerId(),CustomerFriendRequestState.AGREE.getState());
-
-        CustomerFriend customerFriend = new CustomerFriend();
-        CustomerFriendId customerFriendId = new CustomerFriendId();
-        customerFriendId.setCustomerId(customerId);
-        customerFriendId.setFriendId(customer.getCustomerId());
-        customerFriend.setId(customerFriendId);
-        customerFriend.setCustomer(myself);
-        customerFriend.setFriend(customer);
-        customerFriend.setCreateTime(new Date());
-        customerFriend.setState(CustomerFriendState.NORMAL);
-        customerService.addFriend(customerFriend);
-
-        //双向加好友
-        customerFriend = new CustomerFriend();
-        customerFriendId = new CustomerFriendId();
-        customerFriendId.setCustomerId(customer.getCustomerId());
-        customerFriendId.setFriendId(customerId);
-        customerFriend.setId(customerFriendId);
-        customerFriend.setCustomer(customer);
-        customerFriend.setFriend(myself);
-        customerFriend.setCreateTime(new Date());
-        customerFriend.setState(CustomerFriendState.NORMAL);
-        customerService.addFriend(customerFriend);
+        customerService.addTwoWayFriend(customer,myself);
 
         return new ResponseResult(Result.SUCCESS);
     }
 
     /**
      * 根据邀请添加好友ID查询所有添加记录
-     * @author      likang
+     *
      * @param customerId
-     * @return      com.yunxin.cb.vo.ResponseResult
-     * @exception
-     * @date        2018/7/18 20:03
+     * @return com.yunxin.cb.vo.ResponseResult
+     * @throws
+     * @author likang
+     * @date 2018/7/18 20:03
      */
     @ApiOperation(value = "根据邀请添加好友ID查询所有添加记录")
     @ApiImplicitParams({
 
     })
-    @PostMapping(value = "getCustomerFriendRequestList")
-    public ResponseResult getCustomerFriendRequestList(@ModelAttribute("customerId") int customerId){
+    @GetMapping(value = "getCustomerFriendRequestList")
+    public ResponseResult getCustomerFriendRequestList(@ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerFriendRequestService.getCustomerFriendRequestByFriendId(customerId));
     }
 
     @ApiOperation(value = "添加好友通知")
     @PostMapping(value = "addFriendNotice")
-    public ResponseResult addFriendNoitce(@RequestParam("friendId") int friendId, @RequestParam("requestMessage") String requestMessage, @ModelAttribute("customerId") int customerId) {
+    public ResponseResult addFriendNoitce(@RequestParam("friendId") String friendId, @RequestParam("requestMessage") String requestMessage, @ModelAttribute("customerId") int customerId) {
         try {
             Customer myself = customerService.getCustomerById(customerId);
-            Customer friend = customerService.getCustomerById(friendId);
+            Customer friend = customerService.findByAccountName(friendId);
 
             if (friend == null) {
                 return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
             }
             rongCloudService.sendMessage(myself, friend, requestMessage);
             //添加好友请求记录
-            customerFriendRequestService.addCustomerFriendRequest(myself,friend,requestMessage);
+            customerFriendRequestService.addCustomerFriendRequest(myself, friend, requestMessage);
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("addFriendNotice failed", e);
@@ -225,7 +200,7 @@ public class CustomerResource extends BaseResource {
     @GetMapping(value = "addBlacklist/{friendId}")
     public ResponseResult addBlacklist(@PathVariable int friendId, @ModelAttribute("customerId") int customerId) {
         try {
-            customerService.addBlacklist(friendId,customerId);
+            customerService.addBlacklist(friendId, customerId);
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("addBlacklist failed", e);
@@ -238,7 +213,7 @@ public class CustomerResource extends BaseResource {
     @GetMapping(value = "removeBlacklist/{friendId}")
     public ResponseResult removeBlacklist(@PathVariable int friendId, @ModelAttribute("customerId") int customerId) {
         try {
-            customerService.removeBlacklist(friendId,customerId);
+            customerService.removeBlacklist(friendId, customerId);
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("removeBlacklist failed", e);
@@ -250,7 +225,7 @@ public class CustomerResource extends BaseResource {
     @GetMapping(value = "getBlacklist")
     public ResponseResult getBlacklist(@ModelAttribute("customerId") int customerId) {
         try {
-            List<CustomerFriend> blackList=customerService.getBlacklist(customerId);
+            List<CustomerFriend> blackList = customerService.getBlacklist(customerId);
             return new ResponseResult(blackList);
         } catch (Exception e) {
             logger.error("getBlacklist failed", e);

@@ -424,7 +424,9 @@
                     <div class="spacer-10"></div>
                     <div class="row">
                       <div class="col-sm-2">
-                        <label>所在地区：<span class="asterisk"></span></label>
+                        <label>所在地区：<span class="asterisk"></span>
+                               <span id="district"></span>
+                        </label>
                       </div>
                       <div class="col-sm-9" id="pdcDetail">
 

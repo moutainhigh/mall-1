@@ -13,5 +13,5 @@ public enum UploadType {
     PAPERWORK,//("证件"),
     OTHER,//("其他")
     INSURANCEPRODUCT,//("保险产品")
-    APPAPK//("保险产品")
+    ANDROID//("保险产品")
 }

@@ -31,17 +31,18 @@ public class FavoriteServiceImpl implements FavoriteService {
 
 	@Override
 	public Favorite addFavorite(Favorite favorite) {
-		favorite = favoriteMapper.findByCustomerAndCommodity(favorite);
-		if (favorite == null) {
+		Favorite getFavorite = favoriteMapper.findByCustomerAndCommodity(favorite);
+		if (getFavorite == null) {
 			favorite.setCreateTime(new Date());
 			favoriteMapper.insert(favorite);
+			return favorite;
 		}
-		return favorite;
+		return getFavorite;
 	}
 
 	@Override
-	public void removeFavorite(int favoriteId) {
-		favoriteMapper.deleteByPrimaryKey(favoriteId);
+	public int removeFavorite(int favoriteId) {
+		return favoriteMapper.deleteByPrimaryKey(favoriteId);
 	}
 
 	@Override

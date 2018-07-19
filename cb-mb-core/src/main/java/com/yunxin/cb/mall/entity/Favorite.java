@@ -20,6 +20,8 @@ public class Favorite {
     /** 商品id */
     private Integer commodityId;
 
+    private Commodity commodity;
+
     /** 客户id */
     private Integer customerId;
 
@@ -61,5 +63,13 @@ public class Favorite {
 
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public Commodity getCommodity() {
+        return commodity;
+    }
+
+    public void setCommodity(Commodity commodity) {
+        this.commodity = commodity;
     }
 }
