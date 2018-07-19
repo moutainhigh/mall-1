@@ -16,13 +16,14 @@ public interface FavoriteMapper {
     int deleteByPrimaryKey(Integer favoriteId);
 
     @Insert({
-        "insert into favorite (CREATE_TIME, ",
+        "insert into favorite (FAVORITE_ID, CREATE_TIME, ",
         "SALE_PRICE, COMMODITY_ID, ",
         "CUSTOMER_ID)",
-        "values (#{createTime,jdbcType=TIMESTAMP}, ",
+        "values (#{favoriteId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, ",
         "#{salePrice,jdbcType=REAL}, #{commodityId,jdbcType=INTEGER}, ",
         "#{customerId,jdbcType=INTEGER})"
     })
+    @Options(useGeneratedKeys=true, keyProperty="favoriteId", keyColumn="FAVORITE_ID")
     int insert(Favorite record);
 
     @Select({
@@ -43,10 +44,10 @@ public interface FavoriteMapper {
     @Select("<script>"
             +"select FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID from favorite where 1=1 "
             + "<if test='customerId!=null'>"
-            + "AND CUSTOMER_ID = #{q.customerId} "
+            + "AND CUSTOMER_ID = #{data.customerId} "
             + "</if>"
             + "<if test='commodityId!=null'>"
-            + "AND FAVORITE_ID = #{q.commodityId} "
+            + "AND FAVORITE_ID = #{data.commodityId} "
             + "</if>"
             + "ORDER BY CREATE_TIME DESC "
             + "</script>")
@@ -87,11 +88,11 @@ public interface FavoriteMapper {
 
     @Select("<script>"
             +"select FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID from favorite where 1=1"
-            + "<if test='q.customerId!=null'>"
-            + "AND CUSTOMER_ID = #{q.customerId} "
+            + "<if test='data.customerId!=null'>"
+            + "AND CUSTOMER_ID = #{data.customerId} "
             + "</if>"
-            + "<if test='q.commodityId!=null'>"
-            + "AND FAVORITE_ID = #{q.commodityId} "
+            + "<if test='data.commodityId!=null'>"
+            + "AND FAVORITE_ID = #{data.commodityId} "
             + "</if>"
             + "ORDER BY CREATE_TIME DESC "
             + "LIMIT #{rowIndex},#{pageSize}"
@@ -100,18 +101,19 @@ public interface FavoriteMapper {
             @Result(column="FAVORITE_ID", property="favoriteId", jdbcType=JdbcType.INTEGER, id=true),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
-            @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
+            @Result(column="COMMODITY_ID", property="commodity", jdbcType=JdbcType.INTEGER,
+                    one = @One(select = "com.yunxin.cb.mall.mapper.CommodityMapper.selectByPrimaryKey")),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
     })
     List<Favorite> pageList(Query q);
 
     @Select("<script>"
             +"select count(FAVORITE_ID) from favorite where 1=1"
-            + "<if test='q.customerId!=null'>"
-            + "AND CUSTOMER_ID = #{q.customerId} "
+            + "<if test='data.customerId!=null'>"
+            + "AND CUSTOMER_ID = #{data.customerId} "
             + "</if>"
-            + "<if test='q.commodityId!=null'>"
-            + "AND FAVORITE_ID = #{q.commodityId} "
+            + "<if test='data.commodityId!=null'>"
+            + "AND FAVORITE_ID = #{data.commodityId} "
             + "</if>"
             + "</script>")
     long count(Query q);

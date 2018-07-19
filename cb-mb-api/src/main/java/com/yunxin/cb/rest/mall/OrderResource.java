@@ -5,6 +5,8 @@ import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.service.OrderService;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.util.page.PageFinder;
+import com.yunxin.cb.util.page.Query;
 import com.yunxin.cb.vo.OrderVo;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
@@ -25,10 +27,9 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "订单确认")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderVo", value = "订单确认对象", required = true, paramType = "post", dataType = "OrderVo")
-    })
+            @ApiImplicitParam(name = "orderVo", value = "订单确认对象", required = true, paramType = "post", dataType = "OrderVo")})
     @PostMapping(value = "saveOrder")
-    public ResponseResult saveOrder(@ModelAttribute("orderVo")OrderVo orderVo){
+    public ResponseResult saveOrder(@RequestBody OrderVo orderVo){
         try {
             Order order = new Order();
             order.setCustomerId(getCustomerId());
@@ -45,29 +46,33 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "查询用户订单列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "get", dataType = "int")
-    })
-    @GetMapping(value = "listOrder")
-    public ResponseResult listOrder(@RequestParam(value = "orderStatus") int orderStatus, @ModelAttribute("customerId") int customerId){
-        return new ResponseResult(null);
+            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "int")})
+    @PostMapping(value = "pageOrder")
+    public ResponseResult pageOrder(@RequestBody Query q, @RequestBody Order order){
+        order.setCustomerId(getCustomerId());
+        q.setData(order);
+        PageFinder<Order> pageFinder = orderService.pageOrder(q);
+        return new ResponseResult(pageFinder);
     }
 
     @ApiOperation(value = "根据订单id查询订单详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")
-    })
-    @GetMapping(value = "getOrder/{orderId}")
-    public ResponseResult getOrder(@PathVariable(value = "orderId") int orderId){
-        return new ResponseResult(null);
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "get", dataType = "int")})
+    @GetMapping(value = "getOrder")
+    public ResponseResult getOrder(@RequestParam(value = "orderId") int orderId){
+        Order order = orderService.getByOrderIdAndCustomerId(orderId, getCustomerId());
+        return new ResponseResult(order);
     }
 
     @ApiOperation(value = "根据订单id取消订单")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")
-    })
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
     @PostMapping(value = "cancelOrder")
-    public ResponseResult cancelOrder(@RequestParam(value = "orderId") int orderId){
-        Order result = orderService.cancelOrder(orderId);
+    public ResponseResult cancelOrder(@RequestBody Order order){
+        order.setCustomerId(getCustomerId());
+        Order result = orderService.cancelOrder(order);
         if (result == null) {
             return new ResponseResult(Result.FAILURE);
         }
