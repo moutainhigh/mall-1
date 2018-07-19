@@ -208,7 +208,7 @@ debugger;
                 <%--第一页--%>
                 <div style="height: 356px;width: 100%;z-index: 20;position: absolute;"></div>
                 <div class="hidden-prints">
-                    <div style="height: 1465px;">
+                    <div style="height: 1488px;">
                         <div class="header">
                             <img src="../images/orderHeader/newlogo.png" width="729px" height="92px"/>
                             <%--<h1 style="font-size: 40px">富德生命人寿保险股份有限公司</h1>--%>
@@ -911,7 +911,7 @@ debugger;
                         </div>
                     </div>
                     <%--第二页--%>
-                    <div style="height:1465px;">
+                    <div style="height:1490px;">
                         <div>B.投保内容</div>
                         <div class="div-title" style="display: inline-block">
                             <div style="display: inline-block;vertical-align: top">注意:</div>
@@ -1305,7 +1305,7 @@ debugger;
 
 
                     <%--第三页--%>
-                    <div style="height:1465px;">
+                    <div style="height:1490px;">
                         <div class="div-tab">
                             <div class="table-line" style="height: 58px;">
                                 <div class="div-table-2"
