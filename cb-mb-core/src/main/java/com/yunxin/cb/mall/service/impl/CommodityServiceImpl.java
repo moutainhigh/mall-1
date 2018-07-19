@@ -1,10 +1,12 @@
 package com.yunxin.cb.mall.service.impl;
 
+import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.mapper.CommodityMapper;
 import com.yunxin.cb.mall.service.CommodityService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 
 /**
@@ -19,4 +21,9 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Resource
     private CommodityMapper commodityMapper;
+
+    @Override
+    public Commodity selectByPrimaryKey(int commodityId) {
+        return commodityMapper.selectByPrimaryKey(commodityId);
+    }
 }

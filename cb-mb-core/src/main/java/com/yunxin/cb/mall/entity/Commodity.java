@@ -7,7 +7,8 @@ import java.util.Date;
  * @auther: eleven
  * @date: 2018/7/18 17:29
  */
-public class Commodity {
+public class Commodity  implements java.io.Serializable{
+    private static final long serialVersionUID = 1502774904693173239L;
     /** 商品ID */
     private Integer commodityId;
 

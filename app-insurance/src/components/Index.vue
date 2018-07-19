@@ -4,46 +4,46 @@
       <img src="../assets/img/banner.png">
     </div>
 
-    <div class="i-list" style="margin-top: 0">
+    <div class="i-list" style="margin-top: 0" v-for="(product, index) in products">
       <div style="display: inline-block;">
-        <img src="../assets/img/product1.png">
+        <img :src="product.prodImg">
       </div>
       <div class="i-list-detail">
-        <div class="dt-title">生命福星高照终身寿险（分红型）</div>
-        <div class="dt-intro">福相随综合保障计划（2017版）</div>
-        <div class="dt-content">爱相伴、心相知、福相随</div>
+        <div class="dt-title">{{product.prodName}}</div><!--生命福星高照终身寿险（分红型）-->
+        <div class="dt-intro">{{product.description}}</div><!--福相随综合保障计划（2017版）-->
+        <div class="dt-content">{{product.tags}}</div><!--爱相伴、心相知、福相随-->
         <div class="dt-price">
           <div>
             <div class="dt-price-pro">
               2万/5万/10万
             </div>
-            <button @click="goToPro(1)">
+            <button @click="goToPro(index)">
              立即投保
             </button>
           </div>
         </div>
       </div>
     </div>
-    <div class="i-list">
-      <div style="display: inline-block;height: 100%;">
-        <img src="../assets/img/product2.png">
-      </div>
-      <div class="i-list-detail">
-        <div class="dt-title">富德生命鑫福来年金保险</div>
-        <div class="dt-intro">富德生命鑫福来为投保</div>
-        <div class="dt-content">鑫福来，鑫福送福乐开怀</div>
-        <div class="dt-price">
-          <div>
-            <div class="dt-price-pro">
-              2万/5万/10万
-            </div>
-            <button @click="goToPro(2)">
-              立即投保
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!--<div class="i-list">-->
+      <!--<div style="display: inline-block;height: 100%;">-->
+        <!--<img src="../assets/img/product2.png">-->
+      <!--</div>-->
+      <!--<div class="i-list-detail">-->
+        <!--<div class="dt-title">生命鑫福来年金保险（分红型）</div>-->
+        <!--<div class="dt-intro">生命鑫福来年金保险计划</div>-->
+        <!--<div class="dt-content">从富贵金生开始美好生活</div>-->
+        <!--<div class="dt-price">-->
+          <!--<div>-->
+            <!--<div class="dt-price-pro">-->
+              <!--2万/5万/10万-->
+            <!--</div>-->
+            <!--<button @click="goToPro(2)">-->
+              <!--立即投保-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
     <!--<div><button @click="clear">清除缓存</button></div>-->
   </div>
 </template>
@@ -51,12 +51,19 @@
 <script>
   import storage from '../store/storage'
   import Admin from '../admin/Admin'
+  import {getProducts} from "../service/getData";
 
   export default {
     name: "index",
+    data() {
+      return {
+        products: [],
+      }
+    },
     methods: {
       goToPro(val){
-        if (val === 1){
+        console.log(val)
+        if (val === 0){
           storage.save('packetId', 1);
           this.$router.push({
             path:'pro-detail',
@@ -67,7 +74,7 @@
           });
         }
 
-        if (val === 2){
+        if (val === 1){
           storage.save('packetId', 2);
           this.$router.push({
             path:'/pro-detail',
@@ -95,6 +102,12 @@
       if (storage.fetch('insured').length ==0){
         storage.save('insured',Admin.insured);
       }
+      getProducts().then(res => {
+        if (res.result == 'SUCCESS') {
+          this.products = res.data;
+          console.log(this.products)
+        }
+      });
     }
 
   }

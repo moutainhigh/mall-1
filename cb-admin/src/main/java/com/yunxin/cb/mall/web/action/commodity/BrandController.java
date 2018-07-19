@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.web.action.commodity;
 
 import com.yunxin.cb.mall.entity.Brand;
+import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.service.IBrandService;
 import com.yunxin.cb.mall.service.ICategoryService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
@@ -59,6 +60,18 @@ public class BrandController {
         return brandService.pageBrands(brandQuery);
     }
 
+    /**
+     *
+     * @param brandQuery
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "choosePagedBrand",method = RequestMethod.POST)
+    public Page<Brand> choosePagedCommodities(@RequestBody PageSpecification<Brand> brandQuery, HttpServletRequest request) {
+        Page<Brand> page = brandService.pageBrands(brandQuery);
+        return page;
+    }
     /**
      * 跳转到brand新增页面
      *

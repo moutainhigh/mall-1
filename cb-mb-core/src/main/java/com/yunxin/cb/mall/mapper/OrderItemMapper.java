@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
+import java.util.Set;
+
 @Mapper
 public interface OrderItemMapper {
     String columns = "ITEM_ID, BUYER_MESSAGE, CREATE_TIME, EVALUATE, ORDER_ITEM_PRICE, PRODUCT_IMG, PRODUCT_NUM, SALE_PRICE, ACTIVITY_ID, ORDER_ID, PRODUCT_ID";
@@ -104,4 +106,12 @@ public interface OrderItemMapper {
         "where ITEM_ID = #{itemId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(OrderItem record);
+
+    @Select({
+            "select", columns,
+            "from order_item",
+            "where ORDER_ID = #{orderId,jdbcType=INTEGER}"
+    })
+    @ResultMap(value="orderItemMap")
+    Set<OrderItem> selectByOrderId(Integer orderId);
 }

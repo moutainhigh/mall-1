@@ -11,11 +11,39 @@ import com.yunxin.cb.util.page.Query;
  */
 public interface FavoriteService {
 
+	/**
+	 * @title: 添加收藏夹
+	 * @param: [favorite]
+	 * @return: com.yunxin.cb.mall.entity.Favorite
+	 * @auther: eleven
+	 * @date: 2018/7/19 10:41
+	 */
 	public Favorite addFavorite(Favorite favorite);
 
+	/**
+	 * @title: 移除收藏夹
+	 * @param: [favoriteId]
+	 * @return: void
+	 * @auther: eleven
+	 * @date: 2018/7/19 10:41
+	 */
 	public void removeFavorite(int favoriteId);
 
+	/**
+	 * @title: 分页查询收藏夹
+	 * @param: [q]
+	 * @return: com.yunxin.cb.util.page.PageFinder<com.yunxin.cb.mall.entity.Favorite>
+	 * @auther: eleven
+	 * @date: 2018/7/19 10:42
+	 */
 	public PageFinder<Favorite> pageCustomerFavorites(Query q);
 
+	/**
+	 * @title: 通过商品id和客户id查询收藏夹
+	 * @param: [favorite]
+	 * @return: com.yunxin.cb.mall.entity.Favorite
+	 * @auther: eleven
+	 * @date: 2018/7/19 10:42
+	 */
 	public Favorite findByCustomerAndCommodity(Favorite favorite);
 }

@@ -1,9 +1,10 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.Commodity;
-import java.util.List;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.List;
 
 @Mapper
 public interface CommodityMapper {

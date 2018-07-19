@@ -748,7 +748,7 @@
 
         if (this.twoYear === false) {
           if (this.values12[0] === '' || this.values12[1] === '' || this.values12[2] === '' || this.values12[3] === '') {
-            alert("被保人小于2周岁，请填写第12项额外信息");
+            alert("被保人小于2周岁，请填写第14项额外信息");
             return false;
           }
         }
@@ -762,6 +762,15 @@
         }
         if (this.values12[0].length > 3 || this.values12[1].length > 3 || this.values12[3].length > 3) {
           alert("婴儿信息栏填写长度不大于3");
+          return false;
+        }
+        let kongge = /\s+/g;
+        if (kongge.test(this.values12[2])) {
+          alert("请不要输入空格");
+          return false;
+        }
+        if (this.values12[2].length > 24) {
+          alert("婴儿信息栏填写医院名长度不大于24");
           return false;
         }
         if (parseInt(this.values12[0]) <= 0 || parseInt(this.values12[1]) <= 0 || parseInt(this.values12[3]) <= 0) {
@@ -871,6 +880,16 @@
       },
       matters: {
         handler(newVal, oldVal) {
+          for (let i = 0; i < newVal.length; i++) {
+            if (!newVal[i].insuredResult) {
+              newVal[i].insuredRemark = '';
+              this.matters[i].insuredRemark = '';
+            }
+            if (!newVal[i].policyholderResult) {
+              newVal[i].policyholderRemark = '';
+              this.matters[i].policyholderRemark = '';
+            }
+          }
           storage.save("matters", newVal);
         },
         immediate: true,

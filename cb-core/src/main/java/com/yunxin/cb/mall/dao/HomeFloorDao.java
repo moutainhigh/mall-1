@@ -15,7 +15,7 @@ public interface HomeFloorDao extends JpaRepository<HomeFloor, Integer>, JpaSpec
     @Query("update HomeFloor a set a.enabled = ?1 where a.floorId=?2")
     void enableHomeFloorById(boolean enabled, int floorId);
 
-    @Query("select hf from HomeFloor hf left join fetch hf.floorCategories fct left join fetch fct.category left join fetch hf.floorCommodities fcm left join fetch fcm.commodity where hf.floorId = ?1")
+    @Query("select hf from HomeFloor hf left join fetch hf.floorCategories fct left join fetch fct.category left join fetch hf.floorCommodities fcm left join fetch fcm.commodity left join fetch hf.floorBrands fcb left join fetch fcb.brand where hf.floorId = ?1")
     HomeFloor fetchAllById(int floorId);
 
 

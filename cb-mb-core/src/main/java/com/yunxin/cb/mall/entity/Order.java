@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 public class Order {
     /** 订单id */
@@ -134,6 +135,8 @@ public class Order {
 
     /** 卖家id */
     private Integer sellerId;
+    /**商品详情 */
+    Set<OrderItem> orderItems;
 
     public Integer getOrderId() {
         return orderId;
@@ -485,5 +488,13 @@ public class Order {
 
     public void setSellerId(Integer sellerId) {
         this.sellerId = sellerId;
+    }
+
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }
