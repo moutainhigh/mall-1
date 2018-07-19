@@ -2,7 +2,7 @@
   <div>
     <div class="search">
       <img class="ic-search" src="../assets/img/ic_search.png"/>
-      <input placeholder="请输入职位" v-model="searchVal"/>
+      <input placeholder="请输入职业" v-model="searchVal"/>
       <img class="eliminate" v-if="searchVal.length != 0" @click="searchVal=''" src="../assets/img/search_ic_eliminate.png"/>
       <div class="cancel" @click="cancel">取消</div>
     </div>
@@ -14,6 +14,9 @@
       <div class="search-item" v-for="career in careers" v-if="career.key != defaultCareer.key" @click="changeCareer(career)">
           <div>{{career.value}}</div>
       </div>
+    </div>
+    <div>
+      <img v-if="scroll > 500" src="../assets/img/top.png" style="position:fixed;right:10px;bottom:10px;width: 10vw" @click="returnTop"/>
     </div>
   </div>
 </template>
@@ -33,7 +36,8 @@
           value:''
         },
         type:'',
-        key:''
+        key:'',
+        scroll: '',
       }
     },
     methods: {
@@ -48,7 +52,13 @@
           storage.save(this.type,fetch);
         }
         this.$router.back();
-      }
+      },
+      menu() {
+        this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
+      },
+      returnTop() {
+        scrollTo(0, 0);
+      },
     },
     watch: {
       searchVal(newVal){
@@ -78,7 +88,10 @@
           }
         }
       }
-    }
+    },
+    mounted() {
+      window.addEventListener('scroll', this.menu)
+    },
   }
 </script>
 
