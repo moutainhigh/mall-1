@@ -10,13 +10,18 @@ import com.yunxin.cb.mall.mapper.OrderMapper;
 import com.yunxin.cb.mall.mapper.ProductMapper;
 import com.yunxin.cb.mall.service.OrderService;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
+import com.yunxin.cb.util.page.PageFinder;
+import com.yunxin.cb.util.page.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -61,22 +66,7 @@ public class OrderServiceImpl implements OrderService {
         order.setProdQuantity(1);
         order.setTotalPrice(Double.valueOf(product.getSalePrice()));
         order.setFeeTotal(order.getTotalPrice());
-        order.setCouponsFee(0d);
-        order.setDelivery(false);
-        order.setDeliveryFeeTotal(0d);
-        order.setDeliveryState(0);
-        order.setDeliveryType(0);
-        order.setScoreTotal(0);
-
-        order.setProvince("0");
-        order.setCity("0");
-        order.setDistrict("0");
-        order.setConsigneeAddress("");
-        order.setConsigneeName("");
-        order.setEnabled(true);
-
-        //order.setSellerId(0);
-        //order.setLogisticId(0);
+        defalutValue(order);//添加默认数据
 
         orderMapper.insert(order);
         OrderItem orderItem = new OrderItem();
@@ -94,6 +84,34 @@ public class OrderServiceImpl implements OrderService {
         product.setStoreNum(product.getStoreNum() - 1);
         productMapper.updateByPrimaryKey(product);
         return order;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public PageFinder<Order> pageOrder(Query q) {
+        PageFinder<Order> page = new PageFinder<Order>(q.getPageNo(), q.getPageSize());
+        List<Order> list = null;
+        long rowCount = 0L;
+        try {
+            //调用dao查询满足条件的分页数据
+            list = orderMapper.pageList(q);
+            //调用dao统计满足条件的记录总数
+            rowCount = orderMapper.count(q);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        //如list为null时，则改为返回一个空列表
+        list = list == null ? new ArrayList<Order>(0) : list;
+        //将分页数据和记录总数设置到分页结果对象中
+        page.setData(list);
+        page.setRowCount(rowCount);//记录总数
+        page.setPageCount((int)rowCount);//总页数
+        return page;
+    }
+
+    @Override
+    public Order getByOrderIdAndCustomerId(Integer orderId, Integer customerId){
+        return orderMapper.selectByOrderIdAndCustomerId(orderId, customerId);
     }
 
     @Override
@@ -115,6 +133,23 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return order;
+    }
+
+    private void defalutValue(Order order) {
+        order.setCouponsFee(0d);
+        order.setDelivery(false);
+        order.setDeliveryFeeTotal(0d);
+        order.setDeliveryState(0);
+        order.setDeliveryType(0);
+        order.setScoreTotal(0);
+        order.setProvince("0");
+        order.setCity("0");
+        order.setDistrict("0");
+        order.setConsigneeAddress("");
+        order.setConsigneeName("");
+        order.setEnabled(true);
+        //order.setSellerId(0);
+        //order.setLogisticId(0);
     }
 }
 
