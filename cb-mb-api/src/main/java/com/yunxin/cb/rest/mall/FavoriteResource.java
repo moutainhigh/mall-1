@@ -1,5 +1,6 @@
 package com.yunxin.cb.rest.mall;
 
+import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.mall.entity.Favorite;
 import com.yunxin.cb.mall.service.FavoriteService;
 import com.yunxin.cb.rest.BaseResource;
@@ -10,10 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -42,19 +40,19 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "getCustomerFavorite")
-    public ResponseResult getCustomerFavorite(Query q){
+    public String getCustomerFavorite(@RequestBody Query q){
         Favorite favorite=new Favorite();
-        favorite.setCustomerId(1);//getCustomerId());
+        favorite.setCustomerId(getCustomerId());
         q.setData(favorite);
         PageFinder<Favorite> pageFinder=favoriteService.pageCustomerFavorites(q);
-        return new ResponseResult(pageFinder);
+        return JSON.toJSONString(pageFinder);
     }
 
     @ApiOperation(value = "商品是否存在收藏夹")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "findByCustomerAndCommodity")
-    public ResponseResult findByCustomerAndCommodity(Favorite favorite) {
+    public ResponseResult findByCustomerAndCommodity(@RequestBody Favorite favorite) {
         favorite.setCustomerId(getCustomerId());
         favorite=favoriteService.findByCustomerAndCommodity(favorite);
         if(favorite==null){
@@ -73,9 +71,10 @@ public class FavoriteResource extends BaseResource {
      */
     @ApiOperation(value = "商品添加收藏夹")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "salePrice", value = "销售价", required = true, paramType = "post", dataType = "Float")})
     @PostMapping(value = "addFavorite")
-    public ResponseResult addFavorite(Favorite favorite){
+    public ResponseResult addFavorite(@RequestBody Favorite favorite){
         favorite.setCustomerId(getCustomerId());
         favorite=favoriteService.addFavorite(favorite);
         return new ResponseResult(favorite);
@@ -92,7 +91,7 @@ public class FavoriteResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "favoriteId", value = "收藏夹ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "delFavorite")
-    public ResponseResult delFavorite(@ModelAttribute("favoriteId") int favoriteId){
+    public ResponseResult delFavorite(@RequestParam int favoriteId){
         int result=favoriteService.removeFavorite(favoriteId);
         if(result>0){
             return new ResponseResult(true);//成功
