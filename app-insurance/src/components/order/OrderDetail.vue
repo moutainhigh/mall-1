@@ -221,11 +221,11 @@
           <div class="d-cell-val">{{item.beneficiaryBirthday}}</div>
         </div>
         <div class="d-cell">
-          <div class="d-cell-item">收益顺序</div>
+          <div class="d-cell-item">受益顺序</div>
           <div class="d-cell-val">{{item.beneficiaryOrder}}</div>
         </div>
         <div class="d-cell">
-          <div class="d-cell-item">收益份额</div>
+          <div class="d-cell-item">受益份额</div>
           <div class="d-cell-val">{{item.beneficiaryProportion}}</div>
         </div>
         <div class="d-cell">
@@ -270,14 +270,6 @@
   import {arrayContain, ageYear} from "../../config/mUtils";
   import {careerCode} from "../../admin/career";
   import Place from "./Place";
-
-  window.onscroll = function () {
-    if (document.documentElement.scrollTop > 500) {
-      document.getElementById("top1").style.display ="block";
-    } else {
-      document.getElementById("top1").style.display ="none";
-    }
-  };
 
   export default {
     name: "orderDetail",
@@ -332,6 +324,13 @@
       }
     },
     created() {
+      window.onscroll = function () {
+        if (document.documentElement.scrollTop > 500) {
+          document.getElementById("top1").style.display ="block";
+        } else {
+          document.getElementById("top1").style.display ="none";
+        }
+      };
       this.$vux.loading.show({
         text: '加载中...'
       });
