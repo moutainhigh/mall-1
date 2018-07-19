@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.entity;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * @title: 商品实体类
@@ -119,6 +119,21 @@ public class Commodity  implements java.io.Serializable{
 
     /** 供应商 */
     private Integer sellerId;
+
+    //品牌
+    private Brand brand;
+
+    //价格段
+    private PriceSection priceSection;
+
+    //商家
+    private Seller seller;
+
+    //货品
+    private List<Product> products = new ArrayList<Product>();
+
+    //规格
+    private List<CommoditySpec> commoditySpecs = new ArrayList<>();
 
     /** 包装清单 */
     private String packingList;
@@ -425,5 +440,45 @@ public class Commodity  implements java.io.Serializable{
 
     public void setPackingList(String packingList) {
         this.packingList = packingList == null ? null : packingList.trim();
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public PriceSection getPriceSection() {
+        return priceSection;
+    }
+
+    public void setPriceSection(PriceSection priceSection) {
+        this.priceSection = priceSection;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<CommoditySpec> getCommoditySpecs() {
+        return commoditySpecs;
+    }
+
+    public void setCommoditySpecs(List<CommoditySpec> commoditySpecs) {
+        this.commoditySpecs = commoditySpecs;
     }
 }

@@ -221,11 +221,11 @@
           <div class="d-cell-val">{{item.beneficiaryBirthday}}</div>
         </div>
         <div class="d-cell">
-          <div class="d-cell-item">收益顺序</div>
+          <div class="d-cell-item">受益顺序</div>
           <div class="d-cell-val">{{item.beneficiaryOrder}}</div>
         </div>
         <div class="d-cell">
-          <div class="d-cell-item">收益份额</div>
+          <div class="d-cell-item">受益份额</div>
           <div class="d-cell-val">{{item.beneficiaryProportion}}</div>
         </div>
         <div class="d-cell">
@@ -257,7 +257,7 @@
     </div>
 
     <div>
-      <img id="top1" src="../../assets/img/top.png" style="position:fixed;right:10px;bottom:10px;width: 10vw" @click="returnTop"/>
+      <img v-if="scroll > 500" src="../../assets/img/top.png" style="position:fixed;right:10px;bottom:10px;width: 10vw" @click="returnTop"/>
     </div>
   </div>
 </template>
@@ -270,14 +270,6 @@
   import {arrayContain, ageYear} from "../../config/mUtils";
   import {careerCode} from "../../admin/career";
   import Place from "./Place";
-
-  window.onscroll = function () {
-    if (document.documentElement.scrollTop > 500) {
-      document.getElementById("top1").style.display ="block";
-    } else {
-      document.getElementById("top1").style.display ="none";
-    }
-  };
 
   export default {
     name: "orderDetail",
@@ -294,7 +286,9 @@
         holder: '',
         beneficiaries: [],
         order: '',
-        addr: ChinaAddressData
+        addr: ChinaAddressData,
+        scroll: '',
+
       }
     },
     methods: {
@@ -329,6 +323,9 @@
       },
       returnTop() {
         scrollTo(0, 0);
+      },
+      menu() {
+        this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
       }
     },
     created() {
@@ -350,8 +347,8 @@
       }
     },
     mounted() {
-
-    }
+      window.addEventListener('scroll', this.menu)
+    },
   }
 </script>
 
@@ -386,7 +383,7 @@
 
   .d-cell .d-cell-val {
     display: inline-block;
-    color: #c5c5c5;
+    color: #666;
     flex: auto;
   }
 

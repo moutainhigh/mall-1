@@ -166,14 +166,14 @@
                 <strong>投保时间:</strong>
               </div>
               <div class="toolbar-field">
-                <input name="createTime" onchange="checkTime()" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                <input name="createTime" onchange="checkTime()" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
               </div>
 
               <div class="toolbar-field">
                 <strong>-</strong>
               </div>
               <div class="toolbar-field">
-                <input name="createTime"  onchange="checkTime()" id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
+                <input name="createTime"  onchange="checkTime()" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
               </div>
 
 

@@ -683,7 +683,7 @@
 <script>
   import storage from "../store/storage";
   import {Toast} from 'vux'
-  import {emoji} from "../admin/validate";
+  import {emoji, space} from "../admin/validate";
 
   export default {
     components: {Toast},
@@ -720,7 +720,11 @@
         let input = document.getElementsByTagName("input");
         for (let i = 0; i < textatea.length; i++) {
           if (emoji.test(textatea[i].value)) {
-            alert("输入信息不得带表情");
+            alert("请不要输入空格");
+            return false;
+          }
+          if (space.test(textatea[i].value)) {
+            alert("请不要输入空格");
             return false;
           }
         }
@@ -748,9 +752,14 @@
 
         if (this.twoYear === false) {
           if (this.values12[0] === '' || this.values12[1] === '' || this.values12[2] === '' || this.values12[3] === '') {
-            alert("被保人小于2周岁，请填写第12项额外信息");
+            alert("被保人小于2周岁，请填写第14项额外信息");
             return false;
           }
+        }
+        let insuredGender = storage.fetch("insured").insuredGender;
+        if (insuredGender && this.values11 != '') {
+          alert('被保人为男性,不输入怀孕周期');
+          return false;
         }
         if (this.values11.length > 3) {
           alert("怀孕周数长度不大于3");
@@ -762,6 +771,14 @@
         }
         if (this.values12[0].length > 3 || this.values12[1].length > 3 || this.values12[3].length > 3) {
           alert("婴儿信息栏填写长度不大于3");
+          return false;
+        }
+        if (space.test(this.values12[2])) {
+          alert("请不要输入空格");
+          return false;
+        }
+        if (this.values12[2].length > 24) {
+          alert("婴儿信息栏填写医院名长度不大于24");
           return false;
         }
         if (parseInt(this.values12[0]) <= 0 || parseInt(this.values12[1]) <= 0 || parseInt(this.values12[3]) <= 0) {
@@ -857,6 +874,11 @@
         deep: true
       },
       values11: function (newVal, oldVal) {
+        let insuredGender = storage.fetch("insured").insuredGender;
+        if (insuredGender) {
+          alert('被保人为男性');
+          return
+        }
         if (this.matters.length !== 0) {
           this.matters[10].collectValues = newVal;
         }
@@ -871,6 +893,16 @@
       },
       matters: {
         handler(newVal, oldVal) {
+          for (let i = 0; i < newVal.length; i++) {
+            if (!newVal[i].insuredResult) {
+              newVal[i].insuredRemark = '';
+              this.matters[i].insuredRemark = '';
+            }
+            if (!newVal[i].policyholderResult) {
+              newVal[i].policyholderRemark = '';
+              this.matters[i].policyholderRemark = '';
+            }
+          }
           storage.save("matters", newVal);
         },
         immediate: true,

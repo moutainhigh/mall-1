@@ -26,4 +26,10 @@ public class CommodityServiceImpl implements CommodityService {
     public Commodity selectByPrimaryKey(int commodityId) {
         return commodityMapper.selectByPrimaryKey(commodityId);
     }
+
+    @Override
+    public Commodity selectCommodityDetailById(int commodityId){
+        Commodity commodity=commodityMapper.selectCommodityDetailById(commodityId);
+        return commodity;
+    }
 }

@@ -1,10 +1,10 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.CommoditySpec;
-import java.util.List;
-
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.List;
 
 @Mapper
 public interface CommoditySpecMapper {
@@ -48,6 +48,19 @@ public interface CommoditySpecMapper {
         @Result(column="VALUE", property="value", jdbcType=JdbcType.VARCHAR)
     })
     List<CommoditySpec> selectAll();
+
+    @Select({
+            "select",
+            "COMMODITY_ID, SPEC_ID, VALUE",
+            "from commodity_spec where COMMODITY_ID = #{commodityId,jdbcType=INTEGER}"
+    })
+    @Results({
+            @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="SPEC_ID", property="spec", jdbcType=JdbcType.INTEGER, id=true,
+                    one = @One(select = "com.yunxin.cb.mall.mapper.SpecMapper.selectByPrimaryKey")),
+            @Result(column="VALUE", property="value", jdbcType=JdbcType.VARCHAR)
+    })
+    List<CommoditySpec> selectAllByCommodityId(Integer commodityId);
 
     @Update({
         "update commodity_spec",

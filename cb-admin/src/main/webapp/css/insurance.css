@@ -118,6 +118,7 @@ h2 {
     width: 26px;
     height: 36px;
     box-sizing: border-box;
+    vertical-align: top;
 }
 
 .div-line .div-line-con .i-cb {
@@ -138,12 +139,12 @@ input {
 
 .c-input {
     text-align: center;
-    width: 25px;
+    width: 28px;
 }
 
 .b-input {
     text-align: center;
-    width: 30px;
+    width: 33px;
 }
 
 .d-input {
@@ -331,11 +332,10 @@ input {
     width: 200px;
 }
 
-.three-span {
+.three-span{
     font-size: 14px;
 }
-
-.div-line .div-line-con-three {
+.div-line .div-line-con-three{
     border-left: #000000 solid 1px;
     display: inline-block;
     font-size: 13px;
@@ -355,94 +355,91 @@ input {
     margin-left: 8px;
 }
 
-.div-line-con-three .i-cert-code {
+.div-line-con-three .i-cert-code-three {
     display: inline-block;
     width: 21px;
+    height: 20px;
     font-size: 15px;
     margin-left: -1px;
     text-align: center;
     border-radius: 0;
 }
 
-.left-span-div {
+.i-cert-code-four {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    font-size: 15px;
+    margin-left: -1px;
+    text-align: center;
+    border-radius: 0;
+}
+
+.left-span-div{
     float: left;
     width: 2%;
 }
-
-.right-span-div {
+.right-span-div{
     float: left;
     width: 97%;
 }
-
-.a-body-font-three {
+.a-body-font-three{
     font-size: 15px;
     line-height: 27px;
 }
-
-.d-body-font-three {
+.d-body-font-three{
     font-size: 18px;
     line-height: 25px;
     font-weight: bold;
 }
-
-.b-body-font-three {
+.b-body-font-three{
     font-size: 15px;
     line-height: 40px;
 }
-
-.c-body-font-three {
+.c-body-font-three{
     font-size: 18px;
     line-height: 25px;
 }
-
-.f-body-font-three {
+.f-body-font-three{
     font-size: 15px;
-    line-height: 22px;
+    line-height: 15px;
 }
-
-.a-input-div {
+.a-input-div{
     width: 100px;
     border-bottom: #000000 solid 1px;
 }
-
-.b-input-div {
+.b-input-div{
     width: 40px;
     border-bottom: #000000 solid 1px;
 }
 
-.body-font {
+
+.body-font{
     font-size: 14px;
 }
-
-.a-body-font {
+.a-body-font{
     font-size: 15px;
     line-height: 27px;
 }
-
-.d-body-font {
+.d-body-font{
     font-size: 15.5px;
     line-height: 32px;
 }
-
-.b-body-font {
+.b-body-font{
     font-size: 15px;
     line-height: 40px;
 }
-
-.c-body-font {
+.c-body-font{
     font-size: 14px;
     line-height: 22px;
 }
-
-.f-body-font {
+.f-body-font{
     font-size: 15px;
     line-height: 22px;
 }
-
-.div-line .div-line-con-four {
+.div-line .div-line-con-four{
     border-left: #000000 solid 1px;
     display: inline-block;
-    padding: 3px 4px 4px 10px;
     font-size: 13px;
     box-sizing: border-box;
     /*margin-bottom: -1px;*/
@@ -468,40 +465,120 @@ input {
     border-radius: 0;
 }
 
-/*浮动层*/
-.a-div-line-con {
+.s-head-name div {
     display: inline-block;
-    font-size: 13px;
-    box-sizing: border-box;
-    vertical-align: top;
+    text-align: left;
 }
 
-.a-tick {
-    position: absolute;
-    font-size: 16px;
-    font-weight: bold;
+.s-name {
+    width: 450px;
 }
 
-.a-table-line {
-    position: absolute;
+.s-name-content {
+    border-bottom: #000000 1px solid;
+    width: 250px;
+    padding: 5px 10px 5px 10px;
+}
+
+.s-contact-title {
+    display: inline-block;
+    width: 450px;
+    font-size: 20px;
+    vertical-align: middle;
+    text-align: left;
+    letter-spacing: 14px;
+}
+
+.s-contact-num {
+    border: 1px #000000 solid;
+    border-radius: 8px !important;
+    overflow: hidden;
+    margin: 10px 0 10px 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: 450px;
     font-size: 0;
 }
 
-.a-div-table-2 {
-    height: 60px;
+.s-contact-num div {
+    border-left: 1px #000000 solid;
+    width: 27.8px;
+    display: inline-block;
+    vertical-align: middle;
+    height: 40px;
+    margin-bottom: -5px;
+    margin-left: -1px;
+    font-size: 24px;
+}
+
+.s-insure-content {
+    width: 920px;
+    height: 1000px;
     box-sizing: border-box;
-    display: table-cell;
+    border: #000000 1px solid;
+    border-radius: 10px;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 30px;
 }
 
-.a-price {
-    position: absolute;
-    width: 600px;
-    margin-top: 5px;
+.s-insure-end {
+    margin-top: 30px;
+}
+
+.s-name-date {
+    border-bottom: #000000 1px solid;
+    margin: 0 -10px;
+    text-align: center !important;
+}
+
+.body-font{
+    font-size: 14px;
+}
+.a-body-font{
     font-size: 15px;
-    font-weight: bold;
-    margin-left: 300px;
+    line-height: 27px;
+}
+.d-body-font{
+    font-size: 15.5px;
+    line-height: 32px;
+}
+.b-body-font{
+    font-size: 15px;
+    line-height: 40px;
+}
+.c-body-font{
+    font-size: 14px;
+    line-height: 22px;
+}
+.f-body-font{
+    font-size: 15px;
+    line-height: 22px;
+}
+.div-line .div-line-con-four{
+    border-left: #000000 solid 1px;
+    display: inline-block;
+    font-size: 13px;
+    box-sizing: border-box;
+    /*margin-bottom: -1px;*/
+    /*margin-top: -1px;*/
 }
 
-.a-price span {
-    position: absolute;
+.div-line .div-line-con-four div {
+    display: inline-block;
+}
+
+.div-line .div-line-con-four .i-cb {
+    position: relative;
+    top: 2px;
+    margin-left: 8px;
+}
+
+.div-line-con-four .i-cert-code {
+    display: inline-block;
+    width: 21px;
+    font-size: 15px;
+    margin-left: -1px;
+    text-align: center;
+    border-radius: 0;
 }
