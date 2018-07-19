@@ -58,6 +58,7 @@ public class QiniuStorageService implements IStorageService {
         switch (type) {
             case RESOURCE:
             case INSURANCEPRODUCT:
+            case ANDROID:
             case OTHER:
                 bucket = bucket_1;
                 domain = domain_1;
@@ -69,7 +70,7 @@ public class QiniuStorageService implements IStorageService {
         }
         String upToken = auth.uploadToken(bucket);
         try {
-            Response response = uploadManager.put(inputStream, key, upToken, null, null);
+            Response response = uploadManager.put(inputStream, key, upToken, null, "png");
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             String url = domain + putRet.key;

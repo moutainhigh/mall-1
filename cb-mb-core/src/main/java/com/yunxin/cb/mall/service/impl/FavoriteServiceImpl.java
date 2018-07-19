@@ -40,8 +40,8 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	@Override
-	public void removeFavorite(int favoriteId) {
-		favoriteMapper.deleteByPrimaryKey(favoriteId);
+	public int removeFavorite(int favoriteId) {
+		return favoriteMapper.deleteByPrimaryKey(favoriteId);
 	}
 
 	@Override

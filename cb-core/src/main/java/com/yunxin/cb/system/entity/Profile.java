@@ -35,6 +35,10 @@ public class Profile implements Serializable {
     public Profile() {
 
     }
+    public Profile(ProfileName profileName,String fileValue) {
+           this.profileName=profileName;
+           this.fileValue=fileValue;
+    }
 
     public Profile(int userId) {
         this.fileId = userId;

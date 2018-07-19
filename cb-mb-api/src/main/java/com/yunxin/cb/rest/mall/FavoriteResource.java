@@ -2,7 +2,6 @@ package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.mall.entity.Favorite;
 import com.yunxin.cb.mall.service.FavoriteService;
-import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
@@ -11,7 +10,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -42,8 +44,8 @@ public class FavoriteResource extends BaseResource {
     @PostMapping(value = "getCustomerFavorite")
     public ResponseResult getCustomerFavorite(Query q){
         Favorite favorite=new Favorite();
-        favorite.setCustomerId(getCustomerId());
-        q.setQ(favorite);
+        favorite.setCustomerId(1);//getCustomerId());
+        q.setData(favorite);
         PageFinder<Favorite> pageFinder=favoriteService.pageCustomerFavorites(q);
         return new ResponseResult(pageFinder);
     }
@@ -56,9 +58,9 @@ public class FavoriteResource extends BaseResource {
         favorite.setCustomerId(getCustomerId());
         favorite=favoriteService.findByCustomerAndCommodity(favorite);
         if(favorite==null){
-            return new ResponseResult(Result.SUCCESS);
+            return new ResponseResult(false);//收藏夹不存在
         }else{
-            return new ResponseResult(Result.FAILURE);
+            return new ResponseResult(true);//收藏夹已存在
         }
     }
 
@@ -91,7 +93,11 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "favoriteId", value = "收藏夹ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "delFavorite")
     public ResponseResult delFavorite(@ModelAttribute("favoriteId") int favoriteId){
-        favoriteService.removeFavorite(favoriteId);
-        return new ResponseResult(Result.SUCCESS);
+        int result=favoriteService.removeFavorite(favoriteId);
+        if(result>0){
+            return new ResponseResult(true);//成功
+        }else{
+            return new ResponseResult(false);//失败
+        }
     }
 }

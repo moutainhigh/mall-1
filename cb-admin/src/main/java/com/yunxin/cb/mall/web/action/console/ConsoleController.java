@@ -117,8 +117,8 @@ public class ConsoleController {
 
 
 
-        List<Order> orders = orderService.getLastedOrders(20);
-        modelMap.addAttribute("orders", orders);
+//        List<Order> orders = orderService.getLastedOrders(20);
+//        modelMap.addAttribute("orders", orders);
 
         List<ProductEvaluate> evaluates = evaluateService.pageProductEvaluates(new PageSpecification<ProductEvaluate>(1,30)).getContent();
         modelMap.addAttribute("evaluates", evaluates);
