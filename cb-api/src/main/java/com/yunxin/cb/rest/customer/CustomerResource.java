@@ -121,10 +121,10 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "添加好友通知")
     @PostMapping(value = "addFriendNotice")
-    public ResponseResult addFriendNoitce(@RequestParam("friendId") int friendId, @RequestParam("requestMessage") String requestMessage, @ModelAttribute("customerId") int customerId) {
+    public ResponseResult addFriendNoitce(@RequestParam("friendId") String friendId, @RequestParam("requestMessage") String requestMessage, @ModelAttribute("customerId") int customerId) {
         try {
             Customer myself = customerService.getCustomerById(customerId);
-            Customer friend = customerService.getCustomerById(friendId);
+            Customer friend = customerService.findByAccountName(friendId);
 
             if (friend == null) {
                 return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
