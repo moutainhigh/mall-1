@@ -19,7 +19,6 @@ import java.util.List;
 @Api(description = "商城首页")
 @RestController
 @RequestMapping(value = "/mall/index")
-@SessionAttributes("customerId")
 public class IndexResource extends BaseResource {
     @Resource
     private AdvertisementService advertisementService;
