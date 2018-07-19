@@ -18,7 +18,6 @@ import javax.annotation.Resource;
 @Api(description = "商城订单接口")
 @RestController
 @RequestMapping(value = "/mall/order")
-@SessionAttributes("customerId")
 public class OrderResource extends BaseResource {
 
     @Resource
@@ -29,10 +28,10 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "orderVo", value = "订单确认对象", required = true, paramType = "post", dataType = "OrderVo")
     })
     @PostMapping(value = "saveOrder")
-    public ResponseResult saveOrder(@RequestBody OrderVo orderVo, @ModelAttribute("customerId") int customerId){
+    public ResponseResult saveOrder(@RequestBody OrderVo orderVo){
         try {
             Order order = new Order();
-            order.setCustomerId(customerId);
+            order.setCustomerId(getCustomerId());
             order.setPaymentType(orderVo.getPaymentType());
             Order result = orderService.createOrder(orderVo.getProductId(), order);
             if (result == null) {
@@ -58,7 +57,7 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")
     })
     @GetMapping(value = "getOrder/{orderId}")
-    public ResponseResult getOrder(@PathVariable(value = "orderId") int orderId, @ModelAttribute("customerId") int customerId){
+    public ResponseResult getOrder(@PathVariable(value = "orderId") int orderId){
         return new ResponseResult(null);
     }
 
@@ -67,7 +66,7 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")
     })
     @GetMapping(value = "cancelOrder/{orderId}")
-    public ResponseResult cancelOrder(@PathVariable(value = "orderId") int orderId, @ModelAttribute("customerId") int customerId){
+    public ResponseResult cancelOrder(@PathVariable(value = "orderId") int orderId){
         return new ResponseResult(null);
     }
 
