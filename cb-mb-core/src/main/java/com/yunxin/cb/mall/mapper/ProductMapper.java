@@ -115,7 +115,9 @@ public interface ProductMapper {
             @Result(column="VOLUME", property="volume", jdbcType=JdbcType.REAL),
             @Result(column="WEIGHT", property="weight", jdbcType=JdbcType.REAL),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
-            @Result(column="STORE_ID", property="storeId", jdbcType=JdbcType.INTEGER)
+            @Result(column="STORE_ID", property="storeId", jdbcType=JdbcType.INTEGER),
+            @Result(column = "PRODUCT_ID",property = "productAttributes",
+                    many = @Many(select = "com.yunxin.cb.mall.mapper.ProductAttributeMapper.selectAllByProductId"))
     })
     List<Product> selectAllByCommodityId(Integer commodityId);
 

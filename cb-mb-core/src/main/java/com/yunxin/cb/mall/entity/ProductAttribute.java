@@ -1,7 +1,5 @@
 package com.yunxin.cb.mall.entity;
 
-import org.springframework.stereotype.Repository;
-
 /**
  * @title: 货品属性关联实体类
  * @auther: eleven
@@ -16,6 +14,9 @@ public class ProductAttribute {
 
     /** 货品id */
     private Integer productId;
+
+    //属性
+    private Attribute attribute;
 
     public Integer getProAttrId() {
         return proAttrId;
@@ -39,5 +40,13 @@ public class ProductAttribute {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public Attribute getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(Attribute attribute) {
+        this.attribute = attribute;
     }
 }

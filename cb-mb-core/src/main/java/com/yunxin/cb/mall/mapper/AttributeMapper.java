@@ -1,10 +1,10 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.Attribute;
-import java.util.List;
-
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.List;
 
 @Mapper
 public interface AttributeMapper {
@@ -35,7 +35,9 @@ public interface AttributeMapper {
         @Result(column="ATTRIBUTE_NAME", property="attributeName", jdbcType=JdbcType.VARCHAR),
         @Result(column="IMAGE_PATH", property="imagePath", jdbcType=JdbcType.VARCHAR),
         @Result(column="SORT_ORDER", property="sortOrder", jdbcType=JdbcType.SMALLINT),
-        @Result(column="GROUP_ID", property="groupId", jdbcType=JdbcType.INTEGER)
+        @Result(column="GROUP_ID", property="groupId", jdbcType=JdbcType.INTEGER),
+        @Result(column="GROUP_ID", property="attributeGroup", jdbcType=JdbcType.INTEGER,
+                one = @One(select = "com.yunxin.cb.mall.mapper.AttributeGroupMapper.selectByPrimaryKey"))
     })
     Attribute selectByPrimaryKey(Integer attributeId);
 
