@@ -148,6 +148,13 @@ public class OrderServiceImpl implements OrderService {
         order.setConsigneeAddress("");
         order.setConsigneeName("");
         order.setEnabled(true);
+        order.setWeightTotal(0d);
+        order.setVolumeTotal(0d);
+        order.setUsedScore(0);
+        order.setPostCode("");
+        order.setPayByIntegral(0d);
+        order.setDiscountTotal(0d);
+        order.setDiscountDeliveryFeeTotal(0d);
         //order.setSellerId(0);
         //order.setLogisticId(0);
     }
