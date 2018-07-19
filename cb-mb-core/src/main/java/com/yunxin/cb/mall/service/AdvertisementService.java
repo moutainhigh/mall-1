@@ -9,5 +9,5 @@ public interface AdvertisementService {
     /**
      * 查询banner
      */
-    List<Advertisement> selectAll();
+    List<Advertisement> selectByPlace(Integer advertisementPlace);
 }
