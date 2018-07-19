@@ -42,57 +42,27 @@ public class FileResource {
         Map<String,String> result=new HashMap<String,String>();
         if (!file.isEmpty()) {
             try {
-                String fileName=file.getName();
-                String url = qiniuStorageService.put(file.getInputStream(), type);
+                String url = "";
                 //表示是apk文件，读取版本信息
                 if(type.equals(UploadType.ANDROID)){
+                    String key=file.getName()+".apk";
+                    url = qiniuStorageService.put(file.getInputStream(), type,key);
                     Map<String,Object> map=AppParseUtil.readAPK(url);
                     result.put("versionCode",map.get("versionCode").toString());
                     result.put("versionName",map.get("versionName").toString());
+                }else{
+                    url = qiniuStorageService.put(file.getInputStream(), type);
                 }
-                result.put("code","0");
-                result.put("info","上传成功");
                 result.put("url",url);
-                result.put("fileName",fileName);
                 return  result;
             } catch (IOException e) {
                 e.printStackTrace();
-                result.put("code","1");
-                result.put("info","上传失败");
                 return  result;
             }
         } else {
-            result.put("code","1");
-            result.put("info","上传失败");
             return  result;
         }
 
     }
-
-    /**
-     * 图片上传
-     * @param base64
-     * @param type
-     * @return
-     */
-    @RequestMapping(value = "uploadBase64/{type}")
-    public ResponseResult uploadBase64(@RequestBody String base64, @PathVariable(value = "type") UploadType type) {
-        if (StringUtils.isNotBlank(base64)) {
-            try {
-                base64 = base64.substring(base64.indexOf("\"") + 1,base64.lastIndexOf("\""));
-                byte[] imgBytes = Base64.getDecoder().decode(base64);//Base64转换成byte数组
-
-                String url = qiniuStorageService.put(imgBytes, type);
-                return new ResponseResult(url);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new ResponseResult(Result.FAILURE, "上传失败");
-            }
-        } else {
-            return new ResponseResult(Result.FAILURE, "上传失败");
-        }
-
-    }
-
 
 }
