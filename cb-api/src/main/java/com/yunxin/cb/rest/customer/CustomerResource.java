@@ -72,31 +72,7 @@ public class CustomerResource extends BaseResource {
         if (customer == null) {
             return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
         }
-        //修改添加好友记录为已同意
-        customerFriendRequestService.updateCustomerFriendRequestState(customer.getCustomerId(), myself.getCustomerId(), CustomerFriendRequestState.AGREE.getState());
-
-        CustomerFriend customerFriend = new CustomerFriend();
-        CustomerFriendId customerFriendId = new CustomerFriendId();
-        customerFriendId.setCustomerId(customerId);
-        customerFriendId.setFriendId(customer.getCustomerId());
-        customerFriend.setId(customerFriendId);
-        customerFriend.setCustomer(myself);
-        customerFriend.setFriend(customer);
-        customerFriend.setCreateTime(new Date());
-        customerFriend.setState(CustomerFriendState.NORMAL);
-        customerService.addFriend(customerFriend);
-
-        //双向加好友
-        customerFriend = new CustomerFriend();
-        customerFriendId = new CustomerFriendId();
-        customerFriendId.setCustomerId(customer.getCustomerId());
-        customerFriendId.setFriendId(customerId);
-        customerFriend.setId(customerFriendId);
-        customerFriend.setCustomer(customer);
-        customerFriend.setFriend(myself);
-        customerFriend.setCreateTime(new Date());
-        customerFriend.setState(CustomerFriendState.NORMAL);
-        customerService.addFriend(customerFriend);
+        customerService.addTwoWayFriend(customer,myself);
 
         return new ResponseResult(Result.SUCCESS);
     }

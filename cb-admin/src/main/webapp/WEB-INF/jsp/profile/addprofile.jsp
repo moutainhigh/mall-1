@@ -85,11 +85,8 @@
                                     processData: false,
                                     contentType: false,
                                     success: function (result) {
-                                        if (result.code == 0) {
-                                            $('#ANDROID_URL').val(result.url);
-                                            $('#ANDROID_VERSION_NAME').val(result.versionName);
-                                            $('#ANDROID_VERSION_CODE').val(result.versionCode);
-                                        }
+                                        alert("上传成功")
+                                        $('#ANDROID_URL').val(result.url);
                                     },
                                     error: function (err) {
                                     }
@@ -116,7 +113,7 @@
                             <label><span class="asterisk">*</span>安卓版本编号：</label>
                         </div>
                         <div class="col-sm-3">
-                            <input readonly="readonly"  name="ANDROID_VERSION_CODE" id="ANDROID_VERSION_CODE" value=""
+                            <input   name="ANDROID_VERSION_CODE" id="ANDROID_VERSION_CODE" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
                                    style="width: 600px"/>
                         </div>
@@ -127,7 +124,7 @@
                             <label><span class="asterisk">*</span>安卓版本名称：</label>
                         </div>
                         <div class="col-sm-3">
-                            <input readonly="readonly" name="ANDROID_VERSION_NAME" id="ANDROID_VERSION_NAME" value=""
+                            <input  name="ANDROID_VERSION_NAME" id="ANDROID_VERSION_NAME" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
                                    style="width: 600px"/>
                         </div>

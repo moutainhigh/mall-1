@@ -9,7 +9,9 @@ import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
+import com.yunxin.cb.sns.meta.CustomerFriendRequestState;
 import com.yunxin.cb.sns.meta.CustomerFriendState;
+import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -51,6 +53,9 @@ public class CustomerService implements ICustomerService {
 
     @Resource
     private CustomerFriendDao customerFriendDao;
+
+    @Resource
+    private ICustomerFriendRequestService customerFriendRequestService;
 
     @Override
     public Fridge addFridge(Fridge fridge) {
@@ -521,6 +526,33 @@ public class CustomerService implements ICustomerService {
             rongCloudService.removeBlacklist(customer.getAccountName(),friend);
         }
         return blacklist;
+    }
+
+    @Transactional
+    public void addTwoWayFriend(Customer myself,Customer customer){
+        //修改添加好友记录为已同意
+        customerFriendRequestService.updateCustomerFriendRequestState(customer.getCustomerId(), myself.getCustomerId(), CustomerFriendRequestState.AGREE.getState());
+        CustomerFriend customerFriend = new CustomerFriend();
+        CustomerFriendId customerFriendId = new CustomerFriendId();
+        customerFriendId.setCustomerId(myself.getCustomerId());
+        customerFriendId.setFriendId(customer.getCustomerId());
+        customerFriend.setId(customerFriendId);
+        customerFriend.setCustomer(customer);
+        customerFriend.setFriend(customer);
+        customerFriend.setCreateTime(new Date());
+        customerFriend.setState(CustomerFriendState.NORMAL);
+        addFriend(customerFriend);
+        //双向加好友
+        customerFriend = new CustomerFriend();
+        customerFriendId = new CustomerFriendId();
+        customerFriendId.setCustomerId(customer.getCustomerId());
+        customerFriendId.setFriendId(myself.getCustomerId());
+        customerFriend.setId(customerFriendId);
+        customerFriend.setCustomer(customer);
+        customerFriend.setFriend(myself);
+        customerFriend.setCreateTime(new Date());
+        customerFriend.setState(CustomerFriendState.NORMAL);
+        addFriend(customerFriend);
     }
 
 }
