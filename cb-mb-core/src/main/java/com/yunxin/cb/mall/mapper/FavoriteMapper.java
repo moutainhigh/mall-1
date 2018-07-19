@@ -101,10 +101,11 @@ public interface FavoriteMapper {
             @Result(column="FAVORITE_ID", property="favoriteId", jdbcType=JdbcType.INTEGER, id=true),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
+            @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
+            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
             @Result(column="COMMODITY_ID", property="commodity", jdbcType=JdbcType.INTEGER,
-                    one = @One(select = "com.yunxin.cb.mall.mapper.CommodityMapper.selectByPrimaryKey")),
-            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
-    })
+                    one = @One(select = "com.yunxin.cb.mall.mapper.CommodityMapper.selectByPrimaryKey"))
+            })
     List<Favorite> pageList(Query q);
 
     @Select("<script>"

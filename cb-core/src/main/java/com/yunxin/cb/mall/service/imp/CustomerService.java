@@ -528,6 +528,16 @@ public class CustomerService implements ICustomerService {
         return blacklist;
     }
 
+
+    /**
+     * 双向添加好友，并且修改申请添加记录
+     * @author      likang
+     * @param myself
+    * @param customer
+     * @return      void
+     * @exception
+     * @date        2018/7/19 20:16
+     */
     @Transactional
     public void addTwoWayFriend(Customer myself,Customer customer){
         //修改添加好友记录为已同意

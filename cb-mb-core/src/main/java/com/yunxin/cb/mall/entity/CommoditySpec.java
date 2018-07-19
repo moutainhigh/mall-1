@@ -1,7 +1,5 @@
 package com.yunxin.cb.mall.entity;
 
-import org.springframework.stereotype.Repository;
-
 /**
  * @title: 商品规格实体类
  * @auther: eleven
@@ -16,6 +14,9 @@ public class CommoditySpec {
 
     /** 内容 */
     private String value;
+
+    //规格
+    private Spec spec;
 
     public Integer getCommodityId() {
         return commodityId;
@@ -39,5 +40,13 @@ public class CommoditySpec {
 
     public void setValue(String value) {
         this.value = value == null ? null : value.trim();
+    }
+
+    public Spec getSpec() {
+        return spec;
+    }
+
+    public void setSpec(Spec spec) {
+        this.spec = spec;
     }
 }
