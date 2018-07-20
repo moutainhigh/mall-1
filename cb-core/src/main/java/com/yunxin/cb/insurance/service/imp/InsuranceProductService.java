@@ -16,10 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -83,23 +80,6 @@ public class InsuranceProductService implements IInsuranceProductService {
      */
     @Override
     public Page<InsuranceProduct> pageInsuranceProduct(PageSpecification<InsuranceProduct> query){
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
-        for (PageSpecification.FilterDescriptor filterDescriptor:list
-                ) {
-            if("createTime".equals(filterDescriptor.getField())){
-
-                Date createTime= null;
-                SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
-                    String createTimes=simpleDateFormat.format(dates);
-                    filterDescriptor.setValue(createTimes);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         query.setCustomSpecification(new CustomSpecification<InsuranceProduct>() {
             @Override
             public void buildFetch(Root<InsuranceProduct> root) {
