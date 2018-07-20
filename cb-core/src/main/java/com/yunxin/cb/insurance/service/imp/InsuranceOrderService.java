@@ -155,14 +155,15 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 }else{
                                     String description=insuranceInformedMatter.getMatterDescription();
                                         String[] str={"{0}","{1}","{2}","{3}","{4}","{5}","{6}"};
-                                        if(null!=list.getCollectValues()&&!"".equals(list.getCollectValues())){
+
                                             String[] strValue=list.getCollectValues().replace("[","").replace("]","").replace("\"","") .split(",");
+                                            if(strValue.length>0){
                                             for (int j=0;j<strValue.length;j++)
                                                 description = description.replace(str[j],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;"+strValue[j]+"&nbsp;&nbsp;</p>");
-                                        }else{
-                                            for (int i=0;i<str.length;i++)
-                                                description = description.replace(str[i],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;</p>");
-                                        }
+                                            }else{
+                                                for (int i=0;i<str.length;i++)
+                                                    description = description.replace(str[i],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;</p>");
+                                            }
                                     put("matter",description);
                                     put("insured",list.getInsuredResult());
                                     put("insured_remark",list.getInsuredRemark());
