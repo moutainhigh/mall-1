@@ -2334,7 +2334,13 @@
                             <div class="header">
                                 <img src="../images/orderHeader/newlogo.png" width="650px"/>
                                 <h2 style="margin-top: 20px;">
-                                    <div style="position:absolute;margin-left: 60px;"></div>
+                                    <div style="position:absolute;margin-left: 50px;">
+                                        <c:if test="${map.insuranceOrder.barCode!=null&&map.insuranceOrder.barCode!=''}">
+                                            <img src='data:image/jpeg;base64,${map.insuranceOrder.barCode}' width="200px">
+                                            <div style="font-size: 18px">${map.insuranceOrder.orderCode}</div>
+                                        </c:if>
+
+                                    </div>
                                     <div style="display: inline-block;letter-spacing: 8px;">
                                         投保或合同变更补充声明
                                     </div>
@@ -2373,24 +2379,29 @@
                                                         ${matterRemarks.title}
                                                 </div>
                                                 <div>
-                                                    <div style="display: flex">
+                                                    <c:if test="${matterRemarks.insured_remark!=null&&matterRemarks.insured_remark!=''}">
+                                                        <div style="display: flex">
+                                                            <div style="display: inline-block;vertical-align: top;">
+                                                                    被保人：
+
+                                                            </div>
+                                                            <div style="display: inline-block;width: 803px;height:34px">
+                                                                    <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
+                                                                    ${matterRemarks.insured_remark}
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${matterRemarks.policyholder_remark!=null&&matterRemarks.policyholder_remark!=''}">
+                                                        <div style="display: flex">
                                                         <div style="display: inline-block;vertical-align: top;">
-                                                                <%--被保人：--%>
-                                                                ${matterRemarks.person}
+                                                        投保人：
                                                         </div>
-                                                        <div style="display: inline-block;width: 803px;height:34px">
-                                                                <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
-                                                                ${matterRemarks.remark}
-                                                        </div>
-                                                    </div>
-                                                        <%--<div style="display: flex">--%>
-                                                        <%--<div style="display: inline-block;vertical-align: top;">--%>
-                                                        <%--投保人：--%>
-                                                        <%--</div>--%>
-                                                        <%--<div style="display: inline-block;width: 803px;;height:34px">--%>
+                                                        <div style="display: inline-block;width: 803px;;height:34px">
                                                         <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
-                                                        <%--</div>--%>
-                                                        <%--</div>--%>
+                                                                ${matterRemarks.policyholder_remark}
+                                                        </div>
+                                                        </div>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                             </c:forEach>
