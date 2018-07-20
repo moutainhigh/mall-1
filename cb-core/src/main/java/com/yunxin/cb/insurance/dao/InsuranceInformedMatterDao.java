@@ -14,7 +14,9 @@ public interface InsuranceInformedMatterDao extends JpaRepository<InsuranceInfor
     public InsuranceInformedMatter getInsuranceInformedMatter(int matterId);
 
 
-    @Query("select c from InsuranceInformedMatter c left join fetch c.matterGroup  where c.matterDescription like ?1")
-    public List<InsuranceInformedMatter> getListByName(String matterDescription);
+    @Modifying
+    @Query("update InsuranceInformedMatter iim set iim.enabled =?2 where iim.matterId=?1")
+    public void enableInformedMatterById(int matterId,int enabled);
+
 
 }

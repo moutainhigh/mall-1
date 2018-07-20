@@ -85,8 +85,15 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
      */
     @Override
     public Page<InsuranceInformedMatter> pageaddMatter(PageSpecification<InsuranceInformedMatter> query){
+        //添加一个只查询启用状态的条件
+        PageSpecification.FilterDescriptor filterDescriptor1 = new PageSpecification.FilterDescriptor();
+        filterDescriptor1.setField("enabled");
+        filterDescriptor1.setLogic("and");
+        filterDescriptor1.setOperator("eq");
+        filterDescriptor1.setValue(1);
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
+        list.add(filterDescriptor1);
         for (PageSpecification.FilterDescriptor filterDescriptor:list
                 ) {
             if("createTime".equals(filterDescriptor.getField())){
@@ -194,6 +201,21 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
     @Override
     public List<InsuranceInformedMatter> getInsuranceInformedMatterList(){
         return insuranceInformedMatterDao.findAll();
+    }
+
+    /**
+     * 修改事项的启用状态
+     * @author      likang
+     * @param matterId
+    * @param enabled
+     * @return      void
+     * @exception
+     * @date        2018/7/20 10:36
+     */
+    @Override
+    @Transactional
+    public void enableInformedMatterById(int matterId,int enabled){
+        insuranceInformedMatterDao.enableInformedMatterById(matterId,enabled);
     }
 
 }

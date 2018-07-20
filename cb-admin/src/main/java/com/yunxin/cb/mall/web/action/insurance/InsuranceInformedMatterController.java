@@ -82,22 +82,6 @@ public class InsuranceInformedMatterController {
     @RequestMapping(value = "pageaddMatter",method = RequestMethod.POST)
     @ResponseBody
     public Page<InsuranceInformedMatter> pageaddMatter(@RequestBody PageSpecification<InsuranceInformedMatter> query,@RequestParam("prodId") String prodId) {
-//        List<InsuranceInformedMatter> list = insuranceInformedMatterService.pageaddMatter(query).getContent();
-//        int pros=Integer.parseInt(prodId);
-//        InsuranceProduct insuranceProduct = insuranceProductService.getInsuranceProductById(pros);
-//        Set<InsuranceInformedMatter> insuranceInformedMatters = insuranceProduct.getInsuranceInformedMatters();
-//        Set<Integer> setId=new HashSet<Integer>();
-//        /**
-//         * 筛选出已经存在的事项，(后期再优化)
-//         */
-//        for (InsuranceInformedMatter matters:insuranceInformedMatters) {
-//            setId.add(matters.getMatterId());
-//        }
-//        for (InsuranceInformedMatter insuranceInformedMatter : list) {
-//            if(!setId.contains(insuranceInformedMatter.getMatterId())){
-//                list.remove(insuranceInformedMatter);
-//            }
-//        }
         return insuranceInformedMatterService.pageaddMatter(query);
     }
 
@@ -201,5 +185,26 @@ public class InsuranceInformedMatterController {
             return false;
         }
 
+    }
+
+    /**
+     * 修改事项的启用状态
+     * @author      likang
+     * @param matterId
+    * @param enabled
+     * @return      boolean
+     * @exception
+     * @date        2018/7/20 10:33
+     */
+    @RequestMapping(value = "enableInformedMatterById",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean enableInformedMatterById(@RequestParam("matterId") int matterId,@RequestParam("enabled") int enabled) {
+        try{
+            insuranceInformedMatterService.enableInformedMatterById(matterId,enabled);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }
