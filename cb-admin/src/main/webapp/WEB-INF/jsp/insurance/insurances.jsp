@@ -80,7 +80,7 @@
         function orderPDF() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
-                window.location.href = "downloadPdf.do?orderId=" + dataItem.orderId;
+                window.location.href = "prints.do?orderId=" + dataItem.orderId;
             }
         }
     </script>
