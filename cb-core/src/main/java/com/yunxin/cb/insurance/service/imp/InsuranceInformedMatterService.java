@@ -37,22 +37,6 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
      */
     @Override
     public Page<InsuranceInformedMatter> pageInsuranceInformedMatter(PageSpecification<InsuranceInformedMatter> query){
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
-        for (PageSpecification.FilterDescriptor filterDescriptor:list
-                ) {
-            if("createTime".equals(filterDescriptor.getField())){
-                Date createTime= null;
-                SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
-                    String createTimes=simpleDateFormat.format(dates);
-                    filterDescriptor.setValue(createTimes);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         query.setCustomSpecification(new CustomSpecification<InsuranceInformedMatter>() {
             @Override
             public void buildFetch(Root<InsuranceInformedMatter> root) {
@@ -91,23 +75,8 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
         filterDescriptor1.setLogic("and");
         filterDescriptor1.setOperator("eq");
         filterDescriptor1.setValue(1);
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
         list.add(filterDescriptor1);
-        for (PageSpecification.FilterDescriptor filterDescriptor:list
-                ) {
-            if("createTime".equals(filterDescriptor.getField())){
-                Date createTime= null;
-                SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
-                    String createTimes=simpleDateFormat.format(dates);
-                    filterDescriptor.setValue(createTimes);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         query.setCustomSpecification(new CustomSpecification<InsuranceInformedMatter>() {
             @Override
             public void buildFetch(Root<InsuranceInformedMatter> root) {

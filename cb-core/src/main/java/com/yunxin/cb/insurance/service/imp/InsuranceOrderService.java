@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -156,14 +155,15 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 }else{
                                     String description=insuranceInformedMatter.getMatterDescription();
                                         String[] str={"{0}","{1}","{2}","{3}","{4}","{5}","{6}"};
-                                        if(null!=list.getCollectValues()&&!"".equals(list.getCollectValues())){
+
                                             String[] strValue=list.getCollectValues().replace("[","").replace("]","").replace("\"","") .split(",");
+                                            if(strValue.length>0){
                                             for (int j=0;j<strValue.length;j++)
                                                 description = description.replace(str[j],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;"+strValue[j]+"&nbsp;&nbsp;</p>");
-                                        }else{
-                                            for (int i=0;i<str.length;i++)
-                                                description = description.replace(str[i],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;</p>");
-                                        }
+                                            }else{
+                                                for (int i=0;i<str.length;i++)
+                                                    description = description.replace(str[i],"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;</p>");
+                                            }
                                     put("matter",description);
                                     put("insured",list.getInsuredResult());
                                     put("insured_remark",list.getInsuredRemark());
@@ -179,6 +179,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         };
     }
 
+
+
     /**
      * 保单分页
      * @param query
@@ -186,23 +188,23 @@ public class InsuranceOrderService implements IInsuranceOrderService {
      */
     @Override
     public Page<InsuranceOrder> pageInsuranceOrder(PageSpecification<InsuranceOrder> query) {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
-        for (PageSpecification.FilterDescriptor filterDescriptor:list
-             ) {
-            if("createTime".equals(filterDescriptor.getField())){
-
-                Date createTime= null;
-                    SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
-                    String createTimes=simpleDateFormat.format(dates);
-                    filterDescriptor.setValue(createTimes);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
+//        for (PageSpecification.FilterDescriptor filterDescriptor:list
+//             ) {
+//            if("createTime".equals(filterDescriptor.getField())){
+//
+//                Date createTime= null;
+//                    SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
+//                try {
+//                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
+//                    String createTimes=simpleDateFormat.format(dates);
+//                    filterDescriptor.setValue(createTimes);
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
         query.setCustomSpecification(new CustomSpecification<InsuranceOrder>(){
             @Override
             public void buildFetch(Root<InsuranceOrder> root) {
