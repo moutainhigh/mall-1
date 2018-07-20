@@ -162,7 +162,7 @@
                             <div class="toolbar-field">
                                 <div class="toolbar-field">
                                     <select data-filter="matterGroup.groupId"  data-operator="eq"
-                                            class="form-control simpleselect grid-filter">
+                                            class="form-control  grid-filter">
                                         <option value="">全部</option>
                                         <c:forEach items="${groups}" var="group">
                                             <option value="${group.groupId}">${group.description}</option>

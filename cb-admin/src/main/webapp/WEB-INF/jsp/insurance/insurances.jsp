@@ -193,7 +193,7 @@
                             </div>
                             <div class="toolbar-field">
                                 <select data-filter="orderState" id="payState" data-operator="eq"
-                                        class="form-control simpleselect grid-filter">
+                                        class="form-control  grid-filter">
                                     <option value="">全部</option>
                                     <option value="UN_PAID">待支付</option>
                                     <option value="ON_PAID">已支付</option>

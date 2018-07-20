@@ -39,7 +39,7 @@
                             });
                         </script>
                         <select id="group" data-filter="matterGroup.groupId"  data-operator="eq"
-                                class="form-control simpleselect grid-filter">
+                                class="form-control  grid-filter">
                             <option value="">全部</option>
                         </select>
                     </div>
