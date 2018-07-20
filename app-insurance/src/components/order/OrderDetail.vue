@@ -49,7 +49,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">性别</div>
-          <div class="d-cell-val">{{insured.insuredGender ? '男' : '女'}}</div>
+          <div class="d-cell-val">{{insured.insuredGender == 'true' ? '男' : '女'}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">出生日期</div>
@@ -127,7 +127,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">性别</div>
-          <div class="d-cell-val">{{holder.policyholderGender ? '男' : '女'}}</div>
+          <div class="d-cell-val">{{holder.policyholderGender == 'true' ? '男' : '女'}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">出生日期</div>
@@ -214,7 +214,7 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">性别</div>
-          <div class="d-cell-val">{{item.beneficiaryGender ? '男' : '女'}}</div>
+          <div class="d-cell-val">{{item.beneficiaryGender == 'true' ? '男' : '女'}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">出生日期</div>

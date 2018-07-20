@@ -6,7 +6,7 @@
 
     <div class="i-list" style="margin-top: 0" v-for="(product, index) in products">
       <div style="display: inline-block;">
-        <img :src="product.prodImg">
+        <img style="height: 81px" :src="product.prodImg">
       </div>
       <div class="i-list-detail">
         <div class="dt-title">{{product.prodName}}</div><!--生命福星高照终身寿险（分红型）-->

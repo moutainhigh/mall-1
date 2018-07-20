@@ -7,7 +7,6 @@ import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
-import com.yunxin.cb.vo.OrderVo;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,13 +27,15 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "订单确认")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "productNum", value = "购买数量", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "consigneeName", value = "收货人姓名", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "consigneeMobile", value = "收货人手机号码", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "consigneeAddress", value = "收货人地址", required = true, paramType = "post", dataType = "String")})
     @PostMapping(value = "saveOrder")
-    public ResponseResult saveOrder(@RequestBody OrderVo orderVo) throws Exception{
-        Order order = new Order();
+    public ResponseResult saveOrder(@RequestBody Order order) throws Exception{
         order.setCustomerId(getCustomerId());
-        order.setPaymentType(orderVo.getPaymentType());
-        Order result = orderService.createOrder(orderVo.getProductId(), order);
+        Order result = orderService.createOrder(order);
         if (result == null) {
             return new ResponseResult(Result.FAILURE);
         }

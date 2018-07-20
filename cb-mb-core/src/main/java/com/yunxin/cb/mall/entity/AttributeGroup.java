@@ -1,8 +1,6 @@
 package com.yunxin.cb.mall.entity;
 
-import org.springframework.stereotype.Repository;
-
-import java.util.Date;
+import java.util.*;
 
 /**
  * @title: 属性组实体类
@@ -24,6 +22,8 @@ public class AttributeGroup {
 
     /** 商品id */
     private Integer commodityId;
+
+    private List<Attribute> attributes = new ArrayList<>();
 
     public Integer getGroupId() {
         return groupId;
@@ -63,5 +63,13 @@ public class AttributeGroup {
 
     public void setCommodityId(Integer commodityId) {
         this.commodityId = commodityId;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<Attribute> attributes) {
+        this.attributes = attributes;
     }
 }

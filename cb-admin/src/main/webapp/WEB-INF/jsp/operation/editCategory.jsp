@@ -142,6 +142,13 @@
                             <div class="col-sm-3">
                                 <form:input cssClass="form-control validate[required]" path="categoryNo" maxlength="32"/>
                             </div>
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span> 价格区间：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input path="lowestPrice" maxlength="32"/>-
+                                <form:input path="highestPrice" maxlength="32"/>万
+                            </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">

@@ -163,8 +163,6 @@ public interface CommodityMapper {
 					one = @One(select = "com.yunxin.cb.mall.mapper.PriceSectionMapper.selectByPrimaryKey")),
 			@Result(column="SELLER_ID", property="seller", jdbcType=JdbcType.INTEGER,
 					one = @One(select = "com.yunxin.cb.mall.mapper.SellerMapper.selectByPrimaryKey")),
-			@Result(column = "COMMODITY_ID",property = "products",
-					many = @Many(select = "com.yunxin.cb.mall.mapper.ProductMapper.selectAllByCommodityId")),
 			@Result(column = "COMMODITY_ID",property = "commoditySpecs",
 					many = @Many(select = "com.yunxin.cb.mall.mapper.CommoditySpecMapper.selectAllByCommodityId"))
 	})

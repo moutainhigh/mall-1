@@ -28,7 +28,10 @@
 <div class="background">
     <div class="head">
         <div class="logo"><img src="../images/orderHeader/newlogo.png" height="51px"></div>
-        <div class="barcode"><img src="../images/files/barcode2.png" height="70px"></div>
+        <div class="barcode">
+            <img src="data:image/jpeg;base64,${insuranceOrder.barCode}" height="50px">
+            <div class="barcode_num">${insuranceOrder.orderCode}</div>
+        </div>
     </div>
     <div class="cleanfx"></div>
     <div class="title">
@@ -97,7 +100,9 @@
 <div class="foreground" id="foreground">
     <div class="head">
         <div class="logo">&nbsp;</div>
-        <div class="barcode">&nbsp;</div>
+        <div class="barcode">&nbsp;
+            <div class="barcode_num">&nbsp;</div>
+        </div>
     </div>
     <div class="cleanfx"></div>
     <div class="title">
@@ -141,8 +146,8 @@
                 <div class="indent">${orderOffsite.stayTime}</div>
                 <div>&nbsp; </div>
                 <div class="indent">${orderOffsite.offsiteAddress}</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <c:choose><c:when test="${orderOffsite.otherMatter==null||orderOffsite.otherMatter==''}">&nbsp;&nbsp;&nbsp;&nbsp;√</c:when><c:otherwise>√</c:otherwise></c:choose>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <c:choose><c:when test="${orderOffsite.otherMatter==null||orderOffsite.otherMatter==''}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;√</c:when><c:otherwise>√</c:otherwise></c:choose>
                 </div>
                 <div class="indent">${orderOffsite.otherMatter}</div>
             </div>
@@ -160,7 +165,7 @@
                         <div class="firstLine">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
 
                         </div>
-                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="${insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" height="40px" alt=""></div>
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="${insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" style="transform:rotate(-90deg)" height="40px" alt=""></div>
                     </div>
                     <div class="autograph2">
                         <div class="firstLine">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>
