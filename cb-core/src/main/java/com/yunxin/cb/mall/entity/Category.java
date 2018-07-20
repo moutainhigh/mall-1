@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -99,6 +100,16 @@ public class Category implements java.io.Serializable {
      * 分类级别作为限制层级用途
      */
     private int level;
+
+    /**
+     * 最低价格
+     */
+    private BigDecimal lowestPrice;
+
+    /**
+     * 最高价格
+     */
+    private BigDecimal highestPrice;
 
     /**
      * 子分类
@@ -253,6 +264,20 @@ public class Category implements java.io.Serializable {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+    @Column(nullable = false, precision = 1)
+    public BigDecimal getLowestPrice() {
+        return lowestPrice;
+    }
+    public void setLowestPrice(BigDecimal lowestPrice) {
+        this.lowestPrice = lowestPrice;
+    }
+    @Column(nullable = false, precision = 1)
+    public BigDecimal getHighestPrice() {
+        return highestPrice;
+    }
+    public void setHighestPrice(BigDecimal highestPrice) {
+        this.highestPrice = highestPrice;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
