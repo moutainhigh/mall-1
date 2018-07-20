@@ -1838,8 +1838,16 @@
                                                 </span>
                                         </div>
                                         <div class="a-input-div" style="width: 130px;">
-                                            <span class="f-body-font-three">&nbsp;<img style="width: 100px;height: 20px;"
-                                                                                       src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></span>
+                                            <%--<div>--%>
+                                                <%--<img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"--%>
+                                                     <%--src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>--%>
+                                            <%--</div>--%>
+                                            <div>
+                                                <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                                     src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
+                                            </div>
+
+                                            <%--<span class="f-body-font-three"></span>--%>
                                         </div>
                                     </div>
                                     <div class="div-line-con-three" style="border-left: solid 00px;">
@@ -2393,8 +2401,12 @@
                                         </div>
                                         <div class="s-name" style="text-align: right;width: 300px;">
                                             <div>投保人签名</div>
-                                            <div class="s-name-content" style="width: 150px;"><img style="width: 100px;height: 20px;"
-                                                                                                   src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></div>
+                                            <div class="s-name-content" style="width: 150px;">
+                                                <div>
+                                                    <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                                         src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="s-head-name" style="margin-top: 20px;">
