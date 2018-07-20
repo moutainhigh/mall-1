@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.web.action.media;
 
 import com.yunxin.cb.mall.web.action.MediaPather;
+import com.yunxin.cb.security.SecurityConstants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,13 +34,13 @@ public class MediaController {
 
     @RequestMapping(value = "medias", method = RequestMethod.GET)
     public String medias(ModelMap modelMap) {
-        modelMap.addAttribute("picPath", uploadPath);
+        modelMap.addAttribute("picPath", SecurityConstants.PIC_DIR);
         return "media/medias";
     }
 
     @RequestMapping(value = "chooseMedias", method = RequestMethod.GET)
     public String chooseMedias(ModelMap modelMap) {
-        modelMap.addAttribute("picPath", uploadPath);
+        modelMap.addAttribute("picPath", SecurityConstants.PIC_DIR);
         return "media/chooseMedias";
     }
 
