@@ -167,6 +167,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     put("matter",description);
                                     put("insured",list.getInsuredResult());
                                     put("insured_remark",list.getInsuredRemark());
+                                    put("policy",list.getPolicyholderResult());
+                                    put("policy_remark",list.getPolicyholderRemark());
                                     put("no","2");
                                 }
 
@@ -394,6 +396,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                         {
                             List<Map<String,Object>> listStr=new ArrayList<Map<String,Object>>();
                             List<Map<String,Object>> listStrTwo=new ArrayList<Map<String,Object>>();
+                            List<Map<String,Object>> listStrThree=new ArrayList<Map<String,Object>>();
+                            List<Map<String,Object>> listStrFour=new ArrayList<Map<String,Object>>();
                             for (InsuranceOrderInformedMatter insuranceOrderInformedMatter:insuranceOrderInformedMatterList
                                     ) {
                                 InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(insuranceOrderInformedMatter.getInsuranceInformedMatter().getMatterId());
@@ -408,15 +412,21 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 /**
                                  * 被保人
                                  */
-                                if(insuranceOrderInformedMatter.getInsuredResult()) {
+                                if(insuranceOrderInformedMatter.getInsuredResult()||insuranceOrderInformedMatter.getPolicyholderResult()) {
                                     Map<String,Object> map=new HashMap<String,Object>(){
                                         {
                                             put("title",matterDescriptions);
-                                            put("person","被保人：");
-                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
+//                                            put("insured_person","被保人：");
+                                            put("insured_remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
+//                                            put("policyholder_person","投保人：");
+                                            put("policyholder_remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
                                         }
                                     };
-                                    if (listStr.size() >= 26)
+                                    if(listStr.size()>=8&&listStrTwo.size()>=8&&listStrThree.size()>=8)
+                                        listStrFour.add(map);
+                                    else if(listStr.size()>=8&&listStrTwo.size()>=8&&listStrThree.size()<8)
+                                        listStrThree.add(map);
+                                    else if(listStr.size()>=8&&listStrTwo.size()<8)
                                         listStrTwo.add(map);
                                     else
                                         listStr.add(map);
@@ -425,19 +435,21 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 /**
                                  * 投保人
                                  */
-                                if(insuranceOrderInformedMatter.getPolicyholderResult()){
-                                    Map<String,Object> map=new HashMap<String,Object>(){
-                                        {
-                                            put("title",matterDescriptions);
-                                            put("person","投保人：");
-                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
-                                        }
-                                    };
-                                    if(listStr.size()>=26)
-                                        listStrTwo.add(map);
-                                    else
-                                        listStr.add(map);
-                                }
+//                                if(insuranceOrderInformedMatter.getPolicyholderResult()){
+//                                    Map<String,Object> map=new HashMap<String,Object>(){
+//                                        {
+//                                            put("title",matterDescriptions);
+//                                            put("person","投保人：");
+//                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
+//                                        }
+//                                    };
+//                                    if(listStr.size()>=12&&listStrTwo.size()>=12)
+//                                        listStrThree.add(map);
+//                                    else if(listStr.size()>=12&&listStrTwo.size()<12)
+//                                        listStrTwo.add(map);
+//                                    else
+//                                        listStr.add(map);
+//                                }
 
 
                             }
@@ -446,6 +458,10 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 add(listStr);
                             if(listStrTwo!=null&&listStrTwo.size()>0)
                                 add(listStrTwo);
+                            if(listStrThree!=null&&listStrThree.size()>0)
+                                add(listStrThree);
+                            if(listStrFour!=null&&listStrFour.size()>0)
+                                add(listStrFour);
                         }
 
                     });

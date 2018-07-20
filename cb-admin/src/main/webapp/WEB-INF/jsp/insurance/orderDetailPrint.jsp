@@ -58,7 +58,7 @@
 
             $("#insuredCareer").html(insuredCareer);
 
-            $("#policyholderCareer").val(policyholderCareer);
+            $("#policyholderCareer").text(policyholderCareer);
 
         });
 
@@ -297,13 +297,13 @@
                                 <div class="div-line-con div-row-5">
                                     <div class="title">A 5.证件类型</div>
                                     <div>
-                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredCardType=='居民身份证'}">checked</c:if>/>
                                         身份证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='护照'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredCardType=='护照'}">checked</c:if>/>
                                         护照
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='军官证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredCardType=='军官证'}">checked</c:if>/>
                                         军官证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='军官证'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='护照'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredCardType!='军官证'&&map.insuranceOrder.insuranceOrderInsured.insuredCardType!='护照'&&map.insuranceOrder.insuranceOrderInsured.insuredCardType!='居民身份证'}">checked</c:if>/>
                                         其他
                                     </div>
                                 </div>
@@ -477,7 +477,10 @@
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 19.&nbsp;E-mail</div>
-                                    <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredEmail}"/>
+                                    <div style="position: absolute;width: 180px;margin-left: 10px;word-break: break-all;">
+                                        ${map.insuranceOrder.insuranceOrderInsured.insuredEmail}
+                                    </div>
+                                    <%--<input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredEmail}"/>--%>
                                 </div>
                                 <div class="div-line-con div-part-job">
                                     <div class="title">A 20.是否有兼职？</div>
@@ -528,13 +531,13 @@
                                 <div class="div-line-con div-row-5">
                                     <div class="title">A 25.证件类型</div>
                                     <div>
-                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType=='居民身份证'}">checked</c:if>/>
                                         身份证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='护照'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType=='护照'}">checked</c:if>/>
                                         护照
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='军官证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType=='军官证'}">checked</c:if>/>
                                         军官证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='军官证'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='护照'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType!='军官证'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType!='护照'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType!='居民身份证'}">checked</c:if>/>
                                         其他
                                     </div>
                                 </div>
@@ -613,7 +616,7 @@
                                 <div class="div-line-con div-row-3">
                                     <div class="title">A 31.固定电话（<input readonly class="b-input"
                                                                         type="text" value="${map.policy_q_tel}"/>)-(<input
-                                            class="mobile-input" type="text" id="${map.policy_h_tel}"/></span>)
+                                            class="mobile-input" type="text" value="${map.policy_h_tel}"/></span>)
                                     </div>
                                 </div>
                                 <div class="div-line-con div-row-3">
@@ -711,7 +714,9 @@
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 39. E-mail</div>
-                                    <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderEmail}"/>
+                                    <div style="position: absolute;width: 180px;margin-left: 10px;word-break: break-all;">
+                                        ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderEmail}
+                                    </div>
                                 </div>
                                 <div class="div-line-con div-part-job">
                                     <div class="title">A 40.其它联系电话</div>
@@ -1412,7 +1417,7 @@
                                     </div>
                                     <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[14].insuredResult=='true'}">checked</c:if>>是<input
                                             type="checkbox"
-                                            style="margin-left: 10px;" <c:if test="${map.insurance_matterList[14].insuredResult=='true'}">checked</c:if>>否
+                                            style="margin-left: 10px;" <c:if test="${map.insurance_matterList[14].insuredResult=='false'}">checked</c:if>>否
                                     </div>
                                     <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[15].insuredResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                                                                                                                            style="margin-left: 10px;" <c:if test="${map.insurance_matterList[15].insuredResult=='false'}">checked</c:if>>否
@@ -1530,7 +1535,7 @@
                                         type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[25].insuredResult=='false'}">checked</c:if>>否
                                 </div>
                                 <div class="div-table-2" style="width: 83px;height: 197px;border-right:#000000 1px solid;">
-                                    <input readonly type="checkbox" <c:if test="${map.insurance_matterList[25].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[25].policyholderResult=='false'}">checked</c:if>>否
+                                    <%--<input readonly type="checkbox" <c:if test="${map.insurance_matterList[25].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[25].policyholderResult=='false'}">checked</c:if>>否--%>
                                 </div>
                             </div>
                             <div class="table-line" style="height: 28px;">
@@ -2329,7 +2334,13 @@
                             <div class="header">
                                 <img src="../images/orderHeader/newlogo.png" width="650px"/>
                                 <h2 style="margin-top: 20px;">
-                                    <div style="position:absolute;margin-left: 60px;"></div>
+                                    <div style="position:absolute;margin-left: 50px;">
+                                        <c:if test="${map.insuranceOrder.barCode!=null&&map.insuranceOrder.barCode!=''}">
+                                            <img src='data:image/jpeg;base64,${map.insuranceOrder.barCode}' width="200px">
+                                            <div style="font-size: 18px">${map.insuranceOrder.orderCode}</div>
+                                        </c:if>
+
+                                    </div>
                                     <div style="display: inline-block;letter-spacing: 8px;">
                                         投保或合同变更补充声明
                                     </div>
@@ -2368,24 +2379,29 @@
                                                         ${matterRemarks.title}
                                                 </div>
                                                 <div>
-                                                    <div style="display: flex">
+                                                    <c:if test="${matterRemarks.insured_remark!=null&&matterRemarks.insured_remark!=''}">
+                                                        <div style="display: flex">
+                                                            <div style="display: inline-block;vertical-align: top;">
+                                                                    被保人：
+
+                                                            </div>
+                                                            <div style="display: inline-block;width: 803px;height:34px">
+                                                                    <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
+                                                                    ${matterRemarks.insured_remark}
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${matterRemarks.policyholder_remark!=null&&matterRemarks.policyholder_remark!=''}">
+                                                        <div style="display: flex">
                                                         <div style="display: inline-block;vertical-align: top;">
-                                                                <%--被保人：--%>
-                                                                ${matterRemarks.person}
+                                                        投保人：
                                                         </div>
-                                                        <div style="display: inline-block;width: 803px;height:34px">
-                                                                <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
-                                                                ${matterRemarks.remark}
-                                                        </div>
-                                                    </div>
-                                                        <%--<div style="display: flex">--%>
-                                                        <%--<div style="display: inline-block;vertical-align: top;">--%>
-                                                        <%--投保人：--%>
-                                                        <%--</div>--%>
-                                                        <%--<div style="display: inline-block;width: 803px;;height:34px">--%>
+                                                        <div style="display: inline-block;width: 803px;;height:34px">
                                                         <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
-                                                        <%--</div>--%>
-                                                        <%--</div>--%>
+                                                                ${matterRemarks.policyholder_remark}
+                                                        </div>
+                                                        </div>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                             </c:forEach>

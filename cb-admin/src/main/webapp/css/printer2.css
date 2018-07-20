@@ -250,3 +250,8 @@ body{
     background: #6c7c7c;
     text-decoration: none;
 }
+.barcode_num{
+    font-size: 16px;
+    text-align: center;
+    float: none;
+}

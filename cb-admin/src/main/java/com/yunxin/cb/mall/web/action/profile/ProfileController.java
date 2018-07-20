@@ -46,6 +46,34 @@ public class ProfileController {
     }
 
     /**
+     * 进入修改页面
+     * @author      likang
+     * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/20 16:40
+     */
+    @RequestMapping(value = "toEditProfiles")
+    public String toEditProfiles(ModelMap modelMap,@RequestParam("fileId") int fileId){
+        modelMap.addAttribute("profile", profileService.getProfile(fileId));
+        return "profile/editprofile";
+    }
+
+    /**
+     * 修改参数配置
+     * @author      likang
+     * @param profile
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/20 16:47
+     */
+    @RequestMapping(value = "updateProfile", method = RequestMethod.POST)
+    public String updateProfile(@ModelAttribute("profile") Profile profile){
+        profileService.updateProfile(profile);
+        return "redirect:../common/success.do?reurl=profile/profiles.do";
+    }
+
+    /**
      * 添加系统配置
      * @author      likang
      * @param

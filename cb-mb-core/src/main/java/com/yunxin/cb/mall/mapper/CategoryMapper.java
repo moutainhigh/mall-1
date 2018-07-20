@@ -32,14 +32,16 @@ public interface CategoryMapper {
         "ENABLED, ICON_PATH, LEVEL, ",
         "RECOMMEND, REMARK, SEO_DESCRIPTION, ",
         "SEO_KEY, SEO_TITLE, ",
-        "SORT_ORDER, PARENT_CATEGORY_ID)",
+        "SORT_ORDER, PARENT_CATEGORY_ID, ",
+        "LOWEST_PRICE, HIGHEST_PRICE)",
         "values (#{categoryId,jdbcType=INTEGER}, #{categoryKey,jdbcType=VARCHAR}, ",
         "#{categoryName,jdbcType=VARCHAR}, #{categoryNo,jdbcType=VARCHAR}, ",
         "#{createTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, ",
         "#{enabled,jdbcType=BIT}, #{iconPath,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, ",
         "#{recommend,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, #{seoDescription,jdbcType=VARCHAR}, ",
         "#{seoKey,jdbcType=VARCHAR}, #{seoTitle,jdbcType=VARCHAR}, ",
-        "#{sortOrder,jdbcType=INTEGER}, #{parentCategoryId,jdbcType=INTEGER})"
+        "#{sortOrder,jdbcType=INTEGER}, #{parentCategoryId,jdbcType=INTEGER}, ",
+        "#{lowestPrice,jdbcType=DECIMAL}, #{highestPrice,jdbcType=DECIMAL})"
     })
     int insert(Category record);
 
@@ -53,7 +55,7 @@ public interface CategoryMapper {
         "select",
         "CATEGORY_ID, CATEGORY_KEY, CATEGORY_NAME, CATEGORY_NO, CREATE_TIME, DESCRIPTION, ",
         "ENABLED, ICON_PATH, LEVEL, RECOMMEND, REMARK, SEO_DESCRIPTION, SEO_KEY, SEO_TITLE, ",
-        "SORT_ORDER, PARENT_CATEGORY_ID",
+        "SORT_ORDER, PARENT_CATEGORY_ID, LOWEST_PRICE, HIGHEST_PRICE",
         "from category",
         "where CATEGORY_ID = #{categoryId,jdbcType=INTEGER}"
     })
@@ -73,7 +75,9 @@ public interface CategoryMapper {
         @Result(column="SEO_KEY", property="seoKey", jdbcType=JdbcType.VARCHAR),
         @Result(column="SEO_TITLE", property="seoTitle", jdbcType=JdbcType.VARCHAR),
         @Result(column="SORT_ORDER", property="sortOrder", jdbcType=JdbcType.INTEGER),
-        @Result(column="PARENT_CATEGORY_ID", property="parentCategoryId", jdbcType=JdbcType.INTEGER)
+        @Result(column="PARENT_CATEGORY_ID", property="parentCategoryId", jdbcType=JdbcType.INTEGER),
+        @Result(column="LOWEST_PRICE", property="lowestPrice", jdbcType=JdbcType.DECIMAL),
+        @Result(column="HIGHEST_PRICE", property="highestPrice", jdbcType=JdbcType.DECIMAL)
     })
     Category selectByPrimaryKey(Integer categoryId);
 
@@ -87,7 +91,7 @@ public interface CategoryMapper {
         "select",
         "CATEGORY_ID, CATEGORY_KEY, CATEGORY_NAME, CATEGORY_NO, CREATE_TIME, DESCRIPTION, ",
         "ENABLED, ICON_PATH, LEVEL, RECOMMEND, REMARK, SEO_DESCRIPTION, SEO_KEY, SEO_TITLE, ",
-        "SORT_ORDER, PARENT_CATEGORY_ID",
+        "SORT_ORDER, PARENT_CATEGORY_ID, LOWEST_PRICE, HIGHEST_PRICE",
         "from category"
     })
     @Results({
@@ -106,7 +110,9 @@ public interface CategoryMapper {
         @Result(column="SEO_KEY", property="seoKey", jdbcType=JdbcType.VARCHAR),
         @Result(column="SEO_TITLE", property="seoTitle", jdbcType=JdbcType.VARCHAR),
         @Result(column="SORT_ORDER", property="sortOrder", jdbcType=JdbcType.INTEGER),
-        @Result(column="PARENT_CATEGORY_ID", property="parentCategoryId", jdbcType=JdbcType.INTEGER)
+        @Result(column="PARENT_CATEGORY_ID", property="parentCategoryId", jdbcType=JdbcType.INTEGER),
+        @Result(column="LOWEST_PRICE", property="lowestPrice", jdbcType=JdbcType.DECIMAL),
+        @Result(column="HIGHEST_PRICE", property="highestPrice", jdbcType=JdbcType.DECIMAL)
     })
     List<Category> selectAll();
 
@@ -119,20 +125,22 @@ public interface CategoryMapper {
     @Update({
         "update category",
         "set CATEGORY_KEY = #{categoryKey,jdbcType=VARCHAR},",
-          "CATEGORY_NAME = #{categoryName,jdbcType=VARCHAR},",
-          "CATEGORY_NO = #{categoryNo,jdbcType=VARCHAR},",
-          "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},",
-          "DESCRIPTION = #{description,jdbcType=VARCHAR},",
-          "ENABLED = #{enabled,jdbcType=BIT},",
-          "ICON_PATH = #{iconPath,jdbcType=VARCHAR},",
-          "LEVEL = #{level,jdbcType=INTEGER},",
-          "RECOMMEND = #{recommend,jdbcType=BIT},",
-          "REMARK = #{remark,jdbcType=VARCHAR},",
-          "SEO_DESCRIPTION = #{seoDescription,jdbcType=VARCHAR},",
-          "SEO_KEY = #{seoKey,jdbcType=VARCHAR},",
-          "SEO_TITLE = #{seoTitle,jdbcType=VARCHAR},",
-          "SORT_ORDER = #{sortOrder,jdbcType=INTEGER},",
-          "PARENT_CATEGORY_ID = #{parentCategoryId,jdbcType=INTEGER}",
+        "CATEGORY_NAME = #{categoryName,jdbcType=VARCHAR},",
+        "CATEGORY_NO = #{categoryNo,jdbcType=VARCHAR},",
+        "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},",
+        "DESCRIPTION = #{description,jdbcType=VARCHAR},",
+        "ENABLED = #{enabled,jdbcType=BIT},",
+        "ICON_PATH = #{iconPath,jdbcType=VARCHAR},",
+        "LEVEL = #{level,jdbcType=INTEGER},",
+        "RECOMMEND = #{recommend,jdbcType=BIT},",
+        "REMARK = #{remark,jdbcType=VARCHAR},",
+        "SEO_DESCRIPTION = #{seoDescription,jdbcType=VARCHAR},",
+        "SEO_KEY = #{seoKey,jdbcType=VARCHAR},",
+        "SEO_TITLE = #{seoTitle,jdbcType=VARCHAR},",
+        "SORT_ORDER = #{sortOrder,jdbcType=INTEGER},",
+        "PARENT_CATEGORY_ID = #{parentCategoryId,jdbcType=INTEGER},",
+        "LOWEST_PRICE = #{lowestPrice,jdbcType=DECIMAL},",
+        "HIGHEST_PRICE = #{highestPrice,jdbcType=DECIMAL}",
         "where CATEGORY_ID = #{categoryId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Category record);
