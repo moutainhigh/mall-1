@@ -143,4 +143,17 @@ public class InsuranceInformedMatterGroupService implements IInsuranceInformedMa
     public List<InsuranceInformedMatterGroup> findList(int enabled){
         return insuranceInformedMatterGroupDao.findList(enabled);
     }
+
+    /**
+     * 更新事项组使用状态
+     * @author      likang
+     * @param groupId
+     * @return      void
+     * @exception
+     * @date        2018/7/20 10:15
+     */
+    @Override
+    public void enableInformedMatterGroupById(int groupId,int enabled){
+        insuranceInformedMatterGroupDao.enableInformedMatterGroupById(groupId,enabled);
+    }
 }

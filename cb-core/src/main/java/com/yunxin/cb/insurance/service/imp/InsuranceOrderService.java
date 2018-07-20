@@ -385,122 +385,68 @@ public class InsuranceOrderService implements IInsuranceOrderService {
 
                     }});
 
-//                    List<InsuranceInformedMatter> list=new ArrayList<InsuranceInformedMatter>(){
-//                        {
-//                            String matterDescription=insuranceInformedMatter.getMatterDescription();
-//                            matterDescription= matterDescription.substring(0,indexOf("."));
-//                            if(insuranceInformedMatter.getMatterGroup()!=null&&Hibernate.isInitialized(insuranceInformedMatter.getMatterGroup()))
-//                                matterDescription=insuranceInformedMatter.getMatterGroup().getDescription().substring(0,indexOf("."))+matterDescription;
-//                            final String lastMatterDescription=matterDescription;
-//                            //告知事项补充说明
-//                            if(insuranceOrderInformedMatter.getInsuredResult()){
-//
-//                                add( new InsuranceInformedMatter(){
-//                                    {
-//                                        setMatterDescription(lastMatterDescription+"&nbsp;&nbsp;"+insuranceOrderInformedMatter.getInsuredRemark());
-//                                    }
-//                                });
-//                            }
-//                            if(insuranceOrderInformedMatter.getPolicyholderResult()){
-//
-//                                add( new InsuranceInformedMatter(){
-//                                    {
-//                                        setMatterDescription(lastMatterDescription+"&nbsp;&nbsp;"+insuranceOrderInformedMatter.getPolicyholderRemark());
-//                                    }
-//                                });
-//                            }
-//                        }
-//                    };
-//                    int total=0;
-//
-//                    for (int i=0;i<insuranceOrderInformedMatterList.size();i++){
-//                        if(insuranceOrderInformedMatterList.get(i).getInsuredResult())
-//                            total++;
-//                        if(insuranceOrderInformedMatterList.get(i).getPolicyholderResult())
-//                            total++;
-//                    }
-//
-//                    int allTotal=total*2;
-//                    int page=0;
-//                    if(allTotal%52==0)
-//                        page=allTotal/52;
-//                    else
-//                        page=allTotal/52+1;
-//                    final int remark_page=page;
-                    List<List<Map<String,Object>>> list=new ArrayList<List<Map<String,Object>>>();
-                    List<Map<String,Object>> listStr=new ArrayList<Map<String,Object>>();
-                    List<Map<String,Object>> listStrTwo=new ArrayList<Map<String,Object>>();
-                    for (InsuranceOrderInformedMatter insuranceOrderInformedMatter:insuranceOrderInformedMatterList
-                            ) {
+                    /**
+                     * 告知事项补充说明
+                     */
+                    put("matter_remark",new ArrayList<List<Map<String,Object>>>(){
+                        {
+                            List<Map<String,Object>> listStr=new ArrayList<Map<String,Object>>();
+                            List<Map<String,Object>> listStrTwo=new ArrayList<Map<String,Object>>();
+                            for (InsuranceOrderInformedMatter insuranceOrderInformedMatter:insuranceOrderInformedMatterList
+                                    ) {
+                                InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(insuranceOrderInformedMatter.getInsuranceInformedMatter().getMatterId());
 
-                        InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(insuranceOrderInformedMatter.getInsuranceInformedMatter().getMatterId());
+                                String matterDescription=insuranceInformedMatter.getMatterDescription();
+                                if(matterDescription.contains("."))
+                                    matterDescription= matterDescription.substring(0,matterDescription.indexOf("."));
 
-                        String matterDescription=insuranceInformedMatter.getMatterDescription();
-                        if(matterDescription.contains("."))
-                            matterDescription= matterDescription.substring(0,matterDescription.indexOf("."));
+                                if(insuranceInformedMatter.getMatterGroup()!=null&&Hibernate.isInitialized(insuranceInformedMatter.getMatterGroup()))
+                                    matterDescription=insuranceInformedMatter.getMatterGroup().getDescription().substring(0,insuranceInformedMatter.getMatterGroup().getDescription().indexOf("."))+matterDescription;
+                                final String matterDescriptions=matterDescription;
+                                /**
+                                 * 被保人
+                                 */
+                                if(insuranceOrderInformedMatter.getInsuredResult()) {
+                                    Map<String,Object> map=new HashMap<String,Object>(){
+                                        {
+                                            put("title",matterDescriptions);
+                                            put("person","被保人：");
+                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
+                                        }
+                                    };
+                                    if (listStr.size() >= 26)
+                                        listStrTwo.add(map);
+                                    else
+                                        listStr.add(map);
 
-                        if(insuranceInformedMatter.getMatterGroup()!=null&&Hibernate.isInitialized(insuranceInformedMatter.getMatterGroup()))
-                            matterDescription=insuranceInformedMatter.getMatterGroup().getDescription().substring(0,insuranceInformedMatter.getMatterGroup().getDescription().indexOf("."))+matterDescription;
-                        Map<String,Object> map=new HashMap<String,Object>();
-                        if(listStr.size()>=26){
-                            if(insuranceOrderInformedMatter.getInsuredResult()) {
-                                map.put("title",matterDescription);
-                                map.put("person","被保人：");
-                                map.put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
-                                listStrTwo.add(map);
-                            }
-                            if(insuranceOrderInformedMatter.getPolicyholderResult()){
-                                map.put("title",matterDescription);
-                                map.put("person","投保人：");
-                                map.put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
-                                listStrTwo.add(map);
-                            }
-                        }else{
+                                }
+                                /**
+                                 * 投保人
+                                 */
+                                if(insuranceOrderInformedMatter.getPolicyholderResult()){
+                                    Map<String,Object> map=new HashMap<String,Object>(){
+                                        {
+                                            put("title",matterDescriptions);
+                                            put("person","投保人：");
+                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
+                                        }
+                                    };
+                                    if(listStr.size()>=26)
+                                        listStrTwo.add(map);
+                                    else
+                                        listStr.add(map);
+                                }
 
-                            if(insuranceOrderInformedMatter.getInsuredResult()) {
-                                map.put("title",matterDescription);
-                                map.put("person","被保人：");
-                                map.put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
-                                listStr.add(map);
+
                             }
-                            if(insuranceOrderInformedMatter.getPolicyholderResult()){
-                                map.put("title",matterDescription);
-                                map.put("person","投保人：");
-                                map.put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
-                                listStr.add(map);
-                            }
+
+                            if(listStr!=null&&listStr.size()>0)
+                                add(listStr);
+                            if(listStrTwo!=null&&listStrTwo.size()>0)
+                                add(listStrTwo);
                         }
 
-
-//                                    String matterDescription=insuranceInformedMatter.getMatterDescription();
-//                                    matterDescription= matterDescription.substring(0,indexOf("."));
-//                                    if(insuranceInformedMatter.getMatterGroup()!=null&&Hibernate.isInitialized(insuranceInformedMatter.getMatterGroup()))
-//                                        matterDescription=insuranceInformedMatter.getMatterGroup().getDescription().substring(0,indexOf("."))+matterDescription;
-//                                    final String lastMatterDescription=matterDescription;
-//                                    //告知事项补充说明
-//                                    if(insuranceOrderInformedMatter.getInsuredResult()){
-//
-//                                        add( new InsuranceInformedMatter(){
-//                                            {
-//                                                setMatterDescription(lastMatterDescription+"&nbsp;&nbsp;"+insuranceOrderInformedMatter.getInsuredRemark());
-//                                            }
-//                                        });
-//                                    }
-//                                    if(insuranceOrderInformedMatter.getPolicyholderResult()){
-//
-//                                        add( new InsuranceInformedMatter(){
-//                                            {
-//                                                setMatterDescription(lastMatterDescription+"&nbsp;&nbsp;"+insuranceOrderInformedMatter.getPolicyholderRemark());
-//                                            }
-//                                        });
-//                                    }
-//                                }
-                    }
-                    if(listStr.size()>0)
-                        list.add(listStr);
-                    if(listStrTwo.size()>0)
-                    list.add(listStrTwo);
-                    put("matter_remark",list);
+                    });
                     put("insurance_matterList",insuranceOrderInformedMatterList);
 
 

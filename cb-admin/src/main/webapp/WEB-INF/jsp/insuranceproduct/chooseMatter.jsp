@@ -10,11 +10,12 @@
                 </div>
                 <div class="toolbar-field">
                     <input type="text" data-filter="matterDescription" data-operator="contains" class="form-control grid-filter" placeholder="事项描述"/>
+                    <input type="hidden" value="1" data-filter="enabled" data-operator="eq" class="form-control grid-filter" placeholder="启用状态"/>
                 </div>
             </div>
             <div class="pull-left">
                 <div class="toolbar-field">
-                    <strong>事项描述:</strong>
+                    <strong>事项组:</strong>
                 </div>
                 <div class="toolbar-field">
                     <div class="toolbar-field">
@@ -69,7 +70,7 @@
     </div>
     <div class="table-wrapper">
         <kendo:grid name="commodityGrid" pageable="true" sortable="true" filterable="true" selectable="true" height="500">
-            <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="8"/>
+            <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="6"/>
             <kendo:grid-filterable extra="false">
                 <kendo:grid-filterable-messages filter="查询" clear="清除" info="请输入查询条件:"/>
                 <kendo:grid-filterable-operators>

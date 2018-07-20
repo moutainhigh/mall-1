@@ -169,7 +169,8 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="订单编号" field="codeNo" width="100px"/>
+                            <kendo:grid-column title="ID" field="codeId" width="100px"/>
+                            <kendo:grid-column title="合同编号" field="codeNo" width="100px"/>
                             <kendo:grid-column filterable="false" title="是否使用" field="useed" width="100px"
                                                template="#= useed ? '是' : '否' #"/>
                             <kendo:grid-column filterable="false" title="创建时间" field="createTime"

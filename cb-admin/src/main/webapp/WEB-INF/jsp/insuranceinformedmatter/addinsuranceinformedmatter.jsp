@@ -103,7 +103,7 @@
             <div class="inner-padding">
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
-                    <legend>事项组</legend>
+                    <legend>事项添加</legend>
                     <form:form id="validateSubmitForm" action="addinsuranceInformedMatter.do"
                                cssClass="form-horizontal" method="post"
                                commandName="insuranceInformedMatter">

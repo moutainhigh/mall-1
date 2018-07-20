@@ -5,6 +5,7 @@ package com.yunxin.core.persistence;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.google.common.collect.Lists;
+import com.yunxin.core.util.CalendarUtils;
 import com.yunxin.core.util.EumnUtil;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -233,7 +234,7 @@ public class PageSpecification<T> implements Specification<T> {
                 value = Boolean.parseBoolean(value.toString());
             } else if (type == Date.class){
                 String input = value.toString();
-                value = df.parse(input);
+                value = CalendarUtils.attemptParseDate(input);
             }else if (type.isEnum()){
                 value= EumnUtil.parseEumn(type, value.toString());
             }
