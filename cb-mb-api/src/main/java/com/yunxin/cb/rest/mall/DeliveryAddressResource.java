@@ -48,14 +48,14 @@ public class DeliveryAddressResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
     })
-    @GetMapping(value = "delectDeliveryAddress/{addressId}")
-    public ResponseResult delectDeliveryAddress(@PathVariable(value = "addressId") int addressId){
+    @PostMapping(value = "delectDeliveryAddress")
+    public ResponseResult delectDeliveryAddress(@RequestParam(value = "addressId") int addressId){
         deliveryAddressService.deleteByPrimaryKey(addressId);
         return new ResponseResult(Result.SUCCESS);
     }
     @ApiOperation(value = "更新收货地址")
-    @PostMapping(value = "upDeliveryAddress")
-    public ResponseResult upDeliveryAddress(@RequestBody DeliveryAddress deliveryAddress){
+    @PostMapping(value = "updateDeliveryAddress")
+    public ResponseResult updateDeliveryAddress(@RequestBody DeliveryAddress deliveryAddress){
         deliveryAddressService.updateByPrimaryKey(deliveryAddress);
         return new ResponseResult(Result.SUCCESS);
     }

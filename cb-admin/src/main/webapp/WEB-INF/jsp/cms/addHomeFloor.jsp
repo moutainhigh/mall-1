@@ -16,6 +16,25 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if(valid){
+                        if($("#sortOrder").val() == 2){
+                            if ($('input[name="brandId"]').length==0) {
+                                bootbox.alert("请至少添加一个品牌!");
+                                return false;
+                            }
+                        }else if($("#sortOrder").val() == 3){
+                            if ($('input[name="brandId"]').length==0) {
+                                bootbox.alert("请至少添加一个分类!");
+                                return false;
+                            }
+                        }else if($("#sortOrder").val() == 5){
+                            if ($('input[name="brandId"]').length==0) {
+                                bootbox.alert("请至少添加一个分类!");
+                                return false;
+                            }
+                        }else{
+                            bootbox.alert("请填写正确的序号!");
+                            return false;
+                        }
                         /*if (null == $("#iconPath").val() || "" == $("#iconPath").val()) {
                             bootbox.alert("请选择图标!");
                             return false;
@@ -121,7 +140,7 @@
                                 <label><span class="asterisk">*</span>排序：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[integer],min[0]]" path="sortOrder" maxlength="4"/>
+                                <form:input id="sortOrder" cssClass="form-control validate[required,custom[integer],min[0]]" path="sortOrder" maxlength="4"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
