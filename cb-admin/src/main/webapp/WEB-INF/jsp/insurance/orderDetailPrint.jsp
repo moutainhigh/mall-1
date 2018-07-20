@@ -2367,14 +2367,14 @@
                                 <div class="s-insure-content">
                                     <div style="height: 90px;border: #000000 1px solid;background-color: #FFFBD6;margin: -1px;box-sizing: border-box;">
                                         <div style="text-align: left;padding: 18px;line-height: 1.5;font-size: 18px;text-indent: 2rem;">
-                                            本人对福德生命人寿保险股份有限公司的投保或合同变更告知有下列补充和修改。本人明白并同意这些补充和修改是保险合同成立或变更的依据，并成为保险合同的组成部分。
+                                            本人对富德生命人寿保险股份有限公司的投保或合同变更告知有下列补充和修改。本人明白并同意这些补充和修改是保险合同成立或变更的依据，并成为保险合同的组成部分。
                                         </div>
                                     </div>
                                     <div>
                                         <div style="height: 910px;box-sizing: border-box;">
                                             <c:forEach items="${matterRemark}" var="matterRemarks">
                                             <div style="display: flex;padding: 17px 10px;font-size: 15px;text-align: left;">
-                                                <div style="display: flex; flex: 0 0 20px;">
+                                                <div style="display: flex; flex: 0 0 25px;">
                                                         <%--C1.--%>
                                                         ${matterRemarks.title}
                                                 </div>
