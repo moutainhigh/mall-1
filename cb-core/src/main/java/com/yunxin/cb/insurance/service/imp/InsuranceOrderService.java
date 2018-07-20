@@ -411,17 +411,19 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 /**
                                  * 被保人
                                  */
-                                if(insuranceOrderInformedMatter.getInsuredResult()) {
+                                if(insuranceOrderInformedMatter.getInsuredResult()||insuranceOrderInformedMatter.getPolicyholderResult()) {
                                     Map<String,Object> map=new HashMap<String,Object>(){
                                         {
                                             put("title",matterDescriptions);
-                                            put("person","被保人：");
-                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
+//                                            put("insured_person","被保人：");
+                                            put("insured_remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
+//                                            put("policyholder_person","投保人：");
+                                            put("policyholder_remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
                                         }
                                     };
                                     if(listStr.size()>=12&&listStrTwo.size()>=12)
                                         listStrThree.add(map);
-                                    else if(listStrTwo.size()>=12&&listStrTwo.size()<12)
+                                    else if(listStr.size()>=12&&listStrTwo.size()<12)
                                         listStrTwo.add(map);
                                     else
                                         listStr.add(map);
@@ -430,21 +432,21 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 /**
                                  * 投保人
                                  */
-                                if(insuranceOrderInformedMatter.getPolicyholderResult()){
-                                    Map<String,Object> map=new HashMap<String,Object>(){
-                                        {
-                                            put("title",matterDescriptions);
-                                            put("person","投保人：");
-                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
-                                        }
-                                    };
-                                    if(listStr.size()>=12&&listStrTwo.size()>=12)
-                                        listStrThree.add(map);
-                                    else if(listStrTwo.size()>=12&&listStrTwo.size()<12)
-                                        listStrTwo.add(map);
-                                    else
-                                        listStr.add(map);
-                                }
+//                                if(insuranceOrderInformedMatter.getPolicyholderResult()){
+//                                    Map<String,Object> map=new HashMap<String,Object>(){
+//                                        {
+//                                            put("title",matterDescriptions);
+//                                            put("person","投保人：");
+//                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
+//                                        }
+//                                    };
+//                                    if(listStr.size()>=12&&listStrTwo.size()>=12)
+//                                        listStrThree.add(map);
+//                                    else if(listStr.size()>=12&&listStrTwo.size()<12)
+//                                        listStrTwo.add(map);
+//                                    else
+//                                        listStr.add(map);
+//                                }
 
 
                             }
