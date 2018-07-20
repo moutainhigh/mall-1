@@ -42,19 +42,19 @@
 
         $(function () {
 
-            $("#insuredProvince").val(insuredProvince);
+            $("#insuredProvince").text(insuredProvince);
 
-            $("#insuredCity").val(insuredCity);
+            $("#insuredCity").text(insuredCity);
 
-            $("#insuredDistrict").val(insuredDistrict);
+            $("#insuredDistrict").text(insuredDistrict);
 
-            $("#policyholderProvince").val(policyholderProvince);
-            $("#policyholderCity").val(policyholderCity);
-            $("#policyholderDistrict").val(policyholderDistrict);
+            $("#policyholderProvince").text(policyholderProvince);
+            $("#policyholderCity").text(policyholderCity);
+            $("#policyholderDistrict").text(policyholderDistrict);
 
-            $("#policyholderProvinces").val(policyholderProvince);
-            $("#policyholderCitys").val(policyholderCity);
-            $("#policyholderDistricts").val(policyholderDistrict);
+            $("#policyholderProvinces").text(policyholderProvince);
+            $("#policyholderCitys").text(policyholderCity);
+            $("#policyholderDistricts").text(policyholderDistrict);
 
             $("#insuredCareer").html(insuredCareer);
 
@@ -392,12 +392,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 13.住址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;" id="insuredProvince"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;" id="insuredCity"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 25px;" id="insuredDistrict"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="insuredProvince"></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="insuredCity"></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="insuredDistrict"></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderInsured.insuredAddress}</div>
                                         </div>
@@ -422,7 +428,7 @@
                                 </div>
                                 <div class="div-line-con div-row-3">
                                     <div class="title" style="float: left;">A 15.职业&nbsp;</div>
-                                    <%--<input readonly class="a-input" type="text" value="" id=""/>--%>
+                                    <%--<input readonly class="a-input" type="text" value="" />--%>
                                     <div  style="float: left;width: 200px;font-size: 10px;position: absolute" id="insuredCareer"></div>
                                 </div>
                                 <div class="div-line-con div-row-3">
@@ -434,12 +440,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 17.单位地址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;"></div>
                                         </div>
@@ -614,12 +626,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 33.住址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text" style="margin-left:40px; " id="policyholderProvince"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 30px;" id="policyholderCity"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 20px;" id="policyholderDistrict"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderProvince"></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderCity"></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderDistrict"></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
                                         </div>
@@ -656,12 +674,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 37.单位地址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;"></div>
                                         </div>
@@ -700,11 +724,22 @@
                             <div class="div-line">
                                 <div class="div-line-con" style="padding: 7px 5px 7px 10px;">
                                     A 41. 信函寄往
-                                    <div > <input readonly class="a-input" type="text" id="policyholderProvinces" style="width: 60px;"/>省</div>
-                                    <div><input readonly class="a-input" type="text" id="policyholderCitys"  style="width: 80px;"/>市</div>
-                                    <div><input readonly class="a-input" type="text" id="policyholderDistricts"  style="width: 70px;"/>区/县</div>
-                                    <div style="vertical-align: top">
-                                        <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
+                                    <div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderProvinces"></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderCitys" ></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderDistricts"></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
+                                        <div style="vertical-align: top">
+                                            <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="div-line-con div-postcode" style="margin-right: 120px;">
