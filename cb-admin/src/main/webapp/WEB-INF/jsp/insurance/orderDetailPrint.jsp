@@ -262,7 +262,6 @@ debugger;
                             <div class="div-line">
                                 <div class="div-line-con div-row-2">
                                     <div class="title">A 1.姓名&nbsp;${map.insuranceOrder.insuranceOrderInsured.insuredName}</div>
-
                                 </div>
                                 <div class="div-line-con div-sex">
                                     <div class="title">A 2.性别</div>
@@ -396,7 +395,9 @@ debugger;
                                         市
                                         <input readonly class="b-input" type="text" style="margin-left: 25px;" id="insuredDistrict"/>
                                         区/县
-                                        <input readonly class="d-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredAddress}"/>
+                                        <div style="vertical-align: top">
+                                            <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderInsured.insuredAddress}</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
@@ -436,7 +437,9 @@ debugger;
                                         市
                                         <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
                                         区/县
-                                        <input readonly class="d-input" type="text"/>
+                                        <div style="vertical-align: top">
+                                            <div style="width: 380px;position: absolute;word-break: break-all;"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
@@ -614,7 +617,10 @@ debugger;
                                         市
                                         <input readonly class="b-input" type="text" style="margin-left: 20px;" id="policyholderDistrict"/>
                                         区/县
-                                        <input readonly class="d-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}"/>
+                                        <div style="vertical-align: top">
+                                            <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
+                                        </div>
+                                        <%--<input readonly class="d-input" type="text" value=""/>--%>
                                     </div>
                                 </div>
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
@@ -653,7 +659,9 @@ debugger;
                                         市
                                         <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
                                         区/县
-                                        <input readonly class="d-input" type="text"/>
+                                        <div style="vertical-align: top">
+                                            <div style="width: 380px;position: absolute;word-break: break-all;"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
