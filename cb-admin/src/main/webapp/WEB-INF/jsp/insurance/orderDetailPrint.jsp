@@ -203,7 +203,7 @@
             </div><!-- End .actionbar-->
 
 
-            <div class="th-tab prints" id="exportToPdf" onclick="downPdf()">
+            <div class="th-tab prints" id="exportToPdf" >
                 <%--第一页--%>
                 <div class="hidden-prints">
                     <div style="height: 1488px;">
