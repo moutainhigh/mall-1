@@ -738,11 +738,11 @@
                                             区/县
                                         </div>
                                         <div style="vertical-align: top">
-                                            <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
+                                            <div style="width: 180px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="div-line-con div-postcode" style="margin-right: 120px;">
+                                <div class="div-line-con div-postcode" style="margin-right: 60px;">
                                     电话&nbsp;${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}
                                 </div>
                                 <div class="div-line-con div-postcode" style="margin-right:  35px;">
