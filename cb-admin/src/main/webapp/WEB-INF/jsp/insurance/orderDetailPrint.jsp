@@ -2334,7 +2334,13 @@
                             <div class="header">
                                 <img src="../images/orderHeader/newlogo.png" width="650px"/>
                                 <h2 style="margin-top: 20px;">
-                                    <div style="position:absolute;margin-left: 60px;"></div>
+                                    <div style="position:absolute;margin-left: 50px;">
+                                        <c:if test="${map.insuranceOrder.barCode!=null&&map.insuranceOrder.barCode!=''}">
+                                            <img src='data:image/jpeg;base64,${map.insuranceOrder.barCode}' width="200px">
+                                            <div style="font-size: 18px">${map.insuranceOrder.orderCode}</div>
+                                        </c:if>
+
+                                    </div>
                                     <div style="display: inline-block;letter-spacing: 8px;">
                                         投保或合同变更补充声明
                                     </div>

@@ -397,6 +397,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                             List<Map<String,Object>> listStr=new ArrayList<Map<String,Object>>();
                             List<Map<String,Object>> listStrTwo=new ArrayList<Map<String,Object>>();
                             List<Map<String,Object>> listStrThree=new ArrayList<Map<String,Object>>();
+                            List<Map<String,Object>> listStrFour=new ArrayList<Map<String,Object>>();
                             for (InsuranceOrderInformedMatter insuranceOrderInformedMatter:insuranceOrderInformedMatterList
                                     ) {
                                 InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(insuranceOrderInformedMatter.getInsuranceInformedMatter().getMatterId());
@@ -421,9 +422,11 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                             put("policyholder_remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
                                         }
                                     };
-                                    if(listStr.size()>=9&&listStrTwo.size()>=9)
+                                    if(listStr.size()>=8&&listStrTwo.size()>=8&&listStrThree.size()>=8)
+                                        listStrFour.add(map);
+                                    else if(listStr.size()>=8&&listStrTwo.size()>=8&&listStrThree.size()<8)
                                         listStrThree.add(map);
-                                    else if(listStr.size()>=9&&listStrTwo.size()<9)
+                                    else if(listStr.size()>=8&&listStrTwo.size()<8)
                                         listStrTwo.add(map);
                                     else
                                         listStr.add(map);
@@ -457,6 +460,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 add(listStrTwo);
                             if(listStrThree!=null&&listStrThree.size()>0)
                                 add(listStrThree);
+                            if(listStrFour!=null&&listStrFour.size()>0)
+                                add(listStrFour);
                         }
 
                     });
