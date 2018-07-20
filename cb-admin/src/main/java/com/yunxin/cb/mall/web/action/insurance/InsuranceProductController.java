@@ -1,26 +1,15 @@
 package com.yunxin.cb.mall.web.action.insurance;
 
-import com.yunxin.cb.insurance.entity.*;
-import com.yunxin.cb.insurance.meta.InsuranceOrderState;
-import com.yunxin.cb.insurance.service.IInsuranceInformedMatterService;
-import com.yunxin.cb.insurance.service.IInsuranceOrderService;
+import com.yunxin.cb.insurance.entity.InsuranceProduct;
 import com.yunxin.cb.insurance.service.IInsuranceProductService;
-import com.yunxin.cb.util.HttpsUtils;
 import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.core.util.CalendarUtils;
-import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.xhtmlrenderer.pdf.ITextFontResolver;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
 
 
 /**

@@ -13,7 +13,6 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
   <title>反馈详情</title>
 
   <script type="text/javascript">
@@ -36,34 +35,9 @@
 </head>
 <body>
 
-
-  <!-- ********************************************
-       * SIDEBAR MAIN:                            *
-       *                                          *
-       * the part which contains the main         *
-       * navigation, logo, search and more...     *
-       * (parts can be in both sidebars).         *
-       ******************************************** -->
-
   <jsp:include page="../layouts/left.jsp"/>
-  <!-- End aside -->
-
-  <!-- ********************************************
-       * SIDEBAR SEC:                             *
-       *                                          *
-       * the part which contains things like      *
-       * calendar, users, lists, blocks and       *
-       * much more.                               *
-       ******************************************** -->
-
   <div id="sidebar-sec" class="sidebar">
-
     <div class="sidebar-sec-top"></div>
-
-      <!-- ********** -->
-    <!-- NEW MODULE -->
-    <!-- ********** -->
-
     <div class="sidebar-module">
       <form class="input-group">
         <input type="text" name="" class="form-control" placeholder="Type A head..." id="typeahead-sidebar-search"/>
@@ -76,13 +50,7 @@
         </div>
       </form>
     </div>
-    <!-- End .sidebar-module -->
-
     <div class="sidebar-line"><!-- A seperator line --></div>
-
-    <!-- * Tabs can be removed, if so dont forget * -->
-    <!-- * to remove the .tab-pane divs(wrapper). * -->
-
     <ul class="ext-tabs-sidebar">
       <li class="active">
         <a href="#sidebar-tab-3"><i class="fa fa-group"></i> Users</a>
@@ -94,10 +62,6 @@
     <!-- End .ext-tabs-sidebar -->
     <div class="tab-content">
       <div id="sidebar-tab-3" class="tab-pane active">
-
-        <!-- ********** -->
-        <!-- NEW MODULE -->
-        <!-- ********** -->
 
         <div class="sidebar-module">
           <ul class="mini-list">
@@ -283,13 +247,6 @@
 
   <div id="main" class="clearfix">
 
-    <!-- ********************************************
-         * MAIN HEADER:                             *
-         *                                          *
-         * the part which contains the breadcrumbs, *
-         * dropdown menus, toggle sidebar button    *
-         ******************************************** -->
-
     <header id="header-main">
       <div class="header-main-top">
         <div class="pull-left">
@@ -325,13 +282,6 @@
 
     <div id="content" class="clearfix">
 
-      <!-- ********************************************
-           * HEADER SEC:                              *
-           *                                          *
-           * the part which contains the page title,  *
-           * buttons and dropdowns.                   *
-           ******************************************** -->
-
       <header id="header-sec">
         <div class="inner-padding">
           <div class="pull-left">
@@ -344,12 +294,6 @@
         <!-- End .inner-padding -->
       </header>
       <!-- End #header-sec -->
-
-      <!-- ********************************************
-           * WINDOW:                                  *
-           *                                          *
-           * the part which contains the main content *
-           ******************************************** -->
 
       <div class="window">
         <div class="actionbar">

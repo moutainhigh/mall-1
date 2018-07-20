@@ -2,28 +2,17 @@ package com.yunxin.cb.mall.web.action.insurance;
 
 import com.yunxin.cb.insurance.entity.InsuranceInformedMatter;
 import com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup;
-import com.yunxin.cb.insurance.entity.InsuranceOrderCode;
-import com.yunxin.cb.insurance.entity.InsuranceProduct;
 import com.yunxin.cb.insurance.service.IInsuranceInformedMatterGroupService;
 import com.yunxin.cb.insurance.service.IInsuranceInformedMatterService;
-import com.yunxin.cb.insurance.service.IInsuranceOrderCodeService;
-import com.yunxin.cb.insurance.service.IInsuranceProductService;
-import com.yunxin.cb.mall.web.util.ExcelUtils;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-import java.util.*;
+import java.util.Date;
 
 /**
 * @Description:    事项控制器
@@ -39,8 +28,6 @@ public class InsuranceInformedMatterController {
     private IInsuranceInformedMatterService insuranceInformedMatterService;
     @Resource
     private IInsuranceInformedMatterGroupService insuranceInformedMatterGroupService;
-    @Resource
-    private IInsuranceProductService insuranceProductService;
 
     /**
      * 跳转到事项页面

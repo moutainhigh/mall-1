@@ -42,19 +42,19 @@
 
         $(function () {
 
-            $("#insuredProvince").val(insuredProvince);
+            $("#insuredProvince").text(insuredProvince);
 
-            $("#insuredCity").val(insuredCity);
+            $("#insuredCity").text(insuredCity);
 
-            $("#insuredDistrict").val(insuredDistrict);
+            $("#insuredDistrict").text(insuredDistrict);
 
-            $("#policyholderProvince").val(policyholderProvince);
-            $("#policyholderCity").val(policyholderCity);
-            $("#policyholderDistrict").val(policyholderDistrict);
+            $("#policyholderProvince").text(policyholderProvince);
+            $("#policyholderCity").text(policyholderCity);
+            $("#policyholderDistrict").text(policyholderDistrict);
 
-            $("#policyholderProvinces").val(policyholderProvince);
-            $("#policyholderCitys").val(policyholderCity);
-            $("#policyholderDistricts").val(policyholderDistrict);
+            $("#policyholderProvinces").text(policyholderProvince);
+            $("#policyholderCitys").text(policyholderCity);
+            $("#policyholderDistricts").text(policyholderDistrict);
 
             $("#insuredCareer").html(insuredCareer);
 
@@ -203,9 +203,8 @@
             </div><!-- End .actionbar-->
 
 
-            <div class="th-tab prints" id="exportToPdf" onclick="downPdf()">
+            <div class="th-tab prints" id="exportToPdf" >
                 <%--第一页--%>
-                <div style="height: 356px;width: 100%;z-index: 20;position: absolute;"></div>
                 <div class="hidden-prints">
                     <div style="height: 1488px;">
                         <div class="header">
@@ -214,7 +213,12 @@
                             <%--<h2>FUNDE SINO LIFE INSUANCE CO.,LTD.</h2>--%>
                             <h2>个人保险投保单（经代渠道）</h2>
                             <div class="header-contract">
-                                <div  style="width: 400px;float: left;display: inline-block;margin-top: 10px;"></div>
+                                <div  style="width: 400px;float: left;display: inline-block;margin-top: 20px;text-align: center">
+                                    <c:if test="${map.insuranceOrder.barCode!=null&&map.insuranceOrder.barCode!=''}">
+                                        <img src='data:image/jpeg;base64,${map.insuranceOrder.barCode}' style="width: 300px; height: 50px">
+                                        <div style="letter-spacing: 4.5px">${map.insuranceOrder.orderCode}</div>
+                                    </c:if>
+                                    </div>
                                 <div class="contract" style="width: 450px;"></div>
                                 <div class="contract">
                                     <p>（本单所示金额单位：人民币元）</p>
@@ -335,7 +339,7 @@
                                         <input readonly class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_p_year!=null&&map.insurance_p_year!=''}">checked</c:if>/>
                                         有效期至
                                         <div>
-                                            <input readonly class="c-input" type="text" style="margin-left: 10px;" value="${map.insurance_p_year}"/>
+                                            <input readonly class="c-input" type="text" style="margin-left: 10px;width: 40px;" value="${map.insurance_p_year}"/>
                                             年
                                             <input readonly class="c-input" type="text" value="${map.insurance_p_month}"/>
                                             月
@@ -388,12 +392,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 13.住址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;" id="insuredProvince"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;" id="insuredCity"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 25px;" id="insuredDistrict"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="insuredProvince"></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="insuredCity"></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="insuredDistrict"></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderInsured.insuredAddress}</div>
                                         </div>
@@ -418,7 +428,7 @@
                                 </div>
                                 <div class="div-line-con div-row-3">
                                     <div class="title" style="float: left;">A 15.职业&nbsp;</div>
-                                    <%--<input readonly class="a-input" type="text" value="" id=""/>--%>
+                                    <%--<input readonly class="a-input" type="text" value="" />--%>
                                     <div  style="float: left;width: 200px;font-size: 10px;position: absolute" id="insuredCareer"></div>
                                 </div>
                                 <div class="div-line-con div-row-3">
@@ -430,12 +440,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 17.单位地址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;"></div>
                                         </div>
@@ -555,8 +571,8 @@
                                     <div>
                                         <input readonly class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.policy_p_year!=null&&map.policy_p_year!=''}">checked</c:if>/>
                                         有效期至
-                                        <div style="margin-left: 10px;">
-                                            <input readonly class="c-input" type="text" value="${map.policy_p_year}"/>
+                                        <div style="margin-left: 5px;">
+                                            <input readonly class="c-input" type="text" style="width: 40px;" value="${map.policy_p_year}"/>
                                             年
                                             <input readonly class="c-input" type="text" value="${map.policy_p_month}"/>
                                             月
@@ -610,12 +626,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 33.住址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text" style="margin-left:40px; " id="policyholderProvince"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 30px;" id="policyholderCity"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 20px;" id="policyholderDistrict"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderProvince"></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderCity"></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderDistrict"></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
                                         </div>
@@ -652,12 +674,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 37.单位地址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;"></div>
                                         </div>
@@ -696,12 +724,25 @@
                             <div class="div-line">
                                 <div class="div-line-con" style="padding: 7px 5px 7px 10px;">
                                     A 41. 信函寄往
-                                    <div > <input readonly class="a-input" type="text" id="policyholderProvinces" style="width: 60px;"/>省</div>
-                                    <div><input readonly class="a-input" type="text" id="policyholderCitys"  style="width: 80px;"/>市</div>
-                                    <div><input readonly class="a-input" type="text" id="policyholderDistricts"  style="width: 70px;"/>区/县</div>
-                                    &nbsp; ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
+                                    <div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderProvinces"></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderCitys" ></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderDistricts"></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
+                                        <div style="vertical-align: top">
+                                            <div style="width: 180px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="div-line-con div-postcode" style="margin-right: 120px;">
+                                <div class="div-line-con div-postcode" style="margin-right: 60px;">
                                     电话&nbsp;${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}
                                 </div>
                                 <div class="div-line-con div-postcode" style="margin-right:  35px;">
@@ -1796,10 +1837,18 @@
                                             <span class="d-body-font-three">投保人签名：
                                                 </span>
                                         </div>
-                                        <div class="a-input-div" style="width: 130px;">
-                                            <span class="f-body-font-three">&nbsp;<img style="width: 100px;height: 20px;"
-                                                                                       src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></span>
+                                        <div>
+                                            <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                                 src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
                                         </div>
+                                        <div class="a-input-div" style="width: 130px;position: relative">
+                                            <%--<div>--%>
+                                                <%--<img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"--%>
+                                                     <%--src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>--%>
+                                            <%--</div>--%>
+                                            <%--<span class="f-body-font-three"></span>--%>
+                                        </div>
+
                                     </div>
                                     <div class="div-line-con-three" style="border-left: solid 00px;">
                                         <div class="title">
@@ -2352,8 +2401,13 @@
                                         </div>
                                         <div class="s-name" style="text-align: right;width: 300px;">
                                             <div>投保人签名</div>
-                                            <div class="s-name-content" style="width: 150px;"><img style="width: 100px;height: 20px;"
-                                                                                                   src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></div>
+                                            <div>
+                                                <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                                     src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
+                                            </div>
+                                            <div class="s-name-content" style="width: 150px;position: relative">
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="s-head-name" style="margin-top: 20px;">

@@ -3,13 +3,10 @@ package com.yunxin.cb.mall.web.action.insurance;
 import com.yunxin.cb.insurance.entity.InsuranceInformedMatterGroup;
 import com.yunxin.cb.insurance.service.IInsuranceInformedMatterGroupService;
 import com.yunxin.cb.security.SecurityConstants;
-import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

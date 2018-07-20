@@ -13,9 +13,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -49,23 +46,6 @@ public class InsuranceOrderCodeService implements IInsuranceOrderCodeService {
      */
     @Override
     public Page<InsuranceOrderCode> pageInsuranceOrderCode(PageSpecification<InsuranceOrderCode> query){
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
-        for (PageSpecification.FilterDescriptor filterDescriptor:list
-                ) {
-            if("createTime".equals(filterDescriptor.getField())){
-
-                Date createTime= null;
-                SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
-                    String createTimes=simpleDateFormat.format(dates);
-                    filterDescriptor.setValue(createTimes);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         query.setCustomSpecification(new CustomSpecification<InsuranceOrderCode>() {
             @Override
             public void buildFetch(Root<InsuranceOrderCode> root) {
