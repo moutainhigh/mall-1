@@ -167,6 +167,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     put("matter",description);
                                     put("insured",list.getInsuredResult());
                                     put("insured_remark",list.getInsuredRemark());
+                                    put("policy",list.getPolicyholderResult());
+                                    put("policy_remark",list.getPolicyholderRemark());
                                     put("no","2");
                                 }
 
@@ -394,6 +396,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                         {
                             List<Map<String,Object>> listStr=new ArrayList<Map<String,Object>>();
                             List<Map<String,Object>> listStrTwo=new ArrayList<Map<String,Object>>();
+                            List<Map<String,Object>> listStrThree=new ArrayList<Map<String,Object>>();
                             for (InsuranceOrderInformedMatter insuranceOrderInformedMatter:insuranceOrderInformedMatterList
                                     ) {
                                 InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(insuranceOrderInformedMatter.getInsuranceInformedMatter().getMatterId());
@@ -416,7 +419,9 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                             put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
                                         }
                                     };
-                                    if (listStr.size() >= 26)
+                                    if(listStr.size()>=12&&listStrTwo.size()>=12)
+                                        listStrThree.add(map);
+                                    else if(listStrTwo.size()>=12&&listStrTwo.size()<12)
                                         listStrTwo.add(map);
                                     else
                                         listStr.add(map);
@@ -433,7 +438,9 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                             put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
                                         }
                                     };
-                                    if(listStr.size()>=26)
+                                    if(listStr.size()>=12&&listStrTwo.size()>=12)
+                                        listStrThree.add(map);
+                                    else if(listStrTwo.size()>=12&&listStrTwo.size()<12)
                                         listStrTwo.add(map);
                                     else
                                         listStr.add(map);
@@ -446,6 +453,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                 add(listStr);
                             if(listStrTwo!=null&&listStrTwo.size()>0)
                                 add(listStrTwo);
+                            if(listStrThree!=null&&listStrThree.size()>0)
+                                add(listStrThree);
                         }
 
                     });
