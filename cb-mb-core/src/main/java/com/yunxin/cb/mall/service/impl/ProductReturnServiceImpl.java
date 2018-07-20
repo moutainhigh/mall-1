@@ -10,14 +10,19 @@ import com.yunxin.cb.mall.mapper.ProductMapper;
 import com.yunxin.cb.mall.mapper.ProductReturnMapper;
 import com.yunxin.cb.mall.service.ProductReturnService;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
+import com.yunxin.cb.util.page.PageFinder;
+import com.yunxin.cb.util.page.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -72,8 +77,42 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         order.setReturnRefundState(ReturnRefundState.APPLY_REFUND.ordinal());
         orderMapper.updateByPrimaryKey(order);
         //添加退货申请
-        productReturnMapper.insert(productReturn);
+        productReturnMapper.insert(nReturn);
         return productReturn;
+    }
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<ProductReturn> listProductReturn(Query q) {
+        List<ProductReturn> list = productReturnMapper.pageList(q);
+        return list;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public PageFinder<ProductReturn> pageProductReturn(Query q) {
+        PageFinder<ProductReturn> page = new PageFinder<ProductReturn>(q.getPageNo(), q.getPageSize());
+        List<ProductReturn> list = null;
+        long rowCount = 0L;
+        try {
+            //调用dao查询满足条件的分页数据
+            list = productReturnMapper.pageList(q);
+            //调用dao统计满足条件的记录总数
+            rowCount = productReturnMapper.count(q);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        //如list为null时，则改为返回一个空列表
+        list = list == null ? new ArrayList<ProductReturn>(0) : list;
+        //将分页数据和记录总数设置到分页结果对象中
+        page.setData(list);
+        page.setRowCount(rowCount);//记录总数
+        page.setPageCount((int)rowCount);//总页数
+        return page;
+    }
+
+    @Override
+    public ProductReturn getProductReturn(Integer productReturnId, Integer customerId){
+        return productReturnMapper.selectByProductReturnIdAndCustomerId(productReturnId, customerId);
     }
 
 }

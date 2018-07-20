@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.ProductReturn;
+import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
@@ -156,4 +157,47 @@ public interface ProductReturnMapper {
     })
     @ResultMap(value="productReturnMap")
     ProductReturn selectByOrderId(@Param("orderId") Integer orderId);
+
+    @Select({
+            "<script>",
+            "select",
+            columns,
+            "from product_return",
+            "where 1=1",
+            "<if test='data.customerId!=null'>",
+            "and CUSTOMER_ID = #{data.customerId}",
+            "</if>",
+            "<if test='data.returnId!=null'>",
+            "and RETURN_ID = #{data.returnId}",
+            "</if>",
+            "<if test='data.orderId!=null'>",
+            "and ORDER_ID = #{data.orderId}",
+            "</if>",
+            "ORDER BY APPLY_TIME DESC",
+            "<if test='pageable==\"true\"'>",
+            "LIMIT #{rowIndex},#{pageSize}",
+            "</if>",
+            "</script>"
+    })
+    @ResultMap(value="productReturnMap")
+    List<ProductReturn> pageList(Query q);
+
+    @Select({
+            "<script>",
+            "select",
+            "count(RETURN_ID)",
+            "from product_return",
+            "where 1=1",
+            "<if test='data.customerId!=null'>",
+            "and CUSTOMER_ID = #{data.customerId}",
+            "</if>",
+            "<if test='data.returnId!=null'>",
+            "and RETURN_ID = #{data.returnId}",
+            "</if>",
+            "<if test='data.orderId!=null'>",
+            "and ORDER_ID = #{data.orderId}",
+            "</if>",
+            "</script>"
+    })
+    long count(Query q);
 }
