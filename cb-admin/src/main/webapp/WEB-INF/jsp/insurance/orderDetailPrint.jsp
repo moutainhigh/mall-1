@@ -1793,10 +1793,12 @@
                                 <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;">
                                     <div class="div-line-con-three" style="border-left: solid 0px;">
                                         <div class="title">
-                                            <span class="d-body-font-three">投保人签名：</span>
+                                            <span class="d-body-font-three">投保人签名：
+                                                </span>
                                         </div>
                                         <div class="a-input-div" style="width: 130px;">
-                                            <span class="f-body-font-three">&nbsp;</span>
+                                            <span class="f-body-font-three">&nbsp;<img style="width: 100px;height: 20px;"
+                                                                                       src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></span>
                                         </div>
                                     </div>
                                     <div class="div-line-con-three" style="border-left: solid 00px;">
@@ -2350,7 +2352,8 @@
                                         </div>
                                         <div class="s-name" style="text-align: right;width: 300px;">
                                             <div>投保人签名</div>
-                                            <div class="s-name-content" style="width: 150px;">&nbsp;</div>
+                                            <div class="s-name-content" style="width: 150px;"><img style="width: 100px;height: 20px;"
+                                                                                                   src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></div>
                                         </div>
                                     </div>
                                     <div class="s-head-name" style="margin-top: 20px;">
