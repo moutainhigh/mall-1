@@ -1,5 +1,6 @@
 package com.yunxin.cb.test;
 
+import com.yunxin.cb.util.CodeGenerator;
 import com.yunxin.cb.util.ZxingUtils;
 
 public class ZxingTest {
@@ -7,7 +8,8 @@ public class ZxingTest {
     public static void main(String[] args) throws Exception {
         String imgPath = "D:/barcode1.png";
         // 益达无糖口香糖的条形码
-        String contents = "1113021345873023";
+        String contents = CodeGenerator.getInsuranceCode();
+        System.out.println(contents);
         int width = 150, height = 50;
         ZxingUtils handler = new ZxingUtils();
         handler.encodeBarCode(contents, width, height, imgPath);
