@@ -23,12 +23,12 @@
                                 return false;
                             }
                         }else if($("#sortOrder").val() == 3){
-                            if ($('input[name="brandId"]').length==0) {
+                            if ($('input[name="categoryId"]').length==0) {
                                 bootbox.alert("请至少添加一个分类!");
                                 return false;
                             }
                         }else if($("#sortOrder").val() == 5){
-                            if ($('input[name="brandId"]').length==0) {
+                            if ($('input[name="categoryId"]').length==0) {
                                 bootbox.alert("请至少添加一个分类!");
                                 return false;
                             }
