@@ -45,14 +45,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     @Transactional
-    public Order createOrder(Integer productId, Order order) throws Exception {
-        //根据货品id查询货品
-        Product product = productMapper.selectByPrimaryKey(productId);
-        //判断货品是否存在，且库存足够
-        if (product == null || product.getStoreNum() <= 0) {
-            //库存不足
-            throw new Exception("库存不足");
-        }
+    public Order createOrder(Order order) throws Exception {
         //支付方式
         if (order.getPaymentType()== PaymentType.LOAN.ordinal()) {
             //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
@@ -64,27 +57,39 @@ public class OrderServiceImpl implements OrderService {
         order.setUpdateTime(createTime);
         order.setOrderCode(UUIDGeneratorUtil.getUUCode());
         order.setOrderState(OrderState.PENDING_PAYMENT.ordinal());
-        order.setTotalPrice(Double.valueOf(product.getSalePrice()));
-        order.setFeeTotal(order.getTotalPrice());
         defaultValue(order);//添加默认数据
+        double totalPrice = 0; // 订单总价
 
-        orderMapper.insert(order);
-        OrderItem orderItem = new OrderItem();
-        orderItem.setOrderId(order.getOrderId());
-        orderItem.setBuyerMessage(order.getBuyerMessage());
-        orderItem.setOrderItemPrice(product.getSalePrice());
-        orderItem.setProductId(product.getProductId());
-        orderItem.setSalePrice(product.getSalePrice());
-        orderItem.setEvaluate(false);
-        orderItem.setProductNum(order.getProdQuantity());
-        //orderItem.setProductImg();
-        orderItem.setCreateTime(createTime);
-        orderItemMapper.insert(orderItem);
-        //减少库存
-        product.setStoreNum(product.getStoreNum() - orderItem.getProductNum());
-        productMapper.updateByPrimaryKey(product);
+        Set<OrderItem> orderItems = order.getOrderItems();
+        if (orderItems != null && !orderItems.isEmpty()) {
+            for (OrderItem orderItem : orderItems) {
+                //根据货品id查询货品
+                Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
+                //判断货品是否存在，且库存足够
+                if (product == null || product.getStoreNum() <= 0) {
+                    //库存不足
+                    throw new Exception("库存不足");
+                }
+                orderItem.setOrderId(order.getOrderId());
+                orderItem.setBuyerMessage(order.getBuyerMessage());
+                orderItem.setOrderItemPrice(product.getSalePrice());
+                orderItem.setProductId(product.getProductId());
+                orderItem.setSalePrice(product.getSalePrice());
+                orderItem.setEvaluate(false);
+                orderItem.setProductNum(order.getProdQuantity());
+                //orderItem.setProductImg();
+                orderItem.setCreateTime(createTime);
+                orderItemMapper.insert(orderItem);
+                //减少库存
+                product.setStoreNum(product.getStoreNum() - orderItem.getProductNum());
+                productMapper.updateByPrimaryKey(product);
+                totalPrice += product.getSalePrice();
+            }
+        }
         //发票数据
-
+        order.setTotalPrice(totalPrice);
+        order.setFeeTotal(order.getTotalPrice());
+        orderMapper.insert(order);
         return order;
     }
 
