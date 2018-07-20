@@ -42,23 +42,23 @@
 
         $(function () {
 
-            $("#insuredProvince").val(insuredProvince);
+            $("#insuredProvince").text(insuredProvince);
 
-            $("#insuredCity").val(insuredCity);
+            $("#insuredCity").text(insuredCity);
 
-            $("#insuredDistrict").val(insuredDistrict);
+            $("#insuredDistrict").text(insuredDistrict);
 
-            $("#policyholderProvince").val(policyholderProvince);
-            $("#policyholderCity").val(policyholderCity);
-            $("#policyholderDistrict").val(policyholderDistrict);
+            $("#policyholderProvince").text(policyholderProvince);
+            $("#policyholderCity").text(policyholderCity);
+            $("#policyholderDistrict").text(policyholderDistrict);
 
-            $("#policyholderProvinces").val(policyholderProvince);
-            $("#policyholderCitys").val(policyholderCity);
-            $("#policyholderDistricts").val(policyholderDistrict);
+            $("#policyholderProvinces").text(policyholderProvince);
+            $("#policyholderCitys").text(policyholderCity);
+            $("#policyholderDistricts").text(policyholderDistrict);
 
             $("#insuredCareer").html(insuredCareer);
 
-            $("#policyholderCareer").val(policyholderCareer);
+            $("#policyholderCareer").text(policyholderCareer);
 
         });
 
@@ -297,13 +297,13 @@
                                 <div class="div-line-con div-row-5">
                                     <div class="title">A 5.证件类型</div>
                                     <div>
-                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredCardType=='居民身份证'}">checked</c:if>/>
                                         身份证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='护照'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredCardType=='护照'}">checked</c:if>/>
                                         护照
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage=='军官证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredCardType=='军官证'}">checked</c:if>/>
                                         军官证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='军官证'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='护照'&&map.insuranceOrder.insuranceOrderInsured.insuredMarriage!='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; " <c:if test="${map.insuranceOrder.insuranceOrderInsured.insuredCardType!='军官证'&&map.insuranceOrder.insuranceOrderInsured.insuredCardType!='护照'&&map.insuranceOrder.insuranceOrderInsured.insuredCardType!='居民身份证'}">checked</c:if>/>
                                         其他
                                     </div>
                                 </div>
@@ -339,7 +339,7 @@
                                         <input readonly class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_p_year!=null&&map.insurance_p_year!=''}">checked</c:if>/>
                                         有效期至
                                         <div>
-                                            <input readonly class="c-input" type="text" style="margin-left: 10px;" value="${map.insurance_p_year}"/>
+                                            <input readonly class="c-input" type="text" style="margin-left: 10px;width: 40px;" value="${map.insurance_p_year}"/>
                                             年
                                             <input readonly class="c-input" type="text" value="${map.insurance_p_month}"/>
                                             月
@@ -392,12 +392,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 13.住址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;" id="insuredProvince"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;" id="insuredCity"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 25px;" id="insuredDistrict"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="insuredProvince"></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="insuredCity"></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="insuredDistrict"></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderInsured.insuredAddress}</div>
                                         </div>
@@ -422,7 +428,7 @@
                                 </div>
                                 <div class="div-line-con div-row-3">
                                     <div class="title" style="float: left;">A 15.职业&nbsp;</div>
-                                    <%--<input readonly class="a-input" type="text" value="" id=""/>--%>
+                                    <%--<input readonly class="a-input" type="text" value="" />--%>
                                     <div  style="float: left;width: 200px;font-size: 10px;position: absolute" id="insuredCareer"></div>
                                 </div>
                                 <div class="div-line-con div-row-3">
@@ -434,12 +440,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 17.单位地址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;"></div>
                                         </div>
@@ -465,7 +477,10 @@
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 19.&nbsp;E-mail</div>
-                                    <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredEmail}"/>
+                                    <div style="position: absolute;width: 180px;margin-left: 10px;word-break: break-all;">
+                                        ${map.insuranceOrder.insuranceOrderInsured.insuredEmail}
+                                    </div>
+                                    <%--<input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderInsured.insuredEmail}"/>--%>
                                 </div>
                                 <div class="div-line-con div-part-job">
                                     <div class="title">A 20.是否有兼职？</div>
@@ -516,13 +531,13 @@
                                 <div class="div-line-con div-row-5">
                                     <div class="title">A 25.证件类型</div>
                                     <div>
-                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType=='居民身份证'}">checked</c:if>/>
                                         身份证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='护照'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType=='护照'}">checked</c:if>/>
                                         护照
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage=='军官证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType=='军官证'}">checked</c:if>/>
                                         军官证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='军官证'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='护照'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderMarriage!='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType!='军官证'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType!='护照'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType!='居民身份证'}">checked</c:if>/>
                                         其他
                                     </div>
                                 </div>
@@ -559,8 +574,8 @@
                                     <div>
                                         <input readonly class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.policy_p_year!=null&&map.policy_p_year!=''}">checked</c:if>/>
                                         有效期至
-                                        <div style="margin-left: 10px;">
-                                            <input readonly class="c-input" type="text" value="${map.policy_p_year}"/>
+                                        <div style="margin-left: 5px;">
+                                            <input readonly class="c-input" type="text" style="width: 40px;" value="${map.policy_p_year}"/>
                                             年
                                             <input readonly class="c-input" type="text" value="${map.policy_p_month}"/>
                                             月
@@ -601,7 +616,7 @@
                                 <div class="div-line-con div-row-3">
                                     <div class="title">A 31.固定电话（<input readonly class="b-input"
                                                                         type="text" value="${map.policy_q_tel}"/>)-(<input
-                                            class="mobile-input" type="text" id="${map.policy_h_tel}"/></span>)
+                                            class="mobile-input" type="text" value="${map.policy_h_tel}"/></span>)
                                     </div>
                                 </div>
                                 <div class="div-line-con div-row-3">
@@ -614,12 +629,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 33.住址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text" style="margin-left:40px; " id="policyholderProvince"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 30px;" id="policyholderCity"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 20px;" id="policyholderDistrict"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderProvince"></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderCity"></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderDistrict"></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
                                         </div>
@@ -656,12 +677,18 @@
                                 <div class="div-line-con div-row-7">
                                     <div class="title">A 37.单位地址</div>
                                     <div>
-                                        <input readonly class="b-input" type="text"/>
-                                        省
-                                        <input readonly class="b-input" type="text" style="margin-left: 10px;"/>
-                                        市
-                                        <input readonly class="b-input" type="text" style="margin-left: 25px;"/>
-                                        区/县
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" ></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
                                         <div style="vertical-align: top">
                                             <div style="width: 380px;position: absolute;word-break: break-all;"></div>
                                         </div>
@@ -687,7 +714,9 @@
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 39. E-mail</div>
-                                    <input readonly class="a-input" type="text" value="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderEmail}"/>
+                                    <div style="position: absolute;width: 180px;margin-left: 10px;word-break: break-all;">
+                                        ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderEmail}
+                                    </div>
                                 </div>
                                 <div class="div-line-con div-part-job">
                                     <div class="title">A 40.其它联系电话</div>
@@ -700,14 +729,25 @@
                             <div class="div-line">
                                 <div class="div-line-con" style="padding: 7px 5px 7px 10px;">
                                     A 41. 信函寄往
-                                    <div > <input readonly class="a-input" type="text" id="policyholderProvinces" style="width: 60px;"/>省</div>
-                                    <div><input readonly class="a-input" type="text" id="policyholderCitys"  style="width: 80px;"/>市</div>
-                                    <div><input readonly class="a-input" type="text" id="policyholderDistricts"  style="width: 70px;"/>区/县</div>
-                                    <div style="vertical-align: top">
-                                        <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
+                                    <div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderProvinces"></div>
+                                        <div style="margin-left: 70px">
+                                            省
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderCitys" ></div>
+                                        <div style="margin-left: 70px">
+                                            市
+                                        </div>
+                                        <div style="width: 70px; text-align:  center;position:  absolute;" id="policyholderDistricts"></div>
+                                        <div style="margin-left: 70px">
+                                            区/县
+                                        </div>
+                                        <div style="vertical-align: top">
+                                            <div style="width: 180px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="div-line-con div-postcode" style="margin-right: 120px;">
+                                <div class="div-line-con div-postcode" style="margin-right: 60px;">
                                     电话&nbsp;${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}
                                 </div>
                                 <div class="div-line-con div-postcode" style="margin-right:  35px;">
@@ -1377,7 +1417,7 @@
                                     </div>
                                     <div style="display: block;margin-top:15px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[14].insuredResult=='true'}">checked</c:if>>是<input
                                             type="checkbox"
-                                            style="margin-left: 10px;" <c:if test="${map.insurance_matterList[14].insuredResult=='true'}">checked</c:if>>否
+                                            style="margin-left: 10px;" <c:if test="${map.insurance_matterList[14].insuredResult=='false'}">checked</c:if>>否
                                     </div>
                                     <div style="display: block;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[15].insuredResult=='true'}">checked</c:if>>是<input readonly type="checkbox"
                                                                                                                                                                                            style="margin-left: 10px;" <c:if test="${map.insurance_matterList[15].insuredResult=='false'}">checked</c:if>>否
@@ -1495,7 +1535,7 @@
                                         type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[25].insuredResult=='false'}">checked</c:if>>否
                                 </div>
                                 <div class="div-table-2" style="width: 83px;height: 197px;border-right:#000000 1px solid;">
-                                    <input readonly type="checkbox" <c:if test="${map.insurance_matterList[25].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[25].policyholderResult=='false'}">checked</c:if>>否
+                                    <%--<input readonly type="checkbox" <c:if test="${map.insurance_matterList[25].policyholderResult=='true'}">checked</c:if>>是<input readonly type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_matterList[25].policyholderResult=='false'}">checked</c:if>>否--%>
                                 </div>
                             </div>
                             <div class="table-line" style="height: 28px;">
@@ -1802,10 +1842,18 @@
                                             <span class="d-body-font-three">投保人签名：
                                                 </span>
                                         </div>
-                                        <div class="a-input-div" style="width: 130px;">
-                                            <span class="f-body-font-three">&nbsp;<img style="width: 100px;height: 20px;"
-                                                                                       src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></span>
+                                        <div>
+                                            <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                                 src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
                                         </div>
+                                        <div class="a-input-div" style="width: 130px;position: relative">
+                                            <%--<div>--%>
+                                                <%--<img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"--%>
+                                                     <%--src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>--%>
+                                            <%--</div>--%>
+                                            <%--<span class="f-body-font-three"></span>--%>
+                                        </div>
+
                                     </div>
                                     <div class="div-line-con-three" style="border-left: solid 00px;">
                                         <div class="title">
@@ -2325,24 +2373,29 @@
                                                         ${matterRemarks.title}
                                                 </div>
                                                 <div>
-                                                    <div style="display: flex">
+                                                    <c:if test="${matterRemarks.insured_remark!=null&&matterRemarks.insured_remark!=''}">
+                                                        <div style="display: flex">
+                                                            <div style="display: inline-block;vertical-align: top;">
+                                                                    被保人：
+
+                                                            </div>
+                                                            <div style="display: inline-block;width: 803px;height:34px">
+                                                                    <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
+                                                                    ${matterRemarks.insured_remark}
+                                                            </div>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${matterRemarks.policyholder_remark!=null&&matterRemarks.policyholder_remark!=''}">
+                                                        <div style="display: flex">
                                                         <div style="display: inline-block;vertical-align: top;">
-                                                                <%--被保人：--%>
-                                                                ${matterRemarks.person}
+                                                        投保人：
                                                         </div>
-                                                        <div style="display: inline-block;width: 803px;height:34px">
-                                                                <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
-                                                                ${matterRemarks.remark}
-                                                        </div>
-                                                    </div>
-                                                        <%--<div style="display: flex">--%>
-                                                        <%--<div style="display: inline-block;vertical-align: top;">--%>
-                                                        <%--投保人：--%>
-                                                        <%--</div>--%>
-                                                        <%--<div style="display: inline-block;width: 803px;;height:34px">--%>
+                                                        <div style="display: inline-block;width: 803px;;height:34px">
                                                         <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
-                                                        <%--</div>--%>
-                                                        <%--</div>--%>
+                                                                ${matterRemarks.policyholder_remark}
+                                                        </div>
+                                                        </div>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                             </c:forEach>
@@ -2358,8 +2411,13 @@
                                         </div>
                                         <div class="s-name" style="text-align: right;width: 300px;">
                                             <div>投保人签名</div>
-                                            <div class="s-name-content" style="width: 150px;"><img style="width: 100px;height: 20px;"
-                                                                                                   src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></div>
+                                            <div>
+                                                <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                                     src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
+                                            </div>
+                                            <div class="s-name-content" style="width: 150px;position: relative">
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="s-head-name" style="margin-top: 20px;">

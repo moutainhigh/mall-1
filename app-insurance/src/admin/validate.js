@@ -5,7 +5,7 @@ export const idCardVali = helpers.regex('idCardVali', /^[1-9]\d{5}(18|19|([23]\d
 //居民户口蒲 9位数
 export const householdVali = helpers.regex('householdVali', /^\d{9}$/);
 //出生证
-export const birthVali = helpers.regex('birthVali', /[A-Z]{1}\d{9}/);
+export const birthVali = helpers.regex('birthVali', /[A-Z]{1}\d{9}$/);
 //港澳通行证
 export const hkmcPassVali = helpers.regex('hkmcPassVali', /^[HMhm]{1}([0-9]{10}|[0-9]{8})$/);
 // 台湾通行证

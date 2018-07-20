@@ -182,8 +182,8 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="产品ID" field="prodId" template="<a href='toEditProduct.do?prodId=#= prodId#' style='color:blue'>#= prodId#</a>" width="20px"/>
-                            <kendo:grid-column title="产品名称" field="prodName" template="<a href='toEditProduct.do?prodId=#= prodId#' style='color:blue'>#= prodName#</a>" width="50px"/>
+                            <kendo:grid-column title="产品ID" field="prodId" template="<a href='toEditProduct.do?prodId=#= prodId#' >#= prodId#</a>" width="20px"/>
+                            <kendo:grid-column title="产品名称" field="prodName" template="<a href='toEditProduct.do?prodId=#= prodId#' >#= prodName#</a>" width="50px"/>
                             <kendo:grid-column title="产品描述" field="description" width="50px"/>
                             <kendo:grid-column title="保险期间" field="insurePeriod"  width="50px"/>
                             <kendo:grid-column title="保障年限" field="protectionYear" width="50px"/>

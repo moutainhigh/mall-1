@@ -166,7 +166,7 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="反馈用户手机号" filterable="false" field="customer.mobile" template="<a href='feedBackDetail.do?id=#= id#' style='color:blue'>#= customer.mobile#</a>" width="100px"/>
+                            <kendo:grid-column title="反馈用户手机号" filterable="false" field="customer.mobile" template="<a href='feedBackDetail.do?id=#= id#'>#= customer.mobile#</a>" width="100px"/>
                             <kendo:grid-column title="反馈帐户" filterable="false" field="customer.accountName" width="100px"/>
                             <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="100px"/>
                             <kendo:grid-column title="反馈内容" filterable="false" field="content" width="100px" />

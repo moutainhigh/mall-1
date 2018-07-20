@@ -45,9 +45,9 @@ public class OrderResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "json", dataType = "int")})
     @PostMapping(value = "pageOrder")
-    public ResponseResult pageOrder(@RequestBody Query q, @RequestBody Order order){
+    public ResponseResult pageOrder(Query q, @RequestBody Order order){
         order.setCustomerId(getCustomerId());
         q.setData(order);
         PageFinder<Order> pageFinder = orderService.pageOrder(q);

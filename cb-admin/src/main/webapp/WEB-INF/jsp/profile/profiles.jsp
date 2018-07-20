@@ -10,6 +10,33 @@
     <title>系统配置</title>
 
     <script type="text/javascript">
+        function detailItem(){
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                window.location.href = "toEditProfiles.do?fileId=" + dataItem.fileId;
+            }
+        }
+
+        function getprofileName(state){
+            switch (state){
+                case "ANDROID_VERSION_CODE":{
+                    return "安卓版本编码";
+                }
+                case "ANDROID_VERSION_NAME":{
+                    return "安卓版本名称";
+                }
+                case "ANDROID_APP_NAME":{
+                    return "安卓APP名称";
+                }
+                case "ANDROID_URL":{
+                    return "安卓APP下载地址";
+                }
+                case "ANDROID_DESCRIPTION":{
+                    return "安卓APP更新描述";
+                }
+            }
+        }
+
     </script>
 </head>
 <body>
@@ -97,6 +124,7 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
+                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="toAddProfile.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;安卓版本更新</a>
                             </div>
                         </div>
@@ -114,8 +142,8 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="系统ID" field="fileId" width="30px"/>
-                            <kendo:grid-column title="名称" field="profileName" width="200px"/>
+                            <kendo:grid-column title="ID" field="fileId" width="30px"/>
+                            <kendo:grid-column title="名称" field="profileName" template="#=getprofileName(profileName)#" width="200px"/>
                             <kendo:grid-column title="值" field="fileValue" width="200px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">

@@ -20,6 +20,10 @@
     </script>
 </head>
 <body>
+<div id="mainload" style="width:5000px;height:5000px;filter:alpha(opacity=5);opacity:.05;position:absolute;top:0;left:0;z-index:98;background:#000;display: none"></div>
+<div id="loadgif" style="position:absolute;top:40%;left:40%;z-index: 999;display: none">
+    　　<img src="../images/git/loading.gif"  />
+</div>
 <jsp:include page="../layouts/left.jsp"/>
 <div id="main" class="clearfix">
     <header id="header-main">
@@ -84,15 +88,25 @@
                                     data: formData,
                                     processData: false,
                                     contentType: false,
+                                    beforeSend : function(){     //请求成功前触发的局部事件
+                                        $('#loadgif').show();
+                                        $('#mainload').show();
+                                    },
                                     success: function (result) {
-                                        alert("上传成功")
                                         $('#ANDROID_URL').val(result.url);
+                                        $('#loadgif').css("display","none");
+                                        $('#mainload').css("display","none");
+                                        bootbox.alert("上传成功！");
                                     },
                                     error: function (err) {
                                     }
                                 });
                             }
+
+
                         </script>
+
+
                         <div class="col-sm-2">
                             <label><span class="asterisk">*</span>apk文件导入：</label>
                         </div>
