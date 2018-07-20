@@ -2,17 +2,29 @@
   <div>
     <!--投保提示书签名-->
     <div class="popContainer" v-if="clickSign1 && !show1">
-        <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign1"
-              @click="clear1">清除</span>
-      <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'60vh'"></Signature>
-      <button class="doneButton" @click="doneButton1">完成</button>
+      <div style="position: relative">
+        <span
+          style="position: absolute; color: #f5ca1d; right: 0; top: 0; margin: 20px 20px; transform:rotate(90deg);"
+          v-if="clickSign1"
+          @click="clear1">清除</span>
+        <span
+          style="position: absolute; color: #f5ca1d; right: 0; bottom: 0; margin: 20px 20px; transform:rotate(90deg);"
+          v-if="clickSign1"
+          @click="doneButton1">完成</span>
+        <Signature ref="signature1" :sigOption="option" :w="'92vw'" :h="'90vh'"></Signature>
+      </div>
+      <!--<button class="doneButton" @click="doneButton1">完成</button>-->
     </div>
     <!--投保单签名-->
     <div class="popContainer" v-if="clickSign && !show">
-           <span style="position: absolute; color: #f5ca1d; right: 0; margin: 10px 30px" v-if="clickSign"
+      <div style="position: relative">
+           <span style="position: absolute; color: #f5ca1d; right: 0; top: 0; margin: 20px 20px; transform:rotate(90deg);" v-if="clickSign"
                  @click="clear">清除</span>
-      <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'60vh'"></Signature>
-      <button class="doneButton" @click="doneButton">完成</button>
+        <span style="position: absolute; color: #f5ca1d; right: 0; bottom: 0; margin: 20px 20px; transform:rotate(90deg);" v-if="clickSign"
+              @click="doneButton">完成</span>
+        <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'90vh'"></Signature>
+      </div>
+      <!--<button class="doneButton" @click="doneButton">完成</button>-->
     </div>
 
     <!--页面主体-->
@@ -30,14 +42,14 @@
       <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保提示书签名</div>
       <div class="canvas">
         <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-        <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1">
+        <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1" v-bind:style="{ background: submissionColor}">
           <p style="padding-top: 15vh" v-if="submissionSign === ''">点击签名（请用正楷进行签名）</p>
-          <img v-if="submissionSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;"
+          <img v-if="submissionSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);"
                :src="submissionSign">
         </div>
-        <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow1"
+        <div class="sign" style="background: #ffffff; height: auto; line-height: normal; border: 1px solid #f5f5f5" @click="checkShow1"
              v-if="clickSign1 && show1">
-          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw;" :src="submissionSign">
+          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);" :src="submissionSign">
         </div>
       </div>
 
@@ -58,15 +70,15 @@
 
       <div class="canvas">
         <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-        <div class="sign" v-if="!clickSign && !show" @click="checkSign">
+        <div class="sign" v-if="!clickSign && !show" @click="checkSign" v-bind:style="{ background: policyholderColor}">
           <p style="padding-top: 15vh" v-if="policyholderSign === ''">点击签名（请用正楷进行签名）</p>
-          <img v-if="policyholderSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw;"
+          <img v-if="policyholderSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);"
                :src="policyholderSign">
         </div>
 
-        <div class="sign" style="background: #f3f5f7;height: auto; line-height: normal" @click="checkShow"
+        <div class="sign" style="background: #ffffff;height: auto; line-height: normal; border: 1px solid #f5f5f5" @click="checkShow"
              v-if="clickSign && show">
-          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw" :src="policyholderSign">
+          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);" :src="policyholderSign">
         </div>
       </div>
       <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
@@ -97,7 +109,7 @@
         imgUrl: storage.fetch("holder").policyholderAvatar,
         option: {
           penColor: "rgb(0, 0, 0)",
-          backgroundColor: "#f3f5f7",
+          backgroundColor: "#ffffff",
         },
         toastText: '',
         showPositionValue: false,
@@ -105,6 +117,8 @@
         policyholderSign: storage.fetch("holder").policyholderSign,
         show1: false,
         show: false,
+        submissionColor: '#ffffff',
+        policyholderColor: '#ffffff'
       }
     },
     components: {Signature, Toast},
@@ -253,6 +267,30 @@
           this.$router.push("clause");
         }
 
+      }
+    },
+    watch: {
+      submissionSign: {
+        handler(newVal, oldVal) {
+          if (newVal != '') {
+            this.submissionColor = '#ffffff'
+          } else {
+            this.submissionColor = '#f3f5f7'
+          }
+        },
+        immediate: true,
+        deep: true
+      },
+      policyholderSign: {
+        handler(newVal, oldVal) {
+          if (newVal != '') {
+            this.policyholderColor = '#ffffff'
+          } else {
+            this.policyholderColor = '#f3f5f7'
+          }
+        },
+        immediate: true,
+        deep: true
       }
     },
     created: function () {
@@ -422,9 +460,9 @@
     border-radius: 50px;
     width: 50px;
     height: 50px;
-    margin-left: 43%;
-    margin-top: 20px;
+    margin-left: 15px;
     color: #f5ca1d;
+    transform: rotate(90deg);
   }
 
   /*签名动态样式*/
