@@ -471,9 +471,9 @@
                             </div>
                             <div class="div-line">
                                 <div class="div-line-con div-career">
-                                    <div class="title">A 18.职业代码</div>
+                                    <div class="title" style="color: green">A 18.职业代码</div>
                                     <input readonly class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
-                                    <div class="title" style="margin-left: 25px;">职业类别</div>
+                                    <div class="title" style="margin-left: 25px;color: green">职业类别</div>
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 19.&nbsp;E-mail</div>
@@ -708,9 +708,9 @@
                             </div>
                             <div class="div-line">
                                 <div class="div-line-con div-career">
-                                    <div class="title">A 38.职业代码</div>
+                                    <div class="title" style="color: green">A 38.职业代码</div>
                                     <input readonly class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
-                                    <div class="title" style="margin-left: 25px;">职业类别</div>
+                                    <div class="title" style="margin-left: 25px;color: green">职业类别</div>
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 39. E-mail</div>
