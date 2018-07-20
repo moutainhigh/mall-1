@@ -216,10 +216,29 @@ public class MainResource extends BaseResource {
     @PostMapping(value = "resetPwd/{mobile}")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "mobile", value = "用户手机号码", required = true, paramType = "path", dataType = "String"),
-            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String")
+            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "resetNewPwd", value = "新密码", required = true, paramType = "post", dataType = "String")
     })
-    public ResponseResult resetPwd(@PathVariable String mobile, @RequestParam String code) {
-
+    public ResponseResult resetPwd(@RequestParam String mobile, @RequestParam String code,@RequestParam String resetNewPwd) {
+        Customer customer = customerService.getCustomerByMobile(mobile);
+        if(customer == null){
+            return new ResponseResult(Result.FAILURE,"用户不存在");
+        }
+        //校验验证码
+        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(customer.getMobile());
+        //验证码不存在
+        if (verificationCode == null){
+            return new ResponseResult(Result.FAILURE, "验证码不存在");
+        }
+        //验证码超过5分钟，失效
+        if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
+            return new ResponseResult(Result.FAILURE, "验证码失效");
+        }
+        //验证码错误
+        if (!verificationCode.getCode().equals(code)) {
+            return new ResponseResult(Result.FAILURE, "验证码错误");
+        }
+        customerService.updatePassword(customer.getCustomerId(), resetNewPwd);
         return new ResponseResult(Result.SUCCESS);
     }
 }
