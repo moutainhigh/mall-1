@@ -441,5 +441,28 @@ public class CalendarUtils {
         return age;
     }
 
+    public static Date attemptParseDate(String dateStr) throws ParseException {
+        Date date;
+        try {
+            date = getDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(dateStr);
+        } catch (ParseException var9) {
+            try {
+                date = parseDateTime(dateStr);
+            } catch (ParseException var8) {
+                try {
+                    date = parseTimeNoDate(dateStr);
+                } catch (ParseException var7) {
+                    try {
+                        date = parseDate(dateStr);
+                    } catch (ParseException var6) {
+                        date = getDateFormat("HH:mm").parse(dateStr);
+                    }
+                }
+            }
+        }
+
+        return date;
+    }
+
 
 }
