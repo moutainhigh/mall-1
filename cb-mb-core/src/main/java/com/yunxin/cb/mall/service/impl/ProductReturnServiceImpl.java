@@ -2,7 +2,6 @@ package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
-import com.yunxin.cb.mall.entity.Product;
 import com.yunxin.cb.mall.entity.ProductReturn;
 import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.entity.meta.ReturnRefundState;
@@ -60,11 +59,11 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         if (orderItems != null && !orderItems.isEmpty()) {
             for (OrderItem orderItem : orderItems) {
                 if (orderItem.getItemId() == productReturn.getItemId()) {
-                    //更新库存
-                    Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
-                    //增加库存
-                    product.setStoreNum(product.getStoreNum() + orderItem.getProductNum());
-                    productMapper.updateByPrimaryKey(product);
+//                    //更新库存
+//                    Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
+//                    //增加库存
+//                    product.setStoreNum(product.getStoreNum() + orderItem.getProductNum());
+//                    productMapper.updateByPrimaryKey(product);
                     nReturn.setRefundPrice(Double.valueOf(orderItem.getOrderItemPrice()));
                 }
             }
