@@ -1,8 +1,8 @@
 package com.yunxin.cb.mall.entity;
 
-import org.springframework.stereotype.Repository;
-
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @title: 货品实体类
@@ -60,6 +60,9 @@ public class Product {
 
     /** 仓库id */
     private Integer storeId;
+
+    //货品所有属性
+    public List<ProductAttribute> productAttributes = new ArrayList<ProductAttribute>();
 
     public Integer getProductId() {
         return productId;
@@ -195,5 +198,13 @@ public class Product {
 
     public void setStoreId(Integer storeId) {
         this.storeId = storeId;
+    }
+
+    public List<ProductAttribute> getProductAttributes() {
+        return productAttributes;
+    }
+
+    public void setProductAttributes(List<ProductAttribute> productAttributes) {
+        this.productAttributes = productAttributes;
     }
 }

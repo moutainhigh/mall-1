@@ -50,6 +50,7 @@ h2 {
     display: inline-block;
     height: 40px;
     margin-bottom: -5px;
+    vertical-align: top;
 }
 
 .header .contract input {
@@ -264,6 +265,7 @@ table tr th, table tr td {
     box-sizing: border-box;
     width: 27.5px;
     height: 30px;
+    vertical-align: middle;
 }
 
 .div-checkbox input {
@@ -497,7 +499,7 @@ input {
     display: inline-block;
     vertical-align: middle;
     width: 450px;
-    font-size: 24px;
+    font-size: 0;
 }
 
 .s-contact-num div {
@@ -508,6 +510,7 @@ input {
     height: 40px;
     margin-bottom: -5px;
     margin-left: -1px;
+    font-size: 24px;
 }
 
 .s-insure-content {
@@ -522,7 +525,7 @@ input {
 }
 
 .s-insure-end {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .s-name-date {

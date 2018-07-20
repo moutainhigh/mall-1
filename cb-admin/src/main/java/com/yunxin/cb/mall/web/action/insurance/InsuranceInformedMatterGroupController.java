@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
 * @Description:    事项组控制器
@@ -40,7 +41,19 @@ public class InsuranceInformedMatterGroupController {
     public String insuranceInformedGroups(ModelMap modelMap) {
         return "insuranceinformedgroup/insuranceInformedGroups";
     }
-
+    /**
+     * 产品添加事项跳转页面
+     * @author      likang
+     * @param modelMap
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/19 21:35
+     */
+    @RequestMapping(value = "getInsuranceInformedMatterGroupList")
+    @ResponseBody
+    public List<InsuranceInformedMatterGroup> getInsuranceInformedMatterGroupList(ModelMap modelMap) {
+        return insuranceInformedMatterGroupService.findList(1);
+    }
     /**
      * 事项组分页列表
      * @author      likang
@@ -133,6 +146,25 @@ public class InsuranceInformedMatterGroupController {
         }catch (Exception e){
             return false;
         }
+    }
 
+
+    /**
+     * 根据id修改使用状态
+     * @author      likang
+     * @param groupId
+     * @return      boolean
+     * @exception
+     * @date        2018/7/17 21:16
+     */
+    @RequestMapping(value = "enableInformedMatterGroupById",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean enableInformedMatterGroupById(@RequestParam("groupId") int groupId,@RequestParam("enabled") int enabled) {
+        try{
+            insuranceInformedMatterGroupService.enableInformedMatterGroupById(groupId,enabled);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

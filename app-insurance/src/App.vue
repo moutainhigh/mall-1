@@ -17,6 +17,10 @@
       }
     },
     created:function () {
+      console.log(process.env.VERSION);
+      if (storage.fetch('version').length == 0 || storage.fetch('version') != process.env.VERSION) {
+        storage.clear();
+      }
       if (storage.fetch('holder').length === 0){
         storage.save('holder',this.Admin.holder);
       }

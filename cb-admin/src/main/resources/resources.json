@@ -208,7 +208,7 @@
     ]
   },
   {
-    "name": "系统配置", "code": "17", "type": "MENU", "cssClass": "fa fa-cogs", "value": "system", "childrenCssClass": "children",
+    "name": "系统配置", "code": "17", "type": "MENU", "cssClass": "fa fa-cogs", "value": "profile", "childrenCssClass": "children",
     "children": [
       {
         "name": "APP版本控制", "code": "171", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"

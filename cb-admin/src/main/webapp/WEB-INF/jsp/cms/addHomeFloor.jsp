@@ -24,14 +24,14 @@
                             bootbox.alert("请选择宣传图片!");
                             return false;
                         }*/
-                        if ($('input[name="commodityId"]').length==0) {
+                        /*if ($('input[name="commodityId"]').length==0) {
                             bootbox.alert("请至少添加一个商品!");
                             return false;
                         }
                         if ($('input[name="categoryId"]').length==0) {
                             bootbox.alert("请至少添加一个分类!");
                             return false;
-                        }
+                        }*/
 
 
                         return true;

@@ -16,7 +16,7 @@ public interface DeliveryAddressService {
      * @param addressId
      * @return
      */
-    DeliveryAddress selectByPrimaryKey(Integer addressId);
+    DeliveryAddress selectByPrimaryKey(Integer addressId,Integer customerId);
     /**
      * 新增收货地址
      */

@@ -56,6 +56,24 @@
                 });
             }
         }
+
+        function enabledItem(enabled) {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                $.get("enableInformedMatterById.do", {
+                    matterId: dataItem.matterId,
+                    enabled: enabled,
+                    rad: Math.random()
+                }, function (data) {
+                    if (true == data) {
+                        commonNotify("操作成功！", "success");
+                        $("#grid").data("kendoGrid").dataSource.read();
+                    } else {
+                        commonNotify("操作失败!", "error");
+                    }
+                });
+            }
+        }
     </script>
 </head>
 <body>
@@ -145,19 +163,22 @@
                             </div>
                         </div>
 
-                        <%--<div class="pull-left">--%>
-                            <%--<div class="toolbar-field">--%>
-                                <%--<strong>事项组:</strong>--%>
-                            <%--</div>--%>
-                            <%--<div class="toolbar-field">--%>
-                                <%--<select class="form-control simpleselect grid-filter" name="matterGroup.groupId">--%>
-                                    <%--<option value="0">-不选-</option>--%>
-                                    <%--<c:forEach items="${groups}" var="group">--%>
-                                        <%--<option value="${group.groupId}">${group.description}</option>--%>
-                                    <%--</c:forEach>--%>
-                                <%--</select>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+                        <div class="pull-left">
+                            <div class="toolbar-field">
+                                <strong>事项描述:</strong>
+                            </div>
+                            <div class="toolbar-field">
+                                <div class="toolbar-field">
+                                    <select data-filter="matterGroup.groupId"  data-operator="eq"
+                                            class="form-control  grid-filter">
+                                        <option value="">全部</option>
+                                        <c:forEach items="${groups}" var="group">
+                                            <option value="${group.groupId}">${group.description}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="pull-left">
                             <div class="toolbar-field">
@@ -200,6 +221,10 @@
                                 <a href="toAddMatter.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
                                 <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
+                            </div>
+                            <div class="btn-group">
+                                <a href="javascript:void(0);" onclick="enabledItem(1)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
+                                <a href="javascript:void(0);" onclick="enabledItem(0)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
                             </div>
                         </div>
                     </header>
