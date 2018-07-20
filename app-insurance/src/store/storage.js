@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'todos-vuejs'
+import Admin from '../admin/Admin'
 
 export default {
 
@@ -13,6 +14,9 @@ export default {
     let token = this.fetch('token');
     window.localStorage.clear();
     this.save("token",token);
+    this.save("version",process.env.VERSION);
+    this.save('holder',Admin.holder);
+    this.save('insured',Admin.insured);
   }
 
 }
