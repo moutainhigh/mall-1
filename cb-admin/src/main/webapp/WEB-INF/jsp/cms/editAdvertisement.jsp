@@ -399,6 +399,15 @@
               </div>
             </div>
 
+            <div class="row">
+              <div class="col-sm-2">
+                <label><span class="asterisk">*</span> 是否启用：</label>
+              </div>
+              <div class="col-sm-3">
+                <form:radiobutton path="enabled" value="1"/>启用
+                <form:radiobutton path="enabled" value="0"/>停用
+              </div>
+            </div>
             <div class="spacer-20"></div>
             <hr>
             <div class="spacer-20"></div>

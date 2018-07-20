@@ -189,6 +189,7 @@
                         <kendo:grid-columns>
                             <kendo:grid-column title="楼层名称" field="floorName" width="150px"/>
                             <kendo:grid-column title="排序" field="sortOrder" width="100px"/>
+                            <kendo:grid-column title="品牌数量" field="brandAmount" width="100px"/>
                             <kendo:grid-column title="类别数量" field="categoryAmount" width="100px"/>
                             <kendo:grid-column title="商品数量" field="commodityAmount" width="100px"/>
                             <%--<kendo:grid-column title="模板" field="templateId" width="100px"/>--%>

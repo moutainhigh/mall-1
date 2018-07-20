@@ -80,7 +80,7 @@ public class AdvertisementService implements IAdvertisementService {
         Advertisement oldAdvertisementDB = advertisementDao.findOne(advertisement.getAdvertId());
         AttributeReplication.copying(advertisement, oldAdvertisementDB, Advertisement_.advertTitle, Advertisement_.advertCode, Advertisement_.advertisementType,
                 Advertisement_.advertisementPlace, Advertisement_.videoPath, Advertisement_.advertisementURLType, Advertisement_.advertURL, Advertisement_.picPath,
-                Advertisement_.content, Advertisement_.remark);
+                Advertisement_.content, Advertisement_.remark,Advertisement_.enabled);
 
         String[] clientTypesTemporary = advertisement.getClientTypesTemporary();
         StringBuffer cTypeBuffer = new StringBuffer();
