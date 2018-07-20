@@ -775,7 +775,7 @@
                                         <div>身份证</div>
                                         <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList[0].beneficiaryName&&map.beneficiaryList[0].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                         <div>其他</div>
-                                        <div style="margin:0 60px;">有效期至
+                                        <div style="margin:0 10px;">有效期至
                                             <c:if test="${map.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList[0].beneficiaryName&&map.beneficiaryList[0].beneficiaryCardType!='长期'}">
                                                 <fmt:formatDate value="${map.beneficiaryList[0].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                             </c:if>
@@ -826,7 +826,7 @@
                                         <div>身份证</div>
                                         <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList[1].beneficiaryName&&map.beneficiaryList[1].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                         <div>其他</div>
-                                        <div style="margin:0 60px;">有效期至
+                                        <div style="margin:0 10px;">有效期至
                                             <c:if test="${map.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList[1].beneficiaryName&&map.beneficiaryList[1].beneficiaryCardType!='长期'}">
                                                 <fmt:formatDate value="${map.beneficiaryList[1].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                             </c:if>
@@ -878,7 +878,7 @@
                                         <div>身份证</div>
                                         <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList[2].beneficiaryName&&map.beneficiaryList[2].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                         <div>其他</div>
-                                        <div style="margin:0 60px;">有效期至
+                                        <div style="margin:0 10px;">有效期至
                                             <c:if test="${map.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList[2].beneficiaryName&&map.beneficiaryList[2].beneficiaryCardType!='长期'}">
                                                 <fmt:formatDate value="${map.beneficiaryList[2].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                             </c:if>
