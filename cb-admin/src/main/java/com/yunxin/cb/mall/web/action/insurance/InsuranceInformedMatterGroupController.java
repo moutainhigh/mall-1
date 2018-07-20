@@ -146,6 +146,25 @@ public class InsuranceInformedMatterGroupController {
         }catch (Exception e){
             return false;
         }
+    }
 
+
+    /**
+     * 根据id修改使用状态
+     * @author      likang
+     * @param groupId
+     * @return      boolean
+     * @exception
+     * @date        2018/7/17 21:16
+     */
+    @RequestMapping(value = "enableInformedMatterGroupById",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean enableInformedMatterGroupById(@RequestParam("groupId") int groupId,@RequestParam("enabled") int enabled) {
+        try{
+            insuranceInformedMatterGroupService.enableInformedMatterGroupById(groupId,enabled);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

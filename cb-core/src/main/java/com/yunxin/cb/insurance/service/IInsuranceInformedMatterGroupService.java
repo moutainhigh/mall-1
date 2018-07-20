@@ -37,9 +37,9 @@ public interface IInsuranceInformedMatterGroupService {
     InsuranceInformedMatterGroup addInsuranceInformedMatterGroup(InsuranceInformedMatterGroup insuranceInformedMatterGroup);
 
     /**
-     * @param metterId
+     * @param groupId
      */
-    public void removeById(int metterId);
+    public void removeById(int groupId);
 
     /**
      * @param insuranceInformedMatterGroup
@@ -52,5 +52,11 @@ public interface IInsuranceInformedMatterGroupService {
      * @return
      */
     public List<InsuranceInformedMatterGroup> findList(int enabled);
+
+    /**
+     *
+     * @param groupId
+     */
+    public void enableInformedMatterGroupById(int groupId,int enabled);
 
 }

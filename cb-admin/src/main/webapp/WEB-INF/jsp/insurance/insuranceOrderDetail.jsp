@@ -243,9 +243,9 @@
                                 <c:if test="${insuranceOrder.orderState=='ON_SURRENDER'}">已退保</c:if>
 
                                 <c:if test="${insuranceOrder.orderState=='UN_PAID'}">
-                                    <a class="btn btn-default pull-right" style="margin-right: 100px" href="javascript:void(0);" onclick="updInsuranceOrderState('${insuranceOrder.orderId}','ON_PAID')">确认支付</a></c:if>
+                                    <a class="btn pull-right " style="margin-right: 100px;background-color:#449d44;margin-top: -5px;color: #0d1114;border-color: #ccc;font-weight: bold" href="javascript:void(0);" onclick="updInsuranceOrderState('${insuranceOrder.orderId}','ON_PAID')">确认支付</a></c:if>
                                 <c:if test="${insuranceOrder.orderState=='UN_SURRENDER'}">
-                                    <a class="btn btn-default pull-right" style="margin-right: 100px" href="javascript:void(0);" onclick="updInsuranceOrderState('${insuranceOrder.orderId}','ON_SURRENDER')">确认退保</a></c:if>
+                                    <a class="btn btn-default pull-right" style="margin-right: 100px;background-color:#449d44;margin-top: -5px;color: #0d1114;border-color: #ccc;font-weight: bold" href="javascript:void(0);" onclick="updInsuranceOrderState('${insuranceOrder.orderId}','ON_SURRENDER')">确认退保</a></c:if>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

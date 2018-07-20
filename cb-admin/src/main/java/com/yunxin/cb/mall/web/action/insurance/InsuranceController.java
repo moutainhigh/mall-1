@@ -1,22 +1,17 @@
 package com.yunxin.cb.mall.web.action.insurance;
 
-import com.itextpdf.text.pdf.BaseFont;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.insurance.service.IInsuranceOrderOffsiteService;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
-import com.yunxin.cb.util.HttpsUtils;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.xhtmlrenderer.pdf.ITextFontResolver;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
 
 
 /**
@@ -138,7 +133,6 @@ public class InsuranceController {
      */
     @RequestMapping(value = "prints", method = RequestMethod.GET)
     public String prints(@RequestParam("orderId") int orderId, ModelMap modelMap) {
-        System.out.println(iInsuranceOrderService.insuranceOrder(orderId).get("insurance_matter_value"));
             modelMap.addAttribute("map", iInsuranceOrderService.insuranceOrder(orderId));
         return "insurance/orderDetailPrint";
     }
@@ -156,23 +150,25 @@ public class InsuranceController {
     }
 
     @RequestMapping(value = "downloadPdf", method = RequestMethod.GET)
-    public void downloadPdf(@RequestParam("orderId") int orderId, HttpServletResponse response) throws Exception {
-        response.setHeader("Content-Disposition", "attachment; filename=\"insurance-" + orderId + ".pdf\"");
-        response.setContentType("application/octet-stream;charset=UTF-8");
-        ITextRenderer renderer = new ITextRenderer();
-        ITextFontResolver fontResolver = renderer.getFontResolver();
-        fontResolver.addFont("F:\\vistaBold.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-        OutputStream os = response.getOutputStream();
-        try {
-            String htmlstr = HttpsUtils.doGet("http://localhost:8080/admin/insurance/prints.do?orderId=" + orderId);//HttpHandler.sendGet只是单纯获得指定网页的html字符串内容
-            renderer.setDocumentFromString(htmlstr);
-            renderer.layout();
-            renderer.createPDF(os);
-            os.flush();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            os.close();
-        }
+    public String downloadPdf(@RequestParam("orderId") int orderId, ModelMap modelMap, HttpServletResponse response) throws Exception {
+        modelMap.addAttribute("map", iInsuranceOrderService.insuranceOrder(orderId));
+//        response.setHeader("Content-Disposition", "attachment; filename=\"insurance-" + orderId + ".pdf\"");
+//        response.setContentType("application/octet-stream;charset=UTF-8");
+//        ITextRenderer renderer = new ITextRenderer();
+//        ITextFontResolver fontResolver = renderer.getFontResolver();
+//        fontResolver.addFont("F:\\vistaBold.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+//        OutputStream os = response.getOutputStream();
+//        try {
+//            String htmlstr = HttpsUtils.doGet("http://localhost:8080/admin/insurance/prints.do?orderId=" + orderId);//HttpHandler.sendGet只是单纯获得指定网页的html字符串内容
+//            renderer.setDocumentFromString(htmlstr);
+//            renderer.layout();
+//            renderer.createPDF(os);
+//            os.flush();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        } finally {
+//            os.close();
+//        }
+        return "insurance/orderDetailPrint";
     }
 }
