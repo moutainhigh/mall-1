@@ -151,13 +151,26 @@
                             <%--</div>--%>
                             <%--<div class="toolbar-field">--%>
                                 <%--<select class="form-control simpleselect grid-filter" name="matterGroup.groupId">--%>
-                                    <%--<option value="0">-不选-</option>--%>
-                                    <%--<c:forEach items="${groups}" var="group">--%>
-                                        <%--<option value="${group.groupId}">${group.description}</option>--%>
-                                    <%--</c:forEach>--%>
                                 <%--</select>--%>
                             <%--</div>--%>
                         <%--</div>--%>
+
+                        <div class="pull-left">
+                            <div class="toolbar-field">
+                                <strong>事项描述:</strong>
+                            </div>
+                            <div class="toolbar-field">
+                                <div class="toolbar-field">
+                                    <select data-filter="matterGroup.groupId"  data-operator="eq"
+                                            class="form-control  grid-filter">
+                                        <option value="">全部</option>
+                                        <c:forEach items="${groups}" var="group">
+                                            <option value="${group.groupId}">${group.description}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="pull-left">
                             <div class="toolbar-field">

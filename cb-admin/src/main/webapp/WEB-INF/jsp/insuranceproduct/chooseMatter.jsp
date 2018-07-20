@@ -12,6 +12,39 @@
                     <input type="text" data-filter="matterDescription" data-operator="contains" class="form-control grid-filter" placeholder="事项描述"/>
                 </div>
             </div>
+            <div class="pull-left">
+                <div class="toolbar-field">
+                    <strong>事项描述:</strong>
+                </div>
+                <div class="toolbar-field">
+                    <div class="toolbar-field">
+                        <script>
+                            $.ajax({
+                                url: "/admin/insuranceInformedGroup/getInsuranceInformedMatterGroupList.do",
+                                type: 'POST',
+                                cache: false,
+                                data: '',
+                                processData: false,
+                                contentType: false,
+                                success: function (result) {
+                                    var html=$("#group").html();
+                                    for (var i=0;i<result.length;i++)
+                                    {
+                                        html+='<option value="'+result[i].groupId+'">'+result[i].description+'</option>'
+                                    }
+                                    $("#group").html(html);
+                                },
+                                error: function (err) {
+                                }
+                            });
+                        </script>
+                        <select id="group" data-filter="matterGroup.groupId"  data-operator="eq"
+                                class="form-control  grid-filter">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <!-- End .pull-left -->
             <div class="pull-right">
                 <div class="toolbar-field">
