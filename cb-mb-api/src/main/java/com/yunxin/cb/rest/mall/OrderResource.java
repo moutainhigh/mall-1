@@ -28,12 +28,17 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "订单确认")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "productNum", value = "购买数量", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "consigneeName", value = "收货人姓名", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "consigneeMobile", value = "收货人手机号码", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "consigneeAddress", value = "收货人地址", required = true, paramType = "post", dataType = "String")})
     @PostMapping(value = "saveOrder")
     public ResponseResult saveOrder(@RequestBody OrderVo orderVo) throws Exception{
         Order order = new Order();
         order.setCustomerId(getCustomerId());
         order.setPaymentType(orderVo.getPaymentType());
+        order.setProdQuantity(orderVo.getProductNum());
         Order result = orderService.createOrder(orderVo.getProductId(), order);
         if (result == null) {
             return new ResponseResult(Result.FAILURE);

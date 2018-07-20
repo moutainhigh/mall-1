@@ -51,12 +51,12 @@ public class OrderServiceImpl implements OrderService {
         //判断货品是否存在，且库存足够
         if (product == null || product.getStoreNum() <= 0) {
             //库存不足
-            //throw new Exception("库存不足");
-            return null;
+            throw new Exception("库存不足");
         }
         //支付方式
         if (order.getPaymentType()== PaymentType.LOAN.ordinal()) {
-            //贷款购车需要判断用户额度（接口调用）
+            //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
+            //throw new Exception("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
         }
         //添加订单数据
         Date createTime = new Date();
@@ -64,7 +64,6 @@ public class OrderServiceImpl implements OrderService {
         order.setUpdateTime(createTime);
         order.setOrderCode(UUIDGeneratorUtil.getUUCode());
         order.setOrderState(OrderState.PENDING_PAYMENT.ordinal());
-        order.setProdQuantity(1);
         order.setTotalPrice(Double.valueOf(product.getSalePrice()));
         order.setFeeTotal(order.getTotalPrice());
         defaultValue(order);//添加默认数据
@@ -77,13 +76,15 @@ public class OrderServiceImpl implements OrderService {
         orderItem.setProductId(product.getProductId());
         orderItem.setSalePrice(product.getSalePrice());
         orderItem.setEvaluate(false);
-        orderItem.setProductNum(1);
+        orderItem.setProductNum(order.getProdQuantity());
         //orderItem.setProductImg();
         orderItem.setCreateTime(createTime);
         orderItemMapper.insert(orderItem);
         //减少库存
-        product.setStoreNum(product.getStoreNum() - 1);
+        product.setStoreNum(product.getStoreNum() - orderItem.getProductNum());
         productMapper.updateByPrimaryKey(product);
+        //发票数据
+
         return order;
     }
 
@@ -151,8 +152,8 @@ public class OrderServiceImpl implements OrderService {
         order.setProvince("0");
         order.setCity("0");
         order.setDistrict("0");
-        order.setConsigneeAddress("");
-        order.setConsigneeName("");
+        //order.setConsigneeAddress("");
+        //order.setConsigneeName("");
         order.setEnabled(true);
         order.setWeightTotal(0d);
         order.setVolumeTotal(0d);
