@@ -339,7 +339,7 @@
                                         <input readonly class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.insurance_p_year!=null&&map.insurance_p_year!=''}">checked</c:if>/>
                                         有效期至
                                         <div>
-                                            <input readonly class="c-input" type="text" style="margin-left: 10px;" value="${map.insurance_p_year}"/>
+                                            <input readonly class="c-input" type="text" style="margin-left: 10px;width: 40px;" value="${map.insurance_p_year}"/>
                                             年
                                             <input readonly class="c-input" type="text" value="${map.insurance_p_month}"/>
                                             月
@@ -571,8 +571,8 @@
                                     <div>
                                         <input readonly class="i-cb" type="checkbox" style="margin-left: 10px;" <c:if test="${map.policy_p_year!=null&&map.policy_p_year!=''}">checked</c:if>/>
                                         有效期至
-                                        <div style="margin-left: 10px;">
-                                            <input readonly class="c-input" type="text" value="${map.policy_p_year}"/>
+                                        <div style="margin-left: 5px;">
+                                            <input readonly class="c-input" type="text" style="width: 40px;" value="${map.policy_p_year}"/>
                                             年
                                             <input readonly class="c-input" type="text" value="${map.policy_p_month}"/>
                                             月
