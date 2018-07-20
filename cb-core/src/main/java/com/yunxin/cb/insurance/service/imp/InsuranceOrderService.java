@@ -421,9 +421,9 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                             put("policyholder_remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
                                         }
                                     };
-                                    if(listStr.size()>=12&&listStrTwo.size()>=12)
+                                    if(listStr.size()>=9&&listStrTwo.size()>=9)
                                         listStrThree.add(map);
-                                    else if(listStr.size()>=12&&listStrTwo.size()<12)
+                                    else if(listStr.size()>=9&&listStrTwo.size()<9)
                                         listStrTwo.add(map);
                                     else
                                         listStr.add(map);
