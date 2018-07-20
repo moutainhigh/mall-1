@@ -18,6 +18,7 @@
     },
     created:function () {
       console.log(process.env.VERSION);
+      // alert(process.env.VERSION);
       if (storage.fetch('version').length == 0 || storage.fetch('version') != process.env.VERSION) {
         storage.clear();
       }
