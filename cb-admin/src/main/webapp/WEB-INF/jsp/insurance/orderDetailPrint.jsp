@@ -70,11 +70,10 @@
         }
         function downPdf(){
             html2canvas(
-                document.getElementsByName("exportToPdf"),
+                document.getElementById("exportToPdf"),
                 {
                     dpi: 172,//导出pdf清晰度
                     onrendered: function (canvas) {
-                        debugger;
                         var contentWidth = canvas.width;
                         var contentHeight = canvas.height;
 
@@ -90,7 +89,7 @@
 
                         var pageData = canvas.toDataURL('image/jpeg', 1.0);
                         var pdf = new jsPDF('', 'pt', 'a4');
-debugger;
+
                         //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
                         //当内容未超过pdf一页显示的范围，无需分页
                         if (leftHeight < pageHeight) {
@@ -204,7 +203,7 @@ debugger;
             </div><!-- End .actionbar-->
 
 
-            <div class="th-tab prints">
+            <div class="th-tab prints" id="exportToPdf" onclick="downPdf()">
                 <%--第一页--%>
                 <div style="height: 356px;width: 100%;z-index: 20;position: absolute;"></div>
                 <div class="hidden-prints">
@@ -776,7 +775,7 @@ debugger;
                                         <div>身份证</div>
                                         <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList[0].beneficiaryName&&map.beneficiaryList[0].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                         <div>其他</div>
-                                        <div style="margin:0 60px;">有效期至
+                                        <div style="margin:0 10px;">有效期至
                                             <c:if test="${map.beneficiaryList[0].beneficiaryName!=null&&''!=map.beneficiaryList[0].beneficiaryName&&map.beneficiaryList[0].beneficiaryCardType!='长期'}">
                                                 <fmt:formatDate value="${map.beneficiaryList[0].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                             </c:if>
@@ -827,7 +826,7 @@ debugger;
                                         <div>身份证</div>
                                         <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList[1].beneficiaryName&&map.beneficiaryList[1].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                         <div>其他</div>
-                                        <div style="margin:0 60px;">有效期至
+                                        <div style="margin:0 10px;">有效期至
                                             <c:if test="${map.beneficiaryList[1].beneficiaryName!=null&&''!=map.beneficiaryList[1].beneficiaryName&&map.beneficiaryList[1].beneficiaryCardType!='长期'}">
                                                 <fmt:formatDate value="${map.beneficiaryList[1].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                             </c:if>
@@ -879,7 +878,7 @@ debugger;
                                         <div>身份证</div>
                                         <input readonly type="checkbox" style="margin-left: 15px;" <c:if test="${map.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList[2].beneficiaryName&&map.beneficiaryList[2].beneficiaryCardType!='居民身份证'}">checked</c:if>/>
                                         <div>其他</div>
-                                        <div style="margin:0 60px;">有效期至
+                                        <div style="margin:0 10px;">有效期至
                                             <c:if test="${map.beneficiaryList[2].beneficiaryName!=null&&''!=map.beneficiaryList[2].beneficiaryName&&map.beneficiaryList[2].beneficiaryCardType!='长期'}">
                                                 <fmt:formatDate value="${map.beneficiaryList[2].beneficiaryCardPeroid}"  pattern="yyyy-MM-dd" type="date" dateStyle="long"/>
                                             </c:if>
@@ -1794,10 +1793,12 @@ debugger;
                                 <div class="div-line" style="border-bottom: solid 0px;padding-left: 5px;padding-top: 15px;">
                                     <div class="div-line-con-three" style="border-left: solid 0px;">
                                         <div class="title">
-                                            <span class="d-body-font-three">投保人签名：</span>
+                                            <span class="d-body-font-three">投保人签名：
+                                                </span>
                                         </div>
                                         <div class="a-input-div" style="width: 130px;">
-                                            <span class="f-body-font-three">&nbsp;</span>
+                                            <span class="f-body-font-three">&nbsp;<img style="width: 100px;height: 20px;"
+                                                                                       src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></span>
                                         </div>
                                     </div>
                                     <div class="div-line-con-three" style="border-left: solid 00px;">
@@ -2351,7 +2352,8 @@ debugger;
                                         </div>
                                         <div class="s-name" style="text-align: right;width: 300px;">
                                             <div>投保人签名</div>
-                                            <div class="s-name-content" style="width: 150px;">&nbsp;</div>
+                                            <div class="s-name-content" style="width: 150px;"><img style="width: 100px;height: 20px;"
+                                                                                                   src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/></div>
                                         </div>
                                     </div>
                                     <div class="s-head-name" style="margin-top: 20px;">
