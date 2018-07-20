@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -179,6 +178,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         };
     }
 
+
+
     /**
      * 保单分页
      * @param query
@@ -186,23 +187,23 @@ public class InsuranceOrderService implements IInsuranceOrderService {
      */
     @Override
     public Page<InsuranceOrder> pageInsuranceOrder(PageSpecification<InsuranceOrder> query) {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
-        for (PageSpecification.FilterDescriptor filterDescriptor:list
-             ) {
-            if("createTime".equals(filterDescriptor.getField())){
-
-                Date createTime= null;
-                    SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
-                    String createTimes=simpleDateFormat.format(dates);
-                    filterDescriptor.setValue(createTimes);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//        List<PageSpecification.FilterDescriptor> list=query.getFilter().getFilters();
+//        for (PageSpecification.FilterDescriptor filterDescriptor:list
+//             ) {
+//            if("createTime".equals(filterDescriptor.getField())){
+//
+//                Date createTime= null;
+//                    SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
+//                try {
+//                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
+//                    String createTimes=simpleDateFormat.format(dates);
+//                    filterDescriptor.setValue(createTimes);
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
         query.setCustomSpecification(new CustomSpecification<InsuranceOrder>(){
             @Override
             public void buildFetch(Root<InsuranceOrder> root) {

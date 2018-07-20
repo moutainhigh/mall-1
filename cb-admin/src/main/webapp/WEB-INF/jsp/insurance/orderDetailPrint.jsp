@@ -203,9 +203,8 @@
             </div><!-- End .actionbar-->
 
 
-            <div class="th-tab prints" id="exportToPdf" onclick="downPdf()">
+            <div class="th-tab prints" id="exportToPdf" >
                 <%--第一页--%>
-                <div style="height: 356px;width: 100%;z-index: 20;position: absolute;"></div>
                 <div class="hidden-prints">
                     <div style="height: 1488px;">
                         <div class="header">
@@ -214,7 +213,12 @@
                             <%--<h2>FUNDE SINO LIFE INSUANCE CO.,LTD.</h2>--%>
                             <h2>个人保险投保单（经代渠道）</h2>
                             <div class="header-contract">
-                                <div  style="width: 400px;float: left;display: inline-block;margin-top: 10px;"></div>
+                                <div  style="width: 400px;float: left;display: inline-block;margin-top: 20px;text-align: center">
+                                    <c:if test="${map.insuranceOrder.barCode!=null&&map.insuranceOrder.barCode!=''}">
+                                        <img src='data:image/jpeg;base64,${map.insuranceOrder.barCode}' style="width: 300px; height: 50px">
+                                        <div style="letter-spacing: 4.5px">${map.insuranceOrder.orderCode}</div>
+                                    </c:if>
+                                    </div>
                                 <div class="contract" style="width: 450px;"></div>
                                 <div class="contract">
                                     <p>（本单所示金额单位：人民币元）</p>
@@ -699,7 +703,9 @@
                                     <div > <input readonly class="a-input" type="text" id="policyholderProvinces" style="width: 60px;"/>省</div>
                                     <div><input readonly class="a-input" type="text" id="policyholderCitys"  style="width: 80px;"/>市</div>
                                     <div><input readonly class="a-input" type="text" id="policyholderDistricts"  style="width: 70px;"/>区/县</div>
-                                    &nbsp; ${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}
+                                    <div style="vertical-align: top">
+                                        <div style="width: 380px;position: absolute;word-break: break-all;">${map.insuranceOrder.insuranceOrderPolicyholder.policyholderAddress}</div>
+                                    </div>
                                 </div>
                                 <div class="div-line-con div-postcode" style="margin-right: 120px;">
                                     电话&nbsp;${map.insuranceOrder.insuranceOrderPolicyholder.policyholderMobile}
