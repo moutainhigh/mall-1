@@ -114,7 +114,7 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="系统ID" field="fileId" width="30px"/>
+                            <kendo:grid-column title="ID" field="fileId" width="30px"/>
                             <kendo:grid-column title="名称" field="profileName" width="200px"/>
                             <kendo:grid-column title="值" field="fileValue" width="200px"/>
                         </kendo:grid-columns>

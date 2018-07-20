@@ -213,8 +213,8 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="事项组ID" field="groupId" template="<a href='toEditGroup.do?groupId=#= groupId#' style='color:blue'>#= groupId#</a>" width="25px"/>
-                            <kendo:grid-column title="事项组描述" field="description" width="150px"/>
+                            <kendo:grid-column title="事项组ID" field="groupId" template="<a href='toEditGroup.do?groupId=#= groupId#' >#= groupId#</a>" width="25px"/>
+                            <kendo:grid-column title="事项组描述" template="<a href='toEditGroup.do?groupId=#= groupId#' >#= description#</a>"  field="description" width="150px"/>
                             <kendo:grid-column title="排序" field="serNo" width="20px"/>
                             <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="30px"/>
                             <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="30px"/>

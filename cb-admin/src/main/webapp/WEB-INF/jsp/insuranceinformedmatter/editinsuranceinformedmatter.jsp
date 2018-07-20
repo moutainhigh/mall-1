@@ -132,12 +132,12 @@
                             </div>
                         </div>
                         <div class="spacer-10"></div>
-                        <div class="row">
+                        <div class="row" >
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>事项描述：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea path="matterDescription"
+                                <form:textarea  path="matterDescription"
                                                cssClass="form-control validate[required,minSize[1]]"/>
                             </div>
                         </div>
