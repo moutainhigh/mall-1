@@ -7,10 +7,6 @@
 
 <script>
   import storage from "./store/storage";
-  import data from '../static/config.json'
-  import {setBase} from "./config/env";
-
-
   export default {
     name: 'App',
     watch: {
@@ -34,7 +30,7 @@
     },
     methods:{
       async loadJson(){
-        setBase(data.baseUrl);
+
       }
     }
   }
