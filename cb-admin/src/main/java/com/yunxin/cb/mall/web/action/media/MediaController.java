@@ -1,20 +1,20 @@
 package com.yunxin.cb.mall.web.action.media;
 
-import com.yunxin.cb.mall.web.action.MediaPather;
 import com.yunxin.cb.security.SecurityConstants;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.ServletContextAware;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -152,7 +152,7 @@ public class MediaController {
      */
     @RequestMapping(value = "uploadMediaFile", method = RequestMethod.POST)
     @ResponseBody
-    public MediaResult uploadMediaFile(@RequestParam("mediaFile") CommonsMultipartFile file, HttpServletRequest request) {
+    public MediaResult uploadMediaFile(@RequestParam("mediaFile") MultipartFile file, HttpServletRequest request) {
         String path = request.getParameter("path");
         int scaleWidth = Integer.parseInt(request.getParameter("scaleWidth"));
         int scaleHeight = Integer.parseInt(request.getParameter("scaleHeight"));
@@ -160,13 +160,18 @@ public class MediaController {
         if (!fileDir.exists()) {
             fileDir.mkdirs();
         }
-        String fileName = file.getFileItem().getName();
+        String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf("."));
         String name = System.currentTimeMillis() + suffix.toLowerCase();
-        File newFile = new File(uploadPath + "/" + name);
+        File newFile = new File(uploadPath + path+"/" + name);
         MediaResult mediaResult = new MediaResult();
         try {
-            file.getFileItem().write(newFile);
+            OutputStream out = FileUtils.openOutputStream(newFile, false);
+            try {
+                IOUtils.copy(file.getInputStream(), out);
+            } finally {
+                IOUtils.closeQuietly(out);
+            }
             FileNode node = new FileNode(name, path + "/" + name, true);
             node.setFileLength(newFile.length());
             node.setFile(true);
