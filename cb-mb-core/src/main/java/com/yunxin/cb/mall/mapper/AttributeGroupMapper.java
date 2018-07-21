@@ -28,7 +28,7 @@ public interface AttributeGroupMapper {
         "select",
         "GROUP_ID, CREATE_TIME, GROUP_NAME, SHOW_AS_IMAGE, COMMODITY_ID",
         "from attribute_group",
-        "where GROUP_ID = #{groupId,jdbcType=INTEGER}"
+        "where GROUP_ID = #{groupId,jdbcType=INTEGER} order by GROUP_ID"
     })
     @Results({
         @Result(column="GROUP_ID", property="groupId", jdbcType=JdbcType.INTEGER, id=true),
