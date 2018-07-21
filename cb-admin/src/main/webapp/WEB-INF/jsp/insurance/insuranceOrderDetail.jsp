@@ -793,22 +793,22 @@
                                                             <th scope="col">
                                                                 <c:if test="${matterLists.insured=='false'}">否</c:if>
                                                                 <c:if test="${matterLists.insured=='true'}">是</c:if></th>
-                                                            <th scope="col" colspan="3">${matterLists.insured_remark}</th>
+                                                            <th scope="col" colspan="3" style="word-break: break-all">${matterLists.insured_remark}</th>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <th scope="col" >${matterLists.matter}</th>
-                                                            <th scope="col" width="100">
+                                                            <th scope="col" width="100" >
                                                                 <c:if test="${matterLists.insured=='false'}">否</c:if>
                                                                 <c:if test="${matterLists.insured=='true'}">是</c:if>
                                                             </th>
-                                                            <th scope="col">
+                                                            <th scope="col" style="word-break: break-all">
                                                                     ${matterLists.insured_remark}
                                                             </th>
-                                                            <th scope="col" width="100">
+                                                            <th scope="col" width="100" >
                                                                 <c:if test="${matterLists.policy=='false'}">否</c:if>
                                                                 <c:if test="${matterLists.policy=='true'}">是</c:if>
                                                             </th>
-                                                            <th scope="col">
+                                                            <th scope="col" style="word-break: break-all">
                                                                     ${matterLists.policy_remark}
                                                             </th>
                                                         </c:otherwise>

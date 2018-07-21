@@ -60,13 +60,13 @@ public class CommodityServiceImpl implements CommodityService {
             specMap.put(spec.getSpec().getSpecName(), spec.getValue());//将规格名称和规格内容封装
         }
         resultMap.put("specs", specMap);//规格及参数
-        List<AttributeGroup> attributeGroups = attributeGroupMapper.getAttributeGroupsByCommodityId(commodity.getCommodityId());
-        Map goodAttrMap = new HashMap();//商品属性Map
-        for (AttributeGroup attributeGroup:attributeGroups){
-            goodAttrMap.put(attributeGroup.getGroupName(),attributeGroup.getAttributes());
-        }
-        resultMap.put("attributeGroups", goodAttrMap);//属性组及属性
-        if(customerId!=0){//用户存在则查询商品收藏夹
+//        List<AttributeGroup> attributeGroups = attributeGroupMapper.getAttributeGroupsByCommodityId(commodity.getCommodityId());
+//        Map goodAttrMap = new HashMap();//商品属性Map
+//        for (AttributeGroup attributeGroup:attributeGroups){
+//            goodAttrMap.put(attributeGroup.getGroupName(),attributeGroup.getAttributes());
+//        }
+//        resultMap.put("attributeGroups", goodAttrMap);//属性组及属性
+        if(customerId>0){//用户存在则查询商品收藏夹
             Favorite favorite=new Favorite();
             favorite.setCustomerId(customerId);
             favorite.setCommodityId(product.getCommodityId());

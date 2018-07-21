@@ -29,6 +29,13 @@
             }
         }
 
+
+        function checkTime() {
+            if ($('#createTime').val() > $('#createTimes').val() && '' != $('#createTimes').val()) {
+                alert("开始时间不能大于结束时间")
+                $('#createTimes').val('')
+            }
+        }
         function removeItem() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
@@ -129,17 +136,27 @@
                     <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
+                                <strong>产品名称:</strong>
+                            </div>
+                            <div class="toolbar-field">
+                                <input type="text" data-filter="prodName" data-operator="contains" class="form-control grid-filter" placeholder="产品名称"/>
+                            </div>
+                        </div>
+                        <div class="pull-left">
+                            <div class="toolbar-field">
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                                <input name="createTime" onchange="checkTime()"
+                                       onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
                             </div>
 
                             <div class="toolbar-field">
                                 <strong>-</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
+                                <input name="createTime" onchange="checkTime()"
+                                       onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
                             </div>
                         </div>
                         <!-- End .pull-left -->

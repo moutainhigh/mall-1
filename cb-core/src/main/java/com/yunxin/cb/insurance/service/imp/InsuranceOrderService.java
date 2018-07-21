@@ -372,15 +372,16 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     add(new HashMap<String,Object>(){
                                         {
                                             String collectValues=insuranceOrderInformedMatter.getCollectValues();
-                                                if(StringUtils.isNotBlank(collectValues)){
+//                                                if(StringUtils.isNotBlank(collectValues)){
                                                     String[] strValue=collectValues.replace("[","").replace("]","").replace("\"","") .split(",");
+                                                   if(strValue.length>0){
                                                     for (int j=0;j<strValue.length;j++)
                                                         put("m_value"+j,"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;"+strValue[j]+"&nbsp;&nbsp;</p>");
-                                                }else{
-                                                    String[] strCollectValues={"{0}","{1}","{2}","{3}","{4}","{5}","{6}"};
-                                                    for (int i=0;i<strCollectValues.length;i++)
-                                                        put("m_value"+i,"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>");
-                                                }
+                                                    }else{
+                                                        String[] strCollectValues={"{0}","{1}","{2}","{3}","{4}","{5}","{6}"};
+                                                        for (int i=0;i<strCollectValues.length;i++)
+                                                            put("m_value"+i,"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>");
+                                                    }
                                         }
                                     });
                                 }
@@ -392,69 +393,54 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                     /**
                      * 告知事项补充说明
                      */
+                    int pageSize=8;
+                    List<InsuranceOrderInformedMatter> listInsuranceoim=new ArrayList<InsuranceOrderInformedMatter>();
                     put("matter_remark",new ArrayList<List<Map<String,Object>>>(){
                         {
-                            List<Map<String,Object>> listStr=new ArrayList<Map<String,Object>>();
-                            List<Map<String,Object>> listStrTwo=new ArrayList<Map<String,Object>>();
-                            List<Map<String,Object>> listStrThree=new ArrayList<Map<String,Object>>();
+
+                            List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
                             for (InsuranceOrderInformedMatter insuranceOrderInformedMatter:insuranceOrderInformedMatterList
                                     ) {
-                                InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(insuranceOrderInformedMatter.getInsuranceInformedMatter().getMatterId());
+                                if(insuranceOrderInformedMatter.getInsuredResult()||insuranceOrderInformedMatter.getPolicyholderResult())
+                                    listInsuranceoim.add(insuranceOrderInformedMatter);
+                            }
+                            if(listInsuranceoim!=null&&listInsuranceoim.size()>0){
+                                int total=listInsuranceoim.size();
 
-                                String matterDescription=insuranceInformedMatter.getMatterDescription();
-                                if(matterDescription.contains("."))
-                                    matterDescription= matterDescription.substring(0,matterDescription.indexOf("."));
+                                for (int i=0;i<listInsuranceoim.size();i++){
 
-                                if(insuranceInformedMatter.getMatterGroup()!=null&&Hibernate.isInitialized(insuranceInformedMatter.getMatterGroup()))
-                                    matterDescription=insuranceInformedMatter.getMatterGroup().getDescription().substring(0,insuranceInformedMatter.getMatterGroup().getDescription().indexOf("."))+matterDescription;
-                                final String matterDescriptions=matterDescription;
-                                /**
-                                 * 被保人
-                                 */
-                                if(insuranceOrderInformedMatter.getInsuredResult()) {
-                                    Map<String,Object> map=new HashMap<String,Object>(){
+                                    InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(listInsuranceoim.get(i).getInsuranceInformedMatter().getMatterId());
+
+                                    String matterDescription=insuranceInformedMatter.getMatterDescription();
+                                    if(matterDescription.contains("."))
+                                        matterDescription= matterDescription.substring(0,matterDescription.indexOf("."));
+
+                                    if(insuranceInformedMatter.getMatterGroup()!=null&&Hibernate.isInitialized(insuranceInformedMatter.getMatterGroup()))
+                                        matterDescription=insuranceInformedMatter.getMatterGroup().getDescription().substring(0,insuranceInformedMatter.getMatterGroup().getDescription().indexOf("."))+matterDescription;
+                                    final String matterDescriptions=matterDescription;
+                                    final boolean insuredResult=listInsuranceoim.get(i).getInsuredResult();
+                                    final boolean policyholderResult=listInsuranceoim.get(i).getPolicyholderResult();
+                                    final String insuredRemark=listInsuranceoim.get(i).getInsuredRemark();
+                                    final String policyholderRemark=listInsuranceoim.get(i).getPolicyholderRemark();
+
+                                    list.add(new HashMap<String,Object>(){
                                         {
                                             put("title",matterDescriptions);
-                                            put("person","被保人：");
-                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
+                                            if(insuredResult)
+                                                put("insured_remark", "&nbsp;&nbsp;" +insuredRemark );
+                                            if(policyholderResult)
+                                            put("policyholder_remark", "&nbsp;&nbsp;" + policyholderRemark);
                                         }
-                                    };
-                                    if(listStr.size()>=12&&listStrTwo.size()>=12)
-                                        listStrThree.add(map);
-                                    else if(listStrTwo.size()>=12&&listStrTwo.size()<12)
-                                        listStrTwo.add(map);
-                                    else
-                                        listStr.add(map);
-
+                                    });
+                                    if((i+1)%pageSize==0){
+                                        add(list);
+                                        list=new ArrayList<Map<String,Object>>();
+                                    }else if(i==total-1) {
+                                        add(list);
+                                    }
                                 }
-                                /**
-                                 * 投保人
-                                 */
-                                if(insuranceOrderInformedMatter.getPolicyholderResult()){
-                                    Map<String,Object> map=new HashMap<String,Object>(){
-                                        {
-                                            put("title",matterDescriptions);
-                                            put("person","投保人：");
-                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
-                                        }
-                                    };
-                                    if(listStr.size()>=12&&listStrTwo.size()>=12)
-                                        listStrThree.add(map);
-                                    else if(listStrTwo.size()>=12&&listStrTwo.size()<12)
-                                        listStrTwo.add(map);
-                                    else
-                                        listStr.add(map);
-                                }
-
 
                             }
-
-                            if(listStr!=null&&listStr.size()>0)
-                                add(listStr);
-                            if(listStrTwo!=null&&listStrTwo.size()>0)
-                                add(listStrTwo);
-                            if(listStrThree!=null&&listStrThree.size()>0)
-                                add(listStrThree);
                         }
 
                     });

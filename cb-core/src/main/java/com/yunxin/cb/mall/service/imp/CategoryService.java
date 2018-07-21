@@ -89,7 +89,9 @@ public class CategoryService implements ICategoryService {
                 Category_.seoTitle,
                 Category_.categoryName,
                 Category_.enabled,
-                Category_.sortOrder);
+                Category_.sortOrder,
+                Category_.lowestPrice,
+                Category_.highestPrice);
         return category1;
     }
 
