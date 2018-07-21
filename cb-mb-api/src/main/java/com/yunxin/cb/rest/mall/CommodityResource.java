@@ -120,53 +120,6 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
                 }
             }
         }
-        //将组装好的Map拼装成Vo
-//        AttributeVo attributeVo=new AttributeVo();
-//        for(String key:firstFloor.keySet()){
-//            List<AttributeVo> twoAttributeVoList=new ArrayList<AttributeVo>();
-//            //第一层GroupName放firstFloor的key
-//            attributeVo.setGroupName(key);
-//            attributeVo.setLayer(1);
-//            //获取第二层
-//            Map<String, Object> twoMap=(Map<String, Object>)firstFloor.get(key);
-//            for(String twoKey:twoMap.keySet()){
-//                AttributeVo twoVo=new AttributeVo();
-//                //第二层GroupName放firstFloor的key
-//                twoVo.setGroupName(key);
-//                //第二层AttributeName放twoM的key
-//                twoVo.setAttributeName(twoKey);
-//                twoVo.setLayer(2);
-//                //获取第三层
-//                Map<String, Object> threeMap=(Map<String, Object>)twoMap.get(twoKey);
-//                List<AttributeVo> threeAttributeVoList=new ArrayList<AttributeVo>();
-//                for(String threeKey:threeMap.keySet()){
-//                    AttributeVo threeVo=new AttributeVo();
-//                    //第三层GroupName放threeM的key
-//                    threeVo.setGroupName(threeKey);
-//                    threeVo.setLayer(3);
-//                    threeAttributeVoList.add(threeVo);
-//                    //获取第三层的值
-//                    Set<String> value=(Set<String>)threeMap.get(threeKey);
-//                    List<AttributeVo> fourAttributeVoList=new ArrayList<AttributeVo>();
-//                    for (String s: value) {
-//                        AttributeVo fourVo=new AttributeVo();
-//                        //第四层GroupName放threeM的key
-//                        fourVo.setGroupName(threeKey);
-//                        //第四层GroupName放threeM的Value
-//                        fourVo.setAttributeName(s);
-//                        fourVo.setLayer(4);
-//                        fourAttributeVoList.add(fourVo);
-//                    }
-//                    //把第四层添加到第三层
-//                    threeVo.setItems(fourAttributeVoList);
-//                }
-//                //把第三层添加到第二层
-//                twoVo.setItems(threeAttributeVoList);
-//                twoAttributeVoList.add(twoVo);
-//            }
-//            //把第二层添加到第一层
-//            attributeVo.setItems(twoAttributeVoList);
-//        }
         return new ResponseResult(firstFloor);
     }
 }
