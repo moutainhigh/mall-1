@@ -31,8 +31,8 @@
 
             KindEditor.ready(function(K) {
                 window.editor = K.create('#editorContent',{
-                    uploadJson : '../editor/jsp/upload_json.jsp',
-                    fileManagerJson : '../editor/jsp/file_manager_json.jsp',
+                    uploadJson: '../upload/fileUpload.do',
+                    fileManagerJson: '../upload/fileManager.do',
                     allowFileManager : true,
                     afterCreate : function() {
                         this.sync();

@@ -1,20 +1,20 @@
 package com.yunxin.cb.mall.web.action.media;
 
 import com.yunxin.cb.security.SecurityConstants;
-import com.yunxin.cb.security.SecurityConstants;
-import com.yunxin.cb.mall.web.action.MediaPather;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.ServletContextAware;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,26 +25,22 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/media")
-public class MediaController implements ServletContextAware {
+public class MediaController {
 
 
-    private ServletContext servletContext;
-
-    @Override
-    public void setServletContext(ServletContext servletContext) {
-        this.servletContext = servletContext;
-    }
+    @Value("${application.uploadPath}")
+    private String uploadPath;
 
 
     @RequestMapping(value = "medias", method = RequestMethod.GET)
     public String medias(ModelMap modelMap) {
-        modelMap.addAttribute("picPath", servletContext.getInitParameter(SecurityConstants.PIC_PATH));
+        modelMap.addAttribute("picPath", SecurityConstants.PIC_DIR);
         return "media/medias";
     }
 
     @RequestMapping(value = "chooseMedias", method = RequestMethod.GET)
     public String chooseMedias(ModelMap modelMap) {
-        modelMap.addAttribute("picPath", servletContext.getInitParameter(SecurityConstants.PIC_PATH));
+        modelMap.addAttribute("picPath", SecurityConstants.PIC_DIR);
         return "media/chooseMedias";
     }
 
@@ -53,11 +49,11 @@ public class MediaController implements ServletContextAware {
     @ResponseBody
     public List<FolderNode> getDataNodesById(@RequestBody Map<String, Object> model) {
         String path = (String) model.get("path");
-        String realPath = servletContext.getInitParameter(SecurityConstants.PIC_PATH);
+        String realPath = uploadPath;
         if (path != null) {
             realPath = realPath + path;
         }
-        File fileDir = new File(servletContext.getRealPath(realPath));
+        File fileDir = new File(realPath);
         File[] files = fileDir.listFiles();
         List<FolderNode> folderNodes = new ArrayList<>(files.length);
         for (File file : files) {
@@ -80,8 +76,8 @@ public class MediaController implements ServletContextAware {
 
     @RequestMapping(value = "getFileNodesByPath", method = RequestMethod.GET)
     @ResponseBody
-    public PageUtil getFileNodesByPath(@RequestParam("path") String path,@RequestParam("page") int page) {
-        File fileDir = new File(servletContext.getRealPath(servletContext.getInitParameter(SecurityConstants.PIC_PATH) + path));
+    public PageUtil getFileNodesByPath(@RequestParam("path") String path, @RequestParam("page") int page) {
+        File fileDir = new File(uploadPath + path);
         File[] files = fileDir.listFiles();
         List<FileNode> folderNodes = new ArrayList<>(files.length);
         for (int i = 0; i < files.length; i++) {
@@ -117,16 +113,16 @@ public class MediaController implements ServletContextAware {
             }
             folderNodes.add(node);
         }
-        PageUtil pageUtil=new PageUtil(folderNodes.size());
+        PageUtil pageUtil = new PageUtil(folderNodes.size());
         pageUtil.setCurrentPage(page);
-        pageUtil.setFileNodes(folderNodes.subList(pageUtil.getPageStartRow(),pageUtil.getPageEndRow()));
+        pageUtil.setFileNodes(folderNodes.subList(pageUtil.getPageStartRow(), pageUtil.getPageEndRow()));
         return pageUtil;
     }
 
     @RequestMapping(value = "deleteFileNodeByPath", method = RequestMethod.GET)
     @ResponseBody
     public MediaResult deleteFileNodeByPath(@RequestParam("filePath") String filePath) {
-        File file = new File(servletContext.getRealPath(servletContext.getInitParameter(SecurityConstants.PIC_PATH) + filePath));
+        File file = new File(uploadPath + filePath);
         if (file.exists()) {
             file.delete();
         }
@@ -138,7 +134,10 @@ public class MediaController implements ServletContextAware {
     @RequestMapping(value = "createDirByPath", method = RequestMethod.GET)
     @ResponseBody
     public MediaResult createDirByPath(@RequestParam("filePath") String filePath, @RequestParam("dirName") String dirName) {
-        File file = MediaPather.createPicStoreRealDir(servletContext, filePath + "/" + dirName);
+        File file = new File(uploadPath+ filePath + "/" + dirName);
+        if(!file.exists()){
+            file.mkdirs();
+        }
         MediaResult mediaResult = new MediaResult();
         mediaResult.setResult("success");
         FileNode node = new FileNode(dirName, filePath + "/" + dirName, false);
@@ -153,22 +152,26 @@ public class MediaController implements ServletContextAware {
      */
     @RequestMapping(value = "uploadMediaFile", method = RequestMethod.POST)
     @ResponseBody
-    public MediaResult uploadMediaFile(@RequestParam("mediaFile") CommonsMultipartFile file, HttpServletRequest request) {
+    public MediaResult uploadMediaFile(@RequestParam("mediaFile") MultipartFile file, HttpServletRequest request) {
         String path = request.getParameter("path");
         int scaleWidth = Integer.parseInt(request.getParameter("scaleWidth"));
         int scaleHeight = Integer.parseInt(request.getParameter("scaleHeight"));
-        String contextPath = MediaPather.getPicStoreRealPath(servletContext, path); //
-        File fileDir = new File(contextPath);
+        File fileDir = new File(uploadPath+path);
         if (!fileDir.exists()) {
             fileDir.mkdirs();
         }
-        String fileName = file.getFileItem().getName();
+        String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf("."));
         String name = System.currentTimeMillis() + suffix.toLowerCase();
-        File newFile = new File(contextPath + "/" + name);
+        File newFile = new File(uploadPath + path+"/" + name);
         MediaResult mediaResult = new MediaResult();
         try {
-            file.getFileItem().write(newFile);
+            OutputStream out = FileUtils.openOutputStream(newFile, false);
+            try {
+                IOUtils.copy(file.getInputStream(), out);
+            } finally {
+                IOUtils.closeQuietly(out);
+            }
             FileNode node = new FileNode(name, path + "/" + name, true);
             node.setFileLength(newFile.length());
             node.setFile(true);
