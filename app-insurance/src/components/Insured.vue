@@ -73,7 +73,7 @@
           </div>
         </div>
         <div class="error" v-if="!$v.insured.insuredIncome.required && $v.insured.insuredIncome.$dirty">请输入年收入</div>
-        <div class="error" v-if="!$v.insured.insuredIncome.int">请输入年收入，单位万元（正整数）</div>
+        <div class="error" v-if="!$v.insured.insuredIncome.insuredInt">请输入年收入，单位万元（正整数）</div>
         <div class="error" v-if="!$v.insured.insuredIncome.maxLength">最大不超过6位数</div>
 
         <popup-picker id="marriage" title="婚姻状况" placeholder="请选择婚姻状况" :data="maritalStatus" value-text-align="left"
@@ -161,6 +161,7 @@
     passportVali,
     permanentResidenceVali,
     int,
+    insuredInt,
     fixedTel,
     mobile,
     mail,
@@ -205,7 +206,7 @@
           insuredCountry: {required, maxLength: maxLength(64)},
           insuredHeight: {required, int, maxLength: maxLength(3)},
           insuredBodyWeight: {required, int, maxLength: maxLength(3)},
-          insuredIncome: {required, int, maxLength: maxLength(6)},
+          insuredIncome: {required, insuredInt, maxLength: maxLength(6)},
           insuredMarriage: {required},
           insuredTel: {fixedTel, maxLength: maxLength(15)},
           insuredMobile: {mobile},
