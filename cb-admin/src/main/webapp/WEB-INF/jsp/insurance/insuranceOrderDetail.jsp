@@ -797,18 +797,18 @@
                                                         </c:when>
                                                         <c:otherwise>
                                                             <th scope="col" >${matterLists.matter}</th>
-                                                            <th scope="col" width="100">
+                                                            <th scope="col" width="100" style="word-break: break-all">
                                                                 <c:if test="${matterLists.insured=='false'}">否</c:if>
                                                                 <c:if test="${matterLists.insured=='true'}">是</c:if>
                                                             </th>
                                                             <th scope="col">
                                                                     ${matterLists.insured_remark}
                                                             </th>
-                                                            <th scope="col" width="100">
+                                                            <th scope="col" width="100" >
                                                                 <c:if test="${matterLists.policy=='false'}">否</c:if>
                                                                 <c:if test="${matterLists.policy=='true'}">是</c:if>
                                                             </th>
-                                                            <th scope="col">
+                                                            <th scope="col" style="word-break: break-all">
                                                                     ${matterLists.policy_remark}
                                                             </th>
                                                         </c:otherwise>
