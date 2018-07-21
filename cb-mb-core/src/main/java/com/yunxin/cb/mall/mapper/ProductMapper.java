@@ -126,7 +126,8 @@ public interface ProductMapper {
             "PRODUCT_ID, ADD_TIME, COST_PRICE, CREATE_TIME, DEFAULT_PIC_PATH, MARKET_PRICE, ",
             "PRODUCT_NAME, PRODUCT_NO, PRODUCT_STATE, PUBLISH_STATE, REMARK, SALE_PRICE, ",
             "STORE_NUM, VOLUME, WEIGHT, COMMODITY_ID, STORE_ID",
-            "from product where COMMODITY_ID = #{commodityId,jdbcType=INTEGER}"
+            "from product where PRODUCT_ID = #{productId}",
+            "and PRODUCT_STATE = #{state} and PUBLISH_STATE = #{publish}"
     })
     @Results({
             @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER, id=true),
@@ -145,11 +146,9 @@ public interface ProductMapper {
             @Result(column="VOLUME", property="volume", jdbcType=JdbcType.REAL),
             @Result(column="WEIGHT", property="weight", jdbcType=JdbcType.REAL),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
-            @Result(column="STORE_ID", property="storeId", jdbcType=JdbcType.INTEGER),
-            @Result(column = "PRODUCT_ID",property = "productAttributes",
-                    many = @Many(select = "com.yunxin.cb.mall.mapper.ProductAttributeMapper.selectAllByProductId"))
+            @Result(column="STORE_ID", property="storeId", jdbcType=JdbcType.INTEGER)
     })
-    Product selectProductById(Integer productId);
+    Product selectProductById(@Param("productId") Integer productId,@Param("state") Integer state,@Param("publish") Integer publish);
 
     @Update({
         "update product",

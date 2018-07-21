@@ -74,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().anyRequest().authenticated();
 
+        http.headers().frameOptions().disable();
         // 禁用CSRF
         http.csrf().disable();
 
