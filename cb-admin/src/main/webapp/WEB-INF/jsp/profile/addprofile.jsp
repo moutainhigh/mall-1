@@ -100,6 +100,8 @@
                                     },
                                     success: function (result) {
                                         $('#ANDROID_URL').val(result.url);
+                                        $('#ANDROID_VERSION_CODE').val(result.versionCode);
+                                        $('#ANDROID_VERSION_NAME').val(result.versionName);
                                         $('#loadgif').css("display","none");
                                         $('#mainload').css("display","none");
                                         bootbox.alert("上传成功！");
