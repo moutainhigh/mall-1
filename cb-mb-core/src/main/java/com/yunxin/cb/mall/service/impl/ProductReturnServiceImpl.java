@@ -39,7 +39,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
     @Resource
     private ProductMapper productMapper;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public ProductReturn applyOrderProductReturn(ProductReturn productReturn) throws Exception {
         ProductReturn dbReturn = productReturnMapper.selectByOrderId(productReturn.getOrderId());
         if (null != dbReturn) {

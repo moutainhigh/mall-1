@@ -34,5 +34,5 @@ public interface OrderService {
      * @param order
      * @return
      */
-    public Order cancelOrder(Order order);
+    public Order cancelOrder(Order order) throws Exception;
 }
