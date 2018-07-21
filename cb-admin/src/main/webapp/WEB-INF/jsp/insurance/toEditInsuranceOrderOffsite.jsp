@@ -73,7 +73,7 @@
                             <div class="spacer-30">1、您的户籍所在地是哪里？
                             </div>
                             <div style="float: left;margin-left: 10px">
-                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.sensue" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.sensue" maxlength="60"></form:textarea>
                             </div>
                         </div>
 
@@ -84,7 +84,7 @@
                                 2、您目前工作所在城市或地区名？单位名称？工作单位所属行业？您的职务？
                             </div>
                             <div style="float: left;margin-left: 10px">
-                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.workplace" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.workplace" maxlength="100"></form:textarea>
                             </div>
                         </div>
 
@@ -95,7 +95,7 @@
                                 3、请说明您离开投保地的原因？前往何地？出行目的？（如是工作或学习，请提供单位或学校的名称和地址，并详细告知工作内容）
                             </div>
                             <div  style="float: left;margin-left: 10px">
-                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.leaveReason" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.leaveReason" maxlength="100"></form:textarea>
                             </div>
                         </div>
 
@@ -106,7 +106,7 @@
                                 4、您一年中平均在投保地逗留的时间多长？每次回投保地的时间间隔多久？您往来投保地和上述异地之间经常乘坐的交通工具是什么？
                             </div>
                             <div  style="float: left;margin-left: 10px">
-                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.stayTime" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.stayTime" maxlength="100"></form:textarea>
                             </div>
                         </div>
 
@@ -117,7 +117,7 @@
                                 5、您在投保地或异地是否已落实居住住所？如已落实请简述居住地址、环境？
                             </div>
                             <div style="float: left;margin-left: 10px">
-                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.offsiteAddress" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" path="insuranceOrderOffsite.offsiteAddress" maxlength="100"></form:textarea>
                             </div>
                         </div>
 
@@ -130,7 +130,7 @@
                                 <input type="radio"  name="otherMatter" value="false" <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}" > checked </c:if> onclick="changeOtherMatter(false);"/> 否
                             </div>
                             <div id="otherMatterDiv" style='float: left;margin-left: 10px; <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> display:none;</c:if>' >
-                                <form:textarea id="insuranceOrderOffsite_otherMatter" rows="10" cols="101" path="insuranceOrderOffsite.otherMatter" maxlength="255"></form:textarea>
+                                <form:textarea id="insuranceOrderOffsite_otherMatter" rows="10" cols="101" path="insuranceOrderOffsite.otherMatter" maxlength="100"></form:textarea>
                             </div>
 
                         </div>
