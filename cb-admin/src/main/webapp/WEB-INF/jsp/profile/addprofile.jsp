@@ -17,9 +17,19 @@
     <title>ANDROID导入</title>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true, scroll: false, showOneMessage: true
+            });
+            $('#serNo').val("")
+        });
     </script>
 </head>
 <body>
+<div id="mainload" style="width:5000px;height:5000px;filter:alpha(opacity=5);opacity:.05;position:absolute;top:0;left:0;z-index:98;background:#000;display: none"></div>
+<div id="loadgif" style="position:absolute;top:40%;left:40%;z-index: 999;display: none">
+    　　<img src="../images/git/loading.gif"  />
+</div>
 <jsp:include page="../layouts/left.jsp"/>
 <div id="main" class="clearfix">
     <header id="header-main">
@@ -84,15 +94,27 @@
                                     data: formData,
                                     processData: false,
                                     contentType: false,
+                                    beforeSend : function(){     //请求成功前触发的局部事件
+                                        $('#loadgif').show();
+                                        $('#mainload').show();
+                                    },
                                     success: function (result) {
-                                        alert("上传成功")
                                         $('#ANDROID_URL').val(result.url);
+                                        $('#ANDROID_VERSION_CODE').val(result.versionCode);
+                                        $('#ANDROID_VERSION_NAME').val(result.versionName);
+                                        $('#loadgif').css("display","none");
+                                        $('#mainload').css("display","none");
+                                        bootbox.alert("上传成功！");
                                     },
                                     error: function (err) {
                                     }
                                 });
                             }
+
+
                         </script>
+
+
                         <div class="col-sm-2">
                             <label><span class="asterisk">*</span>apk文件导入：</label>
                         </div>
@@ -115,7 +137,7 @@
                         <div class="col-sm-3">
                             <input   name="ANDROID_VERSION_CODE" id="ANDROID_VERSION_CODE" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
-                                   style="width: 600px"/>
+                                   style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>
                     <div class="spacer-10"></div>
@@ -126,7 +148,7 @@
                         <div class="col-sm-3">
                             <input  name="ANDROID_VERSION_NAME" id="ANDROID_VERSION_NAME" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
-                                   style="width: 600px"/>
+                                   style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>
                     <div class="spacer-10"></div>
@@ -137,7 +159,7 @@
                         <div class="col-sm-3">
                             <input name="ANDROID_APP_NAME" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
-                                   style="width: 600px"/>
+                                   style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>
                     <div class="spacer-10"></div>
@@ -148,7 +170,7 @@
                         <div class="col-sm-3">
                             <input readonly="readonly" name="ANDROID_URL" id="ANDROID_URL" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
-                                   style="width: 600px"/>
+                                   style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>
                     <div class="spacer-10"></div>

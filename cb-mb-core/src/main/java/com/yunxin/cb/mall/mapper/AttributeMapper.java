@@ -28,7 +28,7 @@ public interface AttributeMapper {
         "select",
         "ATTRIBUTE_ID, ATTRIBUTE_NAME, IMAGE_PATH, SORT_ORDER, GROUP_ID",
         "from attribute",
-        "where ATTRIBUTE_ID = #{attributeId,jdbcType=INTEGER}"
+        "where ATTRIBUTE_ID = #{attributeId,jdbcType=INTEGER} order by ATTRIBUTE_ID"
     })
     @Results({
         @Result(column="ATTRIBUTE_ID", property="attributeId", jdbcType=JdbcType.INTEGER, id=true),
@@ -40,6 +40,21 @@ public interface AttributeMapper {
                 one = @One(select = "com.yunxin.cb.mall.mapper.AttributeGroupMapper.selectByPrimaryKey"))
     })
     Attribute selectByPrimaryKey(Integer attributeId);
+
+    @Select({
+            "select",
+            "ATTRIBUTE_ID, ATTRIBUTE_NAME, IMAGE_PATH, SORT_ORDER, GROUP_ID",
+            "from attribute",
+            "where GROUP_ID = #{groupId,jdbcType=INTEGER} order by ATTRIBUTE_ID"
+    })
+    @Results({
+            @Result(column="ATTRIBUTE_ID", property="attributeId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="ATTRIBUTE_NAME", property="attributeName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="IMAGE_PATH", property="imagePath", jdbcType=JdbcType.VARCHAR),
+            @Result(column="SORT_ORDER", property="sortOrder", jdbcType=JdbcType.SMALLINT),
+            @Result(column="GROUP_ID", property="groupId", jdbcType=JdbcType.INTEGER)
+    })
+    List<Attribute> selectByGroupId(Integer groupId);
 
     @Select({
         "select",
@@ -64,4 +79,5 @@ public interface AttributeMapper {
         "where ATTRIBUTE_ID = #{attributeId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Attribute record);
+
 }
