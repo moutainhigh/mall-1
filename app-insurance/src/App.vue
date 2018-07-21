@@ -7,6 +7,8 @@
 
 <script>
   import storage from "./store/storage";
+  import data from '../static/config.json'
+  import {setBase} from "./config/env";
 
 
   export default {
@@ -17,6 +19,7 @@
       }
     },
     created:function () {
+      this.loadJson();
       console.log(process.env.VERSION);
       // alert(process.env.VERSION);
       if (storage.fetch('version').length == 0 || storage.fetch('version') != process.env.VERSION) {
@@ -27,6 +30,11 @@
       }
       if (storage.fetch('insured').length === 0) {
         storage.save('insured', this.Admin.insured);
+      }
+    },
+    methods:{
+      async loadJson(){
+        setBase(data.baseUrl);
       }
     }
   }
