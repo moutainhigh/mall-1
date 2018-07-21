@@ -43,6 +43,14 @@
         </div>
         <div class="borderBottom"></div>
       </div>
+
+      <div class="content" style="height: auto" v-if="insuranceOrderOffsite.otherMatter">
+        <p>6、是否有其他需要说明事项：</p>
+        <div class="content-val">
+          <p>{{insuranceOrderOffsite.otherMatter}}</p>
+        </div>
+        <div class="borderBottom"></div>
+      </div>
     </div>
 
     <div v-if="!enShow" class="title">
@@ -80,6 +88,8 @@
     background-color: #ffffff;
     padding: 15px;
     color: #666;
+    -ms-word-break: break-all;
+    word-break: break-all;
   }
 
 </style>

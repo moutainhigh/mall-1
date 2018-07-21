@@ -2,3 +2,28 @@ body {
   margin: 0 !important;
   background-color: #F5F5F5;
 }
+
+.i-footer {
+  position: fixed;
+  bottom: 0;
+  height: 72px;
+  width: 100%;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.i-footer button{
+  width: 94%;
+  height: 48px;
+  margin-top: 10px;
+  background-color: #f5ca1d;
+  font-size: 18px;
+  color: #ffffff;
+  border: unset;
+  border-radius: 5px;
+}
+
+p {
+  -webkit-margin-before: unset !important;
+  -webkit-margin-after: unset !important;
+}

@@ -11,8 +11,8 @@
       </div>
       <div class="collect" @click="isCollect = !isCollect">
         <div style="position: relative;">
-          <img v-if="!isCollect" src="../../assets/img/star.png">
-          <img v-if="isCollect" src="../../assets/img/starSelect.png">
+          <img v-if="!isCollect" src="../../assets/img/cardetail/ic_collect_nor.png">
+          <img v-if="isCollect" src="../../assets/img/cardetail/ic_collect_sele.png">
         </div>
         <p>收藏</p>
       </div>
@@ -30,12 +30,12 @@
     <div class="selectItem" @click="checkType = 'standard'">
       <p class="selectItem-title">规格选择</p>
       <p v-if="standard[0] == ''" class="selectItem-detail">请选择</p>
-      <img src="../../assets/img/right.png">
+      <img src="../../assets/img/cardetail/ic_right.png">
     </div>
     <div class="buyMode" @click="checkType = 'mode'">
       <p class="selectItem-title">支付方式</p>
       <p class="selectItem-detail">请选择</p>
-      <img src="../../assets/img/right.png">
+      <img src="../../assets/img/cardetail/ic_right.png">
     </div>
     <div style="background: #f3f3f3; height: 1px; margin-left: 10px; margin-right: 10px"></div>
 
@@ -46,13 +46,13 @@
     </div>
     <div style="position: relative; height: 40px; background: #FAFAFA; margin-bottom: 10px">
       <p style="padding: 10px; font-size: 14px; color: #999; float: left"><img style="width: 13px; margin-right: 5px"
-                                                                               src="../../assets/img/check-circle.png">店铺发货
+                                                                               src="../../assets/img/cardetail/ic_particulars_service.png">店铺发货
       </p>
       <p style="padding: 10px; font-size: 14px; color: #999; float: left"><img style="width: 13px; margin-right: 5px"
-                                                                               src="../../assets/img/check-circle.png">全国联保
+                                                                               src="../../assets/img/cardetail/ic_particulars_service.png">全国联保
       </p>
       <p style="padding: 10px; font-size: 14px; color: #999; float: left"><img style="width: 13px; margin-right: 5px"
-                                                                               src="../../assets/img/check-circle.png">认证商家
+                                                                               src="../../assets/img/cardetail/ic_particulars_service.png">认证商家
       </p>
     </div>
     <div
@@ -73,7 +73,7 @@
         <div style="padding: 15px; position: relative; height: 100px">
           <img style="height: 100%; border-radius: 4px; border: 1px solid #f3f3f3; float: left"
                src="../../assets/logo.png">
-          <img style="width: 30px; float: right" src="../../assets/img/delete.png" @click="checkType = 'none'">
+          <img style="width: 14px; float: right" src="../../assets/img/cardetail/ic_sku_close.png" @click="checkType = 'none'">
           <p style="color: red; font-size: 16px; padding-top: 45px; margin-left: 110px">￥<span
             style="color: red; font-size: 24px; font-weight: bold">23.98</span>万</p>
           <p style="margin-left: 110px; font-size: 14px">商品编号：1212454878</p>
@@ -108,7 +108,7 @@
       <div v-if="checkType == 'mode'" style="position: fixed; bottom: 0; width: 100%; height: 250px; background: #fff;">
         <div style="padding: 15px; position: relative; border-bottom: 1px solid #f3f3f3">
           <span style="font-weight: bold">支付方式</span>
-          <img style="width: 26px; float: right" src="../../assets/img/delete.png" @click="checkType = 'none'">
+          <img style="width: 14px; float: right" src="../../assets/img/cardetail/ic_sku_close.png" @click="checkType = 'none'">
         </div>
         <button v-for="(buyMode, index) in buyModes" class="carColor" :class="{'activeColor': index == activeMode}"
                 @click="checkMode(index)">
