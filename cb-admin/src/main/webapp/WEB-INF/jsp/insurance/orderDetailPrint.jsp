@@ -412,12 +412,12 @@
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
                                     </div>
                                 </div>
                             </div>
@@ -460,20 +460,20 @@
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
                                     </div>
                                 </div>
                             </div>
                             <div class="div-line">
                                 <div class="div-line-con div-career">
-                                    <div class="title">A 18.职业代码</div>
+                                    <div class="title" style="color: green">A 18.职业代码</div>
                                     <input readonly class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
-                                    <div class="title" style="margin-left: 25px;">职业类别</div>
+                                    <div class="title" style="margin-left: 25px;color: green">职业类别</div>
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 19.&nbsp;E-mail</div>
@@ -650,12 +650,12 @@
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
                                     </div>
                                 </div>
                             </div>
@@ -697,20 +697,20 @@
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
                                     </div>
                                 </div>
                             </div>
                             <div class="div-line">
                                 <div class="div-line-con div-career">
-                                    <div class="title">A 38.职业代码</div>
+                                    <div class="title" style="color: green">A 38.职业代码</div>
                                     <input readonly class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
-                                    <div class="title" style="margin-left: 25px;">职业类别</div>
+                                    <div class="title" style="margin-left: 25px;color: green">职业类别</div>
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 39. E-mail</div>
@@ -724,7 +724,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="div-title">本单联系地址（如此栏空缺，将以投保人住址为准</div>
+                        <div class="div-title">本单联系地址（如此栏空缺，将以投保人住址为准）</div>
                         <div class="div-tab">
                             <div class="div-line">
                                 <div class="div-line-con" style="padding: 7px 5px 7px 10px;">
@@ -753,12 +753,12 @@
                                 <div class="div-line-con div-postcode" style="margin-right:  35px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
                                     </div>
                                 </div>
                             </div>
@@ -780,7 +780,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="div-title" style="line-height: 1.5;"><span>身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险年金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充告知，则视剩余养老保险年金受益人与身故保险金受益人为同一人）
+                        <div class="div-title" style="line-height: 1.5;color: red"><span style="color: red;">身故保险金受益人：</span>（投保养老年金保险产品需要指定剩余养老保险年金受益人时，请填写“投保与合同变更补充声明”告知剩余养老保险年金受益人，如未补充告知，则视剩余养老保险年金受益人与身故保险金受益人为同一人）
                             <br/>说明：1.指定受益人时，同一受益顺序的受益份额合计必须等于100%。2.后一受益顺序的受益人只有在前一受益顺序所有受益人丧失或放弃受益权后才能享有受益权。3.若未填写受益份额，同一顺序的保险金受益人按照相等份额享有保险金。4.若未指定受益人，或者受益人指定不明无法确定的，保险金将作为被保险人的遗产按照《中华人民共和国继承法》的规定进行分配。5.投保无身故保险利益的保险产品时无需填写本栏，填写亦视为无效。
                         </div>
                         <div class="div-tab" style="height: 240px;width: 1000px;">
@@ -1117,7 +1117,7 @@
                             </div>
                         </div>
                         <div class="div-title">附加保险合同 <span
-                                style="font-size: 13px">(“保险期间”为“一年“的附加保险合同为非保证续保产品，期满前由保险公司通知是否续保）</span></div>
+                                style="font-size: 13px;color: red">(“保险期间”为“一年“的附加保险合同为非保证续保产品，期满前由保险公司通知是否续保）</span></div>
                         <div class="div-tab">
                             <div class="table-line" style="height: 30px;">
                                 <div class="div-table-2" style="width: 338px;height: 30px;">B12.附加保险合同/可选责任名称</div>
@@ -1527,8 +1527,7 @@
                                         <br/>e.是否曾进行婴幼儿体检且结果异常？
                                         <br/>f.是否经常患腹痛、婴幼儿腹泻等消化系统疾病？
                                         <br/>g.是否曾患哮喘、肺炎、扁桃体炎等呼吸系统疾病？
-                                        <br/>h.是否曾患疝气？
-                                        i.是否曾出现“高热惊厥”？
+                                        <br/>h.是否曾患疝气，是否曾出现“高热惊厥”？
                                     </div>
                                 </div>
                                 <div class="div-table-2" style="width: 83px;height: 197px;"><input readonly type="checkbox" <c:if test="${map.insurance_matterList[25].insuredResult=='true'}">checked</c:if>>是<input
@@ -1580,7 +1579,7 @@
                     <span class="three-span">
                         投保人和被保险人对于投保单各栏目中的所有陈述均属真实，
                         <span style="font-weight: bold">并亲笔签名</span>
-                        ，如投保人和被保险人故意或者因重大过失未履行如实告知义务，足以影响富德生命人寿保险股份有限公同决定是否同意承保或者提高保险费率的，富德生命人寿保险股份有限公司有权依法解除保险合同，并对保险合同解除前发生的保险事故，不承担赔偿或给付保险金的责任
+                        ，如投保人和被保险人故意或者因重大过失未履行如实告知义务，足以影响富德生命人寿保险股份有限公同决定是否同意承保或者提高保险费率的，富德生命人寿保险股份有限公司有权依法解除保险合同，并对保险合同解除前发生的保险事故，不承担赔偿或给付保险金的责任。
                     </span>
                                         </div>
                                     </div>
@@ -2088,7 +2087,7 @@
                                 <div class="div-line" style="border-bottom: solid 0px;">
                                     <div class="div-line-con-four">
                                         <div>
-                                            <div class="title"><span class="body-font">&nbsp;9.&nbsp;&nbsp;&nbsp;估计被保险收入：</span>
+                                            <div class="title"><span class="body-font">&nbsp;9.&nbsp;&nbsp;&nbsp;估计被保险人收入</span>
                                             </div>
                                             <div>
                                                 <div class="a-input-div" style="width: 75px;">
@@ -2096,21 +2095,21 @@
                                                 </div>
                                                 <span class="body-font">/月，</span>
                                             </div>
-                                            <div class="title"><span class="body-font">估计投保人收入：</span></div>
+                                            <div class="title"><span class="body-font">估计投保人收入</span></div>
                                             <div>
                                                 <div class="a-input-div" style="width: 75px;">
                                                     <input readonly class="l-input" type="text"/>
                                                 </div>
                                                 <span class="body-font">/月，</span>
                                             </div>
-                                            <div class="title"><span class="body-font">估计被保险人财产值：</span></div>
+                                            <div class="title"><span class="body-font">估计被保险人财产值</span></div>
                                             <div>
                                                 <div class="a-input-div" style="width: 75px;">
                                                     <input readonly class="l-input" type="text"/>
                                                 </div>
-                                                <span class="body-font">; ，</span>
+                                                <span class="body-font">，</span>
                                             </div>
-                                            <div class="title"><span class="body-font">估计投保人财产值：</span></div>
+                                            <div class="title"><span class="body-font">估计投保人财产值</span></div>
                                             <div>
                                                 <div class="a-input-div" style="width: 85px;">
                                                     <input readonly class="l-input" type="text"/>
@@ -2367,14 +2366,14 @@
                                 <div class="s-insure-content">
                                     <div style="height: 90px;border: #000000 1px solid;background-color: #FFFBD6;margin: -1px;box-sizing: border-box;">
                                         <div style="text-align: left;padding: 18px;line-height: 1.5;font-size: 18px;text-indent: 2rem;">
-                                            本人对福德生命人寿保险股份有限公司的投保或合同变更告知有下列补充和修改。本人明白并同意这些补充和修改是保险合同成立或变更的依据，并成为保险合同的组成部分。
+                                            本人对富德生命人寿保险股份有限公司的投保或合同变更告知有下列补充和修改。本人明白并同意这些补充和修改是保险合同成立或变更的依据，并成为保险合同的组成部分。
                                         </div>
                                     </div>
                                     <div>
                                         <div style="height: 910px;box-sizing: border-box;">
                                             <c:forEach items="${matterRemark}" var="matterRemarks">
                                             <div style="display: flex;padding: 17px 10px;font-size: 15px;text-align: left;">
-                                                <div style="display: flex; flex: 0 0 20px;">
+                                                <div style="display: flex; flex: 0 0 25px;">
                                                         <%--C1.--%>
                                                         ${matterRemarks.title}
                                                 </div>

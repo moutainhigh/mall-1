@@ -45,18 +45,11 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     @Transactional
-    public Order createOrder(Integer productId, Order order) throws Exception {
-        //根据货品id查询货品
-        Product product = productMapper.selectByPrimaryKey(productId);
-        //判断货品是否存在，且库存足够
-        if (product == null || product.getStoreNum() <= 0) {
-            //库存不足
-            //throw new Exception("库存不足");
-            return null;
-        }
+    public Order createOrder(Order order) throws Exception {
         //支付方式
         if (order.getPaymentType()== PaymentType.LOAN.ordinal()) {
-            //贷款购车需要判断用户额度（接口调用）
+            //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
+            //throw new Exception("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
         }
         //添加订单数据
         Date createTime = new Date();
@@ -64,26 +57,39 @@ public class OrderServiceImpl implements OrderService {
         order.setUpdateTime(createTime);
         order.setOrderCode(UUIDGeneratorUtil.getUUCode());
         order.setOrderState(OrderState.PENDING_PAYMENT.ordinal());
-        order.setProdQuantity(1);
-        order.setTotalPrice(Double.valueOf(product.getSalePrice()));
-        order.setFeeTotal(order.getTotalPrice());
         defaultValue(order);//添加默认数据
+        double totalPrice = 0; // 订单总价
 
+        Set<OrderItem> orderItems = order.getOrderItems();
+        if (orderItems != null && !orderItems.isEmpty()) {
+            for (OrderItem orderItem : orderItems) {
+                //根据货品id查询货品
+                Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
+                //判断货品是否存在，且库存足够
+                if (product == null || product.getStoreNum() <= 0) {
+                    //库存不足
+                    throw new Exception("库存不足");
+                }
+                orderItem.setOrderId(order.getOrderId());
+                orderItem.setBuyerMessage(order.getBuyerMessage());
+                orderItem.setOrderItemPrice(product.getSalePrice());
+                orderItem.setProductId(product.getProductId());
+                orderItem.setSalePrice(product.getSalePrice());
+                orderItem.setEvaluate(false);
+                orderItem.setProductNum(order.getProdQuantity());
+                //orderItem.setProductImg();
+                orderItem.setCreateTime(createTime);
+                orderItemMapper.insert(orderItem);
+                //减少库存
+                product.setStoreNum(product.getStoreNum() - orderItem.getProductNum());
+                productMapper.updateByPrimaryKey(product);
+                totalPrice += product.getSalePrice();
+            }
+        }
+        //发票数据
+        order.setTotalPrice(totalPrice);
+        order.setFeeTotal(order.getTotalPrice());
         orderMapper.insert(order);
-        OrderItem orderItem = new OrderItem();
-        orderItem.setOrderId(order.getOrderId());
-        orderItem.setBuyerMessage(order.getBuyerMessage());
-        orderItem.setOrderItemPrice(product.getSalePrice());
-        orderItem.setProductId(product.getProductId());
-        orderItem.setSalePrice(product.getSalePrice());
-        orderItem.setEvaluate(false);
-        orderItem.setProductNum(1);
-        //orderItem.setProductImg();
-        orderItem.setCreateTime(createTime);
-        orderItemMapper.insert(orderItem);
-        //减少库存
-        product.setStoreNum(product.getStoreNum() - 1);
-        productMapper.updateByPrimaryKey(product);
         return order;
     }
 
@@ -151,8 +157,8 @@ public class OrderServiceImpl implements OrderService {
         order.setProvince("0");
         order.setCity("0");
         order.setDistrict("0");
-        order.setConsigneeAddress("");
-        order.setConsigneeName("");
+        //order.setConsigneeAddress("");
+        //order.setConsigneeName("");
         order.setEnabled(true);
         order.setWeightTotal(0d);
         order.setVolumeTotal(0d);

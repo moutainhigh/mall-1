@@ -125,6 +125,8 @@
                         <div class="pull-right">
                             <div class="btn-group">
                                 <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
+                            </div>
+                            <div class="btn-group">
                                 <a href="toAddProfile.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;安卓版本更新</a>
                             </div>
                         </div>
