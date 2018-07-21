@@ -691,7 +691,6 @@
       addBene() {
         if (this.addBene1 === false) {
           this.addBene1 = true;
-          storage.save("beneficiary1", beneficiary1);
           if (storage.fetch('beneficiary1') instanceof Array || storage.fetch('beneficiary1') == null) {
             let beneficiary1 = {
               beneficiaryName: '',
@@ -710,7 +709,7 @@
           document.getElementById("addBene1").scroll(0, 0);
         } else if (this.addBene1 === true && this.addBene2 === false) {
           this.addBene2 = true;
-          if (storage.fetch('beneficiary1') instanceof Array || storage.fetch('beneficiary1') == null) {
+          if (storage.fetch('beneficiary2') instanceof Array || storage.fetch('beneficiary2') == null) {
             let beneficiary2 = {
               beneficiaryName: '',
               beneficiaryGender: true,
