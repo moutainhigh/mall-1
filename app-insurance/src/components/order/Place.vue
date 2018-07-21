@@ -44,7 +44,7 @@
         <div class="borderBottom"></div>
       </div>
 
-      <div class="content" style="height: auto" v-if="insuranceOrderOffsite.otherMatter != ''">
+      <div class="content" style="height: auto" v-if="insuranceOrderOffsite.otherMatter">
         <p>6、是否有其他需要说明事项：</p>
         <div class="content-val">
           <p>{{insuranceOrderOffsite.otherMatter}}</p>
