@@ -1,6 +1,9 @@
 package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.meta.PaymentType;
+import com.yunxin.cb.mall.entity.meta.ProductState;
+import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.mapper.AttributeGroupMapper;
 import com.yunxin.cb.mall.mapper.CommodityMapper;
 import com.yunxin.cb.mall.mapper.FavoriteMapper;
@@ -47,19 +50,24 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public Map getCommdityDetail(int productId,int customerId) {
         Map resultMap = new HashMap();
-        Product product = productMapper.selectProductById(productId);
+        Product product = productMapper.selectProductById(productId,ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());
         Commodity commodity = commodityMapper.selectCommodityDetailById(product.getCommodityId());
-        resultMap.put("commodity",commodity);//商品
         resultMap.put("product",product);//货品
-        resultMap.put("storeNum",product.getStoreNum());//货品库存
         resultMap.put("brand", commodity.getBrand());//品牌
         resultMap.put("priceSection", commodity.getPriceSection());//商品价格段
         resultMap.put("seller", commodity.getSeller());//商家
         Map specMap = new HashMap();//商品规格Map
         for (CommoditySpec spec : commodity.getCommoditySpecs()) {
+            if(spec.getSpec().getSpecName().equals("级别")){
+                resultMap.put("showLevel",spec.getValue());//级别（页面单独显示）
+            }
             specMap.put(spec.getSpec().getSpecName(), spec.getValue());//将规格名称和规格内容封装
         }
         resultMap.put("specs", specMap);//规格及参数
+        Map paymentMap=new HashMap();
+        paymentMap.put(PaymentType.FULL_SECTION.ordinal(),PaymentType.FULL_SECTION.getName());
+        paymentMap.put(PaymentType.LOAN.ordinal(),PaymentType.LOAN.toString());
+        resultMap.put("paymentType", paymentMap);//支付方式
 //        List<AttributeGroup> attributeGroups = attributeGroupMapper.getAttributeGroupsByCommodityId(commodity.getCommodityId());
 //        Map goodAttrMap = new HashMap();//商品属性Map
 //        for (AttributeGroup attributeGroup:attributeGroups){
@@ -73,6 +81,12 @@ public class CommodityServiceImpl implements CommodityService {
             favorite=favoriteMapper.findByCustomerAndCommodity(favorite);
             resultMap.put("favorite",favorite);//收藏夹
         }
+        //重组数据后清空
+        commodity.setBrand(null);
+        commodity.setSeller(null);
+        commodity.setPriceSection(null);
+        commodity.setCommoditySpecs(null);
+        resultMap.put("commodity",commodity);//商品
         return resultMap;
     }
 
