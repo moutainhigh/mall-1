@@ -412,12 +412,12 @@
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
                                     </div>
                                 </div>
                             </div>
@@ -460,20 +460,20 @@
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important"  value=""/>
                                     </div>
                                 </div>
                             </div>
                             <div class="div-line">
                                 <div class="div-line-con div-career">
-                                    <div class="title">A 18.职业代码</div>
+                                    <div class="title" style="color: green">A 18.职业代码</div>
                                     <input readonly class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
-                                    <div class="title" style="margin-left: 25px;">职业类别</div>
+                                    <div class="title" style="margin-left: 25px;color: green">职业类别</div>
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 19.&nbsp;E-mail</div>
@@ -650,12 +650,12 @@
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
                                     </div>
                                 </div>
                             </div>
@@ -697,20 +697,20 @@
                                 <div class="div-line-con div-postcode" style="margin-right: 40px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
                                     </div>
                                 </div>
                             </div>
                             <div class="div-line">
                                 <div class="div-line-con div-career">
-                                    <div class="title">A 38.职业代码</div>
+                                    <div class="title" style="color: green">A 38.职业代码</div>
                                     <input readonly class="b-input" style="border-bottom: #000000 solid 1px" type="text"/>
-                                    <div class="title" style="margin-left: 25px;">职业类别</div>
+                                    <div class="title" style="margin-left: 25px;color: green">职业类别</div>
                                 </div>
                                 <div class="div-line-con div-email">
                                     <div class="title">A 39. E-mail</div>
@@ -753,12 +753,12 @@
                                 <div class="div-line-con div-postcode" style="margin-right:  35px;">
                                     邮编
                                     <div style="margin-left: 20px;font-size: 0;margin-top: -10px;">
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="5"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="1"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="8"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
-                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value="0"/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
+                                        <input readonly class="i-cert-code" style="border: #000000 solid 1px !important" value=""/>
                                     </div>
                                 </div>
                             </div>
@@ -1842,7 +1842,7 @@
                                                 </span>
                                         </div>
                                         <div>
-                                            <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                            <img style="transform:rotate(-90deg);position:  absolute;margin-top: -50px;margin-left: 40px;" width="45px"
                                                  src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
                                         </div>
                                         <div class="a-input-div" style="width: 130px;position: relative">
@@ -2384,7 +2384,7 @@
                                                                     被保人：
 
                                                             </div>
-                                                            <div style="display: inline-block;width: 803px;height:34px">
+                                                            <div style="display: inline-block;width: 803px;height:34px;word-break: break-all">
                                                                     <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
                                                                     ${matterRemarks.insured_remark}
                                                             </div>
@@ -2395,7 +2395,7 @@
                                                         <div style="display: inline-block;vertical-align: top;">
                                                         投保人：
                                                         </div>
-                                                        <div style="display: inline-block;width: 803px;;height:34px">
+                                                        <div style="display: inline-block;width: 803px;;height:34px;word-break: break-all">
                                                         <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
                                                                 ${matterRemarks.policyholder_remark}
                                                         </div>
@@ -2417,7 +2417,7 @@
                                         <div class="s-name" style="text-align: right;width: 300px;">
                                             <div>投保人签名</div>
                                             <div>
-                                                <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                                <img style="transform:rotate(-90deg);position:  absolute;margin-top: -50px;margin-left: 40px;" width="45px"
                                                      src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
                                             </div>
                                             <div class="s-name-content" style="width: 150px;position: relative">

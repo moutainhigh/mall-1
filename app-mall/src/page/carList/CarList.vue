@@ -588,6 +588,7 @@
     left: 0;
     right: 0;
     padding: 0 0 0.5rem 0;
+    z-index: -1;
   }
 
   .head-tab div {

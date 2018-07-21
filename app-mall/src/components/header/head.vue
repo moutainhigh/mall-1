@@ -1,71 +1,61 @@
 <template>
-    <header id='head_top'>
-        <slot name='logo'></slot>
-        <slot name='search'></slot>
-        <section class="head_goback" v-if="goBack" @click="$router.go(-1)">
-            <!--<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">-->
-                <!--<polyline points="12,18 4,9 12,0" style="fill:none;stroke:rgb(255,255,255);stroke-width:2px"/>-->
-            <!--</svg>-->
-          <img src="../../assets/img/back.png" style="height: 26px;vertical-align: middle;">
-        </section>
-        <section class="title_head ellipsis" v-if="headTitle">
-            <span class="title_text">{{headTitle}}</span>
-        </section>
-        <slot name="head-tab"></slot>
-    </header>
+  <header id='head_top' style="display: flex;">
+    <section class="head_goback" @click="$router.go(-1)">
+      <img src="../../assets/img/back.png" height="18" style="vertical-align: middle;">
+    </section>
+    <slot name='search' class="head_search"></slot>
+    <slot name="local" style="flex: 0 0 2rem;"></slot>
+    <section class="title_head ellipsis" v-if="headTitle">
+      <span class="title_text">{{headTitle}}</span>
+    </section>
+    <slot name="head-tab"></slot>
+  </header>
 </template>
 
 <script>
-    export default {
-    	data(){
-            return{
-
-            }
-        },
-        props: ['signinUp', 'headTitle', 'goBack'],
-    }
+  export default {
+    data() {
+      return {}
+    },
+    props: ['signinUp', 'headTitle', 'goBack'],
+  }
 
 </script>
 
 <style lang="scss" scoped>
-    @import '../../assets/css/mixin';
+  @import '../../assets/css/mixin';
 
-    #head_top{
-        background-color: #ffffff;
-        position: fixed;
-        z-index: 100;
-        left: 0;
-        top: 0;
-        box-shadow:0 1px 5px #d1d1d1;
-        @include wh(100%, 3rem);
+  #head_top {
+    background-color: #ffffff;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    box-shadow: 0 1px 5px #d1d1d1;
+    @include wh(100%, 3rem);
+  }
+
+  .head_goback {
+    left: 0.4rem;
+    @include wh(0.6rem, 1rem);
+    line-height: 2.8rem;
+    margin-left: .4rem;
+    flex: 0 0 2.3rem;
+  }
+
+  .head_search {
+    flex: 1;
+  }
+
+  .title_head {
+    @include center;
+    width: 50%;
+    color: $head;
+    text-align: center;
+    .title_text {
+      @include sc(1.2rem, $head);
+      text-align: center;
+      font-family: PingFang-SC-Medium;
     }
-    .head_goback{
-        left: 0.4rem;
-        @include wh(0.6rem, 1rem);
-        line-height: 2.8rem;
-        margin-left: .4rem;
-    }
-    .head_login{
-        right: 0.55rem;
-        @include sc(0.65rem, #fff);
-        @include ct;
-        .login_span{
-            color: #fff;
-        }
-        .user_avatar{
-            fill: #fff;
-            @include wh(.8rem, .8rem);
-        }
-    }
-    .title_head{
-        @include center;
-        width: 50%;
-        color: #fff;
-        text-align: center;
-        .title_text{
-            @include sc(0.8rem, #fff);
-            text-align: center;
-            font-weight: bold;
-        }
-    }
+  }
 </style>

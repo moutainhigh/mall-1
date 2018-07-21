@@ -14,7 +14,10 @@ import Admin from './admin/Admin'
 import Vuelidate from 'vuelidate'
 import  { LoadingPlugin } from 'vux'
 import VueScroller from 'vue-scroller'
+import data from '../static/config.json'
+import {setBase} from "./config/env";
 
+setBase(data.baseUrl);
 Vue.component('group', Group);
 Vue.use(AlertPlugin);
 Vue.use(ToastPlugin);

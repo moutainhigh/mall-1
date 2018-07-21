@@ -167,6 +167,11 @@
         vm.$vux.loading.show({
           text: 'Loading'
         });
+        let timeout = setTimeout(function () {
+          vm.$vux.loading.hide();
+          vm.showPositionValue = true;
+          vm.toastText = "上传失败，请稍后重试";
+        }, 15000);
         await lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
           uploadImage(rst.base64).then(function (result) {
@@ -204,13 +209,13 @@
                 storage.save("holder", holder);
                 break;
             }
+            vm.$vux.loading.hide();
+            clearTimeout(timeout);
           });
-          vm.$vux.loading.hide();
           return rst;
         }).always(function () {
           // 清空文件上传控件的值
           e.target.value = null;
-          vm.$vux.loading.hide();
         });
       },
       //删除图片
