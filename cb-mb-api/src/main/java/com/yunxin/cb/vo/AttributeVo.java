@@ -12,6 +12,16 @@ public class AttributeVo {
      * 属性名
      */
     private String attributeName;
+
+    /**
+     * 属性Id
+     */
+    private String attributeId;
+
+    /**
+     * 组Id
+     */
+    private String groupId;
     /**
      * 组名
      */
@@ -22,6 +32,22 @@ public class AttributeVo {
      * 下层节点
      */
     private List<AttributeVo> items;
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getAttributeId() {
+        return attributeId;
+    }
+
+    public void setAttributeId(String attributeId) {
+        this.attributeId = attributeId;
+    }
 
     public Integer getLayer() {
         return layer;
