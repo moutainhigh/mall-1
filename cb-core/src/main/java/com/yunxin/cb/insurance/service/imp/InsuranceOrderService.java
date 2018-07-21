@@ -427,9 +427,9 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                         {
                                             put("title",matterDescriptions);
                                             if(insuredResult)
-                                                put("insured_remark", "&nbsp;&nbsp;" +insuredRemark );
+                                                put("insured_remark",insuredRemark );
                                             if(policyholderResult)
-                                            put("policyholder_remark", "&nbsp;&nbsp;" + policyholderRemark);
+                                            put("policyholder_remark",policyholderRemark);
                                         }
                                     });
                                     if((i+1)%pageSize==0){
