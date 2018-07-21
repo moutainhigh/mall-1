@@ -28,7 +28,7 @@ public interface AttributeMapper {
         "select",
         "ATTRIBUTE_ID, ATTRIBUTE_NAME, IMAGE_PATH, SORT_ORDER, GROUP_ID",
         "from attribute",
-        "where ATTRIBUTE_ID = #{attributeId,jdbcType=INTEGER}"
+        "where ATTRIBUTE_ID = #{attributeId,jdbcType=INTEGER} order by ATTRIBUTE_ID"
     })
     @Results({
         @Result(column="ATTRIBUTE_ID", property="attributeId", jdbcType=JdbcType.INTEGER, id=true),

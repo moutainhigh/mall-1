@@ -50,7 +50,7 @@ public interface ProductAttributeMapper {
     @Select({
             "select",
             "PRO_ATTR_ID, ATTRIBUTE_ID, PRODUCT_ID",
-            "from product_attribute where PRODUCT_ID = #{productId,jdbcType=INTEGER}"
+            "from product_attribute where PRODUCT_ID = #{productId,jdbcType=INTEGER} order by PRO_ATTR_ID"
     })
     @Results({
             @Result(column="PRO_ATTR_ID", property="proAttrId", jdbcType=JdbcType.INTEGER, id=true),
