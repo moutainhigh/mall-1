@@ -18,10 +18,14 @@
     <!--投保单签名-->
     <div class="popContainer" v-if="clickSign && !show">
       <div style="position: relative">
-           <span style="position: absolute; color: #f5ca1d; right: 0; top: 0; margin: 20px 20px; transform:rotate(90deg);" v-if="clickSign"
-                 @click="clear">清除</span>
-        <span style="position: absolute; color: #f5ca1d; right: 0; bottom: 0; margin: 20px 20px; transform:rotate(90deg);" v-if="clickSign"
-              @click="doneButton">完成</span>
+           <span
+             style="position: absolute; color: #f5ca1d; right: 0; top: 0; margin: 20px 20px; transform:rotate(90deg);"
+             v-if="clickSign"
+             @click="clear">清除</span>
+        <span
+          style="position: absolute; color: #f5ca1d; right: 0; bottom: 0; margin: 20px 20px; transform:rotate(90deg);"
+          v-if="clickSign"
+          @click="doneButton">完成</span>
         <Signature ref="signature" :sigOption="option" :w="'92vw'" :h="'90vh'"></Signature>
       </div>
       <!--<button class="doneButton" @click="doneButton">完成</button>-->
@@ -42,14 +46,18 @@
       <div class="title" style="color: #000; font-weight: normal; margin-bottom: 0">投保提示书签名</div>
       <div class="canvas">
         <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
-        <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1" v-bind:style="{ background: submissionColor}">
+        <div class="sign" v-if="!clickSign1 && !show1" @click="checkSign1"
+             v-bind:style="{ background: submissionColor}">
           <p style="padding-top: 15vh" v-if="submissionSign === ''">点击签名（请用正楷进行签名）</p>
-          <img v-if="submissionSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);"
+          <img v-if="submissionSign !== ''" class="sign"
+               style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);"
                :src="submissionSign">
         </div>
-        <div class="sign" style="background: #ffffff; height: auto; line-height: normal; border: 1px solid #f5f5f5" @click="checkShow1"
+        <div class="sign" style="background: #ffffff; height: auto; line-height: normal; border: 1px solid #f5f5f5"
+             @click="checkShow1"
              v-if="clickSign1 && show1">
-          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);" :src="submissionSign">
+          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);"
+               :src="submissionSign">
         </div>
       </div>
 
@@ -72,13 +80,16 @@
         <span style="position: absolute; margin: 10px 30px; color: #666; font-size: 14px">投保人签名：</span>
         <div class="sign" v-if="!clickSign && !show" @click="checkSign" v-bind:style="{ background: policyholderColor}">
           <p style="padding-top: 15vh" v-if="policyholderSign === ''">点击签名（请用正楷进行签名）</p>
-          <img v-if="policyholderSign !== ''" class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);"
+          <img v-if="policyholderSign !== ''" class="sign"
+               style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);"
                :src="policyholderSign">
         </div>
 
-        <div class="sign" style="background: #ffffff;height: auto; line-height: normal; border: 1px solid #f5f5f5" @click="checkShow"
+        <div class="sign" style="background: #ffffff;height: auto; line-height: normal; border: 1px solid #f5f5f5"
+             @click="checkShow"
              v-if="clickSign && show">
-          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);" :src="policyholderSign">
+          <img class="sign" style="height: 30vh; width: auto; margin-left: 10vw; transform:rotate(-90deg);"
+               :src="policyholderSign">
         </div>
       </div>
       <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
@@ -129,7 +140,7 @@
         return false;
       },
       onFileChange: function (e) {
-        var files = e.target.files || e.dataTransfer.files;
+        let files = e.target.files || e.dataTransfer.files;
         if (!files.length) return;
         this.createImage(files, e);
       },
@@ -138,6 +149,11 @@
         vm.$vux.loading.show({
           text: 'Loading'
         });
+        let timeout = setTimeout(function () {
+          vm.$vux.loading.hide();
+          vm.showPositionValue = true;
+          vm.toastText = "上传失败，请稍后重试";
+        }, 15000);
         await lrz(file[0], {width: 480}).then(function (rst) {
           rst.base64 = rst.base64.split(',')[1];
           uploadImage(rst.base64).then(function (result) {
@@ -145,13 +161,13 @@
             let holder = storage.fetch("holder");
             holder.policyholderAvatar = result.data;
             storage.save("holder", holder);
+            vm.$vux.loading.hide();
+            clearTimeout(timeout);
           });
-          vm.$vux.loading.hide();
           return rst;
         }).always(function () {
           // 清空文件上传控件的值
           e.target.value = null;
-          vm.$vux.loading.hide();
         });
       },
       //删除图片

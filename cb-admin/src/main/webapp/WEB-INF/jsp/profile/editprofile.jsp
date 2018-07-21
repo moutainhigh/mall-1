@@ -39,6 +39,12 @@
         $(function () {
             $('#profileName').val(getprofileName('${profile.profileName}'))
         });
+        $(document).ready(function () {
+            $("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true, scroll: false, showOneMessage: true
+            });
+            $('#serNo').val("")
+        });
     </script>
 </head>
 <body>

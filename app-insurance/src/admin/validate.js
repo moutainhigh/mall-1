@@ -16,6 +16,8 @@ export const passportVali = helpers.regex('passportVali', /^[a-z0-9A-Z]{6,25}$/)
 export const permanentResidenceVali = helpers.regex('permanentResidenceVali', /^[a-zA-Z]{3}\d{12}$/);
 //小数点后两位校验
 export const int = helpers.regex('int', /^[1-9]\d*$/);
+//被保人收入校验
+export const insuredInt = helpers.regex('insuredInt', /^[0-9]\d*$/);
 //固定电话校验
 export const fixedTel = helpers.regex('fixedTel', /([0-9]{3,4}-)?[0-9]{7,8}$/);
 //手机号码校验

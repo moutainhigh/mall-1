@@ -372,15 +372,16 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     add(new HashMap<String,Object>(){
                                         {
                                             String collectValues=insuranceOrderInformedMatter.getCollectValues();
-                                                if(StringUtils.isNotBlank(collectValues)){
+//                                                if(StringUtils.isNotBlank(collectValues)){
                                                     String[] strValue=collectValues.replace("[","").replace("]","").replace("\"","") .split(",");
+                                                   if(strValue.length>0){
                                                     for (int j=0;j<strValue.length;j++)
                                                         put("m_value"+j,"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;"+strValue[j]+"&nbsp;&nbsp;</p>");
-                                                }else{
-                                                    String[] strCollectValues={"{0}","{1}","{2}","{3}","{4}","{5}","{6}"};
-                                                    for (int i=0;i<strCollectValues.length;i++)
-                                                        put("m_value"+i,"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>");
-                                                }
+                                                    }else{
+                                                        String[] strCollectValues={"{0}","{1}","{2}","{3}","{4}","{5}","{6}"};
+                                                        for (int i=0;i<strCollectValues.length;i++)
+                                                            put("m_value"+i,"<p style=\"text-decoration:underline;display:inline\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>");
+                                                    }
                                         }
                                     });
                                 }
