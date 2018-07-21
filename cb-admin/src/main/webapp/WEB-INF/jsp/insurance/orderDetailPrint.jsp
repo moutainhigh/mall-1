@@ -1842,7 +1842,7 @@
                                                 </span>
                                         </div>
                                         <div>
-                                            <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                            <img style="transform:rotate(-90deg);position:  absolute;margin-top: -50px;margin-left: 40px;" width="45px"
                                                  src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
                                         </div>
                                         <div class="a-input-div" style="width: 130px;position: relative">
@@ -2384,7 +2384,7 @@
                                                                     被保人：
 
                                                             </div>
-                                                            <div style="display: inline-block;width: 803px;height:34px">
+                                                            <div style="display: inline-block;width: 803px;height:34px;word-break: break-all">
                                                                     <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
                                                                     ${matterRemarks.insured_remark}
                                                             </div>
@@ -2395,7 +2395,7 @@
                                                         <div style="display: inline-block;vertical-align: top;">
                                                         投保人：
                                                         </div>
-                                                        <div style="display: inline-block;width: 803px;;height:34px">
+                                                        <div style="display: inline-block;width: 803px;;height:34px;word-break: break-all">
                                                         <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
                                                                 ${matterRemarks.policyholder_remark}
                                                         </div>
@@ -2417,7 +2417,7 @@
                                         <div class="s-name" style="text-align: right;width: 300px;">
                                             <div>投保人签名</div>
                                             <div>
-                                                <img style="transform:rotate(-90deg);position:  absolute;margin-top: -40px;margin-left: 40px;" width="35px"
+                                                <img style="transform:rotate(-90deg);position:  absolute;margin-top: -50px;margin-left: 40px;" width="45px"
                                                      src="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderSign}" alt=""/>
                                             </div>
                                             <div class="s-name-content" style="width: 150px;position: relative">

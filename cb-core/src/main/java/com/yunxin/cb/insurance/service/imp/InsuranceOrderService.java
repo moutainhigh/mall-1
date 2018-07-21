@@ -393,76 +393,54 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                     /**
                      * 告知事项补充说明
                      */
+                    int pageSize=8;
+                    List<InsuranceOrderInformedMatter> listInsuranceoim=new ArrayList<InsuranceOrderInformedMatter>();
                     put("matter_remark",new ArrayList<List<Map<String,Object>>>(){
                         {
-                            List<Map<String,Object>> listStr=new ArrayList<Map<String,Object>>();
-                            List<Map<String,Object>> listStrTwo=new ArrayList<Map<String,Object>>();
-                            List<Map<String,Object>> listStrThree=new ArrayList<Map<String,Object>>();
-                            List<Map<String,Object>> listStrFour=new ArrayList<Map<String,Object>>();
+
+                            List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
                             for (InsuranceOrderInformedMatter insuranceOrderInformedMatter:insuranceOrderInformedMatterList
                                     ) {
-                                InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(insuranceOrderInformedMatter.getInsuranceInformedMatter().getMatterId());
+                                if(insuranceOrderInformedMatter.getInsuredResult()||insuranceOrderInformedMatter.getPolicyholderResult())
+                                    listInsuranceoim.add(insuranceOrderInformedMatter);
+                            }
+                            if(listInsuranceoim!=null&&listInsuranceoim.size()>0){
+                                int total=listInsuranceoim.size();
 
-                                String matterDescription=insuranceInformedMatter.getMatterDescription();
-                                if(matterDescription.contains("."))
-                                    matterDescription= matterDescription.substring(0,matterDescription.indexOf("."));
+                                for (int i=0;i<listInsuranceoim.size();i++){
 
-                                if(insuranceInformedMatter.getMatterGroup()!=null&&Hibernate.isInitialized(insuranceInformedMatter.getMatterGroup()))
-                                    matterDescription=insuranceInformedMatter.getMatterGroup().getDescription().substring(0,insuranceInformedMatter.getMatterGroup().getDescription().indexOf("."))+matterDescription;
-                                final String matterDescriptions=matterDescription;
-                                /**
-                                 * 被保人
-                                 */
-                                if(insuranceOrderInformedMatter.getInsuredResult()||insuranceOrderInformedMatter.getPolicyholderResult()) {
-                                    Map<String,Object> map=new HashMap<String,Object>(){
+                                    InsuranceInformedMatter insuranceInformedMatter= insuranceInformedMatterDao.getInsuranceInformedMatter(listInsuranceoim.get(i).getInsuranceInformedMatter().getMatterId());
+
+                                    String matterDescription=insuranceInformedMatter.getMatterDescription();
+                                    if(matterDescription.contains("."))
+                                        matterDescription= matterDescription.substring(0,matterDescription.indexOf("."));
+
+                                    if(insuranceInformedMatter.getMatterGroup()!=null&&Hibernate.isInitialized(insuranceInformedMatter.getMatterGroup()))
+                                        matterDescription=insuranceInformedMatter.getMatterGroup().getDescription().substring(0,insuranceInformedMatter.getMatterGroup().getDescription().indexOf("."))+matterDescription;
+                                    final String matterDescriptions=matterDescription;
+                                    final boolean insuredResult=listInsuranceoim.get(i).getInsuredResult();
+                                    final boolean policyholderResult=listInsuranceoim.get(i).getPolicyholderResult();
+                                    final String insuredRemark=listInsuranceoim.get(i).getInsuredRemark();
+                                    final String policyholderRemark=listInsuranceoim.get(i).getPolicyholderRemark();
+
+                                    list.add(new HashMap<String,Object>(){
                                         {
                                             put("title",matterDescriptions);
-//                                            put("insured_person","被保人：");
-                                            put("insured_remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getInsuredRemark());
-//                                            put("policyholder_person","投保人：");
-                                            put("policyholder_remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
+                                            if(insuredResult)
+                                                put("insured_remark", "&nbsp;&nbsp;" +insuredRemark );
+                                            if(policyholderResult)
+                                            put("policyholder_remark", "&nbsp;&nbsp;" + policyholderRemark);
                                         }
-                                    };
-                                    if(listStr.size()>=8&&listStrTwo.size()>=8&&listStrThree.size()>=8)
-                                        listStrFour.add(map);
-                                    else if(listStr.size()>=8&&listStrTwo.size()>=8&&listStrThree.size()<8)
-                                        listStrThree.add(map);
-                                    else if(listStr.size()>=8&&listStrTwo.size()<8)
-                                        listStrTwo.add(map);
-                                    else
-                                        listStr.add(map);
-
+                                    });
+                                    if((i+1)%pageSize==0){
+                                        add(list);
+                                        list=new ArrayList<Map<String,Object>>();
+                                    }else if(i==total-1) {
+                                        add(list);
+                                    }
                                 }
-                                /**
-                                 * 投保人
-                                 */
-//                                if(insuranceOrderInformedMatter.getPolicyholderResult()){
-//                                    Map<String,Object> map=new HashMap<String,Object>(){
-//                                        {
-//                                            put("title",matterDescriptions);
-//                                            put("person","投保人：");
-//                                            put("remark", "&nbsp;&nbsp;" + insuranceOrderInformedMatter.getPolicyholderRemark());
-//                                        }
-//                                    };
-//                                    if(listStr.size()>=12&&listStrTwo.size()>=12)
-//                                        listStrThree.add(map);
-//                                    else if(listStr.size()>=12&&listStrTwo.size()<12)
-//                                        listStrTwo.add(map);
-//                                    else
-//                                        listStr.add(map);
-//                                }
-
 
                             }
-
-                            if(listStr!=null&&listStr.size()>0)
-                                add(listStr);
-                            if(listStrTwo!=null&&listStrTwo.size()>0)
-                                add(listStrTwo);
-                            if(listStrThree!=null&&listStrThree.size()>0)
-                                add(listStrThree);
-                            if(listStrFour!=null&&listStrFour.size()>0)
-                                add(listStrFour);
                         }
 
                     });
