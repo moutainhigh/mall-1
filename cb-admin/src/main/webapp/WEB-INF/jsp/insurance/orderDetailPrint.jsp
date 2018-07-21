@@ -2384,7 +2384,7 @@
                                                                     被保人：
 
                                                             </div>
-                                                            <div style="display: inline-block;width: 803px;height:34px">
+                                                            <div style="display: inline-block;width: 803px;height:34px;word-break: break-all">
                                                                     <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
                                                                     ${matterRemarks.insured_remark}
                                                             </div>
@@ -2395,7 +2395,7 @@
                                                         <div style="display: inline-block;vertical-align: top;">
                                                         投保人：
                                                         </div>
-                                                        <div style="display: inline-block;width: 803px;;height:34px">
+                                                        <div style="display: inline-block;width: 803px;;height:34px;word-break: break-all">
                                                         <%--哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈或或或或哈哈哈哈哈哈哈哈哈哈--%>
                                                                 ${matterRemarks.policyholder_remark}
                                                         </div>
