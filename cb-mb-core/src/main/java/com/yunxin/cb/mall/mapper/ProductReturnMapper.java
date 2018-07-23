@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.mapper;
 
+import com.yunxin.cb.mall.entity.Product;
 import com.yunxin.cb.mall.entity.ProductReturn;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
@@ -55,6 +56,42 @@ public interface ProductReturnMapper {
      *
      * @mbg.generated Thu Jul 19 20:01:43 CST 2018
      */
+    @Select({
+            "select",
+            columns,
+            "from product_return",
+            "where RETURN_ID = #{returnId,jdbcType=INTEGER}"
+    })
+    @Results(id = "productReturnRelationMap", value = {
+            @Result(column="RETURN_ID", property="returnId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="APPLY_TIME", property="applyTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="PIC_PATH", property="picPath", jdbcType=JdbcType.VARCHAR),
+            @Result(column="PURCHASING_TIME", property="purchasingTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="REASON", property="reason", jdbcType=JdbcType.VARCHAR),
+            @Result(column="RETURN_REFUND_STATE", property="returnRefundState", jdbcType=JdbcType.INTEGER),
+            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
+            @Result(column="ORDER_ID", property="orderId", jdbcType=JdbcType.INTEGER),
+            @Result(column="ITEM_ID", property="itemId", jdbcType=JdbcType.INTEGER),
+            @Result(column="AUDIT_REMARK", property="auditRemark", jdbcType=JdbcType.VARCHAR),
+            @Result(column="AUDIT_STATE", property="auditState", jdbcType=JdbcType.INTEGER),
+            @Result(column="COURIER_NUMBER", property="courierNumber", jdbcType=JdbcType.VARCHAR),
+            @Result(column="DISPOSE_TIME", property="disposeTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="LOGISTIC_CODE", property="logisticCode", jdbcType=JdbcType.VARCHAR),
+            @Result(column="REASON_REMARK", property="reasonRemark", jdbcType=JdbcType.VARCHAR),
+            @Result(column="RECEIVED_BUYER_PRODUCT", property="receivedBuyerProduct", jdbcType=JdbcType.BIT),
+            @Result(column="RECEIVED_SELLER_PRODUCT", property="receivedSellerProduct", jdbcType=JdbcType.BIT),
+            @Result(column="REFUND_PRICE", property="refundPrice", jdbcType=JdbcType.DOUBLE),
+            @Result(column="REFUND_REASON", property="refundReason", jdbcType=JdbcType.INTEGER),
+            @Result(column="RETURN_CODE", property="returnCode", jdbcType=JdbcType.VARCHAR),
+            @Result(column="RETURN_REASON", property="returnReason", jdbcType=JdbcType.INTEGER),
+            @Result(column="REFUND_ONLY", property="refundOnly", jdbcType=JdbcType.BIT),
+            @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR),
+            @Result(column="REJECT_REASON", property="rejectReason", jdbcType=JdbcType.VARCHAR),
+            @Result(column="ORDER_ID", property="order", javaType=Product.class,
+                    one=@One(select="com.yunxin.cb.mall.mapper.OrderMapper.selectRelationById"))
+    })
+    ProductReturn selectRelationById(Integer returnId);
+
     @Select({
             "select",
             columns,
@@ -179,7 +216,7 @@ public interface ProductReturnMapper {
             "</if>",
             "</script>"
     })
-    @ResultMap(value="productReturnMap")
+    @ResultMap(value="productReturnRelationMap")
     List<ProductReturn> pageList(Query q);
 
     @Select({
