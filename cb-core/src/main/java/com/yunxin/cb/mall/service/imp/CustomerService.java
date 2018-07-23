@@ -347,9 +347,9 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer getAccountName(String accountName, int customerId) {
+    public Customer getAccountName(String accountName) {
 
-        return customerDao.getAccountName(accountName,customerId);
+        return customerDao.getAccountName(accountName);
     }
 
     @Override

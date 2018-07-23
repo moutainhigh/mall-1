@@ -61,9 +61,9 @@ public class CustomerResource extends BaseResource {
         return new ResponseResult(Result.FAILURE, "未找到相关好友");
     }
     @ApiOperation(value = "通过用户名查询用户")
-    @PostMapping(value = "queryByAccountName")
-    public ResponseResult queryByAccountName(@RequestParam("accountName") String accountName, @ModelAttribute("customerId") int customerId) {
-        Customer customer = customerService.getAccountName(accountName,customerId);
+    @GetMapping(value = "queryByAccountName")
+    public ResponseResult queryByAccountName(@RequestParam("accountName") String accountName) {
+        Customer customer = customerService.getAccountName(accountName);
         if (customer != null) {
 //            friend.setFriend(customerService.isFriend(customerId, friend.getCustomerId()) || friend.getCustomerId() == customerId);
             return new ResponseResult(customer);
