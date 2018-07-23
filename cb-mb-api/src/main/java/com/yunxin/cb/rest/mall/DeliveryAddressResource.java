@@ -16,7 +16,7 @@ import java.util.List;
 
 @Api(description = "收货地址接口")
 @RestController
-@RequestMapping(value = "/auth/mall")
+@RequestMapping(value = "/mall")
 public class DeliveryAddressResource extends BaseResource {
 
     @Resource
