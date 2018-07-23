@@ -112,6 +112,7 @@ public class CustomerService implements ICustomerService {
         }
         customer.setCreateTime(new Date());
         customer.setRank(rankDao.getRankByDefaultRank());
+        customer.setNickName(customer.getAccountName());
         Customer dbCustomer = customerDao.save(customer);
         String token = rongCloudService.register(dbCustomer);
         dbCustomer.setRongCloudToken(token);
@@ -158,8 +159,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer updateNickName(int customerId, String nickName) throws Exception {
         Customer customer = customerDao.findOne(customerId);
-        customer.setNickName(nickName);
-        rongCloudService.update(customer);
+        if(StringUtils.isNotBlank(nickName)){
+            customer.setNickName(nickName);
+            rongCloudService.update(customer);
+        }
         return customer;
     }
 
@@ -277,6 +280,7 @@ public class CustomerService implements ICustomerService {
         return customerDao.findByMobileAndEnabled(mobile, true);
     }
 
+
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Customer getCustomerByEmail(String email) {
@@ -340,6 +344,12 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer findByAccountName(String accountName) {
         return customerDao.findByAccountName(accountName);
+    }
+
+    @Override
+    public Customer getAccountName(String accountName) {
+
+        return customerDao.getAccountName(accountName);
     }
 
     @Override
