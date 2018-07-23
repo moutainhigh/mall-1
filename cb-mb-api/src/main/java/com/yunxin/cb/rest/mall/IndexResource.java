@@ -4,6 +4,7 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.FloorInfo;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +37,7 @@ public class IndexResource extends BaseResource {
 
     @ApiOperation(value = "商城首页")
     @GetMapping(value = "getIndex")
+    @IgnoreAuthentication
     public ResponseResult index(){
         //获取首页banner
         Integer homePlace = 0;

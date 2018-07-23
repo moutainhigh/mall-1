@@ -16,7 +16,7 @@ import java.util.List;
 
 @Api(description = "收货地址接口")
 @RestController
-@RequestMapping(value = "/mall/deliveryAddress")
+@RequestMapping(value = "/mall")
 public class DeliveryAddressResource extends BaseResource {
 
     @Resource
@@ -24,22 +24,29 @@ public class DeliveryAddressResource extends BaseResource {
     @ApiOperation(value = "通过用户ID查询收货地址列表")
     @ApiImplicitParams({
     })
-    @PostMapping(value = "getDeliveryAddressList")
+    @GetMapping(value = "deliveryAddress/list")
     public ResponseResult getDeliveryAddress(){
         List<DeliveryAddress> list = deliveryAddressService.selectByCustomerId(getCustomerId());
         return new ResponseResult(list);
     }
     @ApiOperation(value = "收货地址详情")
-    @PostMapping(value = "getDeliveryAddress")
-    public ResponseResult getDeliveryAddressDetail(@RequestParam(value = "addressId") int addressId){
+    @GetMapping(value = "deliveryAddress/{addressId}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
+    })
+    public ResponseResult getDeliveryAddressDetail(@PathVariable(value = "addressId") int addressId){
         int customerId = getCustomerId();
         DeliveryAddress deliveryAddress = deliveryAddressService.selectByPrimaryKey(addressId,customerId);
         return new ResponseResult(deliveryAddress);
     }
 
     @ApiOperation(value = "添加收货地址")
-    @PostMapping(value = "addDeliveryAddress")
-    public ResponseResult addDeliveryAddress(@RequestBody DeliveryAddress deliveryAddress){
+    @PostMapping(value = "deliveryAddress/{addressId}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int"),
+            @ApiImplicitParam(name = "deliveryAddress", value = "地址对象", required = true, paramType = "RequestBody", dataType = "DeliveryAddress")
+    })
+    public ResponseResult addDeliveryAddress(@PathVariable(value = "addressId") int addressId,@RequestBody DeliveryAddress deliveryAddress){
         deliveryAddressService.insert(deliveryAddress);
         return new ResponseResult(Result.SUCCESS);
     }
@@ -48,14 +55,18 @@ public class DeliveryAddressResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
     })
-    @PostMapping(value = "delectDeliveryAddress")
-    public ResponseResult delectDeliveryAddress(@RequestParam(value = "addressId") int addressId){
+    @DeleteMapping(value = "deliveryAddress/{addressId}")
+    public ResponseResult delectDeliveryAddress(@PathVariable(value = "addressId") int addressId){
         deliveryAddressService.deleteByPrimaryKey(addressId);
         return new ResponseResult(Result.SUCCESS);
     }
     @ApiOperation(value = "更新收货地址")
-    @PostMapping(value = "updateDeliveryAddress")
-    public ResponseResult updateDeliveryAddress(@RequestBody DeliveryAddress deliveryAddress){
+    @PutMapping(value = "deliveryAddress/{addressId}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int"),
+            @ApiImplicitParam(name = "deliveryAddress", value = "地址对象", required = true, paramType = "RequestBody", dataType = "DeliveryAddress")
+    })
+    public ResponseResult updateDeliveryAddress(@PathVariable(value = "addressId") int addressId,@RequestBody DeliveryAddress deliveryAddress){
         deliveryAddressService.updateByPrimaryKey(deliveryAddress);
         return new ResponseResult(Result.SUCCESS);
     }

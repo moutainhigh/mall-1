@@ -1,17 +1,21 @@
 package com.yunxin.cb.vo;
 
 import com.yunxin.cb.meta.Result;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Created by gonglei on 16/1/24.
  */
-public class ResponseResult {
+@ApiModel(value="接口对象",description="接口对象 ResponseResult")
+public class ResponseResult<T> {
 
+    @ApiModelProperty(value="结果",name="result",example="SUCCESS")
     private Result result;
-
+    @ApiModelProperty(value="错误信息",name="message",example="参数错误")
     private String message;
-
-    private Object data;
+    @ApiModelProperty(value="数据",name="data",example="{}")
+    private T data;
 
     public ResponseResult(Result result) {
         this.result = result;
@@ -22,12 +26,12 @@ public class ResponseResult {
         this.message = message;
     }
 
-    public ResponseResult(Result result, Object data) {
+    public ResponseResult(Result result, T data) {
         this.result = result;
         this.data = data;
     }
 
-    public ResponseResult(Object data) {
+    public ResponseResult(T data) {
         this.result = Result.SUCCESS;
         this.data = data;
     }
@@ -48,11 +52,11 @@ public class ResponseResult {
         this.message = message;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

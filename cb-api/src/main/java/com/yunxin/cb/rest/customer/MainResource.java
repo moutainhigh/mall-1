@@ -12,10 +12,7 @@ import com.yunxin.cb.sms.SmsHelper;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import com.yunxin.core.util.CommonUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +89,7 @@ public class MainResource extends BaseResource {
             @ApiImplicitParam(name = "password", value = "密码", required = true, paramType = "form", dataType = "String")
     })
     @PostMapping(value = "loginByPwd")
-    public ResponseResult loginByPwd(@RequestParam String accountName, @RequestParam String password) {
+    public ResponseResult<Customer> loginByPwd(@RequestParam String accountName, @RequestParam String password) {
         try {
             Customer customer = customerService.getCustomerByAccountNameAndPassword(accountName, password);
             if (customer != null) {

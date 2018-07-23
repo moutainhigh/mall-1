@@ -15,7 +15,9 @@ spring:
       enabled: true
       max-file-size: 20mb
       max-request-size: 20mb
-
+  messages:
+      basename: i18n_validate,i18n_message
+      encoding: UTF-8
 
 
 

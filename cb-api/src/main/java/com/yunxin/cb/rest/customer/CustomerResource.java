@@ -10,8 +10,6 @@ import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
-import com.yunxin.cb.sns.meta.CustomerFriendRequestState;
-import com.yunxin.cb.sns.meta.CustomerFriendState;
 import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
@@ -62,7 +60,16 @@ public class CustomerResource extends BaseResource {
         }
         return new ResponseResult(Result.FAILURE, "未找到相关好友");
     }
-
+    @ApiOperation(value = "通过用户名查询用户")
+    @GetMapping(value = "queryByAccountName")
+    public ResponseResult queryByAccountName(@RequestParam("accountName") String accountName) {
+        Customer customer = customerService.getAccountName(accountName);
+        if (customer != null) {
+//            friend.setFriend(customerService.isFriend(customerId, friend.getCustomerId()) || friend.getCustomerId() == customerId);
+            return new ResponseResult(customer);
+        }
+        return new ResponseResult(Result.FAILURE, "未找到用户信息");
+    }
 
     @ApiOperation(value = "添加好友")
     @PostMapping(value = "addFriend")
@@ -76,6 +83,8 @@ public class CustomerResource extends BaseResource {
 
         return new ResponseResult(Result.SUCCESS);
     }
+
+
 
     /**
      * 根据邀请添加好友ID查询所有添加记录

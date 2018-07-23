@@ -5,6 +5,7 @@ import CarDetail from '../page/carDetail/CarDetail'
 import OrderComfirm from '../page/order/OrderComfirm'
 import Home from '../page/home/Home'
 import Search from '../page/search/Search'
+import ChooseCarType from '../page/carList/ChooseCarType'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/order-comfirm',
       name: 'OrderComfirm',
       component: OrderComfirm
+    },
+    {
+      path: '/choose-type',
+      name: 'ChooseCarType',
+      component: ChooseCarType
     }
   ]
 })

@@ -76,8 +76,12 @@ public class FavoriteResource extends BaseResource {
     @PostMapping(value = "addFavorite")
     public ResponseResult addFavorite(@RequestBody Favorite favorite){
         favorite.setCustomerId(getCustomerId());
-        favorite=favoriteService.addFavorite(favorite);
-        return new ResponseResult(favorite);
+        int result=favoriteService.addFavorite(favorite);
+        if(result>0){
+            return new ResponseResult(true);//成功
+        }else{
+            return new ResponseResult(false);//失败
+        }
     }
 
     /**

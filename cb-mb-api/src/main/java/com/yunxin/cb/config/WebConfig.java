@@ -1,5 +1,6 @@
 package com.yunxin.cb.config;
 
+import com.yunxin.cb.security.interceptor.AuthInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                         "X-Frame-Options")
                 .allowCredentials(true)
                 .maxAge(3600);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 多个拦截器组成一个拦截器链
+        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/**");
+        super.addInterceptors(registry);
     }
 
 }
