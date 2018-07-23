@@ -1,5 +1,6 @@
 package com.yunxin.cb.config;
 
+import com.yunxin.cb.security.interceptor.AuthInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,10 +36,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 多个拦截器组成一个拦截器链
-        // addPathPatterns 用于添加拦截规则
-        // excludePathPatterns 用户排除拦截
-//        registry.addInterceptor(new ErrorInterceptor()).addPathPatterns("/**");
-//        registry.addInterceptor(localeChangeInterceptor());
+        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
     }
 

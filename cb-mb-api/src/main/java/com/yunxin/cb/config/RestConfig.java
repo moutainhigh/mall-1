@@ -12,17 +12,7 @@ import java.nio.charset.Charset;
 @Configuration
 public class RestConfig {
 
-    @Bean
-    public FilterRegistrationBean restTokenFilter() {
-        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new RestTokenFilter());
-        registrationBean.addUrlPatterns("/mall/order/*");
-        registrationBean.addUrlPatterns("/mall/deliveryAddress/*");
-        registrationBean.addUrlPatterns("/mall/productReturn/*");
-        registrationBean.setName("restTokenFilter");
-        registrationBean.setOrder(1);
-        return registrationBean;
-    }
+
 
 
 
