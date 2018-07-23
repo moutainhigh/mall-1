@@ -27,3 +27,19 @@ p {
   -webkit-margin-before: unset !important;
   -webkit-margin-after: unset !important;
 }
+
+.search-con {
+  height: 2rem;
+  width: 100%;
+  background-color: #F1F3F5;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+}
+
+.search-text {
+  color: #999999;
+  font-size: 1rem;
+  text-align: left;
+  margin: 0;
+  padding: 0.3rem 0 0 2.5rem;
+}

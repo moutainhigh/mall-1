@@ -1,17 +1,11 @@
 <template>
   <div>
-    <head-top>
+    <head-top :local="true">
       <div slot="search" style="width: 100%;">
         <div class="search-con">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
           <p class="search-text">输入搜索内容</p>
         </div>
-      </div>
-      <div slot="local" style="flex: none;margin-top: 0.8rem;padding: 0 0.8rem;">
-        <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1.2rem;vertical-align: middle;">
-        <span>
-          定位
-        </span>
       </div>
     </head-top>
 
@@ -20,7 +14,7 @@
           <img src="../../assets/img/home/banner.png" width="100%" style="">
       </div>
       <div style="height: 10rem;margin: 1rem;border-radius: 0.5rem;">
-        <div class="car-type">
+        <div class="car-type" @click="openCarList">
           <img src="../../assets/img/home/home_logo_bc.png" style="width: 50%;">
           <div style="font-size: 0.8rem;line-height: 3;">奔驰</div>
         </div>
@@ -86,7 +80,7 @@
         <div style="font-size: 1rem;color: #999999;">
           猜你喜欢
         </div>
-        <div class="cont">
+        <div class="cont" @click="openCarDetail">
           <div style="height: 5rem;flex: 0 0 7rem;">
             <img src="../../assets/img/home/1.png" width="100%" style="border-radius: 4px">
           </div>
@@ -129,27 +123,23 @@
       return {
         headTitle: '首页'
       }
+    },
+    methods: {
+      openCarDetail(){
+        this.$router.push({
+          path:"/car-detail"
+        })
+      },
+      openCarList(){
+        this.$router.push({
+          path:"/car-list"
+        })
+      }
     }
   }
 </script>
 
 <style scoped>
-
-  .search-con {
-    height: 2rem;
-    width: 100%;
-    background-color: #F1F3F5;
-    border-radius: 1rem;
-    margin-top: 0.5rem;
-  }
-
-  .search-text {
-    color: #999999;
-    font-size: 1rem;
-    text-align: left;
-    margin: 0;
-    padding: 0.3rem 0 0 2.5rem;
-  }
 
   .card-adv {
     background-color: #FFFFFF;

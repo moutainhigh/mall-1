@@ -1,15 +1,10 @@
 <template>
   <div>
-    <head-top goBack="true">
-      <div slot="head-tab" class="head-tab">
-        <div>
-          详情
-        </div>
-        <div>
-          配置
-        </div>
-        <div>
-          说明
+    <head-top :local="true">
+      <div slot="search" style="width: 100%;">
+        <div class="search-con">
+          <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
+          <p class="search-text">输入搜索内容</p>
         </div>
       </div>
     </head-top>
@@ -18,39 +13,34 @@
         <div class="sort_item_container" @click="chooseType('food')">
           <div class="sort_item_border">
             <span :class="{category_title: sortBy == 'food'}">分类</span>
-            <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
-              <polygon points="0,3 10,3 5,8"/>
-            </svg>
+            <img src="../../assets/img/common/ic_scree_arrows_nor.png" style="width: 1rem;position: absolute;margin-top: 0.3rem;">
           </div>
         </div>
-        <transition name="showlist" v-show="category">
-          <section v-show="sortBy == 'food'" class="category_container sort_detail_type">
-            <section class="category_left">
-              <ul>
-                <li v-for="(item, index) in category" :key="index" class="category_left_li" :class="{category_active:restaurant_category_id == item.id}"
-                    @click="selectCategoryName(item.id, index)">
-                  <section>
-                    <!--<img " v-if="index" class="category_icon">-->
-                    <span>{{item.name}}</span>
-                  </section>
-                  <section>
-                    <span class="category_count">{{item.count}}</span>
-                    <svg v-if="index" width="8" height="8" xmlns="http://www.w3.org/2000/svg" version="1.1" class="category_arrow">
-                      <path d="M0 0 L6 4 L0 8" stroke="#bbb" stroke-width="1" fill="none"/>
-                    </svg>
-                  </section>
-                </li>
-              </ul>
-            </section>
-            <section class="category_right">
-              <ul>
-                <li v-for="(item, index) in categoryDetail" v-if="index" :key="item.id" class="category_right_li" @click="getCategoryIds(item.id, item.name)"
-                    :class="{category_right_choosed: restaurant_category_ids == item.id || (!restaurant_category_ids)&&index == 0}">
-                  <span>{{item.name}}</span>
-                  <span>{{item.count}}</span>
-                </li>
-              </ul>
-            </section>
+        <transition name="showlist">
+          <section v-show="sortBy == 'food'" class="sort_detail_type">
+            <ul class="sort_list_container" @click="sortList($event)">
+              <li class="sort_list_li">
+                <p data="0" :class="{sort_select: sortByType == 0}">
+                  <span>默认排序</span>
+                </p>
+                <img src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 2rem;">
+              </li>
+              <li class="sort_list_li">
+                <p data="5" :class="{sort_select: sortByType == 5}">
+                  <span>最畅销</span>
+                </p>
+              </li>
+              <li class="sort_list_li">
+                <p data="6" :class="{sort_select: sortByType == 6}">
+                  <span>价格最高</span>
+                </p>
+              </li>
+              <li class="sort_list_li">
+                <p data="1" :class="{sort_select: sortByType == 1}">
+                  <span>价格最低</span>
+                </p>
+              </li>
+            </ul>
           </section>
         </transition>
       </div>
@@ -349,10 +339,10 @@
     z-index: 13;
     box-sizing: border-box;
     .sort_item {
-      @include sc(0.55rem, #444);
-      @include wh(33.3%, 1.6rem);
+      @include sc(0.8rem, #444);
+      @include wh(33.3%, 2rem);
       text-align: center;
-      line-height: 1rem;
+      line-height: 1.6rem;
       .sort_item_container {
         @include wh(100%, 100%);
         position: relative;
@@ -361,7 +351,7 @@
         box-sizing: border-box;
         padding-top: .3rem;
         .sort_item_border {
-          height: 1rem;
+          height: 1.5rem;
           border-right: 0.025rem solid $bc;
         }
       }
@@ -400,6 +390,10 @@
       left: 0;
       border-top: 0.025rem solid $bc;
       background-color: #fff;
+      ul {
+        padding-left: 0;
+        margin-bottom: 0;
+      }
     }
     .category_container {
       .category_left {
@@ -479,6 +473,7 @@
           align-items: center;
           span {
             color: #666;
+            padding-left: 1rem;
           }
         }
         .sort_select {
