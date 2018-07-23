@@ -6,6 +6,8 @@ import com.yunxin.cb.mall.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
@@ -13,5 +15,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category selectByPrimaryKey(Integer categoryId) {
         return categoryMapper.selectByPrimaryKey(categoryId);
+    }
+
+    @Override
+    public List<Category> selectByParentCategoryId(Integer parentCategoryId) {
+        return categoryMapper.selectByParentCategoryId(parentCategoryId);
     }
 }

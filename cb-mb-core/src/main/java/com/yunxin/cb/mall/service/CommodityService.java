@@ -39,4 +39,11 @@ public interface CommodityService {
      * @date: 2018/7/20 18:00
      */
     public List<Product> getProductsByCommodityId(int commodityId);
+
+    /**
+     * 获取该品牌下所有商品
+     * @param brandId
+     * @return
+     */
+    List<Commodity> selectByBrandId(Integer brandId);
 }

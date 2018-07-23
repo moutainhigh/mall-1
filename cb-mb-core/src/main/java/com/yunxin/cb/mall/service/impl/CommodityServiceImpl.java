@@ -82,6 +82,11 @@ public class CommodityServiceImpl implements CommodityService {
         return products;
     }
 
+    @Override
+    public List<Commodity> selectByBrandId(Integer brandId) {
+        return commodityMapper.selectByBrandId(brandId);
+    }
+
     /**
      * @title: 获取原来的图
      * @param: [imagesDir, commodity]

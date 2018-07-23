@@ -7,9 +7,7 @@ import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -31,6 +29,10 @@ public class IndexResource extends BaseResource {
     private FloorCategoryService floorCategoryService;
     @Resource
     private CategoryService categoryService;
+    @Resource
+    private CommodityService commodityService;
+    @Resource
+    private CommodityCategoryService commodityCategoryService;
 
     @ApiOperation(value = "商城首页")
     @GetMapping(value = "getIndex")
@@ -97,4 +99,42 @@ public class IndexResource extends BaseResource {
         index.setCategoryFive(floorInfoFive);
         return new ResponseResult(index);
     }
+    @ApiOperation(value = "所有品牌")
+    @PostMapping(value = "getBrandList")
+        public ResponseResult getBrandList(){
+        List<Brand> list = brandService.selectAll();
+        return new ResponseResult(list);
+    }
+    @ApiOperation(value = "该品牌下所有商品")
+    @PostMapping(value = "getCommodityList")
+    public ResponseResult getCommodityList(@RequestParam(value = "brandId") int brandId){
+        List<Commodity> list = commodityService.selectByBrandId(brandId);
+        return new ResponseResult(list);
+    }
+    @ApiOperation(value = "该分类下所有分类或者商品")
+    @PostMapping(value = "getCategoryList")
+    public ResponseResult getCategoryList(@RequestParam(value = "categoryId") int categoryId){
+        Category category = categoryService.selectByPrimaryKey(categoryId);
+        int level = category.getLevel();
+        List<Commodity> commodityList = new ArrayList<>();
+        if(level == 1){
+            List<Category> list = categoryService.selectByParentCategoryId(categoryId);
+            return new ResponseResult(list);
+        }
+        if(level == 2){
+            List<Category> list = categoryService.selectByParentCategoryId(categoryId);
+            return new ResponseResult(list);
+        }
+        if(level == 3){
+            List<CommodityCategory> list = commodityCategoryService.selectByCategoryId(categoryId);
+            for(int i=0;i<list.size();i++){
+                CommodityCategory commodityCategory = list.get(i);
+                int commodityId = commodityCategory.getCommodityId();
+                Commodity commodity = commodityService.selectByPrimaryKey(commodityId);
+                commodityList.add(commodity);
+            }
+        }
+        return new ResponseResult(commodityList);
+    }
+
 }

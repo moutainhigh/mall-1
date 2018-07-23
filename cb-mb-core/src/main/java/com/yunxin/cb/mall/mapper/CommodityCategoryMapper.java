@@ -57,4 +57,18 @@ public interface CommodityCategoryMapper {
         "where COCA_ID = #{cocaId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(CommodityCategory record);
+
+    @Select({
+            "select",
+            "COCA_ID, RECOMMEND_VALUE, CATEGORY_ID, COMMODITY_ID",
+            "from commodity_category",
+            "where CATEGORY_ID = #{categoryId,jdbcType=INTEGER}"
+    })
+    @Results({
+            @Result(column="COCA_ID", property="cocaId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="RECOMMEND_VALUE", property="recommendValue", jdbcType=JdbcType.INTEGER),
+            @Result(column="CATEGORY_ID", property="categoryId", jdbcType=JdbcType.INTEGER),
+            @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER)
+    })
+    List<CommodityCategory> selectByCategoryId(Integer categoryId);
 }
