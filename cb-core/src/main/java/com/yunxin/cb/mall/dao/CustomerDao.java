@@ -54,9 +54,10 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Modifying
     public void updateIntegralById(int integral, int customerId);
 
-    @Query("select c from Customer c left join fetch c.rank where c.accountName=?1")
+    @Query("select c from Customer c left join fetch c.rank where c.accountName=?1 ")
     public Customer findByAccountName(String accountName);
-
+    @Query("select c from Customer c where c.accountName=?1")
+    public Customer getAccountName(String accountName);
 
     @Query("select count(c.customerId) from Customer c left join  c.rank r where r.rankName=?1 ")
     public Long findCustomerNumberByRankName(String s);
