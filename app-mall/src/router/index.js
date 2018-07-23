@@ -4,6 +4,7 @@ import CarList from '../page/carList/CarList'
 import CarDetail from '../page/carDetail/CarDetail'
 import Home from '../page/home/Home'
 import Search from '../page/search/Search'
+import ChooseCarType from '../page/carList/ChooseCarType'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/car-detail',
       name: 'CarDetail',
       component: CarDetail
+    },
+    {
+      path: '/choose-type',
+      name: 'ChooseCarType',
+      component: ChooseCarType
     }
   ]
 })
