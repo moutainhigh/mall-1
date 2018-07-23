@@ -1,7 +1,7 @@
 package com.yunxin.cb.mall.entity.meta;
 
 public enum OrderState {
-    PENDING_PAYMENT("待付款"), PAID_PAYMENT("已付款"), OUT_STOCK("待提车"), RECEIVED("已提车"), REFUSE("拒签收"),
+    PENDING_PAYMENT("待付款"), PAID_PAYMENT("已付款/待发货"), OUT_STOCK("已发货/待签收"), RECEIVED("已签收"), REFUSE("拒签收"),
     RETURN_GOODS("退货"), CHANGE_GOODS("换货"), CANCELED("已取消"), TIMEOUT("超时"), WAIT_EVALUATE("待评价"), EVALUATED("已评价"), SUCCESS("交易成功");
 
     private String name;
