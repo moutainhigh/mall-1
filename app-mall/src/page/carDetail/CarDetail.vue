@@ -16,7 +16,8 @@
 
     <div v-if="tab == 1">
       <div style="width: 100%; height: 280px">
-        <img src="../../assets/logo.png" style="height: 100%; width: 100%; background: #999" v-preview="imgdata" :key="1" :alt="'123'">
+        <img src="../../assets/logo.png" style="height: 100%; width: 100%; background: #999" v-preview="imgdata"
+             :key="1" :alt="'123'">
       </div>
       <div class="carPrice">
         <div class="price">
@@ -79,7 +80,7 @@
       <div style="height: 40px; background: #fff"></div>
       <div style="height: 70px">
         <div class="i-footer">
-          <button>
+          <button @click="toOrderComfirm">
             <div>立即抢购</div>
           </button>
         </div>
@@ -139,10 +140,12 @@
           <span>支付方式</span>
           <img src="../../assets/img/cardetail/ic_sku_close.png" @click="checkType = 'none'">
         </div>
-        <button v-for="(buyMode, index) in buyModes" class="carColor" :class="{'activeColor': index == activeMode}"
-                @click="checkMode(index)">
-          {{buyMode}}
-        </button>
+        <div style="margin-left: 14px">
+          <button v-for="(buyMode, index) in buyModes" class="carColor" :class="{'activeColor': index == activeMode}"
+                  @click="checkMode(index)">
+            {{buyMode}}
+          </button>
+        </div>
         <div style="height: 70px">
           <div class="i-footer">
             <button @click="selectMode()">
@@ -223,6 +226,11 @@
         } else {
           this.headTitle = '';
         }
+      },
+      toOrderComfirm() {
+        this.$router.push({
+          path: "/order-comfirm"
+        })
       }
     },
     watch: {
