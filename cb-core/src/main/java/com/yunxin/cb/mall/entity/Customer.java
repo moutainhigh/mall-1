@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.core.web.json.deserializer.JsonTimestampDeserializer;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
@@ -31,6 +33,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table
 @DynamicInsert
 @DynamicUpdate
+@ApiModel(value="客户对象",description="客户对象Customer")
 public class Customer implements java.io.Serializable {
 
     private static final long serialVersionUID = 3814946735437297136L;
@@ -38,10 +41,12 @@ public class Customer implements java.io.Serializable {
     /**
      * id
      */
+    @ApiModelProperty(value="客户ID",name="customerId",example="1")
     private int customerId;
     /**
      * 账户名
      */
+    @ApiModelProperty(value="账户名",name="accountName",example="186456789")
     private String accountName;
     /**
      * 密码
@@ -50,6 +55,7 @@ public class Customer implements java.io.Serializable {
     /**
      * 创建时间
      */
+    @ApiModelProperty(value="账户名",name="accountName",example="186456789")
     private Date createTime;
     /**
      * 真实姓名
