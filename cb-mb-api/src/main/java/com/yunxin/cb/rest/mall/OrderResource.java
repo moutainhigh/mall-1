@@ -80,4 +80,16 @@ public class OrderResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
+    @ApiOperation(value = "根据订单id确认收货")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
+    @PostMapping(value = "confirmOrder")
+    public ResponseResult confirmOrder(@RequestParam(value = "orderId") int orderId)throws Exception{
+        int result = orderService.confirmOrder(orderId, getCustomerId());
+        if (result <= 0) {
+            return new ResponseResult(Result.FAILURE);
+        }
+        return new ResponseResult(Result.SUCCESS);
+    }
+
 }
