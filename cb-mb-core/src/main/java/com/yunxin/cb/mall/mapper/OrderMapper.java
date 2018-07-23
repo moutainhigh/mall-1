@@ -269,7 +269,7 @@ public interface OrderMapper {
             "LIMIT #{rowIndex},#{pageSize}",
             "</script>"
     })
-    @ResultMap(value="orderMap")
+    @ResultMap(value="orderDetailMap")
     List<Order> pageList(Query q);
 
     @Select({

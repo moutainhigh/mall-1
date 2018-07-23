@@ -49,6 +49,9 @@ public class Product {
     /** 库存数量 */
     private Integer storeNum;
 
+    /** 预占库存数量 */
+    private Integer reservedStoreNum;
+
     /** 体积 */
     private Float volume;
 
@@ -63,6 +66,8 @@ public class Product {
 
     //货品所有属性
     public List<ProductAttribute> productAttributes = new ArrayList<ProductAttribute>();
+    /** 商品 */
+    private Commodity commodity;
 
     public Integer getProductId() {
         return productId;
@@ -168,6 +173,14 @@ public class Product {
         this.storeNum = storeNum;
     }
 
+    public Integer getReservedStoreNum() {
+        return reservedStoreNum;
+    }
+
+    public void setReservedStoreNum(Integer reservedStoreNum) {
+        this.reservedStoreNum = reservedStoreNum;
+    }
+
     public Float getVolume() {
         return volume;
     }
@@ -206,5 +219,13 @@ public class Product {
 
     public void setProductAttributes(List<ProductAttribute> productAttributes) {
         this.productAttributes = productAttributes;
+    }
+
+    public Commodity getCommodity() {
+        return commodity;
+    }
+
+    public void setCommodity(Commodity commodity) {
+        this.commodity = commodity;
     }
 }

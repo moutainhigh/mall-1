@@ -72,6 +72,15 @@ public class FileResource {
 
     }
 
+    /**
+     * InputStream转成File
+     * @author      likang
+     * @param ins
+    * @param file
+     * @return      void
+     * @exception
+     * @date        2018/7/23 9:42
+     */
     public static void inputStreamToFile(InputStream ins,File file) {
         try {
             OutputStream os = new FileOutputStream(file);
