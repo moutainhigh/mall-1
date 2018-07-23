@@ -5,13 +5,12 @@ import App from './App'
 import router from './router'
 import './assets/css/defualt.css'
 import vuePicturePreview from 'vue-picture-preview'
-import 'vue-ydui/dist/ydui.rem.css';
-import YDUI from 'vue-ydui';
+import { Group } from 'vux'
 
 
 Vue.config.productionTip = false;
 Vue.use(vuePicturePreview)
-Vue.use(YDUI)
+Vue.component('group', Group);
 
 
 router.afterEach((to,from,next) => {

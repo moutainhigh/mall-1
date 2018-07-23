@@ -31,9 +31,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
 
-    
-    @Resource
-	private CustomerService customerService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -54,10 +51,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             // don't need token
             return true;
 
-        response.setContentType("application/json;charset=utf-8");
-        response.setCharacterEncoding("UTF-8");
+
 
         if (!request.getMethod().equals("OPTIONS")) {
+            response.setContentType("application/json;charset=utf-8");
+            response.setCharacterEncoding("UTF-8");
             String authHeader = request.getHeader(HEADER_STRING);
             if ((authHeader == null) ||
                     !authHeader.startsWith(TOKEN_PREFIX)) {
@@ -73,14 +71,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                 Token token = JwtUtil.getToken(authHeader);
 
                 int customerId = token.getAccountId();
-                Customer customer =customerService.getCustomerById(customerId);
-                if (customer == null){
-                    PrintWriter writer = response.getWriter();
-                    ObjectMapper mapper = new ObjectMapper();
-                    String mapJakcson = mapper.writeValueAsString(new ResponseResult(Result.NOT_LOGIN, "token信息错误,token用户信息与系统用户信息不对应"));
-                    writer.print(mapJakcson);
-                    return false;
-                }
+//                Customer customer =customerService.getCustomerById(customerId);
+//                if (customer == null){
+//                    PrintWriter writer = response.getWriter();
+//                    ObjectMapper mapper = new ObjectMapper();
+//                    String mapJakcson = mapper.writeValueAsString(new ResponseResult(Result.NOT_LOGIN, "token信息错误,token用户信息与系统用户信息不对应"));
+//                    writer.print(mapJakcson);
+//                    return false;
+//                }
 
                 CustomerContextHolder.setCustomerId(customerId);
                 return true;

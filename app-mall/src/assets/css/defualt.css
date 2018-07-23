@@ -43,3 +43,28 @@ p {
   margin: 0;
   padding: 0.3rem 0 0 2.5rem;
 }
+
+.weui-cells {
+  font-size: 15px!important;
+}
+
+.vux-cell-placeholder {
+  color: #bfbfbf !important;
+}
+
+.weui-cells input::-webkit-input-placeholder {
+  color: #bfbfbf !important;
+}
+
+.weui-label {
+  width: 80px!important;
+}
+
+.vux-label {
+  width: 80px!important;
+}
+
+.weui-cell__ft {
+  color: #333333!important;
+  font-weight: bold!important;
+}
