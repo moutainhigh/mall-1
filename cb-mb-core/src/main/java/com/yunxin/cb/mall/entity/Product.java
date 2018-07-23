@@ -49,6 +49,9 @@ public class Product {
     /** 库存数量 */
     private Integer storeNum;
 
+    /** 预占库存数量 */
+    private Integer reservedStoreNum;
+
     /** 体积 */
     private Float volume;
 
@@ -166,6 +169,14 @@ public class Product {
 
     public void setStoreNum(Integer storeNum) {
         this.storeNum = storeNum;
+    }
+
+    public Integer getReservedStoreNum() {
+        return reservedStoreNum;
+    }
+
+    public void setReservedStoreNum(Integer reservedStoreNum) {
+        this.reservedStoreNum = reservedStoreNum;
     }
 
     public Float getVolume() {

@@ -30,3 +30,6 @@ CREATE TABLE `order_loan_apply` (
   CONSTRAINT `loan_apply_ibfk_2` FOREIGN KEY (`ORDER_ID`) REFERENCES `order_form` (`ORDER_ID`),
   CONSTRAINT `loan_apply_ibfk_3` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--add by guwenshao 2018-07-23
+alter table product add `RESERVED_STORE_NUM` int(11) DEFAULT NULL COMMENT '预占的库存数';
