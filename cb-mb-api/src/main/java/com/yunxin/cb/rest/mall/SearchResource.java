@@ -25,7 +25,7 @@ public class SearchResource extends BaseResource {
 
     @PostMapping(value = "categorySearch")
     @IgnoreAuthentication
-    public ResponseResult categorySearch(@RequestParam(value = "searchVo") SearchVo searchVo){
+    public ResponseResult categorySearch(@RequestBody SearchVo searchVo){
        return new ResponseResult(Result.SUCCESS);
     }
 
