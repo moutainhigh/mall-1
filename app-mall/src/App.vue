@@ -2,6 +2,7 @@
   <div id="app">
     <!--<img src="./assets/logo.png">-->
     <router-view/>
+    <lg-preview></lg-preview>
   </div>
 </template>
 
