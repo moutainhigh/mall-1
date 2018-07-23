@@ -24,9 +24,9 @@ import static javax.persistence.GenerationType.IDENTITY;
  * 文章
  * Created by gonglei on 16/1/14.
  */
-@Indexed(index = "Article")
-@Analyzer(impl = HanLPIndexAnalyzer.class)
-@Cacheable
+//@Indexed(index = "Article")
+//@Analyzer(impl = HanLPIndexAnalyzer.class)
+//@Cacheable
 @Entity
 @Table
 @DynamicInsert
