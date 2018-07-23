@@ -1,22 +1,11 @@
 <template>
   <div>
     <head-top :headTitle="headTitle"></head-top>
-    <div style="position: relative; background: #ffffff; margin-bottom: 10px">
-      <div style="margin: 0 14px; border-bottom: 1px solid #ECECEC">
-        <span style="font-size: 15px; padding: 17px 0;">姓名</span>
-        <input type="text" style="border: 0; margin-left: 20px; padding: 17px 0" placeholder="请填写真实姓名">
-      </div>
-      <div style="margin: 0 14px; border-bottom: 1px solid #ECECEC">
-        <span style="font-size: 15px; padding: 17px 0;">手机号</span>
-        <input type="text" style="border: 0; margin-left: 20px; padding: 17px 0" placeholder="请填写联系手机号">
-      </div>
-      <div style="margin: 0 14px; border-bottom: 1px solid #ECECEC;">
-        <span style="font-size: 15px; padding: 17px 0;">提车地址</span>
-        <!--<input type="text" style="border: 0; margin-left: 20px; padding: 17px 0" placeholder="请填写联系手机号">-->
-        <span
-          style="margin-left: 20px; padding: 17px 0;display: inline-block; width: 230px">广东省深圳市龙华区油松社区中裕冠大道1号1018号</span>
-      </div>
-    </div>
+    <group>
+      <x-input title="姓名" v-model="value" placeholder="请填写真实姓名"></x-input>
+      <x-input title="手机号" v-model="value" placeholder="请填写联系手机号"></x-input>
+      <cell title="提车地址" value-align="left" align-items="flex-start" value="广东省深圳市龙华区油松社区中裕冠大道1号1018号"></cell>
+    </group>
 
     <div class="buyMode" @click="checkType = true">
       <p class="selectItem-title">支付方式</p>
@@ -74,11 +63,14 @@
 
 <script>
   import headTop from '../../components/header/head'
+  import { XInput, Cell } from 'vux'
 
   export default {
     name: "OrderComfirm",
     components: {
-      headTop
+      headTop,
+      XInput,
+      Cell
     },
     data() {
       return {
