@@ -21,7 +21,7 @@ public interface ProductMapper {
         "PRODUCT_NAME, PRODUCT_NO, ",
         "PRODUCT_STATE, PUBLISH_STATE, ",
         "REMARK, SALE_PRICE, ",
-        "STORE_NUM, VOLUME, WEIGHT, ",
+        "STORE_NUM, RESERVED_STORE_NUM, VOLUME, WEIGHT, ",
         "COMMODITY_ID, STORE_ID)",
         "values (#{productId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, ",
         "#{costPrice,jdbcType=REAL}, #{createTime,jdbcType=TIMESTAMP}, ",
@@ -38,7 +38,7 @@ public interface ProductMapper {
         "select",
         "PRODUCT_ID, ADD_TIME, COST_PRICE, CREATE_TIME, DEFAULT_PIC_PATH, MARKET_PRICE, ",
         "PRODUCT_NAME, PRODUCT_NO, PRODUCT_STATE, PUBLISH_STATE, REMARK, SALE_PRICE, ",
-        "STORE_NUM, VOLUME, WEIGHT, COMMODITY_ID, STORE_ID",
+        "STORE_NUM, RESERVED_STORE_NUM, VOLUME, WEIGHT, COMMODITY_ID, STORE_ID",
         "from product",
         "where PRODUCT_ID = #{productId,jdbcType=INTEGER}"
     })
@@ -56,6 +56,7 @@ public interface ProductMapper {
         @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR),
         @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
         @Result(column="STORE_NUM", property="storeNum", jdbcType=JdbcType.INTEGER),
+        @Result(column="RESERVED_STORE_NUM", property="reservedStoreNum", jdbcType=JdbcType.INTEGER),
         @Result(column="VOLUME", property="volume", jdbcType=JdbcType.REAL),
         @Result(column="WEIGHT", property="weight", jdbcType=JdbcType.REAL),
         @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
@@ -67,7 +68,7 @@ public interface ProductMapper {
         "select",
         "PRODUCT_ID, ADD_TIME, COST_PRICE, CREATE_TIME, DEFAULT_PIC_PATH, MARKET_PRICE, ",
         "PRODUCT_NAME, PRODUCT_NO, PRODUCT_STATE, PUBLISH_STATE, REMARK, SALE_PRICE, ",
-        "STORE_NUM, VOLUME, WEIGHT, COMMODITY_ID, STORE_ID",
+        "STORE_NUM, RESERVED_STORE_NUM, VOLUME, WEIGHT, COMMODITY_ID, STORE_ID",
         "from product"
     })
     @Results({
@@ -84,6 +85,7 @@ public interface ProductMapper {
         @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR),
         @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
         @Result(column="STORE_NUM", property="storeNum", jdbcType=JdbcType.INTEGER),
+        @Result(column="RESERVED_STORE_NUM", property="reservedStoreNum", jdbcType=JdbcType.INTEGER),
         @Result(column="VOLUME", property="volume", jdbcType=JdbcType.REAL),
         @Result(column="WEIGHT", property="weight", jdbcType=JdbcType.REAL),
         @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
@@ -95,7 +97,7 @@ public interface ProductMapper {
             "select",
             "PRODUCT_ID, ADD_TIME, COST_PRICE, CREATE_TIME, DEFAULT_PIC_PATH, MARKET_PRICE, ",
             "PRODUCT_NAME, PRODUCT_NO, PRODUCT_STATE, PUBLISH_STATE, REMARK, SALE_PRICE, ",
-            "STORE_NUM, VOLUME, WEIGHT, COMMODITY_ID, STORE_ID",
+            "STORE_NUM, RESERVED_STORE_NUM, VOLUME, WEIGHT, COMMODITY_ID, STORE_ID",
             "from product where COMMODITY_ID = #{commodityId,jdbcType=INTEGER}"
     })
     @Results({
@@ -112,6 +114,7 @@ public interface ProductMapper {
             @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="STORE_NUM", property="storeNum", jdbcType=JdbcType.INTEGER),
+            @Result(column="RESERVED_STORE_NUM", property="reservedStoreNum", jdbcType=JdbcType.INTEGER),
             @Result(column="VOLUME", property="volume", jdbcType=JdbcType.REAL),
             @Result(column="WEIGHT", property="weight", jdbcType=JdbcType.REAL),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
@@ -125,7 +128,7 @@ public interface ProductMapper {
             "select",
             "PRODUCT_ID, ADD_TIME, COST_PRICE, CREATE_TIME, DEFAULT_PIC_PATH, MARKET_PRICE, ",
             "PRODUCT_NAME, PRODUCT_NO, PRODUCT_STATE, PUBLISH_STATE, REMARK, SALE_PRICE, ",
-            "STORE_NUM, VOLUME, WEIGHT, COMMODITY_ID, STORE_ID",
+            "STORE_NUM, RESERVED_STORE_NUM, VOLUME, WEIGHT, COMMODITY_ID, STORE_ID",
             "from product where PRODUCT_ID = #{productId}",
             "and PRODUCT_STATE = #{state} and PUBLISH_STATE = #{publish}"
     })
@@ -143,6 +146,7 @@ public interface ProductMapper {
             @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="STORE_NUM", property="storeNum", jdbcType=JdbcType.INTEGER),
+            @Result(column="RESERVED_STORE_NUM", property="reservedStoreNum", jdbcType=JdbcType.INTEGER),
             @Result(column="VOLUME", property="volume", jdbcType=JdbcType.REAL),
             @Result(column="WEIGHT", property="weight", jdbcType=JdbcType.REAL),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
@@ -164,6 +168,7 @@ public interface ProductMapper {
           "REMARK = #{remark,jdbcType=VARCHAR},",
           "SALE_PRICE = #{salePrice,jdbcType=REAL},",
           "STORE_NUM = #{storeNum,jdbcType=INTEGER},",
+          "RESERVED_STORE_NUM = #{reservedStoreNum,jdbcType=INTEGER},",
           "VOLUME = #{volume,jdbcType=REAL},",
           "WEIGHT = #{weight,jdbcType=REAL},",
           "COMMODITY_ID = #{commodityId,jdbcType=INTEGER},",
