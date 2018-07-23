@@ -217,8 +217,9 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-    public void confirm () {
-        //确认收货
+    @Override
+    public int confirmOrder(Integer orderId, Integer customerId) throws Exception {
+        return orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED.ordinal(), DeliveryState.RECEIVED.ordinal());
     }
 
     private void defaultValue(Order order) {
