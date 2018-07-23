@@ -63,7 +63,7 @@ public class MainResource extends BaseResource {
             Customer recommendCustomer = customerService.getCustomerByMobile(recommendMobile);
             if(StringUtils.isNotBlank(recommendMobile)){
                 if(recommendCustomer == null){
-                    return new ResponseResult(Result.FAILURE, "推荐人手机号不存在");
+                    return new ResponseResult(Result.FAILURE, "邀请码不存在");
                 }
             }
             Customer customer = new Customer();

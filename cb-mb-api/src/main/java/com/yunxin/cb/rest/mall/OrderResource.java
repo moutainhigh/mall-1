@@ -26,12 +26,14 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "订单确认")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "productNum", value = "购买数量", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "consigneeName", value = "收货人姓名", required = true, paramType = "post", dataType = "String"),
             @ApiImplicitParam(name = "consigneeMobile", value = "收货人手机号码", required = true, paramType = "post", dataType = "String"),
-            @ApiImplicitParam(name = "consigneeAddress", value = "收货人地址", required = true, paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "consigneeAddress", value = "收货人地址", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "productNum", value = "购买数量", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "buyerMessage", value = "买家留言", paramType = "post", dataType = "String")
+            })
     @PostMapping(value = "saveOrder")
     public ResponseResult saveOrder(@RequestBody Order order) throws Exception{
         order.setCustomerId(getCustomerId());
@@ -66,9 +68,10 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "根据订单id取消订单")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "cancelReason", value = "取消原因", paramType = "post", dataType = "int")})
     @PostMapping(value = "cancelOrder")
-    public ResponseResult cancelOrder(@RequestBody Order order){
+    public ResponseResult cancelOrder(@RequestBody Order order)throws Exception{
         order.setCustomerId(getCustomerId());
         Order result = orderService.cancelOrder(order);
         if (result == null) {

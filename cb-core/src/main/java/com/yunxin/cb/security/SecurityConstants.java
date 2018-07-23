@@ -23,7 +23,7 @@ public class SecurityConstants {
     /**
      * 图片前台访问相对web路径
      */
-    public static final String PIC_DIR="picDir";
+    public static final String PIC_DIR="/upload/";
 
     /**
      * 图片库文件系统相对web路径
