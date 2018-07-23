@@ -21,6 +21,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Value("${application.uploadPath}")
     private String uploadPath;
 
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:/index");
@@ -42,15 +43,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/upload/**").addResourceLocations("file:" + uploadPath);
         super.addResourceHandlers(registry);
-    }
-
-
-    @Bean
-    public FilterRegistrationBean siteMeshFilter() {
-        FilterRegistrationBean fitler = new FilterRegistrationBean();
-        Meshsite3Filter siteMeshFilter = new Meshsite3Filter();
-        fitler.setFilter(siteMeshFilter);
-        return fitler;
     }
 
 }

@@ -289,4 +289,15 @@ public interface OrderMapper {
             "</script>"
     })
     long count(Query q);
+
+    @Update({
+            "update order_form",
+            "set ",
+            "DELIVERY_STATE = #{deliveryState,jdbcType=INTEGER},",
+            "ORDER_STATE = #{orderState,jdbcType=INTEGER}",
+            "where ORDER_ID = #{orderId,jdbcType=INTEGER}",
+            "and CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
+    })
+    int updateStateByOrderIdAndCustomerId(@Param("orderId") int orderId, @Param("customerId") int customerId,
+                                     @Param("orderState") int orderState, @Param("deliveryState") int deliveryState);
 }

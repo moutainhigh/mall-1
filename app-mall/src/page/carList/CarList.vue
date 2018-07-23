@@ -9,162 +9,96 @@
       </div>
     </head-top>
     <section class="sort_container">
+      <div @click="chooseType('')" v-show="sortBy != ''" style="position:fixed; z-index:2;height: 100%;width: 100%;background-color: rgba(0,0,0,0.3);"></div>
       <div class="sort_item" :class="{choose_type:sortBy == 'food'}">
         <div class="sort_item_container" @click="chooseType('food')">
           <div class="sort_item_border">
             <span :class="{category_title: sortBy == 'food'}">分类</span>
-            <img src="../../assets/img/common/ic_scree_arrows_nor.png" style="width: 1rem;position: absolute;margin-top: 0.3rem;">
+            <img v-show="sortBy != 'food'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
+            <img v-show="sortBy == 'food'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_sele.png">
           </div>
         </div>
         <transition name="showlist">
           <section v-show="sortBy == 'food'" class="sort_detail_type">
-            <ul class="sort_list_container" @click="sortList($event)">
-              <li class="sort_list_li">
+            <div class="sort_list_container">
+              <div class="sort_list_li" @click="sortList($event)">
                 <p data="0" :class="{sort_select: sortByType == 0}">
                   <span>默认排序</span>
                 </p>
-                <img src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 2rem;">
-              </li>
-              <li class="sort_list_li">
-                <p data="5" :class="{sort_select: sortByType == 5}">
+                <img v-if="sortByType == 0" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+              </div>
+              <div class="sort_list_li" @click="sortList($event)">
+                <p data="1" :class="{sort_select: sortByType == 1}">
                   <span>最畅销</span>
                 </p>
-              </li>
-              <li class="sort_list_li">
-                <p data="6" :class="{sort_select: sortByType == 6}">
+                <img v-if="sortByType == 1" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+              </div>
+              <div class="sort_list_li" @click="sortList($event)">
+                <p data="2" :class="{sort_select: sortByType == 2}">
                   <span>价格最高</span>
                 </p>
-              </li>
-              <li class="sort_list_li">
-                <p data="1" :class="{sort_select: sortByType == 1}">
+                <img v-if="sortByType == 2" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+              </div>
+              <div class="sort_list_li" @click="sortList($event)">
+                <p data="3" :class="{sort_select: sortByType == 3}">
                   <span>价格最低</span>
                 </p>
-              </li>
-            </ul>
+                <img v-if="sortByType == 3" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+              </div>
+            </div>
           </section>
         </transition>
       </div>
       <div class="sort_item" :class="{choose_type:sortBy == 'sort'}">
         <div class="sort_item_container" @click="chooseType('sort')">
           <div class="sort_item_border">
-            <span :class="{category_title: sortBy == 'sort'}">排序</span>
-            <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
-              <polygon points="0,3 10,3 5,8"/>
-            </svg>
+            <span :class="{category_title: sortBy == 'sort'}">品牌</span>
+            <img class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
+          </div>
+        </div>
+      </div>
+      <div class="sort_item" :class="{choose_type:sortBy == 'price'}">
+        <div class="sort_item_container" @click="chooseType('price')">
+          <div class="sort_item_border">
+            <span :class="{category_title: sortBy == 'price'}">价格</span>
+            <img v-show="sortBy != 'price'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
+            <img v-show="sortBy == 'price'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_sele.png">
           </div>
         </div>
         <transition name="showlist">
-          <section v-show="sortBy == 'sort'" class="sort_detail_type">
-            <ul class="sort_list_container" @click="sortList($event)">
-              <li class="sort_list_li">
-                <svg>
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#default"></use>
-                </svg>
-                <p data="0" :class="{sort_select: sortByType == 0}">
-                  <span>智能排序</span>
-                  <svg v-if="sortByType == 0">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                  </svg>
-                </p>
-              </li>
-              <li class="sort_list_li">
-                <svg>
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#distance"></use>
-                </svg>
-                <p data="5" :class="{sort_select: sortByType == 5}">
-                  <span>距离最近</span>
-                  <svg v-if="sortByType == 5">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                  </svg>
-                </p>
-              </li>
-              <li class="sort_list_li">
-                <svg>
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hot"></use>
-                </svg>
-                <p data="6" :class="{sort_select: sortByType == 6}">
-                  <span>销量最高</span>
-                  <svg v-if="sortByType == 6">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                  </svg>
-                </p>
-              </li>
-              <li class="sort_list_li">
-                <svg>
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#price"></use>
-                </svg>
-                <p data="1" :class="{sort_select: sortByType == 1}">
-                  <span>起送价最低</span>
-                  <svg v-if="sortByType == 1">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                  </svg>
-                </p>
-              </li>
-              <li class="sort_list_li">
-                <svg>
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#speed"></use>
-                </svg>
-                <p data="2" :class="{sort_select: sortByType == 2}">
-                  <span>配送速度最快</span>
-                  <svg v-if="sortByType == 2">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                  </svg>
-                </p>
-              </li>
-              <li class="sort_list_li">
-                <svg>
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#rating"></use>
-                </svg>
-                <p data="3" :class="{sort_select: sortByType == 3}">
-                  <span>评分最高</span>
-                  <svg v-if="sortByType == 3">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                  </svg>
-                </p>
-              </li>
-            </ul>
+          <section v-show="sortBy == 'price'" class="sort_detail_type filter_container">
+            <section style="width: 100%;background-color: #ffffff;">
+              <header class="filter_header_style">自定义</header>
+              <div class="choose_input">
+                <input/>
+                <div style="position: relative;margin-left: -1.2rem;">万</div>
+                <span style="margin: 0 0.2rem 0 0.5rem;">—</span>
+                <input/>
+                <div style="position: relative;margin-left: -1.2rem;">万</div>
+                <div class="input_button" :class="{input_button_sele:true}"><p>确定</p></div>
+              </div>
+            </section>
+            <section style="width: 100%;background-color: #ffffff;">
+              <div style="display: flex;padding: 1rem;flex-wrap: wrap">
+                <div class="choose_flex_type">
+                  <p :class="{choose_type_sele: true}">不限</p>
+                </div>
+                <div class="choose_flex_type">
+                  <p>不限</p>
+                </div>
+                <div class="choose_flex_type">
+                  <p>不限</p>
+                </div>
+              </div>
+            </section>
           </section>
         </transition>
       </div>
       <div class="sort_item" :class="{choose_type:sortBy == 'activity'}">
         <div class="sort_item_container" @click="chooseType('activity')">
           <span :class="{category_title: sortBy == 'activity'}">筛选</span>
-          <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
-            <polygon points="0,3 10,3 5,8"/>
-          </svg>
+          <img class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
         </div>
-        <transition name="showlist">
-          <section v-show="sortBy == 'activity'" class="sort_detail_type filter_container">
-            <section style="width: 100%;">
-              <header class="filter_header_style">配送方式</header>
-              <ul class="filter_ul">
-                <li v-for="item in Delivery" :key="item.id" class="filter_li" @click="selectDeliveryMode(item.id)">
-                  <svg :style="{opacity: (item.id == 0)&&(delivery_mode !== 0)? 0: 1}">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="delivery_mode == item.id? '#selected':'#fengniao'"></use>
-                  </svg>
-                  <span :class="{selected_filter: delivery_mode == item.id}">{{item.text}}</span>
-                </li>
-              </ul>
-            </section>
-            <section style="width: 100%;">
-              <header class="filter_header_style">商家属性（可以多选）</header>
-              <ul class="filter_ul" style="paddingBottom: .5rem;">
-                <li v-for="(item,index) in Activity" :key="item.id" class="filter_li" @click="selectSupportIds(index, item.id)">
-                  <svg v-show="support_ids[index].status" class="activity_svg">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                  </svg>
-                  <span class="filter_icon" :style="{color: '#' + item.icon_color, borderColor: '#' + item.icon_color}"
-                        v-show="!support_ids[index].status">{{item.icon_name}}</span>
-                  <span :class="{selected_filter: support_ids[index].status}">{{item.name}}</span>
-                </li>
-              </ul>
-            </section>
-            <footer class="confirm_filter">
-              <div class="clear_all filter_button_style" @click="clearSelect">清空</div>
-              <div class="confirm_select filter_button_style" @click="confirmSelectFun">确定<span v-show="filterNum">({{filterNum}})</span></div>
-            </footer>
-          </section>
-        </transition>
       </div>
     </section>
   </div>
@@ -187,8 +121,6 @@
         restaurant_category_id: '', // 食品类型id值
         restaurant_category_ids: '', //筛选类型的id
         sortBy: '', // 筛选的条件
-        category: null, // category分类左侧数据
-        categoryDetail: null, // category分类右侧的详细数据
         sortByType: null, // 根据何种方式排序
         Delivery: null, // 配送方式数据
         Activity: null, // 商家支持活动数据
@@ -336,13 +268,18 @@
     right: 0;
     width: 100%;
     display: flex;
-    z-index: 13;
+    z-index: 10;
     box-sizing: border-box;
     .sort_item {
       @include sc(0.8rem, #444);
       @include wh(33.3%, 2rem);
       text-align: center;
       line-height: 1.6rem;
+      .choose_img {
+        width: 1rem;
+        position: absolute;
+        margin-top: 0.3rem;
+      }
       .sort_item_container {
         @include wh(100%, 100%);
         position: relative;
@@ -352,7 +289,7 @@
         padding-top: .3rem;
         .sort_item_border {
           height: 1.5rem;
-          border-right: 0.025rem solid $bc;
+          //border-right: 0.025rem solid $bc;
         }
       }
       .sort_icon {
@@ -383,6 +320,8 @@
       transform: translateY(-100%);
     }
     .sort_detail_type {
+      margin-top: 0.38rem;
+      z-index: 3;
       width: 100%;
       position: absolute;
       display: flex;
@@ -393,6 +332,12 @@
       ul {
         padding-left: 0;
         margin-bottom: 0;
+        z-index: 3;
+        background-color: #ffffff;
+      }
+
+      ul :active {
+        display: none;
       }
     }
     .category_container {
@@ -459,16 +404,12 @@
         height: 2.5rem;
         display: flex;
         align-items: center;
-        svg {
-          @include wh(0.7rem, 0.7rem);
-          margin: 0 .3rem 0 .8rem;
-        }
         p {
           line-height: 2.5rem;
           flex: auto;
           text-align: left;
           text-indent: 0.25rem;
-          border-bottom: 0.025rem solid $bc;
+          //border-bottom: 0.025rem solid $bc;
           @include fj;
           align-items: center;
           span {
@@ -482,18 +423,22 @@
           }
         }
       }
+
+      .sort_list_li :active {
+        background-color: #ECECEC;
+      }
     }
     .filter_container {
+      margin-top: 0.41rem;
       flex-direction: column;
       align-items: flex-start;
-      min-height: 10.6rem;
       background-color: #f1f1f1;
       .filter_header_style {
-        @include sc(0.4rem, #333);
+        @include sc(0.8rem, #666);
         line-height: 1.5rem;
         height: 1.5rem;
         text-align: left;
-        padding-left: .5rem;
+        padding: 0.5rem 0 0.2rem 1rem;
         background-color: #fff;
       }
       .filter_ul {
@@ -532,6 +477,59 @@
           .selected_filter {
             color: $yc;
           }
+        }
+      }
+      .choose_input {
+        display: flex;
+        text-align: left;
+        margin: 0 1rem;
+        padding: 0.5rem 0;
+        border-bottom: #ECECEC solid 1px;
+        line-height: 2.6;
+        color: #333333;
+        input {
+          padding: 0.5rem;
+          border-radius: 5px;
+          border: 1px solid #DDD;
+          width: 100%;
+          caret-color: #f5ca1d;
+        }
+        input:focus{
+          outline: none;
+          border-radius: 4px;
+          border-color: #f5ca1d;
+        }
+        .input_button {
+          flex: 0 0 25%;
+          margin-left: 1rem;
+          border-radius: 4px;
+          background-color: #DDD;
+          color: #BBB;
+          p {
+            text-align: center;
+          }
+        }
+        .input_button_sele {
+          background-color: #F5CA1D;
+          color: #FFF;
+        }
+      }
+
+      .choose_flex_type {
+        flex:4 0 33%;
+        line-height: 2.5;
+        color: #333333;
+        p {
+          box-sizing: border-box;
+          margin: 0 0.2rem;
+          border-radius: 4px;
+          background-color: #F1F3F5;
+        }
+
+        .choose_type_sele {
+          border: #f5ca1d 1px solid;
+          color: #f5ca1d;
+          background-color: #FFFBEB;
         }
       }
       .confirm_filter {
