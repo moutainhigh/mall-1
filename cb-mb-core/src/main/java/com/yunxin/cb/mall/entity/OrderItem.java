@@ -36,6 +36,9 @@ public class OrderItem {
     /** 货品id */
     private Integer productId;
 
+    /** 货品 */
+    private Product product;
+
     public Integer getItemId() {
         return itemId;
     }
@@ -122,5 +125,13 @@ public class OrderItem {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

@@ -79,7 +79,9 @@ public class CategoryController implements ServletContextAware {
             Category categoryDb = categoryService.addCategory(category);
             CommonImageConverter imageConverter = new CommonImageConverter(servletContext, category);
             imageConverter.compress();
-            categoryService.updateIconPath(categoryDb.getCategoryId(), imageConverter.getDefaultImagePath());
+            if(null!=imageConverter.getDefaultImagePath()){
+                categoryService.updateIconPath(categoryDb.getCategoryId(), imageConverter.getDefaultImagePath());
+            }
         } catch (EntityExistException e) {
             e.printStackTrace();
             result.addError(new FieldError("category", "categoryName", category.getCategoryName(), true, null, null,
