@@ -253,6 +253,10 @@
                v-if="!$v.beneficiary1.beneficiaryProportion.between && $v.beneficiary1.beneficiaryProportion.$dirty">
             请输入受益份额，在1%到100%之间
           </div>
+          <div class="error"
+               v-if="!$v.beneficiary1.beneficiaryProportion.numeric && $v.beneficiary1.beneficiaryProportion.$dirty">
+            请输入整数
+          </div>
           <div class="error" v-if="valiProportion">请重新分配受益份额</div>
 
           <datetime title="出生日期" placeholder="请选择出生日期" startDate="1950-01-01" :endDate="startDate"
@@ -363,6 +367,10 @@
           <div class="error"
                v-if="!$v.beneficiary2.beneficiaryProportion.between && $v.beneficiary2.beneficiaryProportion.$dirty">
             请输入受益份额，在1%到100%之间
+          </div>
+          <div class="error"
+               v-if="!$v.beneficiary2.beneficiaryProportion.numeric && $v.beneficiary2.beneficiaryProportion.$dirty">
+            请输入整数
           </div>
           <div class="error" v-if="valiProportion">请重新分配受益份额</div>
 
@@ -538,7 +546,7 @@
             beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             beneficiaryCountry: {required, maxLength: maxLength(64)},
             beneficiaryOrder: {required},
-            beneficiaryProportion: {required, between: between(1, 100)},
+            beneficiaryProportion: {required, between: between(1, 100), numeric},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
             beneficiaryCardNo: {required, vali: this.valiBene1, maxLength: maxLength(32)},
@@ -549,7 +557,7 @@
             beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             beneficiaryCountry: {required, maxLength: maxLength(64)},
             beneficiaryOrder: {required},
-            beneficiaryProportion: {required, between: between(1, 100)},
+            beneficiaryProportion: {required, between: between(1, 100), numeric},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
             beneficiaryCardNo: {required, vali: this.valiBene2, maxLength: maxLength(32)},
@@ -582,7 +590,7 @@
             beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             beneficiaryCountry: {required, maxLength: maxLength(64)},
             beneficiaryOrder: {required},
-            beneficiaryProportion: {required, between: between(1, 100)},
+            beneficiaryProportion: {required, between: between(1, 100), numeric},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
             beneficiaryCardNo: {required, vali: this.valiBene1, maxLength: maxLength(32)},
@@ -593,7 +601,7 @@
             beneficiaryName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             beneficiaryCountry: {required, maxLength: maxLength(64)},
             beneficiaryOrder: {required},
-            beneficiaryProportion: {required, between: between(1, 100)},
+            beneficiaryProportion: {required, between: between(1, 100), numeric},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
             beneficiaryCardNo: {required, vali: this.valiBene2, maxLength: maxLength(32)},
