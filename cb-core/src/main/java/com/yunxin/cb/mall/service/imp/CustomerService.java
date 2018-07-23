@@ -277,6 +277,7 @@ public class CustomerService implements ICustomerService {
         return customerDao.findByMobileAndEnabled(mobile, true);
     }
 
+
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Customer getCustomerByEmail(String email) {
@@ -340,6 +341,12 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer findByAccountName(String accountName) {
         return customerDao.findByAccountName(accountName);
+    }
+
+    @Override
+    public Customer getAccountName(String accountName, int customerId) {
+
+        return customerDao.getAccountName(accountName,customerId);
     }
 
     @Override

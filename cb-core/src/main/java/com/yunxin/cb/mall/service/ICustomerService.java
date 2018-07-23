@@ -113,6 +113,13 @@ public interface ICustomerService {
 
     public Customer findByAccountName(String accountName);
 
+    /**
+     * 根据用户名查询
+     * @param accountName
+     * @param customerId
+     * @return
+     */
+    public Customer getAccountName(String accountName,int customerId);
 
     /**
      * 统计会员 VIP 数量
