@@ -17,4 +17,9 @@ public class BrandServiceImpl implements BrandService {
     public Brand selectByPrimaryKey(Integer floorId) {
         return brandMapper.selectByPrimaryKey(floorId);
     }
+
+    @Override
+    public List<Brand> selectAll() {
+        return brandMapper.selectAll();
+    }
 }

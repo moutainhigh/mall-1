@@ -11,4 +11,10 @@ public interface BrandService {
      * @return
      */
     Brand selectByPrimaryKey(Integer floorId);
+
+    /**
+     * 获取所有品牌
+     * @return
+     */
+    List<Brand> selectAll();
 }

@@ -17,6 +17,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,5 +91,32 @@ public class CommodityServiceImpl implements CommodityService {
     public List<Product> getProductsByCommodityId(int commodityId) {
         List<Product> products = productMapper.selectAllByCommodityId(commodityId);
         return products;
+    }
+
+    @Override
+    public List<Commodity> selectByBrandId(Integer brandId) {
+        return commodityMapper.selectByBrandId(brandId);
+    }
+
+    /**
+     * @title: 获取原来的图
+     * @param: [imagesDir, commodity]
+     * @return: java.lang.String[]
+     * @auther: eleven
+     * @date: 2018/7/20 10:15
+     */
+    private String[] getImagePath(String imagesDir, Commodity commodity) {
+
+        File imageDir = new File(imagesDir + commodity.getCommodityCode());
+        String[] images = imageDir.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                if (name.endsWith("jpg")) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        return images;
     }
 }
