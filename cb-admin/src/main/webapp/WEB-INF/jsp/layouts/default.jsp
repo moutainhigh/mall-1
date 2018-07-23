@@ -166,7 +166,7 @@
     <script src="../js/profession/profession.js" type="text/javascript"></script>
     <script type="application/javascript">
         //全局后台图片库存放相对目录
-        var PIC_PATH="${PIC_PATH}";
+        var PIC_PATH="/upload/";
 
         Array.prototype.indexOf = function(val) {
             for (var i = 0; i < this.length; i++) {

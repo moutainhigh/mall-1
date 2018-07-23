@@ -12,7 +12,7 @@ public interface OrderService {
      * @param order
      * @return
      */
-    public Order createOrder(Integer productId, Order order) throws Exception;
+    public Order createOrder(Order order) throws Exception;
 
     /**
      * 查询订单分页列表
@@ -34,5 +34,5 @@ public interface OrderService {
      * @param order
      * @return
      */
-    public Order cancelOrder(Order order);
+    public Order cancelOrder(Order order) throws Exception;
 }

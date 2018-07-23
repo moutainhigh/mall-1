@@ -691,35 +691,39 @@
       addBene() {
         if (this.addBene1 === false) {
           this.addBene1 = true;
-          let beneficiary1 = {
-            beneficiaryName: '',
-            beneficiaryGender: true,
-            beneficiaryBirthday: '',
-            beneficiaryCardType: [],
-            beneficiaryCardNo: '',
-            beneficiaryCardPeroid: '',
-            insuredRelation: [],
-            beneficiaryOrder: [],
-            beneficiaryProportion: '',
-            beneficiaryCountry: ''
-          };
-          storage.save("beneficiary1", beneficiary1);
+          if (storage.fetch('beneficiary1') instanceof Array || storage.fetch('beneficiary1') == null) {
+            let beneficiary1 = {
+              beneficiaryName: '',
+              beneficiaryGender: true,
+              beneficiaryBirthday: '',
+              beneficiaryCardType: [],
+              beneficiaryCardNo: '',
+              beneficiaryCardPeroid: '',
+              insuredRelation: [],
+              beneficiaryOrder: [],
+              beneficiaryProportion: '',
+              beneficiaryCountry: ''
+            };
+            storage.save("beneficiary1", beneficiary1);
+          }
           document.getElementById("addBene1").scroll(0, 0);
         } else if (this.addBene1 === true && this.addBene2 === false) {
           this.addBene2 = true;
-          let beneficiary2 = {
-            beneficiaryName: '',
-            beneficiaryGender: true,
-            beneficiaryBirthday: '',
-            beneficiaryCardType: [],
-            beneficiaryCardNo: '',
-            beneficiaryCardPeroid: '',
-            insuredRelation: [],
-            beneficiaryOrder: [],
-            beneficiaryProportion: '',
-            beneficiaryCountry: ''
-          };
-          storage.save("beneficiary2", beneficiary2);
+          if (storage.fetch('beneficiary2') instanceof Array || storage.fetch('beneficiary2') == null) {
+            let beneficiary2 = {
+              beneficiaryName: '',
+              beneficiaryGender: true,
+              beneficiaryBirthday: '',
+              beneficiaryCardType: [],
+              beneficiaryCardNo: '',
+              beneficiaryCardPeroid: '',
+              insuredRelation: [],
+              beneficiaryOrder: [],
+              beneficiaryProportion: '',
+              beneficiaryCountry: ''
+            };
+            storage.save("beneficiary2", beneficiary2);
+          }
           document.getElementById("addBene2").scroll(0, 0);
         }
         this.legalBeneficiary = false;

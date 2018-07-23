@@ -137,6 +137,8 @@ public class Order {
     private Integer sellerId;
     /**商品详情 */
     Set<OrderItem> orderItems;
+    /**订单发票 */
+    OrderInvoice orderInvoice;
 
     public Integer getOrderId() {
         return orderId;
@@ -496,5 +498,13 @@ public class Order {
 
     public void setOrderItems(Set<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public OrderInvoice getOrderInvoice() {
+        return orderInvoice;
+    }
+
+    public void setOrderInvoice(OrderInvoice orderInvoice) {
+        this.orderInvoice = orderInvoice;
     }
 }

@@ -39,6 +39,7 @@ public class FilterInvocationSecurityMetadataSourceService implements FilterInvo
             "/",
             "/index**",
             "/login**",
+            "/media/**",
             "/ajax/**",
             "/bootstrap/**",
             "/css/**",

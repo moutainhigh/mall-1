@@ -17,6 +17,12 @@
     <title>ANDROID导入</title>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true, scroll: false, showOneMessage: true
+            });
+            $('#serNo').val("")
+        });
     </script>
 </head>
 <body>
@@ -94,6 +100,8 @@
                                     },
                                     success: function (result) {
                                         $('#ANDROID_URL').val(result.url);
+                                        $('#ANDROID_VERSION_CODE').val(result.versionCode);
+                                        $('#ANDROID_VERSION_NAME').val(result.versionName);
                                         $('#loadgif').css("display","none");
                                         $('#mainload').css("display","none");
                                         bootbox.alert("上传成功！");
@@ -129,7 +137,7 @@
                         <div class="col-sm-3">
                             <input   name="ANDROID_VERSION_CODE" id="ANDROID_VERSION_CODE" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
-                                   style="width: 600px"/>
+                                   style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>
                     <div class="spacer-10"></div>
@@ -140,7 +148,7 @@
                         <div class="col-sm-3">
                             <input  name="ANDROID_VERSION_NAME" id="ANDROID_VERSION_NAME" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
-                                   style="width: 600px"/>
+                                   style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>
                     <div class="spacer-10"></div>
@@ -151,7 +159,7 @@
                         <div class="col-sm-3">
                             <input name="ANDROID_APP_NAME" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
-                                   style="width: 600px"/>
+                                   style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>
                     <div class="spacer-10"></div>
@@ -162,7 +170,7 @@
                         <div class="col-sm-3">
                             <input readonly="readonly" name="ANDROID_URL" id="ANDROID_URL" value=""
                                    cssClass="form-control validate[required,minSize[1]]"
-                                   style="width: 600px"/>
+                                   style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>
                     <div class="spacer-10"></div>

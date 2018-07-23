@@ -40,4 +40,4 @@ rongcloud:
 application:
   default:
     avatarUrl: http://pb9sg55i7.bkt.clouddn.com/avatar.png
-  uploadPath: D:/www
+  uploadPath: D:/www/
