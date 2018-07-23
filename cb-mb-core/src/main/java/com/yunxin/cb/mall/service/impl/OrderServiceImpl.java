@@ -80,7 +80,8 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setCreateTime(createTime);
                 //减少库存
                 product.setStoreNum(product.getStoreNum() - productNum);
-                product.setReservedStoreNum(product.setReservedStoreNum());
+                int reservedStoreNum = product.getReservedStoreNum() == null ? 0  : product.getReservedStoreNum();
+                product.setReservedStoreNum(productNum + reservedStoreNum);
                 productMapper.updateByPrimaryKey(product);
                 totalPrice += product.getSalePrice();
             }
@@ -184,6 +185,11 @@ public class OrderServiceImpl implements OrderService {
                     Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
                     //增加库存
                     product.setStoreNum(product.getStoreNum() + orderItem.getProductNum());
+                    int reservedStoreNum = product.getReservedStoreNum() == null ? 0  : product.getReservedStoreNum();
+                    product.setReservedStoreNum(reservedStoreNum - orderItem.getProductNum());
+                    if (reservedStoreNum - orderItem.getProductNum() < 0) {
+                        product.setReservedStoreNum(0);
+                    }
                     productMapper.updateByPrimaryKey(product);
                 }
             } else {

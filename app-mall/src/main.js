@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import './assets/css/defualt.css'
+import vuePicturePreview from 'vue-picture-preview'
 
 Vue.config.productionTip = false;
+Vue.use(vuePicturePreview)
 
 router.afterEach((to,from,next) => {
   window.scrollTo(0,0);
