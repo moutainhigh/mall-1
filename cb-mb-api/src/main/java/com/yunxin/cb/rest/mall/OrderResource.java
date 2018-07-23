@@ -59,9 +59,9 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "根据订单id查询订单详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "get", dataType = "int")})
-    @GetMapping(value = "getOrder")
-    public ResponseResult getOrder(@RequestParam(value = "orderId") int orderId){
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
+    @GetMapping(value = "getOrder/{orderId}")
+    public ResponseResult getOrder(@PathVariable(value = "orderId") int orderId){
         Order order = orderService.getByOrderIdAndCustomerId(orderId, getCustomerId());
         return new ResponseResult(order);
     }
@@ -70,7 +70,7 @@ public class OrderResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "cancelReason", value = "取消原因", paramType = "post", dataType = "int")})
-    @PostMapping(value = "cancelOrder")
+    @PutMapping(value = "cancelOrder")
     public ResponseResult cancelOrder(@RequestBody Order order)throws Exception{
         order.setCustomerId(getCustomerId());
         Order result = orderService.cancelOrder(order);
@@ -83,7 +83,7 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "根据订单id确认收货")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
-    @PostMapping(value = "confirmOrder")
+    @PutMapping(value = "confirmOrder")
     public ResponseResult confirmOrder(@RequestParam(value = "orderId") int orderId)throws Exception{
         int result = orderService.confirmOrder(orderId, getCustomerId());
         if (result <= 0) {

@@ -175,10 +175,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Order cancelOrder(Order order) throws Exception {
-        order = orderMapper.selectByOrderIdAndCustomerId(order.getOrderId(), order.getCustomerId());
+        Order orderDb = orderMapper.selectByOrderIdAndCustomerId(order.getOrderId(), order.getCustomerId());
         //待付款订单才可取消
-        if (order != null && order.getOrderState() == OrderState.PENDING_PAYMENT.ordinal()){
-            Set<OrderItem> orderItems = order.getOrderItems();
+        if (orderDb != null && orderDb.getOrderState() == OrderState.PENDING_PAYMENT.ordinal()){
+            Set<OrderItem> orderItems = orderDb.getOrderItems();
             if (orderItems != null && !orderItems.isEmpty()) {
                 for (OrderItem orderItem : orderItems) {
                     //更新库存
@@ -197,24 +197,25 @@ public class OrderServiceImpl implements OrderService {
             }
             Date now = new Date();
             //更改订单为取消状态
-            order.setCancelTime(now);
-            order.setOrderState(OrderState.CANCELED.ordinal());
-            orderMapper.updateByPrimaryKey(order);
+            orderDb.setCancelReason(order.getCancelReason());
+            orderDb.setCancelTime(now);
+            orderDb.setOrderState(OrderState.CANCELED.ordinal());
+            orderMapper.updateByPrimaryKey(orderDb);
             //更改订单贷款申请为取消
-            OrderLoanApply orderLoanApply = orderLoanApplyMapper.selectByOrderId(order.getOrderId());
+            OrderLoanApply orderLoanApply = orderLoanApplyMapper.selectByOrderId(orderDb.getOrderId());
             orderLoanApply.setLoanState(LoanState.CANCELED.ordinal());
             orderLoanApplyMapper.updateByPrimaryKey(orderLoanApply);
             //添加订单日志
             OrderLog orderLog = new OrderLog();
             orderLog.setTime(now);
-            orderLog.setOrderCode(order.getOrderCode());
-            orderLog.setHandler(String.valueOf(order.getCustomerId()));
+            orderLog.setOrderCode(orderDb.getOrderCode());
+            orderLog.setHandler(String.valueOf(orderDb.getCustomerId()));
             orderLog.setRemark("订单取消");
             orderLogMapper.insert(orderLog);
         } else {
             throw new Exception("该订单不可取消");
         }
-        return order;
+        return orderDb;
     }
 
     @Override
