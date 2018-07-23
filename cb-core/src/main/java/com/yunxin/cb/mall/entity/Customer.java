@@ -180,8 +180,26 @@ public class Customer implements java.io.Serializable {
      * 用户账号类型
      */
     private CustomerType customerType;
-
-
+    /**
+     * 证件类型
+     */
+    private String cardType;
+    /**
+     * 证件号码
+     */
+    private String customerCardNo;
+    /**
+     * 证件正面照
+     */
+    private String cardPositiveImg;
+    /**
+     * 证件反面照
+     */
+    private String cardNegativeImg;
+    /**
+     * 银行照片
+     */
+    private String bankCardImg;
     /**
      * 优惠券
      */
@@ -229,6 +247,46 @@ public class Customer implements java.io.Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    @Column(unique = true, nullable = false,length = 32)
+    public String getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
+    }
+    @Column(unique = true, nullable = false,length = 32)
+    public String getCustomerCardNo() {
+        return customerCardNo;
+    }
+
+    public void setCustomerCardNo(String customerCardNo) {
+        this.customerCardNo = customerCardNo;
+    }
+    @Column(unique = true, nullable = false,length = 255)
+    public String getCardPositiveImg() {
+        return cardPositiveImg;
+    }
+
+    public void setCardPositiveImg(String cardPositiveImg) {
+        this.cardPositiveImg = cardPositiveImg;
+    }
+    @Column(unique = true, nullable = false,length = 255)
+    public String getCardNegativeImg() {
+        return cardNegativeImg;
+    }
+
+    public void setCardNegativeImg(String cardNegativeImg) {
+        this.cardNegativeImg = cardNegativeImg;
+    }
+    @Column(unique = true, nullable = false,length = 255)
+    public String getBankCardImg() {
+        return bankCardImg;
+    }
+
+    public void setBankCardImg(String bankCardImg) {
+        this.bankCardImg = bankCardImg;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

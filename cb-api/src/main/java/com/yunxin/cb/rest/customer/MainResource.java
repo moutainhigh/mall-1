@@ -5,6 +5,7 @@ import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.service.ICustomerService;
+import com.yunxin.cb.mall.vo.CustomerVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.meta.SendType;
 import com.yunxin.cb.rest.BaseResource;
@@ -12,7 +13,10 @@ import com.yunxin.cb.sms.SmsHelper;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import com.yunxin.core.util.CommonUtils;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,12 +42,56 @@ public class MainResource extends BaseResource {
     private ICustomerService customerService;
 
 
+//    @ApiOperation(value = "用户注册")
+//    @PostMapping(value = "register")
+//    public ResponseResult register(@RequestParam String mobile, @RequestParam String pwd, @RequestParam(required = false) String recommendMobile, @RequestParam String code) {
+//        try {
+//            //校验验证码
+//            VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(mobile);
+//            //验证码不存在
+//            if (verificationCode == null){
+//                return new ResponseResult(Result.FAILURE, "验证码不存在");
+//            }
+//            //验证码超过5分钟，失效
+//            if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
+//                return new ResponseResult(Result.FAILURE, "验证码失效");
+//            }
+//            //验证码错误
+//            if (!verificationCode.getCode().equals(code)) {
+//                return new ResponseResult(Result.FAILURE, "验证码错误");
+//            }
+//            //验证推荐人手机号
+//            Customer recommendCustomer = customerService.getCustomerByMobile(recommendMobile);
+//            if(StringUtils.isNotBlank(recommendMobile)){
+//                if(recommendCustomer == null){
+//                    return new ResponseResult(Result.FAILURE, "邀请码不存在");
+//                }
+//            }
+//            Customer customer = new Customer();
+//            customer.setAccountName(mobile);
+//            customer.setMobile(mobile);
+//            customer.setPassword(pwd);
+//            customer.setAvatarUrl(avatarUrl);
+//            customer.setCustomerType(CustomerType.PLATFORM_SELF);
+//            customer.setEnabled(true);
+//            if(recommendCustomer != null){
+//                customer.setRecommendCustomer(recommendCustomer);
+//            }
+//            customer = customerService.addCustomer(customer);
+//            String token = JwtUtil.generateToken(customer.getCustomerId(), customer.getMobile());
+//            customer.setToken(token);
+//            return new ResponseResult(customer);
+//        } catch (Exception e) {
+//            logger.error("用户注册异常", e);
+//        }
+//        return new ResponseResult(Result.FAILURE, "注册失败");
+//    }
     @ApiOperation(value = "用户注册")
     @PostMapping(value = "register")
-    public ResponseResult register(@RequestParam String mobile, @RequestParam String pwd, @RequestParam(required = false) String recommendMobile, @RequestParam String code) {
+    public ResponseResult register(@RequestBody CustomerVo customerVo){
         try {
             //校验验证码
-            VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(mobile);
+            VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(customerVo.getMobile());
             //验证码不存在
             if (verificationCode == null){
                 return new ResponseResult(Result.FAILURE, "验证码不存在");
@@ -53,9 +101,10 @@ public class MainResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE, "验证码失效");
             }
             //验证码错误
-            if (!verificationCode.getCode().equals(code)) {
+            if (!verificationCode.getCode().equals(customerVo.getCode())) {
                 return new ResponseResult(Result.FAILURE, "验证码错误");
             }
+            String recommendMobile=customerVo.getRecommendMobile();
             //验证推荐人手机号
             Customer recommendCustomer = customerService.getCustomerByMobile(recommendMobile);
             if(StringUtils.isNotBlank(recommendMobile)){
@@ -64,12 +113,17 @@ public class MainResource extends BaseResource {
                 }
             }
             Customer customer = new Customer();
-            customer.setAccountName(mobile);
-            customer.setMobile(mobile);
-            customer.setPassword(pwd);
+            customer.setAccountName(customerVo.getMobile());
+            customer.setMobile(customerVo.getMobile());
+            customer.setPassword(customerVo.getPwd());
             customer.setAvatarUrl(avatarUrl);
             customer.setCustomerType(CustomerType.PLATFORM_SELF);
             customer.setEnabled(true);
+            customer.setCardType(customerVo.getCardType());
+            customer.setCustomerCardNo(customerVo.getCustomerCardNo());
+            customer.setCardPositiveImg(customerVo.getCardPositiveImg());
+            customer.setCardNegativeImg(customerVo.getCardNegativeImg());
+            customer.setBankCardImg(customerVo.getBankCardImg());
             if(recommendCustomer != null){
                 customer.setRecommendCustomer(recommendCustomer);
             }
