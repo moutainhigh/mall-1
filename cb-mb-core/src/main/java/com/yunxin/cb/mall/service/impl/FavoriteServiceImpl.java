@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.Favorite;
+import com.yunxin.cb.mall.mapper.CommodityMapper;
 import com.yunxin.cb.mall.mapper.FavoriteMapper;
 import com.yunxin.cb.mall.service.FavoriteService;
 import com.yunxin.cb.util.page.PageFinder;
@@ -29,15 +30,24 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Resource
 	private FavoriteMapper favoriteMapper;
 
+	@Resource
+	private CommodityMapper commodityMapper;
+
 	@Override
-	public Favorite addFavorite(Favorite favorite) {
-		Favorite getFavorite = favoriteMapper.findByCustomerAndCommodity(favorite);
-		if (getFavorite == null) {
-			favorite.setCreateTime(new Date());
-			favoriteMapper.insert(favorite);
-			return favorite;
+	public int addFavorite(Favorite favorite) {
+		int result=0;
+		if(null==commodityMapper.selectByPrimaryKey(favorite.getCommodityId())){
+			return result;//商品不存在，返回失败
+		}else{
+			Favorite getFavorite = favoriteMapper.findByCustomerAndCommodity(favorite);
+			if (getFavorite == null) {//不存在，则新增
+				favorite.setCreateTime(new Date());
+				result=favoriteMapper.insert(favorite);
+			}else{
+				result=1;//已存在，则返回成功
+			}
+			return result;
 		}
-		return getFavorite;
 	}
 
 	@Override

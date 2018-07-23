@@ -30,9 +30,17 @@ public interface OrderService {
     public Order getByOrderIdAndCustomerId(Integer orderId, Integer customerId);
 
     /***
-     *
+     * 根据订单id取消订单
      * @param order
      * @return
      */
     public Order cancelOrder(Order order) throws Exception;
+
+    /***
+     * 根据订单id确认收货订单
+     * @param orderId
+     * @param customerId
+     * @return
+     */
+    public int confirmOrder(Integer orderId, Integer customerId) throws Exception;
 }

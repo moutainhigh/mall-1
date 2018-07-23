@@ -18,7 +18,7 @@ public interface FavoriteService {
 	 * @auther: eleven
 	 * @date: 2018/7/19 10:41
 	 */
-	public Favorite addFavorite(Favorite favorite);
+	public int addFavorite(Favorite favorite);
 
 	/**
 	 * @title: 移除收藏夹

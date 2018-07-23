@@ -3,6 +3,7 @@ package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.SearchVo;
 import io.swagger.annotations.Api;
@@ -23,7 +24,8 @@ public class SearchResource extends BaseResource {
     })
 
     @PostMapping(value = "categorySearch")
-    public ResponseResult categorySearch(@RequestParam(value = "searchVo") SearchVo searchVo){
+    @IgnoreAuthentication
+    public ResponseResult categorySearch(@RequestBody SearchVo searchVo){
        return new ResponseResult(Result.SUCCESS);
     }
 
@@ -32,6 +34,7 @@ public class SearchResource extends BaseResource {
             @ApiImplicitParam(name = "keyword", value = "搜索关键字", required = true, paramType = "post", dataType = "String")
     })
     @PostMapping(value = "keywordSearch")
+    @IgnoreAuthentication
     public ResponseResult keywordSearch(@RequestParam(value = "keyword") String keyword){
         return new ResponseResult(Result.SUCCESS);
     }
