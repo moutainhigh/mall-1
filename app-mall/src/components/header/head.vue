@@ -1,7 +1,7 @@
 <template>
   <header id='head_top' style="display: flex;">
     <section class="head_goback" @click="$router.go(-1)">
-      <img src="../../assets/img/back.png" height="18" style="vertical-align: middle;">
+      <img src="../../assets/img/common/ic_nav_close.png" height="23" style="vertical-align: middle;margin-left: 5px;">
     </section>
     <slot name='search' class="head_search"></slot>
     <slot name="local" style="flex: 0 0 2rem;"></slot>
