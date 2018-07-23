@@ -34,6 +34,8 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private OrderLoanApplyMapper orderLoanApplyMapper;
     @Resource
+    private OrderLogMapper orderLogMapper;
+    @Resource
     private CustomerWalletMapper customerWalletMapper;
 
     @Resource
@@ -78,6 +80,7 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setCreateTime(createTime);
                 //减少库存
                 product.setStoreNum(product.getStoreNum() - productNum);
+                product.setReservedStoreNum(product.setReservedStoreNum());
                 productMapper.updateByPrimaryKey(product);
                 totalPrice += product.getSalePrice();
             }
@@ -130,6 +133,13 @@ public class OrderServiceImpl implements OrderService {
             orderLoanApply.setUpdateTime(createTime);
             orderLoanApplyMapper.insert(orderLoanApply);
         }
+        //添加订单日志
+        OrderLog orderLog = new OrderLog();
+        orderLog.setTime(createTime);
+        orderLog.setOrderCode(order.getOrderCode());
+        orderLog.setHandler(String.valueOf(order.getCustomerId()));
+        orderLog.setRemark("订单确认");
+        orderLogMapper.insert(orderLog);
         return order;
     }
 
@@ -179,18 +189,30 @@ public class OrderServiceImpl implements OrderService {
             } else {
                 throw new Exception("无可退货品");
             }
+            Date now = new Date();
             //更改订单为取消状态
-            order.setCancelTime(new Date());
+            order.setCancelTime(now);
             order.setOrderState(OrderState.CANCELED.ordinal());
             orderMapper.updateByPrimaryKey(order);
             //更改订单贷款申请为取消
             OrderLoanApply orderLoanApply = orderLoanApplyMapper.selectByOrderId(order.getOrderId());
             orderLoanApply.setLoanState(LoanState.CANCELED.ordinal());
             orderLoanApplyMapper.updateByPrimaryKey(orderLoanApply);
+            //添加订单日志
+            OrderLog orderLog = new OrderLog();
+            orderLog.setTime(now);
+            orderLog.setOrderCode(order.getOrderCode());
+            orderLog.setHandler(String.valueOf(order.getCustomerId()));
+            orderLog.setRemark("订单取消");
+            orderLogMapper.insert(orderLog);
         } else {
             throw new Exception("该订单不可取消");
         }
         return order;
+    }
+
+    public void confirm () {
+        //确认收货
     }
 
     private void defaultValue(Order order) {

@@ -32,4 +32,4 @@ CREATE TABLE `order_loan_apply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --add by guwenshao 2018-07-23
-alter table product add `RESERVED_STORE_NUM` int(11) DEFAULT NULL COMMENT '预占的库存数';
+alter table product add `RESERVED_STORE_NUM` int(11) DEFAULT 0 COMMENT '预占的库存数';
