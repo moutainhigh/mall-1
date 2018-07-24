@@ -1,7 +1,9 @@
 package com.yunxin.cb.mall.web.action.commodity;
 
+import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.CommodityState;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.TreeViewItem;
@@ -9,12 +11,8 @@ import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.LogicUtils;
-import com.yunxin.cb.mall.entity.meta.CommodityState;
-import com.yunxin.cb.mall.entity.meta.PublishState;
-import com.yunxin.cb.mall.service.*;
-import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.cb.security.SecurityConstants;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -68,6 +66,8 @@ public class CommodityController implements ServletContextAware {
     private MessageSource messageSource;
 
     private ServletContext servletContext;
+    @Resource
+    private IAttachmentService  attachmentService;
 
     @Override
     public void setServletContext(ServletContext servletContext) {
@@ -114,18 +114,24 @@ public class CommodityController implements ServletContextAware {
     }
 
     @RequestMapping(value = "addCommodity", method = RequestMethod.POST)
-    public String addCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String addCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
         if (result.hasErrors()) {
             return toAddCommodity(commodity, modelMap);
         }
         try {
-            String[] imagePath = commodity.getImagePath();
-            Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
-            commodity.setSeller(seller);
-            commodity = commodityService.addCommodity(commodity);
-            CommodityImageConverter imageConverter = new CommodityImageConverter(commodity, imagePath, servletContext);
-            imageConverter.compress();
-            commodityService.updateDefaultPicPath(commodity.getCommodityId(), imageConverter.getDefaultImagePath());
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
+                Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
+                commodity.setSeller(seller);
+                commodity = commodityService.addCommodity(commodity);
+                //保存图片路径
+                attachmentService.deleteAttachment(ObjectType.COMMODITY,commodity.getCommodityId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachment(ObjectType.COMMODITY,commodity.getCommodityId(),imgpath);
+                }
+            }
+
         } catch (EntityExistException e) {
             result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
                     messageSource.getMessage("commodity_commodityName_repeat", null, locale)));
@@ -169,20 +175,23 @@ public class CommodityController implements ServletContextAware {
             }
             modelMap.addAttribute("imageSet", imageSet);
         }
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.COMMODITY,commodity.getCommodityId());
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return "commodity/editCommodity";
     }
 
     @RequestMapping(value = "editCommodity", method = RequestMethod.POST)
-    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
         try {
-            String[] imagePath = commodity.getImagePath();
-            commodity = commodityService.updateCommodity(commodity,servletContext.getRealPath("/images/commodity/"));
-            CommodityImageConverter imageConverter = new CommodityImageConverter(commodity, imagePath, servletContext);
-            imageConverter.compress();
-            if (LogicUtils.isNullOrEmpty(imageConverter.getDefaultImagePath())) {
-                commodityService.updateDefaultPicPath(commodity.getCommodityId(), commodity.getDefaultPicPath());
-            } else {
-                commodityService.updateDefaultPicPath(commodity.getCommodityId(), imageConverter.getDefaultImagePath());
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
+                commodity = commodityService.updateCommodity(commodity);
+                //保存图片路径
+                attachmentService.deleteAttachment(ObjectType.COMMODITY,commodity.getCommodityId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachment(ObjectType.COMMODITY,commodity.getCommodityId(),imgpath);
+                }
             }
 
         } catch (EntityExistException e) {

@@ -108,7 +108,7 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
-    public Commodity updateCommodity(Commodity commodity, String imagesDir) throws EntityExistException {
+    public Commodity updateCommodity(Commodity commodity) throws EntityExistException {
         if (!commodityDao.isOrUnique(commodity, Commodity_.commodityCode, Commodity_.commodityName)) {
             throw new EntityExistException("商品编码或商品名已存在");
         }
@@ -137,7 +137,6 @@ public class CommodityService implements ICommodityService {
             }
         }
         // 删除未选中的图
-        deleteUnSelectImg(imagesDir, commodity);
         return dbCommodity;
     }
 

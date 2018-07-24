@@ -90,22 +90,6 @@ public class CatalogAttributeGroupController implements ServletContextAware {
             return toAddCatalogAttributeGroup(attributeGroup, result, modelMap);
         }
         try {
-            if (attributeGroup.isShowAsImage()) {
-                //创建文件夹
-                MediaPather.createPicSiteRealDir(servletContext, "attribute");
-                String[] imagePath = attributeGroup.getImagePath();
-                if (LogicUtils.isNotNullAndEmpty(imagePath)) {
-                    for (int i = 0; i < imagePath.length; i++) {
-                        String iPath = uploadPath+imagePath[i];
-                        if (null != iPath) {
-                            File imageFile = MediaPather.getPicStoreRealFile(servletContext, iPath);
-                            imagePath[i] = "attribute/" + System.currentTimeMillis() + ".jpg";
-                            ImageConverter imageConverter = new ImageConverter(imageFile);
-                            imageConverter.compressJpg(50, 50, MediaPather.getPicSiteRealPath(servletContext, imagePath[i]));
-                        }
-                    }
-                }
-            }
             attributeService.addCatalogAttributeGroup(attributeGroup);
         } catch (EntityExistException e) {
             e.printStackTrace();
@@ -134,22 +118,6 @@ public class CatalogAttributeGroupController implements ServletContextAware {
             return toEditAttributeGroup(attributeGroup, modelMap);
         }
         try {
-            if (attributeGroup.isShowAsImage()) {
-                MediaPather.createPicSiteRealDir(servletContext, "attribute");
-                String[] imagePath = attributeGroup.getImagePath();
-                if (LogicUtils.isNotNullAndEmpty(imagePath)) {
-                    for (int i = 0; i < imagePath.length; i++) {
-                        if (LogicUtils.isNotNullAndEmpty(imagePath[i])) {
-                            if (!imagePath[i].startsWith("attribute")) {
-                                File imageFile = MediaPather.getPicStoreRealFile(servletContext, imagePath[i]);
-                                ImageConverter imageConverter = new ImageConverter(imageFile);
-                                imagePath[i] = "attribute/" + System.currentTimeMillis() + ".jpg";
-                                imageConverter.compressJpg(50, 50, MediaPather.getPicSiteRealPath(servletContext, imagePath[i]));
-                            }
-                        }
-                    }
-                }
-            }
             attributeService.updateCatalogAttributeGroup(attributeGroup);
         } catch (EntityExistException e) {
             e.printStackTrace();

@@ -54,24 +54,65 @@
                 $('#attributeTable tr').find('td:eq(1) td:eq(2)').hide();
             }
         }
+
+        /**
+         *上传图片
+         */
+        function onchangeImg(imgId){
+            var formData = new FormData();
+            formData.append("file", $('#upload'+imgId)[0].files[0]);
+            $.ajax({
+                url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    $('#imagePath'+imgId).val(result.url);
+                },
+                error: function (err) {
+                }
+            });
+        }
+
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null;
+            if (window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+
+        function addImage(indexa){
+            $("#upload"+indexa).click(); //隐藏了input:file样式后，点击头像就可以本地上传
+            $("#upload"+indexa).on("change", function () {
+                var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+                if (objUrl) {
+                    $("#img"+indexa).attr("src", objUrl); //将图片路径存入src中，显示出图片
+                }
+            });
+        }
+        $(function () {
+
+
+        });
     </script>
     <script id="attributeImgTr" type="text/x-jquery-tmpl">
         <tr id='attribute{{= idIndex}}'>
             <td><input type='text' name='attributeName' class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
-            <td><input id="imagePath{{= idIndex}}" type='hidden' name='imagePath' value=''/><a class='btn btn-default' href="javascript:chooseImage({{= idIndex}})">选择图片</a><img id="img{{= idIndex}}" src="" style="max-height:60px"/></td>
+            <td><input id="imagePath{{= idIndex}}" type='hidden' name='imagePath' value=''/>
+                 <img id="img{{= idIndex}}"    onclick="addImage({{= idIndex}})" src="" width="130px" height="120px" style="padding: 5px">
+                 <input id="upload{{= idIndex}}" onchange="onchangeImg('{{= idIndex}}')" name="file" multiple="multiple" accept="image/*" type="file" style="display: none"/>
+            </td>
             <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2'/></td>
             <td class="text-center"><a class='btn btn-default' href='javascript:removeAttribute({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
         </tr>
-
-    </script>
-    <script id="attributeTr" type="text/x-jquery-tmpl">
-        <tr id='attribute{{= idIndex}}'>
-            <td><input type='text' name='attributeName' class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
-            <td><input id='imagePath{{= idIndex}}' type='hidden' name='imagePath' value=''/></td>
-            <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2'/></td>
-            <td class="text-center"><a class='btn btn-default' href='javascript:removeAttribute({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
-        </tr>
-
     </script>
 </head>
 <body>

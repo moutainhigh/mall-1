@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.Order;
+import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
@@ -179,7 +180,9 @@ public interface OrderMapper {
             @Result(column="LOGISTIC_ID", property="logisticId", jdbcType=JdbcType.INTEGER),
             @Result(column="SELLER_ID", property="sellerId", jdbcType=JdbcType.INTEGER),
             @Result(column="ORDER_ID", property="orderItems", javaType=Set.class,
-                    many=@Many(select="com.yunxin.cb.mall.mapper.OrderItemMapper.selectByOrderId"))
+                    many=@Many(select="com.yunxin.cb.mall.mapper.OrderItemMapper.selectByOrderId")),
+            @Result(column="SELLER_ID", property="seller", javaType=Seller.class,
+                    one=@One(select="com.yunxin.cb.mall.mapper.SellerMapper.selectByPrimaryKey"))
     })
     Order selectRelationById(Integer orderId);
 

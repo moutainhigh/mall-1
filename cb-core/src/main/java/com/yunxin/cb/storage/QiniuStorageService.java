@@ -196,14 +196,18 @@ public class QiniuStorageService implements IStorageService {
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         Long timeStr=new Date().getTime();
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = null;
-        String domain = null;
+        String bucket = bucket_1;
+        String domain = domain_1;
         String fileName= null;
         switch (objectType) {
             case BRAND:
-                bucket = bucket_1;
-                domain = domain_1;
                 fileName ="BRAND/"+timeStr;
+                break;
+            case COMMODITY:
+                fileName ="COMMODITY/"+timeStr;
+                break;
+            case ATTRIBUTE:
+                fileName ="ATTRIBUTE/"+timeStr;
                 break;
         }
         String upToken = auth.uploadToken(bucket);
@@ -243,14 +247,8 @@ public class QiniuStorageService implements IStorageService {
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         Long timeStr=new Date().getTime();
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = null;
-        String domain = null;
-        switch (objectType) {
-            case BRAND:
-                bucket = bucket_1;
-                domain = domain_1;
-                break;
-        }
+        String bucket = bucket_1;
+        String domain = domain_1;
         String upToken = auth.uploadToken(bucket);
         try {
             //构造一个带指定Zone对象的配置类
