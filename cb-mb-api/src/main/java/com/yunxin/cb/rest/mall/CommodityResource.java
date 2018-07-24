@@ -1,9 +1,8 @@
 package com.yunxin.cb.rest.mall;
 
-import com.yunxin.cb.mall.entity.Commodity;
-import com.yunxin.cb.mall.entity.Product;
-import com.yunxin.cb.mall.entity.ProductAttribute;
+import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.service.CommodityService;
+import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
@@ -11,13 +10,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ServletContextAware;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.FilenameFilter;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -53,28 +53,54 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     @GetMapping(value = "getCommdityDetail/{productId}")
     @IgnoreAuthentication
     public ResponseResult getCommdityDetail(@PathVariable int productId){
-        int customerId=getCustomerId();
-        Map map=commodityService.getCommdityDetail(productId,customerId);
-        Commodity commodity=(Commodity)map.get("commodity");
-        //通过商品编码规则取商品所有图片
-        File imageDir = new File(servletContext.getRealPath("/images/commodity/" + commodity.getCommodityCode()));
-        String[] images = imageDir.list(new FilenameFilter() {//过滤图片后缀
-            @Override
-            public boolean accept(File dir, String name) {
-                if (name.endsWith("jpg")) {
-                    return true;
-                }
-                return false;
+        CommodityVo commodityVo=new CommodityVo();
+        try {
+            int customerId=getCustomerId();
+            Map map=commodityService.getCommdityDetail(productId,customerId);
+            Commodity commodity=(Commodity)map.get("commodity");
+            Product product=(Product)map.get("product");
+            PriceSection priceSection=(PriceSection)map.get("priceSection");
+            Seller seller=(Seller)map.get("seller");
+            String showLevel=String.valueOf(map.get("showLevel"));
+            Map specs=(Map)map.get("specs");
+            Map paymetType=(Map)map.get("paymentType");
+            Favorite favorite=(Favorite)map.get("favorite");
+            List imageSet=(List)map.get("imageSet");
+            ProductVo productVo=null;
+            PriceSectionVo priceSectionVo=null;
+            SellerVo sellerVo=null;
+            FavoriteVo favoriteVo=null;
+            BeanUtils.copyProperties(commodityVo,commodity);
+            if(!StringUtils.isEmpty(product)){
+                productVo=new ProductVo();
+                BeanUtils.copyProperties(productVo,product);
             }
-        });
-        Set<String> imageSet = new HashSet<>();
-        if (images != null) {
-            for (String image : images) {
-                imageSet.add("commodity/" + commodity.getCommodityCode() + "/" + image.substring(0, image.indexOf("_")));
+            if(!StringUtils.isEmpty(priceSection)){
+                priceSectionVo=new PriceSectionVo();
+                BeanUtils.copyProperties(priceSectionVo,priceSection);
             }
+            if(!StringUtils.isEmpty(seller)){
+                sellerVo=new SellerVo();
+                BeanUtils.copyProperties(sellerVo,seller);
+            }
+            if(!StringUtils.isEmpty(favorite)){
+                favoriteVo=new FavoriteVo();
+                BeanUtils.copyProperties(favoriteVo,favorite);
+            }
+            commodityVo.setProductVo(productVo);
+            commodityVo.setPriceSectionVo(priceSectionVo);
+            commodityVo.setSellerVo(sellerVo);
+            commodityVo.setFavoriteVo(favoriteVo);
+            commodityVo.setShowLevel(showLevel);
+            commodityVo.setSpecs(specs);
+            commodityVo.setPaymentType(paymetType);
+            commodityVo.setImageSet(imageSet);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
-        map.put("imageSet", imageSet);//商品图片
-        return new ResponseResult(map);
+        return new ResponseResult(commodityVo);
     }
 
     /**
@@ -86,10 +112,10 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
      */
     @ApiOperation(value = "通过商品ID查询所有货品")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int")})
-    @PostMapping(value = "getProductsByCommodityId")
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")})
+    @GetMapping(value = "getProductsByCommodityId/{commodityId}")
     @IgnoreAuthentication
-    public ResponseResult getProductsByCommodityId(@RequestParam int commodityId) {
+    public ResponseResult getProductsByCommodityId(@PathVariable int commodityId) {
         Map<String, Object> firstFloor = new HashMap<String, Object>();//第一层
         Map<String, Object> twoFloor = new HashMap<String, Object>();//第二层
         List<Product> products = commodityService.getProductsByCommodityId(commodityId);

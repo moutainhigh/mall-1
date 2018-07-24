@@ -20,7 +20,7 @@ public interface AttributeGroupDao extends JpaRepository<AttributeGroup, Integer
     @EntityGraph(value = "AttributeGroup.attributes", type = EntityGraph.EntityGraphType.LOAD)
     AttributeGroup findByGroupId(int groupId);
 
-    @Query("select distinct pg from AttributeGroup pg left join fetch pg.attributes c where pg.commodity.commodityId=?1 order by pg.groupName asc")
+    @Query("select distinct pg from AttributeGroup pg left join fetch pg.attributes c where pg.commodity.commodityId=?1 order by pg.groupId asc")
     List<AttributeGroup> findByCommodity_CommodityIdOrderByGroupNameAsc(int commodityId);
 
     AttributeGroup findByGroupName(String groupName);

@@ -84,8 +84,7 @@ public class FileResource {
         Map<String, String> result = new HashMap<String, String>();
         if (!file.isEmpty()) {
             try {
-                String url = qiniuStorageService.put(file.getInputStream(),type);
-                result.put("url", url);
+                result=qiniuStorageService.put(file.getInputStream(),type);
                 return result;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -96,10 +95,22 @@ public class FileResource {
         }
     }
 
+    /**
+     * 删除文件
+     * @author      likang
+     * @param type
+    * @param key
+    * @param request
+     * @return      java.util.Map
+     * @exception
+     * @date        2018/7/24 16:07
+     */
     @RequestMapping(value = "delete/{type}")
     @ResponseBody
-    public Map delete(@PathVariable(value = "type") UploadType type,@RequestParam("key") Long key, HttpServletRequest request) throws IOException {
+    public Map delete(@PathVariable(value = "type") ObjectType type,@RequestParam("key") String key, HttpServletRequest request) throws IOException {
         Map<String, String> result = new HashMap<String, String>();
+        String fileName=type+"/"+key;
+        qiniuStorageService.deleteByfileName(type,fileName);
         return result;
 
     }

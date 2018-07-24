@@ -46,6 +46,10 @@ public class CustomerVo  implements Serializable {
      * 随机串
      */
     private String random;
+    /**
+     * 真实姓名
+     */
+    private String realName;
 
     public String getMobile() {
         return mobile;
@@ -125,5 +129,13 @@ public class CustomerVo  implements Serializable {
 
     public void setRandom(String random) {
         this.random = random;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

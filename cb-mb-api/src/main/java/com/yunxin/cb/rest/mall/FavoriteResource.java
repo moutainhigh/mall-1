@@ -105,6 +105,7 @@ public class FavoriteResource extends BaseResource {
     @PostMapping(value = "addFavorite")
     public ResponseResult addFavorite(@RequestBody FavoriteVo favoriteVo) {
         try {
+            logger.info("input Parameter favoriteVo:" + favoriteVo.toString());
             Favorite favorite = new Favorite();
             BeanUtils.copyProperties(favorite, favoriteVo);
             favorite.setCustomerId(getCustomerId());
@@ -132,7 +133,7 @@ public class FavoriteResource extends BaseResource {
     @ApiOperation(value = "商品移出收藏夹")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "favoriteId", value = "收藏夹ID", required = true, paramType = "path", dataType = "int")})
-    @GetMapping(value = "delFavorite/{favoriteId}")
+    @DeleteMapping(value = "delFavorite/{favoriteId}")
     public ResponseResult delFavorite(@PathVariable(value = "favoriteId") int favoriteId){
         int result=favoriteService.removeFavorite(favoriteId);
         if(result>0){

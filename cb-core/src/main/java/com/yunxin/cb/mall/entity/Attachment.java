@@ -57,11 +57,15 @@ public class Attachment implements Serializable {
      * 业务对象ID
      */
     private int objectId;
+
+    /**
+     * 保存的文件ID
+     */
+    private String inputId;
     /**
      * 业务应用场景编码
      * 如：指标ID等于1：commodity:1 or 指标ID等于1评论等于1：commodity:1:sku:1
      */
-    @NotBlank
     @Length(max = 255)
     private String businessScenario;
     /**
@@ -73,13 +77,11 @@ public class Attachment implements Serializable {
     /**
      * 附件名称
      */
-    @NotBlank
     @Length(max = 255)
     private String fileName;
     /**
      * 文件类型(文档.压缩.图片,视频,其他)
      */
-    @NotNull
     private FileType fileType;
     /**
      * 文件大小
@@ -88,7 +90,6 @@ public class Attachment implements Serializable {
     /**
      * 文件存储系统标识
      */
-    @NotBlank
     @Length(max = 32)
     private String fsGuid;
     /**
@@ -104,13 +105,11 @@ public class Attachment implements Serializable {
     /**
      * 上传人
      */
-    @NotBlank
     @Length(max = 32)
     private String staffName;
     /**
      * 状态
      */
-    @NotNull
     private AttachmentState state;
     /**
      * 描述
@@ -176,6 +175,15 @@ public class Attachment implements Serializable {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    @Column(unique = false, nullable = false, length = 512)
+    public String getInputId() {
+        return inputId;
+    }
+
+    public void setInputId(String inputId) {
+        this.inputId = inputId;
     }
 
     @Column(unique = false, nullable = false, length = 255)

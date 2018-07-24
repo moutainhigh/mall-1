@@ -1,15 +1,15 @@
 package com.yunxin.cb.rest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.yunxin.cb.orm.CustomerContextHolder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @RestController
 public class BaseResource {
+
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 获取请求中token参数解析的用户ID

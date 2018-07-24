@@ -105,8 +105,12 @@ public class MainResource extends BaseResource {
         if (!verificationCode.getCode().equals(customerVo.getCode())) {
             return new ResponseResult(Result.FAILURE, "验证码错误");
         }
+
         //邀请码或者手机号码
         String invitationCode=customerVo.getInvitationCode();
+        if(StringUtils.isEmpty(invitationCode)){
+                return new ResponseResult(Result.FAILURE, "邀请码或推荐人不能为空");
+        }
         //验证推荐人手机号
         Customer recommendCustomer = customerService.getCustomerByInvitationCode(invitationCode);
         if(StringUtils.isNotBlank(invitationCode)){
@@ -144,6 +148,7 @@ public class MainResource extends BaseResource {
             customer.setAvatarUrl(avatarUrl);
             customer.setCustomerType(CustomerType.PLATFORM_SELF);
             customer.setEnabled(true);
+            customer.setRealName(customerVo.getRealName());
             customer.setCardType(customerVo.getCardType());
             customer.setCustomerCardNo(customerVo.getCustomerCardNo());
             customer.setCardPositiveImg(customerVo.getCardPositiveImg());
