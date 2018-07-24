@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div style="height: 3rem"></div>
     <div class="search">
       <button class="search-magnifier">
         <img src="../../assets/img/common/ic_search.png">

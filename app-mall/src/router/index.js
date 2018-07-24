@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import CarList from '../page/carList/CarList'
 import CarDetail from '../page/carDetail/CarDetail'
+import OrderComfirm from '../page/order/OrderComfirm'
+import OrderSuccess from '../page/order/OrderSuccess'
 import Home from '../page/home/Home'
 import Search from '../page/search/Search'
 import ChooseCarType from '../page/carList/ChooseCarType'
@@ -34,6 +36,16 @@ export default new Router({
       path: '/choose-type',
       name: 'ChooseCarType',
       component: ChooseCarType
-    }
+    },
+    {
+      path: '/order-comfirm',
+      name: 'OrderComfirm',
+      component: OrderComfirm
+    },
+    {
+      path: '/order-success',
+      name: 'OrderSuccess',
+      component: OrderSuccess
+    },
   ]
 })

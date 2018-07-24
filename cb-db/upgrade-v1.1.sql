@@ -33,3 +33,10 @@ CREATE TABLE `order_loan_apply` (
 
 --add by guwenshao 2018-07-23
 alter table product add `RESERVED_STORE_NUM` int(11) DEFAULT 0 COMMENT '预占的库存数';
+
+--add by wangteng 2018-07-23
+alter table customer add CARD_TYPE VARCHAR(32) NOT NULL COMMENT '证件类型';
+alter table customer add CUSTOMER_CARD_NO VARCHAR(32) NOT NULL COMMENT '证件号码';
+alter table customer add CARD_POSITIVE_IMG VARCHAR(255) NOT NULL COMMENT '证件证明照';
+alter table customer add CARD_NEGATIVE_IMG VARCHAR(255) NOT NULL COMMENT '证件反面照';
+alter table customer add BANK_CARD_IMG VARCHAR(255) NOT NULL COMMENT '银行卡图片';

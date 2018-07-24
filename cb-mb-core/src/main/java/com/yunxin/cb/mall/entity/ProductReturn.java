@@ -74,6 +74,8 @@ public class ProductReturn {
 
     /** 拒绝原因 */
     private String rejectReason;
+    /** 订单 */
+    private Order order;
 
     public Integer getReturnId() {
         return returnId;
@@ -265,5 +267,13 @@ public class ProductReturn {
 
     public void setRejectReason(String rejectReason) {
         this.rejectReason = rejectReason == null ? null : rejectReason.trim();
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
