@@ -27,6 +27,10 @@ spring:
       properties:
           hibernate.format_sql: true
           hibernate.search.default.indexBase: D:/www/cb/api/index
+  data:
+     elasticsearch:
+       cluster-name: elasticsearch
+       cluster-nodes: 127.0.0.1:9300
 #7牛云存储
 qiniu:
   accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
