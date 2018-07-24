@@ -235,9 +235,9 @@ public class OrderServiceImpl implements OrderService {
                 orderLogMapper.insert(orderLog);
             }
             return count;
+        } else {
+            throw new Exception("该订单暂不可确认收货");
         }
-
-        return 0;
     }
 
     private void defaultValue(Order order) {
