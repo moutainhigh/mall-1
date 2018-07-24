@@ -20,9 +20,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 /**
  * 品牌
  */
-@Indexed(index = "Brand")
-@Analyzer(impl = HanLPAnalyzer.class)
-@Cacheable(true)
+//@Indexed(index = "Brand")
+//@Analyzer(impl = HanLPAnalyzer.class)
+//@Cacheable(true)
 @Entity
 @Table
 @DynamicInsert
