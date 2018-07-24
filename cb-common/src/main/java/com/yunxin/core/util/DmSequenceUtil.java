@@ -155,7 +155,6 @@ public class DmSequenceUtil {
                 + randomWords[index3 == 0 ? 0 : index3 - 1] + randomWords[index4 ==0?0:index4- 1]+randomWords[index5 ==0?0:index5- 1]+randomWords[index6- 1];
         write(id,"sequenceSix.dat");
         return id;
-
     }
 
     public static void main(String[] ager){
