@@ -1,6 +1,7 @@
 <template>
   <div>
     <head-top :headTitle="headTitle"></head-top>
+    <div style="height: 30px"></div>
     <group>
       <x-input title="姓名" placeholder="请填写真实姓名"></x-input>
       <x-input title="手机号" placeholder="请填写联系手机号"></x-input>
@@ -36,7 +37,7 @@
         </button>
       </div>
     </div>
-    <alert v-model="isAlert" :title="'温馨提示'" :content="'您的信用额度不够，无法贷款购买此款车型，请选择其他车型'"></alert>
+    <alert v-model="isAlert" :title="'温馨提示'" :content="'您的信用额度不够，无法贷款购买此款车型，请选择其他车型'" :button-text="'我知道了'"></alert>
 
     <div class="type-mode" v-if="checkType">
       <div class="modeTitle">
@@ -88,17 +89,13 @@
         this.buytype = this.buyModes[index];
       },
       submit() {
-        this.isAlert = true;
-        // this.$vux.alert.show({
-        //   title: 'Vux is Cool',
-        //   content: 'Do you agree?',
-        //   onShow () {
-        //     console.log('Plugin: I\'m showing')
-        //   },
-        //   onHide () {
-        //     console.log('Plugin: I\'m hiding')
-        //   }
-        // })
+        if (this.buytype == '贷款支付') {
+          this.isAlert = true;
+        } else {
+          this.$router.push({
+            path: "/order-success"
+          })
+        }
       }
     }
   }
