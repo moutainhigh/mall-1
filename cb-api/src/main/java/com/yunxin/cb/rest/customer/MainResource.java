@@ -144,6 +144,7 @@ public class MainResource extends BaseResource {
             customer.setAvatarUrl(avatarUrl);
             customer.setCustomerType(CustomerType.PLATFORM_SELF);
             customer.setEnabled(true);
+            customer.setRealName(customerVo.getRealName());
             customer.setCardType(customerVo.getCardType());
             customer.setCustomerCardNo(customerVo.getCustomerCardNo());
             customer.setCardPositiveImg(customerVo.getCardPositiveImg());

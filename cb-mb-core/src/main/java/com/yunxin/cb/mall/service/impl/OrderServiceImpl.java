@@ -220,7 +220,24 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int confirmOrder(Integer orderId, Integer customerId) throws Exception {
-        return orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED.ordinal(), DeliveryState.RECEIVED.ordinal());
+        Order orderDb = orderMapper.selectByOrderIdAndCustomerId(orderId, customerId);
+        //已付款订单才可确认收货
+        if (orderDb != null &&
+                (orderDb.getOrderState() == OrderState.PAID_PAYMENT.ordinal() || orderDb.getOrderState() == OrderState.OUT_STOCK.ordinal())){
+            int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED.ordinal(), DeliveryState.RECEIVED.ordinal());
+            //添加订单日志
+            if (count > 0) {
+                OrderLog orderLog = new OrderLog();
+                orderLog.setTime(new Date());
+                orderLog.setOrderCode(orderDb.getOrderCode());
+                orderLog.setHandler(String.valueOf(customerId));
+                orderLog.setRemark("买家确认收货");
+                orderLogMapper.insert(orderLog);
+            }
+            return count;
+        } else {
+            throw new Exception("该订单暂不可确认收货");
+        }
     }
 
     private void defaultValue(Order order) {

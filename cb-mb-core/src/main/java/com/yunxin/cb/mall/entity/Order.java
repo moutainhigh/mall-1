@@ -135,6 +135,8 @@ public class Order {
 
     /** 卖家id */
     private Integer sellerId;
+    /**卖家信息*/
+    private Seller seller;
     /**商品详情 */
     Set<OrderItem> orderItems;
     /**订单发票 */
@@ -506,5 +508,13 @@ public class Order {
 
     public void setOrderInvoice(OrderInvoice orderInvoice) {
         this.orderInvoice = orderInvoice;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
     }
 }

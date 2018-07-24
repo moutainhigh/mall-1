@@ -1,12 +1,14 @@
 package com.yunxin.cb.search.vo.meta;
 
-public enum CommodityState {
-
-    WAIT_AUDITED("待审核"), AUDITED("审核通过"), NOT_AUDITED("审核未通过"), DEL("删除");
+/**
+ * Created by tanggangyi
+ */
+public enum SellerType {
+    SELLER("商家"), SELF_OPERATION("自营");
 
     private String name;
 
-    private CommodityState(String name) {
+    private SellerType(String name) {
         this.name = name;
     }
 
@@ -22,5 +24,4 @@ public enum CommodityState {
     public String toString() {
         return name;
     }
-
 }

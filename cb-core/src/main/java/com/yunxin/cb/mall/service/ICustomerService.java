@@ -55,10 +55,10 @@ public interface ICustomerService {
 
     /**
      * 生成邀请码跟等级编码
-     * @param customerId
+     * @param invitationCode
      * @return
      */
-    public Map<String,Object>  generateCode(int customerId);
+    public Customer  generateCode(String invitationCode);
     public Page<Customer> pageCustomers(PageSpecification<Customer> specification);
 
     void resetCustomerPwd(int customerId);
@@ -85,6 +85,9 @@ public interface ICustomerService {
     Customer getCustomerByMobile(String mobile);
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     Customer getCustomerByInvitationCode(String invitationCode);
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    Customer getByLevelCode(String levelCode);
+
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     Customer getCustomerByEmail(String email);
 
