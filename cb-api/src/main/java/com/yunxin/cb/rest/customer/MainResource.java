@@ -118,13 +118,21 @@ public class MainResource extends BaseResource {
             logger.error("用户注册异常", e);
             return new ResponseResult(Result.FAILURE, "用户注册验证异常");
         }
-        return new ResponseResult(Result.SUCCESS, "验证成功");
+        String random=String.valueOf(System.currentTimeMillis());
+        CachedUtil.getInstance().setContext(customerVo.getMobile()+customerVo.getMobile(),random);
+        return new ResponseResult(random);
     }
     @ApiOperation(value = "用户注册")
     @PostMapping(value = "register")
     public ResponseResult register(@RequestBody CustomerVo customerVo){
         try {
-
+            if(!StringUtils.isNotBlank(customerVo.getRandom()))
+                return new ResponseResult(Result.FAILURE, "注册失败");
+            else{
+               String random=(String)CachedUtil.getInstance().getContext(customerVo.getMobile()+customerVo.getMobile());
+               if(!customerVo.getRandom().equals(random))
+                   return new ResponseResult(Result.FAILURE, "注册失败");
+            }
             String invitationCode=customerVo.getInvitationCode();
             Customer recommendCustomer = customerService.getCustomerByMobile(invitationCode);
             Customer customer = new Customer();

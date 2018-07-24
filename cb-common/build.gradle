@@ -17,8 +17,6 @@ dependencies {
             "org.springframework:spring-oxm:$springVersion",
             "org.springframework:spring-web:$springVersion",
             "org.springframework:spring-webmvc:$springVersion",
-            "org.springframework.data:spring-data-elasticsearch:2.1.8.RELEASE",
-            "org.springframework.boot:spring-boot-starter-data-elasticsearch:1.5.8.RELEASE",
             "org.springframework.data:spring-data-jpa:1.11.7.RELEASE",
             "org.springframework.security:spring-security-web:4.2.3.RELEASE",
             "org.springframework.security:spring-security-config:4.2.3.RELEASE",
