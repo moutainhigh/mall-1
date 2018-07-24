@@ -17,24 +17,6 @@
   <title>编辑品牌</title>
 
   <script type="text/javascript">
-    $(document).ready(function() {
-
-      $("#validateSubmitForm").validationEngine({
-        autoHidePrompt: true, scroll: false, showOneMessage: true,
-        onValidationComplete: function (form, valid) {
-          if (valid) {
-            var defaultPicPath = $('input:radio[name="picPath"]:checked').val();
-            if (defaultPicPath == null) {
-              bootbox.alert("请至少选择一张品牌默认图片!");
-              return false;
-            } else {
-              return true;
-            }
-          }
-        }
-      });
-
-    });
 
 
   </script>
@@ -331,37 +313,120 @@
             </div>
 
             <div class="spacer-10"></div>
-            <div class="inner-padding">
-              <div class="row">
-                <div class="col-sm-2">
-                </div>
-                <div class="col-sm-3">
-                  <a id="chooseImageBtn" class="btn btn-default">添加图片</a>
-                </div>
+
+            <div class="spacer-30"></div>
+            <hr>
+            <div class="spacer-30"></div>
+            <div class="row">
+              <div class="col-sm-2">
+                <label>图片</label>
               </div>
-              <div class="spacer-10"></div>
-              <div class="row">
-                <div class="col-sm-2">
+              <div class="col-sm-9">
+                  <%--图片上传控件--%>
+                    <link href="../js/plugins/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
+                    <script src="../js/plugins/fileinput/fileinput.min.js" type="text/javascript"></script>
+                    <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
+                    <script type="text/javascript">
+                    $(function(){
+                        $("#validateSubmitForm").validationEngine({
+                            autoHidePrompt: true, scroll: false, showOneMessage: true,
+                            onValidationComplete: function (form, valid) {
+                                if (valid) {
+                                    var defaultPicPath = $('input[name="imgurl"]');
+                                    if (defaultPicPath.size()==0) {
+                                        bootbox.alert("请至少选择一张图片!");
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }
+                        });
+                        var initPreview = new Array();//展示元素
+                        var initPreviewConfig = new Array();//展示设置
+                        //初始化图片上传组件
+                        $("#picUrl").fileinput({
+                            uploadUrl: "/admin/uploads/uploadFile/BRAND.do",
+                            showCaption: true,
+                            minImageWidth: 50,
+                            minImageHeight: 50,
+                            showUpload:true, //是否显示上传按钮
+                            showRemove :false, //显示移除按钮
+                            showPreview :true, //是否显示预览
+                            showCaption:false,//是否显示标题
+                            browseOnZoneClick: true,//是否显示点击选择文件
+                            language: "zh" ,
+                            showBrowse : false,
+                            maxFileSize : 2000,
+                            autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                            overwriteInitial: false,//不覆盖已存在的图片
+                            browseClass:"btn btn-primary", //按钮样式
+                            // layoutTemplates:{
+                            //     actionUpload:''    //设置为空可去掉上传按钮
+                            // },
+                            maxFileCount: 10  //上传的个数
+                        }).on("fileuploaded", function (event, data) {
+                            var response = data.response;
+                            //添加url到隐藏域
+                            var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
+                            $('#imgDiv').html($('#imgDiv').html()+html);
+                            //上传完成回调
+                            initPreview[initPreview.length]  = response.url;
+                            var config = new Object();
+                            config.caption = "";
+                            config.url="/admin/uploads/delete/BRAND.do";
+                            config.key=response.timeStr;
+                            initPreviewConfig[initPreviewConfig.length]=config;
+                            $("#picUrl").fileinput('refresh', {
+                                initialPreview: initPreview,
+                                initialPreviewConfig: initPreviewConfig,
+                                initialPreviewAsData: true
+                            });
+                            $(".btn-default").attr("disabled",false);
+                        }).on("filepredelete", function(jqXHR) {
+                            var abort = true;
+                            if (confirm("确定要删除吗？(删除后不会恢复)")) {
+                                abort = false;
+                            }
+                            return abort;
+                        }).on('filedeleted', function(event, id) {
+                            $("#"+id).remove();
+                            for (var i=0;i<initPreview.length;i++)
+                            {
+                                if(initPreview[i].indexOf(id) != -1){
+                                    initPreview.splice(i)
+                                    initPreviewConfig.splice(i)
+                                }
+                            }
+                        }).on('filebatchselected', function (event, files) {//选中文件事件
+                            $(".kv-file-upload").click();
+                        });
+                        //加载图片
+                        var a='${listAttachment}';
+                        var json=eval('(' + a + ')')
+                        for(var i=0,l=json.length;i<l;i++){
+                            initPreview[i]  = json[i].filePath;
+                            var config = new Object();
+                            config.caption = "";
+                            config.url="/admin/uploads/delete/BRAND.do";
+                            config.key=json[i].timeStr;
+                            initPreviewConfig[i]=config;
+                            $("#picUrl").fileinput('refresh', {
+                                initialPreview: initPreview,
+                                initialPreviewConfig: initPreviewConfig,
+                                initialPreviewAsData: true
+                            });
+                            var html='<input name="imgurl" type="hidden" id="'+json.inputId+'" value="'+json[i].filePath+','+json[i].fileName+','+json[i].inputId+'">';
+                            $('#imgDiv').html($('#imgDiv').html()+html);
+                        }
+                    })
+                </script>
+                <input id="picUrl" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                <div id="imgDiv">
                 </div>
-                <div class="col-sm-9">
-                  <table id="imageTable" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                      <th class="text-center" width="120">默认封面图片</th>
-                      <th scope="col">图片预览</th>
-                      <th class="text-center" width="100">操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr id="imageTr-1">
-                      <td class='text-center'><input type='radio' name='picPath' value='${brand.picPath}' cssClass='form-control' <c:if test="${!empty brand.picPath}">checked="true"</c:if>/></td>
-                      <td><img src='..${PIC_PATH}${brand.picPath}' style='max-height:120px'/></td>
-                      <td><a type='button' title='删除' class='btn btn-default' href='javascript:removeAttribute(-1)'><i class='fa fa-minus-circle'></i></a></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
+                  <%--图片上传控件结束--%>
               </div>
+              <div class="col-sm-1"></div>
             </div>
 
             <div class="spacer-30"></div>
@@ -393,52 +458,6 @@
   <!-- End #content -->
 </div>
 <!-- End #main -->
-
-<div class="modal fade" id="imageDialog" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" style="width: 1100px;height: 600px;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">选择图片</h4>
-      </div>
-      <div class="modal-body">
-        <iframe id="imageFrame" src="../media/chooseMedias.do" style="width: 100%;height: 500px;border: none"></iframe>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button class="btn btn-primary pull-right" onclick="chooseImage();">确认</button>
-      </div>
-    </div>
-    <script type="application/javascript">
-
-      var idIndex = 0;
-
-      $('#chooseImageBtn').click(function (e) {
-        $('#imageDialog').modal().css({
-          width: 'auto'
-        });
-
-        e.preventDefault();
-      });
-
-      function chooseImage() {
-        var imagePath = $("#imageFrame")[0].contentWindow.getSelectedPath();
-        if (imagePath != null) {
-          var newRow = "<tr id='imageTr" + idIndex + "'><td class='text-center'><input type='radio' name='picPath' value='" + imagePath + "'/></td><td><img src='.."+PIC_PATH + imagePath + "' style='max-height:120px'/></td><td class='text-center'><a type='button' title='删除' class='btn btn-default' href='javascript:removeImage(" + idIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
-          $("#imageTable tr:last").after(newRow);
-          idIndex++;
-          $('#imageDialog').modal("hide");
-        } else {
-          alert("请选择图片");
-        }
-      }
-
-      function removeImage(indx) {
-        $("#imageTr" + indx).remove();
-      }
-    </script>
-  </div>
-</div>
 
 <div class="modal fade" id="categoryDialog" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">

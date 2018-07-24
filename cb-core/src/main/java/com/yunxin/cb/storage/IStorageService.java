@@ -4,6 +4,7 @@ import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.entity.meta.UploadType;
 
 import java.io.InputStream;
+import java.util.Map;
 
 public interface IStorageService {
 
@@ -35,5 +36,8 @@ public interface IStorageService {
      * @param
      * @return
      */
-    public String put(InputStream inputStream, ObjectType objectType);
+    public Map<String,String> put(InputStream inputStream, ObjectType objectType);
+
+
+    public Map<String,String> deleteByfileName(ObjectType objectType,String fileName);
 }

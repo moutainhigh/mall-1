@@ -17,4 +17,7 @@ public interface IAttachmentService {
 
 
     public Attachment addAttachment(ObjectType objectType,int objectId,String filePath);
+
+
+    public void deleteAttachment(ObjectType objectType, int objectId);
 }

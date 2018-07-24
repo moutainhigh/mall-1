@@ -3,6 +3,9 @@ package com.yunxin.cb.mall.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @title: 商品VO
  * @auther: eleven
@@ -60,6 +63,38 @@ public class CommodityVo  implements java.io.Serializable{
     /** 简称 */
     @ApiModelProperty(value="简称",name="shortName",example="BMW")
     private String shortName;
+
+    /** 级别 */
+    @ApiModelProperty(value="级别",name="showLevel",example="紧凑型车")
+    private String showLevel;
+
+    /** 规格及参数 */
+    @ApiModelProperty(value="规格及参数",name="specs",example="厂商：华晨宝马")
+    private Map specs;
+
+    /** 支付方式 */
+    @ApiModelProperty(value="支付方式",name="paymentType",example="0：全款购车")
+    private Map paymentType;
+
+    /** 商品图片 */
+    @ApiModelProperty(value="商品图片",name="imageSet",example="bmw.jpg")
+    private List<String> imageSet;
+
+    /** 货品 */
+    @ApiModelProperty(value="货品",name="productVo",example="货品")
+    private ProductVo productVo;
+
+    /** 价格段 */
+    @ApiModelProperty(value="价格段",name="priceSectionVo",example="1000-19999")
+    private PriceSectionVo priceSectionVo;
+
+    /** 商家 */
+    @ApiModelProperty(value="商家",name="sellerVo",example="商家")
+    private SellerVo sellerVo;
+
+    /** 收藏夹 */
+    @ApiModelProperty(value="收藏夹",name="favoriteVo",example="收藏夹")
+    private FavoriteVo favoriteVo;
 
     public Integer getCommodityId() {
         return commodityId;
@@ -155,5 +190,95 @@ public class CommodityVo  implements java.io.Serializable{
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
+    }
+
+    public String getShowLevel() {
+        return showLevel;
+    }
+
+    public void setShowLevel(String showLevel) {
+        this.showLevel = showLevel;
+    }
+
+    public Map getSpecs() {
+        return specs;
+    }
+
+    public void setSpecs(Map specs) {
+        this.specs = specs;
+    }
+
+    public Map getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(Map paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public List<String> getImageSet() {
+        return imageSet;
+    }
+
+    public void setImageSet(List<String> imageSet) {
+        this.imageSet = imageSet;
+    }
+
+    public ProductVo getProductVo() {
+        return productVo;
+    }
+
+    public void setProductVo(ProductVo productVo) {
+        this.productVo = productVo;
+    }
+
+    public PriceSectionVo getPriceSectionVo() {
+        return priceSectionVo;
+    }
+
+    public void setPriceSectionVo(PriceSectionVo priceSectionVo) {
+        this.priceSectionVo = priceSectionVo;
+    }
+
+    public SellerVo getSellerVo() {
+        return sellerVo;
+    }
+
+    public void setSellerVo(SellerVo sellerVo) {
+        this.sellerVo = sellerVo;
+    }
+
+    public FavoriteVo getFavoriteVo() {
+        return favoriteVo;
+    }
+
+    public void setFavoriteVo(FavoriteVo favoriteVo) {
+        this.favoriteVo = favoriteVo;
+    }
+
+    @Override
+    public String toString() {
+        return "CommodityVo{" +
+                "commodityId=" + commodityId +
+                ", city='" + city + '\'' +
+                ", commodityCode='" + commodityCode + '\'' +
+                ", commodityName='" + commodityName + '\'' +
+                ", commodityTitle='" + commodityTitle + '\'' +
+                ", content='" + content + '\'' +
+                ", defaultPicPath='" + defaultPicPath + '\'' +
+                ", description='" + description + '\'' +
+                ", province='" + province + '\'' +
+                ", saleNum=" + saleNum +
+                ", sellPrice=" + sellPrice +
+                ", shortName='" + shortName + '\'' +
+                ", showLevel='" + showLevel + '\'' +
+                ", specs=" + specs +
+                ", paymentType=" + paymentType +
+                ", imageSet=" + imageSet +
+                ", productVo=" + productVo +
+                ", priceSectionVo=" + priceSectionVo +
+                ", sellerVo=" + sellerVo +
+                ", favoriteVo=" + favoriteVo +
+                '}';
     }
 }

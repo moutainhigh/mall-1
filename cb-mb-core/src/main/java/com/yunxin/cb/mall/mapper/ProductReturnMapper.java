@@ -183,7 +183,7 @@ public interface ProductReturnMapper {
             "where RETURN_ID = #{productReturnId,jdbcType=INTEGER}",
             "and CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
-    @ResultMap(value="productReturnMap")
+    @ResultMap(value="productReturnRelationMap")
     ProductReturn selectByProductReturnIdAndCustomerId(@Param("productReturnId") Integer orderId, @Param("customerId")Integer customerId);
 
     @Select({

@@ -12,7 +12,17 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
   <title>新增品牌</title>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+
+
+      });
+
+
+  </script>
 </head>
 <body>
 
@@ -302,6 +312,8 @@
               </div>
               <div class="col-sm-1"></div>
             </div>
+
+
             <div class="spacer-30"></div>
             <hr>
             <div class="spacer-30"></div>
@@ -310,19 +322,32 @@
                 <label>图片</label>
               </div>
               <div class="col-sm-9">
-
                 <%--图片上传控件--%>
                 <link href="../js/plugins/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
                 <script src="../js/plugins/fileinput/fileinput.min.js" type="text/javascript"></script>
                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                 <script type="text/javascript">
                     $(function(){
+                        $("#validateSubmitForm").validationEngine({
+                            autoHidePrompt: true, scroll: false, showOneMessage: true,
+                            onValidationComplete: function (form, valid) {
+                                if (valid) {
+                                    var defaultPicPath = $('input[name="imgurl"]');
+                                    if (defaultPicPath.size()==0) {
+                                        bootbox.alert("请至少选择一张图片!");
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }
+                        });
                         var initPreview = new Array();//展示元素
                         var initPreviewConfig = new Array();//展示设置
                         //初始化图片上传组件
                         $("#picUrl").fileinput({
                             uploadUrl: "/admin/uploads/uploadFile/BRAND.do",
-                            showCaption: false,
+                            showCaption: true,
                             minImageWidth: 50,
                             minImageHeight: 50,
                             showUpload:true, //是否显示上传按钮
@@ -333,53 +358,49 @@
                             language: "zh" ,
                             showBrowse : false,
                             maxFileSize : 2000,
-                            autoReplace : true,//覆盖已存在的图片
-                            overwriteInitial: true,//不覆盖已存在的图片
+                            autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                            overwriteInitial: false,//不覆盖已存在的图片
                             browseClass:"btn btn-primary", //按钮样式
-                            layoutTemplates:{
-                                actionUpload:''    //设置为空可去掉上传按钮
-                            },
-                            maxFileCount: 1  //上传的个数
+                            // layoutTemplates:{
+                            //     actionUpload:''    //设置为空可去掉上传按钮
+                            // },
+                            maxFileCount: 10  //上传的个数
                         }).on("fileuploaded", function (event, data) {
                             var response = data.response;
                             //添加url到隐藏域
-                            var html='<input name="imgurl" type="text" value="'+response.url+'">';
+                            var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
                             $('#imgDiv').html($('#imgDiv').html()+html);
                             //上传完成回调
-                            initPreview[3]  = response.url;
+                            initPreview[initPreview.length]  = response.url;
                             var config = new Object();
                             config.caption = "";
-                            config.url="/admin/uploads/delete/INSURANCEPRODUCT.do";
-                            config.key=3;
-                            initPreviewConfig[3]=config;
+                            config.url="/admin/uploads/delete/BRAND.do";
+                            config.key=response.timeStr;
+                            initPreviewConfig[initPreviewConfig.length]=config;
                             $("#picUrl").fileinput('refresh', {
                                 initialPreview: initPreview,
                                 initialPreviewConfig: initPreviewConfig,
                                 initialPreviewAsData: true
                             });
+                            $(".btn-default").attr("disabled",false);
                         }).on("filepredelete", function(jqXHR) {
                             var abort = true;
                             if (confirm("确定要删除吗？(删除后不会恢复)")) {
                                 abort = false;
                             }
                             return abort;
+                        }).on('filedeleted', function(event, id) {
+                            $("#"+id).remove();
+                            for (var i=0;i<initPreview.length;i++)
+                            {
+                                if(initPreview[i].indexOf(id) != -1){
+                                    initPreview.splice(i)
+                                    initPreviewConfig.splice(i)
+                                }
+                            }
+                        }).on('filebatchselected', function (event, files) {//选中文件事件
+                            $(".kv-file-upload").click();
                         });
-                        //加载图片
-                        for (var i=0;i<1;i++)
-                        {
-                            initPreview[i]  = "http://pb9sg55i7.bkt.clouddn.com/Fq0qcRJp6SHVytYlMKgwmhkpfgZB";
-                            var config = new Object();
-                            config.caption = "";
-                            config.url="/admin/uploads/delete/INSURANCEPRODUCT.do";
-                            config.key=i;
-                            initPreviewConfig[i]=config;
-                            $("#picUrl").fileinput('refresh', {
-                                initialPreview: initPreview,
-                                initialPreviewConfig: initPreviewConfig,
-                                initialPreviewAsData: true
-
-                            });
-                        }
                     })
                 </script>
                 <input id="picUrl" name="file" type="file" class="file-loading" accept="image/*" multiple>
@@ -387,11 +408,9 @@
 
                 </div>
                 <%--图片上传控件结束--%>
-
               </div>
               <div class="col-sm-1"></div>
             </div>
-            <div class="spacer-30"></div>
 
 
             <div class="spacer-30"></div>
@@ -415,12 +434,59 @@
       <!-- End .inner-padding -->
     </div>
     <!-- End .window -->
+
+
     <jsp:include page="../layouts/footer.jsp"/>
     <!-- End #footer-main -->
   </div>
   <!-- End #content -->
 </div>
 <!-- End #main -->
+<div class="modal fade" id="categoryDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">选择运营分类</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row" style="margin-top:-20px;margin-bottom:-20px">
+          <div class="sidebar-module">
+            <kendo:treeView name="treeview" select="onSelect">
+              <kendo:dataSource data="${categoryTree}">
+              </kendo:dataSource>
+            </kendo:treeView>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;关闭</button>
+        <button class="btn btn-primary pull-right" onclick="chooseCategory();"><i class="fa fa-check"></i>&nbsp;确认</button>
+      </div>
+    </div>
+    <script type="application/javascript">
+        var categoryId = 0;
+        var categoryName = "";
+        $('#categoryNameBtn').click(function (e) {
+            $('#categoryDialog').modal();
+            e.preventDefault();
+        });
+
+        function onSelect(e) {
+            var data = $('#treeview').data('kendoTreeView').dataItem(e.node);
+            categoryId = data.id;
+            categoryName = data.text;
+        }
+
+        function chooseCategory() {
+            $('#categoryDialog').modal("hide");
+            $("#categoryId").val(categoryId);
+            $("#categoryName").val(categoryName);
+            //loadSpecs(catalogId);
+        }
+    </script>
+  </div>
+</div>
 
 </body>
 </html>
