@@ -1,18 +1,16 @@
-package com.yunxin.cb.mall.entity;
+package com.yunxin.cb.search.vo;
 
-import com.yunxin.cb.mall.entity.meta.CommodityState;
-import com.yunxin.cb.mall.entity.meta.CommodityUnit;
-import com.yunxin.cb.mall.entity.meta.DeliveryType;
-import com.yunxin.cb.mall.entity.meta.PublishState;
+import com.yunxin.cb.search.vo.meta.CommodityState;
+import com.yunxin.cb.search.vo.meta.CommodityUnit;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-import java.util.*;
+import java.util.Date;
 
 /**
- * @author z001075  商品
+ * @author
  */
-@Document(indexName="crystal_ball",type="commodity1")
-public class CommodityEs implements java.io.Serializable{
+@Document(indexName = "crystal_ball", type = "commodity")
+public class CommodityEs implements java.io.Serializable {
     private static final long serialVersionUID = -3993560903203859821L;
 
     /**
@@ -23,19 +21,19 @@ public class CommodityEs implements java.io.Serializable{
     /**
      * 商品分类
      */
-    private Catalog catalog;
+//    private Catalog catalog;
 
-    /**
-     * 商品所属价格段
-     */
-    private PriceSection priceSection;
-    /**
-     * 品牌
-     */
-    private Brand brand;
-    /**
-     * 供应商
-     */
+//    /**
+//     * 商品所属价格段
+//     */
+//    private PriceSection priceSection;
+//    /**
+//     * 品牌
+//     */
+//    private Brand brand;
+//    /**
+//     * 供应商
+//     */
 //    private Seller seller;
     /**
      * 商品编码
@@ -112,7 +110,7 @@ public class CommodityEs implements java.io.Serializable{
     /**
      * 商品上下架
      */
-    private PublishState publishState;
+//    private PublishState publishState;
     /**
      * 是否为热门商品
      */
@@ -156,11 +154,11 @@ public class CommodityEs implements java.io.Serializable{
     /**
      * 货品
      */
-    private List<Product> products = new ArrayList<Product>();
+//    private List<Product> products = new ArrayList<Product>();
     /**
      * 配送方式
      */
-    private DeliveryType deliveryType;
+//    private DeliveryType deliveryType;
     /**
      * 重量
      */
@@ -169,25 +167,17 @@ public class CommodityEs implements java.io.Serializable{
      * 体积
      */
     private double volume;
-    /**
-     * 商品组合 ：特惠组合 ，推荐搭配等
-     */
-    private List<Combination> combinations = new ArrayList<>();
 
     /**
      * 商品分类
      */
-    private Set<CommodityCategory> commodityCategories = new HashSet<>();
+//    private Set<CommodityCategory> commodityCategories = new HashSet<>();
 
     /**
      * 商品规格
      */
-    private Set<CommoditySpec> commoditySpecs = new HashSet<>();
+//    private Set<CommoditySpec> commoditySpecs = new HashSet<>();
 
-    /**
-     * 物流价格
-     **/
-    private Set<LogisticPrice> logisticPrices = new HashSet<>();
 
     /******************form 字段*****************/
     private int[] specId;
@@ -212,29 +202,29 @@ public class CommodityEs implements java.io.Serializable{
         this.commodityId = commodityId;
     }
 
-    public Catalog getCatalog() {
-        return catalog;
-    }
-
-    public void setCatalog(Catalog catalog) {
-        this.catalog = catalog;
-    }
-
-    public PriceSection getPriceSection() {
-        return priceSection;
-    }
-
-    public void setPriceSection(PriceSection priceSection) {
-        this.priceSection = priceSection;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
+//    public Catalog getCatalog() {
+//        return catalog;
+//    }
+//
+//    public void setCatalog(Catalog catalog) {
+//        this.catalog = catalog;
+//    }
+//
+//    public PriceSection getPriceSection() {
+//        return priceSection;
+//    }
+//
+//    public void setPriceSection(PriceSection priceSection) {
+//        this.priceSection = priceSection;
+//    }
+//
+//    public Brand getBrand() {
+//        return brand;
+//    }
+//
+//    public void setBrand(Brand brand) {
+//        this.brand = brand;
+//    }
 
 /*    public Seller getSeller() {
         return seller;
@@ -387,14 +377,14 @@ public class CommodityEs implements java.io.Serializable{
     public void setCommodityState(CommodityState commodityState) {
         this.commodityState = commodityState;
     }
-
-    public PublishState getPublishState() {
-        return publishState;
-    }
-
-    public void setPublishState(PublishState publishState) {
-        this.publishState = publishState;
-    }
+//
+//    public PublishState getPublishState() {
+//        return publishState;
+//    }
+//
+//    public void setPublishState(PublishState publishState) {
+//        this.publishState = publishState;
+//    }
 
     public boolean isPopular() {
         return popular;
@@ -475,22 +465,22 @@ public class CommodityEs implements java.io.Serializable{
     public void setPackingList(String packingList) {
         this.packingList = packingList;
     }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public DeliveryType getDeliveryType() {
-        return deliveryType;
-    }
-
-    public void setDeliveryType(DeliveryType deliveryType) {
-        this.deliveryType = deliveryType;
-    }
+//
+//    public List<Product> getProducts() {
+//        return products;
+//    }
+//
+//    public void setProducts(List<Product> products) {
+//        this.products = products;
+//    }
+//
+//    public DeliveryType getDeliveryType() {
+//        return deliveryType;
+//    }
+//
+//    public void setDeliveryType(DeliveryType deliveryType) {
+//        this.deliveryType = deliveryType;
+//    }
 
     public double getWeight() {
         return weight;
@@ -508,37 +498,23 @@ public class CommodityEs implements java.io.Serializable{
         this.volume = volume;
     }
 
-    public List<Combination> getCombinations() {
-        return combinations;
-    }
 
-    public void setCombinations(List<Combination> combinations) {
-        this.combinations = combinations;
-    }
+//    public Set<CommodityCategory> getCommodityCategories() {
+//        return commodityCategories;
+//    }
+//
+//    public void setCommodityCategories(Set<CommodityCategory> commodityCategories) {
+//        this.commodityCategories = commodityCategories;
+//    }
+//
+//    public Set<CommoditySpec> getCommoditySpecs() {
+//        return commoditySpecs;
+//    }
+//
+//    public void setCommoditySpecs(Set<CommoditySpec> commoditySpecs) {
+//        this.commoditySpecs = commoditySpecs;
+//    }
 
-    public Set<CommodityCategory> getCommodityCategories() {
-        return commodityCategories;
-    }
-
-    public void setCommodityCategories(Set<CommodityCategory> commodityCategories) {
-        this.commodityCategories = commodityCategories;
-    }
-
-    public Set<CommoditySpec> getCommoditySpecs() {
-        return commoditySpecs;
-    }
-
-    public void setCommoditySpecs(Set<CommoditySpec> commoditySpecs) {
-        this.commoditySpecs = commoditySpecs;
-    }
-
-    public Set<LogisticPrice> getLogisticPrices() {
-        return logisticPrices;
-    }
-
-    public void setLogisticPrices(Set<LogisticPrice> logisticPrices) {
-        this.logisticPrices = logisticPrices;
-    }
 
     public int[] getSpecId() {
         return specId;

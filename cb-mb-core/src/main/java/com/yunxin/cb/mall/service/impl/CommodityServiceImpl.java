@@ -56,7 +56,7 @@ public class CommodityServiceImpl implements CommodityService {
         Product product = productMapper.selectProductById(productId,ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());
         Commodity commodity = commodityMapper.selectCommodityDetailById(product.getCommodityId());
         resultMap.put("product",product);//货品
-        resultMap.put("brand", commodity.getBrand());//品牌
+        //resultMap.put("brand", commodity.getBrand());//品牌
         resultMap.put("priceSection", commodity.getPriceSection());//商品价格段
         resultMap.put("seller", commodity.getSeller());//商家
         Map specMap = new HashMap();//商品规格Map
@@ -71,19 +71,21 @@ public class CommodityServiceImpl implements CommodityService {
         paymentMap.put(PaymentType.FULL_SECTION.ordinal(),PaymentType.FULL_SECTION.getName());
         paymentMap.put(PaymentType.LOAN.ordinal(),PaymentType.LOAN.toString());
         resultMap.put("paymentType", paymentMap);//支付方式
+        Favorite favorite=null;
         if(customerId>0){//用户存在则查询商品收藏夹
-            Favorite favorite=new Favorite();
+            favorite=new Favorite();
             favorite.setCustomerId(customerId);
             favorite.setCommodityId(product.getCommodityId());
             favorite=favoriteMapper.findByCustomerAndCommodity(favorite);
-            resultMap.put("favorite",favorite);//收藏夹
         }
         //重组数据后清空
         commodity.setBrand(null);
         commodity.setSeller(null);
         commodity.setPriceSection(null);
         commodity.setCommoditySpecs(null);
+        resultMap.put("favorite",favorite);//收藏夹
         resultMap.put("commodity",commodity);//商品
+        resultMap.put("imageSet", null);//商品图片
         return resultMap;
     }
 

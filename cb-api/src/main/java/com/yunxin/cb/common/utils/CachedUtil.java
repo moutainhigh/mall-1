@@ -23,5 +23,8 @@ public class CachedUtil {
     public Object getContext(String key){
         return context.get(key);
     }
+    public void removeContext(String key){
+        context.remove(key);
+    }
 
 }

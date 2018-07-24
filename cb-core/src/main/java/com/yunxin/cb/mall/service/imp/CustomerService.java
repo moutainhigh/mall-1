@@ -17,10 +17,13 @@ import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CommonUtils;
+import com.yunxin.core.util.DmSequenceUtil;
 import com.yunxin.core.util.LogicUtils;
 import io.rong.models.response.BlackListResult;
 import io.rong.models.user.UserModel;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -38,7 +41,7 @@ import java.util.*;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class CustomerService implements ICustomerService {
-
+    private static Logger logger = LoggerFactory.getLogger(CustomerService.class);
     @Resource
     private CustomerDao customerDao;
 
@@ -245,10 +248,70 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Map<String, Object> generateCode(int customerId) {
-        return null;
+    public Customer generateCode(String invitationCode) {
+
+       return new Customer(){
+            {
+
+                try {
+                    String levelCode=checkLevelCode(DmSequenceUtil.getNoRepeatId());
+                    String invitationCodes=checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
+                    if(StringUtils.isNotBlank(invitationCode)){
+                        Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
+                        if(recommendCustomer!=null){
+                            int customerLevel=recommendCustomer.getCustomerLevel();
+                            String recommendLevelCode=recommendCustomer.getLevelCode();
+                            setCustomerLevel(customerLevel+1);
+                            setLevelCode(recommendLevelCode+levelCode);
+                        }else{
+                            setCustomerLevel(1);
+                            setLevelCode(levelCode);
+                        }
+                    }else{
+                        setCustomerLevel(1);
+                        setLevelCode(levelCode);
+                    }
+                    setInvitationCode(invitationCodes);
+                } catch (Exception e) {
+                    logger.error("生成编码异常",e);
+                }
+            }
+        };
     }
 
+    /**
+     * 校验邀请码
+     * @param invitationCode
+     * @return
+     */
+    public String checkInvitationCode(String invitationCode){
+            Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
+            if(recommendCustomer!=null) {
+                try {
+                    return  checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        return invitationCode;
+    }
+
+    /**
+     * 校验等级编码
+     * @param levelCode
+     * @return
+     */
+    public String checkLevelCode(String levelCode){
+        Customer recommendCustomer=getByLevelCode(levelCode);
+        if(recommendCustomer!=null) {
+            try {
+                return  checkLevelCode(DmSequenceUtil.getNoRepeatId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return levelCode;
+    }
     @Override
     @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
@@ -289,6 +352,12 @@ public class CustomerService implements ICustomerService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Customer getCustomerByInvitationCode(String invitationCode) {
         return customerDao.findByMobileOrInvitationCode(invitationCode,invitationCode);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public Customer getByLevelCode(String levelCode) {
+        return customerDao.findByLevelCode(levelCode);
     }
 
 

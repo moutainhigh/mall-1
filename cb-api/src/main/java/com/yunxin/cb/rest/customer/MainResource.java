@@ -126,10 +126,12 @@ public class MainResource extends BaseResource {
     @PostMapping(value = "register")
     public ResponseResult register(@RequestBody CustomerVo customerVo){
         try {
+            logger.info("register-random"+customerVo.getRandom());
             if(!StringUtils.isNotBlank(customerVo.getRandom()))
                 return new ResponseResult(Result.FAILURE, "注册失败");
             else{
                String random=(String)CachedUtil.getInstance().getContext(customerVo.getMobile()+customerVo.getMobile());
+                logger.info("register-randomNext"+random);
                if(!customerVo.getRandom().equals(random))
                    return new ResponseResult(Result.FAILURE, "注册失败");
             }
@@ -142,6 +144,7 @@ public class MainResource extends BaseResource {
             customer.setAvatarUrl(avatarUrl);
             customer.setCustomerType(CustomerType.PLATFORM_SELF);
             customer.setEnabled(true);
+            customer.setRealName(customerVo.getRealName());
             customer.setCardType(customerVo.getCardType());
             customer.setCustomerCardNo(customerVo.getCustomerCardNo());
             customer.setCardPositiveImg(customerVo.getCardPositiveImg());
@@ -154,6 +157,7 @@ public class MainResource extends BaseResource {
             customer = customerService.addCustomer(customer);
             String token = JwtUtil.generateToken(customer.getCustomerId(), customer.getMobile());
             customer.setToken(token);
+            CachedUtil.getInstance().removeContext(customerVo.getMobile()+customerVo.getMobile());
             return new ResponseResult(customer);
         } catch (Exception e) {
             logger.error("用户注册异常", e);

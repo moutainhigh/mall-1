@@ -200,7 +200,7 @@
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
                             <kendo:grid-column title="所属分类" field="category" width="150px" template="#=category.categoryName#"/>
-                            <kendo:grid-column title="图片" field="picPath" width="140px" template="<img src='..#=PIC_PATH##=picPath#'  width='120px' height='60px'/>" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="图片" field="picPath" width="140px" template="<img src='#=picPath#'  width='120px' height='60px'/>" sortable="false" filterable="false"/>
                             <kendo:grid-column title="编码" field="brandNo" width="100px"/>
                             <kendo:grid-column title="名称" field="brandName" width="100px" template="<a href='brandDetail.do?brandId=#=brandId#'>#=brandName#</a>"/>
                             <kendo:grid-column title="标题" field="brandTitle" width="100px"/>
