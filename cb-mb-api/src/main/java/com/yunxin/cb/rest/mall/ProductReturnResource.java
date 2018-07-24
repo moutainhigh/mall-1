@@ -43,6 +43,7 @@ public class ProductReturnResource extends BaseResource {
     })
     @PostMapping(value = "productReturn")
     public ResponseResult addProductReturn(@RequestBody ProductReturnApplyVO productReturnApplyVO) throws Exception{
+        logger.info("productReturnApplyVO:" + productReturnApplyVO.toString());
         ProductReturn productReturn = new ProductReturn();
         try {
             BeanUtils.copyProperties(productReturn, productReturnApplyVO);

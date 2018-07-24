@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 * @author gws
 * @date 2018/7/24 19:59
 * @param 
-* @return 
+* @return
 */
 @ApiModel(value="售后退款申请",description="售后退款申请VO对象")
 public class ProductReturnApplyVO implements java.io.Serializable{
