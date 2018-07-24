@@ -78,6 +78,7 @@
     height: 100%;
     padding: 0;
     outline: none;
+    font-size: 0.91rem;
   }
 
   .search-magnifier {
