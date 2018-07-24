@@ -201,6 +201,18 @@ public class Customer implements java.io.Serializable {
      */
     private String bankCardImg;
     /**
+     * 等级
+     */
+    private int customerLevel;
+    /**
+     * 等级编码
+     */
+    private String levelCode;
+    /**
+     * 邀请码
+     */
+    private String  invitationCode;
+    /**
      * 优惠券
      */
     private Set<Coupon> coupons = new HashSet<>();
@@ -275,6 +287,30 @@ public class Customer implements java.io.Serializable {
     @Column(unique = true, nullable = false,length = 255)
     public String getCardNegativeImg() {
         return cardNegativeImg;
+    }
+    @Column(length = 12, nullable = true)
+    public int getCustomerLevel() {
+        return customerLevel;
+    }
+
+    public void setCustomerLevel(int customerLevel) {
+        this.customerLevel = customerLevel;
+    }
+    @Column(length = 255)
+    public String getLevelCode() {
+        return levelCode;
+    }
+
+    public void setLevelCode(String levelCode) {
+        this.levelCode = levelCode;
+    }
+    @Column(length = 25)
+    public String getInvitationCode() {
+        return invitationCode;
+    }
+
+    public void setInvitationCode(String invitationCode) {
+        this.invitationCode = invitationCode;
     }
 
     public void setCardNegativeImg(String cardNegativeImg) {
