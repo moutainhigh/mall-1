@@ -99,6 +99,107 @@
           <span :class="{category_title: sortBy == 'activity'}">筛选</span>
           <img class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
         </div>
+        <transition name="showlist">
+          <section v-show="sortBy == 'activity'" class="sort_detail_type sort_activity">
+            <div style="overflow-x: scroll;height: 100%;">
+              <div class="activity_type">
+                <div class="type_title">
+                  国别
+                </div>
+                <div class="type_list">
+                  <div class="type_item">
+                    <p>自主</p>
+                  </div>
+                  <div class="type_item">
+                    <p>合资</p>
+                  </div>
+                  <div class="type_item">
+                    <p>进口</p>
+                  </div>
+                  <div class="type_item">
+                    <p>德系</p>
+                  </div>
+                  <div class="type_item">
+                    <p>韩系</p>
+                  </div>
+                  <div class="type_item">
+                    <p>自主</p>
+                  </div>
+                  <div class="type_item">
+                    <p>合资</p>
+                  </div>
+                  <div class="type_item">
+                    <p>自主</p>
+                  </div>
+                  <div class="type_item">
+                    <p>合资</p>
+                  </div>
+                  <div class="type_item">
+                    <p>自主</p>
+                  </div>
+                  <div class="type_item">
+                    <p>合资</p>
+                  </div>
+                  <div class="type_item">
+                    <p>自主</p>
+                  </div>
+                  <div class="type_item">
+                    <p>合资</p>
+                  </div>
+                </div>
+              </div>
+              <div class="activity_type">
+                <div class="type_title">
+                  车型
+                </div>
+                <div class="type_list">
+                  <div class="type_item">
+                    <p>轿车</p>
+                  </div>
+                  <div class="type_item">
+                    <p>SUV</p>
+                  </div>
+                  <div class="type_item">
+                    <p>MVP</p>
+                  </div>
+                  <div class="type_item">
+                    <p>跑车</p>
+                  </div>
+                  <div class="type_item">
+                    <p>微面</p>
+                  </div>
+                </div>
+              </div>
+              <div class="activity_type">
+                <div class="type_title">
+                  坐席
+                </div>
+                <div class="type_list">
+                  <div class="type_item">
+                    <p>两座</p>
+                  </div>
+                  <div class="type_item">
+                    <p>4-5座</p>
+                  </div>
+                  <div class="type_item">
+                    <p>6座</p>
+                  </div>
+                  <div class="type_item">
+                    <p>7座</p>
+                  </div>
+                  <div class="type_item">
+                    <p>7座以上</p>
+                  </div>
+                </div>
+              </div>
+              <div class="activity_submit">
+                <div style="padding: 0.5rem;">
+                  <button style="color: #666666">重置</button><button class="submit_true">确认</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </transition>
       </div>
     </section>
   </div>
@@ -120,7 +221,7 @@
         foodTitle: '', // 排序左侧头部标题
         restaurant_category_id: '', // 食品类型id值
         restaurant_category_ids: '', //筛选类型的id
-        sortBy: '', // 筛选的条件
+        sortBy: 'activity', // 筛选的条件
         sortByType: null, // 根据何种方式排序
         Delivery: null, // 配送方式数据
         Activity: null, // 商家支持活动数据
@@ -275,6 +376,7 @@
       @include wh(33.3%, 2rem);
       text-align: center;
       line-height: 1.6rem;
+      margin: 0 0 0 -0.1rem;
       .choose_img {
         width: 1rem;
         position: absolute;
@@ -297,7 +399,62 @@
         transition: all .3s;
         fill: #666;
       }
+      .sort_activity {
+        display: block;
+        position: fixed;
+        top: 4.6rem;
+        padding-bottom: 9.3rem;
+        height: 100%;
+        .activity_type {
+          padding-top: 1rem;
+          width: 100%;
+          text-align: left;
+          .type_title {
+            font-size: 1rem;
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+          }
+          .type_list {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0 0.4rem;
+            .type_item {
+              flex: 0 0 33%;
+              margin: 0.5rem 0;
+              p {
+                text-align: center;
+                background-color: #F1F3F5;
+                color: #333333;
+                border-radius: 4px;
+                padding: 0.3rem;
+                font-size: 0.9rem;
+                margin: 0 0.4rem;
+              }
+            }
+          }
+        }
+        .activity_submit {
+          position: absolute;
+          bottom: 6rem;
+          width: 100%;
+          background-color: #ffffff;
+          button {
+            padding: 0.7rem 1rem;
+            width: 46%;
+            margin: 0 2%;
+            box-sizing: border-box;
+            border: 1px #BBBBBB solid;
+            border-radius: 4px;
+          }
 
+          .submit_true {
+            border: 0;
+            background: #F5CA1D;
+            color: #FEFEFE;
+          }
+        }
+      }
     }
     .choose_type {
       .sort_item_container {
@@ -320,7 +477,7 @@
       transform: translateY(-100%);
     }
     .sort_detail_type {
-      margin-top: 0.38rem;
+      margin-top: 0.39rem;
       z-index: 3;
       width: 100%;
       position: absolute;
@@ -494,7 +651,7 @@
           width: 100%;
           caret-color: #f5ca1d;
         }
-        input:focus{
+        input:focus {
           outline: none;
           border-radius: 4px;
           border-color: #f5ca1d;
@@ -516,7 +673,7 @@
       }
 
       .choose_flex_type {
-        flex:4 0 33%;
+        flex: 4 0 33%;
         line-height: 2.5;
         color: #333333;
         p {

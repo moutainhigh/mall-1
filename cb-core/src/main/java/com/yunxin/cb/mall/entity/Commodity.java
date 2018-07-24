@@ -24,9 +24,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 /**
  * @author z001075  商品
  */
-@Indexed(index = "Commodity")
-@Analyzer(impl = HanLPAnalyzer.class)
-@Cacheable(true)
+//@Indexed(index = "Commodity")
+//@Analyzer(impl = HanLPAnalyzer.class)
+//@Cacheable(true)
 @Entity
 @Table
 @DynamicInsert
@@ -255,7 +255,7 @@ public class Commodity implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BRAND_ID", nullable = false)
-    @IndexedEmbedded(depth = 1)
+//    @IndexedEmbedded(depth = 1)
     public Brand getBrand() {
         return brand;
     }
