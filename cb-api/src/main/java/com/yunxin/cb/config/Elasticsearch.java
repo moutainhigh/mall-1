@@ -12,9 +12,9 @@ import java.net.UnknownHostException;
 @Configuration
 public class Elasticsearch {
 
-    @Bean
+/*    @Bean
     public TransportClient client() throws UnknownHostException {
-        InetSocketTransportAddress node1 = new InetSocketTransportAddress(InetAddress.getByName("localhost"),
+        InetSocketTransportAddress node1 = new InetSocketTransportAddress(InetAddress.getByName("192.168.0.145"),
                 9300
         );
         //连接localhost的9300端口，即Elasticsearch的master
@@ -26,6 +26,6 @@ public class Elasticsearch {
                 .build()
                 .addTransportAddress(node1);
         return transportClient;
-    }
+    }*/
 
 }
