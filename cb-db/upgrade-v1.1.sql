@@ -40,3 +40,27 @@ alter table customer add CUSTOMER_CARD_NO VARCHAR(32) NOT NULL COMMENT '证件�
 alter table customer add CARD_POSITIVE_IMG VARCHAR(255) NOT NULL COMMENT '证件证明照';
 alter table customer add CARD_NEGATIVE_IMG VARCHAR(255) NOT NULL COMMENT '证件反面照';
 alter table customer add BANK_CARD_IMG VARCHAR(255) NOT NULL COMMENT '银行卡图片';
+alter table customer add CUSTOMER_LEVEL INT(10) DEFAULT 1  COMMENT '等级';
+alter table customer add LEVEL_CODE VARCHAR(255) DEFAULT NULL COMMENT '等级编码';
+alter table customer add INVITATION_CODE VARCHAR(25) DEFAULT NULL COMMENT '邀请码';
+
+--add by likang 2018-07-24
+DROP TABLE IF EXISTS `attachment`;
+CREATE TABLE `attachment` (
+  `ATTACH_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `OBJECT_TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '业务对象类型',
+  `OBJECT_ID` int(11) NOT NULL COMMENT '业务对象ID',
+  `BUSINESS_SCENARIO` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '业务应用场景编码',
+  `INPUT_ID` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '文件名ID',
+  `FILE_PATH` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '访问路径',
+  `FILE_NAME` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '附件名称',
+  `FILE_TYPE` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '文件类型',
+  `FILE_SIZE` int(11) DEFAULT NULL COMMENT '文件大小',
+  `FS_GUID` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '文件存储系统标识',
+  `CREATE_TIME` datetime DEFAULT NULL ON UPDATE current_timestamp() COMMENT '上传时间',
+  `STAFF_ID` int(11) DEFAULT NULL COMMENT '上传人ID',
+  `STAFF_NAME` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '上传人',
+  `STATE` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '状态',
+  `DESCRIPTION` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  PRIMARY KEY (`ATTACH_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -59,14 +59,25 @@ public class CustomerFriendRequestService implements ICustomerFriendRequestServi
      * @date        2018/7/18 18:04
      */
     public CustomerFriendRequest addCustomerFriendRequest(Customer customer, Customer friendCustomer, String requestMessage){
+        List<CustomerFriendRequest> CustomerFriendRequest=customerFriendRequestDao.getCustomerFriendRequestByFriendIdAndCustomerId(friendCustomer.getCustomerId(),customer.getCustomerId());
+
         CustomerFriendRequest cfr=new CustomerFriendRequest();
         cfr.setCreateTime(new Date());
         cfr.setCustomer(customer);
         cfr.setFriendCustomer(friendCustomer);
         cfr.setRequestMessage(requestMessage);
-        //默认新请求
-        cfr.setState(CustomerFriendRequestState.NEWREQUEST.getState());
-        customerFriendRequestDao.save(cfr);
+        if(null!=CustomerFriendRequest&&CustomerFriendRequest.size()>0){
+
+            for(CustomerFriendRequest CustomerFriendRequests:CustomerFriendRequest){
+                CustomerFriendRequest customerFriendRequest= customerFriendRequestDao.findOne(CustomerFriendRequests.getRequestId());
+                customerFriendRequest.setCreateTime(new Date());
+            }
+
+        }else {
+            //默认新请求
+            cfr.setState(CustomerFriendRequestState.NEWREQUEST.getState());
+            customerFriendRequestDao.save(cfr);
+        }
         return cfr;
     }
 }

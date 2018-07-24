@@ -6,3 +6,6 @@ include 'cb-admin'
 include 'cb-api'
 include 'cb-mb-core'
 include 'cb-mb-api'
+include 'cb-search'
+
+

@@ -17,7 +17,7 @@ public class CustomerVo  implements Serializable {
     /**
      * 邀请码
      */
-    private String recommendMobile;
+    private String invitationCode;
     /**
      * 验证码
      */
@@ -42,6 +42,14 @@ public class CustomerVo  implements Serializable {
      * 银行照片
      */
     private String bankCardImg;
+    /**
+     * 随机串
+     */
+    private String random;
+    /**
+     * 真实姓名
+     */
+    private String realName;
 
     public String getMobile() {
         return mobile;
@@ -59,12 +67,12 @@ public class CustomerVo  implements Serializable {
         this.pwd = pwd;
     }
 
-    public String getRecommendMobile() {
-        return recommendMobile;
+    public String getInvitationCode() {
+        return invitationCode;
     }
 
-    public void setRecommendMobile(String recommendMobile) {
-        this.recommendMobile = recommendMobile;
+    public void setInvitationCode(String invitationCode) {
+        this.invitationCode = invitationCode;
     }
 
     public String getCode() {
@@ -113,5 +121,21 @@ public class CustomerVo  implements Serializable {
 
     public void setBankCardImg(String bankCardImg) {
         this.bankCardImg = bankCardImg;
+    }
+
+    public String getRandom() {
+        return random;
+    }
+
+    public void setRandom(String random) {
+        this.random = random;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

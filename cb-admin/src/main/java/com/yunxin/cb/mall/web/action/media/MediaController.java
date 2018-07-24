@@ -44,6 +44,11 @@ public class MediaController {
         return "media/chooseMedias";
     }
 
+    @RequestMapping(value = "chooseFile", method = RequestMethod.GET)
+    public String chooseFile(ModelMap modelMap) {
+        return "media/chooseFile";
+    }
+
 
     @RequestMapping(value = "getFolderNodesByPath", method = RequestMethod.POST)
     @ResponseBody

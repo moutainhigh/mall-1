@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Created by gonglei on 16/1/24.
+ * Created by tanggangyi
  */
 @ApiModel(value="接口对象",description="接口对象 ResponseResult")
 public class ResponseResult<T> {
@@ -14,7 +14,7 @@ public class ResponseResult<T> {
     private Result result;
     @ApiModelProperty(value="错误信息",name="message",example="参数错误")
     private String message;
-    @ApiModelProperty(value="数据",name="data",example="{}")
+    @ApiModelProperty(value="数据",name="data",example="返回对象")
     private T data;
 
     public ResponseResult(Result result) {

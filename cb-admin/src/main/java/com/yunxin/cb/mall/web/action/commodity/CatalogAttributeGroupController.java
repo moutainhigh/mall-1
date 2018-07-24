@@ -15,6 +15,7 @@ import com.yunxin.cb.mall.service.IAttributeService;
 import com.yunxin.cb.mall.service.ICatalogService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.cb.mall.web.action.MediaPather;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -38,6 +39,8 @@ import java.util.List;
 @RequestMapping(value = "/commodity")
 public class CatalogAttributeGroupController implements ServletContextAware {
 
+    @Value("${application.uploadPath}")
+    private String uploadPath;
     @Resource
     private IAttributeService attributeService;
 
@@ -88,15 +91,16 @@ public class CatalogAttributeGroupController implements ServletContextAware {
         }
         try {
             if (attributeGroup.isShowAsImage()) {
+                //创建文件夹
                 MediaPather.createPicSiteRealDir(servletContext, "attribute");
                 String[] imagePath = attributeGroup.getImagePath();
                 if (LogicUtils.isNotNullAndEmpty(imagePath)) {
                     for (int i = 0; i < imagePath.length; i++) {
-                        String iPath = imagePath[i];
+                        String iPath = uploadPath+imagePath[i];
                         if (null != iPath) {
-                            File imageFile = MediaPather.getPicStoreRealFile(servletContext, imagePath[i]);
-                            ImageConverter imageConverter = new ImageConverter(imageFile);
+                            File imageFile = MediaPather.getPicStoreRealFile(servletContext, iPath);
                             imagePath[i] = "attribute/" + System.currentTimeMillis() + ".jpg";
+                            ImageConverter imageConverter = new ImageConverter(imageFile);
                             imageConverter.compressJpg(50, 50, MediaPather.getPicSiteRealPath(servletContext, imagePath[i]));
                         }
                     }

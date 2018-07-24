@@ -6,6 +6,7 @@ import OrderComfirm from '../page/order/OrderComfirm'
 import OrderSuccess from '../page/order/OrderSuccess'
 import Home from '../page/home/Home'
 import Search from '../page/search/Search'
+import Location from '../page/location/Location'
 import ChooseCarType from '../page/carList/ChooseCarType'
 
 Vue.use(Router)
@@ -21,6 +22,11 @@ export default new Router({
       path: '/search',
       name: 'Search',
       component: Search
+    },
+    {
+      path: '/location',
+      name: 'Location',
+      component: Location
     },
     {
       path: '/car-list',

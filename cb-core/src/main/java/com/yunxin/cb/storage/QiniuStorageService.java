@@ -4,10 +4,12 @@ import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.entity.meta.UploadType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class QiniuStorageService implements IStorageService {
@@ -56,6 +61,10 @@ public class QiniuStorageService implements IStorageService {
         String bucket = null;
         String domain = null;
         switch (type) {
+            case ANDROID:
+                bucket = bucket_1;
+                domain = domain_1;
+                break;
             case RESOURCE:
             case INSURANCEPRODUCT:
             case OTHER:
@@ -170,5 +179,94 @@ public class QiniuStorageService implements IStorageService {
             }
         }
         return null;
+    }
+
+    /**
+     * 方法实现说明
+     * @author      likang
+     * @param inputStream
+    * @param objectType
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/24 14:07
+     */
+    @Override
+    public Map<String,String> put(InputStream inputStream, ObjectType objectType) {
+        Map<String,String> result=new HashMap();
+        //默认不指定key的情况下，以文件内容的hash值作为文件名
+        Long timeStr=new Date().getTime();
+        Auth auth = Auth.create(accessKey, secretKey);
+        String bucket = null;
+        String domain = null;
+        String fileName= null;
+        switch (objectType) {
+            case BRAND:
+                bucket = bucket_1;
+                domain = domain_1;
+                fileName ="BRAND/"+timeStr;
+                break;
+        }
+        String upToken = auth.uploadToken(bucket);
+        try {
+            Response response = uploadManager.put(inputStream, fileName, upToken, null, null);
+            //解析上传成功的结果
+            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+            String url = domain + putRet.key;
+            result.put("url",url);
+            result.put("fileName",fileName);
+            result.put("timeStr",timeStr.toString());
+            logger.info("qiniu put success, url:" + url);
+        } catch (QiniuException ex) {
+            Response r = ex.response;
+            logger.error(r.toString());
+            try {
+                logger.error(r.bodyString());
+            } catch (QiniuException ex2) {
+                //ignore
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 根据fileName删除文件
+     * @author      likang
+     * @param objectType
+    * @param fileName
+     * @return      java.util.Map<java.lang.String,java.lang.String>
+     * @exception
+     * @date        2018/7/24 16:05
+     */
+    @Override
+    public Map<String,String> deleteByfileName(ObjectType objectType,String fileName) {
+        Map<String,String> result=new HashMap();
+        //默认不指定key的情况下，以文件内容的hash值作为文件名
+        Long timeStr=new Date().getTime();
+        Auth auth = Auth.create(accessKey, secretKey);
+        String bucket = null;
+        String domain = null;
+        switch (objectType) {
+            case BRAND:
+                bucket = bucket_1;
+                domain = domain_1;
+                break;
+        }
+        String upToken = auth.uploadToken(bucket);
+        try {
+            //构造一个带指定Zone对象的配置类
+            Configuration cfg = new Configuration(Zone.zone2());
+            //实例化一个BucketManager对象
+            BucketManager bucketManager = new BucketManager(auth, cfg);
+            bucketManager.delete(bucket, fileName);
+        } catch (QiniuException ex) {
+            Response r = ex.response;
+            logger.error(r.toString());
+            try {
+                logger.error(r.bodyString());
+            } catch (QiniuException ex2) {
+                //ignore
+            }
+        }
+        return result;
     }
 }

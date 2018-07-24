@@ -1,18 +1,17 @@
 package com.yunxin.cb.mall.web.action.commodity;
 
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.Brand;
-import com.yunxin.cb.mall.entity.Commodity;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.service.IBrandService;
 import com.yunxin.cb.mall.service.ICategoryService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.cb.security.SecurityConstants;
-import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.cb.security.SecurityConstants;
-import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.cb.mall.service.IBrandService;
-import com.yunxin.cb.mall.service.ICategoryService;
-import com.yunxin.cb.mall.vo.TreeViewItem;
+import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -42,6 +42,8 @@ public class BrandController {
 
     @Resource
     private MessageSource messageSource;
+    @Resource
+    private IAttachmentService  attachmentService;
 
     @RequestMapping(value = "brands")
     public String brands(ModelMap modelMap) {
@@ -93,10 +95,18 @@ public class BrandController {
      * @return
      */
     @RequestMapping(value = "addBrand", method = RequestMethod.POST)
-    public String addBrand(@ModelAttribute("brand") Brand brand,BindingResult result, ModelMap modelMap,Locale locale) {
-
+    public String addBrand(@ModelAttribute("brand") Brand brand,BindingResult result,ModelMap modelMap,Locale locale,HttpServletRequest request) {
         try {
-            brandService.addBrand(brand);
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                brand.setPicPath(imgurl[0].split(",")[0]);
+                brandService.addBrand(brand);
+                //保存图片路径
+                attachmentService.deleteAttachment(ObjectType.BRAND,brand.getBrandId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachment(ObjectType.BRAND,brand.getBrandId(),imgpath);
+                }
+            }
         } catch (EntityExistException e) {
             result.addError(new FieldError("brand", "brandName", brand.getBrandEnName(), true, null, null,
                     messageSource.getMessage("brand_brandName_repeat", null, locale)));
@@ -118,6 +128,9 @@ public class BrandController {
         modelMap.addAttribute("brand", brand);
         TreeViewItem categoryTree = categoryService.getCategoryTree();
         modelMap.addAttribute("categoryTree", Arrays.asList(categoryTree));
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.BRAND,brand.getBrandId());
+
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return "commodity/editBrand";
     }
 
@@ -130,9 +143,17 @@ public class BrandController {
      */
     @RequestMapping(value = "editBrand", method = RequestMethod.POST)
     public String editBrand(@ModelAttribute("brand") Brand brand,BindingResult result,HttpServletRequest request,ModelMap modelMap,Locale locale) {
-
         try {
-            brandService.updateBrand(brand);
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                brand.setPicPath(imgurl[0].split(",")[0]);
+                brandService.updateBrand(brand);
+                //保存图片路径
+                attachmentService.deleteAttachment(ObjectType.BRAND,brand.getBrandId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachment(ObjectType.BRAND,brand.getBrandId(),imgpath);
+                }
+            }
         } catch (EntityExistException e) {
             result.addError(new FieldError("brand", "brandName", brand.getBrandEnName(), true, null, null,
                     messageSource.getMessage("brand_brandName_repeat", null, locale)));
