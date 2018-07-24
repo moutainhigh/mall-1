@@ -23,7 +23,7 @@ public class DeliveryAddressVO implements java.io.Serializable{
      * 收货地址类型
      */
     @ApiModelProperty(value="地址类型",name="addressType",example="1")
-    private Integer addressType;
+    private AddressType addressType;
 
     /**
      * 市
@@ -99,11 +99,11 @@ public class DeliveryAddressVO implements java.io.Serializable{
         this.addressId = addressId;
     }
 
-    public Integer getAddressType() {
+    public AddressType getAddressType() {
         return addressType;
     }
 
-    public void setAddressType(Integer addressType) {
+    public void setAddressType(AddressType addressType) {
         this.addressType = addressType;
     }
 

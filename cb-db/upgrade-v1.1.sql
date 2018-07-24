@@ -40,7 +40,7 @@ alter table customer add CUSTOMER_CARD_NO VARCHAR(32) NOT NULL COMMENT '证件�
 alter table customer add CARD_POSITIVE_IMG VARCHAR(255) NOT NULL COMMENT '证件证明照';
 alter table customer add CARD_NEGATIVE_IMG VARCHAR(255) NOT NULL COMMENT '证件反面照';
 alter table customer add BANK_CARD_IMG VARCHAR(255) NOT NULL COMMENT '银行卡图片';
-alter table customer add CUSTOMER_LEVEL INT(10) DEFAULT NULL COMMENT '等级';
+alter table customer add CUSTOMER_LEVEL INT(10) DEFAULT 1  COMMENT '等级';
 alter table customer add LEVEL_CODE VARCHAR(255) DEFAULT NULL COMMENT '等级编码';
 alter table customer add INVITATION_CODE VARCHAR(25) DEFAULT NULL COMMENT '邀请码';
 

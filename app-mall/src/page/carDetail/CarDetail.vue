@@ -476,6 +476,8 @@
     width: 100%;
     height: 250px;
     background: #fff;
+    transition: all .3s;
+    transform: translateY(0);
   }
 
   .car-sale {

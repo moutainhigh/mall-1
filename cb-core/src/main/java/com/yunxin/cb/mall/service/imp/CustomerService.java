@@ -245,6 +245,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public Map<String, Object> generateCode(int customerId) {
+        return null;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
         return customerDao.findAll(new Sort(Direction.ASC, "accountName"));
@@ -278,6 +283,12 @@ public class CustomerService implements ICustomerService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Customer getCustomerByMobile(String mobile) {
         return customerDao.findByMobileAndEnabled(mobile, true);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public Customer getCustomerByInvitationCode(String invitationCode) {
+        return customerDao.findByMobileOrInvitationCode(invitationCode,invitationCode);
     }
 
 
