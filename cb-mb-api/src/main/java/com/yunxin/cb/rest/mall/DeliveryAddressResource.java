@@ -2,16 +2,22 @@ package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.mall.entity.DeliveryAddress;
 import com.yunxin.cb.mall.service.DeliveryAddressService;
+import com.yunxin.cb.mall.vo.DeliveryAddressVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.security.interceptor.AuthInterceptor;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(description = "收货地址接口")
@@ -19,35 +25,65 @@ import java.util.List;
 @RequestMapping(value = "/mall")
 public class DeliveryAddressResource extends BaseResource {
 
+    private static Logger logger = LoggerFactory.getLogger(DeliveryAddressResource.class);
+
     @Resource
     private DeliveryAddressService deliveryAddressService;
+
     @ApiOperation(value = "通过用户ID查询收货地址列表")
     @ApiImplicitParams({
     })
     @GetMapping(value = "deliveryAddress/list")
-    public ResponseResult getDeliveryAddress(){
-        List<DeliveryAddress> list = deliveryAddressService.selectByCustomerId(getCustomerId());
-        return new ResponseResult(list);
+    public ResponseResult<List<DeliveryAddressVO>> getDeliveryAddress() {
+        try {
+            List<DeliveryAddress> list = deliveryAddressService.selectByCustomerId(getCustomerId());
+            List<DeliveryAddressVO> volist = new ArrayList<>();
+            for (DeliveryAddress deliveryAddress : list) {
+                DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
+                BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
+                volist.add(deliveryAddressVO);
+            }
+            return new ResponseResult(volist);
+        } catch (Exception e) {
+            logger.info("addDeliveryAddress failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
+
     }
+
     @ApiOperation(value = "收货地址详情")
     @GetMapping(value = "deliveryAddress/{addressId}")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
     })
-    public ResponseResult getDeliveryAddressDetail(@PathVariable(value = "addressId") int addressId){
-        int customerId = getCustomerId();
-        DeliveryAddress deliveryAddress = deliveryAddressService.selectByPrimaryKey(addressId,customerId);
-        return new ResponseResult(deliveryAddress);
+    public ResponseResult<DeliveryAddressVO> getDeliveryAddressDetail(@PathVariable(value = "addressId") int addressId) {
+        try {
+            int customerId = getCustomerId();
+            DeliveryAddress deliveryAddress = deliveryAddressService.selectByPrimaryKey(addressId, customerId);
+            DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
+            BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
+            return new ResponseResult(deliveryAddressVO);
+        } catch (Exception e) {
+            logger.info("addDeliveryAddress failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
     }
 
     @ApiOperation(value = "添加收货地址")
-    @PostMapping(value = "deliveryAddress/{addressId}")
+    @PostMapping(value = "deliveryAddress")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "deliveryAddress", value = "地址对象", required = true, paramType = "RequestBody", dataType = "DeliveryAddress")
+
     })
-    public ResponseResult addDeliveryAddress(@PathVariable(value = "addressId") int addressId,@RequestBody DeliveryAddress deliveryAddress){
-        deliveryAddressService.insert(deliveryAddress);
+    public ResponseResult addDeliveryAddress(@RequestBody DeliveryAddressVO deliveryAddressVO) {
+        try {
+            logger.info("deliveryAddressVO:" + deliveryAddressVO.toString());
+            DeliveryAddress deliveryAddress = new DeliveryAddress();
+            BeanUtils.copyProperties(deliveryAddress, deliveryAddressVO);
+            deliveryAddressService.insert(deliveryAddress);
+        } catch (Exception e) {
+            logger.info("addDeliveryAddress failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
         return new ResponseResult(Result.SUCCESS);
     }
 
@@ -56,18 +92,27 @@ public class DeliveryAddressResource extends BaseResource {
             @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
     })
     @DeleteMapping(value = "deliveryAddress/{addressId}")
-    public ResponseResult delectDeliveryAddress(@PathVariable(value = "addressId") int addressId){
+    public ResponseResult delectDeliveryAddress(@PathVariable(value = "addressId") int addressId) {
         deliveryAddressService.deleteByPrimaryKey(addressId);
         return new ResponseResult(Result.SUCCESS);
     }
+
     @ApiOperation(value = "更新收货地址")
     @PutMapping(value = "deliveryAddress/{addressId}")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int"),
-            @ApiImplicitParam(name = "deliveryAddress", value = "地址对象", required = true, paramType = "RequestBody", dataType = "DeliveryAddress")
+            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
     })
-    public ResponseResult updateDeliveryAddress(@PathVariable(value = "addressId") int addressId,@RequestBody DeliveryAddress deliveryAddress){
-        deliveryAddressService.updateByPrimaryKey(deliveryAddress);
+    public ResponseResult updateDeliveryAddress(@PathVariable(value = "addressId") int addressId, @RequestBody DeliveryAddressVO deliveryAddressVO) {
+        try {
+            logger.info("input Parameter deliveryAddressVO:" + deliveryAddressVO.toString());
+            DeliveryAddress deliveryAddress = new DeliveryAddress();
+            BeanUtils.copyProperties(deliveryAddress, deliveryAddressVO);
+            deliveryAddressService.updateByPrimaryKey(deliveryAddress);
+        } catch (Exception e) {
+            logger.info("updateDeliveryAddress failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
         return new ResponseResult(Result.SUCCESS);
+
     }
 }

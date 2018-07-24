@@ -34,10 +34,10 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @version 1.0
  * @since 1.0
  */
-//@Entity
-//@DynamicInsert
-//@DynamicUpdate
-//@Table
+@Entity
+@DynamicInsert
+@DynamicUpdate
+@Table
 public class Attachment implements Serializable {
 
     private static final long serialVersionUID = 1L;

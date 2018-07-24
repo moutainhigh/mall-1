@@ -15,6 +15,8 @@ public interface CustomerFriendRequestDao extends JpaRepository<CustomerFriendRe
 
      @Query("select cr from CustomerFriendRequest cr left join fetch cr.friendCustomer fc left join fetch cr.customer c where fc.customerId = ?1 ")
      public List<CustomerFriendRequest> getCustomerFriendRequestByFriendId(int friendId);
+     @Query("select cr from CustomerFriendRequest cr left join fetch cr.friendCustomer fc left join fetch cr.customer c where fc.customerId = ?1 and c.customerId = ?2 and cr.state=0")
+     public List<CustomerFriendRequest> getCustomerFriendRequestByFriendIdAndCustomerId(int friendId,int customerId);
 
      @Modifying
      @Query("update CustomerFriendRequest cr set cr.state = ?3 where cr.friendCustomer.customerId=?1 and cr.customer.customerId=?2")

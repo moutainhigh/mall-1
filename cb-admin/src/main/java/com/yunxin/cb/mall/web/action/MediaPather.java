@@ -63,8 +63,8 @@ public class MediaPather {
      * @return
      */
     public static File getPicStoreRealFile(ServletContext servletContext, String webPath){
-        String fileDir=getPicStoreRealPath(servletContext,webPath);
-        File file=new File(fileDir);
+//        String fileDir=getPicStoreRealPath(servletContext,webPath);
+        File file=new File(webPath);
         return file;
     }
 }
