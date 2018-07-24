@@ -8,6 +8,7 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.entity.meta.UploadType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
+import java.util.Date;
 
 @Component
 public class QiniuStorageService implements IStorageService {
@@ -56,6 +58,10 @@ public class QiniuStorageService implements IStorageService {
         String bucket = null;
         String domain = null;
         switch (type) {
+            case ANDROID:
+                bucket = bucket_1;
+                domain = domain_1;
+                break;
             case RESOURCE:
             case INSURANCEPRODUCT:
             case OTHER:
@@ -155,6 +161,50 @@ public class QiniuStorageService implements IStorageService {
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(data, key, upToken, null, null, true);
+            //解析上传成功的结果
+            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+            String url = domain + putRet.key;
+            logger.info("qiniu put success, url:" + url);
+            return url;
+        } catch (QiniuException ex) {
+            Response r = ex.response;
+            logger.error(r.toString());
+            try {
+                logger.error(r.bodyString());
+            } catch (QiniuException ex2) {
+                //ignore
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 方法实现说明
+     * @author      likang
+     * @param inputStream
+    * @param objectType
+     * @return      java.lang.String
+     * @exception
+     * @date        2018/7/24 14:07
+     */
+    @Override
+    public String put(InputStream inputStream, ObjectType objectType) {
+        //默认不指定key的情况下，以文件内容的hash值作为文件名
+        Long timeStr=new Date().getTime();
+        Auth auth = Auth.create(accessKey, secretKey);
+        String bucket = null;
+        String domain = null;
+        String fileName= null;
+        switch (objectType) {
+            case BRAND:
+                bucket = bucket_1;
+                domain = domain_1;
+                fileName ="BRAND/"+timeStr+".jsp";
+                break;
+        }
+        String upToken = auth.uploadToken(bucket);
+        try {
+            Response response = uploadManager.put(inputStream, fileName, upToken, null, null);
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             String url = domain + putRet.key;
