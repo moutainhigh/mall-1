@@ -129,7 +129,6 @@ public class BrandController {
         TreeViewItem categoryTree = categoryService.getCategoryTree();
         modelMap.addAttribute("categoryTree", Arrays.asList(categoryTree));
         List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.BRAND,brand.getBrandId());
-
         modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return "commodity/editBrand";
     }
