@@ -8,200 +8,276 @@
         </div>
       </div>
     </head-top>
-    <section class="sort_container">
-      <div @click="chooseType('')" v-show="sortBy != ''" style="position:fixed; z-index:2;height: 100%;width: 100%;background-color: rgba(0,0,0,0.3);"></div>
-      <div class="sort_item" :class="{choose_type:sortBy == 'food'}">
-        <div class="sort_item_container" @click="chooseType('food')">
-          <div class="sort_item_border">
-            <span :class="{category_title: sortBy == 'food'}">分类</span>
-            <img v-show="sortBy != 'food'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
-            <img v-show="sortBy == 'food'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_sele.png">
+    <div style="margin-top: 5rem;">
+      <section class="sort_container">
+        <div @click="chooseType('')" v-show="sortBy != ''" style="position:fixed; z-index:2;height: 100%;width: 100%;background-color: rgba(0,0,0,0.3);"></div>
+        <div class="sort_item" :class="{choose_type:sortBy == 'food'}">
+          <div class="sort_item_container" @click="chooseType('food')">
+            <div class="sort_item_border">
+              <span :class="{category_title: sortBy == 'food'}">分类</span>
+              <img v-show="sortBy != 'food'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
+              <img v-show="sortBy == 'food'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_sele.png">
+            </div>
+          </div>
+          <transition name="showlist">
+            <section v-show="sortBy == 'food'" class="sort_detail_type">
+              <div class="sort_list_container">
+                <div class="sort_list_li" @click="sortList($event)">
+                  <p data="0" :class="{sort_select: sortByType == 0}">
+                    <span>默认排序</span>
+                  </p>
+                  <img v-if="sortByType == 0" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                </div>
+                <div class="sort_list_li" @click="sortList($event)">
+                  <p data="1" :class="{sort_select: sortByType == 1}">
+                    <span>最畅销</span>
+                  </p>
+                  <img v-if="sortByType == 1" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                </div>
+                <div class="sort_list_li" @click="sortList($event)">
+                  <p data="2" :class="{sort_select: sortByType == 2}">
+                    <span>价格最高</span>
+                  </p>
+                  <img v-if="sortByType == 2" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                </div>
+                <div class="sort_list_li" @click="sortList($event)">
+                  <p data="3" :class="{sort_select: sortByType == 3}">
+                    <span>价格最低</span>
+                  </p>
+                  <img v-if="sortByType == 3" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                </div>
+              </div>
+            </section>
+          </transition>
+        </div>
+        <div class="sort_item" :class="{choose_type:sortBy == 'sort'}">
+          <div class="sort_item_container" @click="chooseType('sort')">
+            <div class="sort_item_border">
+              <span :class="{category_title: sortBy == 'sort'}">品牌</span>
+              <img class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
+            </div>
           </div>
         </div>
-        <transition name="showlist">
-          <section v-show="sortBy == 'food'" class="sort_detail_type">
-            <div class="sort_list_container">
-              <div class="sort_list_li" @click="sortList($event)">
-                <p data="0" :class="{sort_select: sortByType == 0}">
-                  <span>默认排序</span>
-                </p>
-                <img v-if="sortByType == 0" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
-              </div>
-              <div class="sort_list_li" @click="sortList($event)">
-                <p data="1" :class="{sort_select: sortByType == 1}">
-                  <span>最畅销</span>
-                </p>
-                <img v-if="sortByType == 1" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
-              </div>
-              <div class="sort_list_li" @click="sortList($event)">
-                <p data="2" :class="{sort_select: sortByType == 2}">
-                  <span>价格最高</span>
-                </p>
-                <img v-if="sortByType == 2" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
-              </div>
-              <div class="sort_list_li" @click="sortList($event)">
-                <p data="3" :class="{sort_select: sortByType == 3}">
-                  <span>价格最低</span>
-                </p>
-                <img v-if="sortByType == 3" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
-              </div>
+        <div class="sort_item" :class="{choose_type:sortBy == 'price'}">
+          <div class="sort_item_container" @click="chooseType('price')">
+            <div class="sort_item_border">
+              <span :class="{category_title: sortBy == 'price'}">价格</span>
+              <img v-show="sortBy != 'price'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
+              <img v-show="sortBy == 'price'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_sele.png">
             </div>
-          </section>
-        </transition>
-      </div>
-      <div class="sort_item" :class="{choose_type:sortBy == 'sort'}">
-        <div class="sort_item_container" @click="chooseType('sort')">
-          <div class="sort_item_border">
-            <span :class="{category_title: sortBy == 'sort'}">品牌</span>
+          </div>
+          <transition name="showlist">
+            <section v-show="sortBy == 'price'" class="sort_detail_type filter_container">
+              <section style="width: 100%;background-color: #ffffff;">
+                <header class="filter_header_style">自定义</header>
+                <div class="choose_input">
+                  <input/>
+                  <div style="position: relative;margin-left: -1.2rem;">万</div>
+                  <span style="margin: 0 0.2rem 0 0.5rem;">—</span>
+                  <input/>
+                  <div style="position: relative;margin-left: -1.2rem;">万</div>
+                  <div class="input_button" :class="{input_button_sele:true}"><p>确定</p></div>
+                </div>
+              </section>
+              <section style="width: 100%;background-color: #ffffff;">
+                <div style="display: flex;padding: 1rem;flex-wrap: wrap">
+                  <div class="choose_flex_type">
+                    <p :class="{choose_type_sele: true}">不限</p>
+                  </div>
+                  <div class="choose_flex_type">
+                    <p>不限</p>
+                  </div>
+                  <div class="choose_flex_type">
+                    <p>不限</p>
+                  </div>
+                </div>
+              </section>
+            </section>
+          </transition>
+        </div>
+        <div class="sort_item" :class="{choose_type:sortBy == 'activity'}">
+          <div class="sort_item_container" @click="chooseType('activity')">
+            <span :class="{category_title: sortBy == 'activity'}">筛选</span>
             <img class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
           </div>
+          <transition name="showlist">
+            <section v-show="sortBy == 'activity'" class="sort_detail_type sort_activity">
+              <div style="overflow-x: scroll;height: 75%;">
+                <div class="activity_type">
+                  <div class="type_title">
+                    国别
+                  </div>
+                  <div class="type_list">
+                    <div class="type_item">
+                      <p>自主</p>
+                    </div>
+                    <div class="type_item">
+                      <p>合资</p>
+                    </div>
+                    <div class="type_item">
+                      <p>进口</p>
+                    </div>
+                    <div class="type_item">
+                      <p>德系</p>
+                    </div>
+                    <div class="type_item">
+                      <p>韩系</p>
+                    </div>
+                    <div class="type_item">
+                      <p>自主</p>
+                    </div>
+                    <div class="type_item">
+                      <p>合资</p>
+                    </div>
+                    <div class="type_item">
+                      <p>自主</p>
+                    </div>
+                    <div class="type_item">
+                      <p>合资</p>
+                    </div>
+                    <div class="type_item">
+                      <p>自主</p>
+                    </div>
+                    <div class="type_item">
+                      <p>合资</p>
+                    </div>
+                    <div class="type_item">
+                      <p>自主</p>
+                    </div>
+                    <div class="type_item">
+                      <p>合资</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="activity_type">
+                  <div class="type_title">
+                    车型
+                  </div>
+                  <div class="type_list">
+                    <div class="type_item">
+                      <p>轿车</p>
+                    </div>
+                    <div class="type_item">
+                      <p>SUV</p>
+                    </div>
+                    <div class="type_item">
+                      <p>MVP</p>
+                    </div>
+                    <div class="type_item">
+                      <p>跑车</p>
+                    </div>
+                    <div class="type_item">
+                      <p>微面</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="activity_type">
+                  <div class="type_title">
+                    坐席
+                  </div>
+                  <div class="type_list">
+                    <div class="type_item">
+                      <p>两座</p>
+                    </div>
+                    <div class="type_item">
+                      <p>4-5座</p>
+                    </div>
+                    <div class="type_item">
+                      <p>6座</p>
+                    </div>
+                    <div class="type_item">
+                      <p>7座</p>
+                    </div>
+                    <div class="type_item">
+                      <p>7座以上</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="activity_submit">
+                  <div style="padding: 0.5rem;">
+                    <button style="color: #666666">重置</button>
+                    <button class="submit_true">确认</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </transition>
+        </div>
+      </section>
+      <div class="car_type_list">
+        <div class="type_item">
+          <p>
+            日系
+          </p>
+          <img src="../../assets/img/common/ic_screen_close.png">
+        </div>
+        <div class="type_item">
+          <p>
+            20-35万
+          </p>
+          <img src="../../assets/img/common/ic_screen_close.png">
+        </div>
+        <div class="type_item">
+          <p>
+            20-35万
+          </p>
+          <img src="../../assets/img/common/ic_screen_close.png">
         </div>
       </div>
-      <div class="sort_item" :class="{choose_type:sortBy == 'price'}">
-        <div class="sort_item_container" @click="chooseType('price')">
-          <div class="sort_item_border">
-            <span :class="{category_title: sortBy == 'price'}">价格</span>
-            <img v-show="sortBy != 'price'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
-            <img v-show="sortBy == 'price'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_sele.png">
+      <div class="car_list">
+        <div class="list_item">
+          <div class="cont_img">
+            <img src="../../assets/img/home/1.png" width="100%">
+          </div>
+          <div class="cont">
+            <div class="cont_title">
+              2018款 240TURBO自动两驱舒适版
+            </div>
+            <div class="cont_price">
+              <span style="font-size: 1rem;">￥</span>8.98万
+            </div>
+            <div class="cont_local">
+              <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1rem;">
+              <span>深圳中升汇宝宝马4S店</span>
+            </div>
           </div>
         </div>
-        <transition name="showlist">
-          <section v-show="sortBy == 'price'" class="sort_detail_type filter_container">
-            <section style="width: 100%;background-color: #ffffff;">
-              <header class="filter_header_style">自定义</header>
-              <div class="choose_input">
-                <input/>
-                <div style="position: relative;margin-left: -1.2rem;">万</div>
-                <span style="margin: 0 0.2rem 0 0.5rem;">—</span>
-                <input/>
-                <div style="position: relative;margin-left: -1.2rem;">万</div>
-                <div class="input_button" :class="{input_button_sele:true}"><p>确定</p></div>
-              </div>
-            </section>
-            <section style="width: 100%;background-color: #ffffff;">
-              <div style="display: flex;padding: 1rem;flex-wrap: wrap">
-                <div class="choose_flex_type">
-                  <p :class="{choose_type_sele: true}">不限</p>
-                </div>
-                <div class="choose_flex_type">
-                  <p>不限</p>
-                </div>
-                <div class="choose_flex_type">
-                  <p>不限</p>
-                </div>
-              </div>
-            </section>
-          </section>
-        </transition>
-      </div>
-      <div class="sort_item" :class="{choose_type:sortBy == 'activity'}">
-        <div class="sort_item_container" @click="chooseType('activity')">
-          <span :class="{category_title: sortBy == 'activity'}">筛选</span>
-          <img class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
-        </div>
-        <transition name="showlist">
-          <section v-show="sortBy == 'activity'" class="sort_detail_type sort_activity">
-            <div style="overflow-x: scroll;height: 100%;">
-              <div class="activity_type">
-                <div class="type_title">
-                  国别
-                </div>
-                <div class="type_list">
-                  <div class="type_item">
-                    <p>自主</p>
-                  </div>
-                  <div class="type_item">
-                    <p>合资</p>
-                  </div>
-                  <div class="type_item">
-                    <p>进口</p>
-                  </div>
-                  <div class="type_item">
-                    <p>德系</p>
-                  </div>
-                  <div class="type_item">
-                    <p>韩系</p>
-                  </div>
-                  <div class="type_item">
-                    <p>自主</p>
-                  </div>
-                  <div class="type_item">
-                    <p>合资</p>
-                  </div>
-                  <div class="type_item">
-                    <p>自主</p>
-                  </div>
-                  <div class="type_item">
-                    <p>合资</p>
-                  </div>
-                  <div class="type_item">
-                    <p>自主</p>
-                  </div>
-                  <div class="type_item">
-                    <p>合资</p>
-                  </div>
-                  <div class="type_item">
-                    <p>自主</p>
-                  </div>
-                  <div class="type_item">
-                    <p>合资</p>
-                  </div>
-                </div>
-              </div>
-              <div class="activity_type">
-                <div class="type_title">
-                  车型
-                </div>
-                <div class="type_list">
-                  <div class="type_item">
-                    <p>轿车</p>
-                  </div>
-                  <div class="type_item">
-                    <p>SUV</p>
-                  </div>
-                  <div class="type_item">
-                    <p>MVP</p>
-                  </div>
-                  <div class="type_item">
-                    <p>跑车</p>
-                  </div>
-                  <div class="type_item">
-                    <p>微面</p>
-                  </div>
-                </div>
-              </div>
-              <div class="activity_type">
-                <div class="type_title">
-                  坐席
-                </div>
-                <div class="type_list">
-                  <div class="type_item">
-                    <p>两座</p>
-                  </div>
-                  <div class="type_item">
-                    <p>4-5座</p>
-                  </div>
-                  <div class="type_item">
-                    <p>6座</p>
-                  </div>
-                  <div class="type_item">
-                    <p>7座</p>
-                  </div>
-                  <div class="type_item">
-                    <p>7座以上</p>
-                  </div>
-                </div>
-              </div>
-              <div class="activity_submit">
-                <div style="padding: 0.5rem;">
-                  <button style="color: #666666">重置</button><button class="submit_true">确认</button>
-                </div>
-              </div>
+        <div class="list_item">
+          <div class="cont_img">
+            <img src="../../assets/img/home/1.png" width="100%">
+          </div>
+          <div class="cont">
+            <div class="cont_title">
+              2018款 240TURBO自动两驱舒适版
             </div>
-          </section>
-        </transition>
+            <div class="cont_price">
+              <span style="font-size: 1rem;">￥</span>8.98万
+            </div>
+            <div class="cont_local">
+              <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1rem;">
+              <span>深圳中升汇宝宝马4S店</span>
+            </div>
+          </div>
+        </div>
+        <div class="list_item">
+          <div class="cont_img">
+            <img src="../../assets/img/home/1.png" width="100%">
+          </div>
+          <div class="cont">
+            <div class="cont_title">
+              2018款 240TURBO自动两驱舒适版
+            </div>
+            <div class="cont_price">
+              <span style="font-size: 1rem;">￥</span>8.98万
+            </div>
+            <div class="cont_local">
+              <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1rem;">
+              <span>深圳中升汇宝宝马4S店</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
   </div>
 
 </template>
@@ -221,7 +297,7 @@
         foodTitle: '', // 排序左侧头部标题
         restaurant_category_id: '', // 食品类型id值
         restaurant_category_ids: '', //筛选类型的id
-        sortBy: 'activity', // 筛选的条件
+        sortBy: '', // 筛选的条件
         sortByType: null, // 根据何种方式排序
         Delivery: null, // 配送方式数据
         Activity: null, // 商家支持活动数据
@@ -403,7 +479,6 @@
         display: block;
         position: fixed;
         top: 4.6rem;
-        padding-bottom: 9.3rem;
         height: 100%;
         .activity_type {
           padding-top: 1rem;
@@ -442,7 +517,6 @@
           button {
             padding: 0.7rem 1rem;
             width: 46%;
-            margin: 0 2%;
             box-sizing: border-box;
             border: 1px #BBBBBB solid;
             border-radius: 4px;
@@ -746,5 +820,71 @@
     border-bottom: #f5ca1d solid 3px;
     padding: 0 0 0.5rem 0;
     margin: 0 8px;
+  }
+
+  .car_type_list {
+    padding: 0.5rem;
+    .type_item {
+      border: #DDDDDD 1px solid;
+      display: inline-block;
+      margin: 0.2rem 0.1rem;
+      font-size: 0.8rem;
+      background-color: #fff;
+      p {
+        padding: 0.2rem 0 0.2rem 0.3rem;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      img {
+        margin-right: 0.2rem;
+        vertical-align: middle;
+        width: 0.8rem;
+      }
+    }
+  }
+
+  .car_list {
+    background-color: #fff;
+    .list_item {
+      display: flex;
+      padding: 0.5rem;
+      line-height: 1.5;
+      .cont_img {
+        flex: 0 0 40%;
+        img {
+          border-radius: 4px;
+        }
+      }
+      .cont {
+        flex: 0 0 60%;
+        padding: 0 0.7rem 0.7rem 0.7rem;
+        height: 6rem;
+        border-bottom: #ececec 1px solid;
+        .cont_title {
+          overflow:hidden;
+          text-overflow:ellipsis;
+          display:-webkit-box;
+          -webkit-box-orient:vertical;
+          -webkit-line-clamp:2;
+        }
+        .cont_price {
+          color: #F54E4E;
+          font-size: 1.3rem;
+          font-weight: bold;
+        }
+
+        .cont_local {
+          font-size: 0.8rem;
+          color: #999;
+          img {
+            vertical-align: middle;
+          }
+          span {
+            vertical-align: middle;
+          }
+        }
+      }
+    }
   }
 </style>
