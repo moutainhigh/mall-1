@@ -112,10 +112,10 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
      */
     @ApiOperation(value = "通过商品ID查询所有货品")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int")})
-    @PostMapping(value = "getProductsByCommodityId")
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")})
+    @GetMapping(value = "getProductsByCommodityId/{commodityId}")
     @IgnoreAuthentication
-    public ResponseResult getProductsByCommodityId(@RequestParam int commodityId) {
+    public ResponseResult getProductsByCommodityId(@PathVariable int commodityId) {
         Map<String, Object> firstFloor = new HashMap<String, Object>();//第一层
         Map<String, Object> twoFloor = new HashMap<String, Object>();//第二层
         List<Product> products = commodityService.getProductsByCommodityId(commodityId);
