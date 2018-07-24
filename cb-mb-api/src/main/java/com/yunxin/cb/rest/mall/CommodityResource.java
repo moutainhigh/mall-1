@@ -5,16 +5,13 @@ import com.yunxin.cb.mall.entity.Product;
 import com.yunxin.cb.mall.entity.ProductAttribute;
 import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.rest.BaseResource;
-import com.yunxin.cb.vo.AttributeVo;
+import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ServletContextAware;
 
 import javax.annotation.Resource;
@@ -52,9 +49,10 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
      */
     @ApiOperation(value = "通过货品ID查询商品详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "post", dataType = "int")})
-    @PostMapping(value = "getCommdityDetail")
-    public ResponseResult getCommdityDetail(@RequestParam int productId){
+            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "path", dataType = "int")})
+    @GetMapping(value = "getCommdityDetail/{productId}")
+    @IgnoreAuthentication
+    public ResponseResult getCommdityDetail(@PathVariable int productId){
         int customerId=getCustomerId();
         Map map=commodityService.getCommdityDetail(productId,customerId);
         Commodity commodity=(Commodity)map.get("commodity");
@@ -90,6 +88,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "getProductsByCommodityId")
+    @IgnoreAuthentication
     public ResponseResult getProductsByCommodityId(@RequestParam int commodityId) {
         Map<String, Object> firstFloor = new HashMap<String, Object>();//第一层
         Map<String, Object> twoFloor = new HashMap<String, Object>();//第二层

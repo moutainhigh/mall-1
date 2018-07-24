@@ -7,7 +7,7 @@ import java.util.Date;
  * @auther: eleven
  * @date: 2018/7/18 20:01
  */
-public class Favorite {
+public class Favorite implements java.io.Serializable{
     /** 收藏Id */
     private Integer favoriteId;
 
