@@ -17,7 +17,7 @@ public class CustomerVo  implements Serializable {
     /**
      * 邀请码
      */
-    private String recommendMobile;
+    private String invitationCode;
     /**
      * 验证码
      */
@@ -59,12 +59,12 @@ public class CustomerVo  implements Serializable {
         this.pwd = pwd;
     }
 
-    public String getRecommendMobile() {
-        return recommendMobile;
+    public String getInvitationCode() {
+        return invitationCode;
     }
 
-    public void setRecommendMobile(String recommendMobile) {
-        this.recommendMobile = recommendMobile;
+    public void setInvitationCode(String invitationCode) {
+        this.invitationCode = invitationCode;
     }
 
     public String getCode() {
