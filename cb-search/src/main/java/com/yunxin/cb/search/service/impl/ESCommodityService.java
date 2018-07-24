@@ -1,9 +1,10 @@
-package com.yunxin.cb.mall.service.imp;
+package com.yunxin.cb.search.service.impl;
 
 
-import com.yunxin.cb.mall.dao.CommodityEsDao;
-import com.yunxin.cb.mall.entity.CommodityEs;
-import com.yunxin.cb.mall.service.IESCommodityService;
+
+import com.yunxin.cb.search.repository.CommodityEsDao;
+import com.yunxin.cb.search.service.IESCommodityService;
+import com.yunxin.cb.search.vo.CommodityEs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
