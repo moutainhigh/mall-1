@@ -86,32 +86,47 @@ public class MainResource extends BaseResource {
 //        }
 //        return new ResponseResult(Result.FAILURE, "注册失败");
 //    }
+
+    @ApiOperation(value = "用户注册验证")
+    @PostMapping(value = "registerFirst")
+    public ResponseResult registerFirst(@RequestBody CustomerVo customerVo){
+        try {
+        //校验验证码
+        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(customerVo.getMobile());
+        //验证码不存在
+        if (verificationCode == null){
+            return new ResponseResult(Result.FAILURE, "验证码不存在");
+        }
+        //验证码超过5分钟，失效
+        if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
+            return new ResponseResult(Result.FAILURE, "验证码失效");
+        }
+        //验证码错误
+        if (!verificationCode.getCode().equals(customerVo.getCode())) {
+            return new ResponseResult(Result.FAILURE, "验证码错误");
+        }
+        //邀请码或者手机号码
+        String invitationCode=customerVo.getInvitationCode();
+        //验证推荐人手机号
+        Customer recommendCustomer = customerService.getCustomerByInvitationCode(invitationCode);
+        if(StringUtils.isNotBlank(invitationCode)){
+            if(recommendCustomer == null){
+                return new ResponseResult(Result.FAILURE, "邀请码或推荐人不存在");
+            }
+        }
+        } catch (Exception e) {
+            logger.error("用户注册异常", e);
+            return new ResponseResult(Result.FAILURE, "用户注册验证异常");
+        }
+        return new ResponseResult(Result.SUCCESS, "验证成功");
+    }
     @ApiOperation(value = "用户注册")
     @PostMapping(value = "register")
     public ResponseResult register(@RequestBody CustomerVo customerVo){
         try {
-            //校验验证码
-            VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(customerVo.getMobile());
-            //验证码不存在
-            if (verificationCode == null){
-                return new ResponseResult(Result.FAILURE, "验证码不存在");
-            }
-            //验证码超过5分钟，失效
-            if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
-                return new ResponseResult(Result.FAILURE, "验证码失效");
-            }
-            //验证码错误
-            if (!verificationCode.getCode().equals(customerVo.getCode())) {
-                return new ResponseResult(Result.FAILURE, "验证码错误");
-            }
-            String recommendMobile=customerVo.getRecommendMobile();
-            //验证推荐人手机号
-            Customer recommendCustomer = customerService.getCustomerByMobile(recommendMobile);
-            if(StringUtils.isNotBlank(recommendMobile)){
-                if(recommendCustomer == null){
-                    return new ResponseResult(Result.FAILURE, "邀请码不存在");
-                }
-            }
+
+            String invitationCode=customerVo.getInvitationCode();
+            Customer recommendCustomer = customerService.getCustomerByMobile(invitationCode);
             Customer customer = new Customer();
             customer.setAccountName(customerVo.getMobile());
             customer.setMobile(customerVo.getMobile());
@@ -124,6 +139,7 @@ public class MainResource extends BaseResource {
             customer.setCardPositiveImg(customerVo.getCardPositiveImg());
             customer.setCardNegativeImg(customerVo.getCardNegativeImg());
             customer.setBankCardImg(customerVo.getBankCardImg());
+
             if(recommendCustomer != null){
                 customer.setRecommendCustomer(recommendCustomer);
             }
