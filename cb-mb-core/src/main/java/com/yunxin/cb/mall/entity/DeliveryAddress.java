@@ -1,5 +1,7 @@
 package com.yunxin.cb.mall.entity;
 
+import com.yunxin.cb.mall.entity.meta.AddressType;
+
 /**
  * DeliveryAddress 数据实体类
  */
@@ -15,7 +17,7 @@ public class DeliveryAddress implements java.io.Serializable{
     /**
      * 收货地址类型
      */
-    private Integer addressType;
+    private int addressType;
 
     /**
      * 市
@@ -104,7 +106,7 @@ public class DeliveryAddress implements java.io.Serializable{
      *
      * @mbg.generated Wed Jul 18 09:54:14 CST 2018
      */
-    public Integer getAddressType() {
+    public int getAddressType() {
         return addressType;
     }
 
@@ -116,7 +118,7 @@ public class DeliveryAddress implements java.io.Serializable{
      *
      * @mbg.generated Wed Jul 18 09:54:14 CST 2018
      */
-    public void setAddressType(Integer addressType) {
+    public void setAddressType(int addressType) {
         this.addressType = addressType;
     }
 

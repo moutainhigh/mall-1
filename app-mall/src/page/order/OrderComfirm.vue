@@ -1,9 +1,10 @@
 <template>
   <div>
     <head-top :headTitle="headTitle"></head-top>
+    <div style="height: 30px"></div>
     <group>
-      <x-input title="姓名" v-model="value" placeholder="请填写真实姓名"></x-input>
-      <x-input title="手机号" v-model="value" placeholder="请填写联系手机号"></x-input>
+      <x-input title="姓名" placeholder="请填写真实姓名"></x-input>
+      <x-input title="手机号" placeholder="请填写联系手机号"></x-input>
       <cell title="提车地址" value-align="left" align-items="flex-start" value="广东省深圳市龙华区油松社区中裕冠大道1号1018号"></cell>
     </group>
 
@@ -14,30 +15,29 @@
     </div>
 
     <div style="background: #ffffff">
-      <p style="font-size: 16px; padding: 12px 14px">深圳中升汇宝宝马4S店</p>
-      <div style="height: 106px; line-height: 1.5; background: #FAFAFA">
-        <img style="width: 78px; height: 78px; padding: 14px; float: left; border-radius: 6px"
-             src="../../assets/logo.png">
-        <p style="margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-top: 14px">宝马 宝马X1
-          2018款 sDrive18Li 尊享型尊享型</p>
-        <span style="font-size: 14px; color: #888888">雪山白 2.0L 自动</span>
-        <p style="color: #F54E4E">￥<span style="font-size: 25px; font-weight: bold">26.98</span>万</p>
+      <p class="shopName">深圳中升汇宝宝马4S店</p>
+      <div class="orderIntro">
+        <img src="../../assets/logo.png">
+        <p class="orderCarTitle">宝马 宝马X1 2018款 sDrive18Li 尊享型尊享型</p>
+        <span class="orderCarConfig">雪山白 2.0L 自动</span>
+        <p class="orderCarPrice">￥<span>26.98</span>万</p>
       </div>
       <div style="padding: 2px 0">
-        <p style="padding: 7px 15px; font-size: 15px">车型<span style="font-weight: bold; float: right">轿车</span></p>
-        <p style="padding: 7px 15px; font-size: 15px">坐席<span style="font-weight: bold; float: right">4-5座</span></p>
-        <p style="padding: 7px 15px; font-size: 15px">燃料<span style="font-weight: bold; float: right">汽油</span></p>
+        <p class="carInfo">车型<span>轿车</span></p>
+        <p class="carInfo">坐席<span>4-5座</span></p>
+        <p class="carInfo">燃料<span>汽油</span></p>
       </div>
     </div>
-    <p style="color: #888888; font-size: 13px; padding: 8px 14px">点击提交即视为同意<span style="color: #333333">《隐私政策》</span>
+    <p class="agree">点击提交即视为同意<span style="color: #333333">《隐私政策》</span>
     </p>
     <div style="height: 70px">
       <div class="i-footer">
-        <button @click="">
+        <button @click="submit">
           <div>提交</div>
         </button>
       </div>
     </div>
+    <alert v-model="isAlert" :title="'温馨提示'" :content="'您的信用额度不够，无法贷款购买此款车型，请选择其他车型'" :button-text="'我知道了'"></alert>
 
     <div class="type-mode" v-if="checkType">
       <div class="modeTitle">
@@ -63,14 +63,15 @@
 
 <script>
   import headTop from '../../components/header/head'
-  import { XInput, Cell } from 'vux'
+  import {XInput, Cell, Alert} from 'vux'
 
   export default {
     name: "OrderComfirm",
     components: {
       headTop,
       XInput,
-      Cell
+      Cell,
+      Alert
     },
     data() {
       return {
@@ -79,6 +80,7 @@
         buyModes: ['贷款支付', '在线支付'],
         checkType: false,
         activeMode: 0,
+        isAlert: false,
       }
     },
     methods: {
@@ -86,6 +88,15 @@
         this.activeMode = index;
         this.buytype = this.buyModes[index];
       },
+      submit() {
+        if (this.buytype == '贷款支付') {
+          this.isAlert = true;
+        } else {
+          this.$router.push({
+            path: "/order-success"
+          })
+        }
+      }
     }
   }
 </script>
@@ -114,6 +125,63 @@
     padding: 10px;
     float: left;
     font-weight: bold
+  }
+
+  .shopName {
+    font-size: 16px;
+    padding: 12px 14px
+  }
+
+  .orderIntro {
+    height: 106px;
+    line-height: 1.5;
+    background: #FAFAFA
+  }
+
+  .orderIntro img {
+    width: 78px;
+    height: 78px;
+    padding: 14px;
+    float: left;
+    border-radius: 6px
+  }
+
+  .orderCarTitle {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-top: 14px
+  }
+
+  .orderCarConfig {
+    font-size: 14px;
+    color: #888888
+  }
+
+  .orderCarPrice {
+    color: #F54E4E
+  }
+
+  .orderCarPrice span {
+    font-size: 25px;
+    font-weight: bold
+  }
+
+  .carInfo {
+    padding: 7px 15px;
+    font-size: 15px
+  }
+
+  .carInfo span {
+    font-weight: bold;
+    float: right
+  }
+
+  .agree {
+    color: #888888;
+    font-size: 13px;
+    padding: 8px 14px
   }
 
   .type-mode {
