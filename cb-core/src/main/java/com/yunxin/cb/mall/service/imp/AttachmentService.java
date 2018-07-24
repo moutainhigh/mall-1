@@ -64,11 +64,27 @@ public class AttachmentService implements IAttachmentService {
         Attachment attachment=new Attachment();
         attachment.setObjectId(objectId);
         attachment.setCreateTime(new Date());
-        attachment.setFilePath(filePath);
+        attachment.setFilePath(filePath.split(",")[0]);
+        attachment.setFileName(filePath.split(",")[1]);
+        attachment.setInputId(filePath.split(",")[2]);
         attachment.setObjectType(objectType);
+        attachment.setStaffId(0);
         attachmentDao.save(attachment);
         return attachment;
     }
 
+    /**
+     * 删除Attachment
+     * @author      likang
+     * @param objectType
+    * @param objectId
+     * @return      void
+     * @exception
+     * @date        2018/7/24 16:34
+     */
+    @Override
+    public void deleteAttachment(ObjectType objectType, int objectId){
+        attachmentDao.deleteByObjectTypeAndObjectId(objectType,objectId);
+    }
 
 }

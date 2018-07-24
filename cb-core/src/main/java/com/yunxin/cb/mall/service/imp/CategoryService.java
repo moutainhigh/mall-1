@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.service.imp;
 
+import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.mall.dao.CategoryDao;
 import com.yunxin.cb.mall.dao.CommodityCategoryDao;
 import com.yunxin.cb.mall.dao.FilterItemDao;
