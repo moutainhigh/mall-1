@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.web.action.commodity;
 
 import com.yunxin.cb.mall.entity.Brand;
+import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.service.IBrandService;
 import com.yunxin.cb.mall.service.ICategoryService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
@@ -36,6 +37,8 @@ public class BrandController {
 
     @Resource
     private MessageSource messageSource;
+    @Resource
+    private IAttachmentService  attachmentService;
 
     @RequestMapping(value = "brands")
     public String brands(ModelMap modelMap) {
@@ -87,10 +90,13 @@ public class BrandController {
      * @return
      */
     @RequestMapping(value = "addBrand", method = RequestMethod.POST)
-    public String addBrand(@ModelAttribute("brand") Brand brand,BindingResult result, ModelMap modelMap,Locale locale) {
-
+    public String addBrand(@ModelAttribute("brand") Brand brand,BindingResult result,@RequestBody String imgurl[],ModelMap modelMap,Locale locale) {
         try {
             brandService.addBrand(brand);
+            //保存图片路径
+            for (String imgu:imgurl) {
+
+            }
         } catch (EntityExistException e) {
             result.addError(new FieldError("brand", "brandName", brand.getBrandEnName(), true, null, null,
                     messageSource.getMessage("brand_brandName_repeat", null, locale)));
