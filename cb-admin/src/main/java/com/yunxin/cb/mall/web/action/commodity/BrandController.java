@@ -1,18 +1,12 @@
 package com.yunxin.cb.mall.web.action.commodity;
 
 import com.yunxin.cb.mall.entity.Brand;
-import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.service.IBrandService;
 import com.yunxin.cb.mall.service.ICategoryService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.cb.security.SecurityConstants;
-import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.cb.security.SecurityConstants;
-import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.cb.mall.service.IBrandService;
-import com.yunxin.cb.mall.service.ICategoryService;
-import com.yunxin.cb.mall.vo.TreeViewItem;
+import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -134,6 +128,7 @@ public class BrandController {
         try {
             brandService.updateBrand(brand);
         } catch (EntityExistException e) {
+
             result.addError(new FieldError("brand", "brandName", brand.getBrandEnName(), true, null, null,
                     messageSource.getMessage("brand_brandName_repeat", null, locale)));
             return toEditBrand(brand.getBrandId(), modelMap);
