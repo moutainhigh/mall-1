@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div style="height: 3rem"></div>
     <head-top :headTitle="headTitle">
       <div slot="head-tab" class="head-tab" v-if="scroll > 350 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
