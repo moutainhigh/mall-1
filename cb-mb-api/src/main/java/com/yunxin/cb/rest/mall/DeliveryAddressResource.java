@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.service.DeliveryAddressService;
 import com.yunxin.cb.mall.vo.DeliveryAddressVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.security.interceptor.AuthInterceptor;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
@@ -31,7 +32,7 @@ public class DeliveryAddressResource extends BaseResource {
     @Resource
     private DeliveryAddressService deliveryAddressService;
 
-    @ApiOperation(value = "通过用户ID查询收货地址列表")
+    @ApiOperation(value = "通过用户ID查询收货地址列表 V1")
     @ApiImplicitParams({
     })
     @GetMapping(value = "deliveryAddress/list")
@@ -50,7 +51,6 @@ public class DeliveryAddressResource extends BaseResource {
             logger.info("addDeliveryAddress failed", e);
             return new ResponseResult(Result.FAILURE);
         }
-
     }
 
     @ApiOperation(value = "收货地址详情")

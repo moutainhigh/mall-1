@@ -11,4 +11,5 @@ public interface CommodityDao extends ElasticsearchRepository<Commodity, Integer
 
 
     Page<Commodity> findByCommodityNameLike(String content, Pageable pageable);
+
 }

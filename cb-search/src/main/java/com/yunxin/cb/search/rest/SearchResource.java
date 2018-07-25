@@ -31,7 +31,7 @@ public class SearchResource extends BaseResource {
     @PostMapping(value = "keywordSearch")
     public ResponseResult keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size){
        Page pager =  commodityService.search(keyword, new PageRequest(page, size));
-        return new ResponseResult(pager.getContent());
+       return new ResponseResult(pager.getContent());
     }
 
     @PostMapping(value = "addCommodity")

@@ -1,6 +1,5 @@
 package com.yunxin.cb.mall.web.action.sale;
 
-import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.AuditState;
 import com.yunxin.cb.mall.entity.meta.ChannelType;
@@ -11,23 +10,10 @@ import com.yunxin.cb.mall.exception.ProductBarterException;
 import com.yunxin.cb.mall.exception.ProductReturnException;
 import com.yunxin.cb.mall.service.IOrderService;
 import com.yunxin.cb.mall.service.IPayService;
+import com.yunxin.cb.mall.web.vo.JsonResult;
 import com.yunxin.cb.security.SecurityConstants;
-import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.LogicUtils;
-import com.yunxin.cb.mall.entity.meta.AuditState;
-import com.yunxin.cb.mall.entity.meta.ChannelType;
-import com.yunxin.cb.mall.entity.meta.OrderState;
-import com.yunxin.cb.mall.exception.BusinessNotInStockException;
-import com.yunxin.cb.mall.exception.CommonException;
-import com.yunxin.cb.mall.exception.ProductBarterException;
-import com.yunxin.cb.mall.exception.ProductReturnException;
-import com.yunxin.cb.mall.service.IOrderService;
-import com.yunxin.cb.mall.service.IPayService;
-import com.yunxin.cb.mall.web.vo.JsonResult;
-import com.yunxin.cb.mall.web.vo.ResponseResult;
-import com.yunxin.cb.mall.web.vo.ResultType;
-import com.yunxin.cb.security.SecurityConstants;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -243,6 +229,20 @@ public class OrderController {
         } catch (CommonException e) {
             return "redirect:../common/failure.do?reurl=sale/returnOrders.do&msgContent="+e.getMessage();
         }
+    }
+
+    @RequestMapping(value = "loanOrders",method = RequestMethod.GET)
+    public String loanOrders(HttpSession session,ModelMap modelMap) {
+        Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
+        modelMap.put("seller",seller);
+        return "sale/loanOrders";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "pageLoanOrders",method = RequestMethod.POST)
+    public Page<OrderLoanApply> pageLoanOrders(@RequestBody PageSpecification query, HttpServletRequest request) {
+        Page<OrderLoanApply> page = orderService.pageLoanOrders(query);
+        return page;
     }
 }
 

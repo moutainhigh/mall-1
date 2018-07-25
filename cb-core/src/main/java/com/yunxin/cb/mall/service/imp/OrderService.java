@@ -100,6 +100,9 @@ public class OrderService implements IOrderService {
     @Resource
     private OrderInvoiceDao orderInvoiceDao;
 
+    @Resource
+    private OrderLoanApplyDao orderLoanApplyDao;
+
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Order getOrderByCode(String orderCode) {
@@ -782,5 +785,20 @@ public class OrderService implements IOrderService {
     public void updateOrderItemEvaluate(int itemId) {
         OrderItem item = orderItemDao.findOne(itemId);
         item.setEvaluate(true);
+    }
+
+    @Override
+    public Page<OrderLoanApply> pageLoanOrders(PageSpecification<OrderLoanApply> query) {
+        query.setCustomSpecification(new CustomSpecification<OrderLoanApply>() {
+            public void buildFetch(Root<OrderLoanApply> root) {
+                root.fetch(OrderLoanApply_.order, JoinType.LEFT);
+                root.fetch(OrderLoanApply_.customer, JoinType.LEFT);
+            }
+            @Override
+            public void addConditions(Root<OrderLoanApply> root, CriteriaQuery<?> query, CriteriaBuilder builder, List<Predicate> predicates) {
+                query.orderBy(builder.desc(root.get(OrderLoanApply_.createTime)));
+            }
+        });
+        return orderLoanApplyDao.findAll(query, query.getPageRequest());
     }
 }

@@ -1,5 +1,6 @@
 package com.yunxin.cb.rest.mall;
 
+import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.mall.vo.*;
@@ -27,7 +28,7 @@ import java.util.*;
  */
 @Api(description = "商城商品接口")
 @RestController
-@RequestMapping(value = "/mall/commodity")
+@RequestMapping(value = "/{version}/mall/commodity")
 public class CommodityResource extends BaseResource implements ServletContextAware {
 
     @Resource
@@ -51,6 +52,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "path", dataType = "int")})
     @GetMapping(value = "getCommdityDetail/{productId}")
+    @ApiVersion(1)
     @IgnoreAuthentication
     public ResponseResult getCommdityDetail(@PathVariable int productId){
         CommodityVo commodityVo=new CommodityVo();
@@ -65,7 +67,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
             Map specs=(Map)map.get("specs");
             Map paymetType=(Map)map.get("paymentType");
             Favorite favorite=(Favorite)map.get("favorite");
-            List imageSet=(List)map.get("imageSet");
+            Set imageSet=(Set)map.get("imageSet");
             ProductVo productVo=null;
             PriceSectionVo priceSectionVo=null;
             SellerVo sellerVo=null;
@@ -114,6 +116,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")})
     @GetMapping(value = "getProductsByCommodityId/{commodityId}")
+    @ApiVersion(1)
     @IgnoreAuthentication
     public ResponseResult getProductsByCommodityId(@PathVariable int commodityId) {
         Map<String, Object> firstFloor = new HashMap<String, Object>();//第一层

@@ -11,20 +11,20 @@ import javax.annotation.Resource;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    @Resource
-    private CategoryDao categoryDao;
-    @Override
-    public void addCategory(Category category) {
-        categoryDao.save(category);
-    }
-
-    @Override
-    public Page<Category> search(String categoryName, Pageable pageable) {
-        return categoryDao.findByCategoryNameLike(categoryName,pageable);
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-        categoryDao.deleteById(id);
-    }
+//    @Resource
+//    private CategoryDao categoryDao;
+//    @Override
+//    public void addCategory(Category category) {
+//        categoryDao.save(category);
+//    }
+//
+//    @Override
+//    public Page<Category> search(String categoryName, Pageable pageable) {
+//        return categoryDao.findByCategoryNameLike(categoryName,pageable);
+//    }
+//
+//    @Override
+//    public void deleteById(Integer id) {
+//        categoryDao.deleteById(id);
+//    }
 }

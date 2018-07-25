@@ -6,7 +6,7 @@ import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IFeedbackService;
-import com.yunxin.cb.mall.vo.CustomerCardVo;
+import com.yunxin.cb.mall.vo.CustomerInfoVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
@@ -197,13 +197,13 @@ public class CustomerResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
-    @ApiOperation(value = "查询客户身份证银行卡信息")
-    @PostMapping(value = "getCustomerCard")
-    public ResponseResult getCustomerCard(@ModelAttribute("customerId") int customerId) throws Exception{
+    @ApiOperation(value = "查询客户基本信息")
+    @PostMapping(value = "getCustomerInfo")
+    public ResponseResult getCustomerInfo(@ModelAttribute("customerId") int customerId) throws Exception{
         Customer customer = customerService.getCustomerById(customerId);
-        CustomerCardVo customerCardVo = new CustomerCardVo();
-        BeanUtils.copyProperties(customerCardVo, customer);
-        return new ResponseResult(customerCardVo);
+        CustomerInfoVo customerInfoVo = new CustomerInfoVo();
+        BeanUtils.copyProperties(customerInfoVo, customer);
+        return new ResponseResult(customerInfoVo);
     }
 
     @ApiOperation(value = "提交反馈")

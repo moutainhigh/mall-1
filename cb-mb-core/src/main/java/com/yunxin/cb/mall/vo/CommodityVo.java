@@ -3,8 +3,8 @@ package com.yunxin.cb.mall.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @title: 商品VO
@@ -78,7 +78,7 @@ public class CommodityVo  implements java.io.Serializable{
 
     /** 商品图片 */
     @ApiModelProperty(value="商品图片",name="imageSet",example="bmw.jpg")
-    private List<String> imageSet;
+    private Set<String> imageSet;
 
     /** 货品 */
     @ApiModelProperty(value="货品",name="productVo",example="货品")
@@ -216,11 +216,11 @@ public class CommodityVo  implements java.io.Serializable{
         this.paymentType = paymentType;
     }
 
-    public List<String> getImageSet() {
+    public Set<String> getImageSet() {
         return imageSet;
     }
 
-    public void setImageSet(List<String> imageSet) {
+    public void setImageSet(Set<String> imageSet) {
         this.imageSet = imageSet;
     }
 

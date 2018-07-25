@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.vo.CustomerVo;
+import com.yunxin.cb.mall.vo.RecommendCustomerVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.meta.SendType;
 import com.yunxin.cb.rest.BaseResource;
@@ -20,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -215,6 +217,14 @@ public class MainResource extends BaseResource {
             }
         }
         return new ResponseResult(Result.FAILURE, "登陆失败");
+    }
+
+    @ApiOperation(value = "通过邀请码查询推荐人手机号和邀请人名称")
+    @GetMapping(value = "recommendCustomer/{invitationCode}")
+    public ResponseResult recommendCustomer(@PathVariable String invitationCode) {
+        Customer customer = customerService.getCustomerByInvitationCode(invitationCode);
+        RecommendCustomerVo recommendCustomerVo = new RecommendCustomerVo(customer);
+        return new ResponseResult(recommendCustomerVo);
     }
 
     @ApiOperation(value ="修改密码")

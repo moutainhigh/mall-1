@@ -28,6 +28,10 @@ public class ProductReturnApplyVO implements java.io.Serializable{
     @ApiModelProperty(value="退货原因",name="returnReason",example="我不想买了")
     private String returnReason;
 
+    /** 原因 */
+    @ApiModelProperty(value="原因",name="reason",example="我不想买了")
+    private String reason;
+
     public Integer getOrderId() {
         return orderId;
     }
@@ -52,12 +56,21 @@ public class ProductReturnApplyVO implements java.io.Serializable{
         this.returnReason = returnReason;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
     @Override
     public String toString() {
         return "ProductReturnApplyVO{" +
                 "orderId=" + orderId +
                 ", itemId=" + itemId +
                 ", returnReason='" + returnReason + '\'' +
+                ", reason='" + reason + '\'' +
                 '}';
     }
 }
