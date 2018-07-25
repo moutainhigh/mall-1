@@ -1,17 +1,14 @@
 package com.yunxin.cb.search.vo;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-
 /**
  * 运营分类
  */
-@Document(indexName = "crystal_ball", type = "category")
+
 public class Category implements java.io.Serializable {
     /**
      * ID
      */
-    @Id
+
     private int categoryId;
     /**
      * 分类编号

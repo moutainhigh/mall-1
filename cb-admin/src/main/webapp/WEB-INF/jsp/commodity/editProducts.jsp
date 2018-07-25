@@ -221,12 +221,7 @@
                             <c:forEach var="product" items="${products}">
                                 <tr id="product${product.productId}">
                                     <td>${product.productNo}</td>
-                                    <%--<td>${product.productName}</td>--%>
-                                    <td>
-                                        <c:forEach var="pa" items="${product.productAttributes}">
-                                            ${pa.attribute.attributeGroup.groupName}:${pa.attribute.attributeName}&nbsp;&nbsp;
-                                        </c:forEach>
-                                    </td>
+                                    <td>${product.productName}</td>
                                     <td>${product.costPrice}</td>
                                     <td>${product.salePrice}</td>
                                     <td>${product.marketPrice}</td>

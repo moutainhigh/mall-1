@@ -16,13 +16,13 @@ public class DeliveryAddressVO implements java.io.Serializable{
     /**
      *
      */
-    @ApiModelProperty(value="地址ID",name="addressId",example="枚举:家庭、公司、其他")
+    @ApiModelProperty(value="地址ID",name="addressId")
     private int addressId;
 
     /**
      * 收货地址类型
      */
-    @ApiModelProperty(value="地址类型",name="addressType",example="1")
+    @ApiModelProperty(value="地址类型",name="addressType",example="枚举:家庭、公司、其他")
     private AddressType addressType;
 
     /**

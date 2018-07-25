@@ -64,6 +64,7 @@ public class AttachmentService implements IAttachmentService {
         Attachment attachment=new Attachment();
         attachment.setObjectId(objectId);
         attachment.setCreateTime(new Date());
+        //path格式：七牛url，fileName,保存的inputid（用于前端删除）
         attachment.setFilePath(filePath.split(",")[0]);
         attachment.setFileName(filePath.split(",")[1]);
         attachment.setInputId(filePath.split(",")[2]);

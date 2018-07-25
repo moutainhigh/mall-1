@@ -454,12 +454,6 @@
                   ${brand.category.categoryName}
                 </div>
                 <div class="col-sm-1"></div>
-                <div class="col-sm-2">
-                  <label>品牌图片：</label>
-                </div>
-                <div class="col-sm-3">
-                  <img src="..${PIC_PATH}${brand.picPath}" width="120px" height="120px" />
-                </div>
                 <div class="col-sm-1"></div>
               </div>
 
@@ -488,7 +482,73 @@
                   <div class="col-sm-1"></div>
                 </div>
               </div>
+              <div class="spacer-30"></div>
+              <hr>
+              <div class="spacer-30"></div>
 
+              <div class="row">
+                <div class="col-sm-2">
+                  <label>品牌图片：</label>
+                </div>
+                <div class="col-sm-9">
+                  <%--图片上传控件--%>
+                  <link href="../js/plugins/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
+                  <script src="../js/plugins/fileinput/fileinput.min.js" type="text/javascript"></script>
+                  <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
+                  <script type="text/javascript">
+                      $(function(){
+                          var initPreview = new Array();//展示元素
+                          var initPreviewConfig = new Array();//展示设置
+                          //初始化图片上传组件
+                          $("#picUrl").fileinput({
+                              uploadUrl: "/admin/uploads/uploadFile/COMMODITY.do",
+                              showCaption: true,
+                              minImageWidth: 50,
+                              minImageHeight: 50,
+                              showUpload:false, //是否显示上传按钮
+                              showRemove :false, //显示移除按钮
+                              showPreview :true, //是否显示预览
+                              showCaption:false,//是否显示标题
+                              browseOnZoneClick: false,//是否显示点击选择文件
+                              language: "zh" ,
+                              showBrowse : false,
+                              maxFileSize : 2000,
+                              autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                              overwriteInitial: false,//不覆盖已存在的图片
+                              browseClass:"btn btn-primary", //按钮样式
+                              layoutTemplates:{
+                                  actionUpload:'',    //设置为空可去掉上传按钮
+                                  actionDelete:''
+                              },
+                              maxFileCount: 10  //上传的个数
+                          });
+                          //加载图片
+                          var a='${listAttachment}';
+                          var json=eval('(' + a + ')')
+                          for(var i=0,l=json.length;i<l;i++){
+                              initPreview[i]  = json[i].filePath;
+                              var config = new Object();
+                              config.caption = "";
+                              config.url="/admin/uploads/delete/COMMODITY.do";
+                              config.key=json[i].timeStr;
+                              initPreviewConfig[i]=config;
+                              $("#picUrl").fileinput('refresh', {
+                                  initialPreview: initPreview,
+                                  initialPreviewConfig: initPreviewConfig,
+                                  initialPreviewAsData: true
+                              });
+                              var html='<input name="imgurl" type="hidden" id="'+json.inputId+'" value="'+json[i].filePath+','+json[i].fileName+','+json[i].inputId+'">';
+                              $('#imgDiv').html($('#imgDiv').html()+html);
+                          }
+                      })
+                  </script>
+                  <input id="picUrl"  name="file" type="file" class="file-loading" accept="image/*" multiple>
+                  <div id="imgDiv">
+                  </div>
+                  <%--图片上传控件结束--%>
+                </div>
+                <div class="col-sm-1"></div>
+              </div>
 
               <div class="spacer-30"></div>
               <hr>

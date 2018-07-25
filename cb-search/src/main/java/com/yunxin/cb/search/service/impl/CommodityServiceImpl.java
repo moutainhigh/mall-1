@@ -1,9 +1,9 @@
 package com.yunxin.cb.search.service.impl;
 
 
+import com.yunxin.cb.search.document.Commodity;
 import com.yunxin.cb.search.repository.CommodityDao;
 import com.yunxin.cb.search.service.CommodityService;
-import com.yunxin.cb.search.vo.Commodity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,6 @@ public class CommodityServiceImpl implements CommodityService {
     @Resource
     private CommodityDao commodityDao;
 
-
     @Override
     public void addCommodity(Commodity commodity) {
         commodityDao.save(commodity);
@@ -31,7 +30,9 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public Page<Commodity> search(String content, Pageable pageable) {
-        return commodityDao.findByCommodityNameLike(content, pageable);
+        Page<Commodity> page = commodityDao.findByCommodityNameLike(content, pageable);
+        Page<Commodity> page2 =commodityDao.findAll(pageable);
+        return page2;
     }
 
     @Override
