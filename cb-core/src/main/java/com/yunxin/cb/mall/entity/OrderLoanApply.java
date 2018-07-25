@@ -166,6 +166,7 @@ public class OrderLoanApply implements java.io.Serializable {
         this.auditRemark = auditRemark;
     }
 
+    @Column(length = 255)
     public String getRemark() {
         return remark;
     }
