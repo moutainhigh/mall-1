@@ -124,7 +124,8 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
         Map<String, Object> threeFloor = new HashMap<String, Object>();//第三层
         Map<String, Object> fourFloor = new HashMap<String, Object>();//第四层
         Map<String, Object> fiveFloor = new HashMap<String, Object>();//第五层
-        Map<String, Object> sixFloor = new HashMap<String, Object>();//第六层
+        Set<String> sixValue=new HashSet<String>();
+//        Map<String, Object> sixFloor = new HashMap<String, Object>();//第六层
         String treeKey="";
         String fourKey="";
         String fiveKey="";
@@ -153,7 +154,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
                     //取value---map，没有就实例化
                     fourFloor= (Map<String, Object>)threeFloor.get(treeKey)==null?new HashMap<String, Object>():(Map<String, Object>) threeFloor.get(treeKey);
                     fiveFloor = (Map<String, Object>)fourFloor.get(fourKey)==null?new HashMap<String, Object>():(Map<String, Object>) fourFloor.get(fourKey);
-                    sixFloor = (Map<String, Object>)fiveFloor.get(fiveKey)==null?new HashMap<String, Object>():(Map<String, Object>) fiveFloor.get(fiveKey);
+//                    sixFloor = (Map<String, Object>)fiveFloor.get(fiveKey)==null?new HashMap<String, Object>():(Map<String, Object>) fiveFloor.get(fiveKey);
                     //第四层key放AttributeName
                     fourFloor.put(attributeList.get(1).getAttribute().getAttributeName(),fiveFloor);
                     //第三层key放GroupName
@@ -165,10 +166,11 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
                     twoFloor= (Map<String, Object>) firstFloor.get(oneKey);
                     threeFloor = (Map<String, Object>) twoFloor.get(twoKey);
                     fourFloor= (Map<String, Object>)threeFloor.get(treeKey);
-                    //第六层key放AttributeName
-                    sixFloor.put(sixKey,new HashMap<String, Object>());
+                    sixValue=fiveFloor.get(fiveKey)==null?new HashSet<String>():(Set<String>) fiveFloor.get(fiveKey);
+                    //第六层放AttributeName
+                    sixValue.add(sixKey);
                     //第五层key放GroupName
-                    fiveFloor.put(fiveKey,sixFloor);
+                    fiveFloor.put(fiveKey,sixValue);
                 }
 
             }
