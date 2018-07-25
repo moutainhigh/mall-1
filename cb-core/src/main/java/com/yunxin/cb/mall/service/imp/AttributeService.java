@@ -157,7 +157,7 @@ public class AttributeService implements IAttributeService {
     @Override
     @Transactional(readOnly = true)
     public List<AttributeGroup> getAttributeGroupsByCommodityId(final int commodityId) {
-        return attributeGroupDao.findByCommodity_CommodityIdOrderByGroupNameAsc(commodityId);
+        return attributeGroupDao.findByCommodity_CommodityIdOrderByGroupIdAsc(commodityId);
     }
 
     @Override
