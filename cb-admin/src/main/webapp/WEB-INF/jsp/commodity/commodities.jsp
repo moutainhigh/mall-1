@@ -261,7 +261,7 @@
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
                             <kendo:grid-column title="商品编码" field="commodityCode" width="100"/>
-                            <kendo:grid-column title="商品图片" field="defaultPicPath" width="70" template="<img src='../images/#=defaultPicPath#_64_69.jpg'  width='51px' height='55px'/>" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="商品图片" field="defaultPicPath" width="70" template="<img src='#=defaultPicPath#'  width='51px' height='55px'/>" sortable="false" filterable="false"/>
                             <kendo:grid-column title="商品名称" field="commodityName" width="150" template="<a href='commodityDetail.do?commodityId=#= commodityId#'>#= commodityName#</a>"/>
                             <kendo:grid-column title="商品分类" field="catalog.catalogName" width="130"/>
                             <kendo:grid-column title="商品品牌" field="brand.brandName" width="130"/>

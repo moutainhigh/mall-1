@@ -23,7 +23,7 @@ public interface ICommodityService {
 
     public Commodity addCommodity(Commodity commodity) throws EntityExistException;
 
-    public Commodity updateCommodity(Commodity commodity, String imagesDir) throws EntityExistException;
+    public Commodity updateCommodity(Commodity commodity) throws EntityExistException;
 
     @Transactional(readOnly = true)
     List<CommoditySpec> getCommoditySpecsByCommodity(Commodity commodity);

@@ -48,7 +48,7 @@ axios.interceptors.response.use(
  * @returns {Promise}
  */
 
-export function fetch(url,params={}){
+export function get(url,params={}){
   url = baseUrl + url;
   return new Promise((resolve,reject) => {
     axios.get(url,{
