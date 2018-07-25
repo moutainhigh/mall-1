@@ -116,7 +116,8 @@ public interface CommodityMapper {
 			"SEO_KEY, SEO_TITLE, SHORT_NAME, SPECIAL, UNIT, VOLUME, WEIGHT, BRAND_ID, CATALOG_ID, ",
 			"SECTION_ID, SELLER_ID, PACKING_LIST",
 			"from commodity",
-			"where COMMODITY_ID = #{commodityId,jdbcType=INTEGER}"
+			"where COMMODITY_ID = #{commodityId}",
+			"and COMMODITY_STATE = #{state} and PUBLISH_STATE = #{publish}"
 	})
 	@Results({
 			@Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER, id=true),
@@ -166,7 +167,7 @@ public interface CommodityMapper {
 			@Result(column = "COMMODITY_ID",property = "commoditySpecs",
 					many = @Many(select = "com.yunxin.cb.mall.mapper.CommoditySpecMapper.selectAllByCommodityId"))
 	})
-	Commodity selectCommodityDetailById(Integer commodityId);
+	Commodity selectCommodityDetailById(@Param("commodityId") Integer commodityId,@Param("state") Integer state,@Param("publish") Integer publish);
 
 	@Select({
 			"select",
