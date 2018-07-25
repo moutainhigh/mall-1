@@ -1,8 +1,12 @@
 package com.yunxin.cb.mall.web.action.cms;
 
+import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.cms.service.IArticleService;
 import com.yunxin.cb.mall.entity.Advertisement;
+import com.yunxin.cb.mall.entity.Attachment;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.IAdvertisementService;
+import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.context.MessageSource;
@@ -14,7 +18,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -33,6 +39,9 @@ public class AdvertisementController {
 
     @Resource
     private MessageSource messageSource;
+
+    @Resource
+    private IAttachmentService attachmentService;
 
     @RequestMapping(value = "advertisements", method = RequestMethod.GET)
     public String advertisements(ModelMap modelMap) {
@@ -53,13 +62,21 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = "addAdvertisement", method = RequestMethod.POST)
-    public String addAdvertisement(@Valid @ModelAttribute("advertisement") Advertisement advertisement, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String addAdvertisement(@Valid @ModelAttribute("advertisement") Advertisement advertisement, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
         if (result.hasErrors()) {
             return toAddAdvertisement(advertisement, modelMap);
         }
         try {
-            advertisementService.addAdvertisement(advertisement);
-
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                advertisement.setPicPath(imgurl[0].split(",")[0]);
+                advertisementService.addAdvertisement(advertisement);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.ADVERT,advertisement.getAdvertId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.ADVERT,advertisement.getAdvertId(),imgpath);
+                }
+            }
         } catch (EntityExistException e) {
             result.addError(new FieldError("advertisement", "advertTitle", advertisement.getAdvertTitle(), true, null, null,
                     messageSource.getMessage("advertisement", null, locale)));
@@ -73,20 +90,32 @@ public class AdvertisementController {
     public String toEditAdvertisement(@RequestParam("advertId") int advertId, ModelMap modelMap) {
         Advertisement advertisement = advertisementService.getAdvertisementById(advertId);
         modelMap.addAttribute("advertisement", advertisement);
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.ADVERT,advertId);
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return editAdvertisement(advertisement, modelMap);
     }
 
     private String editAdvertisement(Advertisement advertisement, ModelMap modelMap) {
+
         return "cms/editAdvertisement";
     }
 
     @RequestMapping(value = "editAdvertisement", method = RequestMethod.POST)
-    public String editAdvertisement(@Valid @ModelAttribute("advertisement") Advertisement advertisement, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String editAdvertisement(@Valid @ModelAttribute("advertisement") Advertisement advertisement, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
         if (result.hasErrors()) {
             return toEditAdvertisement(advertisement.getAdvertId(), modelMap);
         }
         try {
-            advertisementService.updateAdvertisement(advertisement);
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                advertisement.setPicPath(imgurl[0].split(",")[0]);
+                advertisementService.updateAdvertisement(advertisement);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.ADVERT,advertisement.getAdvertId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.ADVERT,advertisement.getAdvertId(),imgpath);
+                }
+            }
         } catch (EntityExistException e) {
             result.addError(new FieldError("advertisement", "advertTitle", advertisement.getAdvertTitle(), true, null, null,
                     messageSource.getMessage("article_articleTitle_repeat", null, locale)));

@@ -35,37 +35,26 @@
                             bootbox.alert("请填写正确的序号!");
                             return false;
                         }
-                        /*if (null == $("#iconPath").val() || "" == $("#iconPath").val()) {
-                            bootbox.alert("请选择图标!");
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
                             return false;
+                        } else {
+                            return true;
                         }
-                        if (null == $("#imagePath").val() || "" == $("#imagePath").val()) {
-                            bootbox.alert("请选择宣传图片!");
+                        var defaultPicPath1 = $('input[name="imgurl1"]');
+                        if (defaultPicPath1.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
                             return false;
-                        }*/
-                        /*if ($('input[name="commodityId"]').length==0) {
-                            bootbox.alert("请至少添加一个商品!");
-                            return false;
+                        } else {
+                            return true;
                         }
-                        if ($('input[name="categoryId"]').length==0) {
-                            bootbox.alert("请至少添加一个分类!");
-                            return false;
-                        }*/
-
-
                         return true;
                     }
                 }
             });
 
         });
-//        var idIndex = 0;
-//        function addCommodity() {
-//            var newRow = "<tr id='commodity" + idIndex + "'><td><input type='text' name='commodityName' class='form-control'/></td><td><input type='text' name='sortOrder' class='form-control'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeCommodity(" + idIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
-//            $("#commodityTable tr:last").after(newRow);
-//            idIndex++;
-//        }
-
         function removeCommodity(indx) {
             $("#commodity" + indx).remove();
         }
@@ -160,36 +149,176 @@
                                 <form:checkbox path="enabled"/>
                             </div>
                         </div>
-                        <div class="spacer-10"></div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 图标：</label>
+                                <label><span class="asterisk">*</span>图标：</label>
                             </div>
-                            <div class="col-sm-3">
-                                <a id="chooseIconBtn" class="btn btn-default">选择</a>
-                                <form:hidden path="iconPath" id="iconPath" />
-                                <img id="previewIconPath" src="" style="max-width:60px ">
+                            <div class="col-sm-9">
+                                    <%--图片上传控件--%>
+                                <link href="../js/plugins/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
+                                <script src="../js/plugins/fileinput/fileinput.min.js" type="text/javascript"></script>
+                                <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        var initPreview = new Array();//展示元素
+                                        var initPreviewConfig = new Array();//展示设置
+                                        //初始化图片上传组件
+                                        $("#picUrl").fileinput({
+                                            uploadUrl: "/admin/uploads/uploadFile/HOMEFLOORICO.do",
+                                            showCaption: true,
+                                            minImageWidth: 50,
+                                            minImageHeight: 50,
+                                            showUpload:true, //是否显示上传按钮
+                                            showRemove :false, //显示移除按钮
+                                            showPreview :true, //是否显示预览
+                                            showCaption:false,//是否显示标题
+                                            browseOnZoneClick: true,//是否显示点击选择文件
+                                            language: "zh" ,
+                                            showBrowse : false,
+                                            maxFileSize : 2000,
+                                            autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                                            overwriteInitial: false,//不覆盖已存在的图片
+                                            browseClass:"btn btn-primary", //按钮样式
+                                            // layoutTemplates:{
+                                            //     actionUpload:''    //设置为空可去掉上传按钮
+                                            // },
+                                            maxFileCount: 10  //上传的个数
+                                        }).on("fileuploaded", function (event, data) {
+                                            var response = data.response;
+                                            //添加url到隐藏域
+                                            var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
+                                            $('#imgDiv').html($('#imgDiv').html()+html);
+                                            //上传完成回调
+                                            var index=0;
+                                            if(initPreview.length>0 ){
+                                                index=initPreview.length;
+                                            }
+                                            initPreview[index]  = response.url;
+                                            var config = new Object();
+                                            config.caption = "";
+                                            config.url="/admin/uploads/delete/HOMEFLOORICO.do";
+                                            config.key=response.timeStr;
+                                            initPreviewConfig[index]=config;
+                                            $("#picUrl").fileinput('refresh', {
+                                                initialPreview: initPreview,
+                                                initialPreviewConfig: initPreviewConfig,
+                                                initialPreviewAsData: true
+                                            });
+                                            $(".btn-default").attr("disabled",false);
+                                        }).on("filepredelete", function(jqXHR) {
+                                            var abort = true;
+                                            if (confirm("确定要删除吗？(删除后不会恢复)")) {
+                                                abort = false;
+                                            }
+                                            return abort;
+                                        }).on('filedeleted', function(event, id) {
+                                            $("#"+id).remove();
+                                            for (var i=0;i<initPreview.length;i++)
+                                            {
+                                                if(initPreview[i].indexOf(id) != -1){
+                                                    initPreview.splice(i)
+                                                    initPreviewConfig.splice(i)
+                                                }
+                                            }
+                                        }).on('filebatchselected', function (event, files) {//选中文件事件
+                                            $(".kv-file-upload").click();
+                                        });
+                                    })
+                                </script>
+                                <input id="picUrl" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                                <div id="imgDiv">
+
+                                </div>
+                                    <%--图片上传控件结束--%>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>宣传图片：</label>
+                            </div>
+                            <div class="col-sm-9">
+                                    <%--图片上传控件--%>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        var initPreview = new Array();//展示元素
+                                        var initPreviewConfig = new Array();//展示设置
+                                        //初始化图片上传组件
+                                        $("#picUrl1").fileinput({
+                                            uploadUrl: "/admin/uploads/uploadFile/HOMEFLOORPROPAGANDA.do",
+                                            showCaption: true,
+                                            minImageWidth: 50,
+                                            minImageHeight: 50,
+                                            showUpload:true, //是否显示上传按钮
+                                            showRemove :false, //显示移除按钮
+                                            showPreview :true, //是否显示预览
+                                            showCaption:false,//是否显示标题
+                                            browseOnZoneClick: true,//是否显示点击选择文件
+                                            language: "zh" ,
+                                            showBrowse : false,
+                                            maxFileSize : 2000,
+                                            autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                                            overwriteInitial: false,//不覆盖已存在的图片
+                                            browseClass:"btn btn-primary", //按钮样式
+                                            // layoutTemplates:{
+                                            //     actionUpload:''    //设置为空可去掉上传按钮
+                                            // },
+                                            maxFileCount: 10  //上传的个数
+                                        }).on("fileuploaded", function (event, data) {
+                                            var response = data.response;
+                                            //添加url到隐藏域
+                                            var html='<input name="imgurl1" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
+                                            $('#imgDiv1').html($('#imgDiv1').html()+html);
+                                            //上传完成回调
+                                            var index=0;
+                                            if(initPreview.length>0 ){
+                                                index=initPreview.length;
+                                            }
+                                            initPreview[index]  = response.url;
+                                            var config = new Object();
+                                            config.caption = "";
+                                            config.url="/admin/uploads/delete/HOMEFLOORPROPAGANDA.do";
+                                            config.key=response.timeStr;
+                                            initPreviewConfig[index]=config;
+                                            $("#picUrl1").fileinput('refresh', {
+                                                initialPreview: initPreview,
+                                                initialPreviewConfig: initPreviewConfig,
+                                                initialPreviewAsData: true
+                                            });
+                                            $(".btn-default").attr("disabled",false);
+                                        }).on("filepredelete", function(jqXHR) {
+                                            var abort = true;
+                                            if (confirm("确定要删除吗？(删除后不会恢复)")) {
+                                                abort = false;
+                                            }
+                                            return abort;
+                                        }).on('filedeleted', function(event, id) {
+                                            $("#"+id).remove();
+                                            for (var i=0;i<initPreview.length;i++)
+                                            {
+                                                if(initPreview[i].indexOf(id) != -1){
+                                                    initPreview.splice(i)
+                                                    initPreviewConfig.splice(i)
+                                                }
+                                            }
+                                        }).on('filebatchselected', function (event, files) {//选中文件事件
+                                            $(".kv-file-upload").click();
+                                        });
+                                    })
+                                </script>
+                                <input id="picUrl1" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                                <div id="imgDiv1">
+
+                                </div>
+                                    <%--图片上传控件结束--%>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 宣传图片：</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <a id="chooseImageBtn" class="btn btn-default">选择</a>
-                                <form:hidden path="imagePath" id="imagePath"/>
-                            </div>
-                        </div>
-                        <div class="spacer-10"></div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label>图片预览：</label>
-                            </div>
-                            <div class="col-sm-8">
-                                <img id="previewImagePath" src="" style="max-width:600px ">
-                            </div>
-                        </div>
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>

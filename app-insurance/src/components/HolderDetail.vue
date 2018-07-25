@@ -46,17 +46,16 @@
           出生日期不能为空
         </div>
 
-        <popup-picker id="cardType" title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType"
-                      :data="cardTypes"
-                      value-text-align="left"
-                      v-bind:class="{'errorInput': $v.holder.policyholderCardType.$error}"></popup-picker>
+        <x-input title="证件类型" v-model="holder.policyholderCardType"
+                 v-bind:class="{'errorInput': $v.holder.policyholderCardType.$error}"
+                 @input="$v.holder.policyholderCardType.$touch()" readonly></x-input>
         <div class="error" v-if="!$v.holder.policyholderCardType.required && $v.holder.policyholderCardType.$dirty">
           证件类型不能为空
         </div>
 
         <x-input title="证件号码" v-model="holder.policyholderCardNo" placeholder="请输入证件号"
                  v-bind:class="{'errorInput': $v.holder.policyholderCardNo.$error}"
-                 @input="$v.holder.policyholderCardNo.$touch()"></x-input>
+                 @input="$v.holder.policyholderCardNo.$touch()" readonly></x-input>
         <div class="error" v-if="!$v.holder.policyholderCardNo.required && $v.holder.policyholderCardNo.$dirty">
           证件号码不能为空
         </div>
@@ -141,7 +140,7 @@
 
         <x-input title="移动电话" v-model="holder.policyholderMobile" placeholder="请输入移动电话"
                  v-bind:class="{'errorInput': $v.holder.policyholderMobile.$error}"
-                 @input="$v.holder.policyholderMobile.$touch()"></x-input>
+                 @input="$v.holder.policyholderMobile.$touch()" readonly></x-input>
         <div class="error" v-if="!$v.holder.policyholderMobile.mobile">请输入正确的手机号码</div>
 
         <x-input title="E-mail" v-model="holder.policyholderEmail" placeholder="请输入邮箱地址（选填）"

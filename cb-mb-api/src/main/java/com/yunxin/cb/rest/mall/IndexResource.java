@@ -1,5 +1,6 @@
 package com.yunxin.cb.rest.mall;
 
+import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.FloorInfo;
 import com.yunxin.cb.mall.service.*;
@@ -24,7 +25,7 @@ import java.util.List;
 
 @Api(description = "商城首页")
 @RestController
-@RequestMapping(value = "/mall/index")
+@RequestMapping(value = "/{version}/mall/index")
 public class IndexResource extends BaseResource {
     private static Logger logger = LoggerFactory.getLogger(IndexResource.class);
     @Resource
@@ -40,8 +41,9 @@ public class IndexResource extends BaseResource {
     @Resource
     private CategoryService categoryService;
 
-    @ApiOperation(value = "商城首页")
+    @ApiOperation(value = "商城首页 V1")
     @GetMapping(value = "getIndex")
+    @ApiVersion(1)
     @IgnoreAuthentication
     public ResponseResult index(){
         try{

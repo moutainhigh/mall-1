@@ -4,6 +4,7 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Attachment;
+import com.yunxin.cb.mall.entity.meta.FileType;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public interface IAttachmentService {
     public List<Attachment> findAttachmentByObjectTypeAndObjectId(ObjectType objectType, int objectId);
 
 
-    public Attachment addAttachment(ObjectType objectType,int objectId,String filePath);
+    public Attachment addAttachmentPictures(ObjectType objectType,int objectId,String filePath);
 
 
-    public void deleteAttachment(ObjectType objectType, int objectId);
+    public void deleteAttachmentPictures(ObjectType objectType, int objectId);
 }

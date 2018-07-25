@@ -56,7 +56,8 @@ const holder = {
   //临时变量，省市区
   holderPCD: [],
   unifyAddr:false,
-  careerName:''
+  careerName:'',
+  bankCardImg: ''
 };
 
 const order = {
