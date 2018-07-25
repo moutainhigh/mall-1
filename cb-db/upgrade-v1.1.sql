@@ -78,3 +78,6 @@ CREATE TABLE `customer_trading_record` (
   PRIMARY KEY (`TRADE_RECORD_ID`) USING BTREE,
   CONSTRAINT `customer_trading_record_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客户交易流水表';
+
+--add by wangteng 2018-07-25
+alter table customer add POLICY bit(1) DEFAULT 0 COMMENT '是否买过保单';

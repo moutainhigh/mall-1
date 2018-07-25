@@ -21,13 +21,13 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Api(description = "用户接口")
 @RestController
@@ -128,6 +128,14 @@ public class MainResource extends BaseResource {
         CachedUtil.getInstance().setContext(customerVo.getMobile()+customerVo.getMobile(),random);
         return new ResponseResult(random);
     }
+
+    @ApiOperation(value = "测试生成编码")
+    @PostMapping(value = "generateLevelCode")
+    public ResponseResult generateLevelCode(){
+        List<Customer> list= customerService.findCustomerByLevelCode("100110011001100110011001");
+        return new ResponseResult(list);
+    }
+
     @ApiOperation(value = "用户注册")
     @PostMapping(value = "register")
     public ResponseResult register(@RequestBody CustomerVo customerVo){
@@ -160,6 +168,12 @@ public class MainResource extends BaseResource {
 
             if(recommendCustomer != null){
                 customer.setRecommendCustomer(recommendCustomer);
+                Customer customerCode=customerService.generateCode(invitationCode);
+                if(customerCode!=null){
+                    customer.setLevelCode(customerCode.getLevelCode());
+                    customer.setCustomerLevel(customerCode.getCustomerLevel());
+                    customer.setInvitationCode(customerCode.getInvitationCode());
+                }
             }
             customer = customerService.addCustomer(customer);
             String token = JwtUtil.generateToken(customer.getCustomerId(), customer.getMobile());
