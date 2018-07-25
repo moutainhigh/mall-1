@@ -1,6 +1,7 @@
 package com.yunxin.cb.config;
 
 import com.yunxin.cb.security.interceptor.AuthInterceptor;
+import com.yunxin.cb.web.CustomRequestMappingHandlerMapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.Locale;
 
@@ -15,7 +17,7 @@ import java.util.Locale;
  * @author tanggangyi
  */
 @Configuration
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig extends WebMvcConfigurationSupport {
 
 
     @Override
@@ -44,4 +46,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         super.addInterceptors(registry);
     }
 
+//    @Override
+//    @Bean
+//    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
+//        RequestMappingHandlerMapping handlerMapping = new CustomRequestMappingHandlerMapping();
+//        handlerMapping.setOrder(0);
+//        handlerMapping.setInterceptors(getInterceptors());
+//        return handlerMapping;
+//    }
 }
