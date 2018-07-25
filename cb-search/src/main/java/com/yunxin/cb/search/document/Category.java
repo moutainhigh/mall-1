@@ -1,12 +1,14 @@
-package com.yunxin.cb.search.vo;
+package com.yunxin.cb.search.document;
 
 /**
  * 运营分类
  */
+
 public class Category implements java.io.Serializable {
     /**
      * ID
      */
+
     private int categoryId;
     /**
      * 分类编号

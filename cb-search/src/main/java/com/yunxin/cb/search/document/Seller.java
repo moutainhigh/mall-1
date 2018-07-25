@@ -1,4 +1,4 @@
-package com.yunxin.cb.search.vo;
+package com.yunxin.cb.search.document;
 
 import com.yunxin.cb.search.vo.meta.SellerType;
 

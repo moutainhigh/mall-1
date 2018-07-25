@@ -1,8 +1,9 @@
-package com.yunxin.cb.search.vo;
+package com.yunxin.cb.search.document;
 
 /**
  * 品牌
  */
+
 public class Brand implements java.io.Serializable {
 
     private int brandId;

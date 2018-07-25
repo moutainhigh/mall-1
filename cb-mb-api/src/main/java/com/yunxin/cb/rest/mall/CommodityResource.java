@@ -27,7 +27,7 @@ import java.util.*;
  */
 @Api(description = "商城商品接口")
 @RestController
-@RequestMapping(value = "/mall/commodity")
+@RequestMapping(value = "/{version}/mall/commodity")
 public class CommodityResource extends BaseResource implements ServletContextAware {
 
     @Resource
@@ -51,41 +51,42 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "path", dataType = "int")})
     @GetMapping(value = "getCommdityDetail/{productId}")
+    @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult getCommdityDetail(@PathVariable int productId) {
-        CommodityVo commodityVo = new CommodityVo();
+    public ResponseResult getCommdityDetail(@PathVariable int productId){
+        CommodityVo commodityVo=new CommodityVo();
         try {
-            int customerId = getCustomerId();
-            Map map = commodityService.getCommdityDetail(productId, customerId);
-            Commodity commodity = (Commodity) map.get("commodity");
-            Product product = (Product) map.get("product");
-            PriceSection priceSection = (PriceSection) map.get("priceSection");
-            Seller seller = (Seller) map.get("seller");
-            String showLevel = String.valueOf(map.get("showLevel"));
-            Map specs = (Map) map.get("specs");
-            Map paymetType = (Map) map.get("paymentType");
-            Favorite favorite = (Favorite) map.get("favorite");
-            List imageSet = (List) map.get("imageSet");
-            ProductVo productVo = null;
-            PriceSectionVo priceSectionVo = null;
-            SellerVo sellerVo = null;
-            FavoriteVo favoriteVo = null;
-            BeanUtils.copyProperties(commodityVo, commodity);
-            if (!StringUtils.isEmpty(product)) {
-                productVo = new ProductVo();
-                BeanUtils.copyProperties(productVo, product);
+            int customerId=getCustomerId();
+            Map map=commodityService.getCommdityDetail(productId,customerId);
+            Commodity commodity=(Commodity)map.get("commodity");
+            Product product=(Product)map.get("product");
+            PriceSection priceSection=(PriceSection)map.get("priceSection");
+            Seller seller=(Seller)map.get("seller");
+            String showLevel=String.valueOf(map.get("showLevel"));
+            Map specs=(Map)map.get("specs");
+            Map paymetType=(Map)map.get("paymentType");
+            Favorite favorite=(Favorite)map.get("favorite");
+            Set imageSet=(Set)map.get("imageSet");
+            ProductVo productVo=null;
+            PriceSectionVo priceSectionVo=null;
+            SellerVo sellerVo=null;
+            FavoriteVo favoriteVo=null;
+            BeanUtils.copyProperties(commodityVo,commodity);
+            if(!StringUtils.isEmpty(product)){
+                productVo=new ProductVo();
+                BeanUtils.copyProperties(productVo,product);
             }
-            if (!StringUtils.isEmpty(priceSection)) {
-                priceSectionVo = new PriceSectionVo();
-                BeanUtils.copyProperties(priceSectionVo, priceSection);
+            if(!StringUtils.isEmpty(priceSection)){
+                priceSectionVo=new PriceSectionVo();
+                BeanUtils.copyProperties(priceSectionVo,priceSection);
             }
-            if (!StringUtils.isEmpty(seller)) {
-                sellerVo = new SellerVo();
-                BeanUtils.copyProperties(sellerVo, seller);
+            if(!StringUtils.isEmpty(seller)){
+                sellerVo=new SellerVo();
+                BeanUtils.copyProperties(sellerVo,seller);
             }
-            if (!StringUtils.isEmpty(favorite)) {
-                favoriteVo = new FavoriteVo();
-                BeanUtils.copyProperties(favoriteVo, favorite);
+            if(!StringUtils.isEmpty(favorite)){
+                favoriteVo=new FavoriteVo();
+                BeanUtils.copyProperties(favoriteVo,favorite);
             }
             commodityVo.setProductVo(productVo);
             commodityVo.setPriceSectionVo(priceSectionVo);
@@ -114,60 +115,36 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")})
     @GetMapping(value = "getProductsByCommodityId/{commodityId}")
+    @ApiVersion(1)
     @IgnoreAuthentication
     public ResponseResult getProductsByCommodityId(@PathVariable int commodityId) {
         Map<String, Object> firstFloor = new HashMap<String, Object>();//第一层
         Map<String, Object> twoFloor = new HashMap<String, Object>();//第二层
-        Map<String, Object> threeFloor = new HashMap<String, Object>();//第三层
-        Map<String, Object> fourFloor = new HashMap<String, Object>();//第四层
-        Map<String, Object> fiveFloor = new HashMap<String, Object>();//第五层
-        Map<String, Object> sixFloor = new HashMap<String, Object>();//第六层
-        String treeKey="";
-        String fourKey="";
-        String fiveKey="";
-        String sixKey="";
         List<Product> products = commodityService.getProductsByCommodityId(commodityId);
         for (Product pro : products) {
+            Set<String> threeValue = new HashSet<String>();//第三层的值
             List<ProductAttribute> attributeList = pro.getProductAttributes();
             for (int i = 0; i < attributeList.size(); i++) {
-                //获取第一层和第二层的key
-                String oneKey=attributeList.get(0).getAttribute().getAttributeGroup().getGroupName();
-                String twoKey=attributeList.get(0).getAttribute().getAttributeName();
                 if (i == 0) {
-                    //取value---map，没有就实例化
-                    twoFloor= (Map<String, Object>) firstFloor.get(oneKey)==null?new HashMap<String, Object>():(Map<String, Object>) firstFloor.get(oneKey);
-                    threeFloor = (Map<String, Object>) twoFloor.get(twoKey)==null?new HashMap<String, Object>():(Map<String, Object>) twoFloor.get(twoKey);
+                    Map<String, Object> threeFloor= new HashMap<String, Object>();//第三层
+                    //获取第三层
+                    if(null!=twoFloor.get(attributeList.get(0).getAttribute().getAttributeName())){
+                        threeFloor=(Map<String, Object>)twoFloor.get(attributeList.get(0).getAttribute().getAttributeName());
+                    }
                     //第二层Key取AttributeName，Value放第三层
-                    twoFloor.put(twoKey, threeFloor);
+                    twoFloor.put(attributeList.get(0).getAttribute().getAttributeName(), threeFloor);
                     //第一层Key取GroupName，Value放第二层
-                    firstFloor.put(oneKey, twoFloor);
-                } else if (i == 1) {
-                    //获取key
-                    treeKey = attributeList.get(1).getAttribute().getAttributeGroup().getGroupName();
-                    fourKey = attributeList.get(1).getAttribute().getAttributeName();
-                    twoFloor= (Map<String, Object>) firstFloor.get(oneKey);
-                    threeFloor = (Map<String, Object>) twoFloor.get(twoKey);
-                    //取value---map，没有就实例化
-                    fourFloor= (Map<String, Object>)threeFloor.get(treeKey)==null?new HashMap<String, Object>():(Map<String, Object>) threeFloor.get(treeKey);
-                    fiveFloor = (Map<String, Object>)fourFloor.get(fourKey)==null?new HashMap<String, Object>():(Map<String, Object>) fourFloor.get(fourKey);
-                    sixFloor = (Map<String, Object>)fiveFloor.get(fiveKey)==null?new HashMap<String, Object>():(Map<String, Object>) fiveFloor.get(fiveKey);
-                    //第四层key放AttributeName
-                    fourFloor.put(attributeList.get(1).getAttribute().getAttributeName(),fiveFloor);
-                    //第三层key放GroupName
-                    threeFloor.put(treeKey, fourFloor);
-                } else if (i == 2) {
-                    //获取key
-                    fiveKey= attributeList.get(2).getAttribute().getAttributeGroup().getGroupName();
-                    sixKey = attributeList.get(2).getAttribute().getAttributeName();
-                    twoFloor= (Map<String, Object>) firstFloor.get(oneKey);
-                    threeFloor = (Map<String, Object>) twoFloor.get(twoKey);
-                    fourFloor= (Map<String, Object>)threeFloor.get(treeKey);
-                    //第六层key放AttributeName
-                    sixFloor.put(sixKey,new HashMap<String, Object>());
-                    //第五层key放GroupName
-                    fiveFloor.put(fiveKey,sixFloor);
+                    firstFloor.put(attributeList.get(0).getAttribute().getAttributeGroup().getGroupName(), twoFloor);
+                } else {
+                    //第三层Key取GroupName，Value放AttributeName
+                    String treeKey =attributeList.get(i).getAttribute().getAttributeGroup().getGroupName();
+                    Map<String, Object> two = (Map<String, Object>) firstFloor.get(attributeList.get(0).getAttribute().getAttributeGroup().getGroupName());
+                    Map<String, Object> three = (Map<String, Object>) two.get(attributeList.get(0).getAttribute().getAttributeName());
+                    //获取第三层，并且放入
+                    threeValue = (Set<String>) three.get(treeKey) == null ? new HashSet<String>() : (Set<String>) three.get(treeKey);
+                    threeValue.add(attributeList.get(i).getAttribute().getAttributeName());
+                    three.put(treeKey, threeValue);
                 }
-
             }
         }
         return new ResponseResult(firstFloor);

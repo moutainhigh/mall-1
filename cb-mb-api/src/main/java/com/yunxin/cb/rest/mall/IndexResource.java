@@ -3,11 +3,19 @@ package com.yunxin.cb.rest.mall;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.FloorInfo;
 import com.yunxin.cb.mall.service.*;
+import com.yunxin.cb.mall.vo.AdvertisementVO;
+import com.yunxin.cb.mall.vo.BrandVO;
+import com.yunxin.cb.mall.vo.CategoryVO;
+import com.yunxin.cb.mall.vo.IndexVO;
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/mall/index")
 public class IndexResource extends BaseResource {
+    private static Logger logger = LoggerFactory.getLogger(IndexResource.class);
     @Resource
     private AdvertisementService advertisementService;
     @Resource
@@ -30,113 +39,88 @@ public class IndexResource extends BaseResource {
     private FloorCategoryService floorCategoryService;
     @Resource
     private CategoryService categoryService;
-    @Resource
-    private CommodityService commodityService;
-    @Resource
-    private CommodityCategoryService commodityCategoryService;
 
     @ApiOperation(value = "商城首页")
     @GetMapping(value = "getIndex")
     @IgnoreAuthentication
     public ResponseResult index(){
-        //获取首页banner
-        Integer homePlace = 0;
-        List<Advertisement> homeList = advertisementService.selectByPlace(homePlace);
-        //获取中部banner
-        int middlePlace = 1;
-        List<Advertisement> middleList = advertisementService.selectByPlace(middlePlace);
-        //获取楼层信息
-        List<HomeFloor> hList = homeFloorService.selectByEnabledAll();
-        Index index = new Index();
-        FloorInfo floorInfoTwo = new FloorInfo();
-        FloorInfo floorInfoThree = new FloorInfo();
-        FloorInfo floorInfoFive = new FloorInfo();
-        if(hList.size()>0){
-            for(int i=0;i<hList.size();i++){
-                List<Brand> brandList = new ArrayList<>();
-                List<Category> categoryThreeList = new ArrayList<>();
-                List<Category> categoryFiveList = new ArrayList<>();
-                HomeFloor homeFloor = hList.get(i);
-                Integer floorId = homeFloor.getFloorId();
-                //获取品牌
-                if(homeFloor.getSortOrder() == 2){
-                    List<FloorBrand> fbList = floorBrandService.selectByFloorId(floorId);
-                    for(int j=0;j<fbList.size();j++){
-                        FloorBrand floorBrand = fbList.get(j);
-                        Integer brandId = floorBrand.getBrandId();
-                        Brand brand = brandService.selectByPrimaryKey(brandId);
-                        brandList.add(brand);
-                    }
-                    floorInfoTwo.setBrandList(brandList);
-                }
-                //获取第三层分类
-                if(homeFloor.getSortOrder() == 3){
-                    List<FloorCategory> fcyList = floorCategoryService.selectByFloorId(floorId);
-                    for(int k=0;k<fcyList.size();k++){
-                        FloorCategory floorCategory = fcyList.get(k);
-                        Integer categoryId = floorCategory.getCategoryId();
-                        Category category = categoryService.selectByPrimaryKey(categoryId);
-                        categoryThreeList.add(category);
-                    }
-                    floorInfoThree.setCategoryThreeList(categoryThreeList);
-                }
-                //获取第五层分类
-                if(homeFloor.getSortOrder() == 5){
-                    List<FloorCategory> fcy_List = floorCategoryService.selectByFloorId(floorId);
-                    for(int h=0;h<fcy_List.size();h++){
-                        FloorCategory floor_Category = fcy_List.get(h);
-                        Integer categoryId = floor_Category.getCategoryId();
-                        Category cate_gory = categoryService.selectByPrimaryKey(categoryId);
-                        categoryFiveList.add(cate_gory);
-                    }
-                    floorInfoFive.setCategoryFiveList(categoryFiveList);
-                }
-                //List<FloorCommodity> fcList = floorCommodityService.selectByFloorId(floorId);
+        try{
+            //获取首页banner
+            Integer homePlace = 0;
+            List<Advertisement> firstList = advertisementService.selectByPlace(homePlace);
+            List<AdvertisementVO> homeList = new ArrayList<>();
+            for(Advertisement adm : firstList){
+                AdvertisementVO adVO = new AdvertisementVO();
+                BeanUtils.copyProperties(adVO, adm);
+                homeList.add(adVO);
             }
-        }
-        index.setHomeList(homeList);
-        index.setMilldeList(middleList);
-        index.setBrand(floorInfoTwo);
-        index.setCategoryThree(floorInfoThree);
-        index.setCategoryFive(floorInfoFive);
-        return new ResponseResult(index);
-    }
-    @ApiOperation(value = "所有品牌")
-    @PostMapping(value = "getBrandList")
-        public ResponseResult getBrandList(){
-        List<Brand> list = brandService.selectAll();
-        return new ResponseResult(list);
-    }
-    @ApiOperation(value = "该品牌下所有商品")
-    @PostMapping(value = "getCommodityList")
-    public ResponseResult getCommodityList(@RequestParam(value = "brandId") int brandId){
-        List<Commodity> list = commodityService.selectByBrandId(brandId);
-        return new ResponseResult(list);
-    }
-    @ApiOperation(value = "该分类下所有分类或者商品")
-    @PostMapping(value = "getCategoryList")
-    public ResponseResult getCategoryList(@RequestParam(value = "categoryId") int categoryId){
-        Category category = categoryService.selectByPrimaryKey(categoryId);
-        int level = category.getLevel();
-        List<Commodity> commodityList = new ArrayList<>();
-        if(level == 1){
-            List<Category> list = categoryService.selectByParentCategoryId(categoryId);
-            return new ResponseResult(list);
-        }
-        if(level == 2){
-            List<Category> list = categoryService.selectByParentCategoryId(categoryId);
-            return new ResponseResult(list);
-        }
-        if(level == 3){
-            List<CommodityCategory> list = commodityCategoryService.selectByCategoryId(categoryId);
-            for(int i=0;i<list.size();i++){
-                CommodityCategory commodityCategory = list.get(i);
-                int commodityId = commodityCategory.getCommodityId();
-                Commodity commodity = commodityService.selectByPrimaryKey(commodityId);
-                commodityList.add(commodity);
+            //获取中部banner
+            int middlePlace = 1;
+            List<Advertisement> secondList = advertisementService.selectByPlace(middlePlace);
+            List<AdvertisementVO> middleList = new ArrayList<>();
+            for(Advertisement advment : secondList){
+                AdvertisementVO adVO = new AdvertisementVO();
+                BeanUtils.copyProperties(adVO, advment);
+                middleList.add(adVO);
             }
+            //获取楼层信息
+            List<HomeFloor> hList = homeFloorService.selectByEnabledAll();
+            IndexVO indexVO = new IndexVO();
+            if(hList.size()>0){
+                for(int i=0;i<hList.size();i++){
+                    List<BrandVO> brandList = new ArrayList<>();
+                    List<CategoryVO> categoryThreeList = new ArrayList<>();
+                    List<CategoryVO> categoryFiveList = new ArrayList<>();
+                    HomeFloor homeFloor = hList.get(i);
+                    Integer floorId = homeFloor.getFloorId();
+                    //获取品牌
+                    if(homeFloor.getSortOrder() == 2){
+                        List<FloorBrand> fbList = floorBrandService.selectByFloorId(floorId);
+                        for(int j=0;j<fbList.size();j++){
+                            FloorBrand floorBrand = fbList.get(j);
+                            Integer brandId = floorBrand.getBrandId();
+                            Brand brand = brandService.selectByPrimaryKey(brandId);
+                            BrandVO bVO = new BrandVO();
+                            BeanUtils.copyProperties(bVO, brand);
+                            brandList.add(bVO);
+                        }
+                        indexVO.setBrandList(brandList);
+                    }
+                    //获取第三层分类
+                    if(homeFloor.getSortOrder() == 3){
+                        List<FloorCategory> fcyList = floorCategoryService.selectByFloorId(floorId);
+                        for(int k=0;k<fcyList.size();k++){
+                            FloorCategory floorCategory = fcyList.get(k);
+                            Integer categoryId = floorCategory.getCategoryId();
+                            Category category = categoryService.selectByPrimaryKey(categoryId);
+                            CategoryVO cVO = new CategoryVO();
+                            BeanUtils.copyProperties(cVO, category);
+                            categoryThreeList.add(cVO);
+                        }
+                        indexVO.setCategoryThreeList(categoryThreeList);
+                    }
+                    //获取第五层分类
+                    if(homeFloor.getSortOrder() == 5){
+                        List<FloorCategory> fcy_List = floorCategoryService.selectByFloorId(floorId);
+                        for(int h=0;h<fcy_List.size();h++){
+                            FloorCategory floor_Category = fcy_List.get(h);
+                            Integer categoryId = floor_Category.getCategoryId();
+                            Category cate_gory = categoryService.selectByPrimaryKey(categoryId);
+                            CategoryVO cVO = new CategoryVO();
+                            BeanUtils.copyProperties(cVO, cate_gory);
+                            categoryFiveList.add(cVO);
+                        }
+                        indexVO.setCategoryFiveList(categoryFiveList);
+                    }
+                }
+            }
+            indexVO.setHomeList(homeList);
+            indexVO.setMilldeList(middleList);
+            return new ResponseResult(indexVO);
+        }catch (Exception e){
+            logger.info("indexResource failed", e);
+            return new ResponseResult(Result.FAILURE);
         }
-        return new ResponseResult(commodityList);
-    }
 
+    }
 }

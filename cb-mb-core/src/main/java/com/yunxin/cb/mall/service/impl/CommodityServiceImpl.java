@@ -1,16 +1,11 @@
 package com.yunxin.cb.mall.service.impl;
 
-import com.yunxin.cb.mall.entity.Commodity;
-import com.yunxin.cb.mall.entity.CommoditySpec;
-import com.yunxin.cb.mall.entity.Favorite;
-import com.yunxin.cb.mall.entity.Product;
+import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.entity.meta.PaymentType;
 import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
-import com.yunxin.cb.mall.mapper.AttributeGroupMapper;
-import com.yunxin.cb.mall.mapper.CommodityMapper;
-import com.yunxin.cb.mall.mapper.FavoriteMapper;
-import com.yunxin.cb.mall.mapper.ProductMapper;
+import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.service.CommodityService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,9 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @title: 商品接口实现类
@@ -43,7 +36,7 @@ public class CommodityServiceImpl implements CommodityService {
     private FavoriteMapper favoriteMapper;
 
     @Resource
-    private AttributeGroupMapper attributeGroupMapper;
+    private AttachmentMapper attachmentMapper;
 
     @Override
     public Commodity selectByPrimaryKey(int commodityId) {
@@ -53,8 +46,8 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public Map getCommdityDetail(int productId,int customerId) {
         Map resultMap = new HashMap();
-        Product product = productMapper.selectProductById(productId,ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());
-        Commodity commodity = commodityMapper.selectCommodityDetailById(product.getCommodityId());
+        Product product = productMapper.selectProductById(productId,ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());//审核通过并上架状态
+        Commodity commodity = commodityMapper.selectCommodityDetailById(product.getCommodityId(),ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());//审核通过并上架状态
         resultMap.put("product",product);//货品
         //resultMap.put("brand", commodity.getBrand());//品牌
         resultMap.put("priceSection", commodity.getPriceSection());//商品价格段
@@ -85,7 +78,12 @@ public class CommodityServiceImpl implements CommodityService {
         commodity.setCommoditySpecs(null);
         resultMap.put("favorite",favorite);//收藏夹
         resultMap.put("commodity",commodity);//商品
-        resultMap.put("imageSet", null);//商品图片
+        List<Attachment> attachments=attachmentMapper.selectByObjectTypeAndId(ObjectType.COMMODITY.name(),commodity.getCommodityId());
+        Set imageSet=new HashSet<>();
+        for (Attachment attachment:attachments){
+            imageSet.add(attachment.getFilePath());
+        }
+        resultMap.put("imageSet", imageSet);//商品图片
         return resultMap;
     }
 

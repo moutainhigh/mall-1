@@ -1,5 +1,7 @@
 package com.yunxin.cb.mall.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 /**

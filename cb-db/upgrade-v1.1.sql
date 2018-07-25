@@ -64,3 +64,17 @@ CREATE TABLE `attachment` (
   `DESCRIPTION` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`ATTACH_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--add by guwenshao 2018-07-25
+drop table IF EXISTS `customer_trading_record`;
+CREATE TABLE `customer_trading_record` (
+  `TRADE_RECORD_ID` int(11) NOT NULL COMMENT '交易流水id',
+  `CUSTOMER_ID` int(11) NOT NULL COMMENT '客户钱包id',
+  `BUSINESS_TYPE` int(11) NOT NULL COMMENT '业务类型:0余额，1:贷款预期收益 2:贷款额度 3:贷款金额',
+  `OPERATION_TYPE` int(11) NOT NULL COMMENT '操作类型:0增加，1减少',
+  `AMOUNT` double DEFAULT 0 COMMENT '操作余额',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `REMARK` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`TRADE_RECORD_ID`) USING BTREE,
+  CONSTRAINT `customer_trading_record_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客户交易流水表';

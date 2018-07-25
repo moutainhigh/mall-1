@@ -78,6 +78,9 @@
       },
       {
         "name": "换货管理", "code": "53", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/barterOrders.do"
+      },
+      {
+        "name": "贷款管理", "code": "54", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/loanOrders.do"
       }
     ]
   },

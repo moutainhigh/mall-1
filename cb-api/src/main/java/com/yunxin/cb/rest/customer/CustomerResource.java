@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IFeedbackService;
+import com.yunxin.cb.mall.vo.CustomerInfoVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
@@ -16,6 +17,7 @@ import com.yunxin.cb.vo.VerificationCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -193,6 +195,15 @@ public class CustomerResource extends BaseResource {
         }
         Customer customer = customerService.updateMobile(customerId, moblie);
         return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "查询客户基本信息")
+    @PostMapping(value = "getCustomerInfo")
+    public ResponseResult getCustomerInfo(@ModelAttribute("customerId") int customerId) throws Exception{
+        Customer customer = customerService.getCustomerById(customerId);
+        CustomerInfoVo customerInfoVo = new CustomerInfoVo();
+        BeanUtils.copyProperties(customerInfoVo, customer);
+        return new ResponseResult(customerInfoVo);
     }
 
     @ApiOperation(value = "提交反馈")

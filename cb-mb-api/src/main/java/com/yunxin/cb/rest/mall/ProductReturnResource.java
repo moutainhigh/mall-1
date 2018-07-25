@@ -1,6 +1,7 @@
 package com.yunxin.cb.rest.mall;
 
 
+import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.ProductReturn;
 import com.yunxin.cb.mall.service.ProductReturnService;
 import com.yunxin.cb.mall.vo.ProductReturnDetailVO;
@@ -31,7 +32,7 @@ import java.util.List;
 */
 @Api(description = "商城退货接口")
 @RestController
-@RequestMapping(value = "/mall")
+@RequestMapping(value = "{version}/mall")
 public class ProductReturnResource extends BaseResource {
 
     private static Logger logger = LoggerFactory.getLogger(ProductReturnResource.class);
@@ -41,6 +42,7 @@ public class ProductReturnResource extends BaseResource {
     @ApiOperation(value = "退货申请")
     @ApiImplicitParams({
     })
+    @ApiVersion(1)
     @PostMapping(value = "productReturn")
     public ResponseResult addProductReturn(@RequestBody ProductReturnApplyVO productReturnApplyVO) throws Exception{
         logger.info("productReturnApplyVO:" + productReturnApplyVO.toString());
@@ -61,6 +63,7 @@ public class ProductReturnResource extends BaseResource {
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "post", dataType = "Integer")})
+    @ApiVersion(1)
     @PostMapping(value = "productReturn/pageList")
     public ResponseResult pageProductReturn(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
                                             @RequestParam(value = "orderId", required = false) Integer orderId){
@@ -83,6 +86,7 @@ public class ProductReturnResource extends BaseResource {
     @ApiOperation(value = "退货列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "post", dataType = "Integer")})
+    @ApiVersion(1)
     @PostMapping(value = "productReturn/list")
     public ResponseResult listProductReturn(@RequestParam(value = "orderId", required = false) Integer orderId){
         Query q = new Query();
@@ -104,6 +108,7 @@ public class ProductReturnResource extends BaseResource {
     @ApiOperation(value = "退货详情")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productReturnId", value = "退货id", required = true, paramType = "path", dataType = "int")})
+    @ApiVersion(1)
     @GetMapping(value = "productReturn/{productReturnId}")
     public ResponseResult getProductReturn(@PathVariable Integer productReturnId){
         ProductReturn productReturn = productReturnService.getProductReturn(productReturnId, getCustomerId());

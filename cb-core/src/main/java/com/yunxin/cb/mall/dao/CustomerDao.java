@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -27,8 +28,8 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Query("select c from Customer c where c.mobile=?1 and c.enabled=?2")
     public Customer findByMobileAndEnabled(String mobile, boolean enabled);
 
-    @Query("select c from Customer c where c.mobile=?1 or c.invitationCode=?2")
-    public Customer findByMobileOrInvitationCode(String mobile,String invitationCode);
+    @Query("select c from Customer c where c.mobile=:invitationCode or c.invitationCode=:invitationCode")
+    public Customer findByMobileOrInvitationCode(@Param("invitationCode") String invitationCode);
     @Query("select c from Customer c where c.levelCode=?1")
     public Customer findByLevelCode(String levelCode);
 
