@@ -189,6 +189,8 @@ public class BrandController {
     @RequestMapping(value = "brandDetail", method = RequestMethod.GET)
     public String brandDetail(@RequestParam("brandId") int brandId, ModelMap modelMap) {
         modelMap.addAttribute("brand", brandService.getBrandById(brandId));
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.BRAND,brandId);
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return "commodity/brandDetail";
     }
 

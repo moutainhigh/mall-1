@@ -801,4 +801,16 @@ public class OrderService implements IOrderService {
         });
         return orderLoanApplyDao.findAll(query, query.getPageRequest());
     }
+
+    @Override
+    public void orderLoanApplyAudit(int loanId, AuditState auditState, String auditRemark) {
+        OrderLoanApply orderLoanApply = orderLoanApplyDao.findOne(loanId);
+        if (auditState == AuditState.AUDITED) {
+            orderLoanApply.setLoanState(LoanState.APPLY_SUCCESS);
+        } else if (auditState == AuditState.NOT_AUDIT) {
+            orderLoanApply.setLoanState(LoanState.APPLY_FAILURE);
+        }
+        orderLoanApply.setAuditState(auditState);
+        orderLoanApply.setAuditRemark(auditRemark);
+    }
 }

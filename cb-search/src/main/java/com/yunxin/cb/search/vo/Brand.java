@@ -1,8 +1,5 @@
 package com.yunxin.cb.search.vo;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-
 /**
  * 品牌
  */

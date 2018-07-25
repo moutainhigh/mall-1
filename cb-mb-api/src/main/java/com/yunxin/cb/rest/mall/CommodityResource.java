@@ -13,7 +13,10 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.ServletContextAware;
 
 import javax.annotation.Resource;
@@ -121,31 +124,58 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     public ResponseResult getProductsByCommodityId(@PathVariable int commodityId) {
         Map<String, Object> firstFloor = new HashMap<String, Object>();//第一层
         Map<String, Object> twoFloor = new HashMap<String, Object>();//第二层
+        Map<String, Object> threeFloor = new HashMap<String, Object>();//第三层
+        Map<String, Object> fourFloor = new HashMap<String, Object>();//第四层
+        Map<String, Object> fiveFloor = new HashMap<String, Object>();//第五层
+        Set<String> sixValue=new HashSet<String>();
+//        Map<String, Object> sixFloor = new HashMap<String, Object>();//第六层
+        String treeKey="";
+        String fourKey="";
+        String fiveKey="";
+        String sixKey="";
         List<Product> products = commodityService.getProductsByCommodityId(commodityId);
         for (Product pro : products) {
-            Set<String> threeValue = new HashSet<String>();//第三层的值
             List<ProductAttribute> attributeList = pro.getProductAttributes();
             for (int i = 0; i < attributeList.size(); i++) {
+                //获取第一层和第二层的key
+                String oneKey=attributeList.get(0).getAttribute().getAttributeGroup().getGroupName();
+                String twoKey=attributeList.get(0).getAttribute().getAttributeName();
                 if (i == 0) {
-                    Map<String, Object> threeFloor= new HashMap<String, Object>();//第三层
-                    //获取第三层
-                    if(null!=twoFloor.get(attributeList.get(0).getAttribute().getAttributeName())){
-                        threeFloor=(Map<String, Object>)twoFloor.get(attributeList.get(0).getAttribute().getAttributeName());
-                    }
+                    //取value---map，没有就实例化
+                    twoFloor= (Map<String, Object>) firstFloor.get(oneKey)==null?new HashMap<String, Object>():(Map<String, Object>) firstFloor.get(oneKey);
+                    threeFloor = (Map<String, Object>) twoFloor.get(twoKey)==null?new HashMap<String, Object>():(Map<String, Object>) twoFloor.get(twoKey);
                     //第二层Key取AttributeName，Value放第三层
-                    twoFloor.put(attributeList.get(0).getAttribute().getAttributeName(), threeFloor);
+                    twoFloor.put(twoKey, threeFloor);
                     //第一层Key取GroupName，Value放第二层
-                    firstFloor.put(attributeList.get(0).getAttribute().getAttributeGroup().getGroupName(), twoFloor);
-                } else {
-                    //第三层Key取GroupName，Value放AttributeName
-                    String treeKey =attributeList.get(i).getAttribute().getAttributeGroup().getGroupName();
-                    Map<String, Object> two = (Map<String, Object>) firstFloor.get(attributeList.get(0).getAttribute().getAttributeGroup().getGroupName());
-                    Map<String, Object> three = (Map<String, Object>) two.get(attributeList.get(0).getAttribute().getAttributeName());
-                    //获取第三层，并且放入
-                    threeValue = (Set<String>) three.get(treeKey) == null ? new HashSet<String>() : (Set<String>) three.get(treeKey);
-                    threeValue.add(attributeList.get(i).getAttribute().getAttributeName());
-                    three.put(treeKey, threeValue);
+                    firstFloor.put(oneKey, twoFloor);
+                } else if (i == 1) {
+                    //获取key
+                    treeKey = attributeList.get(1).getAttribute().getAttributeGroup().getGroupName();
+                    fourKey = attributeList.get(1).getAttribute().getAttributeName();
+                    twoFloor= (Map<String, Object>) firstFloor.get(oneKey);
+                    threeFloor = (Map<String, Object>) twoFloor.get(twoKey);
+                    //取value---map，没有就实例化
+                    fourFloor= (Map<String, Object>)threeFloor.get(treeKey)==null?new HashMap<String, Object>():(Map<String, Object>) threeFloor.get(treeKey);
+                    fiveFloor = (Map<String, Object>)fourFloor.get(fourKey)==null?new HashMap<String, Object>():(Map<String, Object>) fourFloor.get(fourKey);
+//                    sixFloor = (Map<String, Object>)fiveFloor.get(fiveKey)==null?new HashMap<String, Object>():(Map<String, Object>) fiveFloor.get(fiveKey);
+                    //第四层key放AttributeName
+                    fourFloor.put(attributeList.get(1).getAttribute().getAttributeName(),fiveFloor);
+                    //第三层key放GroupName
+                    threeFloor.put(treeKey, fourFloor);
+                } else if (i == 2) {
+                    //获取key
+                    fiveKey= attributeList.get(2).getAttribute().getAttributeGroup().getGroupName();
+                    sixKey = attributeList.get(2).getAttribute().getAttributeName();
+                    twoFloor= (Map<String, Object>) firstFloor.get(oneKey);
+                    threeFloor = (Map<String, Object>) twoFloor.get(twoKey);
+                    fourFloor= (Map<String, Object>)threeFloor.get(treeKey);
+                    sixValue=fiveFloor.get(fiveKey)==null?new HashSet<String>():(Set<String>) fiveFloor.get(fiveKey);
+                    //第六层放AttributeName
+                    sixValue.add(sixKey);
+                    //第五层key放GroupName
+                    fiveFloor.put(fiveKey,sixValue);
                 }
+
             }
         }
         return new ResponseResult(firstFloor);

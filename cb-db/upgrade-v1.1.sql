@@ -69,7 +69,7 @@ CREATE TABLE `attachment` (
 drop table IF EXISTS `customer_trading_record`;
 CREATE TABLE `customer_trading_record` (
   `TRADE_RECORD_ID` int(11) NOT NULL COMMENT '交易流水id',
-  `CUSTOMER_ID` int(11) NOT NULL COMMENT '客户钱包id',
+  `CUSTOMER_ID` int(11) NOT NULL COMMENT '客户id',
   `BUSINESS_TYPE` int(11) NOT NULL COMMENT '业务类型:0余额，1:贷款预期收益 2:贷款额度 3:贷款金额',
   `OPERATION_TYPE` int(11) NOT NULL COMMENT '操作类型:0增加，1减少',
   `AMOUNT` double DEFAULT 0 COMMENT '操作余额',

@@ -114,6 +114,16 @@
             <td class="text-center"><a class='btn btn-default' href='javascript:removeAttribute({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
         </tr>
     </script>
+
+    <script id="attributeTr" type="text/x-jquery-tmpl">
+        <tr id='attribute{{= idIndex}}'>
+            <td><input type='text' name='attributeName' class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
+            <td><input id='imagePath{{= idIndex}}' type='hidden' name='imagePath' value=''/></td>
+            <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2'/></td>
+            <td class="text-center"><a class='btn btn-default' href='javascript:removeAttribute({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
+        </tr>
+
+    </script>
 </head>
 <body>
 <jsp:include page="../layouts/left.jsp"/>

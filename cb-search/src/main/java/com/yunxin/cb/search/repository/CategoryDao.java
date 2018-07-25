@@ -7,4 +7,5 @@ import org.springframework.data.domain.Pageable;
 public interface CategoryDao  {
 
     Page<Category> findByCategoryNameLike(String categoryName, Pageable pageable);
+
 }
