@@ -10,11 +10,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+
+import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 
 @Api(description = "商城商品搜索接口")
 @RestController
@@ -24,6 +30,9 @@ public class SearchResource extends BaseResource {
     @Resource
     private CommodityService commodityService;
 
+    @Autowired
+    private ElasticsearchTemplate elasticsearchTemplate;
+
 
     @ApiOperation(value = "关键字搜索")
     @ApiImplicitParams({
@@ -31,8 +40,12 @@ public class SearchResource extends BaseResource {
     })
     @PostMapping(value = "keywordSearch")
     public ResponseResult<Page<Commodity>> keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size){
-       Page<Commodity> pager =  commodityService.search(keyword, new PageRequest(page, size));
-       return new ResponseResult(pager.getContent());
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(matchAllQuery())
+
+                .build();
+        Page<Commodity> pageable =elasticsearchTemplate.queryForPage(searchQuery,Commodity.class);
+       return new ResponseResult(pageable);
     }
 
     @PostMapping(value = "addCommodity")
@@ -40,5 +53,7 @@ public class SearchResource extends BaseResource {
         commodityService.addCommodity(commodity);
         return new ResponseResult(Result.SUCCESS);
     }
+
+
 
 }

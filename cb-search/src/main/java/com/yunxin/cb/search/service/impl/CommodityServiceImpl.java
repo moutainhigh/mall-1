@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author tanggangyi
@@ -33,6 +35,12 @@ public class CommodityServiceImpl implements CommodityService {
         Page<Commodity> page = commodityDao.findByCommodityNameLike(content, pageable);
         Page<Commodity> page2 =commodityDao.findAll(pageable);
         return page2;
+    }
+
+    public Iterable<Commodity> findAll() {
+        Iterable<Commodity> iterable = commodityDao.findAll();
+        return iterable ;
+
     }
 
     @Override
