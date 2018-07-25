@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.service.DeliveryAddressService;
 import com.yunxin.cb.mall.vo.DeliveryAddressVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.security.interceptor.AuthInterceptor;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
@@ -31,12 +32,36 @@ public class DeliveryAddressResource extends BaseResource {
     @Resource
     private DeliveryAddressService deliveryAddressService;
 
-    @ApiOperation(value = "通过用户ID查询收货地址列表")
+    @ApiOperation(value = "通过用户ID查询收货地址列表 V1")
     @ApiImplicitParams({
     })
     @GetMapping(value = "deliveryAddress/list")
     @ApiVersion(1)
+    @IgnoreAuthentication
     public ResponseResult<List<DeliveryAddressVO>> getDeliveryAddress() {
+        try {
+            List<DeliveryAddress> list = deliveryAddressService.selectByCustomerId(1);
+            List<DeliveryAddressVO> volist = new ArrayList<>();
+            for (DeliveryAddress deliveryAddress : list) {
+                DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
+                BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
+                volist.add(deliveryAddressVO);
+            }
+            return new ResponseResult(volist);
+        } catch (Exception e) {
+            logger.info("addDeliveryAddress failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
+
+    }
+
+    @ApiOperation(value = "通过用户ID查询收货地址列表 V2")
+    @ApiImplicitParams({
+    })
+    @GetMapping(value = "deliveryAddress/list")
+    @ApiVersion(2)
+    @IgnoreAuthentication
+    public ResponseResult<List<DeliveryAddressVO>> getDeliveryAddressV2() {
         try {
             List<DeliveryAddress> list = deliveryAddressService.selectByCustomerId(getCustomerId());
             List<DeliveryAddressVO> volist = new ArrayList<>();
