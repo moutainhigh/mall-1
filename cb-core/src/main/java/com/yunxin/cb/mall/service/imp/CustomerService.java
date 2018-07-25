@@ -351,7 +351,7 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Customer getCustomerByInvitationCode(String invitationCode) {
-        return customerDao.findByMobileOrInvitationCode(invitationCode,invitationCode);
+        return customerDao.findByMobileOrInvitationCode(invitationCode);
     }
 
     @Override
