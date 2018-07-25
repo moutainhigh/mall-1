@@ -6,9 +6,9 @@ import org.springframework.data.elasticsearch.annotations.Document;
 /**
  * 品牌
  */
-@Document(indexName = "crystal_ball", type = "brand")
+
 public class Brand implements java.io.Serializable {
-    @Id
+
     private int brandId;
     /**
      * 品牌编号
