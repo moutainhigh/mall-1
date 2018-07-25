@@ -13,7 +13,7 @@ import java.util.*;
 * @author gws
 * @date 2018/7/24 20:00
 * @param 
-* @return 
+* @return
 */
 @ApiModel(value="商城订单详情",description="订单详情VO对象")
 public class ProductReturnDetailVO implements java.io.Serializable{
