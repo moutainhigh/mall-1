@@ -47,6 +47,9 @@ public class CommodityServiceImpl implements CommodityService {
     public Map getCommdityDetail(int productId,int customerId) {
         Map resultMap = new HashMap();
         Product product = productMapper.selectProductById(productId,ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());//审核通过并上架状态
+        if(product==null){
+            return null;
+        }
         Commodity commodity = commodityMapper.selectCommodityDetailById(product.getCommodityId(),ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());//审核通过并上架状态
         resultMap.put("product",product);//货品
         //resultMap.put("brand", commodity.getBrand());//品牌
