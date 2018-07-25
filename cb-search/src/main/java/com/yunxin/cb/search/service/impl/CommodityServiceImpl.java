@@ -30,7 +30,9 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public Page<Commodity> search(String content, Pageable pageable) {
-        return commodityDao.findByCommodityNameLike(content, pageable);
+        Page<Commodity> page = commodityDao.findByCommodityNameLike(content, pageable);
+        Page<Commodity> page2 =commodityDao.findAll(pageable);
+        return page2;
     }
 
     @Override
