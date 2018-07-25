@@ -274,8 +274,8 @@ public interface OrderMapper {
             "<if test='data.customerId!=null'>",
             "and CUSTOMER_ID = #{data.customerId}",
             "</if>",
-            "<if test='data.orderState!=null'>",
-            "and ORDER_STATE = #{data.orderState}",
+            "<if test='data.orderStateId!=null'>",
+            "and ORDER_STATE = #{data.orderStateId}",
             "</if>",
             "ORDER BY CREATE_TIME DESC",
             "LIMIT #{rowIndex},#{pageSize}",
@@ -293,11 +293,9 @@ public interface OrderMapper {
             "<if test='data.customerId!=null'>",
                  "and CUSTOMER_ID = #{data.customerId}",
             "</if>",
-            "<if test='data.orderState!=null'>",
-                "and ORDER_STATE = #{data.orderState}",
+            "<if test='data.orderStateId!=null'>",
+                "and ORDER_STATE = #{data.orderStateId}",
             "</if>",
-            "ORDER BY CREATE_TIME DESC",
-            "LIMIT #{rowIndex},#{pageSize}",
             "</script>"
     })
     long count(Query q);
