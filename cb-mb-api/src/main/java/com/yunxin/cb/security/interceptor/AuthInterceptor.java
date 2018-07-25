@@ -3,8 +3,6 @@ package com.yunxin.cb.security.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.jwt.Token;
-import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.service.CustomerService;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.orm.CustomerContextHolder;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
@@ -14,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
@@ -37,7 +34,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
         //用户访问日志
         logger.info("AppAccess info: clientIp=" + getIpAddr(request) + " access_url=" + request.getRequestURI() + " attime="+new Date().toString()
-        		+ " Bymethod= " + request.getMethod() + ",user-Agent='" + request.getHeader("user-Agent") + "'");
+                + " Bymethod= " + request.getMethod() + ",user-Agent='" + request.getHeader("user-Agent") + "'");
 
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -93,8 +90,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         }
         return true;
     }
-    
-    
+
+
     public String getIpAddr(HttpServletRequest request) {
 
         String ip = request.getHeader("x-forwarded-for");
@@ -120,5 +117,5 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         return ip;
 
     }
-	
+
 }
