@@ -1,6 +1,7 @@
 package com.yunxin.cb.rest.mall;
 
 
+import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.service.OrderService;
@@ -34,7 +35,7 @@ import java.util.Set;
 */
 @Api(description = "商城订单接口")
 @RestController
-@RequestMapping(value = "/mall")
+@RequestMapping(value = "{version}/mall")
 public class OrderResource extends BaseResource {
 
     private static Logger logger = LoggerFactory.getLogger(OrderResource.class);
@@ -45,6 +46,7 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "订单确认")
     @ApiImplicitParams({
             })
+    @ApiVersion(1)
     @PostMapping(value = "order")
     public ResponseResult addOrder(@RequestBody OrderConfirmVO orderConfirmVO) throws Exception{
         logger.info("orderConfirmVO:" + orderConfirmVO.toString());
@@ -99,6 +101,7 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "根据订单id查询订单详情")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
+    @ApiVersion(1)
     @GetMapping(value = "order/{orderId}")
     public ResponseResult<OrderDetailVO> getOrder(@PathVariable(value = "orderId") int orderId){
         Order model = orderService.getByOrderIdAndCustomerId(orderId, getCustomerId());
@@ -118,6 +121,7 @@ public class OrderResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "cancelReason", value = "取消原因", paramType = "post", dataType = "String")})
+    @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
     public ResponseResult cancelOrder(@RequestParam(value = "orderId") int orderId, @RequestParam(value = "cancelReason") String cancelReason)throws Exception{
         Order order = new Order();
@@ -134,6 +138,7 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "根据订单id确认收货")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
+    @ApiVersion(1)
     @PutMapping(value = "order/confirmOrder/{orderId}")
     public ResponseResult confirmOrder(@PathVariable(value = "orderId") int orderId)throws Exception{
         int result = orderService.confirmOrder(orderId, getCustomerId());
