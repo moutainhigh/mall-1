@@ -35,28 +35,29 @@ public class CustomerWalletService implements ICustomerWalletService {
 
         CustomerWallet  customerWalletBean=CustomerWalletDao.findOne(customerId);
 
-        BigDecimal loanQuota=new BigDecimal(customerWalletBean.getLoanQuota());
-        BigDecimal ratio=new BigDecimal(ratios);
-        BigDecimal addedLoanQuota=loanQuota.multiply(ratio);
-        Double  newLoanQuota=loanQuota.add(addedLoanQuota).doubleValue();
-        customerWalletBean.setLoanQuota(newLoanQuota);
-        final double amount=addedLoanQuota.doubleValue();
-        /**
-         * 更新交易记录
-         */
-        iCustomerTradingRecordService.addCustomerTradingRecord(new CustomerTradingRecord(){
-            {
-                setCustomer(new Customer(){{
-                    setCustomerId(customerId);
-                }});
-                setAmount(amount);
-                setCreateTime(new Date());
-                setRemark(remark);
-                setOperationType(OperationType.ADD);
-                setBusinessType(businessType);
-            }
-        });
-
+        if(null!=customerWalletBean){
+            BigDecimal loanQuota=new BigDecimal(customerWalletBean.getLoanQuota());
+            BigDecimal ratio=new BigDecimal(ratios);
+            BigDecimal addedLoanQuota=loanQuota.multiply(ratio);
+            Double  newLoanQuota=loanQuota.add(addedLoanQuota).doubleValue();
+            customerWalletBean.setLoanQuota(newLoanQuota);
+            final double amount=addedLoanQuota.doubleValue();
+            /**
+             * 更新交易记录
+             */
+            iCustomerTradingRecordService.addCustomerTradingRecord(new CustomerTradingRecord(){
+                {
+                    setCustomer(new Customer(){{
+                        setCustomerId(customerId);
+                    }});
+                    setAmount(amount);
+                    setCreateTime(new Date());
+                    setRemark(remark);
+                    setOperationType(OperationType.ADD);
+                    setBusinessType(businessType);
+                }
+            });
+        }
         return customerWalletBean;
     }
 
