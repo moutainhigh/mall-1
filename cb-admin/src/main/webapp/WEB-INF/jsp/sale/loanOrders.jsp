@@ -255,11 +255,11 @@
         <form id="auditForm">
           <div class="row">
             <div class="col-sm-4">
-              <label>订单编码：</label>
+              <label>贷款编码：</label>
             </div>
             <div class="col-sm-8">
-              <input type="hidden" id="returnIdHid" name="returnId">
-              <span style="color:#073980" id="orderCodeSpan"></span>
+              <input type="hidden" id="loanIdHid" name="loanId">
+              <span style="color:#073980" id="loanCodeSpan"></span>
             </div>
           </div>
           <div class="spacer-10"></div>
@@ -303,8 +303,8 @@
         return ;
       }
       $('#auditDialog').modal();
-      $("#returnIdHid").val(dataItem.returnId);
-      $("#orderCodeSpan").html(dataItem.order.orderCode);
+      $("#loanIdHid").val(dataItem.loanId);
+      $("#loanCodeSpan").html(dataItem.loanCode);
     }
   }
 
@@ -313,7 +313,7 @@
       bootbox.alert("请填写审核不通过原因!");
       return false;
     }
-    $.get("productReturnAudit.do",$("#auditForm").serialize(),function(result){
+    $.get("orderLoanApplyAudit.do",$("#auditForm").serialize(),function(result){
       if(result){
         $("#auditForm")[0].reset();
         $('#auditDialog').modal("hide");

@@ -186,4 +186,13 @@ public interface IOrderService {
      * @return
      */
     public Page<OrderLoanApply> pageLoanOrders(PageSpecification<OrderLoanApply> query);
+
+    /**
+     * 贷款审核
+    * @author gws
+    * @date 2018/7/25 15:14
+    * @param
+    * @return void
+    */
+    public void orderLoanApplyAudit(int loanId, AuditState auditState, String auditRemark);
 }
