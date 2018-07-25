@@ -34,4 +34,9 @@ public class CommodityServiceImpl implements CommodityService {
         return commodityDao.findByCommodityNameLike(content, pageable);
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        commodityDao.deleteById(id);
+    }
+
 }
