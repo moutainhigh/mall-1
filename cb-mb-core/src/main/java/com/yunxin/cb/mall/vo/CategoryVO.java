@@ -20,6 +20,11 @@ public class CategoryVO implements java.io.Serializable{
     @ApiModelProperty(value="分类描述",name="description",example="分类描述")
     private String description;
     /**
+     * 分类名称
+     */
+    @ApiModelProperty(value="分类名称",name="categoryName",example="分类名称")
+    private String categoryName;
+    /**
      * 图标路径
      */
     @ApiModelProperty(value="图标路径",name="iconPath",example="xxxx.png")
@@ -73,5 +78,13 @@ public class CategoryVO implements java.io.Serializable{
 
     public void setHighestPrice(BigDecimal highestPrice) {
         this.highestPrice = highestPrice;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
