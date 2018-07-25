@@ -24,4 +24,6 @@ public interface CommodityService {
      * @param id
      */
     void deleteById(Integer id);
+
+    public Iterable<Commodity> findAll();
 }
