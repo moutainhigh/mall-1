@@ -67,7 +67,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
             Map specs=(Map)map.get("specs");
             Map paymetType=(Map)map.get("paymentType");
             Favorite favorite=(Favorite)map.get("favorite");
-            List imageSet=(List)map.get("imageSet");
+            Set imageSet=(Set)map.get("imageSet");
             ProductVo productVo=null;
             PriceSectionVo priceSectionVo=null;
             SellerVo sellerVo=null;

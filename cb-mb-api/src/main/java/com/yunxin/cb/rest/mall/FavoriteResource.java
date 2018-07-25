@@ -1,5 +1,6 @@
 package com.yunxin.cb.rest.mall;
 
+import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Favorite;
 import com.yunxin.cb.mall.service.FavoriteService;
 import com.yunxin.cb.mall.vo.CommodityVo;
@@ -27,7 +28,7 @@ import java.util.List;
  */
 @Api(description = "商城收藏夹接口")
 @RestController
-@RequestMapping(value = "/mall/favorite")
+@RequestMapping(value = "/{version}/mall/favorite")
 public class FavoriteResource extends BaseResource {
 
     @Resource
@@ -45,6 +46,7 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "getCustomerFavorite")
+    @ApiVersion(1)
     public ResponseResult getCustomerFavorite(Query q){
         PageFinder<FavoriteVo> page=new PageFinder<>();
         Favorite favorite=new Favorite();
@@ -79,6 +81,7 @@ public class FavoriteResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")})
     @GetMapping(value = "findByCustomerAndCommodity/{commodityId}")
+    @ApiVersion(1)
     public ResponseResult findByCustomerAndCommodity(@PathVariable(value = "commodityId") int commodityId) {
         Favorite favorite=new Favorite();
         favorite.setCommodityId(commodityId);
@@ -103,6 +106,7 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "salePrice", value = "销售价", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "addFavorite")
+    @ApiVersion(1)
     public ResponseResult addFavorite(@RequestBody FavoriteVo favoriteVo) {
         try {
             logger.info("input Parameter favoriteVo:" + favoriteVo.toString());
@@ -134,6 +138,7 @@ public class FavoriteResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "favoriteId", value = "收藏夹ID", required = true, paramType = "path", dataType = "int")})
     @DeleteMapping(value = "delFavorite/{favoriteId}")
+    @ApiVersion(1)
     public ResponseResult delFavorite(@PathVariable(value = "favoriteId") int favoriteId){
         int result=favoriteService.removeFavorite(favoriteId);
         if(result>0){

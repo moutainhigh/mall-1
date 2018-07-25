@@ -532,8 +532,10 @@ public class CustomerService implements ICustomerService {
     public Customer customerPraise(int customerId) {
         Customer customer = customerDao.findOne(customerId);
         customer.setPraise(true);
+        //给推荐人增加一个点赞次数
         Customer recommendCustomer = customer.getRecommendCustomer();
         recommendCustomer.setPraiseNum(recommendCustomer.getPraiseNum() + 1);
+        //TODO 实现推荐人以及所有上级增加5%的授信额度
         return customer;
     }
 

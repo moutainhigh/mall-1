@@ -179,4 +179,11 @@ public interface IOrderService {
      * @param itemId
      */
     public void updateOrderItemEvaluate(int itemId);
+
+    /***
+     * 贷款订单
+     * @param query
+     * @return
+     */
+    public Page<OrderLoanApply> pageLoanOrders(PageSpecification<OrderLoanApply> query);
 }

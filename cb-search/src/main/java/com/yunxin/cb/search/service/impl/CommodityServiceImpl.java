@@ -23,7 +23,6 @@ public class CommodityServiceImpl implements CommodityService {
     @Resource
     private CommodityDao commodityDao;
 
-
     @Override
     public void addCommodity(Commodity commodity) {
         commodityDao.save(commodity);
