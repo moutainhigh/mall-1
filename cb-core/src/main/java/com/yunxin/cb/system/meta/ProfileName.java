@@ -13,7 +13,8 @@ public enum ProfileName {
     ANDROID_VERSION_NAME("v1.0.0"),//安卓版本名称
     ANDROID_APP_NAME("水晶球"),//安卓APP名称
     ANDROID_URL(""),//安卓APP下载地址
-    ANDROID_DESCRIPTION("")//安卓APP更新描述
+    ANDROID_DESCRIPTION(""),//安卓APP更新描述
+    ANDROID_FORCE_UPGRADE("false"),//安卓APP是否强制更新
     ;
 
     private String i18nName;
