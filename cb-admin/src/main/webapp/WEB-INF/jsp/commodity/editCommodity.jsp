@@ -430,12 +430,16 @@
                                             var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
                                             $('#imgDiv').html($('#imgDiv').html()+html);
                                             //上传完成回调
-                                            initPreview[initPreview.length]  = response.url;
+                                            var index=0;
+                                            if(initPreview.length>0 ){
+                                                index=initPreview.length;
+                                            }
+                                            initPreview[index]  = response.url;
                                             var config = new Object();
                                             config.caption = "";
                                             config.url="/admin/uploads/delete/COMMODITY.do";
                                             config.key=response.timeStr;
-                                            initPreviewConfig[initPreviewConfig.length]=config;
+                                            initPreviewConfig[index]=config;
                                             $("#picUrl").fileinput('refresh', {
                                                 initialPreview: initPreview,
                                                 initialPreviewConfig: initPreviewConfig,
@@ -449,6 +453,7 @@
                                             }
                                             return abort;
                                         }).on('filedeleted', function(event, id) {
+                                            debugger;
                                             $("#"+id).remove();
                                             for (var i=0;i<initPreview.length;i++)
                                             {
@@ -468,14 +473,14 @@
                                             var config = new Object();
                                             config.caption = "";
                                             config.url="/admin/uploads/delete/COMMODITY.do";
-                                            config.key=json[i].timeStr;
+                                            config.key=json[i].inputId;
                                             initPreviewConfig[i]=config;
                                             $("#picUrl").fileinput('refresh', {
                                                 initialPreview: initPreview,
                                                 initialPreviewConfig: initPreviewConfig,
                                                 initialPreviewAsData: true
                                             });
-                                            var html='<input name="imgurl" type="hidden" id="'+json.inputId+'" value="'+json[i].filePath+','+json[i].fileName+','+json[i].inputId+'">';
+                                            var html='<input name="imgurl" type="hidden" id="'+json[i].inputId+'" value="'+json[i].filePath+','+json[i].fileName+','+json[i].inputId+'">';
                                             $('#imgDiv').html($('#imgDiv').html()+html);
                                         }
                                     })

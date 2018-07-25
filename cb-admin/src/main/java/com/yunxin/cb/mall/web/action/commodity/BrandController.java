@@ -36,10 +36,8 @@ public class BrandController {
 
     @Resource
     private IBrandService brandService;
-
     @Resource
     private ICategoryService categoryService;
-
     @Resource
     private MessageSource messageSource;
     @Resource
@@ -102,9 +100,9 @@ public class BrandController {
                 brand.setPicPath(imgurl[0].split(",")[0]);
                 brandService.addBrand(brand);
                 //保存图片路径
-                attachmentService.deleteAttachment(ObjectType.BRAND,brand.getBrandId());
+                attachmentService.deleteAttachmentPictures(ObjectType.BRAND,brand.getBrandId());
                 for (String imgpath:imgurl) {
-                    attachmentService.addAttachment(ObjectType.BRAND,brand.getBrandId(),imgpath);
+                    attachmentService.addAttachmentPictures(ObjectType.BRAND,brand.getBrandId(),imgpath);
                 }
             }
         } catch (EntityExistException e) {
@@ -148,9 +146,9 @@ public class BrandController {
                 brand.setPicPath(imgurl[0].split(",")[0]);
                 brandService.updateBrand(brand);
                 //保存图片路径
-                attachmentService.deleteAttachment(ObjectType.BRAND,brand.getBrandId());
+                attachmentService.deleteAttachmentPictures(ObjectType.BRAND,brand.getBrandId());
                 for (String imgpath:imgurl) {
-                    attachmentService.addAttachment(ObjectType.BRAND,brand.getBrandId(),imgpath);
+                    attachmentService.addAttachmentPictures(ObjectType.BRAND,brand.getBrandId(),imgpath);
                 }
             }
         } catch (EntityExistException e) {
