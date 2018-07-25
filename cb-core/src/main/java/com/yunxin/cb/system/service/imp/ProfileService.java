@@ -1,6 +1,5 @@
 package com.yunxin.cb.system.service.imp;
 
-import com.yunxin.cb.insurance.entity.InsuranceProduct;
 import com.yunxin.cb.system.MobileOSType;
 import com.yunxin.cb.system.dao.ProfileDao;
 import com.yunxin.cb.system.entity.Profile;
@@ -19,9 +18,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -135,5 +131,10 @@ public class ProfileService implements IProfileService {
         Profile oldProfile = profileDao.findOne(profile.getFileId());
         oldProfile.setFileValue(profile.getFileValue());
         return oldProfile;
+    }
+
+    @Override
+    public Profile getProfileByProfileName(ProfileName profileName) {
+        return profileDao.getProfileByProfileName(profileName);
     }
 }

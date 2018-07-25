@@ -4,6 +4,14 @@ import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
+import com.yunxin.cb.mall.dao.CustomerDao;
+import com.yunxin.cb.mall.entity.Customer;
+import com.yunxin.cb.mall.entity.CustomerWallet;
+import com.yunxin.cb.mall.entity.meta.BusinessType;
+import com.yunxin.cb.mall.service.ICustomerWalletService;
+import com.yunxin.cb.system.entity.Profile;
+import com.yunxin.cb.system.meta.ProfileName;
+import com.yunxin.cb.system.service.IProfileService;
 import com.yunxin.cb.util.CodeGenerator;
 import com.yunxin.cb.util.ZxingUtils;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -39,8 +47,12 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private InsuranceInformedMatterDao insuranceInformedMatterDao;
     @Resource
     private InsuranceOrderOffsiteDao insuranceOrderOffsiteDao;
-
-
+    @Resource
+    private CustomerDao customerDao;
+    @Resource
+    private ICustomerWalletService iCustomerWalletService;
+    @Resource
+    private IProfileService iProfileService;
 
     /**
      * 根据用户ID查询保险订单列表
@@ -108,6 +120,39 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         boolean flag=true;
         try {
             insuranceOrderDao.updInsuranceOrderState(orderState,orderId);
+            /**
+             * 更新推荐人增加50%的预期收益金额
+             */
+            if(orderState.getName().equals(InsuranceOrderState.ON_PAID)){
+                InsuranceOrder insuranceOrder=insuranceOrderDao.findOne(orderId);
+
+                if(null!=insuranceOrder.getCustomer()&&Hibernate.isInitialized(insuranceOrder.getCustomer())){
+
+                    if(!insuranceOrder.getCustomer().isPolicy()){
+                        int customerId=insuranceOrder.getCustomer().getCustomerId();
+                        Customer customer= customerDao.findOne(customerId);
+
+                    if(null!=customer.getRecommendCustomer()&&Hibernate.isInitialized(customer.getRecommendCustomer())){
+
+                            int recommerdCustomerId=customer.getRecommendCustomer().getCustomerId();
+                            CustomerWallet customerWallet= iCustomerWalletService.findCustomerWallet(recommerdCustomerId);
+                            if(null!=customerWallet){
+                                Profile  Profile=iProfileService.getProfileByProfileName(ProfileName.LOAN_EXPECTED_RETURN_FIFTY);
+                                Double ration=0.5;
+                                try {
+                                    ration = Double.parseDouble(Profile.getFileValue());
+                                }catch (Exception e){
+                                    ration=0.5;
+                                }
+                                iCustomerWalletService.updateCustomerWallet(customerWallet.getCustomerId(),ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY);
+                         }
+                    }
+                        customer.setPolicy(true);
+                    }
+                }
+
+            }
+
         }catch (Exception e){
             flag=false;
         }

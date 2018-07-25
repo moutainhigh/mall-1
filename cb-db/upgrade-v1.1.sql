@@ -95,3 +95,6 @@ CREATE TABLE `floor_brand`  (
 ALTER TABLE home_floor add BRAND_AMOUNT int(11)  default (0) not null;
 ALTER TABLE category ADD COLUMN `LOWEST_PRICE` decimal(5, 2) NOT NULL COMMENT '最低价格' AFTER `PARENT_CATEGORY_ID`,
 ALTER TABLE category ADD COLUMN `HIGHEST_PRICE` decimal(5, 2) NOT NULL COMMENT '最高价格' AFTER `LOWEST_PRICE`;
+
+--add by wangteng 2018-07-25
+alter table customer add POLICY bit(1) DEFAULT 0 COMMENT '是否买过保单';
