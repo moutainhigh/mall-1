@@ -1,5 +1,6 @@
 package com.yunxin.cb.search.document;
 
+import com.yunxin.cb.search.vo.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
