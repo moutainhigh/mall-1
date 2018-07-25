@@ -151,6 +151,7 @@ public class MainResource extends BaseResource {
             customer.setCustomerType(CustomerType.PLATFORM_SELF);
             customer.setEnabled(true);
             customer.setRealName(customerVo.getRealName());
+            customer.setNickName(customer.getRealName());
             customer.setCardType(customerVo.getCardType());
             customer.setCustomerCardNo(customerVo.getCustomerCardNo());
             customer.setCardPositiveImg(customerVo.getCardPositiveImg());
