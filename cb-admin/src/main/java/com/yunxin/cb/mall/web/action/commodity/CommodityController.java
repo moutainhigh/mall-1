@@ -157,24 +157,6 @@ public class CommodityController implements ServletContextAware {
         modelMap.addAttribute("commodity", commodity);
         List<CommoditySpec> currentSpecs = commodityService.getCommoditySpecsByCommodityId(commodityId);
         modelMap.addAttribute("currentSpecs", currentSpecs);
-
-        File imageDir = new File(servletContext.getRealPath("/images/commodity/" + commodity.getCommodityCode()));
-        String[] images = imageDir.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                if (name.endsWith("jpg")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        if (images != null) {
-            Set<String> imageSet = new HashSet<>();
-            for (String image : images) {
-                imageSet.add("commodity/" + commodity.getCommodityCode() + "/" + image.substring(0, image.indexOf("_")));
-            }
-            modelMap.addAttribute("imageSet", imageSet);
-        }
         List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.COMMODITY,commodity.getCommodityId());
         modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return "commodity/editCommodity";
@@ -237,23 +219,8 @@ public class CommodityController implements ServletContextAware {
         modelMap.addAttribute("commodity", commodity);
         modelMap.addAttribute("products", productService.getProductsFetchAllByCommodityId(commodity.getCommodityId()));
         modelMap.addAttribute("commoditySpecs", commodityService.getCommoditySpecsByCommodity(commodity));
-        File imageDir = new File(servletContext.getRealPath("/images/commodity/" + commodity.getCommodityCode()));
-        String[] images = imageDir.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                if (name.endsWith("jpg")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        if (images != null) {
-            Set<String> imageSet = new HashSet<>();
-            for (String image : images) {
-                imageSet.add("commodity/" + commodity.getCommodityCode() + "/" + image.substring(0, image.indexOf("_")));
-            }
-            modelMap.addAttribute("imageSet", imageSet);
-        }
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.COMMODITY,commodity.getCommodityId());
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return "commodity/commodityDetail";
     }
 
