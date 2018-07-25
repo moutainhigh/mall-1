@@ -126,9 +126,9 @@ public class CommodityController implements ServletContextAware {
                 commodity.setSeller(seller);
                 commodity = commodityService.addCommodity(commodity);
                 //保存图片路径
-                attachmentService.deleteAttachment(ObjectType.COMMODITY,commodity.getCommodityId());
+                attachmentService.deleteAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId());
                 for (String imgpath:imgurl) {
-                    attachmentService.addAttachment(ObjectType.COMMODITY,commodity.getCommodityId(),imgpath);
+                    attachmentService.addAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId(),imgpath);
                 }
             }
 
@@ -170,9 +170,9 @@ public class CommodityController implements ServletContextAware {
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
                 commodity = commodityService.updateCommodity(commodity);
                 //保存图片路径
-                attachmentService.deleteAttachment(ObjectType.COMMODITY,commodity.getCommodityId());
+                attachmentService.deleteAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId());
                 for (String imgpath:imgurl) {
-                    attachmentService.addAttachment(ObjectType.COMMODITY,commodity.getCommodityId(),imgpath);
+                    attachmentService.addAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId(),imgpath);
                 }
             }
 
@@ -210,7 +210,12 @@ public class CommodityController implements ServletContextAware {
     @ResponseBody
     @RequestMapping(value = "upOrDownShelvesCommodity",method = RequestMethod.GET)
     public boolean upOrDownShelvesCommodity(@RequestParam("commodityId") int commodityId, @RequestParam("publishState") PublishState publishState) {
-        return commodityService.upOrDownShelvesCommodity(commodityId, publishState);
+        try{
+            return commodityService.upOrDownShelvesCommodity(commodityId, publishState);
+        }catch (Exception ex){
+            logger.info(ex.getMessage());
+            return false;
+        }
     }
 
     @RequestMapping(value = "commodityDetail",method = RequestMethod.GET)

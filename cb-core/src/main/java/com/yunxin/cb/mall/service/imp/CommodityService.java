@@ -10,6 +10,10 @@ import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.query.CommodityQuery;
 import com.yunxin.cb.mall.service.ICommodityService;
+import com.yunxin.cb.search.restful.RestfulFactory;
+import com.yunxin.cb.search.service.SearchRestService;
+import com.yunxin.cb.search.vo.CommodityVO;
+import com.yunxin.cb.search.vo.ResponseResult;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -26,6 +30,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import retrofit2.Call;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
@@ -644,8 +649,14 @@ public class CommodityService implements ICommodityService {
         specDao.delete(catalogId);
     }
 
+    /**
+     * 商品上下架
+     * @param commodityId
+     * @param publishState
+     * @return
+     */
     @Override
-    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) {
+    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception{
         Commodity commodity = commodityDao.findOne(commodityId);
         if (commodity.getCommodityState() != CommodityState.AUDITED) {
             return false;
@@ -660,6 +671,12 @@ public class CommodityService implements ICommodityService {
                 }
                 commodity.setPublishState(PublishState.UP_SHELVES);
                 productDao.updateUpOrDownShelvesInProductId(PublishState.UP_SHELVES, prodIds);
+                //商品上架，将商品添加到搜索容器
+                SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+                CommodityVO commodityVO = new CommodityVO(commodity);
+                Call<ResponseResult> call = restService.addCommodity(commodityVO);
+                ResponseResult result = call.execute().body();
+                logger.info("[elasticsearch] Commodity Sync State:" + result.getResult());
                 return true;
             } else {
                 return false;
@@ -674,6 +691,11 @@ public class CommodityService implements ICommodityService {
                 }
                 commodity.setPublishState(PublishState.DOWN_SHELVES);
                 productDao.updateUpOrDownShelvesInProductId(PublishState.DOWN_SHELVES, prodIds);
+                //商品下架，将搜索容器中的商品删除
+                SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+                Call<ResponseResult> call = restService.removeCommodity(commodityId);
+                ResponseResult result = call.execute().body();
+                logger.info("[elasticsearch] remove commodity state:" + result.getResult());
                 return true;
             } else {
                 return false;

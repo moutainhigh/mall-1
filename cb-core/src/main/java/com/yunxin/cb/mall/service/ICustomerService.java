@@ -59,6 +59,14 @@ public interface ICustomerService {
      * @return
      */
     public Customer  generateCode(String invitationCode);
+
+    /**
+     * 根据等级编码获取上级用户
+     * @param levelCode
+     * @return
+     */
+    public List<Customer> findCustomerByLevelCode(String levelCode);
+
     public Page<Customer> pageCustomers(PageSpecification<Customer> specification);
 
     void resetCustomerPwd(int customerId);

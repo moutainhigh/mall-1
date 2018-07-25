@@ -1,12 +1,14 @@
 package com.yunxin.cb.mall.web.action.cms;
 
+import com.alibaba.fastjson.JSON;
+import com.yunxin.cb.mall.entity.Attachment;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.*;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.ImageConverter;
 import com.yunxin.cb.mall.entity.HomeFloor;
 import com.yunxin.cb.mall.entity.meta.FloorLayout;
-import com.yunxin.cb.mall.service.ICategoryService;
-import com.yunxin.cb.mall.service.IFloorService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.ImageConverter;
@@ -33,6 +35,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 //import com.yunxin.cb.mall.entity.meta.FreeRepairCleanRecordType;
@@ -47,12 +50,12 @@ public class HomeFloorController implements ServletContextAware {
     private IFloorService floorService;
 
     @Resource
-    private MessageSource messageSource;
-
-    @Resource
     private ICategoryService categoryService;
 
     private ServletContext servletContext;
+
+    @Resource
+    private IAttachmentService attachmentService;
 
     @Override
     public void setServletContext(ServletContext servletContext) {
@@ -82,45 +85,26 @@ public class HomeFloorController implements ServletContextAware {
 
     @RequestMapping(value = "addHomeFloor", method = RequestMethod.POST)
     public String addHomeFloor(@ModelAttribute HomeFloor homeFloor, HttpServletRequest request) {
-        compressImage(homeFloor);
-        compressIcon(homeFloor);
-        floorService.addHomeFloor(homeFloor);
+        String[] imgurl = request.getParameterValues("imgurl");
+        String[] imgurl1 = request.getParameterValues("imgurl1");
+        if(imgurl.length>0&&imgurl.length>0){
+            homeFloor.setIconPath(imgurl[0].split(",")[0]);
+            homeFloor.setImagePath(imgurl1[0].split(",")[0]);
+            homeFloor=floorService.addHomeFloor(homeFloor);
+            //保存图片路径
+            attachmentService.deleteAttachmentPictures(ObjectType.HOMEFLOORICO,homeFloor.getFloorId());
+            for (String imgpath:imgurl) {
+                attachmentService.addAttachmentPictures(ObjectType.HOMEFLOORICO,homeFloor.getFloorId(),imgpath);
+            }
+            //保存图片路径
+            attachmentService.deleteAttachmentPictures(ObjectType.HOMEFLOORPROPAGANDA,homeFloor.getFloorId());
+            for (String imgpath:imgurl1) {
+                attachmentService.addAttachmentPictures(ObjectType.HOMEFLOORPROPAGANDA,homeFloor.getFloorId(),imgpath);
+            }
+        }
         return "redirect:../common/success.do?reurl=cms/homeFloors.do";
     }
 
-    private void compressImage(HomeFloor homeFloor) {
-        try {
-            MediaPather.createPicSiteRealDir(servletContext, "homeFloor");
-
-            String imagePath = homeFloor.getImagePath();
-            File imageFile = MediaPather.getPicStoreRealFile(servletContext, imagePath);
-            ImageConverter imageConverter = new ImageConverter(imageFile);
-            imagePath = "homeFloor/" + System.currentTimeMillis() + ".jpg";
-            if (homeFloor.getFloorLayout() == FloorLayout.HORIZONTAL) {
-                imageConverter.compressJpg(1270, 270, MediaPather.getPicSiteRealPath(servletContext, imagePath));
-            } else {
-                imageConverter.compressJpg(423, 611, MediaPather.getPicSiteRealPath(servletContext, imagePath));
-            }
-            homeFloor.setImagePath(imagePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void compressIcon(HomeFloor homeFloor) {
-        try {
-            MediaPather.createPicSiteRealDir(servletContext, "homeFloor");
-            String iconPath = homeFloor.getIconPath();
-            File iconFile = MediaPather.getPicStoreRealFile(servletContext, iconPath);
-            ImageConverter iconConverter = new ImageConverter(iconFile);
-            iconPath = "homeFloor/" + System.currentTimeMillis() + ".png";
-            iconConverter.compressPng(30, 30, MediaPather.getPicSiteRealPath(servletContext, iconPath));
-            homeFloor.setIconPath(iconPath);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @RequestMapping(value = "toEditHomeFloor", method = RequestMethod.GET)
     public String toEditHomeFloor(@RequestParam("floorId") int floorId, ModelMap modelMap, Locale locale) {
@@ -128,24 +112,37 @@ public class HomeFloorController implements ServletContextAware {
         modelMap.addAttribute("homeFloor", homeFloor);
         TreeViewItem categoryTree = categoryService.getCategoryTree();
         modelMap.addAttribute("categoryTree", Arrays.asList(categoryTree));
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.HOMEFLOORICO,floorId);
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
+        List<Attachment> listAttachment1=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.HOMEFLOORPROPAGANDA,floorId);
+        modelMap.addAttribute("listAttachment1",JSON.toJSON(listAttachment1));
         return "cms/editHomeFloor";
     }
 
     @RequestMapping(value = "editHomeFloor", method = RequestMethod.POST)
-    public String editHomeFloor(@Valid @ModelAttribute("homeFloor") HomeFloor homeFloor,
+    public String editHomeFloor(@Valid @ModelAttribute("homeFloor") HomeFloor homeFloor,HttpServletRequest request,
                                 BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return toEditHomeFloor(homeFloor.getFloorId(), modelMap, locale);
         }
-        HomeFloor homeFloor1 = floorService.getHomeFloorById(homeFloor.getFloorId());
-        if (!homeFloor1.getIconPath().equals(homeFloor.getIconPath())) {
-            compressIcon(homeFloor);
-        }
-        if (!homeFloor1.getImagePath().equals(homeFloor.getImagePath())) {
-            compressImage(homeFloor);
-        }
         try {
-            homeFloor1 = floorService.updateHomeFloor(homeFloor);
+            String[] imgurl = request.getParameterValues("imgurl");
+            String[] imgurl1 = request.getParameterValues("imgurl1");
+            if(imgurl.length>0&&imgurl.length>0){
+                homeFloor.setIconPath(imgurl[0].split(",")[0]);
+                homeFloor.setImagePath(imgurl1[0].split(",")[0]);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.HOMEFLOORICO,homeFloor.getFloorId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.HOMEFLOORICO,homeFloor.getFloorId(),imgpath);
+                }
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.HOMEFLOORPROPAGANDA,homeFloor.getFloorId());
+                for (String imgpath:imgurl1) {
+                    attachmentService.addAttachmentPictures(ObjectType.HOMEFLOORPROPAGANDA,homeFloor.getFloorId(),imgpath);
+                }
+            }
+            HomeFloor homeFloor1 = floorService.updateHomeFloor(homeFloor);
         } catch (EntityExistException e) {
             result.addError(new FieldError("homeFloor", "floorName", homeFloor.getFloorName(), true, null, null,e.getMessage()));
             return toEditHomeFloor(homeFloor.getFloorId(), modelMap, locale);

@@ -155,7 +155,7 @@ public interface ICommodityService {
      * @param publishState
      * @return
      */
-    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState);
+    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception;
 
     void removeCombinationById(int combinationId);
 

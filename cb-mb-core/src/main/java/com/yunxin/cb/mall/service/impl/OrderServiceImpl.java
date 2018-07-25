@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCreateTime(createTime);
         order.setUpdateTime(createTime);
         order.setOrderCode(UUIDGeneratorUtil.getUUCode());
-        order.setOrderState(OrderState.PENDING_PAYMENT.ordinal());
+        order.setOrderState(OrderState.PENDING_PAYMENT);
         defaultValue(order);//添加默认数据
         double totalPrice = 0; // 订单总价
         int totalQuantity = 0;//订单货品总数量
@@ -177,7 +177,7 @@ public class OrderServiceImpl implements OrderService {
     public Order cancelOrder(Order order) throws Exception {
         Order orderDb = orderMapper.selectByOrderIdAndCustomerId(order.getOrderId(), order.getCustomerId());
         //待付款订单才可取消
-        if (orderDb != null && orderDb.getOrderState() == OrderState.PENDING_PAYMENT.ordinal()){
+        if (orderDb != null && orderDb.getOrderState() == OrderState.PENDING_PAYMENT){
             Set<OrderItem> orderItems = orderDb.getOrderItems();
             if (orderItems != null && !orderItems.isEmpty()) {
                 for (OrderItem orderItem : orderItems) {
@@ -199,7 +199,7 @@ public class OrderServiceImpl implements OrderService {
             //更改订单为取消状态
             orderDb.setCancelReason(order.getCancelReason());
             orderDb.setCancelTime(now);
-            orderDb.setOrderState(OrderState.CANCELED.ordinal());
+            orderDb.setOrderState(OrderState.CANCELED);
             orderMapper.updateByPrimaryKey(orderDb);
             //更改订单贷款申请为取消
             OrderLoanApply orderLoanApply = orderLoanApplyMapper.selectByOrderId(orderDb.getOrderId());
@@ -223,7 +223,7 @@ public class OrderServiceImpl implements OrderService {
         Order orderDb = orderMapper.selectByOrderIdAndCustomerId(orderId, customerId);
         //已付款订单才可确认收货
         if (orderDb != null &&
-                (orderDb.getOrderState() == OrderState.PAID_PAYMENT.ordinal() || orderDb.getOrderState() == OrderState.OUT_STOCK.ordinal())){
+                (orderDb.getOrderState() == OrderState.PAID_PAYMENT || orderDb.getOrderState() == OrderState.OUT_STOCK)){
             int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED.ordinal(), DeliveryState.RECEIVED.ordinal());
             //添加订单日志
             if (count > 0) {

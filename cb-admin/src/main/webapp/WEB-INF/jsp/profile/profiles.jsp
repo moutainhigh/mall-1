@@ -34,6 +34,12 @@
                 case "ANDROID_DESCRIPTION":{
                     return "安卓APP更新描述";
                 }
+                case "GIVE_THE_THUMBS_UP":{
+                    return "点赞推荐人及所有上级加5%的授信额度";
+                }
+                case "LOAN_EXPECTED_RETURN_FIFTY":{
+                    return "下单推荐人增加50%的贷款预期收益";
+                }
             }
         }
 
