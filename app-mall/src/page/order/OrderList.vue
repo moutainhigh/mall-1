@@ -65,6 +65,7 @@
     text-align: center;
     height: 42px;
     border-bottom: 1px solid #ececec;
+    margin-top: 3rem;
   }
 
   .tabItem {

@@ -253,6 +253,9 @@
       } else {
         this.priceId = order.insuranceProductPrice.priceId;
       }
+
+      let holder = storage.fetch("holder");
+      order.insuranceOrderPolicyholderBank.bankCardImg = holder.bankCardImg;
       storage.save('order', order);
 
       let insured = storage.fetch("insured");
