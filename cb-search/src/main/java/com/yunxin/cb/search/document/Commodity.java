@@ -1,5 +1,6 @@
-package com.yunxin.cb.search.vo;
+package com.yunxin.cb.search.document;
 
+import com.yunxin.cb.search.vo.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -31,7 +32,7 @@ public class Commodity implements java.io.Serializable {
     /**
      * 品牌
      */
-    @Field()
+
     private Brand brand;
     /**
      * 供应商

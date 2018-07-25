@@ -1,6 +1,5 @@
 package com.yunxin.cb.search.service;
 
-import com.yunxin.cb.search.vo.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

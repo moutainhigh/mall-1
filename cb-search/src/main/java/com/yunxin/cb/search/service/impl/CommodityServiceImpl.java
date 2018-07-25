@@ -1,9 +1,9 @@
 package com.yunxin.cb.search.service.impl;
 
 
+import com.yunxin.cb.search.document.Commodity;
 import com.yunxin.cb.search.repository.CommodityDao;
 import com.yunxin.cb.search.service.CommodityService;
-import com.yunxin.cb.search.vo.Commodity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author tanggangyi
@@ -30,7 +32,15 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public Page<Commodity> search(String content, Pageable pageable) {
-        return commodityDao.findByCommodityNameLike(content, pageable);
+        Page<Commodity> page = commodityDao.findByCommodityNameLike(content, pageable);
+        Page<Commodity> page2 =commodityDao.findAll(pageable);
+        return page2;
+    }
+
+    public Iterable<Commodity> findAll() {
+        Iterable<Commodity> iterable = commodityDao.findAll();
+        return iterable ;
+
     }
 
     @Override

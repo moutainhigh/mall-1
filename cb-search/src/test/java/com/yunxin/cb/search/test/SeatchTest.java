@@ -2,8 +2,8 @@ package com.yunxin.cb.search.test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yunxin.cb.search.document.Commodity;
 import com.yunxin.cb.search.vo.Brand;
-import com.yunxin.cb.search.vo.Commodity;
 import com.yunxin.cb.search.vo.PriceSection;
 import com.yunxin.cb.search.vo.Seller;
 import com.yunxin.cb.search.vo.meta.SellerType;
