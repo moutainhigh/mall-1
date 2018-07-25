@@ -9,7 +9,7 @@
       </div>
     </head-top>
 
-    <div style="background-color: #FFFFFF;padding: 0.1rem 0;font-size: 0;">
+    <div style="background-color: #FFFFFF;padding: 0.1rem 0;font-size: 0;margin-top: 3rem;">
       <div style="background-color: #999999;margin: 1rem;border-radius: 0.5rem;overflow: hidden">
           <img src="../../assets/img/home/banner.png" width="100%" style="">
       </div>
@@ -113,6 +113,7 @@
 
 <script>
   import headTop from "../../components/header/head"
+  import {getIndex, getVaildData} from "../../service/getData";
 
   export default {
     name: "Home",
@@ -140,6 +141,11 @@
           path:"/search"
         })
       }
+    },
+    created() {
+      getIndex().then(res=>{
+        console.log(res);
+      })
     }
   }
 </script>
@@ -177,7 +183,7 @@
   }
 
   .card-list {
-    margin: 0.8rem;
+    margin: 0.8rem 0.8rem 0;
   }
 
   .card-list .cont {
