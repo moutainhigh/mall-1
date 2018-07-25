@@ -11,40 +11,14 @@
 
     <div style="background-color: #FFFFFF;padding: 0.1rem 0;font-size: 0;margin-top: 3rem;">
       <div style="background-color: #999999;margin: 1rem;border-radius: 0.5rem;overflow: hidden">
-          <img src="../../assets/img/home/banner.png" width="100%" style="">
+        <swiper :aspect-ratio="350/800" auto style="margin:0 auto;" dots-position="center">
+          <swiper-item class="swiper-demo-img" v-for="(item, index) in homeList" :key="index"><img width="100%" :src="item.picPath"></swiper-item>
+        </swiper>
       </div>
-      <div style="height: 10rem;margin: 1rem;border-radius: 0.5rem;">
-        <div class="car-type" @click="openCarList">
-          <img src="../../assets/img/home/home_logo_bc.png" style="width: 50%;">
-          <div style="font-size: 0.8rem;line-height: 3;">奔驰</div>
-        </div>
-        <div class="car-type">
-          <img src="../../assets/img/home/home_logo_bc.png" style="width: 50%;">
-          <div style="font-size: 0.8rem;line-height: 3;">奔驰</div>
-        </div>
-        <div class="car-type">
-          <img src="../../assets/img/home/home_logo_bc.png" style="width: 50%;">
-          <div style="font-size: 0.8rem;line-height: 3;">奔驰</div>
-        </div>
-        <div class="car-type">
-          <img src="../../assets/img/home/home_logo_bc.png" style="width: 50%;">
-          <div style="font-size: 0.8rem;line-height: 3;">奔驰</div>
-        </div>
-        <div class="car-type">
-          <img src="../../assets/img/home/home_logo_bc.png" style="width: 50%;">
-          <div style="font-size: 0.8rem;line-height: 3;">奔驰</div>
-        </div>
-        <div class="car-type">
-          <img src="../../assets/img/home/home_logo_bc.png" style="width: 50%;">
-          <div style="font-size: 0.8rem;line-height: 3;">奔驰</div>
-        </div>
-        <div class="car-type">
-          <img src="../../assets/img/home/home_logo_bc.png" style="width: 50%;">
-          <div style="font-size: 0.8rem;line-height: 3;">奔驰</div>
-        </div>
-        <div class="car-type">
-          <img src="../../assets/img/home/home_logo_bc.png" style="width: 50%;">
-          <div style="font-size: 0.8rem;line-height: 3;">奔驰</div>
+      <div style="margin: 1rem;border-radius: 0.5rem;">
+        <div class="car-type" v-for="brand in brandList" @click="openCarList(brand.brandId)">
+          <img :src="brand.picPath" style="width: 3rem;height: 3rem;">
+          <div style="font-size: 0.8rem;line-height: 3;">{{brand.brandName}}</div>
         </div>
       </div>
     </div>
@@ -52,25 +26,13 @@
     <div class="card-adv">
       <img src="../../assets/img/home/home_floor_title01.png" width="100%"/>
       <div style="text-align: center;">
-        <div class="adv-ban">
-          <img src="../../assets/img/home/home_floor_banner_01.png" width="100%"/>
-        </div>
-        <div class="adv-ban">
-          <img src="../../assets/img/home/home_floor_banner_02.png" width="100%"/>
-        </div>
-        <div class="adv-ban">
-          <img src="../../assets/img/home/home_floor_banner_03.png" width="100%"/>
+        <div class="adv-ban" v-for="item in categoryThreeList">
+          <img :src="item.iconPath" width="100%"/>
         </div>
       </div>
       <div class="adv-scroll">
-        <div style="height: 5rem;width:680px;padding-left: 0.7rem;">
-          <div style="display: inline-block;height: 5rem;">
-            <img src="../../assets/img/home/banner2.png" height="100%" style="margin: 0 5px;border-radius: 8px;">
-          </div>
-          <div style="display: inline-block;height: 5rem;">
-            <img src="../../assets/img/home/banner2.png" height="100%" style="margin: 0 5px;border-radius: 8px;">
-          </div>
-          <div style="display: inline-block;height: 5rem;">
+        <div style="height: 5rem;padding-left: 0.7rem;" v-bind:style="{ width: milldeList.length* 14 + 'rem' }">
+          <div style="display: inline-block;height: 5rem;" v-for="millde in milldeList">
             <img src="../../assets/img/home/banner2.png" height="100%" style="margin: 0 5px;border-radius: 8px;">
           </div>
         </div>
@@ -80,29 +42,16 @@
         <div style="font-size: 1rem;color: #999999;">
           猜你喜欢
         </div>
-        <div class="cont" @click="openCarDetail">
+        <div class="cont" v-for="item in categoryFiveList" @click="openCarDetail">
           <div style="height: 5rem;flex: 0 0 7rem;">
-            <img src="../../assets/img/home/1.png" width="100%" style="border-radius: 4px">
+            <img :src="item.iconPath" width="100%" style="border-radius: 4px">
           </div>
           <div style="margin-left:0.8rem;height: 5rem;width: 100%;border-bottom: #ECECEC solid 1px;padding-bottom: 0.5rem;">
             <div style="font-size: 1rem;height: 3rem;">
-              2018款 240TURBO自动两驱舒适版
+              {{item.categoryName}}
             </div>
             <div style="color: #F54E4E;font-size: 1rem;font-weight: bold;">
-              <span style="font-size: 0.8rem;">￥</span>8.98万
-            </div>
-          </div>
-        </div>
-        <div class="cont">
-          <div style="height: 5rem;flex: 0 0 7rem;">
-            <img src="../../assets/img/home/1.png" width="100%" style="border-radius: 4px">
-          </div>
-          <div style="margin-left:0.8rem;height: 5rem;width: 100%;border-bottom: #ECECEC solid 1px;padding-bottom: 0.5rem;">
-            <div style="font-size: 1rem;height: 3rem;">
-              2018款 240TURBO自动两驱舒适版
-            </div>
-            <div style="color: #F54E4E;font-size: 1rem;font-weight: bold;">
-              <span style="font-size: 0.8rem;">￥</span>8.98万
+              <span style="font-size: 0.8rem;">￥</span>{{item.lowestPrice}}万
             </div>
           </div>
         </div>
@@ -114,15 +63,23 @@
 <script>
   import headTop from "../../components/header/head"
   import {getIndex, getVaildData} from "../../service/getData";
+  import { Swiper,SwiperItem} from 'vux'
 
   export default {
     name: "Home",
     components: {
-      headTop
+      headTop,
+      Swiper,
+      SwiperItem
     },
     data() {
       return {
-        headTitle: '首页'
+        headTitle: '首页',
+        homeList:[],
+        brandList:[],
+        milldeList:[],
+        categoryFiveList:[],
+        categoryThreeList:[]
       }
     },
     methods: {
@@ -143,7 +100,15 @@
       }
     },
     created() {
+      let _this = this;
       getIndex().then(res=>{
+        if (res.result == 'SUCCESS'){
+          _this.homeList = res.data.homeList;
+          _this.brandList = res.data.brand.brandList;
+          _this.categoryThreeList = res.data.categoryThree.categoryThreeList;
+          _this.categoryFiveList = res.data.categoryFive.categoryFiveList;
+          _this.milldeList = res.data.milldeList;
+        }
         console.log(res);
       })
     }
@@ -163,7 +128,7 @@
     display: inline-block;
     width: 28%;
     background-color: #dcdcdc;
-    margin: 0 2px;
+    margin: 0 0.2rem 0.1rem 0.2rem;
     border-radius: 8px;
   }
 

@@ -720,7 +720,7 @@
         let input = document.getElementsByTagName("input");
         for (let i = 0; i < textatea.length; i++) {
           if (emoji.test(textatea[i].value)) {
-            alert("请不要输入空格");
+            alert("输入信息不得带表情");
             return false;
           }
           if (space.test(textatea[i].value)) {

@@ -32,7 +32,7 @@ public class Commodity implements java.io.Serializable {
     /**
      * 品牌
      */
-    @Field()
+
     private Brand brand;
     /**
      * 供应商

@@ -4,6 +4,8 @@ import CarList from '../page/carList/CarList'
 import CarDetail from '../page/carDetail/CarDetail'
 import OrderComfirm from '../page/order/OrderComfirm'
 import OrderSuccess from '../page/order/OrderSuccess'
+import OrderList from '../page/order/OrderList'
+import OrderDetail from '../page/order/OrderDetail'
 import Home from '../page/home/Home'
 import Search from '../page/search/Search'
 import Location from '../page/location/Location'
@@ -52,6 +54,15 @@ export default new Router({
       path: '/order-success',
       name: 'OrderSuccess',
       component: OrderSuccess
+    },{
+      path: '/order-detail',
+      name: 'OrderDetail',
+      component: OrderDetail
+    },
+    {
+      path: '/order-list',
+      name: 'OrderList',
+      component: OrderList
     },
   ]
 })
