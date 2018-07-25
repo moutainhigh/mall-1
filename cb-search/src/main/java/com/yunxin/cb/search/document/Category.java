@@ -1,7 +1,4 @@
-package com.yunxin.cb.search.vo;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
+package com.yunxin.cb.search.document;
 
 /**
  * 运营分类

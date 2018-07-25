@@ -1,9 +1,9 @@
 package com.yunxin.cb.search.service.impl;
 
 
+import com.yunxin.cb.search.document.Commodity;
 import com.yunxin.cb.search.repository.CommodityDao;
 import com.yunxin.cb.search.service.CommodityService;
-import com.yunxin.cb.search.vo.Commodity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

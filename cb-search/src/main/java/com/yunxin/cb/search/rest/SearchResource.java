@@ -1,10 +1,11 @@
 package com.yunxin.cb.search.rest;
 
 
-import com.yunxin.cb.search.service.CommodityService;
-import com.yunxin.cb.search.vo.Commodity;
+import com.yunxin.cb.search.document.Commodity;
 import com.yunxin.cb.search.vo.ResponseResult;
 import com.yunxin.cb.search.vo.meta.Result;
+import com.yunxin.cb.search.service.CommodityService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -29,7 +30,7 @@ public class SearchResource extends BaseResource {
             @ApiImplicitParam(name = "keyword", value = "搜索关键字", required = true, paramType = "post", dataType = "String")
     })
     @PostMapping(value = "keywordSearch")
-    public ResponseResult keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size){
+    public ResponseResult<Page<Commodity>> keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size){
        Page pager =  commodityService.search(keyword, new PageRequest(page, size));
        return new ResponseResult(pager.getContent());
     }

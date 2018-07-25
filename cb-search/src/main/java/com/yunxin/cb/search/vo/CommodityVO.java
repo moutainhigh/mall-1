@@ -1,27 +1,20 @@
 package com.yunxin.cb.search.vo;
 
+import com.yunxin.cb.search.document.*;
+import io.swagger.annotations.ApiModel;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-/**
- * 商品
- *
- * @author
- */
-@Document(indexName = "crystal_ball", type = "commodity")
-public class Commodity implements java.io.Serializable {
-
-    private static final long serialVersionUID = -3993560903203859821L;
+@ApiModel(value="商品搜索对象",description="商品搜索对象 CommodityVO")
+public class CommodityVO implements java.io.Serializable {
+    private static final long serialVersionUID = -3968560903203859821L;
 
     /**
      * 商品ID
      */
-    @Id
     private int commodityId;
 
     /**
@@ -31,7 +24,6 @@ public class Commodity implements java.io.Serializable {
     /**
      * 品牌
      */
-    @Field()
     private Brand brand;
     /**
      * 供应商

@@ -2,7 +2,6 @@ package com.yunxin.cb.search.service.impl;
 
 import com.yunxin.cb.search.repository.CategoryDao;
 import com.yunxin.cb.search.service.CategoryService;
-import com.yunxin.cb.search.vo.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
