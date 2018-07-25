@@ -80,6 +80,8 @@ public class Order {
 
     /** 订单基本状态 */
     private OrderState orderState;
+    /** 订单基本状态数值 */
+    private int orderStateId;
 
     /** 退换货产生的新订单引用原定单 */
     private String originOrderCode;
@@ -519,4 +521,9 @@ public class Order {
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
+
+    public int getOrderStateId() {
+        return this.orderState.ordinal();
+    }
+
 }
