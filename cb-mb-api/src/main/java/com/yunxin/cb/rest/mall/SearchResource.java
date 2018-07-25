@@ -26,7 +26,9 @@ public class SearchResource extends BaseResource {
     @PostMapping(value = "categorySearch")
     @IgnoreAuthentication
     public ResponseResult categorySearch(@RequestBody SearchVo searchVo){
-       return new ResponseResult(Result.SUCCESS);
+
+
+        return new ResponseResult(Result.SUCCESS);
     }
 
     @ApiOperation(value = "关键字搜索")
