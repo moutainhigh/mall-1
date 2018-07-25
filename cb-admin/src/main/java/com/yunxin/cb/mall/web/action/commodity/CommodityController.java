@@ -210,7 +210,12 @@ public class CommodityController implements ServletContextAware {
     @ResponseBody
     @RequestMapping(value = "upOrDownShelvesCommodity",method = RequestMethod.GET)
     public boolean upOrDownShelvesCommodity(@RequestParam("commodityId") int commodityId, @RequestParam("publishState") PublishState publishState) {
-        return commodityService.upOrDownShelvesCommodity(commodityId, publishState);
+        try{
+            return commodityService.upOrDownShelvesCommodity(commodityId, publishState);
+        }catch (Exception ex){
+            logger.info(ex.getMessage());
+            return false;
+        }
     }
 
     @RequestMapping(value = "commodityDetail",method = RequestMethod.GET)
