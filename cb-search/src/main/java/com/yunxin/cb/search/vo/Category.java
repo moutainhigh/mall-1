@@ -1,4 +1,4 @@
-package com.yunxin.cb.search.document;
+package com.yunxin.cb.search.vo;
 
 /**
  * 运营分类
