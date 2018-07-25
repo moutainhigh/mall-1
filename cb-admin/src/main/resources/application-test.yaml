@@ -50,3 +50,4 @@ application:
   default:
     avatarUrl: http://pb9sg55i7.bkt.clouddn.com/avatar.png
   uploadPath: /opt/www
+  searchBaseUrl: http://localhost:8168/search/

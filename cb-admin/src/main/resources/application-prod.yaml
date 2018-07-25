@@ -60,3 +60,4 @@ application:
   default:
     avatarUrl: http://resource.999shuijingqiu.com/avatar.png
   uploadPath: /data/webapps/admin/temp/images
+  searchBaseUrl: http://localhost:8168/search/
