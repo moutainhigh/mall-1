@@ -47,7 +47,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         }
         Order order = orderMapper.selectByOrderIdAndCustomerId(productReturn.getOrderId(), productReturn.getCustomerId());
         //判断订单是否是已支付待提货状态
-        if (order == null || (order.getOrderState() != OrderState.PAID_PAYMENT.ordinal() && order.getOrderState() != OrderState.OUT_STOCK.ordinal())) {
+        if (order == null || (order.getOrderState() != OrderState.PAID_PAYMENT && order.getOrderState() != OrderState.OUT_STOCK)) {
             throw new Exception("该订单不可以退货申请");
         }
         ProductReturn nReturn = new ProductReturn();
