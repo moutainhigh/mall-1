@@ -27,7 +27,7 @@ public class FileResource {
     private IStorageService qiniuStorageService;
 
     /**
-     * 七牛云文件上传
+     * 七牛云文件上传（用于保险产品保留）
      *
      * @param file
      * @param type
@@ -109,6 +109,7 @@ public class FileResource {
     @ResponseBody
     public Map delete(@PathVariable(value = "type") ObjectType type,@RequestParam("key") String key, HttpServletRequest request) throws IOException {
         Map<String, String> result = new HashMap<String, String>();
+        //获取保存文件的key
         String fileName=type+"/"+key;
         qiniuStorageService.deleteByfileName(type,fileName);
         return result;

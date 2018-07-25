@@ -27,6 +27,19 @@ axios.interceptors.request.use(
 //http response 拦截器
 axios.interceptors.response.use(
   response => {
+    var status = response.status;
+    if (status == 502){
+
+    }
+    if (status == 400){
+
+    }
+    if (status == 401){
+
+    }
+    if (status == 500){
+
+    }
     if(response.data.errCode ==2){
       // this.$router.push({
       //   path:"/login",
