@@ -35,9 +35,6 @@ public class ArticleChannelController {
 
     @Resource
     private IProgramaService programaService;
-
-    @Resource
-    private MessageSource messageSource;
     @Resource
     private IAttachmentService attachmentService;
 
