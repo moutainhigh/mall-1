@@ -6,6 +6,7 @@ import com.yunxin.cb.search.vo.ResponseResult;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
@@ -32,6 +33,7 @@ public interface SearchRestService {
      * @param commodityId
      * @return
      */
+    @FormUrlEncoded
     @POST("mall/search/removeCommodity")
     Call<ResponseResult> removeCommodity(@Field("commodityId") int commodityId);
 }
