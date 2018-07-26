@@ -50,7 +50,6 @@ public interface ICustomerService {
     public Customer updateCustomerRank(Customer customer);
 
     public Customer updateCustomerIntegral(Customer customer);
-
     public Customer getCustomerById(int customerId);
 
     public void removeCustomerById(int customerId);
