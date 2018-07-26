@@ -122,34 +122,30 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             /**
              * 更新推荐人增加50%的预期收益金额
              */
-            System.out.println(orderState.getName());
-            if(orderState.getName().equals(InsuranceOrderState.ON_PAID)){
+            System.out.println(orderState);
+            if(orderState.equals(InsuranceOrderState.ON_PAID)){
                 InsuranceOrder insuranceOrder=insuranceOrderDao.findOne(orderId);
-
-                if(null!=insuranceOrder.getCustomer()&&Hibernate.isInitialized(insuranceOrder.getCustomer())){
+                int customerId=insuranceOrder.getCustomer().getCustomerId();
+                Customer customer= customerDao.findOne(customerId);
 
                     if(!insuranceOrder.getCustomer().isPolicy()){
-                        int customerId=insuranceOrder.getCustomer().getCustomerId();
-                        Customer customer= customerDao.findOne(customerId);
+                        if(null!=customer.getRecommendCustomer()){
 
-                    if(null!=customer.getRecommendCustomer()&&Hibernate.isInitialized(customer.getRecommendCustomer())){
-
-                            int recommerdCustomerId=customer.getRecommendCustomer().getCustomerId();
-                            CustomerWallet customerWallet= iCustomerWalletService.findCustomerWallet(recommerdCustomerId);
-                            if(null!=customerWallet){
-                                Profile  Profile=iProfileService.getProfileByProfileName(ProfileName.LOAN_EXPECTED_RETURN_FIFTY);
-                                Double ration=0.5;
-                                try {
-                                    ration = Double.parseDouble(Profile.getFileValue());
-                                }catch (Exception e){
-                                    ration=0.5;
-                                }
-                                iCustomerWalletService.updateCustomerWallet(customerWallet.getCustomerId(),ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY);
-                         }
-                    }
+                                int recommerdCustomerId=customer.getRecommendCustomer().getCustomerId();
+                                CustomerWallet customerWallet= iCustomerWalletService.findCustomerWallet(recommerdCustomerId);
+                                if(null!=customerWallet){
+                                    Profile  Profile=iProfileService.getProfileByProfileName(ProfileName.LOAN_EXPECTED_RETURN_FIFTY);
+                                    Double ration=0.5;
+                                    try {
+                                        ration = Double.parseDouble(Profile.getFileValue());
+                                    }catch (Exception e){
+                                        ration=0.5;
+                                    }
+                                    iCustomerWalletService.updateCustomerWallet(customerWallet.getCustomerId(),ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY);
+                             }
+                        }
                         customer.setPolicy(true);
                     }
-                }
 
             }
 

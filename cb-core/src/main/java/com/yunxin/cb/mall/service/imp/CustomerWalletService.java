@@ -42,6 +42,7 @@ public class CustomerWalletService implements ICustomerWalletService {
             BigDecimal addedLoanQuota=loanQuota.multiply(ratio);
             Double  newLoanQuota=loanQuota.add(addedLoanQuota).setScale(2,BigDecimal.ROUND_UP).doubleValue();
             customerWalletBean.setLoanQuota(newLoanQuota);
+            customerWalletBean.setUpdateTime(new Date());
             final double amount=addedLoanQuota.setScale(2,BigDecimal.ROUND_UP).doubleValue();
             /**
              * 更新交易记录
