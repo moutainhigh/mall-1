@@ -316,8 +316,6 @@ public class CustomerService implements ICustomerService {
        return new ArrayList<Customer>(){
             {
                 if(StringUtils.isNotBlank(levelCode)){
-
-                if(Integer.parseInt(levelCode)>1){
                     Customer customer= getByLevelCode(levelCode);
                     if(customer!=null){
                         int level=customer.getCustomerLevel();
@@ -329,8 +327,6 @@ public class CustomerService implements ICustomerService {
 
                         }
                     }
-                }
-
 
                 }
             }
