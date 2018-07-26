@@ -51,10 +51,6 @@
                             bootbox.alert("请选择标题颜色!");
                             return false;
                         }
-                        if (null == $("#imagePath").val() || "" == $("#imagePath").val()) {
-                            bootbox.alert("请选择宣传图片!");
-                            return false;
-                        }
                         if (null == $("#publishDate").val() || "" == $("#publishDate").val()) {
                             bootbox.alert("请选择发布日期!");
                             return false;
@@ -66,6 +62,13 @@
                         if (null == $("#editorContent").val() || "" == $("#editorContent").val()) {
                             bootbox.alert("请填写文章正文!");
                             return false;
+                        }
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        } else {
+                            return true;
                         }
                         return true;
                     }
@@ -107,6 +110,103 @@
             });
         }
 
+    </script>
+    <script type="application/javascript">
+        /**
+         *上传图片
+         */
+        function onchangeImg(imgId){
+            debugger;
+            var formData = new FormData();
+            formData.append("file", $('#upload'+imgId)[0].files[0]);
+            $.ajax({
+                url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    $('#imagePath'+imgId).val(result.url);
+                },
+                error: function (err) {
+                }
+            });
+        }
+
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null;
+            if (window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if (window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+
+        function addImage(indexa){
+            $("#upload"+indexa).click(); //隐藏了input:file样式后，点击头像就可以本地上传
+            $("#upload"+indexa).on("change", function () {
+                var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+                if (objUrl) {
+                    $("#img"+indexa).attr("src", objUrl); //将图片路径存入src中，显示出图片
+                }
+            });
+        }
+
+        var idIndex = 0;
+        function chooseStepImage() {
+            var nRow=$("<tr></tr>").attr("id","imageTr"+idIndex);
+            var img=$("<img id='img"+idIndex+"'    onclick='addImage("+idIndex+")' src='' width='80px' height='80px'>" +
+                "<input id='upload"+idIndex+"' onchange='onchangeImg("+idIndex+")' name='file' multiple='multiple' accept='image/*' type='file' style='display: none'/>");
+            var ntd0=$("<td style='width:100px;'></td>").append("<input id='imagePath"+idIndex+"'  type='hidden' name='stepPicPath' />")
+                .append(img);
+            nRow.append(ntd0);
+            var ntd1=$("<td></td>").append("<input type='text' name='stepName' class='form-control validate[required]' maxLength='64'/>");
+            nRow.append(ntd1);
+            var ntd2=$("<td></td>").append("<input type='text' name='stepDescription' class='form-control validate[required]' maxLength='255'/>");
+            nRow.append(ntd2);
+            var ntd3=$("<td></td>").append("<input type='text' name='stepRemark' class='form-control'  maxLength='255'/>");
+            nRow.append(ntd3);
+            var ntd4=$("<td></td>").append("<input type='text' name='stepWhen' style='width:40px;' class='form-control validate[required,custom[number]]' maxLength='4'/>");
+            nRow.append(ntd4);
+            var ntd5=$("<td></td>").append("<input type='text' name='stepOrder' value='"+idIndex+"' style='width:40px;' class='form-control validate[required,custom[number]]' maxLength='4'/>");
+            nRow.append(ntd5);
+            var ntd6=$("<td></td>").append("<a type='button' title='删除' class='btn btn-default' href='javascript:removeImage(" + idIndex + ")'><i class='fa fa-minus-circle'></i></a>");
+            nRow.append(ntd6);
+
+            $("#imageStepTbody").append(nRow);
+            idIndex++;
+        }
+
+        function removeImage(indx) {
+            $("#imageTr" + indx).remove();
+            idIndex--;
+        }
+        function applyStepInfo(){
+            var iHtml="";
+            $("#imageStepTable tbody tr").each(function(){
+                var tdArr = $(this).children();
+
+                var img = tdArr.eq(0).find("img").attr("src");
+                var stepName = tdArr.eq(1).find("input").val();
+                var stepDescription = tdArr.eq(2).find("input").val();
+                var stepRemark = tdArr.eq(3).find("input").val();
+                var stepWhen = tdArr.eq(4).find("input").val();
+                var stepOrder = tdArr.eq(5).find("input").val();
+
+                iHtml+="<label>步骤名称：</label><b>"+stepName+"</b><br>";
+                iHtml+="<label>步骤描述：</label><b>"+stepDescription+"</b><br>";
+                iHtml+="<label>步骤备注：</label><b>"+stepRemark+"</b><br>";
+                iHtml+="<label>步骤时长：</label><b>"+stepWhen+"</b><br>";
+                iHtml+="<label>步骤排序：</label><b>"+stepOrder+"</b><br>";
+                iHtml+="<img src='"+img+"'><br>";
+            });
+            window.editor.insertHtml(iHtml);
+        }
     </script>
 </head>
 <body>
@@ -242,18 +342,83 @@
                                 <div class="col-sm-2">
                                     <label><span class="asterisk">*</span> 宣传图片：</label>
                                 </div>
-                                <div class="col-sm-3">
-                                    <a id="chooseImageBtn" class="btn btn-default">选择</a>
-                                    <form:hidden path="picPath" id="imagePath"/>
-                                </div>
-                            </div>
-                            <div class="spacer-10"></div>
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <label>图片预览：</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <img id="previewImagePath" src="" style="max-width:600px ">
+                                <div class="col-sm-9">
+                                        <%--图片上传控件--%>
+                                    <link href="../js/plugins/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
+                                    <script src="../js/plugins/fileinput/fileinput.min.js" type="text/javascript"></script>
+                                    <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
+                                    <script type="text/javascript">
+                                        $(function(){
+                                            var initPreview = new Array();//展示元素
+                                            var initPreviewConfig = new Array();//展示设置
+                                            //初始化图片上传组件
+                                            $("#picUrl").fileinput({
+                                                uploadUrl: "/admin/uploads/uploadFile/ARTICLE.do",
+                                                showCaption: true,
+                                                minImageWidth: 50,
+                                                minImageHeight: 50,
+                                                showUpload:true, //是否显示上传按钮
+                                                showRemove :false, //显示移除按钮
+                                                showPreview :true, //是否显示预览
+                                                showCaption:false,//是否显示标题
+                                                browseOnZoneClick: true,//是否显示点击选择文件
+                                                language: "zh" ,
+                                                showBrowse : false,
+                                                maxFileSize : 2000,
+                                                autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                                                overwriteInitial: false,//不覆盖已存在的图片
+                                                browseClass:"btn btn-primary", //按钮样式
+                                                // layoutTemplates:{
+                                                //     actionUpload:''    //设置为空可去掉上传按钮
+                                                // },
+                                                maxFileCount: 10  //上传的个数
+                                            }).on("fileuploaded", function (event, data) {
+                                                var response = data.response;
+                                                //添加url到隐藏域
+                                                var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
+                                                $('#imgDiv').html($('#imgDiv').html()+html);
+                                                //上传完成回调
+                                                var index=0;
+                                                if(initPreview.length>0 ){
+                                                    index=initPreview.length;
+                                                }
+                                                initPreview[index]  = response.url;
+                                                var config = new Object();
+                                                config.caption = "";
+                                                config.url="/admin/uploads/delete/ARTICLE.do";
+                                                config.key=response.timeStr;
+                                                initPreviewConfig[index]=config;
+                                                $("#picUrl").fileinput('refresh', {
+                                                    initialPreview: initPreview,
+                                                    initialPreviewConfig: initPreviewConfig,
+                                                    initialPreviewAsData: true
+                                                });
+                                                $(".btn-default").attr("disabled",false);
+                                            }).on("filepredelete", function(jqXHR) {
+                                                var abort = true;
+                                                if (confirm("确定要删除吗？(删除后不会恢复)")) {
+                                                    abort = false;
+                                                }
+                                                return abort;
+                                            }).on('filedeleted', function(event, id) {
+                                                $("#"+id).remove();
+                                                for (var i=0;i<initPreview.length;i++)
+                                                {
+                                                    if(initPreview[i].indexOf(id) != -1){
+                                                        initPreview.splice(i)
+                                                        initPreviewConfig.splice(i)
+                                                    }
+                                                }
+                                            }).on('filebatchselected', function (event, files) {//选中文件事件
+                                                $(".kv-file-upload").click();
+                                            });
+                                        })
+                                    </script>
+                                    <input id="picUrl" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                                    <div id="imgDiv">
+
+                                    </div>
+                                        <%--图片上传控件结束--%>
                                 </div>
                             </div>
                             <div class="spacer-10"></div>
@@ -332,8 +497,8 @@
                                     <div class="col-sm-2">
                                         <label>菜谱步骤：</label>
                                     </div>
-                                    <a id="chooseStepImageBtn" class="btn btn-default">添加步骤</a>
-                                    <a id="applyStepInfoBtn" class="btn btn-default">应用到内容</a>
+                                    <a onclick="chooseStepImage()" class="btn btn-default">添加步骤</a>
+                                    <a onclick="applyStepInfo()" class="btn btn-default">应用到内容</a>
                                     <div class="spacer-10"></div>
                                     <table id="imageStepTable" class="table table-bordered table-striped">
                                         <thead>
@@ -387,129 +552,6 @@
         </div>
     </div>
 
-<div class="modal fade" id="imageDialog" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 1100px;height: 600px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">选择图片</h4>
-            </div>
-            <div class="modal-body">
-                <iframe id="imageFrame" src="../media/chooseMedias.do" style="width: 100%;height: 500px;border: none"></iframe>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button class="btn btn-primary pull-right" onclick="chooseImage();">确认</button>
-            </div>
-        </div>
-        <script type="application/javascript">
-            $('#chooseImageBtn').click(function (e) {
-                $('#imageDialog').modal().css({
-                    width: 'auto'
-                });
-                e.preventDefault();
-            });
-
-            function chooseImage() {
-                var imagePath = $("#imageFrame")[0].contentWindow.getSelectedPath();
-                if (imagePath != null) {
-                    $("#previewImagePath").attr("src", ".."+PIC_PATH + imagePath);
-                    $("#imagePath").val(imagePath);
-                    $('#imageDialog').modal("hide");
-                } else {
-                    alert("请选择图片");
-                }
-            }
-        </script>
-    </div>
-</div>
-
-<div class="modal fade" id="imageStepDialog" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 1100px;height: 600px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">选择图片</h4>
-            </div>
-            <div class="modal-body">
-                <iframe id="imageStepFrame" src="../media/chooseMedias.do" style="width: 100%;height: 500px;border: none"></iframe>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button class="btn btn-primary pull-right" onclick="chooseStepImage();">确认</button>
-            </div>
-        </div>
-        <script type="application/javascript">
-
-            var idIndex = 0;
-
-            $('#chooseStepImageBtn').click(function (e) {
-                $('#imageStepDialog').modal().css({
-                    width: 'auto'
-                });
-                ;
-                e.preventDefault();
-            });
-
-
-            function chooseStepImage() {
-                var imagePath = $("#imageStepFrame")[0].contentWindow.getSelectedPath();
-                if (imagePath != null) {
-                    var nRow=$("<tr></tr>").attr("id","imageTr"+idIndex);
-                    var img=$("<img src='../data/pics/" + imagePath + "' style='height:50px;width:80px;'/>");
-                    var ntd0=$("<td style='width:100px;'></td>").append("<input type='hidden' name='stepPicPath' value='" + imagePath + "'/>")
-                            .append(img);
-                    nRow.append(ntd0);
-                    var ntd1=$("<td></td>").append("<input type='text' name='stepName' class='form-control validate[required]' maxLength='64'/>");
-                    nRow.append(ntd1);
-                    var ntd2=$("<td></td>").append("<input type='text' name='stepDescription' class='form-control validate[required]' maxLength='255'/>");
-                    nRow.append(ntd2);
-                    var ntd3=$("<td></td>").append("<input type='text' name='stepRemark' class='form-control'  maxLength='255'/>");
-                    nRow.append(ntd3);
-                    var ntd4=$("<td></td>").append("<input type='text' name='stepWhen' style='width:40px;' class='form-control validate[required,custom[number]]' maxLength='4'/>");
-                    nRow.append(ntd4);
-                    var ntd5=$("<td></td>").append("<input type='text' name='stepOrder' value='"+idIndex+"' style='width:40px;' class='form-control validate[required,custom[number]]' maxLength='4'/>");
-                    nRow.append(ntd5);
-                    var ntd6=$("<td></td>").append("<a type='button' title='删除' class='btn btn-default' href='javascript:removeImage(" + idIndex + ")'><i class='fa fa-minus-circle'></i></a>");
-                    nRow.append(ntd6);
-
-                    $("#imageStepTbody").append(nRow);
-                    idIndex++;
-                    $('#imageStepDialog').modal("hide");
-                } else {
-                    alert("请选择图片");
-                }
-            }
-
-            function removeImage(indx) {
-                $("#imageTr" + indx).remove();
-                idIndex--;
-            }
-
-            $('#applyStepInfoBtn').click(function (e) {
-                var iHtml="";
-                $("#imageStepTable tbody tr").each(function(){
-                    var tdArr = $(this).children();
-
-                    var img = tdArr.eq(0).find("img").attr("src");
-                    var stepName = tdArr.eq(1).find("input").val();
-                    var stepDescription = tdArr.eq(2).find("input").val();
-                    var stepRemark = tdArr.eq(3).find("input").val();
-                    var stepWhen = tdArr.eq(4).find("input").val();
-                    var stepOrder = tdArr.eq(5).find("input").val();
-
-                    iHtml+="<label>步骤名称：</label><b>"+stepName+"</b><br>";
-                    iHtml+="<label>步骤描述：</label><b>"+stepDescription+"</b><br>";
-                    iHtml+="<label>步骤备注：</label><b>"+stepRemark+"</b><br>";
-                    iHtml+="<label>步骤时长：</label><b>"+stepWhen+"</b><br>";
-                    iHtml+="<label>步骤排序：</label><b>"+stepOrder+"</b><br>";
-                    iHtml+="<img src='"+img+"'><br>";
-                });
-                window.editor.insertHtml(iHtml);
-            });
-        </script>
-    </div>
-</div>
 
 </body>
 </html>

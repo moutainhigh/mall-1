@@ -247,7 +247,7 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="图片" field="picPath" width="140px" template="<img src='../images/#=picPath#_90_40.jpg'  width='120px' height='60px'/>" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="图片" field="picPath" width="140px" template="<img src='#=picPath#'  width='120px' height='60px'/>" sortable="false" filterable="false"/>
                             <kendo:grid-column title="文章名称" field="articleTitle" width="150px"/>
                             <kendo:grid-column title="频道" field="programa.articleChannel.channelName" width="130px" filterable="false"/>
                             <kendo:grid-column title="栏目" field="programa.programaName" width="80px"/>
