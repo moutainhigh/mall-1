@@ -27,6 +27,8 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
 
     @Query("select c from Customer c where c.mobile=?1 and c.enabled=?2")
     public Customer findByMobileAndEnabled(String mobile, boolean enabled);
+    @Query("select c from Customer c left join fetch c.recommendCustomer where c.customerId=?1")
+    public Customer findRecommendCustomer(int customerId);
 
     @Query("select c from Customer c where c.mobile=:invitationCode or c.invitationCode=:invitationCode")
     public Customer findByMobileOrInvitationCode(@Param("invitationCode") String invitationCode);

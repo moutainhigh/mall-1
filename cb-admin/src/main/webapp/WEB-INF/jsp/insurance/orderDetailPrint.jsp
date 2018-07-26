@@ -24,17 +24,17 @@
 
     <title></title>
     <script type="text/javascript">
-        var insuredProvince = $.citySelector.getProvince('${map.insuranceOrder.insuranceOrderInsured.insuredProvince}');
+        var insuredProvince = $.citySelector.getAddress('${map.insuranceOrder.insuranceOrderInsured.insuredProvince}');
         insuredProvince = insuredProvince.replace("省", "").replace("市", "");
-        var insuredCity = $.citySelector.getCity(${map.insuranceOrder.insuranceOrderInsured.insuredCity});
+        var insuredCity = $.citySelector.getAddress('${map.insuranceOrder.insuranceOrderInsured.insuredCity}');
         insuredCity = insuredCity.replace("市", "");
-        var insuredDistrict = $.citySelector.getDistrict(${map.insuranceOrder.insuranceOrderInsured.insuredDistrict});
+        var insuredDistrict = $.citySelector.getAddress('${map.insuranceOrder.insuranceOrderInsured.insuredDistrict}');
         insuredDistrict = insuredDistrict.replace("区", "").replace("县", "");
-        var policyholderProvince = $.citySelector.getProvince(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderProvince});
+        var policyholderProvince = $.citySelector.getAddress('${map.insuranceOrder.insuranceOrderPolicyholder.policyholderProvince}');
         policyholderProvince = policyholderProvince.replace("省", "").replace("市", "");
-        var policyholderCity = $.citySelector.getCity(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCity});
+        var policyholderCity = $.citySelector.getAddress('${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCity}');
         policyholderCity = policyholderCity.replace("市", "");
-        var policyholderDistrict = $.citySelector.getDistrict(${map.insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
+        var policyholderDistrict = $.citySelector.getAddress('${map.insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict}');
         policyholderDistrict = policyholderDistrict.replace("区", "").replace("县", "");
         var insuredCareer = $.profession.getProfession('${map.insuranceOrder.insuranceOrderInsured.insuredCareer}');
         var policyholderCareer = $.profession.getProfession('${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCareer}');

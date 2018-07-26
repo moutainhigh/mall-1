@@ -22,6 +22,50 @@
       </div>
     </div>
 
+    <p class="uploadTitle">其它资料（资料）
+      <button v-if="imgUrls.image4 !== '' && imgUrls.image4 !== undefined" @click='delImage(4)'>清除</button>
+    </p>
+    <div class="card">
+      <div v-if="imgUrls.image4 === '' || imgUrls.image4 === undefined" @click.stop="addPic4">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/upload.png">
+      </div>
+      <input id="image4" type="file" accept="image/*" @change="onFileChange"
+             style="display: none;">
+      <div v-if="imgUrls.image4 !== '' && imgUrls.image4 !== undefined">
+        <img style="padding: 0;" :src="imgUrls.image4">
+      </div>
+    </div>
+
+    <p class="uploadTitle">其它资料（资料）
+      <button v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined" @click='delImage(5)'>清除</button>
+    </p>
+    <div class="card">
+      <div v-if="imgUrls.image5 === '' || imgUrls.image5 === undefined" @click.stop="addPic5">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/upload.png">
+      </div>
+      <input id="image5" type="file" accept="image/*" @change="onFileChange"
+             style="display: none;">
+      <div v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined">
+        <img style="padding: 0;" :src="imgUrls.image5">
+      </div>
+    </div>
+
+    <p class="uploadTitle">其它资料（资料）
+      <button v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined" @click='delImage(6)'>清除</button>
+    </p>
+    <div class="card">
+      <div v-if="imgUrls.image6 === '' || imgUrls.image6 === undefined" @click.stop="addPic6">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/upload.png">
+      </div>
+      <input id="image6" type="file" accept="image/*" @change="onFileChange"
+             style="display: none;">
+      <div v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined">
+        <img style="padding: 0;" :src="imgUrls.image6">
+      </div>
+    </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     <div style="height: 60px;">
       <div class="i-footer">

@@ -13,16 +13,16 @@
 
     <div class="list-view" ref="listView">
       <div>
-        <div v-for="(group, index) in singers" class="list-group" :key="group.id" ref="listGroup">
+        <div v-for="(group, index) in singers" class="list-group" :key="parseInt(group.id)" ref="listGroup">
           <h2 v-if="index != 0 && index !=1" class="list-group-title">{{ group.title }}</h2>
           <div v-if="index != 0 && index !=1">
-            <div v-for="item in group.items" class="list-group-item" :key="item.id">
+            <div v-for="item in group.items" class="list-group-item" :key="parseInt(item.id)">
               <span class="name">{{ item.name }}</span>
             </div>
           </div>
           <div v-if="index == 0" style="background: #ffffff">
             <p class="cityTitle">定位城市</p>
-            <button class="locationCity">深圳</button>
+            <button class="locationCity">{{localCity}}</button>
           </div>
           <div v-if="index == 1" style="background: #ffffff">
             <p class="cityTitle">热门城市</p>
@@ -35,7 +35,7 @@
           <div v-for="(item, index) in shortcutList"
                class="item"
                :data-index="index"
-               :key="item.id"
+               :key="parseInt(item.id)"
                @touchstart="onShortcutStart"
                @touchmove.stop.prevent="onShortcutMove"
                :class="{'current': currentIndex === index}"
@@ -51,6 +51,7 @@
 <script>
   import BScroll from 'better-scroll'
   import {cityData} from '../../js/city.js'
+  import AMap from 'AMap';
 
   export default {
     name: "Location",
@@ -60,7 +61,8 @@
         scrollY: 0,
         currentIndex: 0,
         hotCitys: ['北京', '深圳', '上海', '武汉', '长沙', '中山', '成都', '厦门', '珠海'],
-        searchContent: ''
+        searchContent: '',
+        localCity: ''
       }
     },
     created() {
@@ -86,7 +88,6 @@
       onShortcutStart(e) {
         // 获取到绑定的 index
         let index = e.target.getAttribute('data-index')
-        console.log(index,'index')
         // 使用 better-scroll 的 scrollToElement 方法实现跳转
         this.scrollToElement(index)
 
@@ -134,28 +135,40 @@
       clearInput() {
         this.searchContent = '';
       },
+      local() {
+        let vm = this;
+        AMap.plugin('AMap.CitySearch', function () {
+          var citySearch = new AMap.CitySearch()
+          citySearch.getLocalCity(function (status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              vm.localCity = result.city.substr(0, 2);
+              console.log(vm.localCity)
+            }
+          })
+        })
+      }
     },
     watch: {
-      scrollY(newVal) {
-        // 向下滑动的时候 newVal 是一个负数，所以当 newVal > 0 时，currentIndex 直接为 0
-        if (newVal > 0) {
-          this.currentIndex = 0
-          return
-        }
-        // 计算 currentIndex 的值
-        for (let i = 0; i < this.listHeight.length - 1; i++) {
-          let height1 = this.listHeight[i]
-          let height2 = this.listHeight[i + 1]
-
-          if (-newVal >= height1 && -newVal < height2) {
-            this.currentIndex = i
-            return
-          }
-        }
-        // 当超 -newVal > 最后一个高度的时候
-        // 因为 this.listHeight 有头尾，所以需要 - 2
-        this.currentIndex = this.listHeight.length - 2
-      },
+      // scrollY(newVal) {
+      //   // 向下滑动的时候 newVal 是一个负数，所以当 newVal > 0 时，currentIndex 直接为 0
+      //   if (newVal > 0) {
+      //     this.currentIndex = 0
+      //     return
+      //   }
+      //   // 计算 currentIndex 的值
+      //   for (let i = 0; i < this.listHeight.length - 1; i++) {
+      //     let height1 = this.listHeight[i]
+      //     let height2 = this.listHeight[i + 1]
+      //
+      //     if (-newVal >= height1 && -newVal < height2) {
+      //       this.currentIndex = i
+      //       return
+      //     }
+      //   }
+      //   // 当超 -newVal > 最后一个高度的时候
+      //   // 因为 this.listHeight 有头尾，所以需要 - 2
+      //   this.currentIndex = this.listHeight.length - 2
+      // },
     },
     computed: {
       shortcutList() {
@@ -163,6 +176,9 @@
           return group.title.substr(0, 1)
         })
       }
+    },
+    mounted() {
+      this.local();
     }
   }
 </script>
