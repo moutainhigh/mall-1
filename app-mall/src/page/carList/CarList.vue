@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top :local="true">
+    <head-top :local="true"  v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
       <div slot="search" style="width: 100%;">
         <div class="search-con">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
@@ -11,36 +11,36 @@
     <div style="margin-top: 5rem;">
       <section class="sort_container">
         <div @click="chooseType('')" v-show="sortBy != ''" style="position:fixed; z-index:2;height: 100%;width: 100%;background-color: rgba(0,0,0,0.3);"></div>
-        <div class="sort_item" :class="{choose_type:sortBy == 'food'}">
-          <div class="sort_item_container" @click="chooseType('food')">
+        <div class="sort_item" :class="{choose_type:sortBy == 'sort'}">
+          <div class="sort_item_container" @click="chooseType('sort')">
             <div class="sort_item_border">
-              <span :class="{category_title: sortBy == 'food'}">分类</span>
-              <img v-show="sortBy != 'food'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
-              <img v-show="sortBy == 'food'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_sele.png">
+              <span :class="{category_title: sortBy == 'sort'}">{{sortTitle}}</span>
+              <img v-show="sortBy != 'sort'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
+              <img v-show="sortBy == 'sort'" class="choose_img" src="../../assets/img/common/ic_scree_arrows_sele.png">
             </div>
           </div>
           <transition name="showlist">
-            <section v-show="sortBy == 'food'" class="sort_detail_type">
+            <section v-show="sortBy == 'sort'" class="sort_detail_type">
               <div class="sort_list_container">
-                <div class="sort_list_li" @click="sortList($event)">
-                  <p data="0" :class="{sort_select: sortByType == 0}">
+                <div class="sort_list_li" @click="sortList(0,'默认排序')">
+                  <p :class="{sort_select: sortByType == 0}">
                     <span>默认排序</span>
                   </p>
                   <img v-if="sortByType == 0" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList($event)">
+                <div class="sort_list_li" @click="sortList(1,'最畅销')">
                   <p data="1" :class="{sort_select: sortByType == 1}">
                     <span>最畅销</span>
                   </p>
                   <img v-if="sortByType == 1" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList($event)">
+                <div class="sort_list_li" @click="sortList(2,'价格最高')">
                   <p data="2" :class="{sort_select: sortByType == 2}">
                     <span>价格最高</span>
                   </p>
                   <img v-if="sortByType == 2" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList($event)">
+                <div class="sort_list_li" @click="sortList(3,'价格最低')">
                   <p data="3" :class="{sort_select: sortByType == 3}">
                     <span>价格最低</span>
                   </p>
@@ -50,8 +50,8 @@
             </section>
           </transition>
         </div>
-        <div class="sort_item" :class="{choose_type:sortBy == 'sort'}">
-          <div class="sort_item_container" @click="chooseType('sort')">
+        <div class="sort_item">
+          <div class="sort_item_container">
             <div class="sort_item_border">
               <span :class="{category_title: sortBy == 'sort'}">品牌</span>
               <img class="choose_img" src="../../assets/img/common/ic_scree_arrows_nor.png">
@@ -67,14 +67,14 @@
             </div>
           </div>
           <transition name="showlist">
-            <section v-show="sortBy == 'price'" class="sort_detail_type filter_container">
+            <section v-show="sortBy == 'price'" class="sort_detail_type filter_container" :class="{focus_input:enFocus}">
               <section style="width: 100%;background-color: #ffffff;">
                 <header class="filter_header_style">自定义</header>
                 <div class="choose_input">
-                  <input/>
+                  <input @focus="enFocus = true" @blur="enFocus = false"/>
                   <div style="position: relative;margin-left: -1.2rem;">万</div>
                   <span style="margin: 0 0.2rem 0 0.5rem;">—</span>
-                  <input/>
+                  <input @focus="enFocus = true" @blur="enFocus = false"/>
                   <div style="position: relative;margin-left: -1.2rem;">万</div>
                   <div class="input_button" :class="{input_button_sele:true}"><p>确定</p></div>
                 </div>
@@ -85,10 +85,10 @@
                     <p :class="{choose_type_sele: true}">不限</p>
                   </div>
                   <div class="choose_flex_type">
-                    <p>不限</p>
+                    <p>15-25万</p>
                   </div>
                   <div class="choose_flex_type">
-                    <p>不限</p>
+                    <p>25-50万</p>
                   </div>
                 </div>
               </section>
@@ -195,7 +195,7 @@
                 </div>
                 <div class="activity_submit">
                   <div style="padding: 0.5rem;">
-                    <button style="color: #666666">重置</button>
+                    <button>重置</button>
                     <button class="submit_true">确认</button>
                   </div>
                 </div>
@@ -292,49 +292,14 @@
     },
     data() {
       return {
-        geohash: '', // city页面传递过来的地址geohash
-        headTitle: '', // msiet页面头部标题
-        foodTitle: '', // 排序左侧头部标题
-        restaurant_category_id: '', // 食品类型id值
-        restaurant_category_ids: '', //筛选类型的id
         sortBy: '', // 筛选的条件
-        sortByType: null, // 根据何种方式排序
-        Delivery: null, // 配送方式数据
-        Activity: null, // 商家支持活动数据
-        delivery_mode: null, // 选中的配送方式
-        support_ids: [], // 选中的商铺活动列表
-        filterNum: 0, // 所选中的所有样式的集合
-        confirmStatus: false, // 确认选择
+        sortTitle:'默认排序', //排序名称
+        sortByType: 0, // 根据何种方式排序
+        enFocus:false,//是否焦点在input上
+        conditions:[], //已选择的条件
       }
     },
     methods: {
-      //初始化获取数据
-      async initData() {
-        //获取从msite页面传递过来的参数
-        this.geohash = this.$route.query.geohash;
-        this.headTitle = this.$route.query.title;
-        this.foodTitle = this.headTitle;
-        this.restaurant_category_id = this.$route.query.restaurant_category_id;
-        //防止刷新页面时，vuex状态丢失，经度纬度需要重新获取，并存入vuex
-        if (!this.latitude) {
-          //获取位置信息
-          // 记录当前经度纬度进入vuex
-        }
-        //获取category分类左侧数据
-        this.category = await foodCategory(this.latitude, this.longitude);
-        //初始化时定位当前category分类左侧默认选择项，在右侧展示出其sub_categories列表
-        this.category.forEach(item => {
-          if (this.restaurant_category_id == item.id) {
-            this.categoryDetail = item.sub_categories;
-          }
-        });
-        //获取筛选列表的配送方式
-        //获取筛选列表的商铺活动
-        //记录support_ids的状态，默认不选中，点击状态取反，status为true时为选中状态
-        this.Activity.forEach((item, index) => {
-          this.support_ids[index] = {status: false, id: item.id};
-        })
-      },
       // 点击顶部三个选项，展示不同的列表，选中当前选项进行展示，同时收回其他选项
       async chooseType(type) {
         if (this.sortBy !== type) {
@@ -355,78 +320,13 @@
           }
         }
       },
-      //选中Category左侧列表的某个选项时，右侧渲染相应的sub_categories列表
-      selectCategoryName(id, index) {
-        //第一个选项 -- 全部商家 因为没有自己的列表，所以点击则默认获取选所有数据
-        if (index === 0) {
-          this.restaurant_category_ids = null;
-          this.sortBy = '';
-          //不是第一个选项时，右侧展示其子级sub_categories的列表
-        } else {
-          this.restaurant_category_id = id;
-          this.categoryDetail = this.category[index].sub_categories;
-
-        }
-      },
-      //选中Category右侧列表的某个选项时，进行筛选，重新获取数据并渲染
-      getCategoryIds(id, name) {
-        this.restaurant_category_ids = id;
-        this.sortBy = '';
-        this.foodTitle = this.headTitle = name;
-
-      },
       //点击某个排序方式，获取事件对象的data值，并根据获取的值重新获取数据渲染
-      sortList(event) {
-        let node;
-        // 如果点击的是 span 中的文字，则需要获取到 span 的父标签 p
-        if (event.target.nodeName.toUpperCase() !== 'P') {
-          node = event.target.parentNode;
-        } else {
-          node = event.target;
-        }
-        this.sortByType = node.getAttribute('data');
+      sortList(sort,title) {
+        this.sortByType = sort;
+        this.sortTitle = title;
         this.sortBy = '';
       },
-      //筛选选项中的配送方式选择
-      selectDeliveryMode(id) {
-        //delivery_mode为空时，选中当前项，并且filterNum加一
-        if (this.delivery_mode == null) {
-          this.filterNum++;
-          this.delivery_mode = id;
-          //delivery_mode为当前已有值时，清空所选项，并且filterNum减一
-        } else if (this.delivery_mode == id) {
-          this.filterNum--;
-          this.delivery_mode = null;
-          //delivery_mode已有值且不等于当前选择值，则赋值delivery_mode为当前所选id
-        } else {
-          this.delivery_mode = id;
-        }
-      },
-      //点击商家活动，状态取反
-      selectSupportIds(index, id) {
-        //数组替换新的值
-        this.support_ids.splice(index, 1, {status: !this.support_ids[index].status, id});
-        //重新计算filterNum的个数
-        this.filterNum = this.delivery_mode == null ? 0 : 1;
-        this.support_ids.forEach(item => {
-          if (item.status) {
-            this.filterNum++;
-          }
-        })
-      },
-      //只有点击清空按钮才清空数据，否则一直保持原有状态
-      clearSelect() {
-        this.support_ids.map(item => item.status = false);
-        this.filterNum = 0;
-        this.delivery_mode = null;
-      },
-      //点击确认时，将需要筛选的id值传递给子组件，并且收回列表
-      confirmSelectFun() {
-        //状态改变时，因为子组件进行了监听，会重新获取数据进行筛选
-        this.confirmStatus = !this.confirmStatus;
-        this.sortBy = '';
-      }
-    },
+    }
   }
 </script>
 
@@ -511,21 +411,25 @@
         }
         .activity_submit {
           position: absolute;
-          bottom: 6rem;
+          bottom: 5.5rem;
           width: 100%;
           background-color: #ffffff;
           button {
-            padding: 0.7rem 1rem;
+            font-size: 1rem;
+            padding: 0.8rem 1rem;
             width: 46%;
+            margin: 0 1%;
+            color: #666666;
+            background-color: #ffffff;
             box-sizing: border-box;
             border: 1px #BBBBBB solid;
             border-radius: 4px;
           }
 
           .submit_true {
-            border: 0;
             background: #F5CA1D;
             color: #FEFEFE;
+            border: 1px #F5CA1D solid;
           }
         }
       }
@@ -850,6 +754,7 @@
       display: flex;
       padding: 0.5rem;
       line-height: 1.5;
+      overflow: hidden;
       .cont_img {
         flex: 0 0 40%;
         img {
@@ -886,5 +791,11 @@
         }
       }
     }
+  }
+
+  .focus_input {
+    position: fixed !important;
+    z-index: 99 !important;
+    top: 0 !important;
   }
 </style>

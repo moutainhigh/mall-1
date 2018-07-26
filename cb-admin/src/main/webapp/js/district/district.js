@@ -14,6 +14,7 @@ description: 省市区三级(二级)联动
     	        jsonProvince : "../js/district/json-array-of-province.js",
     	        jsonCity : "../js/district/json-array-of-city.js",
     	        jsonDistrict : "../js/district/json-array-of-district.js",
+                jsonAddress : "../js/district/address.js",
     	        hasDistrict : true,
     	        initProvince : "<option value='0'>请选择省份</option>",
     	        initCity : "<option value='0'>请选择城市</option>",
@@ -106,6 +107,27 @@ description: 省市区三级(二级)联动
                 });
                 return t;
             },
+            _LoadNameByValue: function (datapath, targetcode) {
+                var t = ''; // t:    编码对应的省市区名
+                $.ajax({
+                    url:datapath,
+                    dataType:"json",
+                    async:false,
+                    success:function (r) {
+                        if (targetcode == undefined || targetcode == '' || targetcode == null) {
+                            t = '';
+                        }else{
+                            for (var i = 0; i < r.length; i++) {
+                                if (r[i].value == targetcode) {
+                                    t = r[i].name;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+                return t;
+            },
             getProvince: function (targetcode){
             	var that = this;
             	return that._LoadNameByCode(data.jsonProvince, targetcode);
@@ -115,8 +137,12 @@ description: 省市区三级(二级)联动
             	return that._LoadNameByCode(data.jsonCity, targetcode);
             },
             getDistrict: function (targetcode){
-            	var that = this;
-            	return that._LoadNameByCode(data.jsonDistrict, targetcode);
+                var that = this;
+                return that._LoadNameByCode(data.jsonDistrict, targetcode);
+            },
+            getAddress: function (targetcode){
+                var that = this;
+                return that._LoadNameByValue(data.jsonAddress, targetcode);
             },
             getPCDNames:function(pCode,cCode,dCode){
                 var that = this;

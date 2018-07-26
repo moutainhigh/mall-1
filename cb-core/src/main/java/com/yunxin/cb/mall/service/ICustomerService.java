@@ -2,6 +2,7 @@ package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Fridge;
+import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.core.exception.EntityExistException;
@@ -45,6 +46,7 @@ public interface ICustomerService {
 
     public Customer updateCustomer(Customer customer) throws EntityExistException;
 
+    public Customer updateCustomerMsg(int customerId, CustomerUpdateVo customerUpdateVo);
     public Customer updateCustomerRank(Customer customer);
 
     public Customer updateCustomerIntegral(Customer customer);
