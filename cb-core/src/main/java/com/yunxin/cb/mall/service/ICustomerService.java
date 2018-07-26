@@ -179,7 +179,7 @@ public interface ICustomerService {
     CustomerFriend updateFriendsProfile(CustomerFriend customerFriend);
 
     @Transactional
-    Customer customerPraise(int customerId);
+    boolean customerPraise(int customerId);
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     List<Customer> getPraiseCustomers(int customerId);

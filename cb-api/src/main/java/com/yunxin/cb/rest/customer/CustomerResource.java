@@ -64,10 +64,10 @@ public class CustomerResource extends BaseResource {
     }
     @ApiOperation(value = "通过用户名查询用户")
     @GetMapping(value = "queryByAccountName")
-    public ResponseResult queryByAccountName(@RequestParam("accountName") String accountName) {
+    public ResponseResult queryByAccountName(@RequestParam("accountName") String accountName,@ModelAttribute("customerId") int customerId) {
         Customer customer = customerService.getAccountName(accountName);
         if (customer != null) {
-//            friend.setFriend(customerService.isFriend(customerId, friend.getCustomerId()) || friend.getCustomerId() == customerId);
+            customer.setFriend(customerService.isFriend(customerId, customer.getCustomerId()) || customer.getCustomerId() == customerId);
             return new ResponseResult(customer);
         }
         return new ResponseResult(Result.FAILURE, "未找到用户信息");
@@ -257,8 +257,10 @@ public class CustomerResource extends BaseResource {
     @ApiOperation(value = "用户点赞")
     @PostMapping(value = "praise")
     public ResponseResult praise(@ModelAttribute("customerId") int customerId) {
-        customerService.customerPraise(customerId);
-        return new ResponseResult(Result.SUCCESS);
+        if(customerService.customerPraise(customerId))
+            return new ResponseResult(Result.SUCCESS);
+        else
+            return new ResponseResult(Result.FAILURE);
     }
 
     @ApiOperation(value = "查询点赞用户")
