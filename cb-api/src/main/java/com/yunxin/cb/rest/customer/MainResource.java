@@ -143,7 +143,7 @@ public class MainResource extends BaseResource {
                    return new ResponseResult(Result.FAILURE, "注册失败");
             }
             String invitationCode=customerVo.getInvitationCode();
-            Customer recommendCustomer = customerService.getCustomerByMobile(invitationCode);
+            Customer recommendCustomer = customerService.getCustomerByInvitationCode(invitationCode);
             Customer customer = new Customer();
             customer.setAccountName(customerVo.getMobile());
             customer.setMobile(customerVo.getMobile());
