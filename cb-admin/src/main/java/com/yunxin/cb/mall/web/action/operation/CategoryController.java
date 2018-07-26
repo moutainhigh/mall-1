@@ -1,6 +1,10 @@
 package com.yunxin.cb.mall.web.action.operation;
 
+import com.alibaba.fastjson.JSON;
+import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.Category;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.service.ICategoryService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.core.util.ImageConverter;
@@ -40,6 +44,9 @@ public class CategoryController implements ServletContextAware {
 
     private ServletContext servletContext;
 
+    @Resource
+    private IAttachmentService attachmentService;
+
 
     @Override
     public void setServletContext(ServletContext servletContext) {
@@ -71,16 +78,20 @@ public class CategoryController implements ServletContextAware {
     }
 
     @RequestMapping(value = "addCategory",method = RequestMethod.POST)
-    public String addCategory(@Valid @ModelAttribute("category") Category category, BindingResult result, Locale locale,  ModelMap modelMap) {
+    public String addCategory(@Valid @ModelAttribute("category") Category category,HttpServletRequest request, BindingResult result, Locale locale,  ModelMap modelMap) {
         if (result.hasErrors()) {
             return toAddCategory(category, modelMap);
         }
         try {
-            Category categoryDb = categoryService.addCategory(category);
-            CommonImageConverter imageConverter = new CommonImageConverter(servletContext, category);
-            imageConverter.compress();
-            if(null!=imageConverter.getDefaultImagePath()){
-                categoryService.updateIconPath(categoryDb.getCategoryId(), imageConverter.getDefaultImagePath());
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                category.setIconPath(imgurl[0].split(",")[0]);
+                Category categoryDb = categoryService.addCategory(category);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.CATEGORY,categoryDb.getCategoryId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.CATEGORY,categoryDb.getCategoryId(),imgpath);
+                }
             }
         } catch (EntityExistException e) {
             e.printStackTrace();
@@ -94,6 +105,8 @@ public class CategoryController implements ServletContextAware {
     public String toEditCategory(@RequestParam("categoryId") int categoryId, ModelMap modelMap) {
         Category category = categoryService.getCategoryById(categoryId);
         modelMap.addAttribute("category", category);
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.CATEGORY,categoryId);
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return toEditCategory(modelMap);
     }
 
@@ -104,18 +117,21 @@ public class CategoryController implements ServletContextAware {
     }
 
     @RequestMapping(value = "editCategory",method = RequestMethod.POST)
-    public String editCategory(@Valid @ModelAttribute("category") Category category, BindingResult result,Locale locale,
+    public String editCategory(@Valid @ModelAttribute("category") Category category,HttpServletRequest request, BindingResult result,Locale locale,
                                ModelMap modelMap) {
         if (result.hasErrors()) {
             return toEditCategory(modelMap);
         }
         try {
-            Category categoryDb = categoryService.updateCategory(category);
-            // 用户重新上传了图片，即图片路径发生改变，则需要压缩图片
-            if(null != categoryDb && !(categoryDb.getIconPath().equals(category.getIconPath())) ){
-                CommonImageConverter imageConverter = new CommonImageConverter(servletContext, category);
-                imageConverter.compress();
-                categoryService.updateIconPath(categoryDb.getCategoryId(), imageConverter.getDefaultImagePath());
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                category.setIconPath(imgurl[0].split(",")[0]);
+                Category categoryDb = categoryService.updateCategory(category);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.CATEGORY,categoryDb.getCategoryId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.CATEGORY,categoryDb.getCategoryId(),imgpath);
+                }
             }
         } catch (EntityExistException e) {
             e.printStackTrace();

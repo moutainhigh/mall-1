@@ -28,6 +28,17 @@
                         this.sync();
                     }
                 });
+                window.editor = K.create('#editorContent1', {
+                    uploadJson: '../upload/fileUpload.do',
+                    fileManagerJson: '../upload/fileManager.do',
+                    allowFileManager: true,
+                    afterCreate : function() {
+                        this.sync();
+                    },
+                    afterBlur:function(){
+                        this.sync();
+                    }
+                });
             });
 
             $("#brandId").select2();
@@ -323,29 +334,6 @@
                                 <form:checkbox path="recommend"/>
                             </div>
                         </div>
-                        <%--<div class="spacer-10"></div>--%>
-                        <%--<div class="row">--%>
-
-                            <%--<div class="col-sm-2">--%>
-                                <%--<label><span class="asterisk">*</span>赠品：</label>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-1">--%>
-                                <%--<form:checkbox path="giveaway"/>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-2">--%>
-                                <%--<label><span class="asterisk">*</span> 换购：</label>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-1">--%>
-                                <%--<form:checkbox path="barter"/>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-2">--%>
-                                <%--<label><span class="asterisk">*</span> 预售：</label>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-1">--%>
-                                <%--<form:checkbox path="preSell"/>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
@@ -504,6 +492,20 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>商品说明内容</label>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;"></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

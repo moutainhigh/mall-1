@@ -223,6 +223,19 @@ public class Commodity implements java.io.Serializable {
      */
     private String auditRemark;
 
+    /**
+     * 商品说明介绍
+     */
+    private String explainContent;
+
+    @Column(nullable = true, length = 4098)
+    public String getExplainContent() {
+        return explainContent;
+    }
+
+    public void setExplainContent(String explainContent) {
+        this.explainContent = explainContent;
+    }
 
     public Commodity() {
     }
