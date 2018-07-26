@@ -234,7 +234,7 @@ public class Customer implements java.io.Serializable {
     private String token;
 
     private boolean friend;
-
+    private String state;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)
@@ -672,5 +672,13 @@ public class Customer implements java.io.Serializable {
 
     public void setFriend(boolean friend) {
         this.friend = friend;
+    }
+    @Transient
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }
