@@ -80,3 +80,11 @@ p {
 .weui-dialog__bd {
   color: #333333 !important;
 }
+
+.vux-no-group-title {
+  margin-top: 0 !important;
+}
+
+.weui-cell {
+  padding: 1rem;
+}

@@ -10,6 +10,8 @@ import Home from '../page/home/Home'
 import Search from '../page/search/Search'
 import Location from '../page/location/Location'
 import ChooseCarType from '../page/carList/ChooseCarType'
+import ServeDetail from '../page/serve/ServeDetail'
+import Refund from '../page/serve/Refund'
 
 Vue.use(Router)
 
@@ -54,7 +56,7 @@ export default new Router({
       path: '/order-success',
       name: 'OrderSuccess',
       component: OrderSuccess
-    },{
+    }, {
       path: '/order-detail',
       name: 'OrderDetail',
       component: OrderDetail
@@ -63,6 +65,14 @@ export default new Router({
       path: '/order-list',
       name: 'OrderList',
       component: OrderList
+    }, {
+      path: '/serve-detail',
+      name: 'ServeDetail',
+      component: ServeDetail
+    }, {
+      path: '/refund',
+      name: 'Refund',
+      component: Refund
     },
   ]
 })

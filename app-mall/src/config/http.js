@@ -19,7 +19,7 @@ axios.interceptors.request.use(
     return config;
   },
   error => {
-    return Promise.reject(err);
+    return Promise.reject(error);
   }
 );
 
@@ -28,6 +28,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     var status = response.status;
+    console.log(response);
     if (status == 502){
 
     }
