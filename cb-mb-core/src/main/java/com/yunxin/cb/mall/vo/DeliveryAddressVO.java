@@ -22,7 +22,7 @@ public class DeliveryAddressVO implements java.io.Serializable{
     /**
      * 收货地址类型
      */
-    @ApiModelProperty(value="地址类型",name="addressType",example="枚举:家庭、公司、其他")
+    @ApiModelProperty(value="地址类型",name="addressType",example="枚举:HOME(\"家庭\"), COMPANY(\"公司\"), OTHER(\"其他\")")
     private AddressType addressType;
 
     /**

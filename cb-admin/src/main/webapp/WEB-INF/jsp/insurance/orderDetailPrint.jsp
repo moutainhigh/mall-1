@@ -531,13 +531,13 @@
                                 <div class="div-line-con div-row-5">
                                     <div class="title">A 25.证件类型</div>
                                     <div>
-                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType=='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" <c:if test="${map.insuranceOrder.customer.cardType=='居民身份证'}">checked</c:if>/>
                                         身份证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType=='护照'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.customer.cardType=='护照'}">checked</c:if>/>
                                         护照
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType=='军官证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.customer.cardType=='军官证'}">checked</c:if>/>
                                         军官证
-                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType!='军官证'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType!='护照'&&map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardType!='居民身份证'}">checked</c:if>/>
+                                        <input readonly class="i-cb" type="checkbox" style="margin-left:15px; "  <c:if test="${map.insuranceOrder.customer.cardType!='军官证'&&map.insuranceOrder.customer.cardType!='护照'&&map.insuranceOrder.customer.cardType!='居民身份证'}">checked</c:if>/>
                                         其他
                                     </div>
                                 </div>
@@ -546,25 +546,25 @@
                                 </div>
                                 <div style="display: inline-block;float: right;margin-top: 1px;margin-right: 1px;height: 20px">
                                     <div class="div-line-cert">
-                                        ${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 0, 1)}
+                                        ${fn:substring(map.insuranceOrder.customer.customerCardNo, 0, 1)}
                                     </div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 1, 2)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 2, 3)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 3, 4)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 4, 5)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 5, 6)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 6, 7)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 7, 8)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 8, 9)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 9, 10)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 10, 11)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 11, 12)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 12, 13)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 13, 14)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 14, 15)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 15, 16)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 16, 17)}</div>
-                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo, 17, 18)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 1, 2)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 2, 3)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 3, 4)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 4, 5)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 5, 6)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 6, 7)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 7, 8)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 8, 9)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 9, 10)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 10, 11)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 11, 12)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 12, 13)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 13, 14)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 14, 15)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 15, 16)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 16, 17)}</div>
+                                    <div class="div-line-cert">${fn:substring(map.insuranceOrder.customer.customerCardNo, 17, 18)}</div>
                                 </div>
                             </div>
 
