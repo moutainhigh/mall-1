@@ -38,16 +38,16 @@ public class CustomerWalletService implements ICustomerWalletService {
         BigDecimal bigPrice=new BigDecimal(price);
         BigDecimal ratio=new BigDecimal(ratios);
         BigDecimal added=bigPrice.multiply(ratio);
-        double amount=added.setScale(2,BigDecimal.ROUND_UP).doubleValue();
+        double amount=added.setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
         if(null!=customerWalletBean){
             if(businessType.equals(BusinessType.GIVE_THE_THUMBS_UP)){
                 BigDecimal loanQuota=new BigDecimal(customerWalletBean.getLoanQuota());
-                Double  newLoanQuota=loanQuota.add(added).setScale(2,BigDecimal.ROUND_UP).doubleValue();
+                Double  newLoanQuota=loanQuota.add(added).setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
                 customerWalletBean.setLoanQuota(newLoanQuota);
             }else if(businessType.equals(BusinessType.LOAN_EXPECTED_RETURN_FIFTY)){
 
                 BigDecimal expectedReturnAmount=new BigDecimal(customerWalletBean.getExpectedReturnAmount());
-                Double  newExpectedReturnAmount=expectedReturnAmount.add(added).setScale(2,BigDecimal.ROUND_UP).doubleValue();
+                Double  newExpectedReturnAmount=expectedReturnAmount.add(added).setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
                 customerWalletBean.setExpectedReturnAmount(newExpectedReturnAmount);
             }
             customerWalletBean.setUpdateTime(new Date());
