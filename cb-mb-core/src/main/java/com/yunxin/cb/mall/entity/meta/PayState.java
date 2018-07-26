@@ -1,14 +1,18 @@
+/**
+ *
+ */
 package com.yunxin.cb.mall.entity.meta;
 
 /**
- * Created by k001389 on 2014/8/6.
+ * @author Aidy
  */
-public enum PaymentType {
+public enum PayState {
 
-    FULL_SECTION("全款购车"), LOAN("贷款购车"), ALIPAY("支付宝"), TENPAY("财付通"), UNIONPAY("银联"), AFTERREVICED("货到付款");
+    PROCESSING("处理中"), PROCESSED_SUCCESS("处理成功"), PROCESSED_FAILURE("处理失败"), PARTIALLY_SUCCESS("部分成功");
+
     private String name;
 
-    private PaymentType(String name) {
+    private PayState(String name) {
         this.name = name;
     }
 

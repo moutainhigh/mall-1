@@ -189,7 +189,7 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "cancelReason", value = "取消原因", paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
-    public ResponseResult cancelOrder(int orderId, String cancelReason)throws Exception{
+    public ResponseResult cancelOrder(@RequestParam("orderId") int orderId, @RequestParam("cancelReason")String cancelReason)throws Exception{
         Order order = new Order();
         order.setOrderId(orderId);
         order.setCancelReason(cancelReason);

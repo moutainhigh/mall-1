@@ -177,7 +177,7 @@
           return false;
         }
         if (this.state !== true) {
-          alert('请勾选投保须知');
+          window.alert('请勾选投保须知')
           return false;
         } else {
           this.$router.push('/insured');

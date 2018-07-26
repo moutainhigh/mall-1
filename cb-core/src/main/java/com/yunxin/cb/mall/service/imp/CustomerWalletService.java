@@ -32,32 +32,52 @@ public class CustomerWalletService implements ICustomerWalletService {
 
 
     @Override
-    public CustomerWallet updateCustomerWallet(int customerId,Double ratios,String remark,BusinessType businessType) {
+    public synchronized CustomerWallet updateCustomerWallet(int customerId,Double ratios,String remark,BusinessType businessType,int price) {
 
         CustomerWallet  customerWalletBean=CustomerWalletDao.findOne(customerId);
-
+        BigDecimal bigPrice=new BigDecimal(price);
+        BigDecimal ratio=new BigDecimal(ratios);
+        BigDecimal added=bigPrice.multiply(ratio);
+        double amount=added.setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
         if(null!=customerWalletBean){
-            BigDecimal loanQuota=new BigDecimal(customerWalletBean.getLoanQuota());
-            BigDecimal ratio=new BigDecimal(ratios);
-            BigDecimal addedLoanQuota=loanQuota.multiply(ratio);
-            Double  newLoanQuota=loanQuota.add(addedLoanQuota).setScale(2,BigDecimal.ROUND_UP).doubleValue();
-            customerWalletBean.setLoanQuota(newLoanQuota);
+            if(businessType.equals(BusinessType.GIVE_THE_THUMBS_UP)){
+                BigDecimal loanQuota=new BigDecimal(customerWalletBean.getLoanQuota());
+                Double  newLoanQuota=loanQuota.add(added).setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
+                customerWalletBean.setLoanQuota(newLoanQuota);
+            }else if(businessType.equals(BusinessType.LOAN_EXPECTED_RETURN_FIFTY)){
+
+                BigDecimal expectedReturnAmount=new BigDecimal(customerWalletBean.getExpectedReturnAmount());
+                Double  newExpectedReturnAmount=expectedReturnAmount.add(added).setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
+                customerWalletBean.setExpectedReturnAmount(newExpectedReturnAmount);
+            }
             customerWalletBean.setUpdateTime(new Date());
-            final double amount=addedLoanQuota.setScale(2,BigDecimal.ROUND_UP).doubleValue();
-            /**
-             * 更新交易记录
-             */
-            CustomerTradingRecord customerTradingRecord=new CustomerTradingRecord();
-            customerTradingRecord.setRemark(remark);
-            customerTradingRecord.setOperationType(OperationType.ADD);
-            customerTradingRecord.setBusinessType(businessType);
-            customerTradingRecord.setAmount(amount);
-            customerTradingRecord.setCreateTime(new Date());
-            Customer Customer=new Customer();
-            Customer.setCustomerId(customerId);
-            customerTradingRecord.setCustomer(Customer);
-            customerTradingRecordDao.save(customerTradingRecord);
+
+        }else{
+            CustomerWallet customerWallet=new CustomerWallet();
+            customerWallet.setAvailableBalance(0.0);
+            customerWallet.setExpectedReturnAmount(0.0);
+            customerWallet.setArrearsAmount(0.0);
+            if(businessType.equals(BusinessType.GIVE_THE_THUMBS_UP))
+                customerWallet.setLoanQuota(amount);
+            else if(businessType.equals(BusinessType.LOAN_EXPECTED_RETURN_FIFTY))
+                customerWallet.setExpectedReturnAmount(amount);
+            customerWallet.setUpdateTime(new Date());
+            customerWallet.setCreateTime(new Date());
+            CustomerWalletDao.save(customerWallet);
         }
+        /**
+         * 更新交易记录
+         */
+        CustomerTradingRecord customerTradingRecord=new CustomerTradingRecord();
+        customerTradingRecord.setRemark(remark);
+        customerTradingRecord.setOperationType(OperationType.ADD);
+        customerTradingRecord.setBusinessType(businessType);
+        customerTradingRecord.setAmount(amount);
+        customerTradingRecord.setCreateTime(new Date());
+        Customer Customer=new Customer();
+        Customer.setCustomerId(customerId);
+        customerTradingRecord.setCustomer(Customer);
+        customerTradingRecordDao.save(customerTradingRecord);
         return customerWalletBean;
     }
 

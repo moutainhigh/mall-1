@@ -43,12 +43,12 @@ public class OrderConfirmVO implements java.io.Serializable{
         this.paymentType = paymentType;
     }
 
-    public List<OrderConfirmProductVO> getOrderConfirmProductList() {
-        return orderConfirmProductList;
+    public int getAddressId() {
+        return addressId;
     }
 
-    public void setOrderConfirmProductList(List<OrderConfirmProductVO> orderConfirmProductList) {
-        this.orderConfirmProductList = orderConfirmProductList;
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
     public String getSellerId() {
@@ -57,6 +57,14 @@ public class OrderConfirmVO implements java.io.Serializable{
 
     public void setSellerId(String sellerId) {
         this.sellerId = sellerId;
+    }
+
+    public List<OrderConfirmProductVO> getOrderConfirmProductList() {
+        return orderConfirmProductList;
+    }
+
+    public void setOrderConfirmProductList(List<OrderConfirmProductVO> orderConfirmProductList) {
+        this.orderConfirmProductList = orderConfirmProductList;
     }
 
     @Override

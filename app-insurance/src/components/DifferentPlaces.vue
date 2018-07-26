@@ -85,7 +85,8 @@
         let textatea = document.getElementsByTagName("textarea");
         for (let i = 0; i < textatea.length; i++) {
           if (emoji.test(textatea[i].value)) {
-            alert("输入信息不得带表情");
+            this.showPositionValue = true;
+            this.toastText = "输入信息不得带表情";
             return false;
           }
         }

@@ -10,6 +10,7 @@ import Home from '../page/home/Home'
 import Search from '../page/search/Search'
 import Location from '../page/location/Location'
 import ChooseCarType from '../page/carList/ChooseCarType'
+import ServerList from '../page/serve/ServerList'
 
 Vue.use(Router)
 
@@ -63,6 +64,11 @@ export default new Router({
       path: '/order-list',
       name: 'OrderList',
       component: OrderList
+    },
+    {
+      path: '/serve-list',
+      name: 'ServerList',
+      component: ServerList
     },
   ]
 })
