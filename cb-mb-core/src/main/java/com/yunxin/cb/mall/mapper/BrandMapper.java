@@ -59,7 +59,8 @@ public interface BrandMapper {
         "DESCRIPTION, DISPLAY, ENABLED, HOT, PIC_PATH, REMARK, SEO_DESCRIPTION, SEO_KEY, ",
         "SEO_TITLE, WEBSITE, CATEGORY_ID",
         "from brand",
-        "where BRAND_ID = #{brandId,jdbcType=INTEGER}"
+        "where BRAND_ID = #{brandId,jdbcType=INTEGER}",
+            "and enabled=1"
     })
     @Results({
         @Result(column="BRAND_ID", property="brandId", jdbcType=JdbcType.INTEGER, id=true),

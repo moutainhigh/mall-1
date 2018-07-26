@@ -125,7 +125,9 @@ public class CategoryController implements ServletContextAware {
         try {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
-                category.setIconPath(imgurl[0].split(",")[0]);
+                String iconPath = imgurl[0].split(",")[0];
+                category.setIconPath(iconPath);
+                categoryService.updateIconPath(category.getCategoryId(),iconPath);
                 Category categoryDb = categoryService.updateCategory(category);
                 //保存图片路径
                 attachmentService.deleteAttachmentPictures(ObjectType.CATEGORY,categoryDb.getCategoryId());
