@@ -157,4 +157,33 @@ public interface DeliveryAddressMapper {
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
     })
     List<DeliveryAddress> selectByCustomerId(Integer customerId);
+
+    /**
+     * 查询用户默认收货地址
+     */
+    @Select({
+            "select",
+            "ADDRESS_ID, ADDRESS_TYPE, CITY, CONSIGNEE_ADDRESS, CONSIGNEE_MOBILE, CONSIGNEE_NAME, ",
+            "CONSIGNEE_TELEPHONE, DEFAULT_ADDRESS, DISTRICT, POST_CODE, PROVINCE, REMARK, ",
+            "CUSTOMER_ID",
+            "from delivery_address",
+            "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}",
+            "and DEFAULT_ADDRESS = 1"
+    })
+    @Results({
+            @Result(column="ADDRESS_ID", property="addressId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="ADDRESS_TYPE", property="addressType", typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler.class),
+            @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CONSIGNEE_ADDRESS", property="consigneeAddress", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CONSIGNEE_MOBILE", property="consigneeMobile", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CONSIGNEE_NAME", property="consigneeName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CONSIGNEE_TELEPHONE", property="consigneeTelephone", jdbcType=JdbcType.VARCHAR),
+            @Result(column="DEFAULT_ADDRESS", property="defaultAddress", jdbcType=JdbcType.BIT),
+            @Result(column="DISTRICT", property="district", jdbcType=JdbcType.VARCHAR),
+            @Result(column="POST_CODE", property="postCode", jdbcType=JdbcType.VARCHAR),
+            @Result(column="PROVINCE", property="province", jdbcType=JdbcType.VARCHAR),
+            @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
+    })
+    DeliveryAddress selectDefaultByCustomerId(Integer customerId);
 }

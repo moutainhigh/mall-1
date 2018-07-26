@@ -4,6 +4,7 @@ package com.yunxin.cb.rest.mall;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.ProductReturn;
 import com.yunxin.cb.mall.service.ProductReturnService;
+import com.yunxin.cb.mall.vo.ProductReturnApplyVO;
 import com.yunxin.cb.mall.vo.ProductReturnDetailVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;

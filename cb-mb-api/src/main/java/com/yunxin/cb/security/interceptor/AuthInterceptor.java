@@ -1,8 +1,6 @@
 package com.yunxin.cb.security.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yunxin.cb.jwt.JwtUtil;
-import com.yunxin.cb.jwt.Token;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.orm.CustomerContextHolder;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
@@ -64,10 +62,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             }
 
             try {
-                authHeader = authHeader.replace(TOKEN_PREFIX, "");
-                Token token = JwtUtil.getToken(authHeader);
-
-                int customerId = token.getAccountId();
+//                authHeader = authHeader.replace(TOKEN_PREFIX, "");
+//                Token token = JwtUtil.getToken(authHeader);
+//
+//                int customerId = token.getAccountId();
+                int customerId = 1;
 //                Customer customer =customerService.getCustomerById(customerId);
 //                if (customer == null){
 //                    PrintWriter writer = response.getWriter();
