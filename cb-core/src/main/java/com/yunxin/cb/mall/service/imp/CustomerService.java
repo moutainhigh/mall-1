@@ -316,7 +316,6 @@ public class CustomerService implements ICustomerService {
        return new ArrayList<Customer>(){
             {
                 if(StringUtils.isNotBlank(levelCode)){
-
                     Customer customer= getByLevelCode(levelCode);
                     if(customer!=null){
                         int level=customer.getCustomerLevel();
@@ -624,8 +623,11 @@ public class CustomerService implements ICustomerService {
             }catch (Exception e){
                 ration=0.05;
             }
-            for(Customer listCustome:listCustomer)
+            if(listCustomer!=null&&listCustomer.size()>0){
+                for(Customer listCustome:listCustomer)
                     iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(),ration,"推荐人以及所有上级增加5%的授信额度",BusinessType.GIVE_THE_THUMBS_UP,list.get(0).getInsuranceProductPrice().getPrice());
+
+            }
 
         }
         customer.setPraise(true);

@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
@@ -55,6 +56,7 @@ public class OrderDetailVO implements java.io.Serializable{
 
     /** 创建时间 */
     @ApiModelProperty(value="提交时间",name="createTime",example="2018-07-24")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /** 商家地址 */

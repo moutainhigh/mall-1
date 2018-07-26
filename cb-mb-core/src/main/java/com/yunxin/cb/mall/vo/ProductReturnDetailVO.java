@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.ProductReturn;
@@ -32,6 +33,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
 
     /** 申请时间 */
     @ApiModelProperty(value="申请时间 ",name="applyTime",example="1")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date applyTime;
 
     /** 退货退款状态 0:申请退货退款 1:待退货退款 2:已退货待退款 3:已退货退款 4:拒绝退货退款 5:申请退款 6:待退款 7:已退款 8:拒绝退款 */
@@ -52,6 +54,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
 
     /** 处理时间 */
     @ApiModelProperty(value="处理时间 ",name="disposeTime",example="1")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date disposeTime;
 
     /** 退款金额 */

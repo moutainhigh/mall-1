@@ -263,10 +263,16 @@ public class CustomerResource extends BaseResource {
     @ApiOperation(value = "用户点赞")
     @PostMapping(value = "praise")
     public ResponseResult praise(@ModelAttribute("customerId") int customerId) {
-        if(customerService.customerPraise(customerId))
-            return new ResponseResult(Result.SUCCESS);
-        else
-            return new ResponseResult(Result.FAILURE);
+        try{
+            if(customerService.customerPraise(customerId))
+                return new ResponseResult(Result.SUCCESS,"感恩成功");
+            else
+                return new ResponseResult(Result.FAILURE,"请先购买保险才能感恩推荐人");
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return new ResponseResult(Result.FAILURE,"服务器异常,请稍后重试");
+        }
+
     }
 
     @ApiOperation(value = "查询点赞用户")
