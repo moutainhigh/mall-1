@@ -34,12 +34,13 @@ public class CustomerWalletService implements ICustomerWalletService {
     @Override
     public synchronized CustomerWallet updateCustomerWallet(int customerId,Double ratios,String remark,BusinessType businessType,int price) {
 
-        CustomerWallet  customerWalletBean=CustomerWalletDao.findOne(customerId);
+        CustomerWallet  customerWalletBea=CustomerWalletDao.getCustomerWalletByCustomer(customerId);
         BigDecimal bigPrice=new BigDecimal(price);
         BigDecimal ratio=new BigDecimal(ratios);
         BigDecimal added=bigPrice.multiply(ratio);
         double amount=added.setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
-        if(null!=customerWalletBean){
+        if(null!=customerWalletBea){
+            CustomerWallet customerWalletBean= CustomerWalletDao.findOne(customerWalletBea.getWalletId());
             if(businessType.equals(BusinessType.GIVE_THE_THUMBS_UP)){
                 BigDecimal loanQuota=new BigDecimal(customerWalletBean.getLoanQuota());
                 Double  newLoanQuota=loanQuota.add(added).setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
@@ -54,7 +55,9 @@ public class CustomerWalletService implements ICustomerWalletService {
 
         }else{
             CustomerWallet customerWallet=new CustomerWallet();
-            customerWallet.setCustomerId(customerId);
+            Customer customer=new Customer();
+            customer.setCustomerId(customerId);
+            customerWallet.setCustomer(customer);
             customerWallet.setAvailableBalance(0.0);
             customerWallet.setExpectedReturnAmount(0.0);
             customerWallet.setArrearsAmount(0.0);
@@ -79,7 +82,7 @@ public class CustomerWalletService implements ICustomerWalletService {
         Customer.setCustomerId(customerId);
         customerTradingRecord.setCustomer(Customer);
         customerTradingRecordDao.save(customerTradingRecord);
-        return customerWalletBean;
+        return customerWalletBea;
     }
 
 

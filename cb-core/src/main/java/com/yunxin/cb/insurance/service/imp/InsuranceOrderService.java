@@ -6,7 +6,6 @@ import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.CustomerWallet;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
 import com.yunxin.cb.system.entity.Profile;
@@ -132,8 +131,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                         if(null!=customer.getRecommendCustomer()){
 
                                 int recommerdCustomerId=customer.getRecommendCustomer().getCustomerId();
-                                CustomerWallet customerWallet= iCustomerWalletService.findCustomerWallet(recommerdCustomerId);
-                                if(null!=customerWallet){
+//                                CustomerWallet customerWallet= iCustomerWalletService.findCustomerWallet(recommerdCustomerId);
+//                                if(null!=customerWallet){
                                     Profile  Profile=iProfileService.getProfileByProfileName(ProfileName.LOAN_EXPECTED_RETURN_FIFTY);
                                     Double ration=0.5;
                                     try {
@@ -141,8 +140,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     }catch (Exception e){
                                         ration=0.5;
                                     }
-                                    iCustomerWalletService.updateCustomerWallet(customerWallet.getCustomerId(),ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getInsuranceProductPrice().getPrice());
-                             }
+                                    iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getInsuranceProductPrice().getPrice());
+//                             }
                         }
                         customer.setPolicy(true);
                     }
