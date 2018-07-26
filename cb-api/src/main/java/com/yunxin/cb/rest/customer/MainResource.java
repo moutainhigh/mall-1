@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Api(description = "用户接口")
 @RestController
@@ -127,13 +126,6 @@ public class MainResource extends BaseResource {
         String random=String.valueOf(System.currentTimeMillis());
         CachedUtil.getInstance().setContext(customerVo.getMobile()+customerVo.getMobile(),random);
         return new ResponseResult(random);
-    }
-
-    @ApiOperation(value = "测试生成编码")
-    @PostMapping(value = "generateLevelCode")
-    public ResponseResult generateLevelCode(){
-        List<Customer> list= customerService.findCustomerByLevelCode("100110011001100110011001");
-        return new ResponseResult(list);
     }
 
     @ApiOperation(value = "用户注册")
