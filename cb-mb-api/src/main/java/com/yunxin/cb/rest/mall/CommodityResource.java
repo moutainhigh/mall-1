@@ -169,7 +169,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
                 } else if (i == 2) {
                     //获取key
                     fiveKey= attributeList.get(2).getAttribute().getAttributeGroup().getGroupName();
-                    sixKey = attributeList.get(2).getAttribute().getAttributeName();
+                    sixKey = attributeList.get(2).getAttribute().getAttributeName()+"-"+pro.getProductId();
                     twoFloor= (Map<String, Object>) firstFloor.get(oneKey);
                     threeFloor = (Map<String, Object>) twoFloor.get(twoKey);
                     fourFloor= (Map<String, Object>)threeFloor.get(treeKey);

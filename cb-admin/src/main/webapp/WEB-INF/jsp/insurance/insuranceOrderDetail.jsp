@@ -292,13 +292,13 @@
                                 <label><span class="asterisk"></span>  证件类型：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholder.policyholderCardType}
+                                ${insuranceOrder.customer.cardType}
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 证件号码：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceOrderPolicyholder.policyholderCardNo}
+                                ${insuranceOrder.customer.customerCardNo}
                             </div>
                         </div>
 
@@ -622,20 +622,20 @@
                                 <label><span class="asterisk"></span> 投保人银行卡正面 ：</label>
                             </div>
                             <div class="col-sm-2 col-label" id="example1">
-                                        <img data-original="${insuranceOrder.insuranceOrderPolicyholderBank.bankCardImg}"  src="${insuranceOrder.insuranceOrderPolicyholderBank.bankCardImg}" alt="投保人银行卡正面" width="200" height="150"/>
+                                        <img data-original="${insuranceOrder.customer.bankCardImg}"  src="${insuranceOrder.customer.bankCardImg}" alt="投保人银行卡正面" width="200" height="150"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 投保人身份证正面 ：</label>
                             </div>
                             <div class="col-sm-2 col-label"  id="example2">
-                                <img data-original="${insuranceOrder.insuranceOrderPolicyholder.cardPositiveImg}" src="${insuranceOrder.insuranceOrderPolicyholder.cardPositiveImg}" alt="投保人身份证正面" width="200" height="150"/>
+                                <img data-original="${insuranceOrder.customer.cardPositiveImg}" src="${insuranceOrder.customer.cardPositiveImg}" alt="投保人身份证正面" width="200" height="150"/>
                             </div>
 
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 投保人身份证反面 ：</label>
                             </div>
                             <div class="col-sm-2 col-label"  id="example3">
-                                <img data-original="${insuranceOrder.insuranceOrderPolicyholder.cardNegativeImg}" src="${insuranceOrder.insuranceOrderPolicyholder.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
+                                <img data-original="${insuranceOrder.customer.cardNegativeImg}" src="${insuranceOrder.customer.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>

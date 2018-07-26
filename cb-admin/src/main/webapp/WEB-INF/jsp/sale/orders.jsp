@@ -167,7 +167,7 @@
                   <strong>订单状态:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <select class="form-control simpleselect grid-filter" data-filter="orderState" data-operator="eq">
+                  <select class="form-control  grid-filter" data-filter="orderState" data-operator="eq">
                     <option value="">全部</option>
                     <option value="PENDING_PAYMENT">待付款</option>
                     <option value="PAID_PAYMENT">待发货</option>

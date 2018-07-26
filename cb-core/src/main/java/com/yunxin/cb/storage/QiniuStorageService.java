@@ -218,6 +218,9 @@ public class QiniuStorageService implements IStorageService {
             case HOMEFLOORICO:
                 fileName ="HOMEFLOORICO/"+timeStr;
                 break;
+            case CATEGORY:
+                fileName ="CATEGORY/"+timeStr;
+                break;
         }
         String upToken = auth.uploadToken(bucket);
         try {

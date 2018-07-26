@@ -1,12 +1,12 @@
 package com.yunxin.cb.mall.service.imp;
 
+import com.yunxin.cb.mall.dao.CustomerTradingRecordDao;
 import com.yunxin.cb.mall.dao.CustomerWalletDao;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.CustomerTradingRecord;
 import com.yunxin.cb.mall.entity.CustomerWallet;
 import com.yunxin.cb.mall.entity.OperationType;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
-import com.yunxin.cb.mall.service.ICustomerTradingRecordService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,7 +22,8 @@ public class CustomerWalletService implements ICustomerWalletService {
     @Resource
     private CustomerWalletDao CustomerWalletDao;
     @Resource
-    private ICustomerTradingRecordService iCustomerTradingRecordService;
+    private CustomerTradingRecordDao customerTradingRecordDao;
+
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public CustomerWallet findCustomerWallet(int customerId) {
@@ -35,30 +36,31 @@ public class CustomerWalletService implements ICustomerWalletService {
 
         CustomerWallet  customerWalletBean=CustomerWalletDao.findOne(customerId);
 
-        BigDecimal loanQuota=new BigDecimal(customerWalletBean.getLoanQuota());
-        BigDecimal ratio=new BigDecimal(ratios);
-        BigDecimal addedLoanQuota=loanQuota.multiply(ratio);
-        Double  newLoanQuota=loanQuota.add(addedLoanQuota).doubleValue();
-        customerWalletBean.setLoanQuota(newLoanQuota);
-        final double amount=addedLoanQuota.doubleValue();
-        /**
-         * 更新交易记录
-         */
-        iCustomerTradingRecordService.addCustomerTradingRecord(new CustomerTradingRecord(){
-            {
-                setCustomer(new Customer(){{
-                    setCustomerId(customerId);
-                }});
-                setAmount(amount);
-                setCreateTime(new Date());
-                setRemark(remark);
-                setOperationType(OperationType.ADD);
-                setBusinessType(businessType);
-            }
-        });
-
+        if(null!=customerWalletBean){
+            BigDecimal loanQuota=new BigDecimal(customerWalletBean.getLoanQuota());
+            BigDecimal ratio=new BigDecimal(ratios);
+            BigDecimal addedLoanQuota=loanQuota.multiply(ratio);
+            Double  newLoanQuota=loanQuota.add(addedLoanQuota).setScale(2,BigDecimal.ROUND_UP).doubleValue();
+            customerWalletBean.setLoanQuota(newLoanQuota);
+            final double amount=addedLoanQuota.setScale(2,BigDecimal.ROUND_UP).doubleValue();
+            /**
+             * 更新交易记录
+             */
+            CustomerTradingRecord CustomerTradingRecord=new CustomerTradingRecord();
+            CustomerTradingRecord.setRemark(remark);
+            CustomerTradingRecord.setOperationType(OperationType.ADD);
+            CustomerTradingRecord.setBusinessType(businessType);
+            CustomerTradingRecord.setAmount(amount);
+            CustomerTradingRecord.setCreateTime(new Date());
+            Customer Customer=new Customer();
+            Customer.setCustomerId(customerId);
+            CustomerTradingRecord.setCustomer(Customer);
+            customerTradingRecordDao.save(CustomerTradingRecord);
+        }
         return customerWalletBean;
     }
+
+
 
 //    @Override
 //    public CustomerWallet updateExpectedReturnAmount(CustomerWallet customerWallet) {
@@ -87,4 +89,6 @@ public class CustomerWalletService implements ICustomerWalletService {
 //        });
 //        return customerWalletBean;
 //    }
+
+
 }

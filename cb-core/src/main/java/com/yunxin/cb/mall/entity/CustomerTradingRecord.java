@@ -42,7 +42,7 @@ private static final long serialVersionUID = 1L;
     * 交易流水id
     */
     @Max(9999999999L)
-    private int tradeRecodeId;
+    private int tradeRecordId;
     /**
      * 客户
      */
@@ -80,20 +80,20 @@ private static final long serialVersionUID = 1L;
 	}
 
 	public CustomerTradingRecord(
-		int tradeRecodeId
+		int tradeRecordId
 	){
-		this.tradeRecodeId = tradeRecodeId;
+		this.tradeRecordId = tradeRecordId;
 	}
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getTradeRecodeId() {
-        return this.tradeRecodeId;
+    public int getTradeRecordId() {
+        return this.tradeRecordId;
     }
 
-    public void setTradeRecodeId(int tradeRecodeId) {
-        this.tradeRecodeId = tradeRecodeId;
+    public void setTradeRecordId(int tradeRecordId) {
+        this.tradeRecordId = tradeRecordId;
     }
 
     @Column(nullable = true, precision = 2)

@@ -117,7 +117,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Override
     @Transactional
     public boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState) {
-        boolean flag=true;
         try {
             insuranceOrderDao.updInsuranceOrderState(orderState,orderId);
             /**
@@ -154,9 +153,9 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             }
 
         }catch (Exception e){
-            flag=false;
+            return false;
         }
-        return flag;
+        return true;
     }
 
     /**

@@ -190,7 +190,7 @@
                                 <strong>商品状态:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <select data-filter="commodityState" data-operator="eq" class="form-control simpleselect grid-filter">
+                                <select data-filter="commodityState" data-operator="eq" class="form-control  grid-filter">
                                     <option value="">全部</option>
                                     <option value="WAIT_AUDITED">待审核</option>
                                     <option value="AUDITED">审核通过</option>
