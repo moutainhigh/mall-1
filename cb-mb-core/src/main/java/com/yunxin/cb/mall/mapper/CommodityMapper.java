@@ -61,7 +61,7 @@ public interface CommodityMapper {
 			"DELIVERY_TYPE, DESCRIPTION, FORBID_AIR_CARGO, GIVEAWAY, MARKET_PRICE, POPULAR, ",
 			"PRE_SELL, PROVINCE, PUBLISH_STATE, RECOMMEND, SALE_NUM, SELL_PRICE, SEO_DESCRIPTION, ",
 			"SEO_KEY, SEO_TITLE, SHORT_NAME, SPECIAL, UNIT, VOLUME, WEIGHT, BRAND_ID, CATALOG_ID, ",
-			"SECTION_ID, SELLER_ID, PACKING_LIST",
+			"SECTION_ID, SELLER_ID, PACKING_LIST, EXPLAIN_CONTENT",
 			"from commodity",
 			"where COMMODITY_ID = #{commodityId,jdbcType=INTEGER}"
 	})
@@ -103,7 +103,8 @@ public interface CommodityMapper {
 			@Result(column="CATALOG_ID", property="catalogId", jdbcType=JdbcType.INTEGER),
 			@Result(column="SECTION_ID", property="sectionId", jdbcType=JdbcType.INTEGER),
 			@Result(column="SELLER_ID", property="sellerId", jdbcType=JdbcType.INTEGER),
-			@Result(column="PACKING_LIST", property="packingList", jdbcType=JdbcType.VARCHAR)
+			@Result(column="PACKING_LIST", property="packingList", jdbcType=JdbcType.VARCHAR),
+			@Result(column="EXPLAIN_CONTENT", property="explainContent", jdbcType=JdbcType.VARCHAR)
 	})
 	Commodity selectByPrimaryKey(Integer commodityId);
 
@@ -114,7 +115,7 @@ public interface CommodityMapper {
 			"DELIVERY_TYPE, DESCRIPTION, FORBID_AIR_CARGO, GIVEAWAY, MARKET_PRICE, POPULAR, ",
 			"PRE_SELL, PROVINCE, PUBLISH_STATE, RECOMMEND, SALE_NUM, SELL_PRICE, SEO_DESCRIPTION, ",
 			"SEO_KEY, SEO_TITLE, SHORT_NAME, SPECIAL, UNIT, VOLUME, WEIGHT, BRAND_ID, CATALOG_ID, ",
-			"SECTION_ID, SELLER_ID, PACKING_LIST",
+			"SECTION_ID, SELLER_ID, PACKING_LIST, EXPLAIN_CONTENT",
 			"from commodity",
 			"where COMMODITY_ID = #{commodityId}",
 			"and COMMODITY_STATE = #{state} and PUBLISH_STATE = #{publish}"
@@ -158,6 +159,7 @@ public interface CommodityMapper {
 			@Result(column="SECTION_ID", property="sectionId", jdbcType=JdbcType.INTEGER),
 			@Result(column="SELLER_ID", property="sellerId", jdbcType=JdbcType.INTEGER),
 			@Result(column="PACKING_LIST", property="packingList", jdbcType=JdbcType.VARCHAR),
+			@Result(column="EXPLAIN_CONTENT", property="explainContent", jdbcType=JdbcType.VARCHAR),
 			@Result(column="BRAND_ID", property="brand", jdbcType=JdbcType.INTEGER,
 					one = @One(select = "com.yunxin.cb.mall.mapper.BrandMapper.selectByPrimaryKey")),
 			@Result(column="SECTION_ID", property="priceSection", jdbcType=JdbcType.INTEGER,
@@ -176,7 +178,7 @@ public interface CommodityMapper {
 			"DELIVERY_TYPE, DESCRIPTION, FORBID_AIR_CARGO, GIVEAWAY, MARKET_PRICE, POPULAR, ",
 			"PRE_SELL, PROVINCE, PUBLISH_STATE, RECOMMEND, SALE_NUM, SELL_PRICE, SEO_DESCRIPTION, ",
 			"SEO_KEY, SEO_TITLE, SHORT_NAME, SPECIAL, UNIT, VOLUME, WEIGHT, BRAND_ID, CATALOG_ID, ",
-			"SECTION_ID, SELLER_ID, PACKING_LIST",
+			"SECTION_ID, SELLER_ID, PACKING_LIST, EXPLAIN_CONTENT",
 			"from commodity"
 	})
 	@Results({
@@ -217,7 +219,8 @@ public interface CommodityMapper {
 			@Result(column="CATALOG_ID", property="catalogId", jdbcType=JdbcType.INTEGER),
 			@Result(column="SECTION_ID", property="sectionId", jdbcType=JdbcType.INTEGER),
 			@Result(column="SELLER_ID", property="sellerId", jdbcType=JdbcType.INTEGER),
-			@Result(column="PACKING_LIST", property="packingList", jdbcType=JdbcType.VARCHAR)
+			@Result(column="PACKING_LIST", property="packingList", jdbcType=JdbcType.VARCHAR),
+			@Result(column="EXPLAIN_CONTENT", property="explainContent", jdbcType=JdbcType.VARCHAR)
 	})
 	List<Commodity> selectAll();
 
@@ -270,7 +273,7 @@ public interface CommodityMapper {
 			"DELIVERY_TYPE, DESCRIPTION, FORBID_AIR_CARGO, GIVEAWAY, MARKET_PRICE, POPULAR, ",
 			"PRE_SELL, PROVINCE, PUBLISH_STATE, RECOMMEND, SALE_NUM, SELL_PRICE, SEO_DESCRIPTION, ",
 			"SEO_KEY, SEO_TITLE, SHORT_NAME, SPECIAL, UNIT, VOLUME, WEIGHT, BRAND_ID, CATALOG_ID, ",
-			"SECTION_ID, SELLER_ID, PACKING_LIST",
+			"SECTION_ID, SELLER_ID, PACKING_LIST, EXPLAIN_CONTENT",
 			"from commodity",
 			"where BRAND_ID = #{brandId,jdbcType=INTEGER}"
 	})
@@ -312,7 +315,8 @@ public interface CommodityMapper {
 			@Result(column="CATALOG_ID", property="catalogId", jdbcType=JdbcType.INTEGER),
 			@Result(column="SECTION_ID", property="sectionId", jdbcType=JdbcType.INTEGER),
 			@Result(column="SELLER_ID", property="sellerId", jdbcType=JdbcType.INTEGER),
-			@Result(column="PACKING_LIST", property="packingList", jdbcType=JdbcType.VARCHAR)
+			@Result(column="PACKING_LIST", property="packingList", jdbcType=JdbcType.VARCHAR),
+			@Result(column="EXPLAIN_CONTENT", property="explainContent", jdbcType=JdbcType.VARCHAR)
 	})
 	List<Commodity> selectByBrandId(Integer brandId);
 

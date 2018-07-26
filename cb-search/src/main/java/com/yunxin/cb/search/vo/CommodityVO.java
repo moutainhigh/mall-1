@@ -1,14 +1,10 @@
 package com.yunxin.cb.search.vo;
 
-import com.yunxin.cb.search.document.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Field;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 @ApiModel(value="商品搜索对象",description="商品搜索对象 CommodityVO")
 public class CommodityVO implements java.io.Serializable {
     private static final long serialVersionUID = -3968560903203859821L;
@@ -125,6 +121,12 @@ public class CommodityVO implements java.io.Serializable {
      */
     @ApiModelProperty(value="商品规格",name="commoditySpecs",example="商品规格")
     private Set<CommoditySpec> commoditySpecs = new HashSet<>();
+
+    /**
+     * 商品规格选项
+     */
+    @ApiModelProperty(value="商品规格选项",name="specMap",example="")
+    private Map<String,List<Object>> specMap=new TreeMap<>();
 
 
     public int getCommodityId() {
@@ -301,5 +303,13 @@ public class CommodityVO implements java.io.Serializable {
 
     public void setCommoditySpecs(Set<CommoditySpec> commoditySpecs) {
         this.commoditySpecs = commoditySpecs;
+    }
+
+    public Map<String, List<Object>> getSpecMap() {
+        return specMap;
+    }
+
+    public void setSpecMap(Map<String, List<Object>> specMap) {
+        this.specMap = specMap;
     }
 }

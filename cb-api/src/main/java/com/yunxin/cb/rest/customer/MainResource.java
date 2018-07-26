@@ -21,7 +21,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -128,6 +127,7 @@ public class MainResource extends BaseResource {
         CachedUtil.getInstance().setContext(customerVo.getMobile()+customerVo.getMobile(),random);
         return new ResponseResult(random);
     }
+
     @ApiOperation(value = "用户注册")
     @PostMapping(value = "register")
     public ResponseResult register(@RequestBody CustomerVo customerVo){
@@ -160,6 +160,12 @@ public class MainResource extends BaseResource {
 
             if(recommendCustomer != null){
                 customer.setRecommendCustomer(recommendCustomer);
+                Customer customerCode=customerService.generateCode(invitationCode);
+                if(customerCode!=null){
+                    customer.setLevelCode(customerCode.getLevelCode());
+                    customer.setCustomerLevel(customerCode.getCustomerLevel());
+                    customer.setInvitationCode(customerCode.getInvitationCode());
+                }
             }
             customer = customerService.addCustomer(customer);
             String token = JwtUtil.generateToken(customer.getCustomerId(), customer.getMobile());

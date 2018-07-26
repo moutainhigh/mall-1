@@ -4,6 +4,7 @@ import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.mall.vo.*;
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
@@ -62,6 +63,9 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
         try {
             int customerId=getCustomerId();
             Map map=commodityService.getCommdityDetail(productId,customerId);
+            if(map==null){
+                return new ResponseResult(Result.FAILURE,"货品为空");
+            }
             Commodity commodity=(Commodity)map.get("commodity");
             Product product=(Product)map.get("product");
             PriceSection priceSection=(PriceSection)map.get("priceSection");
@@ -165,7 +169,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
                 } else if (i == 2) {
                     //获取key
                     fiveKey= attributeList.get(2).getAttribute().getAttributeGroup().getGroupName();
-                    sixKey = attributeList.get(2).getAttribute().getAttributeName();
+                    sixKey = attributeList.get(2).getAttribute().getAttributeName()+"-"+pro.getProductId();
                     twoFloor= (Map<String, Object>) firstFloor.get(oneKey);
                     threeFloor = (Map<String, Object>) twoFloor.get(twoKey);
                     fourFloor= (Map<String, Object>)threeFloor.get(treeKey);

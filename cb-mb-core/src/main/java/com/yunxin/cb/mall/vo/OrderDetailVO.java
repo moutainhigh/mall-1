@@ -3,6 +3,7 @@ package com.yunxin.cb.mall.vo;
 import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
+import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,7 +33,7 @@ public class OrderDetailVO implements java.io.Serializable{
 
     /** 订单基本状态 */
     @ApiModelProperty(value="订单基本状态",name="orderState",example="1")
-    private Integer orderState;
+    private OrderState orderState;
 
     /** 货品数量 */
     @ApiModelProperty(value="货品总数量",name="prodQuantity",example="1")
@@ -76,11 +77,11 @@ public class OrderDetailVO implements java.io.Serializable{
         this.orderCode = orderCode;
     }
 
-    public Integer getOrderState() {
+    public OrderState getOrderState() {
         return orderState;
     }
 
-    public void setOrderState(Integer orderState) {
+    public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
     }
 

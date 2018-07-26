@@ -6,8 +6,6 @@ import com.yunxin.cb.mall.service.DeliveryAddressService;
 import com.yunxin.cb.mall.vo.DeliveryAddressVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
-import com.yunxin.cb.security.annotation.IgnoreAuthentication;
-import com.yunxin.cb.security.interceptor.AuthInterceptor;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -113,6 +111,7 @@ public class DeliveryAddressResource extends BaseResource {
             logger.info("input Parameter deliveryAddressVO:" + deliveryAddressVO.toString());
             DeliveryAddress deliveryAddress = new DeliveryAddress();
             BeanUtils.copyProperties(deliveryAddress, deliveryAddressVO);
+            deliveryAddress.setAddressId(addressId);
             deliveryAddressService.updateByPrimaryKey(deliveryAddress);
         } catch (Exception e) {
             logger.info("updateDeliveryAddress failed", e);

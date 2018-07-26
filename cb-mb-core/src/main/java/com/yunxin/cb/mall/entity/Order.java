@@ -1,5 +1,7 @@
 package com.yunxin.cb.mall.entity;
 
+import com.yunxin.cb.mall.entity.meta.OrderState;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -77,7 +79,9 @@ public class Order {
     private String orderCode;
 
     /** 订单基本状态 */
-    private Integer orderState;
+    private OrderState orderState;
+    /** 订单基本状态数值 */
+    private int orderStateId;
 
     /** 退换货产生的新订单引用原定单 */
     private String originOrderCode;
@@ -334,11 +338,11 @@ public class Order {
         this.orderCode = orderCode == null ? null : orderCode.trim();
     }
 
-    public Integer getOrderState() {
+    public OrderState getOrderState() {
         return orderState;
     }
 
-    public void setOrderState(Integer orderState) {
+    public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
     }
 
@@ -517,4 +521,9 @@ public class Order {
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
+
+    public int getOrderStateId() {
+        return this.orderState.ordinal();
+    }
+
 }

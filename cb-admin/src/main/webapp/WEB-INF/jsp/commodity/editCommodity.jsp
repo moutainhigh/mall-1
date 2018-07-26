@@ -28,6 +28,17 @@
                         this.sync();
                     }
                 });
+                window.editor = K.create('#editorContent1', {
+                    uploadJson: '../upload/fileUpload.do',
+                    fileManagerJson: '../upload/fileManager.do',
+                    allowFileManager: true,
+                    afterCreate : function() {
+                        this.sync();
+                    },
+                    afterBlur:function(){
+                        this.sync();
+                    }
+                });
             });
 
             $("#brandId").select2();
@@ -323,29 +334,6 @@
                                 <form:checkbox path="recommend"/>
                             </div>
                         </div>
-                        <%--<div class="spacer-10"></div>--%>
-                        <%--<div class="row">--%>
-
-                            <%--<div class="col-sm-2">--%>
-                                <%--<label><span class="asterisk">*</span>赠品：</label>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-1">--%>
-                                <%--<form:checkbox path="giveaway"/>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-2">--%>
-                                <%--<label><span class="asterisk">*</span> 换购：</label>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-1">--%>
-                                <%--<form:checkbox path="barter"/>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-2">--%>
-                                <%--<label><span class="asterisk">*</span> 预售：</label>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-sm-1">--%>
-                                <%--<form:checkbox path="preSell"/>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
@@ -430,12 +418,16 @@
                                             var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
                                             $('#imgDiv').html($('#imgDiv').html()+html);
                                             //上传完成回调
-                                            initPreview[initPreview.length]  = response.url;
+                                            var index=0;
+                                            if(initPreview.length>0 ){
+                                                index=initPreview.length;
+                                            }
+                                            initPreview[index]  = response.url;
                                             var config = new Object();
                                             config.caption = "";
                                             config.url="/admin/uploads/delete/COMMODITY.do";
                                             config.key=response.timeStr;
-                                            initPreviewConfig[initPreviewConfig.length]=config;
+                                            initPreviewConfig[index]=config;
                                             $("#picUrl").fileinput('refresh', {
                                                 initialPreview: initPreview,
                                                 initialPreviewConfig: initPreviewConfig,
@@ -449,6 +441,7 @@
                                             }
                                             return abort;
                                         }).on('filedeleted', function(event, id) {
+                                            debugger;
                                             $("#"+id).remove();
                                             for (var i=0;i<initPreview.length;i++)
                                             {
@@ -468,14 +461,14 @@
                                             var config = new Object();
                                             config.caption = "";
                                             config.url="/admin/uploads/delete/COMMODITY.do";
-                                            config.key=json[i].timeStr;
+                                            config.key=json[i].inputId;
                                             initPreviewConfig[i]=config;
                                             $("#picUrl").fileinput('refresh', {
                                                 initialPreview: initPreview,
                                                 initialPreviewConfig: initPreviewConfig,
                                                 initialPreviewAsData: true
                                             });
-                                            var html='<input name="imgurl" type="hidden" id="'+json.inputId+'" value="'+json[i].filePath+','+json[i].fileName+','+json[i].inputId+'">';
+                                            var html='<input name="imgurl" type="hidden" id="'+json[i].inputId+'" value="'+json[i].filePath+','+json[i].fileName+','+json[i].inputId+'">';
                                             $('#imgDiv').html($('#imgDiv').html()+html);
                                         }
                                     })
@@ -499,6 +492,20 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>商品说明内容</label>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;"></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

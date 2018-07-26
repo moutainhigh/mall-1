@@ -17,5 +17,5 @@ public interface IProfileService {
     public Profile getProfile(int fileId);
 
     public Profile updateProfile(Profile profile);
-
+    public Profile getProfileByProfileName(ProfileName profileName);
 }

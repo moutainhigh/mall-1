@@ -27,6 +27,17 @@
                         this.sync();
                     }
                 });
+                window.editor = K.create('#editorContent1', {
+                    uploadJson: '../upload/fileUpload.do',
+                    fileManagerJson: '../upload/fileManager.do',
+                    allowFileManager: true,
+                    afterCreate : function() {
+                        this.sync();
+                    },
+                    afterBlur:function(){
+                        this.sync();
+                    }
+                });
             });
 
             $("#brandId").select2();
@@ -391,12 +402,16 @@
                                             var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
                                             $('#imgDiv').html($('#imgDiv').html()+html);
                                             //上传完成回调
-                                            initPreview[initPreview.length]  = response.url;
+                                            var index=0;
+                                            if(initPreview.length>0 ){
+                                                index=initPreview.length;
+                                            }
+                                            initPreview[index]  = response.url;
                                             var config = new Object();
                                             config.caption = "";
                                             config.url="/admin/uploads/delete/COMMODITY.do";
                                             config.key=response.timeStr;
-                                            initPreviewConfig[initPreviewConfig.length]=config;
+                                            initPreviewConfig[index]=config;
                                             $("#picUrl").fileinput('refresh', {
                                                 initialPreview: initPreview,
                                                 initialPreviewConfig: initPreviewConfig,
@@ -444,6 +459,20 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>商品说明内容</label>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;"></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

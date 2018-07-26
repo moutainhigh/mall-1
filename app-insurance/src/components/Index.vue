@@ -51,7 +51,7 @@
 <script>
   import storage from '../store/storage'
   import Admin from '../admin/Admin'
-  import {getProducts} from "../service/getData";
+  import {getCustomerCard, getProducts} from "../service/getData";
 
   export default {
     name: "index",
@@ -108,6 +108,22 @@
           console.log(this.products)
         }
       });
+      getCustomerCard().then(res => {
+        if (res.result == 'SUCCESS') {
+          let customerData = res.data;
+          let holder = storage.fetch("holder");
+          holder.policyholderCardType = customerData.cardType;
+          if (!holder.policyholderCardType) {
+            holder.policyholderCardType = '其他证件'
+          }
+          holder.policyholderCardNo = customerData.customerCardNo;
+          holder.policyholderMobile = customerData.mobile;
+          holder.cardPositiveImg = customerData.cardPositiveImg;
+          holder.cardNegativeImg = customerData.cardNegativeImg;
+          holder.bankCardImg = customerData.bankCardImg;
+          storage.save('holder',holder);
+        }
+      })
     }
 
   }

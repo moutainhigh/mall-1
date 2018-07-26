@@ -8,6 +8,7 @@ import com.yunxin.cb.mall.dao.FeedbackDao;
 import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.entity.Feedback_;
+import com.yunxin.cb.mall.entity.meta.FileType;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.service.IFeedbackService;
@@ -60,7 +61,7 @@ public class AttachmentService implements IAttachmentService {
      * @date        2018/7/24 10:56
      */
     @Override
-    public Attachment addAttachment(ObjectType objectType,int objectId,String filePath){
+    public Attachment addAttachmentPictures(ObjectType objectType,int objectId,String filePath){
         Attachment attachment=new Attachment();
         attachment.setObjectId(objectId);
         attachment.setCreateTime(new Date());
@@ -68,6 +69,7 @@ public class AttachmentService implements IAttachmentService {
         attachment.setFilePath(filePath.split(",")[0]);
         attachment.setFileName(filePath.split(",")[1]);
         attachment.setInputId(filePath.split(",")[2]);
+        attachment.setFileType(FileType.PICTURES);
         attachment.setObjectType(objectType);
         attachment.setStaffId(0);
         attachmentDao.save(attachment);
@@ -84,8 +86,8 @@ public class AttachmentService implements IAttachmentService {
      * @date        2018/7/24 16:34
      */
     @Override
-    public void deleteAttachment(ObjectType objectType, int objectId){
-        attachmentDao.deleteByObjectTypeAndObjectId(objectType,objectId);
+    public void deleteAttachmentPictures(ObjectType objectType, int objectId){
+        attachmentDao.deleteByObjectTypeAndObjectId(objectType,objectId,FileType.PICTURES);
     }
 
 }

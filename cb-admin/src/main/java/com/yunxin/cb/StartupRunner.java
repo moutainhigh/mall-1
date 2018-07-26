@@ -1,9 +1,11 @@
 package com.yunxin.cb;
 
 import com.yunxin.cb.console.service.imp.SecurityService;
+import com.yunxin.cb.search.restful.RestfulFactory;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.cb.security.SecurityProvider;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,9 @@ public class StartupRunner implements CommandLineRunner {
 
     protected static Logger logger = Logger.getLogger(StartupRunner.class);
 
+    @Value("${application.searchBaseUrl}")
+    private String searchBaseUrl;
+
     @Resource
     private SecurityService securityService;
 
@@ -32,6 +37,7 @@ public class StartupRunner implements CommandLineRunner {
         //全局加载资源表
         loadPrivileges();
 
+        RestfulFactory.getInstance().init(searchBaseUrl);
         //后台图片存放目录
 //        servletContext.setAttribute("PIC_PATH", servletContext.getInitParameter(SecurityConstants.PIC_PATH));
     }

@@ -139,6 +139,10 @@ public class Customer implements java.io.Serializable {
      */
     private boolean mobileChecked;
     /**
+     * 是否买过保单
+     */
+    private boolean policy;
+    /**
      * 邮箱是否验证
      */
     private boolean emailChecked;
@@ -311,6 +315,14 @@ public class Customer implements java.io.Serializable {
 
     public void setInvitationCode(String invitationCode) {
         this.invitationCode = invitationCode;
+    }
+    @Column(precision = 1)
+    public boolean isPolicy() {
+        return policy;
+    }
+
+    public void setPolicy(boolean policy) {
+        this.policy = policy;
     }
 
     public void setCardNegativeImg(String cardNegativeImg) {

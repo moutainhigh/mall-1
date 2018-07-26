@@ -4,6 +4,7 @@ package com.yunxin.cb.rest.mall;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
+import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.service.OrderService;
 import com.yunxin.cb.mall.vo.OrderDetailVO;
 import com.yunxin.cb.meta.Result;
@@ -78,14 +79,14 @@ public class OrderResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "String")})
     @PostMapping(value = "order/pageList")
     public ResponseResult<PageFinder<OrderDetailVO>> pageOrder(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
-                                                               @RequestParam(value = "orderStatus") int orderStatus){
+                                                               @RequestParam(value = "orderState") String orderState){
         Order order = new Order();
         Query q = new Query(pageNo, pageSize);
         order.setCustomerId(getCustomerId());
-        order.setOrderState(orderStatus);
+        order.setOrderState(OrderState.valueOf(orderState));
         q.setData(order);
         PageFinder<Order> pageFinder = orderService.pageOrder(q);
         PageFinder<OrderDetailVO> page = null;
@@ -123,7 +124,7 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "cancelReason", value = "取消原因", paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
-    public ResponseResult cancelOrder(@RequestParam(value = "orderId") int orderId, @RequestParam(value = "cancelReason") String cancelReason)throws Exception{
+    public ResponseResult cancelOrder(int orderId, String cancelReason)throws Exception{
         Order order = new Order();
         order.setOrderId(orderId);
         order.setCancelReason(cancelReason);

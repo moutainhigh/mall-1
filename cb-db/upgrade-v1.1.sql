@@ -1,4 +1,4 @@
---add by guwenshao 2018-07-21
+##add by guwenshao 2018-07-21
 drop table IF EXISTS `customer_wallet`;
 CREATE TABLE `customer_wallet` (
   `CUSTOMER_ID` int(11) NOT NULL COMMENT '客户钱包id',
@@ -10,7 +10,7 @@ CREATE TABLE `customer_wallet` (
   `UPDATE_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`CUSTOMER_ID`) USING BTREE,
   CONSTRAINT `customer_wallet_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客户钱包表';
+) ENGINE=InnoDB  COMMENT='客户钱包表';
 
 drop table IF EXISTS `order_loan_apply`;
 CREATE TABLE `order_loan_apply` (
@@ -29,12 +29,12 @@ CREATE TABLE `order_loan_apply` (
   KEY `FK_oql18xgkuy2497dxxwiogy1o` (`CUSTOMER_ID`) USING BTREE,
   CONSTRAINT `loan_apply_ibfk_2` FOREIGN KEY (`ORDER_ID`) REFERENCES `order_form` (`ORDER_ID`),
   CONSTRAINT `loan_apply_ibfk_3` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='贷款申请表';
+) ENGINE=InnoDB COMMENT='贷款申请表';
 
---add by guwenshao 2018-07-23
+##add by guwenshao 2018-07-23
 alter table product add `RESERVED_STORE_NUM` int(11) DEFAULT 0 COMMENT '预占的库存数';
 
---add by wangteng 2018-07-23
+##add by wangteng 2018-07-23
 alter table customer add CARD_TYPE VARCHAR(32) NOT NULL COMMENT '证件类型';
 alter table customer add CUSTOMER_CARD_NO VARCHAR(32) NOT NULL COMMENT '证件号码';
 alter table customer add CARD_POSITIVE_IMG VARCHAR(255) NOT NULL COMMENT '证件证明照';
@@ -44,7 +44,7 @@ alter table customer add CUSTOMER_LEVEL INT(10) DEFAULT 1  COMMENT '等级';
 alter table customer add LEVEL_CODE VARCHAR(255) DEFAULT NULL COMMENT '等级编码';
 alter table customer add INVITATION_CODE VARCHAR(25) DEFAULT NULL COMMENT '邀请码';
 
---add by likang 2018-07-24
+##add by likang 2018-07-24
 DROP TABLE IF EXISTS `attachment`;
 CREATE TABLE `attachment` (
   `ATTACH_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -63,9 +63,9 @@ CREATE TABLE `attachment` (
   `STATE` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '状态',
   `DESCRIPTION` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`ATTACH_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB;
 
---add by guwenshao 2018-07-25
+###add by guwenshao 2018-07-25
 drop table IF EXISTS `customer_trading_record`;
 CREATE TABLE `customer_trading_record` (
   `TRADE_RECORD_ID` int(11) NOT NULL COMMENT '交易流水id',
@@ -77,4 +77,24 @@ CREATE TABLE `customer_trading_record` (
   `REMARK` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`TRADE_RECORD_ID`) USING BTREE,
   CONSTRAINT `customer_trading_record_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客户交易流水表';
+) ENGINE=InnoDB COMMENT='客户交易流水表';
+
+##add by pengcong 2018-07-25
+DROP TABLE IF EXISTS `floor_brand`;
+CREATE TABLE `floor_brand`  (
+  `BRAND_ID` int(11) NOT NULL,
+  `FLOOR_ID` int(11) NOT NULL,
+  `SORT_ORDER` int(11) NOT NULL,
+  PRIMARY KEY (`BRAND_ID`, `FLOOR_ID`) USING BTREE,
+  INDEX `FK_7tcdsbs43j61a2b9rc46ow49k`(`FLOOR_ID`) USING BTREE,
+  CONSTRAINT `floor_brand_ibfk_1` FOREIGN KEY (`FLOOR_ID`) REFERENCES `home_floor` (`FLOOR_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `floor_brand_ibfk_2` FOREIGN KEY (`BRAND_ID`) REFERENCES `brand` (`BRAND_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB;
+
+
+ALTER TABLE home_floor add BRAND_AMOUNT int(11)  default (0) not null;
+ALTER TABLE category ADD COLUMN `LOWEST_PRICE` decimal(5, 2) default (0) NOT NULL COMMENT '最低价格';
+ALTER TABLE category ADD COLUMN `HIGHEST_PRICE` decimal(5, 2) default (0) NOT NULL COMMENT '最高价格';
+ALTER TABLE commodity ADD COLUMN `EXPLAIN_CONTENT` VARCHAR(4098)   COMMENT '商品说明内容';
+##add by wangteng 2018-07-25
+alter table customer add POLICY bit(1) DEFAULT 0 COMMENT '是否买过保单';
