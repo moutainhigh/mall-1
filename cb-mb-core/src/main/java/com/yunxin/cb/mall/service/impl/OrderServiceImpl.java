@@ -37,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderLogMapper orderLogMapper;
     @Resource
     private CustomerWalletMapper customerWalletMapper;
+    @Resource
+    private DeliveryAddressMapper deliveryAddressMapper;
 
     @Resource
     private ProductMapper productMapper;
@@ -103,7 +105,17 @@ public class OrderServiceImpl implements OrderService {
             //自提
             order.setDeliveryType(DeliveryType.ZT.ordinal());
         }
-
+        //收货地址
+        DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());
+        if (deliveryAddress != null){
+            order.setProvince(deliveryAddress.getProvince());
+            order.setCity(deliveryAddress.getCity());
+            order.setDistrict(deliveryAddress.getDistrict());
+            order.setConsigneeAddress(deliveryAddress.getConsigneeAddress());
+            order.setConsigneeName(deliveryAddress.getConsigneeName());
+            order.setConsigneeMobile(deliveryAddress.getConsigneeMobile());
+            order.setConsigneeTelephone(deliveryAddress.getConsigneeTelephone());
+        }
         order.setProdQuantity(totalQuantity);
         order.setTotalPrice(totalPrice);
         order.setFeeTotal(order.getTotalPrice());
@@ -249,11 +261,6 @@ public class OrderServiceImpl implements OrderService {
             order.setDeliveryType(DeliveryType.ZT.ordinal());
         }
         order.setScoreTotal(0);
-        order.setProvince("0");
-        order.setCity("0");
-        order.setDistrict("0");
-        //order.setConsigneeAddress("");
-        //order.setConsigneeName("");
         order.setEnabled(true);
         order.setWeightTotal(0d);
         order.setVolumeTotal(0d);

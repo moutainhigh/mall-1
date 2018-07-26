@@ -145,6 +145,8 @@ public class Order {
     Set<OrderItem> orderItems;
     /**订单发票 */
     OrderInvoice orderInvoice;
+    /**收货地址id*/
+    private int addressId;
 
     public Integer getOrderId() {
         return orderId;
@@ -526,4 +528,16 @@ public class Order {
         return this.orderState.ordinal();
     }
 
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
+
+    public void setOrderStateId(int orderStateId) {
+
+        this.orderStateId = orderStateId;
+    }
 }
