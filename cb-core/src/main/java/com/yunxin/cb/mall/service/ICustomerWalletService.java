@@ -22,7 +22,7 @@ public interface ICustomerWalletService {
      * @param businessType
      * @return
      */
-    public CustomerWallet updateCustomerWallet(int customerId,Double ratios,String remark,BusinessType businessType);
+    public CustomerWallet updateCustomerWallet(int customerId,Double ratios,String remark,BusinessType businessType,int price);
 //
 //    /**
 //     * 更新授信额度

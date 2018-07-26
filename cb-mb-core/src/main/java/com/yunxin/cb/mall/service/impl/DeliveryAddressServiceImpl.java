@@ -37,4 +37,9 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
     public int updateByPrimaryKey(DeliveryAddress record) {
         return deliveryAddressMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public DeliveryAddress selectDefaultByCustomerId(Integer customerId) {
+        return deliveryAddressMapper.selectDefaultByCustomerId(customerId);
+    }
 }

@@ -141,7 +141,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     }catch (Exception e){
                                         ration=0.5;
                                     }
-                                    iCustomerWalletService.updateCustomerWallet(customerWallet.getCustomerId(),ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY);
+                                    iCustomerWalletService.updateCustomerWallet(customerWallet.getCustomerId(),ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getInsuranceProductPrice().getPrice());
                              }
                         }
                         customer.setPolicy(true);
@@ -150,6 +150,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             }
 
         }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
         return true;

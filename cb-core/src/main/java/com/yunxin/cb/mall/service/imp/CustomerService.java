@@ -1,6 +1,8 @@
 package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.im.RongCloudService;
+import com.yunxin.cb.insurance.dao.InsuranceOrderDao;
+import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
@@ -71,7 +73,8 @@ public class CustomerService implements ICustomerService {
 
     @Resource
     private IProfileService iProfileService;
-
+    @Resource
+    private InsuranceOrderDao insuranceOrderDao;
 
     @Override
     public Fridge addFridge(Fridge fridge) {
@@ -313,7 +316,6 @@ public class CustomerService implements ICustomerService {
        return new ArrayList<Customer>(){
             {
                 if(StringUtils.isNotBlank(levelCode)){
-
                     Customer customer= getByLevelCode(levelCode);
                     if(customer!=null){
                         int level=customer.getCustomerLevel();
@@ -572,6 +574,13 @@ public class CustomerService implements ICustomerService {
         return customerFriendDao.findOne(new CustomerFriendId(customerId, friendId)) != null;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public CustomerFriend getFriend(int customerId, int friendId) {
+        return customerFriendDao.findOne(new CustomerFriendId(customerId,friendId));
+    }
+
+
     @Transactional
     public CustomerFriend updateFriendsProfile(CustomerFriend customerFriend) {
         CustomerFriend renew = customerFriendDao.findOne(customerFriend.getId());
@@ -593,32 +602,36 @@ public class CustomerService implements ICustomerService {
      */
     @Override
     @Transactional
-    public Customer customerPraise(int customerId) {
+    public boolean customerPraise(int customerId) {
         Customer customer = customerDao.findOne(customerId);
-
+        /**
+         * 查保单
+         */
+        List<InsuranceOrder>  list= insuranceOrderDao.findOrderPriceByCustomerId(customer.getCustomerId());
+        if(list==null||list.size()==0)
+            return false;
         //给推荐人增加一个点赞次数
         Customer recommendCustomer = customer.getRecommendCustomer();
         recommendCustomer.setPraiseNum(recommendCustomer.getPraiseNum() + 1);
         //TODO 实现推荐人以及所有上级增加5%的授信额度
         if(!customer.isPraise()){
             List<Customer>  listCustomer=findCustomerByLevelCode(customer.getLevelCode());
-            for(Customer listCustome:listCustomer){
-                CustomerWallet customerWallet= iCustomerWalletService.findCustomerWallet(listCustome.getCustomerId());
-                if(null!=customerWallet){
-                    Profile Profile=iProfileService.getProfileByProfileName(ProfileName.GIVE_THE_THUMBS_UP);
-                    Double ration=0.05;
-                    try {
-                        ration = Double.parseDouble(Profile.getFileValue());
-                    }catch (Exception e){
-                        ration=0.05;
-                    }
-                    iCustomerWalletService.updateCustomerWallet(customerWallet.getCustomerId(),ration,"推荐人以及所有上级增加5%的授信额度",BusinessType.GIVE_THE_THUMBS_UP);
-                }
+            Profile Profile=iProfileService.getProfileByProfileName(ProfileName.GIVE_THE_THUMBS_UP);
+            Double ration=0.05;
+            try {
+                ration = Double.parseDouble(Profile.getFileValue());
+            }catch (Exception e){
+                ration=0.05;
+            }
+            if(listCustomer!=null&&listCustomer.size()>0){
+                for(Customer listCustome:listCustomer)
+                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(),ration,"推荐人以及所有上级增加5%的授信额度",BusinessType.GIVE_THE_THUMBS_UP,list.get(0).getInsuranceProductPrice().getPrice());
 
             }
+
         }
         customer.setPraise(true);
-        return customer;
+        return true;
     }
 
     /**

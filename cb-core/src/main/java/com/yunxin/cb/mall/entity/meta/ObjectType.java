@@ -14,6 +14,7 @@ public enum ObjectType {
     ARTICLE,//文章
     CHANNER,//频道
     PROGRAMA,//栏目
+    ACTIVITY,//活动
     OTHER//其它
     ;
 }
