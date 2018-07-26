@@ -98,3 +98,6 @@ ALTER TABLE category ADD COLUMN `HIGHEST_PRICE` decimal(5, 2) default (0) NOT NU
 ALTER TABLE commodity ADD COLUMN `EXPLAIN_CONTENT` VARCHAR(4098)   COMMENT '商品说明内容';
 ##add by wangteng 2018-07-25
 alter table customer add POLICY bit(1) DEFAULT 0 COMMENT '是否买过保单';
+
+##add by tangou 2018-07-26
+ALTER TABLE commodity ADD `EXPLAIN_CONTENT` VARCHAR(4098) COMMENT '商品说明内容';
