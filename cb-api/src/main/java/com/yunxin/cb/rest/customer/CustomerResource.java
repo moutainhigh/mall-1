@@ -264,9 +264,9 @@ public class CustomerResource extends BaseResource {
     @PostMapping(value = "praise")
     public ResponseResult praise(@ModelAttribute("customerId") int customerId) {
         if(customerService.customerPraise(customerId))
-            return new ResponseResult(Result.SUCCESS);
+            return new ResponseResult(Result.SUCCESS,"点赞成功");
         else
-            return new ResponseResult(Result.FAILURE);
+            return new ResponseResult(Result.FAILURE,"请先购买保险");
     }
 
     @ApiOperation(value = "查询点赞用户")
