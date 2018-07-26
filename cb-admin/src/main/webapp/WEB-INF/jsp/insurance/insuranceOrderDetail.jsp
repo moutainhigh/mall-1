@@ -37,23 +37,30 @@
             window.location.href = "toEditInsuranceOrderOffsite.do?orderId=" + orderId;
         }
         $(document).ready(function () {
-            var province=$.citySelector.getProvince(${insuranceOrder.insuranceOrderPolicyholderBank.bankProvince});
+            debugger;
+            var province=$.citySelector.getAddress('${insuranceOrder.insuranceOrderPolicyholderBank.bankProvince}');
            $("#province").html(province);
-           var city=  $.citySelector.getCity(${insuranceOrder.insuranceOrderPolicyholderBank.bankCity});
+           var city=  $.citySelector.getAddress('${insuranceOrder.insuranceOrderPolicyholderBank.bankCity}');
             $("#city").html(city);
 
 
-            var policyholderProvince= $.citySelector.getPCDNames(${insuranceOrder.insuranceOrderPolicyholder.policyholderProvince},${insuranceOrder.insuranceOrderPolicyholder.policyholderCity},${insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});
+            <%--var policyholderProvince= $.citySelector.getPCDNames('${insuranceOrder.insuranceOrderPolicyholder.policyholderProvince}','${insuranceOrder.insuranceOrderPolicyholder.policyholderCity}','${insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict}');--%>
+           var policyholderProvince= $.citySelector.getAddress('${insuranceOrder.insuranceOrderPolicyholder.policyholderProvince}');
+            var policyholderCity= $.citySelector.getAddress('${insuranceOrder.insuranceOrderPolicyholder.policyholderCity}');
+            var policyholderDistrict= $.citySelector.getAddress('${insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict}');
             <%--var policyholderCity=  $.citySelector.getCity(${insuranceOrder.insuranceOrderPolicyholder.policyholderCity});--%>
             <%--var policyholderDistrict=  $.citySelector.getDistrict(${insuranceOrder.insuranceOrderPolicyholder.policyholderDistrict});--%>
             <%--var address=policyholderProvince+policyholderCity+policyholderDistrict;--%>
-            $("#policyholderDistrict").html(policyholderProvince);
+            $("#policyholderDistrict").html(policyholderProvince+policyholderCity+policyholderDistrict);
 
-            var insuredProvince= $.citySelector.getPCDNames(${insuranceOrder.insuranceOrderInsured.insuredProvince},${insuranceOrder.insuranceOrderInsured.insuredCity},${insuranceOrder.insuranceOrderInsured.insuredDistrict});
+            <%--var insuredProvince= $.citySelector.getPCDNames('${insuranceOrder.insuranceOrderInsured.insuredProvince}','${insuranceOrder.insuranceOrderInsured.insuredCity}','${insuranceOrder.insuranceOrderInsured.insuredDistrict}');--%>
+            var insuredProvince=$.citySelector.getAddress('${insuranceOrder.insuranceOrderInsured.insuredProvince}');
+            var insuredCity=$.citySelector.getAddress('${insuranceOrder.insuranceOrderInsured.insuredCity}');
+            var insuredDistrict=$.citySelector.getAddress('${insuranceOrder.insuranceOrderInsured.insuredDistrict}');
             <%--var insuredCity= $.citySelector.getCity(${insuranceOrder.insuranceOrderInsured.insuredCity});--%>
             <%--var insuredDistrict= $.citySelector.getDistrict(${insuranceOrder.insuranceOrderInsured.insuredDistrict});--%>
             <%--var insuredAddress=insuredProvince+insuredCity+insuredDistrict;--%>
-            $("#insuredDistrict").html(insuredProvince);
+            $("#insuredDistrict").html(insuredProvince+insuredCity+insuredDistrict);
             var insuredCareer =$.profession.getProfession('${insuranceOrder.insuranceOrderInsured.insuredCareer}');
             $("#insuredCareer").html(insuredCareer);
 

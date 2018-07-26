@@ -122,6 +122,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             /**
              * 更新推荐人增加50%的预期收益金额
              */
+            System.out.println(orderState.getName());
             if(orderState.getName().equals(InsuranceOrderState.ON_PAID)){
                 InsuranceOrder insuranceOrder=insuranceOrderDao.findOne(orderId);
 

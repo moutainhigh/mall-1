@@ -5,6 +5,7 @@ import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.service.ICustomerService;
+import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.mall.vo.CustomerVo;
 import com.yunxin.cb.mall.vo.RecommendCustomerVo;
 import com.yunxin.cb.meta.Result;
@@ -339,6 +340,17 @@ public class MainResource extends BaseResource {
             return new ResponseResult(Result.FAILURE, "验证码错误");
         }
         customerService.updatePassword(customer.getCustomerId(), resetNewPwd);
+        return new ResponseResult(Result.SUCCESS);
+    }
+    @ApiOperation(value = "更新用户信息")
+    @PostMapping(value = "updateCustomer")
+    public ResponseResult  updateCustomer(@RequestBody CustomerUpdateVo customerUpdateVo,@ModelAttribute("customerId") int customerId){
+        try{
+            customerService.updateCustomerMsg(customerId,customerUpdateVo);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return new ResponseResult(Result.FAILURE,"服务器异常");
+        }
         return new ResponseResult(Result.SUCCESS);
     }
 }

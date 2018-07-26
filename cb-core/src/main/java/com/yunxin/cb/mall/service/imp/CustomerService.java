@@ -8,6 +8,7 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
+import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
@@ -231,6 +232,22 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public Customer updateCustomerMsg(int customerId,CustomerUpdateVo customerUpdateVo) {
+        Customer customerDB = customerDao.findOne(customerId);
+        if(StringUtils.isNotBlank(customerUpdateVo.getBankCardImg()))
+            customerDB.setBankCardImg(customerUpdateVo.getBankCardImg());
+        if(StringUtils.isNotBlank(customerUpdateVo.getCardNegativeImg()))
+            customerDB.setCardNegativeImg(customerUpdateVo.getCardNegativeImg());
+        if(StringUtils.isNotBlank(customerUpdateVo.getCardPositiveImg()))
+            customerDB.setCardPositiveImg(customerUpdateVo.getCardPositiveImg());
+        if(StringUtils.isNotBlank(customerUpdateVo.getRealName()))
+            customerDB.setRealName(customerUpdateVo.getRealName());
+        if(StringUtils.isNotBlank(customerUpdateVo.getCardType()))
+            customerDB.setCardType(customerUpdateVo.getCardType());
+        return customerDB;
+    }
+
+    @Override
     public Customer updateCustomerRank(Customer customer) {
         Customer customerDB = customerDao.findOne(customer
                 .getCustomerId());
@@ -264,7 +281,7 @@ public class CustomerService implements ICustomerService {
        return new Customer(){
             {
                 try {
-                    String levelCode=DmSequenceUtil.getNoRepeatId();
+                    String generateCode=checkLevelCode(DmSequenceUtil.getNoRepeatId());
                     String invitationCodes=checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
                     if(StringUtils.isNotBlank(invitationCode)){
                         Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
@@ -272,14 +289,15 @@ public class CustomerService implements ICustomerService {
                             int customerLevel=recommendCustomer.getCustomerLevel();
                             String recommendLevelCode=recommendCustomer.getLevelCode();
                             setCustomerLevel(customerLevel+initialLevel);
-                            setLevelCode(recommendLevelCode+levelCode);
+
+                            setLevelCode(checkGenerateCode(recommendLevelCode,generateCode));
                         }else{
                             setCustomerLevel(initialLevel);
-                            setLevelCode(levelCode);
+                            setLevelCode(generateCode);
                         }
                     }else{
                         setCustomerLevel(initialLevel);
-                        setLevelCode(levelCode);
+                        setLevelCode(generateCode);
                     }
                     setInvitationCode(invitationCodes);
                 } catch (Exception e) {
@@ -331,22 +349,33 @@ public class CustomerService implements ICustomerService {
         return invitationCode;
     }
 
-//    /**
-//     * 校验等级编码
-//     * @param levelCode
-//     * @return
-//     */
-//    public String checkLevelCode(String levelCode){
-//        Customer recommendCustomer=getByLevelCode(levelCode);
-//        if(recommendCustomer!=null) {
-//            try {
-//                return  checkLevelCode(DmSequenceUtil.getNoRepeatId());
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return levelCode;
-//    }
+    /**
+     * 校验等级编码
+     * @param levelCode
+     * @return
+     */
+    public String checkGenerateCode(String levelCode,String generateCode){
+        Customer recommendCustomer=getByLevelCode(levelCode+generateCode);
+        if(recommendCustomer!=null) {
+            try {
+                return  checkGenerateCode(levelCode,DmSequenceUtil.getNoRepeatId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return levelCode+generateCode;
+    }
+    public String checkLevelCode(String generateCode){
+        Customer recommendCustomer=getByLevelCode(generateCode);
+        if(recommendCustomer!=null) {
+            try {
+                return  checkLevelCode(DmSequenceUtil.getNoRepeatId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return generateCode;
+    }
     @Override
     @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
