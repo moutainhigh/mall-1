@@ -57,7 +57,8 @@ public interface CategoryMapper {
         "ENABLED, ICON_PATH, LEVEL, RECOMMEND, REMARK, SEO_DESCRIPTION, SEO_KEY, SEO_TITLE, ",
         "SORT_ORDER, PARENT_CATEGORY_ID, LOWEST_PRICE, HIGHEST_PRICE",
         "from category",
-        "where CATEGORY_ID = #{categoryId,jdbcType=INTEGER}"
+        "where CATEGORY_ID = #{categoryId,jdbcType=INTEGER}",
+            "and enabled=1"
     })
     @Results({
         @Result(column="CATEGORY_ID", property="categoryId", jdbcType=JdbcType.INTEGER, id=true),

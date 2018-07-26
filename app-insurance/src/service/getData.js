@@ -47,6 +47,6 @@ export const getOrderDetail = function (orderCode) {
   return fetch('/insurance/order/getOrder/'+orderCode ,{}, 'POST','fetch');
 };
 
-export const getCustomerCard = function () {
-  return fetch('/customer/getCustomerCard', {},'POST');
+export const getCustomerInfo = function () {
+  return fetch('/customer/getCustomerInfo', {},'POST');
 };

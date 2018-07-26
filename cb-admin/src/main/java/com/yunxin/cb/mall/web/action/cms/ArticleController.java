@@ -1,8 +1,12 @@
 package com.yunxin.cb.mall.web.action.cms;
 
+import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.cms.entity.*;
 import com.yunxin.cb.cms.service.IArticleService;
 import com.yunxin.cb.cms.service.IProgramaService;
+import com.yunxin.cb.mall.entity.Attachment;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.web.action.operation.CommonImageConverter;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
@@ -17,6 +21,7 @@ import org.springframework.web.context.ServletContextAware;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
@@ -31,13 +36,12 @@ public class ArticleController implements ServletContextAware {
 
     @Resource
     private IArticleService articleService;
-
     @Resource
     private IProgramaService programaService;
-
-
     @Resource
     private MessageSource messageSource;
+    @Resource
+    private IAttachmentService attachmentService;
 
     private ServletContext servletContext;
 
@@ -74,15 +78,22 @@ public class ArticleController implements ServletContextAware {
     }
 
     @RequestMapping(value = "addArticle", method = RequestMethod.POST)
-    public String addArticle(@Valid @ModelAttribute("article") Article article, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String addArticle(@Valid @ModelAttribute("article") Article article, HttpServletRequest request, BindingResult result, ModelMap modelMap, Locale locale) {
         if (result.hasErrors()) {
             return toAddArticle(article,modelMap);
         }
         try {
-            Article article1Db =  articleService.addArticle(article);
-            CommonImageConverter imageConverter = new CommonImageConverter(servletContext, article);
-            imageConverter.compress();
-            articleService.updatePicPath(article1Db.getArticleId(), imageConverter.getDefaultImagePath());
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                article.setPicPath(imgurl[0].split(",")[0]);
+                Article articleDb =  articleService.addArticle(article);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.ARTICLE,articleDb.getArticleId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.ARTICLE,articleDb.getArticleId(),imgpath);
+                }
+            }
+
         } catch (EntityExistException e) {
             result.addError(new FieldError("article", "articleTitle", article.getArticleTitle(), true, null, null,
                     messageSource.getMessage("article_articleTitle_repeat", null, locale)));
@@ -97,6 +108,8 @@ public class ArticleController implements ServletContextAware {
         modelMap.addAttribute("article", article);
         List<ArticleRecipeStep> recipeSteps=articleService.getRecipeStepsByArticleId(articleId);
         modelMap.addAttribute("recipeSteps", recipeSteps);
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.ARTICLE,articleId);
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return editArticle(article, modelMap);
     }
 
@@ -105,22 +118,27 @@ public class ArticleController implements ServletContextAware {
         List<ArticleChannel> articleChannels = programaService.getArticleChannels(true);
         modelMap.addAttribute("programas", programas);
         modelMap.addAttribute("articleChannels", articleChannels);
+
         return "cms/editArticle";
     }
 
     @RequestMapping(value = "editArticle", method = RequestMethod.POST)
-    public String editArticle(@Valid @ModelAttribute("article") Article article, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String editArticle(@Valid @ModelAttribute("article") Article article, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
         if (result.hasErrors()) {
             return toEditArticle(article.getArticleId(),modelMap);
         }
         try {
-            Article articleDb=articleService.updateArticle(article);
-            // 用户重新上传了图片，即图片路径发生改变，则需要压缩图片
-            if(null != articleDb && !(articleDb.getPicPath().equals(article.getPicPath())) ){
-                CommonImageConverter imageConverter = new CommonImageConverter(servletContext, article);
-                imageConverter.compress();
-                articleService.updatePicPath(articleDb.getArticleId(), imageConverter.getDefaultImagePath());
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                article.setPicPath(imgurl[0].split(",")[0]);
+                Article articleDb=articleService.updateArticle(article);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.ARTICLE,articleDb.getArticleId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.ARTICLE,articleDb.getArticleId(),imgpath);
+                }
             }
+
         } catch (EntityExistException e) {
             result.addError(new FieldError("article", "articleTitle", article.getArticleTitle(), true, null, null,
                     messageSource.getMessage("article_articleTitle_repeat", null, locale)));

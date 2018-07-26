@@ -42,20 +42,21 @@ public class CustomerWalletService implements ICustomerWalletService {
             BigDecimal addedLoanQuota=loanQuota.multiply(ratio);
             Double  newLoanQuota=loanQuota.add(addedLoanQuota).setScale(2,BigDecimal.ROUND_UP).doubleValue();
             customerWalletBean.setLoanQuota(newLoanQuota);
+            customerWalletBean.setUpdateTime(new Date());
             final double amount=addedLoanQuota.setScale(2,BigDecimal.ROUND_UP).doubleValue();
             /**
              * 更新交易记录
              */
-            CustomerTradingRecord CustomerTradingRecord=new CustomerTradingRecord();
-            CustomerTradingRecord.setRemark(remark);
-            CustomerTradingRecord.setOperationType(OperationType.ADD);
-            CustomerTradingRecord.setBusinessType(businessType);
-            CustomerTradingRecord.setAmount(amount);
-            CustomerTradingRecord.setCreateTime(new Date());
+            CustomerTradingRecord customerTradingRecord=new CustomerTradingRecord();
+            customerTradingRecord.setRemark(remark);
+            customerTradingRecord.setOperationType(OperationType.ADD);
+            customerTradingRecord.setBusinessType(businessType);
+            customerTradingRecord.setAmount(amount);
+            customerTradingRecord.setCreateTime(new Date());
             Customer Customer=new Customer();
             Customer.setCustomerId(customerId);
-            CustomerTradingRecord.setCustomer(Customer);
-            customerTradingRecordDao.save(CustomerTradingRecord);
+            customerTradingRecord.setCustomer(Customer);
+            customerTradingRecordDao.save(customerTradingRecord);
         }
         return customerWalletBean;
     }

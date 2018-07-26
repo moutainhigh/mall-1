@@ -95,8 +95,11 @@ CREATE TABLE `floor_brand`  (
 ALTER TABLE home_floor add BRAND_AMOUNT int(11)  default (0) not null;
 ALTER TABLE category ADD COLUMN `LOWEST_PRICE` decimal(5, 2) default (0) NOT NULL COMMENT '最低价格';
 ALTER TABLE category ADD COLUMN `HIGHEST_PRICE` decimal(5, 2) default (0) NOT NULL COMMENT '最高价格';
-ALTER TABLE commodity ADD COLUMN `EXPLAIN_CONTENT` VARCHAR(4098)   COMMENT '商品说明内容';
+
 ##add by wangteng 2018-07-25
 alter table customer add POLICY bit(1) DEFAULT 0 COMMENT '是否买过保单';
+##add by likang 2018-07-26
+ALTER TABLE commodity ADD COLUMN `EXPLAIN_CONTENT` VARCHAR(4098)   COMMENT '商品说明内容';
+
 ###add by guwenshao 2018-07-26
 alter table customer_trading_record modify column TRADE_RECORD_ID int auto_increment;
