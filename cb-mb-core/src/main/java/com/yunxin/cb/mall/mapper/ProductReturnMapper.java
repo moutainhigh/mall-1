@@ -193,7 +193,7 @@ public interface ProductReturnMapper {
             "where ORDER_ID = #{orderId,jdbcType=INTEGER}"
     })
     @ResultMap(value="productReturnMap")
-    ProductReturn selectByOrderId(@Param("orderId") Integer orderId);
+    List<ProductReturn> selectByOrderId(@Param("orderId") Integer orderId);
 
     @Select({
             "<script>",
@@ -237,4 +237,18 @@ public interface ProductReturnMapper {
             "</script>"
     })
     long count(Query q);
+
+    /**
+     * 根据退货编号查询
+     * @return
+     */
+    @Select({
+            "select",
+            columns,
+            "from product_return",
+            "where RETURN_CODE =  #{returnCode}"
+    })
+    @ResultMap(value="productReturnMap")
+    ProductReturn selectByReturnCode(@Param("returnCode")String returnCode);
+
 }
