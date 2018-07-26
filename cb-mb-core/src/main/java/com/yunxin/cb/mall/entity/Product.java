@@ -228,4 +228,5 @@ public class Product {
     public void setCommodity(Commodity commodity) {
         this.commodity = commodity;
     }
+
 }
