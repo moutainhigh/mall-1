@@ -54,6 +54,7 @@ public class CustomerWalletService implements ICustomerWalletService {
 
         }else{
             CustomerWallet customerWallet=new CustomerWallet();
+            customerWallet.setCustomerId(customerId);
             customerWallet.setAvailableBalance(0.0);
             customerWallet.setExpectedReturnAmount(0.0);
             customerWallet.setArrearsAmount(0.0);
