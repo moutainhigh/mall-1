@@ -68,7 +68,7 @@ CREATE TABLE `attachment` (
 ###add by guwenshao 2018-07-25
 drop table IF EXISTS `customer_trading_record`;
 CREATE TABLE `customer_trading_record` (
-  `TRADE_RECORD_ID` int(11) NOT NULL COMMENT '交易流水id',
+  `TRADE_RECORD_ID` int(11) NOT NULL  AUTO_INCREMENT COMMENT '交易流水id',
   `CUSTOMER_ID` int(11) NOT NULL COMMENT '客户id',
   `BUSINESS_TYPE` int(11) NOT NULL COMMENT '业务类型:0余额，1:贷款预期收益 2:贷款额度 3:贷款金额',
   `OPERATION_TYPE` int(11) NOT NULL COMMENT '操作类型:0增加，1减少',
@@ -101,3 +101,5 @@ alter table customer add POLICY bit(1) DEFAULT 0 COMMENT '是否买过保单';
 ##add by likang 2018-07-26
 ALTER TABLE commodity ADD COLUMN `EXPLAIN_CONTENT` VARCHAR(4098)   COMMENT '商品说明内容';
 
+###add by guwenshao 2018-07-26
+alter table customer_trading_record modify column TRADE_RECORD_ID int auto_increment;
