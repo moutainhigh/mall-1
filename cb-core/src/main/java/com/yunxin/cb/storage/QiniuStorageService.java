@@ -198,30 +198,7 @@ public class QiniuStorageService implements IStorageService {
         Auth auth = Auth.create(accessKey, secretKey);
         String bucket = bucket_1;
         String domain = domain_1;
-        String fileName= null;
-        switch (objectType) {
-            case BRAND:
-                fileName ="BRAND/"+timeStr;
-                break;
-            case COMMODITY:
-                fileName ="COMMODITY/"+timeStr;
-                break;
-            case ATTRIBUTE:
-                fileName ="ATTRIBUTE/"+timeStr;
-                break;
-            case ADVERT:
-                fileName ="ADVERT/"+timeStr;
-                break;
-            case HOMEFLOORPROPAGANDA:
-                fileName ="HOMEFLOORPROPAGANDA/"+timeStr;
-                break;
-            case HOMEFLOORICO:
-                fileName ="HOMEFLOORICO/"+timeStr;
-                break;
-            case CATEGORY:
-                fileName ="CATEGORY/"+timeStr;
-                break;
-        }
+        String fileName= objectType.toString()+"/"+timeStr;
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(inputStream, fileName, upToken, null, null);

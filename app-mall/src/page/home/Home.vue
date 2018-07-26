@@ -1,12 +1,20 @@
 <template>
   <div>
-    <head-top :local="true">
+    <head-top :local="true" :routerLocation="'/location'" :city="localCity">
       <div slot="search" style="width: 100%;">
         <div class="search-con" @click="toSearch">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
           <p class="search-text">输入搜索内容</p>
         </div>
       </div>
+      <slot style="flex: 0 0 2rem;">
+        <div slot="local" style="flex: none;margin-top: 0.8rem;padding: 0 0.8rem;">
+          <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1.2rem;vertical-align: middle;">
+          <span @click="location()">
+          {{localCity}}
+        </span>
+        </div>
+      </slot>
     </head-top>
 
     <div style="background-color: #FFFFFF;padding: 0.1rem 0;font-size: 0;margin-top: 3rem;">
@@ -64,6 +72,7 @@
   import headTop from "../../components/header/head"
   import {getIndex, getVaildData} from "../../service/getData";
   import { Swiper,SwiperItem} from 'vux'
+  import AMap from 'AMap';
 
   export default {
     name: "Home",
@@ -79,7 +88,8 @@
         brandList:[],
         milldeList:[],
         categoryFiveList:[],
-        categoryThreeList:[]
+        categoryThreeList:[],
+        localCity:'定位'
       }
     },
     methods: {
@@ -97,10 +107,28 @@
         this.$router.push({
           path:"/search"
         })
+      },
+      selectLocal() {
+        let vm = this;
+        AMap.plugin('AMap.CitySearch', function () {
+          var citySearch = new AMap.CitySearch()
+          citySearch.getLocalCity(function (status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              vm.localCity = result.city.substr(0, 2);
+            }
+          })
+        })
+      },
+      location() {
+        this.$router.push({
+          path:"/location"
+        })
       }
     },
     created() {
       let _this = this;
+      //获取当前城市定位
+      this.selectLocal();
       getIndex().then(res=>{
         if (res.result == 'SUCCESS'){
           _this.homeList = res.data.homeList;
@@ -111,7 +139,7 @@
         }
         console.log(res);
       })
-    }
+    },
   }
 </script>
 

@@ -2,7 +2,7 @@
   <div>
     <div style="height: 3rem"></div>
     <head-top :headTitle="headTitle">
-      <div slot="head-tab" class="head-tab" v-if="scroll > 350 || tab != 1">
+      <div slot="head-tab" class="head-tab" v-if="scroll > 90 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
           详情
         </div>
@@ -41,7 +41,7 @@
       <div style="background: #f3f3f3; height: 1px; margin-left: 10px; margin-right: 10px;"></div>
 
       <div class="rank">
-        <p class="rank-title">级别</p>
+        <p class="rank-title">级别：</p>
         <p class="rank-detail">紧凑型车</p>
       </div>
       <div class="selectItem" @click="checkType = 'standard'">
@@ -222,7 +222,7 @@
       },
       menu() {
         this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
-        if (this.scroll <= 350 && this.tab == 1) {
+        if (this.scroll <= 90 && this.tab == 1) {
           this.headTitle = '汽车详情';
         } else {
           this.headTitle = '';
@@ -476,8 +476,6 @@
     width: 100%;
     height: 250px;
     background: #fff;
-    transition: all .3s;
-    transform: translateY(0);
   }
 
   .car-sale {

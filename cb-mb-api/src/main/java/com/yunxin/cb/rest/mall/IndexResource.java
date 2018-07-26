@@ -68,11 +68,11 @@ public class IndexResource extends BaseResource {
             //获取楼层信息
             List<HomeFloor> hList = homeFloorService.selectByEnabledAll();
             IndexVO indexVO = new IndexVO();
+            List<BrandVO> brandList = new ArrayList<>();
+            List<CategoryVO> categoryThreeList = new ArrayList<>();
+            List<CategoryVO> categoryFiveList = new ArrayList<>();
             if(hList.size()>0){
                 for(int i=0;i<hList.size();i++){
-                    List<BrandVO> brandList = new ArrayList<>();
-                    List<CategoryVO> categoryThreeList = new ArrayList<>();
-                    List<CategoryVO> categoryFiveList = new ArrayList<>();
                     HomeFloor homeFloor = hList.get(i);
                     Integer floorId = homeFloor.getFloorId();
                     //获取品牌
@@ -86,7 +86,6 @@ public class IndexResource extends BaseResource {
                             BeanUtils.copyProperties(bVO, brand);
                             brandList.add(bVO);
                         }
-                        indexVO.setBrandList(brandList);
                     }
                     //获取第三层分类
                     if(homeFloor.getSortOrder() == 3){
@@ -99,7 +98,6 @@ public class IndexResource extends BaseResource {
                             BeanUtils.copyProperties(cVO, category);
                             categoryThreeList.add(cVO);
                         }
-                        indexVO.setCategoryThreeList(categoryThreeList);
                     }
                     //获取第五层分类
                     if(homeFloor.getSortOrder() == 5){
@@ -112,12 +110,14 @@ public class IndexResource extends BaseResource {
                             BeanUtils.copyProperties(cVO, cate_gory);
                             categoryFiveList.add(cVO);
                         }
-                        indexVO.setCategoryFiveList(categoryFiveList);
                     }
                 }
             }
+            indexVO.setBrandList(brandList);
             indexVO.setHomeList(homeList);
             indexVO.setMilldeList(middleList);
+            indexVO.setCategoryThreeList(categoryThreeList);
+            indexVO.setCategoryFiveList(categoryFiveList);
             return new ResponseResult(indexVO);
         }catch (Exception e){
             logger.info("indexResource failed", e);

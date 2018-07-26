@@ -7,7 +7,7 @@
       <div style="margin-right: 15px">
         <x-input title="姓名" placeholder="请输入姓名" v-model="holder.policyholderName"
                  v-bind:class="{'errorInput': $v.holder.policyholderName.$error}"
-                 @input="$v.holder.policyholderName.$touch()"></x-input>
+                 @input="$v.holder.policyholderName.$touch()" readonly></x-input>
         <div class="error" v-if="!$v.holder.policyholderName.required && $v.holder.policyholderName.$dirty">姓名不能为空</div>
         <div class="error" v-if="!$v.holder.policyholderName.minLength">姓名最少为
           {{$v.holder.policyholderName.$params.minLength.min}}
@@ -60,7 +60,7 @@
           证件号码不能为空
         </div>
         <div class="error" v-if="!$v.holder.policyholderCardNo.vali">请输入正确的证件号码</div>
-        <div class="error" v-if="!$v.holder.policyholderCardNo.maxLength">证件号码最多不超过32位数</div>
+        <div class="error" v-if="!$v.holder.policyholderCardNo.maxLength">证件号码最多不超过18位数</div>
 
         <!--<x-input title="证件有效期" v-model="holder.policyholderCardPeroid" placeholder="请选择证件有效期" v-bind:class="{'errorInput': $v.holder.policyholderCardPeroid.$error}"-->
         <!--@input="$v.holder.policyholderCardPeroid.$touch()"></x-input>-->
@@ -458,7 +458,7 @@
   import {ChinaAddressData, Datetime, Group, PopupPicker, Selector, XAddress, XInput, Toast} from 'vux'
   import storage from "../store/storage";
   import {required, minLength, maxLength, between, helpers, numeric} from 'vuelidate/lib/validators'
-  import {dateFormat, wipeArray} from "../config/mUtils";
+  import {ageYear, dateFormat, wipeArray} from "../config/mUtils";
   import {
     idCardVali,
     householdVali,
@@ -527,7 +527,7 @@
             careerName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             policyholderBirthday: {required},
             policyholderCardType: {required},
-            policyholderCardNo: {required, vali: this.valiHolder, maxLength: maxLength(32)},
+            policyholderCardNo: {required, vali: this.valiHolder, maxLength: maxLength(18)},
             policyholderCardPeroid: {required},
             policyholderCountry: {required, maxLength: maxLength(64)},
             policyholderHeight: {required, int, maxLength: maxLength(3)},
@@ -571,7 +571,7 @@
             careerName: {required, minLength: minLength(2), maxLength: maxLength(32)},
             policyholderBirthday: {required},
             policyholderCardType: {required},
-            policyholderCardNo: {required, vali: this.valiHolder, maxLength: maxLength(32)},
+            policyholderCardNo: {required, vali: this.valiHolder, maxLength: maxLength(18)},
             policyholderCardPeroid: {required},
             policyholderCountry: {required, maxLength: maxLength(64)},
             policyholderHeight: {required, int, maxLength: maxLength(3)},
@@ -849,11 +849,9 @@
           storage.save('holder', newVal);
           //判断投保人是否小于16周岁
           if (newVal.policyholderBirthday !== '') {
-            let newDate = new Date();
-            let birthday = new Date(newVal.policyholderBirthday.replace(/-/, "/"));
-            let time = (newDate.valueOf() - birthday.valueOf());
+            let age = ageYear(newVal.policyholderBirthday);
             //如果小于16周岁，设为false
-            if (time < 24 * 60 * 60 * 1000 * 365 * 16) {
+            if (age < 16) {
               this.holderSixteenYear = false;
             } else {
               this.holderSixteenYear = true;
@@ -1039,11 +1037,9 @@
       }
       //判断被保人周岁是否大于16周岁
       let insured = storage.fetch("insured");
-      let newDate = new Date();
-      let birthday = new Date(insured.insuredBirthday.replace(/-/, "/"));
-      let time = (newDate.valueOf() - birthday.valueOf());
+      let age = ageYear(insured.insuredBirthday);
       //如果小于16周岁，设为false
-      if (time < 24 * 60 * 60 * 1000 * 365 * 16) {
+      if (age < 16) {
         this.insuredSixteenYear = false;
         this.legalBeneficiary = true;
       } else {

@@ -1,9 +1,12 @@
 package com.yunxin.cb.mall.web.action.cms;
 
+import com.alibaba.fastjson.JSON;
+import com.yunxin.cb.cms.entity.*;
+import com.yunxin.cb.mall.entity.Attachment;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.cb.cms.entity.ArticleChannel;
-import com.yunxin.cb.cms.entity.Programa;
 import com.yunxin.cb.cms.service.IProgramaService;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
@@ -18,6 +21,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
@@ -31,9 +35,8 @@ public class ArticleChannelController {
 
     @Resource
     private IProgramaService programaService;
-
     @Resource
-    private MessageSource messageSource;
+    private IAttachmentService attachmentService;
 
 
     @RequestMapping(value = "channelProgramas",method = RequestMethod.GET)
@@ -64,12 +67,22 @@ public class ArticleChannelController {
     }
 
     @RequestMapping(value = "addArticleChannel", method = RequestMethod.POST)
-    public String addArticleChannel(@ModelAttribute("channel") ArticleChannel channel, BindingResult result, ModelMap modelMap) {
+    public String addArticleChannel(@ModelAttribute("channel") ArticleChannel channel, BindingResult result, ModelMap modelMap,HttpServletRequest request) {
         if (result.hasErrors()) {
             return toAddArticleChannel(channel, modelMap);
         }
         try {
-            programaService.addArticleChannel(channel);
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                channel.setOperaImgPath(imgurl[0].split(",")[0]);
+                channel=programaService.addArticleChannel(channel);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.CHANNER,channel.getChannelId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.CHANNER,channel.getChannelId(),imgpath);
+                }
+            }
+
         } catch (EntityExistException e) {
             result.addError(new FieldError("channel", "channelName", channel.getChannelName(), true, null, null,e.getMessage()));
             return toAddArticleChannel(channel, modelMap);
@@ -82,17 +95,28 @@ public class ArticleChannelController {
 
         ArticleChannel channel = programaService.getArticleChannelById(channelId);
         modelMap.addAttribute("channel", channel);
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.CHANNER,channelId);
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return "cms/editArticleChannel";
     }
 
     @RequestMapping(value = "editArticleChannel", method = RequestMethod.POST)
     public String editArticleChannel(@Valid @ModelAttribute("channel") ArticleChannel channel, BindingResult result,
-                                     ModelMap modelMap, Locale locale) {
+                                     ModelMap modelMap, Locale locale,HttpServletRequest request) {
         if (result.hasErrors()) {
             return toEditArticleChannel(channel.getChannelId(), modelMap);
         }
         try {
-            programaService.updateArticleChannel(channel);
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                channel.setOperaImgPath(imgurl[0].split(",")[0]);
+                programaService.updateArticleChannel(channel);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.CHANNER,channel.getChannelId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.CHANNER,channel.getChannelId(),imgpath);
+                }
+            }
             return "redirect:../common/success.do?reurl=cms/channelProgramas.do";
         } catch (EntityExistException e) {
             result.addError(new FieldError("channel", "channelName", channel.getChannelName(), true, null, null,e.getMessage()));

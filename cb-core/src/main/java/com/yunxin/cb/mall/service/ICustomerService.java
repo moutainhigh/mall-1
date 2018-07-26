@@ -2,6 +2,7 @@ package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Fridge;
+import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.core.exception.EntityExistException;
@@ -45,10 +46,10 @@ public interface ICustomerService {
 
     public Customer updateCustomer(Customer customer) throws EntityExistException;
 
+    public Customer updateCustomerMsg(int customerId, CustomerUpdateVo customerUpdateVo);
     public Customer updateCustomerRank(Customer customer);
 
     public Customer updateCustomerIntegral(Customer customer);
-
     public Customer getCustomerById(int customerId);
 
     public void removeCustomerById(int customerId);
@@ -164,7 +165,7 @@ public interface ICustomerService {
     public void delFriendById(CustomerFriendId customerFriendId);
 
     boolean isFriend(int customerId, int friendId);
-
+    CustomerFriend getFriend(int customerId, int friendId);
 
     Customer updateAvatar(int customerId, String avatar) throws Exception;
 
@@ -177,7 +178,7 @@ public interface ICustomerService {
     CustomerFriend updateFriendsProfile(CustomerFriend customerFriend);
 
     @Transactional
-    Customer customerPraise(int customerId);
+    boolean customerPraise(int customerId);
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     List<Customer> getPraiseCustomers(int customerId);

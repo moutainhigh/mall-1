@@ -2,7 +2,6 @@ package com.yunxin.cb.cms.entity;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.hankcs.lucene.HanLPIndexAnalyzer;
 import com.yunxin.core.web.json.serializer.JsonDateSerializer;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
@@ -12,7 +11,6 @@ import org.hibernate.search.annotations.Index;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

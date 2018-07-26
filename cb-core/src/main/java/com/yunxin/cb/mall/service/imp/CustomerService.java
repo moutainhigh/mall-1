@@ -1,6 +1,8 @@
 package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.im.RongCloudService;
+import com.yunxin.cb.insurance.dao.InsuranceOrderDao;
+import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
@@ -8,6 +10,7 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
+import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
@@ -70,7 +73,8 @@ public class CustomerService implements ICustomerService {
 
     @Resource
     private IProfileService iProfileService;
-
+    @Resource
+    private InsuranceOrderDao insuranceOrderDao;
 
     @Override
     public Fridge addFridge(Fridge fridge) {
@@ -231,6 +235,22 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public Customer updateCustomerMsg(int customerId,CustomerUpdateVo customerUpdateVo) {
+        Customer customerDB = customerDao.findOne(customerId);
+        if(StringUtils.isNotBlank(customerUpdateVo.getBankCardImg()))
+            customerDB.setBankCardImg(customerUpdateVo.getBankCardImg());
+        if(StringUtils.isNotBlank(customerUpdateVo.getCardNegativeImg()))
+            customerDB.setCardNegativeImg(customerUpdateVo.getCardNegativeImg());
+        if(StringUtils.isNotBlank(customerUpdateVo.getCardPositiveImg()))
+            customerDB.setCardPositiveImg(customerUpdateVo.getCardPositiveImg());
+        if(StringUtils.isNotBlank(customerUpdateVo.getRealName()))
+            customerDB.setRealName(customerUpdateVo.getRealName());
+        if(StringUtils.isNotBlank(customerUpdateVo.getCardType()))
+            customerDB.setCardType(customerUpdateVo.getCardType());
+        return customerDB;
+    }
+
+    @Override
     public Customer updateCustomerRank(Customer customer) {
         Customer customerDB = customerDao.findOne(customer
                 .getCustomerId());
@@ -264,7 +284,7 @@ public class CustomerService implements ICustomerService {
        return new Customer(){
             {
                 try {
-                    String levelCode=DmSequenceUtil.getNoRepeatId();
+                    String generateCode=checkLevelCode(DmSequenceUtil.getNoRepeatId());
                     String invitationCodes=checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
                     if(StringUtils.isNotBlank(invitationCode)){
                         Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
@@ -272,14 +292,15 @@ public class CustomerService implements ICustomerService {
                             int customerLevel=recommendCustomer.getCustomerLevel();
                             String recommendLevelCode=recommendCustomer.getLevelCode();
                             setCustomerLevel(customerLevel+initialLevel);
-                            setLevelCode(recommendLevelCode+levelCode);
+
+                            setLevelCode(checkGenerateCode(recommendLevelCode,generateCode));
                         }else{
                             setCustomerLevel(initialLevel);
-                            setLevelCode(levelCode);
+                            setLevelCode(generateCode);
                         }
                     }else{
                         setCustomerLevel(initialLevel);
-                        setLevelCode(levelCode);
+                        setLevelCode(generateCode);
                     }
                     setInvitationCode(invitationCodes);
                 } catch (Exception e) {
@@ -331,22 +352,33 @@ public class CustomerService implements ICustomerService {
         return invitationCode;
     }
 
-//    /**
-//     * 校验等级编码
-//     * @param levelCode
-//     * @return
-//     */
-//    public String checkLevelCode(String levelCode){
-//        Customer recommendCustomer=getByLevelCode(levelCode);
-//        if(recommendCustomer!=null) {
-//            try {
-//                return  checkLevelCode(DmSequenceUtil.getNoRepeatId());
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return levelCode;
-//    }
+    /**
+     * 校验等级编码
+     * @param levelCode
+     * @return
+     */
+    public String checkGenerateCode(String levelCode,String generateCode){
+        Customer recommendCustomer=getByLevelCode(levelCode+generateCode);
+        if(recommendCustomer!=null) {
+            try {
+                return  checkGenerateCode(levelCode,DmSequenceUtil.getNoRepeatId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return levelCode+generateCode;
+    }
+    public String checkLevelCode(String generateCode){
+        Customer recommendCustomer=getByLevelCode(generateCode);
+        if(recommendCustomer!=null) {
+            try {
+                return  checkLevelCode(DmSequenceUtil.getNoRepeatId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return generateCode;
+    }
     @Override
     @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
@@ -543,6 +575,13 @@ public class CustomerService implements ICustomerService {
         return customerFriendDao.findOne(new CustomerFriendId(customerId, friendId)) != null;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public CustomerFriend getFriend(int customerId, int friendId) {
+        return customerFriendDao.findOne(new CustomerFriendId(customerId,friendId));
+    }
+
+
     @Transactional
     public CustomerFriend updateFriendsProfile(CustomerFriend customerFriend) {
         CustomerFriend renew = customerFriendDao.findOne(customerFriend.getId());
@@ -564,32 +603,33 @@ public class CustomerService implements ICustomerService {
      */
     @Override
     @Transactional
-    public Customer customerPraise(int customerId) {
+    public boolean customerPraise(int customerId) {
         Customer customer = customerDao.findOne(customerId);
-
+        /**
+         * 查保单
+         */
+        List<InsuranceOrder>  list= insuranceOrderDao.findOrderPriceByCustomerId(customer.getCustomerId());
+        if(list==null||list.size()==0)
+            return false;
         //给推荐人增加一个点赞次数
         Customer recommendCustomer = customer.getRecommendCustomer();
         recommendCustomer.setPraiseNum(recommendCustomer.getPraiseNum() + 1);
         //TODO 实现推荐人以及所有上级增加5%的授信额度
         if(!customer.isPraise()){
             List<Customer>  listCustomer=findCustomerByLevelCode(customer.getLevelCode());
-            for(Customer listCustome:listCustomer){
-                CustomerWallet customerWallet= iCustomerWalletService.findCustomerWallet(listCustome.getCustomerId());
-                if(null!=customerWallet){
-                    Profile Profile=iProfileService.getProfileByProfileName(ProfileName.GIVE_THE_THUMBS_UP);
-                    Double ration=0.05;
-                    try {
-                        ration = Double.parseDouble(Profile.getFileValue());
-                    }catch (Exception e){
-                        ration=0.05;
-                    }
-                    iCustomerWalletService.updateCustomerWallet(customerWallet.getCustomerId(),ration,"推荐人以及所有上级增加5%的授信额度",BusinessType.GIVE_THE_THUMBS_UP);
-                }
-
+            Profile Profile=iProfileService.getProfileByProfileName(ProfileName.GIVE_THE_THUMBS_UP);
+            Double ration=0.05;
+            try {
+                ration = Double.parseDouble(Profile.getFileValue());
+            }catch (Exception e){
+                ration=0.05;
             }
+            for(Customer listCustome:listCustomer)
+                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(),ration,"推荐人以及所有上级增加5%的授信额度",BusinessType.GIVE_THE_THUMBS_UP,list.get(0).getInsuranceProductPrice().getPrice());
+
         }
         customer.setPraise(true);
-        return customer;
+        return true;
     }
 
     /**

@@ -8,8 +8,13 @@ public enum ObjectType {
     BRAND,//品牌
     ADVERT,//广告
     ATTRIBUTE,//商品属性
-    HOMEFLOORPROPAGANDA,//首页宣传图片
-    HOMEFLOORICO,//首页图标
-    CATEGORY//运营分类图标
+    HOMEFLOORPROPAGANDA,//首页宣传
+    HOMEFLOORICO,//首页
+    CATEGORY,//运营分类
+    ARTICLE,//文章
+    CHANNER,//频道
+    PROGRAMA,//栏目
+    ACTIVITY,//活动
+    OTHER//其它
     ;
 }

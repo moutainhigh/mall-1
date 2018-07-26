@@ -29,4 +29,11 @@ public interface DeliveryAddressService {
      * 更新收货地址
      */
     int updateByPrimaryKey(DeliveryAddress record);
+
+    /**
+     * 查询用户默认收货地址
+     * @param customerId
+     * @return
+     */
+    DeliveryAddress selectDefaultByCustomerId(Integer customerId);
 }

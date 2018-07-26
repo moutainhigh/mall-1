@@ -51,7 +51,7 @@
 <script>
   import storage from '../store/storage'
   import Admin from '../admin/Admin'
-  import {getCustomerCard, getProducts} from "../service/getData";
+  import {getCustomerInfo, getProducts} from "../service/getData";
 
   export default {
     name: "index",
@@ -108,14 +108,12 @@
           console.log(this.products)
         }
       });
-      getCustomerCard().then(res => {
+      getCustomerInfo().then(res => {
         if (res.result == 'SUCCESS') {
           let customerData = res.data;
           let holder = storage.fetch("holder");
+          holder.policyholderName = customerData.realName;
           holder.policyholderCardType = customerData.cardType;
-          if (!holder.policyholderCardType) {
-            holder.policyholderCardType = '其他证件'
-          }
           holder.policyholderCardNo = customerData.customerCardNo;
           holder.policyholderMobile = customerData.mobile;
           holder.cardPositiveImg = customerData.cardPositiveImg;

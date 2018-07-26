@@ -1,8 +1,11 @@
 package com.yunxin.cb.mall.web.action.operation;
 
+import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.console.service.ILogsService;
 import com.yunxin.cb.mall.entity.Activity;
+import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.meta.ActivityState;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
@@ -24,6 +27,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -33,30 +37,13 @@ public class ActivityController implements ServletContextAware {
 
     @Resource
     private IActivityService activityService;
-
-
-    @Resource
-    private ILogsService systemsService;
-
-    @Resource
-    private IComplaintService commentService;
-
-
-    @Resource
-    private ICommodityService commodityService;
-
-    @Resource
-    private IBrandService brandService;
-
-    @Resource
-    private ICatalogService catalogService;
-
     @Resource
     private ICategoryService categoryService;
 
     @Resource
     private IRuleConditionService ruleConditionService;
-
+    @Resource
+    private IAttachmentService attachmentService;
 
     private ServletContext servletContext;
 
@@ -88,10 +75,17 @@ public class ActivityController implements ServletContextAware {
     @RequestMapping(value = "addActivity",method = RequestMethod.POST)
     public String addActivity(@Valid @ModelAttribute("activity") Activity activity, BindingResult result, Locale locale, HttpServletRequest request) {
         try {
-            Activity activityDb = activityService.addActivity(activity);
-            CommonImageConverter imageConverter = new CommonImageConverter(servletContext, activity);
-            imageConverter.compress();
-            activityService.updatePicPath(activityDb.getActivityId(), imageConverter.getDefaultImagePath());
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                activity.setPicPath(imgurl[0].split(",")[0]);
+                Activity activityDb = activityService.addActivity(activity);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.ACTIVITY,activityDb.getActivityId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.ACTIVITY,activityDb.getActivityId(),imgpath);
+                }
+            }
+
         } catch (EntityExistException e) {
             e.printStackTrace();
             result.addError(new FieldError("activity", "activityName", activity.getActivityName(), true, null, null,e.getMessage()));
@@ -119,6 +113,8 @@ public class ActivityController implements ServletContextAware {
         modelMap.put("activityRules", ruleConditionService.getRuleConditionsLikeCode("ACTIVITY_"));
         modelMap.addAttribute("activity", activityService.findByActivityId(activityId));
         modelMap.addAttribute("categoryTree", categoryService.getAllCategories());
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.ACTIVITY,activityId);
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         return "operation/editActivity";
     }
 
@@ -128,14 +124,16 @@ public class ActivityController implements ServletContextAware {
             return toEditActivity(activity.getActivityId(), modelMap);
         }
         try {
-            Activity activityDb = activityService.updateActivity(activity);
-            // 用户重新上传了图片，即图片路径发生改变，则需要压缩图片
-            if(null != activityDb && !(activityDb.getPicPath().equals(activity.getPicPath())) ){
-                CommonImageConverter imageConverter = new CommonImageConverter(servletContext, activity);
-                imageConverter.compress();
-                activityService.updatePicPath(activityDb.getActivityId(), imageConverter.getDefaultImagePath());
+            String[] imgurl = request.getParameterValues("imgurl");
+            if(imgurl.length>0){
+                activity.setPicPath(imgurl[0].split(",")[0]);
+                Activity activityDb = activityService.updateActivity(activity);
+                //保存图片路径
+                attachmentService.deleteAttachmentPictures(ObjectType.ACTIVITY,activityDb.getActivityId());
+                for (String imgpath:imgurl) {
+                    attachmentService.addAttachmentPictures(ObjectType.ACTIVITY,activityDb.getActivityId(),imgpath);
+                }
             }
-
         } catch (EntityExistException e) {
             e.printStackTrace();
             result.addError(new FieldError("activity", "activityName", activity.getActivityName(), true, null, null,e.getMessage()));
