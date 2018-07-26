@@ -165,7 +165,7 @@ public interface ICustomerService {
     public void delFriendById(CustomerFriendId customerFriendId);
 
     boolean isFriend(int customerId, int friendId);
-
+    CustomerFriend getFriend(int customerId, int friendId);
 
     Customer updateAvatar(int customerId, String avatar) throws Exception;
 
