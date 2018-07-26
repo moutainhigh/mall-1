@@ -17,7 +17,7 @@ public class DeliveryAddress implements java.io.Serializable{
     /**
      * 收货地址类型
      */
-    private int addressType;
+    private AddressType addressType;
 
     /**
      * 市
@@ -106,7 +106,7 @@ public class DeliveryAddress implements java.io.Serializable{
      *
      * @mbg.generated Wed Jul 18 09:54:14 CST 2018
      */
-    public int getAddressType() {
+    public AddressType getAddressType() {
         return addressType;
     }
 
@@ -118,7 +118,7 @@ public class DeliveryAddress implements java.io.Serializable{
      *
      * @mbg.generated Wed Jul 18 09:54:14 CST 2018
      */
-    public void setAddressType(int addressType) {
+    public void setAddressType(AddressType addressType) {
         this.addressType = addressType;
     }
 
