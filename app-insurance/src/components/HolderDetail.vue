@@ -7,7 +7,7 @@
       <div style="margin-right: 15px">
         <x-input title="姓名" placeholder="请输入姓名" v-model="holder.policyholderName"
                  v-bind:class="{'errorInput': $v.holder.policyholderName.$error}"
-                 @input="$v.holder.policyholderName.$touch()"></x-input>
+                 @input="$v.holder.policyholderName.$touch()" readonly></x-input>
         <div class="error" v-if="!$v.holder.policyholderName.required && $v.holder.policyholderName.$dirty">姓名不能为空</div>
         <div class="error" v-if="!$v.holder.policyholderName.minLength">姓名最少为
           {{$v.holder.policyholderName.$params.minLength.min}}
