@@ -120,6 +120,9 @@ public class Commodity  implements java.io.Serializable{
     /** 供应商 */
     private Integer sellerId;
 
+    /** 商品说明介绍 */
+    private String explainContent;
+
     //品牌
     private Brand brand;
 
@@ -480,5 +483,13 @@ public class Commodity  implements java.io.Serializable{
 
     public void setCommoditySpecs(List<CommoditySpec> commoditySpecs) {
         this.commoditySpecs = commoditySpecs;
+    }
+
+    public String getExplainContent() {
+        return explainContent;
+    }
+
+    public void setExplainContent(String explainContent) {
+        this.explainContent = explainContent;
     }
 }
