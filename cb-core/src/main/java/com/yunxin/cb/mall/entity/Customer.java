@@ -55,7 +55,7 @@ public class Customer implements java.io.Serializable {
     /**
      * 创建时间
      */
-    @ApiModelProperty(value="账户名",name="accountName",example="186456789")
+    @ApiModelProperty(value="创建时间",name="createTime",example="")
     private Date createTime;
     /**
      * 真实姓名
@@ -216,6 +216,19 @@ public class Customer implements java.io.Serializable {
      * 邀请码
      */
     private String  invitationCode;
+    /**
+     * 国籍
+     */
+    private String customerCountry;
+    /**
+     * 证件有效期
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date customerCardPeroid;
+    /**
+     * 职业类别
+     */
+    private String occupationalCategory;
     /**
      * 优惠券
      */
@@ -680,5 +693,32 @@ public class Customer implements java.io.Serializable {
 
     public void setState(String state) {
         this.state = state;
+    }
+    @Column(length = 60, nullable = true)
+    public String getCustomerCountry() {
+        return customerCountry;
+    }
+
+    public void setCustomerCountry(String customerCountry) {
+        this.customerCountry = customerCountry;
+    }
+//    @Temporal(TemporalType.DATE)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    @JsonDeserialize(using = JsonTimestampDeserializer.class)
+    @Column(length = 20,insertable = true, updatable = true)
+    public Date getCustomerCardPeroid() {
+        return customerCardPeroid;
+    }
+
+    public void setCustomerCardPeroid(Date customerCardPeroid) {
+        this.customerCardPeroid = customerCardPeroid;
+    }
+    @Column(length = 60, nullable = true)
+    public String getOccupationalCategory() {
+        return occupationalCategory;
+    }
+
+    public void setOccupationalCategory(String occupationalCategory) {
+        this.occupationalCategory = occupationalCategory;
     }
 }
