@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -21,6 +22,7 @@ public class ProductVo  implements java.io.Serializable{
 
     /** 创建时间 */
     @ApiModelProperty(value="创建时间",name="createTime",example="2018-07-24 17:30:40")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /** 默认图片路径 */

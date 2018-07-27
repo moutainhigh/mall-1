@@ -103,3 +103,19 @@ ALTER TABLE commodity ADD COLUMN `EXPLAIN_CONTENT` VARCHAR(4098)   COMMENT '商�
 
 ###add by guwenshao 2018-07-26
 alter table customer_trading_record modify column TRADE_RECORD_ID int auto_increment;
+
+###update by wangteng 2018-07-26
+DROP TABLE IF EXISTS `customer_wallet`;
+CREATE TABLE `customer_wallet` (
+  `WALLET_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(11) NOT NULL COMMENT '客户钱包id',
+  `AVAILABLE_BALANCE` double DEFAULT 0 COMMENT '可用余额',
+  `EXPECTED_RETURN_AMOUNT` double DEFAULT 0 COMMENT '预期收益金额',
+  `LOAN_QUOTA` double DEFAULT 0 COMMENT '可贷额度',
+  `ARREARS_AMOUNT` double DEFAULT 0 COMMENT '欠款金额',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATE_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`WALLET_ID`) USING BTREE,
+  KEY `CUSTOMER_ID` (`CUSTOMER_ID`),
+  CONSTRAINT `customer_wallet_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='客户钱包表';

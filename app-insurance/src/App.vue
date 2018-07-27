@@ -12,18 +12,23 @@
   export default {
     name: 'App',
     watch: {
-      $route:function(to,from){
+      $route: function (to, from) {
         document.body.scrollTop = 0;
       }
     },
-    created:function () {
-      console.log(process.env.VERSION);
+    created: function () {
+      if (!window.navigator.onLine) {
+        window.alert("网络未连接");
+      }
+      window.addEventListener('offline', function () {
+        window.alert("网络未连接");
+      });
       // alert(process.env.VERSION);
       if (storage.fetch('version').length == 0 || storage.fetch('version') != process.env.VERSION) {
         storage.clear();
       }
-      if (storage.fetch('holder').length === 0){
-        storage.save('holder',this.Admin.holder);
+      if (storage.fetch('holder').length === 0) {
+        storage.save('holder', this.Admin.holder);
       }
       if (storage.fetch('insured').length === 0) {
         storage.save('insured', this.Admin.insured);
@@ -39,5 +44,6 @@
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
   }
+
   /*@import url("../static/default.css");*/
 </style>

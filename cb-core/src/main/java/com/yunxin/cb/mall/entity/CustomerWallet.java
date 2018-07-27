@@ -34,14 +34,13 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class CustomerWallet implements Serializable {
 
 private static final long serialVersionUID = 1L;
-
-
+    @Max(9999999999L)
+    private int walletId;
     //columns START
     /**
     * 客户钱包id
     */
-    @Max(9999999999L)
-    private int customerId;
+    private Customer customer;
     /**
     * 可用余额
     */
@@ -79,23 +78,31 @@ private static final long serialVersionUID = 1L;
 	public CustomerWallet(){
 	}
 
-	public CustomerWallet(
-		int customerId
-	){
-		this.customerId = customerId;
-	}
-
-
+//	public CustomerWallet(
+//		int customerId
+//	){
+//		this.customerId = customerId;
+//	}
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
-    public int getCustomerId() {
-    return this.customerId;
+    public int getWalletId() {
+        return walletId;
     }
 
-    public void setCustomerId(int customerId) {
-    this.customerId = customerId;
+    public void setWalletId(int walletId) {
+        this.walletId = walletId;
     }
+
+
+//    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
+//    public int getCustomerId() {
+//    return this.customerId;
+//    }
+//
+//    public void setCustomerId(int customerId) {
+//    this.customerId = customerId;
+//    }
 
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 22)
     public Double getAvailableBalance() {
@@ -156,7 +163,6 @@ private static final long serialVersionUID = 1L;
     }
 
 
-    private Customer customer;
     public void setCustomer(Customer customer){
     this.customer = customer;
     }

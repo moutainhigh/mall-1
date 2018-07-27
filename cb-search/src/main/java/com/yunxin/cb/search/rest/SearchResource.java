@@ -60,12 +60,16 @@ public class SearchResource extends BaseResource {
     @PostMapping(value = "addCommodity")
     public ResponseResult addCommodity(@RequestBody CommodityVO commodityVO) {
         Commodity commodity = new Commodity();
-        BeanUtils.copyProperties(commodity, commodityVO);
+        BeanUtils.copyProperties(commodityVO, commodity);
         commodityService.addCommodity(commodity);
         return new ResponseResult(Result.SUCCESS);
     }
 
-
+    @PostMapping(value = "removeCommodity")
+    public ResponseResult removeCommodity(@RequestParam(value = "commodityId") int commodityId) {
+        commodityService.deleteById(commodityId);
+        return new ResponseResult(Result.SUCCESS);
+    }
 
 
 }

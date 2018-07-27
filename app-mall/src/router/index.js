@@ -13,6 +13,8 @@ import ChooseCarType from '../page/carList/ChooseCarType'
 import ServeDetail from '../page/serve/ServeDetail'
 import Refund from '../page/serve/Refund'
 import ServerList from '../page/serve/ServerList'
+import MyAddress from '../page/address/MyAddress'
+import AddAddress from '../page/address/AddAddress'
 
 Vue.use(Router)
 
@@ -79,6 +81,16 @@ export default new Router({
       path: '/serve-list',
       name: 'ServerList',
       component: ServerList
+    },
+    {
+      path: '/my-address',
+      name: 'MyAddress',
+      component: MyAddress
+    },
+    {
+      path: '/add-address',
+      name: 'AddAddress',
+      component: AddAddress
     },
   ]
 })
