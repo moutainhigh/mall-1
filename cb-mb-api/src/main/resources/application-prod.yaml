@@ -1,7 +1,7 @@
 # 生产环境配置
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/skc?useUnicode=true&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/crystal_ball?useUnicode=true&autoReconnect=true
     username: root
     password: Yunxin@2018!#%
     type: com.alibaba.druid.pool.DruidDataSource
@@ -22,16 +22,5 @@ qiniu:
   accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
   secretKey: 9fglZdOXWmLXbU1rzroDOr2anFZydhnuKZjzBb-c
   bucket-1: crystal-ball-prod
-  bucket-2: crystal-ball-paperwork-prod
   domain-1: http://resource.999shuijingqiu.com/
-  domain-2: http://pc73xwx6z.bkt.clouddn.com/
 
-#融云IM
-rongcloud:
-  appKey: vnroth0kv8sxo
-  appSecret: xR4RmfFyJhA
-
-#APP自定义配置
-application:
-  default:
-    avatarUrl: http://resource.999shuijingqiu.com/avatar.png
