@@ -4,6 +4,7 @@ package com.yunxin.cb.search.rest;
 import com.yunxin.cb.search.document.Commodity;
 import com.yunxin.cb.search.service.CommodityService;
 import com.yunxin.cb.search.vo.CommodityVO;
+import com.yunxin.cb.search.vo.PageFinder;
 import com.yunxin.cb.search.vo.ResponseResult;
 import com.yunxin.cb.search.vo.SearchVo;
 import com.yunxin.cb.search.vo.meta.Result;
@@ -19,6 +20,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Api(description = "商城商品搜索接口")
 @RestController
@@ -36,28 +39,50 @@ public class SearchResource extends BaseResource {
             @ApiImplicitParam(name = "keyword", value = "搜索关键字", required = true, paramType = "post", dataType = "String")
     })
     @PostMapping(value = "keywordSearch")
-    public ResponseResult<Page<Commodity>> keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+    public ResponseResult<Page<CommodityVO>> keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
         try {
             Page<Commodity> result = commodityService.keywordSearch(keyword, PageRequest.of(page, size));
-            return new ResponseResult(result);
+            PageFinder<CommodityVO> pageFinder = new PageFinder<>();
+            List<Commodity> lsit = result.getContent();
+            List<CommodityVO> lsitVO = new ArrayList<>();
+            for(Commodity commodity : lsit){
+                CommodityVO commodityVO = new CommodityVO();
+                BeanUtils.copyProperties(commodity, commodityVO);
+                lsitVO.add(commodityVO);
+            }
+            pageFinder.setData(lsitVO);
+            pageFinder.setPageCount(result.getNumber());
+            pageFinder.setRowCount(result.getNumber());
+            return new ResponseResult(pageFinder);
         } catch (Exception e) {
             logger.info("keywordSearch excption",e);
             return new ResponseResult(Result.FAILURE);
         }
     }
 
-    @PostMapping(value = "categorySearch")
-    public ResponseResult categorySearch(@RequestBody SearchVo searchVo,@RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+    @PostMapping(value = "categorySearch/{page}/{size}")
+    public ResponseResult categorySearch(@RequestBody SearchVo searchVo,@PathVariable(value = "page") int page,@PathVariable(value = "size") int size ) {
         try {
             Page<Commodity> result = commodityService.categorySearch(searchVo,PageRequest.of(page, size));
-            return new ResponseResult(result);
+            PageFinder<CommodityVO> pageFinder = new PageFinder<>();
+            List<Commodity> lsit = result.getContent();
+            List<CommodityVO> lsitVO = new ArrayList<>();
+            for(Commodity commodity : lsit){
+                CommodityVO commodityVO = new CommodityVO();
+                BeanUtils.copyProperties(commodity, commodityVO);
+                lsitVO.add(commodityVO);
+            }
+            pageFinder.setData(lsitVO);
+            pageFinder.setPageCount(result.getNumber());
+            pageFinder.setRowCount(result.getNumber());
+            return new ResponseResult(pageFinder);
         } catch (Exception e) {
             logger.info("categorySearch excption",e);
             return new ResponseResult(Result.FAILURE);
         }
     }
 
-    @PostMapping(value = "addCommodity")
+    @PostMapping(value = "commodity")
     public ResponseResult addCommodity(@RequestBody CommodityVO commodityVO) {
         Commodity commodity = new Commodity();
         BeanUtils.copyProperties(commodityVO, commodity);
@@ -65,8 +90,8 @@ public class SearchResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
-    @PostMapping(value = "removeCommodity")
-    public ResponseResult removeCommodity(@RequestParam(value = "commodityId") int commodityId) {
+    @DeleteMapping(value = "commodity/{commodityId}")
+    public ResponseResult removeCommodity(@PathVariable int commodityId) {
         commodityService.deleteById(commodityId);
         return new ResponseResult(Result.SUCCESS);
     }

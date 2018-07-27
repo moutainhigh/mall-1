@@ -49,11 +49,15 @@ p {
 }
 
 .vux-cell-placeholder {
-  color: #bfbfbf !important;
+  color: #DCDCDC !important;
 }
 
 .weui-cells input::-webkit-input-placeholder {
-  color: #bfbfbf !important;
+  color: #DCDCDC !important;
+}
+
+.weui-cells textarea::-webkit-input-placeholder {
+  color: #DCDCDC !important;
 }
 
 .weui-label {
@@ -87,4 +91,8 @@ p {
 
 .weui-cell {
   padding: 1rem;
+}
+
+.vux-popup-header-right {
+  color: #f5ca1d !important;
 }

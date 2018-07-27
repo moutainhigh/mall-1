@@ -4,6 +4,9 @@ import {
 import storage from "../store/storage";
 
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
+  if (!window.navigator.onLine) {
+    window.alert("网络未连接");
+  }
 	type = type.toUpperCase();
 	url = baseUrl + url;
 

@@ -1,121 +1,132 @@
-package com.yunxin.cb.search.document;
+package com.yunxin.cb.mall.entity;
 
-import com.yunxin.cb.search.vo.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-/**
- * 商品
- *
- * @author
- */
-@Document(indexName = "crystal_ball", type = "commodity")
-public class Commodity implements java.io.Serializable {
+@ApiModel(value="商品搜索对象",description="商品搜索对象 CommodityVO")
+public class CommodityVO implements java.io.Serializable {
 
-    private static final long serialVersionUID = -3993560903203859821L;
-
+    private static final long serialVersionUID = -5869611358420704304L;
     /**
      * 商品ID
      */
-    @Id
+    @ApiModelProperty(value="商品ID",name="commodityId",example="1")
     private int commodityId;
 
     /**
      * 商品所属价格段
      */
+    @ApiModelProperty(value="价格段",name="priceSection",example="1000-19999")
     private PriceSection priceSection;
     /**
      * 品牌
      */
-    @Field(type = FieldType.Object,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    @ApiModelProperty(value="品牌",name="brand",example="品牌")
     private Brand brand;
     /**
      * 供应商
      */
+    @ApiModelProperty(value="商家",name="seller",example="商家")
     private Seller seller;
     /**
      * 商品编码
      */
+    @ApiModelProperty(value="商品编码",name="commodityCode",example="121233485")
     private String commodityCode;
     /**
      * 商品名
      */
-    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    @ApiModelProperty(value="商品名",name="commodityName",example="BMWX1")
     private String commodityName;
     /**
      * 商品拼音名
      */
+    @ApiModelProperty(value="商品拼音名",name="commodityPYName",example="BMWX")
     private String commodityPYName;
     /**
      * 简称
      */
-    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    @ApiModelProperty(value="简称",name="shortName",example="BMW")
     private String shortName;
     /**
      * 商品标题
      */
-    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    @ApiModelProperty(value="商品标题",name="commodityTitle",example="BMWX1")
     private String commodityTitle;
     /**
      * 描述
      */
-    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    @ApiModelProperty(value="描述",name="description",example="1")
     private String description;
     /**
      * 销售价
      */
+    @ApiModelProperty(value="销售价",name="sellPrice",example="239888")
     private double sellPrice;
     /**
      * 市场价格
      */
+    @ApiModelProperty(value="市场价格",name="marketPrice",example="239888")
     private double marketPrice;
     /**
      * 产地省份
      */
+    @ApiModelProperty(value="产地省份",name="province",example="广东省")
     private String province;
     /**
      * 产地市区
      */
+    @ApiModelProperty(value="产地市区",name="city",example="深圳")
     private String city;
     /**
      * 默认图片路径
      */
+    @ApiModelProperty(value="默认图片路径",name="defaultPicPath",example="bmw.jpg")
     private String defaultPicPath;
     /**
      * 创建时间
      */
+    @ApiModelProperty(value="创建时间",name="createTime",example="bmw.jpg")
     private Date createTime;
     /**
      * 是否为热门商品
      */
+    @ApiModelProperty(value="是否为热门商品",name="popular",example="true")
     private boolean popular;
     /**
      * 是否为特惠商品
      */
+    @ApiModelProperty(value="是否为特惠商品",name="special",example="true")
     private boolean special;
     /**
      * 是否为推荐商品
      */
+    @ApiModelProperty(value="是否为推荐商品",name="recommend",example="true")
     private boolean recommend;
     /**
      * 销量
      */
+    @ApiModelProperty(value="销量",name="saleNum",example="1000")
     private int saleNum;
     /**
      * 商品分类
      */
+    @ApiModelProperty(value="商品分类",name="categories",example="分类")
     private Set<Category> categories = new HashSet<>();
 
     /**
      * 商品规格
      */
+    @ApiModelProperty(value="商品规格",name="commoditySpecs",example="商品规格")
     private Set<CommoditySpec> commoditySpecs = new HashSet<>();
+
+    /**
+     * 商品规格选项
+     */
+    @ApiModelProperty(value="商品规格选项",name="specMap",example="")
+    private Map<String,List<Object>> specMap=new TreeMap<>();
 
 
     public int getCommodityId() {
@@ -293,4 +304,13 @@ public class Commodity implements java.io.Serializable {
     public void setCommoditySpecs(Set<CommoditySpec> commoditySpecs) {
         this.commoditySpecs = commoditySpecs;
     }
+
+    public Map<String, List<Object>> getSpecMap() {
+        return specMap;
+    }
+
+    public void setSpecMap(Map<String, List<Object>> specMap) {
+        this.specMap = specMap;
+    }
 }
+

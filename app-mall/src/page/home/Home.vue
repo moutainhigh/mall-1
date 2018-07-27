@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top :local="true" :routerLocation="'/location'" :city="localCity">
+    <head-top :local="true">
       <div slot="search" style="width: 100%;">
         <div class="search-con" @click="toSearch">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">

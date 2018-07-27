@@ -15,6 +15,9 @@ import Refund from '../page/serve/Refund'
 import ServerList from '../page/serve/ServerList'
 import MyAddress from '../page/address/MyAddress'
 import AddAddress from '../page/address/AddAddress'
+import EditAddress from '../page/address/EditAddress'
+import CollectList from '../page/collect/CollectList'
+import MyBrowse from '../page/collect/MyBrowse'
 
 Vue.use(Router)
 
@@ -91,6 +94,21 @@ export default new Router({
       path: '/add-address',
       name: 'AddAddress',
       component: AddAddress
+    },
+    {
+      path: '/edit-address',
+      name: 'EditAddress',
+      component: EditAddress
+    },
+    {
+      path: '/collect-list',
+      name: 'CollectList',
+      component: CollectList
+    },
+    {
+      path: '/my-browse',
+      name: 'MyBrowse',
+      component: MyBrowse
     },
   ]
 })
