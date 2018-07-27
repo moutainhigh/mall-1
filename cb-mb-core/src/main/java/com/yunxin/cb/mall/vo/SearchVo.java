@@ -1,7 +1,7 @@
 package com.yunxin.cb.mall.vo;
 
 
-import com.yunxin.cb.search.vo.meta.SortBy;
+import com.yunxin.cb.mall.entity.meta.SortBy;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.domain.Sort;

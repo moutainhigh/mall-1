@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
-import com.yunxin.cb.mall.entity.CommodityVO;
+import com.yunxin.cb.mall.vo.search.CommodityVO;
 import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 
