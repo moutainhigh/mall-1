@@ -4,6 +4,7 @@ package com.yunxin.cb.search.rest;
 import com.yunxin.cb.search.document.Commodity;
 import com.yunxin.cb.search.service.CommodityService;
 import com.yunxin.cb.search.vo.CommodityVO;
+import com.yunxin.cb.search.vo.PageFinder;
 import com.yunxin.cb.search.vo.ResponseResult;
 import com.yunxin.cb.search.vo.SearchVo;
 import com.yunxin.cb.search.vo.meta.Result;
@@ -19,6 +20,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
+import java.util.Map;
 
 @Api(description = "商城商品搜索接口")
 @RestController
@@ -46,10 +49,13 @@ public class SearchResource extends BaseResource {
         }
     }
 
-    @PostMapping(value = "categorySearch")
-    public ResponseResult categorySearch(@RequestBody SearchVo searchVo,@RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+    @PostMapping(value = "categorySearch/{page}/{size}")
+    public ResponseResult categorySearch(@RequestBody SearchVo searchVo,@PathVariable(value = "page") int page,@PathVariable(value = "size") int size ) {
         try {
             Page<Commodity> result = commodityService.categorySearch(searchVo,PageRequest.of(page, size));
+            PageFinder<CommodityVO> pageFinder = null;
+
+            result.getContent();
             return new ResponseResult(result);
         } catch (Exception e) {
             logger.info("categorySearch excption",e);
@@ -57,7 +63,7 @@ public class SearchResource extends BaseResource {
         }
     }
 
-    @PostMapping(value = "addCommodity")
+    @PostMapping(value = "commodity")
     public ResponseResult addCommodity(@RequestBody CommodityVO commodityVO) {
         Commodity commodity = new Commodity();
         BeanUtils.copyProperties(commodityVO, commodity);
@@ -65,8 +71,8 @@ public class SearchResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
-    @PostMapping(value = "removeCommodity")
-    public ResponseResult removeCommodity(@RequestParam(value = "commodityId") int commodityId) {
+    @DeleteMapping(value = "commodity/{commodityId}")
+    public ResponseResult removeCommodity(@PathVariable int commodityId) {
         commodityService.deleteById(commodityId);
         return new ResponseResult(Result.SUCCESS);
     }
