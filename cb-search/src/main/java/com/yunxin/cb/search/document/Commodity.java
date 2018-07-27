@@ -4,6 +4,7 @@ import com.yunxin.cb.search.vo.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -32,7 +33,7 @@ public class Commodity implements java.io.Serializable {
     /**
      * 品牌
      */
-
+    @Field(type = FieldType.Object,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private Brand brand;
     /**
      * 供应商
@@ -45,6 +46,7 @@ public class Commodity implements java.io.Serializable {
     /**
      * 商品名
      */
+    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String commodityName;
     /**
      * 商品拼音名
@@ -53,14 +55,17 @@ public class Commodity implements java.io.Serializable {
     /**
      * 简称
      */
+    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String shortName;
     /**
      * 商品标题
      */
+    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String commodityTitle;
     /**
      * 描述
      */
+    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String description;
     /**
      * 销售价
