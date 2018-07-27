@@ -1,16 +1,4 @@
 ##add by guwenshao 2018-07-21
-drop table IF EXISTS `customer_wallet`;
-CREATE TABLE `customer_wallet` (
-  `CUSTOMER_ID` int(11) NOT NULL COMMENT '客户钱包id',
-  `AVAILABLE_BALANCE` double DEFAULT 0 COMMENT '可用余额',
-  `EXPECTED_RETURN_AMOUNT` double DEFAULT 0 COMMENT '预期收益金额',
-  `LOAN_QUOTA` double DEFAULT 0 COMMENT '可贷额度',
-  `ARREARS_AMOUNT` double DEFAULT 0 COMMENT '欠款金额',
-  `CREATE_TIME` datetime DEFAULT NULL COMMENT '创建时间',
-  `UPDATE_TIME` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`CUSTOMER_ID`) USING BTREE,
-  CONSTRAINT `customer_wallet_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
-) ENGINE=InnoDB  COMMENT='客户钱包表';
 
 drop table IF EXISTS `order_loan_apply`;
 CREATE TABLE `order_loan_apply` (

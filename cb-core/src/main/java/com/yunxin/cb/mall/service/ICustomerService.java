@@ -162,7 +162,7 @@ public interface ICustomerService {
 
     public CustomerFriend addFriend(CustomerFriend customerFriend);
 
-    public void delFriendById(CustomerFriendId customerFriendId);
+    public void delFriendById(int customerId, int friendId) throws Exception;
 
     boolean isFriend(int customerId, int friendId);
     CustomerFriend getFriend(int customerId, int friendId);

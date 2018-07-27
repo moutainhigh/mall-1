@@ -567,8 +567,18 @@ public class CustomerService implements ICustomerService {
     }
 
     @Transactional
-    public void delFriendById(CustomerFriendId customerFriendId) {
-        customerFriendDao.delete(customerFriendId);
+    public void delFriendById(int customerId, int friendId) throws Exception{
+        CustomerFriendId customerFriendId1 = new CustomerFriendId();
+        customerFriendId1.setCustomerId(customerId);
+        customerFriendId1.setFriendId(friendId);
+        customerFriendDao.delete(customerFriendId1);
+        CustomerFriendId customerFriendId2 = new CustomerFriendId();
+        customerFriendId2.setCustomerId(friendId);
+        customerFriendId2.setFriendId(customerId);
+        customerFriendDao.delete(customerFriendId2);
+        Customer customer = customerDao.findByCustomerId(customerId);
+        Customer friendCustomer = customerDao.findByCustomerId(friendId);
+        rongCloudService.sendPrivateMessage(customer.getAccountName(), friendCustomer.getAccountName());
     }
 
     @Override

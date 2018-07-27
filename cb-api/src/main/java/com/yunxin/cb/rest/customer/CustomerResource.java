@@ -140,16 +140,13 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "删除好友")
     @DeleteMapping(value = "removeFriend/{friendId}")
-    public ResponseResult removeFriend(@PathVariable int friendId, @ModelAttribute("customerId") int customerId) {
-        CustomerFriendId customerFriendId = new CustomerFriendId();
-        customerFriendId.setCustomerId(customerId);
-        customerFriendId.setFriendId(friendId);
-        customerService.delFriendById(customerFriendId);
-
-        customerFriendId = new CustomerFriendId();
-        customerFriendId.setCustomerId(friendId);
-        customerFriendId.setFriendId(customerId);
-        customerService.delFriendById(customerFriendId);
+    public ResponseResult removeFriend(@PathVariable int friendId, @ModelAttribute("customerId") int customerId){
+        try{
+            customerService.delFriendById(customerId, friendId);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return new ResponseResult(Result.FAILURE,"好友删除失败");
+        }
         return new ResponseResult(Result.SUCCESS);
     }
 
