@@ -160,9 +160,16 @@
         });
         submitOrder(this.code).then(function (res) {
           if (res.result === 'SUCCESS') {
+            let holder = storage.fetch("holder");
+            let pageNum = 0;
+            if (holder.policyholderCity !== '440300') {
+              pageNum = 10;
+            } else {
+              pageNum = 9;
+            }
             _this.$router.push({
               path: 'policy',
-              query: {orderCode: res.data}
+              query: {orderCode: res.data, pageNum: pageNum}
             });
             _this.toastText = '请求成功！';
 

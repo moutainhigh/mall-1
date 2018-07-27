@@ -26,7 +26,7 @@
                  @input="$v.insured.insuredCardNo.$touch()"></x-input>
         <div class="error" v-if="!$v.insured.insuredCardNo.required && $v.insured.insuredCardNo.$dirty">证件号码不能为空</div>
         <div class="error" v-if="!$v.insured.insuredCardNo.cardVali">请输入正确的证件号码</div>
-        <div class="error" v-if="!$v.insured.insuredCardNo.maxLength">证件号码最多不超过32位数</div>
+        <div class="error" v-if="!$v.insured.insuredCardNo.maxLength">证件号码最多不超过18位数</div>
 
         <datetime title="证件有效期" v-model="insured.insuredCardPeriod" :startDate="startDate" endDate="2199-12-31"
                   placeholder="请选择证件有效期"
@@ -201,7 +201,7 @@
         insured: {
           insuredName: {required, minLength: minLength(2), maxLength: maxLength(32)},
           insuredCardType: {required},
-          insuredCardNo: {required, cardVali: this.vali, maxLength: maxLength(32)},
+          insuredCardNo: {required, cardVali: this.vali, maxLength: maxLength(18)},
           insuredCardPeriod: {required},
           insuredCountry: {required, maxLength: maxLength(64)},
           insuredHeight: {required, int, maxLength: maxLength(3)},

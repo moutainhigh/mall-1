@@ -11,8 +11,10 @@
     </group>
     <p style="line-height: 2.7; background: #ffffff; padding-left: 1rem">
       设置成默认收货地址
-      <img v-if="!isDefault" class="isDefault" src="../../assets/img/common/Checkmark_nor.png" @click="isDefault = !isDefault">
-      <img v-if="isDefault" class="isDefault" src="../../assets/img/common/Checkmark_sele.png" @click="isDefault = !isDefault">
+      <img v-if="!isDefault" class="isDefault" src="../../assets/img/common/Checkmark_nor.png"
+           @click="isDefault = !isDefault">
+      <img v-if="isDefault" class="isDefault" src="../../assets/img/common/Checkmark_sele.png"
+           @click="isDefault = !isDefault">
     </p>
   </div>
 </template>
@@ -22,7 +24,7 @@
   import {ChinaAddressData, Group, XAddress, XInput, XTextarea, Toast} from 'vux'
 
   export default {
-    name: "AddAddress",
+    name: "EditAddress",
     components: {
       headTop,
       Group,
@@ -33,7 +35,7 @@
     },
     data() {
       return {
-        headTitle: '新增收货地址',
+        headTitle: '编辑收货地址',
         addressData: ChinaAddressData,
         isDefault: false
       }

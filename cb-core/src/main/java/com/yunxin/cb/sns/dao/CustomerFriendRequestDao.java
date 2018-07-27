@@ -22,7 +22,7 @@ public interface CustomerFriendRequestDao extends JpaRepository<CustomerFriendRe
      @Query("update CustomerFriendRequest cr set cr.state = ?3 where cr.friendCustomer.customerId=?1 and cr.customer.customerId=?2")
      public void updateCustomerFriendRequestState(int friendId,int customerId,int state);
      @Modifying
-     @Query("delete from CustomerFriendRequest cr where cr.friendCustomer.customerId=?1 and cr.customer.customerId=?2")
+     @Query("delete from CustomerFriendRequest cr where  cr.customer.customerId=?1 and cr.friendCustomer.customerId=?2 ")
      public void deleteCustomerFriendRequest(int friendId,int customerId);
 
 }

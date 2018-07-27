@@ -16,6 +16,9 @@
       <span class="title_text">{{headTitle}}</span>
     </section>
     <slot name="head-tab"></slot>
+    <slot name="edit" v-if="edit">
+      <span style="position: absolute; right: 1rem; top: 0.8rem;">编辑</span>
+    </slot>
   </header>
 </template>
 
@@ -24,7 +27,7 @@
     data() {
       return {}
     },
-    props: ['signinUp', 'headTitle', 'goBack','local'],
+    props: ['signinUp', 'headTitle', 'goBack', 'local', 'edit'],
   }
 
 </script>

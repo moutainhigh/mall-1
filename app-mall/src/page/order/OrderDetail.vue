@@ -2,8 +2,12 @@
   <div>
     <head-top :headTitle="'订单详情'"></head-top>
     <div style="margin-top: 3rem;">
-      <div style="width: 100%;height: 5rem;background-color: #f5ca1d;">
-
+      <div>
+        <div class="order-head">
+          <div>进行退款中</div>
+          <div style="font-size: 0.8rem">您的售后服务已审核通过，进行退款中！</div>
+        </div>
+        <img src="../../assets/img/common/aftersale_bg.png" width="100%">
       </div>
       <div class="goods-info">
         <div style="padding:0.8rem 1rem;">
@@ -64,6 +68,13 @@
 </script>
 
 <style lang="scss" scoped>
+
+  .order-head {
+    position: absolute;
+    margin: 1rem 1rem 1rem 1.5rem;
+    color: #fff;
+    line-height: 2
+  }
 
   .goods-info {
     margin-top: .5rem;

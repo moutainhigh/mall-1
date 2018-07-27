@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top :local="true" :routerLocation="'/location'" :city="localCity">
+    <head-top :local="true">
       <div slot="search" style="width: 100%;">
         <div class="search-con" @click="toSearch">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
@@ -41,7 +41,7 @@
       <div class="adv-scroll">
         <div style="height: 5rem;padding-left: 0.7rem;" v-bind:style="{ width: milldeList.length* 14 + 'rem' }">
           <div style="display: inline-block;height: 5rem;" v-for="millde in milldeList">
-            <img src="../../assets/img/home/banner2.png" height="100%" style="margin: 0 5px;border-radius: 8px;">
+            <img :src="millde.picPath" height="100%" style="margin: 0 5px;border-radius: 8px;">
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
 
 <script>
   import headTop from "../../components/header/head"
-  import {getIndex, getVaildData} from "../../service/getData";
+  import {getIndex, getIndex2, getVaildData} from "../../service/getData";
   import { Swiper,SwiperItem} from 'vux'
   import AMap from 'AMap';
 
@@ -132,9 +132,9 @@
       getIndex().then(res=>{
         if (res.result == 'SUCCESS'){
           _this.homeList = res.data.homeList;
-          _this.brandList = res.data.brand.brandList;
-          _this.categoryThreeList = res.data.categoryThree.categoryThreeList;
-          _this.categoryFiveList = res.data.categoryFive.categoryFiveList;
+          _this.brandList = res.data.brandList;
+          _this.categoryThreeList = res.data.categoryThreeList;
+          _this.categoryFiveList = res.data.categoryFiveList;
           _this.milldeList = res.data.milldeList;
         }
         console.log(res);
@@ -166,6 +166,7 @@
     width: 25%;
     vertical-align: middle;
     text-align: center;
+    margin: 0.5rem 0;
   }
 
   .adv-scroll {
