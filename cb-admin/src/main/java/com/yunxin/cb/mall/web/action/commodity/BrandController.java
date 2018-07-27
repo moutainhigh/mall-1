@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.Brand;
+import com.yunxin.cb.mall.entity.meta.AttachmentState;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.service.IBrandService;
@@ -170,6 +171,8 @@ public class BrandController {
     public boolean removeBrandById(@RequestParam("brandId") int brandId) {
         try{
             brandService.removeBrandById(brandId);
+            //把图片删除掉
+            attachmentService.deleteAttachmentPictures(ObjectType.BRAND, brandId);
             return true;
         }catch (Exception e){
             return false;

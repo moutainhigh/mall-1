@@ -99,6 +99,7 @@ public class ActivityController implements ServletContextAware {
     @ResponseBody
     public boolean removeActivityById(@RequestParam("activityId") int activityId, HttpServletRequest request) {
         try {
+            attachmentService.deleteAttachmentPictures(ObjectType.ACTIVITY,activityId);
             activityService.removeActivityById(activityId);
             return true;
         } catch (Exception e) {
@@ -228,7 +229,6 @@ public class ActivityController implements ServletContextAware {
     @RequestMapping(value = "toActivityCommodities",method = RequestMethod.GET)
     public String toActivityCommodities(@RequestParam("activityId") int activityId, ModelMap modelMap) {
         modelMap.addAttribute("activity", activityService.findByActivityId(activityId));
-
         modelMap.addAttribute("activityCommodities", activityService.getActivityCommoditiesByActivityId(activityId));
         return "operation/activityCommoditys";
     }

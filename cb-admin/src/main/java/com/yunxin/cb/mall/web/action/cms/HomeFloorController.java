@@ -155,6 +155,7 @@ public class HomeFloorController implements ServletContextAware {
     @ResponseBody
     public int removeHomeFloorById(@RequestParam("floorId") int floorId, HttpServletRequest request) {
         try {
+            attachmentService.deleteAttachmentPictures(ObjectType.HOMEFLOORICO,floorId);
             floorService.removeHomeFloorById(floorId);
         } catch (Exception e) {
             e.printStackTrace();

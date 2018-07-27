@@ -128,6 +128,7 @@ public class ArticleChannelController {
     @ResponseBody
     public String removeArticleChannel(@RequestParam("channelId") int channelId) {
         try {
+            attachmentService.deleteAttachmentPictures(ObjectType.CHANNER,channelId);
             programaService.removeArticleChannelById(channelId);
             return "success";
         } catch (Exception e) {
