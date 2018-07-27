@@ -24,3 +24,13 @@ qiniu:
   bucket-1: crystal-ball-prod
   domain-1: http://resource.999shuijingqiu.com/
 
+#融云IM
+rongcloud:
+  appKey: vnroth0kv8sxo
+  appSecret: xR4RmfFyJhA
+
+#APP自定义配置
+application:
+  default:
+    avatarUrl: http://resource.999shuijingqiu.com/avatar.png
+  searchBaseUrl: http://localhost:8168/search/
