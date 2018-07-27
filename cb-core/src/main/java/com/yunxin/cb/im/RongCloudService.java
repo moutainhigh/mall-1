@@ -88,11 +88,12 @@ public class RongCloudService {
     public void sendPrivateMessage(String accountName, String friendAccountName) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         CmdMsgMessage txtMessage = new CmdMsgMessage("DeleteFriend", "DeleteFriend");
-        PrivateMessage systemMessage = new PrivateMessage()
+        PrivateMessage privateMessage = new PrivateMessage()
                 .setSenderId(accountName)
                 .setTargetId(new String[]{friendAccountName})
-                .setObjectName(txtMessage.getType());
-        ResponseResult result = rongCloud.message.system.send(systemMessage);
+                .setObjectName(txtMessage.getType())
+                .setContent(txtMessage);
+        ResponseResult result = rongCloud.message.msgPrivate.send(privateMessage);
         if (result.getCode() != 200) {
             throw new Exception(result.getMsg());
         }
