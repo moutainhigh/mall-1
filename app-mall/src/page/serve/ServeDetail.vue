@@ -2,8 +2,12 @@
   <div>
     <head-top :headTitle="'服务单详情'"></head-top>
     <div style="margin-top: 3rem;">
-      <div style="width: 100%;height: 5rem;background-color: #f5ca1d;">
-
+      <div>
+        <div class="order-head">
+          <div>进行退款中</div>
+          <div style="font-size: 0.8rem">您的售后服务已审核通过，进行退款中！</div>
+        </div>
+        <img src="../../assets/img/common/aftersale_bg.png" width="100%">
       </div>
       <div class="order-info">
         <div class="info-detail">
@@ -14,6 +18,44 @@
       <div class="order-info">
         <div class="info-title">
           售后进度
+        </div>
+        <div class="info-course">
+          <div class="course-img">
+            <img class="state" src="../../assets/img/serve/ic_aftersale_jindu_sele.png">
+            <img class="state-line" src="../../assets/img/serve/progressbar01.png" height="2">
+            <div style="height: 4rem;;">
+              <div style="font-size: 0.8rem">提交申请</div>
+              <div style="font-size: 0.6rem">2018-07-20</div>
+              <div style="font-size: 0.6rem">01:10:40</div>
+            </div>
+          </div>
+          <div class="course-img">
+            <img class="state" src="../../assets/img/serve/ic_aftersale_jindu_sele.png">
+            <img class="state-line" src="../../assets/img/serve/progressbar01.png" height="2">
+            <div style="height: 4rem;;">
+              <div style="font-size: 0.8rem">提交申请</div>
+              <div style="font-size: 0.6rem">2018-07-20</div>
+              <div style="font-size: 0.6rem">01:10:40</div>
+            </div>
+          </div>
+          <div class="course-img">
+            <img class="state" src="../../assets/img/serve/ic_aftersale_jindu_sele.png">
+            <img class="state-line" src="../../assets/img/serve/progressbar01.png" height="2">
+            <div style="height: 4rem;;">
+              <div style="font-size: 0.8rem">提交申请</div>
+              <div style="font-size: 0.6rem">2018-07-20</div>
+              <div style="font-size: 0.6rem">01:10:40</div>
+            </div>
+          </div>
+          <div class="course-img">
+            <img class="state" src="../../assets/img/serve/ic_aftersale_jindu_sele.png">
+            <div style="height: 4rem;;">
+              <div style="font-size: 0.8rem">完成</div>
+            </div>
+          </div>
+        </div>
+        <div class="info-title" style="border: 0">
+          退货原因：<span>个人原因</span>
         </div>
       </div>
 
@@ -34,15 +76,23 @@
 
 <script>
   import headTop from '../../components/header/head'
-    export default {
-        name: "ServeDetail",
-      components: {
-        headTop
-      },
-    }
+
+  export default {
+    name: "ServeDetail",
+    components: {
+      headTop
+    },
+  }
 </script>
 
 <style lang="scss" scoped>
+
+  .order-head {
+    position: absolute;
+    margin: 1rem 1rem 1rem 1.5rem;
+    color: #fff;
+    line-height: 2
+  }
 
   .order-info {
     margin-top: 0.5rem;
@@ -58,7 +108,7 @@
     .info-detail {
       padding: 0.8rem 1rem;
       line-height: 2;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       .info-copy {
         display: inline-block;
         float: right;
@@ -82,6 +132,28 @@
       .time {
         margin-top: 0.5rem;
         font-size: 0.7rem;
+      }
+    }
+
+    .info-course {
+      margin: 1rem 1rem 0;
+      font-size: 0;
+      .course-img {
+        display: inline-block;
+        width: 25%;
+        text-align: center;
+        vertical-align: top;
+      }
+      .state {
+        width: 35%;
+        vertical-align: middle;
+      }
+      .state-line {
+        vertical-align: middle;
+        position: absolute;
+        width: 10%;
+        margin-left: 2.25%;
+        margin-top: 4%;
       }
     }
   }

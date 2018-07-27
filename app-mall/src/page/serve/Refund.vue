@@ -59,9 +59,8 @@
       return {
         relates: [["个人原因", "物品原因", "其他原因"]],
       }
-    }
-    , created() {
-      console.log(new Date());
+    }, created() {
+
     }
   }
 </script>

@@ -8,7 +8,15 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  created(){
+    if(!window.navigator.onLine){
+      alert("网络未连接");
+    }
+    window.addEventListener('offline', function(){
+      alert("网络未连接");
+    });
+  }
 }
 </script>
 
