@@ -3,6 +3,7 @@ package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.entity.meta.PaymentType;
 import com.yunxin.cb.mall.service.CommodityService;

@@ -2,6 +2,8 @@ package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.PriceSection;
+import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.meta.Result;
