@@ -578,7 +578,7 @@ public class CustomerService implements ICustomerService {
         customerFriendDao.delete(customerFriendId2);
         Customer customer = customerDao.findByCustomerId(customerId);
         Customer friendCustomer = customerDao.findByCustomerId(friendId);
-        rongCloudService.sendPrivateMessage(customer.getAccountName(), friendCustomer.getAccountName());
+        rongCloudService.sendPrivateMessage(customer.getAccountName(), friendCustomer.getAccountName(),"DeleteFriend");
     }
 
     @Override
@@ -739,7 +739,7 @@ public class CustomerService implements ICustomerService {
      * @date        2018/7/19 20:16
      */
     @Transactional
-    public void addTwoWayFriend(Customer myself,Customer customer){
+    public void addTwoWayFriend(Customer myself,Customer customer) throws Exception{
         //修改添加好友记录为已同意
         customerFriendRequestService.updateCustomerFriendRequestState(customer.getCustomerId(), myself.getCustomerId(), CustomerFriendRequestState.AGREE.getState());
         CustomerFriend customerFriend = new CustomerFriend();
@@ -763,6 +763,7 @@ public class CustomerService implements ICustomerService {
         customerFriend.setCreateTime(new Date());
         customerFriend.setState(CustomerFriendState.NORMAL);
         addFriend(customerFriend);
+        rongCloudService.sendPrivateMessage(customer.getAccountName(), myself.getAccountName(),"AcceptResponse");
     }
 
 }

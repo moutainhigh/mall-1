@@ -81,14 +81,18 @@ public class CustomerResource extends BaseResource {
     @ApiOperation(value = "添加好友")
     @PostMapping(value = "addFriend")
     public ResponseResult addFriend(@RequestParam("mobile") String mobile, @ModelAttribute("customerId") int customerId) {
-        Customer myself = customerService.getCustomerById(customerId);
-        Customer customer = customerService.getCustomerByMobile(mobile);
-        if (customer == null) {
-            return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
+        try {
+            Customer myself = customerService.getCustomerById(customerId);
+            Customer customer = customerService.getCustomerByMobile(mobile);
+            if (customer == null) {
+                return new ResponseResult(Result.FAILURE, "您所添加的用户不存在");
+            }
+            customerService.addTwoWayFriend(customer,myself);
+            return new ResponseResult(Result.SUCCESS);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return new ResponseResult(Result.FAILURE,"好友添加失败");
         }
-        customerService.addTwoWayFriend(customer,myself);
-
-        return new ResponseResult(Result.SUCCESS);
     }
 
 
