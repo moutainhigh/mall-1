@@ -32,7 +32,7 @@ public class RongCloudService {
     public String register(Customer customer) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         User User = rongCloud.user;
-        String nickName = StringUtils.isNotBlank(customer.getNickName())?customer.getNickName():customer.getAccountName();
+        String nickName = StringUtils.isNotBlank(customer.getNickName()) ? customer.getNickName() : customer.getAccountName();
         UserModel user = new UserModel()
                 .setId(customer.getAccountName())
                 .setName(nickName)
@@ -50,7 +50,7 @@ public class RongCloudService {
     public void update(Customer customer) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         User User = rongCloud.user;
-        String nickName = StringUtils.isNotBlank(customer.getNickName())?customer.getNickName():customer.getAccountName();
+        String nickName = StringUtils.isNotBlank(customer.getNickName()) ? customer.getNickName() : customer.getAccountName();
         UserModel user = new UserModel()
                 .setId(customer.getAccountName())
                 .setName(nickName)
@@ -85,14 +85,15 @@ public class RongCloudService {
         }
     }
 
-    public void sendPrivateMessage(String accountName, String friendAccountName) throws Exception {
+    public void sendPrivateMessage(String senderId, String targetId, String cmd) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
-        CmdMsgMessage txtMessage = new CmdMsgMessage("DeleteFriend", "DeleteFriend");
-        PrivateMessage systemMessage = new PrivateMessage()
-                .setSenderId(accountName)
-                .setTargetId(new String[]{friendAccountName})
-                .setObjectName(txtMessage.getType());
-        ResponseResult result = rongCloud.message.system.send(systemMessage);
+        CmdMsgMessage txtMessage = new CmdMsgMessage(cmd, cmd);
+        PrivateMessage privateMessage = new PrivateMessage()
+                .setSenderId(senderId)
+                .setTargetId(new String[]{targetId})
+                .setObjectName(txtMessage.getType())
+                .setContent(txtMessage);
+        ResponseResult result = rongCloud.message.msgPrivate.send(privateMessage);
         if (result.getCode() != 200) {
             throw new Exception(result.getMsg());
         }

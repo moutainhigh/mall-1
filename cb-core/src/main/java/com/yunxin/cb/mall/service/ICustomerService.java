@@ -189,6 +189,6 @@ public interface ICustomerService {
 
     List<CustomerFriend> getBlacklist(int customerId)throws Exception;
 
-    public void addTwoWayFriend(Customer myself,Customer customer);
+    public void addTwoWayFriend(Customer myself,Customer customer) throws Exception;
 
 }

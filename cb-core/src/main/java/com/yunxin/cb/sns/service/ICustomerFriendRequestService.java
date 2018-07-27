@@ -14,5 +14,11 @@ public interface ICustomerFriendRequestService {
 
     public void updateCustomerFriendRequestState(int friendId,int customerId,int state);
 
+    /**
+     * 删除好友请求通知
+     * @param
+     */
+    public void deleteCustomerFriendRequestById(int friendId,int customerId);
+
     public CustomerFriendRequest addCustomerFriendRequest(Customer customer,Customer friendCustomer,String requestMessage);
 }

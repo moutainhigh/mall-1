@@ -189,18 +189,6 @@
                 <!-- End .toolbar -->
                 <div class="spacer-10"></div>
 
-                <div class="toolbar responsive-helper">
-                    <header>
-                        <div class="pull-left">
-                            <h3>七牛图片管理</h3>
-                        </div>
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;详情</a>
-                            </div>
-                        </div>
-                    </header>
-                </div>
                 <div class="table-wrapper">
                     <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" selectable="true" height="450" resizable="true">
                         <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="10"/>
