@@ -39,5 +39,9 @@ public interface IStorageService {
     public Map<String,String> put(InputStream inputStream, ObjectType objectType);
 
 
-    public Map<String,String> deleteByfileName(ObjectType objectType,String fileName);
+
+    public void refresh(String fileName);
+
+
+    public Map<String,String> deleteByfileName(String fileName);
 }

@@ -50,11 +50,12 @@ public class FileResource {
                     InputStream ins = file.getInputStream();
                     File f = new File(file.getOriginalFilename());
                     inputStreamToFile(ins, f);
-                    String key = file.getOriginalFilename().substring(0, file.getOriginalFilename().length()-4) + ".apk";
+                    String key = file.getOriginalFilename();
                     url = qiniuStorageService.put(file.getInputStream(), type, key);
                     Map<String, Object> map = AppParseUtil.readAPK(f.getPath());
                     result.put("versionCode", map.get("versionCode").toString());
                     result.put("versionName", map.get("versionName").toString());
+                    qiniuStorageService.refresh(key);
                 } else {
                     url = qiniuStorageService.put(file.getInputStream(), type);
                 }
@@ -113,7 +114,7 @@ public class FileResource {
         Map<String, String> result = new HashMap<String, String>();
         //获取保存文件的key
         String fileName=type+"/"+key;
-        qiniuStorageService.deleteByfileName(type,fileName);
+        qiniuStorageService.deleteByfileName(fileName);
         return result;
 
     }

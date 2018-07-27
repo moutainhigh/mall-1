@@ -1,6 +1,8 @@
 package com.yunxin.cb.storage;
 
 import com.google.gson.Gson;
+import com.qiniu.cdn.CdnManager;
+import com.qiniu.cdn.CdnResult;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -178,6 +180,35 @@ public class QiniuStorageService implements IStorageService {
     }
 
     /**
+     * 刷新七牛云文件
+     * @author      likang
+     * @param fileName
+     * @return      void
+     * @exception
+     * @date        2018/7/27 18:31
+     */
+    public void refresh(String fileName){
+        Auth auth = Auth.create(accessKey, secretKey);
+        String bucket = bucket_1;
+        String domain = domain_1;
+        String upToken = auth.uploadToken(bucket);
+        CdnManager c = new CdnManager(auth);
+        String url=domain_1+fileName;
+        //待刷新的链接列表
+        String[] urls = new String[]{
+                url
+        };
+        try {
+            //单次方法调用刷新的链接不可以超过100个
+            CdnResult.RefreshResult result = c.refreshUrls(urls);
+            System.out.println(result.code);
+            //获取其他的回复内容
+        } catch (QiniuException e) {
+            System.err.println(e.response.toString());
+        }
+    }
+
+    /**
      * 根据fileName删除文件
      * @author      likang
      * @param objectType
@@ -187,7 +218,7 @@ public class QiniuStorageService implements IStorageService {
      * @date        2018/7/24 16:05
      */
     @Override
-    public Map<String,String> deleteByfileName(ObjectType objectType,String fileName) {
+    public Map<String,String> deleteByfileName(String fileName) {
         Map<String,String> result=new HashMap();
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         Long timeStr=new Date().getTime();
