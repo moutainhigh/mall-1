@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecificationExecutor<Customer>, CustomerPlusDao, BaseDao<Customer> {
 
-    @Query("select c from Customer c left join fetch c.rank where c.accountName=?1 and c.password=?2 and c.enabled=?3")
+    @Query("select c from Customer c left join fetch c.rank where (c.accountName=?1 or c.mobile=?1) and c.password=?2 and c.enabled=?3")
     public Customer findByAccountNameAndPasswordAndEnabled(String accountName, String password, boolean enabled);
 
     @Query("select c from Customer c where c.accountName=?1 and c.mobile=?2 and c.enabled=?3")

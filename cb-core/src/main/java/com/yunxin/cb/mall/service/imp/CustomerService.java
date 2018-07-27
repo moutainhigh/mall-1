@@ -280,6 +280,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer generateCode(String invitationCode) {
+        logger.info("generateCode----------"+invitationCode);
         final int initialLevel=1;
        return new Customer(){
             {
@@ -292,7 +293,7 @@ public class CustomerService implements ICustomerService {
                             int customerLevel=recommendCustomer.getCustomerLevel();
                             String recommendLevelCode=recommendCustomer.getLevelCode();
                             setCustomerLevel(customerLevel+initialLevel);
-
+                            logger.info("invitationCode----------"+invitationCode);
                             setLevelCode(checkGenerateCode(recommendLevelCode,generateCode));
                         }else{
                             setCustomerLevel(initialLevel);
@@ -303,6 +304,7 @@ public class CustomerService implements ICustomerService {
                         setLevelCode(generateCode);
                     }
                     setInvitationCode(invitationCodes);
+                    logger.info("invitationCodes----------"+invitationCodes);
                 } catch (Exception e) {
                     logger.error("生成编码异常",e);
                 }
