@@ -15,6 +15,7 @@ import com.yunxin.cb.sms.SmsHelper;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import com.yunxin.core.util.CommonUtils;
+import com.yunxin.core.util.IdGenerate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -145,7 +146,9 @@ public class MainResource extends BaseResource {
             String invitationCode=customerVo.getInvitationCode();
             Customer recommendCustomer = customerService.getCustomerByInvitationCode(invitationCode);
             Customer customer = new Customer();
-            customer.setAccountName(customerVo.getMobile());
+            //随机数
+//            IdWorker idWorker = IdWorker.getFlowIdWorkerInstance();
+            customer.setAccountName(IdGenerate.generateRandomStr(10));
             customer.setMobile(customerVo.getMobile());
             customer.setPassword(customerVo.getPwd());
             customer.setAvatarUrl(avatarUrl);
@@ -161,7 +164,7 @@ public class MainResource extends BaseResource {
 
             if(recommendCustomer != null){
                 customer.setRecommendCustomer(recommendCustomer);
-                Customer customerCode=customerService.generateCode(invitationCode);
+                Customer customerCode=customerService.generateCode(recommendCustomer.getInvitationCode());
                 if(customerCode!=null){
                     customer.setLevelCode(customerCode.getLevelCode());
                     customer.setCustomerLevel(customerCode.getCustomerLevel());
@@ -272,7 +275,7 @@ public class MainResource extends BaseResource {
         VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(mobile);
         // session.getAttribute(mobile);
         if (verificationCode != null && (System.currentTimeMillis() - verificationCode.getSendTime()) < 60000) {
-            responseResult.setMessage("发送过于频繁，请稍后在试！");
+            responseResult.setMessage("发送过于频繁，请稍后再试！");
             return responseResult;
         }
         switch (sendType) {
@@ -346,11 +349,10 @@ public class MainResource extends BaseResource {
     @PostMapping(value = "updateCustomer")
     public ResponseResult  updateCustomer(@RequestBody CustomerUpdateVo customerUpdateVo,@ModelAttribute("customerId") int customerId){
         try{
-            customerService.updateCustomerMsg(customerId,customerUpdateVo);
+            return new ResponseResult(customerService.updateCustomerMsg(customerId,customerUpdateVo));
         }catch (Exception e){
             logger.error(e.getMessage());
             return new ResponseResult(Result.FAILURE,"服务器异常");
         }
-        return new ResponseResult(Result.SUCCESS);
     }
 }

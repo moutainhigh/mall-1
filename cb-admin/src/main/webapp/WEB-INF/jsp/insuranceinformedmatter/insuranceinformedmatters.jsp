@@ -165,7 +165,7 @@
 
                         <div class="pull-left">
                             <div class="toolbar-field">
-                                <strong>事项描述:</strong>
+                                <strong>事项组:</strong>
                             </div>
                             <div class="toolbar-field">
                                 <div class="toolbar-field">

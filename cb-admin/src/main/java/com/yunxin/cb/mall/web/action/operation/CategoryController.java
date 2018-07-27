@@ -155,6 +155,7 @@ public class CategoryController implements ServletContextAware {
     @ResponseBody
     public boolean removeCategoryById(@RequestParam("categoryId") int categoryId) {
         try {
+            attachmentService.deleteAttachmentPictures(ObjectType.CATEGORY,categoryId);
             categoryService.removeCategoryById(categoryId);
             return true;
         } catch (Exception e) {

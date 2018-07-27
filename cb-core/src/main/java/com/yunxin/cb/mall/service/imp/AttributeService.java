@@ -5,6 +5,8 @@ package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.mall.dao.*;
 import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.service.IAttributeService;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
@@ -42,11 +44,7 @@ public class AttributeService implements IAttributeService {
     private CatalogAttributeGroupDao catalogAttributeGroupDao;
 
     @Resource
-    private SpecDao specDao;
-
-    @Resource
-    private CommoditySpecDao commoditySpecDao;
-
+    private IAttachmentService attachmentService;
 
     @Resource
     private ProductAttributeDao productAttributeDao;
@@ -104,6 +102,7 @@ public class AttributeService implements IAttributeService {
         String[] attributeName = attributeGroup.getAttributeName();
         String[] imagePath = attributeGroup.getImagePath();
         int[] sortOrder = attributeGroup.getSortOrder();
+        attachmentService.deleteAttachmentPictures(ObjectType.ATTRIBUTE,oldAttributeGroup.getGroupId());
         for (int i = 0; i < attributeName.length; i++) {
             CatalogAttribute attribute = new CatalogAttribute();
             attribute.setCatalogAttributeGroup(oldAttributeGroup);
@@ -112,7 +111,10 @@ public class AttributeService implements IAttributeService {
                 attribute.setImagePath(imagePath[i]);
             }
             attribute.setSortOrder((short) sortOrder[i]);
-            catalogAttributeDao.save(attribute);
+            attribute=catalogAttributeDao.save(attribute);
+            if(imagePath[i]!=null&&!"".equals(imagePath[i])){
+                attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,oldAttributeGroup.getGroupId(),imagePath[i]+",0,0");
+            }
         }
         return attributeGroup;
     }
@@ -127,6 +129,7 @@ public class AttributeService implements IAttributeService {
 
     @Override
     public void removeCatalogAttributeGroupById(int groupId) {
+        attachmentService.deleteAttachmentPictures(ObjectType.ATTRIBUTE,groupId);
         catalogAttributeGroupDao.delete(groupId);
     }
 
@@ -255,6 +258,7 @@ public class AttributeService implements IAttributeService {
         String[] attributeName = attributeGroup.getAttributeName();
         String[] imagePath = attributeGroup.getImagePath();
         int[] sortOrder = attributeGroup.getSortOrder();
+        attachmentService.deleteAttachmentPictures(ObjectType.ATTRIBUTE,attributeGroup.getGroupId());
         for (int i = 0; i < attributeName.length; i++) {
             Attribute attribute = new Attribute();
             attribute.setAttributeGroup(attributeGroup);
@@ -264,9 +268,13 @@ public class AttributeService implements IAttributeService {
             }
             attribute.setSortOrder((short) sortOrder[i]);
             attributeDao.save(attribute);
+            if(imagePath[i]!=null&&!"".equals(imagePath[i])){
+                attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,attributeGroup.getGroupId(),imagePath[i]+",0,0");
+            }
         }
         return attributeGroup;
     }
+
 
     @Override
     public AttributeGroup updateAttributeGroup(AttributeGroup attributeGroup) throws EntityExistException {
@@ -302,6 +310,10 @@ public class AttributeService implements IAttributeService {
                 attribute.setAttributeName(attributeName[i]);
                 attribute.setImagePath(imgPath);
                 attribute.setSortOrder((short) sortOrder[i]);
+                if(imgPath!=null&&!"".equals(imgPath)){
+                    attachmentService.deleteAttachmentPictures(ObjectType.ATTRIBUTE,attribute.getAttributeId());
+                    attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,attribute.getAttributeId(),imgPath+",0,0");
+                }
             } else {
                 Attribute attribute = new Attribute();
                 attribute.setAttributeGroup(attributeGroup);
@@ -309,6 +321,10 @@ public class AttributeService implements IAttributeService {
                 attribute.setImagePath(imgPath);
                 attribute.setSortOrder((short) sortOrder[i]);
                 attributeDao.save(attribute);
+                if(imgPath!=null&&!"".equals(imgPath)){
+                    attachmentService.deleteAttachmentPictures(ObjectType.ATTRIBUTE,attribute.getAttributeId());
+                    attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,attribute.getAttributeId(),imgPath+",0,0");
+                }
             }
         }
         return oldAttributeGroup;
