@@ -1,7 +1,7 @@
 # 测试环境配置
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/skc?useUnicode=true&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/crystal_ball?useUnicode=true&autoReconnect=true
     username: root
     password: Yunxin@2018!#%
   session:
@@ -33,22 +33,10 @@ spring:
 
 #7牛云存储
 qiniu:
-#  accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
-#  secretKey: 9fglZdOXWmLXbU1rzroDOr2anFZydhnuKZjzBb-c
-#  bucket-1: crystal-ball-prod
-#  bucket-2: crystal-ball-paperwork-prod
-#  domain-1: http://resource.999shuijingqiu.com/
-#  domain-2: http://pc73xwx6z.bkt.clouddn.com/
-#  accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
-#  secretKey: 9fglZdOXWmLXbU1rzroDOr2anFZydhnuKZjzBb-c
-#  bucket-1: crystal-ball
-#  bucket-2: crystal-ball-paperwork
-#  domain-1: http://pb9sg55i7.bkt.clouddn.com/
-#  domain-2: http://pbf9p2pks.bkt.clouddn.com/
-  accessKey: 8B9RI7jHE9trxKieyEuwUGDAALhjkQxVmqOCRRAf
-  secretKey: mb8r0wVtEx-nN8jmNIVZ7up5STH21E4eqiAvyYZG
-  bucket-1: elevenspace
-  domain-1: http://oty8vd0fp.bkt.clouddn.com/
+  accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
+  secretKey: 9fglZdOXWmLXbU1rzroDOr2anFZydhnuKZjzBb-c
+  bucket-1: crystal-ball-prod
+  domain-1: http://resource.999shuijingqiu.com/
 
 #融云IM
 rongcloud:

@@ -4,8 +4,10 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Attachment;
-import com.yunxin.cb.mall.entity.meta.FileType;
+import com.yunxin.cb.mall.entity.meta.AttachmentState;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.core.persistence.PageSpecification;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -21,4 +23,8 @@ public interface IAttachmentService {
 
 
     public void deleteAttachmentPictures(ObjectType objectType, int objectId);
+
+    public void updateStateByObjectTypeAndObjectId(ObjectType objectType, int objectId, AttachmentState attachmentState);
+
+    public Page<Attachment> pageAttachment(final PageSpecification<Attachment> queryRequest);
 }

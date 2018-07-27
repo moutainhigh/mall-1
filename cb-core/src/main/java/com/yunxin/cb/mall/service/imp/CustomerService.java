@@ -25,7 +25,8 @@ import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CommonUtils;
-import com.yunxin.core.util.DmSequenceUtil;
+import com.yunxin.core.util.DmSequenceFourUtil;
+import com.yunxin.core.util.DmSequenceSixUtil;
 import com.yunxin.core.util.LogicUtils;
 import io.rong.models.response.BlackListResult;
 import io.rong.models.user.UserModel;
@@ -280,19 +281,20 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer generateCode(String invitationCode) {
+        logger.info("generateCode----------"+invitationCode);
         final int initialLevel=1;
        return new Customer(){
             {
                 try {
-                    String generateCode=checkLevelCode(DmSequenceUtil.getNoRepeatId());
-                    String invitationCodes=checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
+                    String generateCode=checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
+                    String invitationCodes=checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
                     if(StringUtils.isNotBlank(invitationCode)){
                         Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
                         if(recommendCustomer!=null){
                             int customerLevel=recommendCustomer.getCustomerLevel();
                             String recommendLevelCode=recommendCustomer.getLevelCode();
                             setCustomerLevel(customerLevel+initialLevel);
-
+                            logger.info("invitationCode----------"+invitationCode);
                             setLevelCode(checkGenerateCode(recommendLevelCode,generateCode));
                         }else{
                             setCustomerLevel(initialLevel);
@@ -303,6 +305,7 @@ public class CustomerService implements ICustomerService {
                         setLevelCode(generateCode);
                     }
                     setInvitationCode(invitationCodes);
+                    logger.info("invitationCodes----------"+invitationCodes);
                 } catch (Exception e) {
                     logger.error("生成编码异常",e);
                 }
@@ -343,7 +346,7 @@ public class CustomerService implements ICustomerService {
             Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
             if(recommendCustomer!=null) {
                 try {
-                    return  checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
+                    return  checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -360,7 +363,7 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer=getByLevelCode(levelCode+generateCode);
         if(recommendCustomer!=null) {
             try {
-                return  checkGenerateCode(levelCode,DmSequenceUtil.getNoRepeatId());
+                return  checkGenerateCode(levelCode,DmSequenceFourUtil.getNoRepeatId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -371,7 +374,7 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer=getByLevelCode(generateCode);
         if(recommendCustomer!=null) {
             try {
-                return  checkLevelCode(DmSequenceUtil.getNoRepeatId());
+                return  checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,5 +1,8 @@
 package com.yunxin.cb.search.vo;
 
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 /**
  * 运营分类
  */
@@ -17,6 +20,7 @@ public class Category implements java.io.Serializable {
     /**
      * 分类名称
      */
+    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String categoryName;
     /**
      * 排序号
