@@ -26,6 +26,7 @@ import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CommonUtils;
 import com.yunxin.core.util.DmSequenceFourUtil;
+import com.yunxin.core.util.DmSequenceSixUtil;
 import com.yunxin.core.util.LogicUtils;
 import io.rong.models.response.BlackListResult;
 import io.rong.models.user.UserModel;
@@ -286,7 +287,7 @@ public class CustomerService implements ICustomerService {
             {
                 try {
                     String generateCode=checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
-                    String invitationCodes=checkInvitationCode(DmSequenceFourUtil.getNoRepeatId());
+                    String invitationCodes=checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
                     if(StringUtils.isNotBlank(invitationCode)){
                         Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
                         if(recommendCustomer!=null){
@@ -345,7 +346,7 @@ public class CustomerService implements ICustomerService {
             Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
             if(recommendCustomer!=null) {
                 try {
-                    return  checkInvitationCode(DmSequenceFourUtil.getNoRepeatId());
+                    return  checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
