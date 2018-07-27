@@ -58,6 +58,9 @@ public class CustomerResource extends BaseResource {
         Customer friend = customerService.getCustomerByMobile(mobile);
         if (friend != null) {
             friend.setFriend(customerService.isFriend(customerId, friend.getCustomerId()) || friend.getCustomerId() == customerId);
+            CustomerFriend customerFriend= customerService.getFriend(customerId,friend.getCustomerId());
+            if(null!=customerFriend)
+                friend.setState(customerFriend.getState().name());
             return new ResponseResult(friend);
         }
         return new ResponseResult(Result.FAILURE, "未找到相关好友");
@@ -68,6 +71,9 @@ public class CustomerResource extends BaseResource {
         Customer customer = customerService.getAccountName(accountName);
         if (customer != null) {
             customer.setFriend(customerService.isFriend(customerId, customer.getCustomerId()) || customer.getCustomerId() == customerId);
+            CustomerFriend customerFriend= customerService.getFriend(customerId,customer.getCustomerId());
+            if(null!=customerFriend)
+                customer.setState(customerFriend.getState().name());
             return new ResponseResult(customer);
         }
         return new ResponseResult(Result.FAILURE, "未找到用户信息");
@@ -257,10 +263,16 @@ public class CustomerResource extends BaseResource {
     @ApiOperation(value = "用户点赞")
     @PostMapping(value = "praise")
     public ResponseResult praise(@ModelAttribute("customerId") int customerId) {
-        if(customerService.customerPraise(customerId))
-            return new ResponseResult(Result.SUCCESS);
-        else
-            return new ResponseResult(Result.FAILURE);
+        try{
+            if(customerService.customerPraise(customerId))
+                return new ResponseResult(Result.SUCCESS,"感恩成功");
+            else
+                return new ResponseResult(Result.FAILURE,"请先购买保险才能感恩推荐人");
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return new ResponseResult(Result.FAILURE,"服务器异常,请稍后重试");
+        }
+
     }
 
     @ApiOperation(value = "查询点赞用户")

@@ -41,7 +41,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
 
     @Transactional(rollbackFor = Exception.class)
     public ProductReturn applyOrderProductReturn(ProductReturn productReturn) throws Exception {
-        ProductReturn dbReturn = productReturnMapper.selectByOrderId(productReturn.getOrderId());
+        List<ProductReturn> dbReturn = productReturnMapper.selectByOrderId(productReturn.getOrderId());
         if (null != dbReturn) {
             throw new Exception("该订单已提交退货申请");
         }

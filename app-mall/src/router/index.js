@@ -10,6 +10,9 @@ import Home from '../page/home/Home'
 import Search from '../page/search/Search'
 import Location from '../page/location/Location'
 import ChooseCarType from '../page/carList/ChooseCarType'
+import ServerList from '../page/serve/ServerList'
+import MyAddress from '../page/address/MyAddress'
+import AddAddress from '../page/address/AddAddress'
 
 Vue.use(Router)
 
@@ -63,6 +66,21 @@ export default new Router({
       path: '/order-list',
       name: 'OrderList',
       component: OrderList
+    },
+    {
+      path: '/serve-list',
+      name: 'ServerList',
+      component: ServerList
+    },
+    {
+      path: '/my-address',
+      name: 'MyAddress',
+      component: MyAddress
+    },
+    {
+      path: '/add-address',
+      name: 'AddAddress',
+      component: AddAddress
     },
   ]
 })

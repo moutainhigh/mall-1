@@ -5,11 +5,13 @@ import com.yunxin.cb.web.CustomRequestMappingHandlerMapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.PathMatcher;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.util.UrlPathHelper;
 
 import java.util.Locale;
 
@@ -49,9 +51,30 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Override
     @Bean
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
-        RequestMappingHandlerMapping handlerMapping = new CustomRequestMappingHandlerMapping();
-        handlerMapping.setOrder(0);
-        handlerMapping.setInterceptors(getInterceptors());
-        return handlerMapping;
+        RequestMappingHandlerMapping mapping = new CustomRequestMappingHandlerMapping();
+        mapping.setOrder(0);
+        mapping.setInterceptors(getInterceptors());
+        mapping.setContentNegotiationManager(mvcContentNegotiationManager());
+        mapping.setCorsConfigurations(getCorsConfigurations());
+
+        PathMatchConfigurer configurer = getPathMatchConfigurer();
+        if (configurer.isUseSuffixPatternMatch() != null) {
+            mapping.setUseSuffixPatternMatch(configurer.isUseSuffixPatternMatch());
+        }
+        if (configurer.isUseRegisteredSuffixPatternMatch() != null) {
+            mapping.setUseRegisteredSuffixPatternMatch(configurer.isUseRegisteredSuffixPatternMatch());
+        }
+        if (configurer.isUseTrailingSlashMatch() != null) {
+            mapping.setUseTrailingSlashMatch(configurer.isUseTrailingSlashMatch());
+        }
+        UrlPathHelper pathHelper = configurer.getUrlPathHelper();
+        if (pathHelper != null) {
+            mapping.setUrlPathHelper(pathHelper);
+        }
+        PathMatcher pathMatcher = configurer.getPathMatcher();
+        if (pathMatcher != null) {
+            mapping.setPathMatcher(pathMatcher);
+        }
+        return mapping;
     }
 }
