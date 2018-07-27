@@ -150,6 +150,8 @@ public class ArticleController implements ServletContextAware {
     @RequestMapping(value = "removeArticleById", method = RequestMethod.GET)
     @ResponseBody
     public int removeArticleById(@RequestParam("articleId") int articleId) {
+        //把图片删除掉
+        attachmentService.deleteAttachmentPictures(ObjectType.ARTICLE, articleId);
         return articleService.removeArticleById(articleId);
     }
 

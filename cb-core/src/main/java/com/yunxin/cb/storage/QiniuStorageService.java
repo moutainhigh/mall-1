@@ -38,12 +38,6 @@ public class QiniuStorageService implements IStorageService {
     @Value("${qiniu.domain-1}")
     private String domain_1;
 
-    @Value("${qiniu.bucket-2}")
-    private String bucket_2;
-
-    @Value("${qiniu.domain-2}")
-    private String domain_2;
-
     private UploadManager uploadManager;
 
     public QiniuStorageService() {
@@ -58,24 +52,8 @@ public class QiniuStorageService implements IStorageService {
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = null;
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = null;
-        String domain = null;
-        switch (type) {
-            case ANDROID:
-                bucket = bucket_1;
-                domain = domain_1;
-                break;
-            case RESOURCE:
-            case INSURANCEPRODUCT:
-            case OTHER:
-                bucket = bucket_1;
-                domain = domain_1;
-                break;
-            case PAPERWORK:
-                bucket = bucket_2;
-                domain = domain_2;
-                break;
-        }
+        String bucket = bucket_1;
+        String domain = domain_1;
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(inputStream, key, upToken, null, null);
@@ -110,19 +88,8 @@ public class QiniuStorageService implements IStorageService {
     public String put(InputStream inputStream, UploadType type,String key) {
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = null;
-        String domain = null;
-        switch (type) {
-            case ANDROID:
-            case OTHER:
-                bucket = bucket_1;
-                domain = domain_1;
-                break;
-            case PAPERWORK:
-                bucket = bucket_2;
-                domain = domain_2;
-                break;
-        }
+        String bucket = bucket_1;
+        String domain = domain_1;
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(inputStream, key, upToken, null, null);
@@ -148,19 +115,8 @@ public class QiniuStorageService implements IStorageService {
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = null;
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = null;
-        String domain = null;
-        switch (type) {
-            case RESOURCE:
-            case OTHER:
-                bucket = bucket_1;
-                domain = domain_1;
-                break;
-            case PAPERWORK:
-                bucket = bucket_2;
-                domain = domain_2;
-                break;
-        }
+        String bucket = bucket_1;
+        String domain = domain_1;
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(data, key, upToken, null, null, true);

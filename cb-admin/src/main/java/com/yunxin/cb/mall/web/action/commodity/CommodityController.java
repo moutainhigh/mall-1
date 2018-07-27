@@ -266,6 +266,8 @@ public class CommodityController implements ServletContextAware {
     public boolean removeCombinationById(@RequestParam("combinationId") int combinationId) {
         try {
             commodityService.removeCombinationById(combinationId);
+            //把图片删除掉
+            attachmentService.deleteAttachmentPictures(ObjectType.COMMODITY, combinationId);
             return true;
         } catch (Exception e) {
             return false;

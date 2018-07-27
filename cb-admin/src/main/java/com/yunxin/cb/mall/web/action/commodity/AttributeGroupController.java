@@ -2,8 +2,8 @@ package com.yunxin.cb.mall.web.action.commodity;
 
 import com.yunxin.cb.mall.entity.AttributeGroup;
 import com.yunxin.cb.mall.entity.Commodity;
-import com.yunxin.cb.mall.service.IAttributeService;
-import com.yunxin.cb.mall.service.ICatalogService;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.*;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.util.ImageConverter;
 import com.yunxin.core.util.LogicUtils;
@@ -37,9 +37,6 @@ public class AttributeGroupController implements ServletContextAware {
     @Resource
     private IAttributeService attributeService;
 
-    @Resource
-    private ICatalogService catalogService;
-
     private ServletContext servletContext;
 
     @Override
@@ -60,23 +57,7 @@ public class AttributeGroupController implements ServletContextAware {
             return toAddAttributeGroup(attributeGroup.getCommodity().getCommodityId(), attributeGroup, modelMap);
         }
         try {
-            if (attributeGroup.isShowAsImage()) {
-                MediaPather.createPicSiteRealDir(servletContext, "attribute");
-                String[] imagePath = attributeGroup.getImagePath();
-                if(LogicUtils.isNotNullAndEmpty(imagePath)){
-                    for (int i = 0; i < imagePath.length; i++) {
-                        String iPath =  imagePath[i];
-                        if(null != iPath){
-                            File imageFile =  MediaPather.getPicStoreRealFile(servletContext, imagePath[i]);
-                            ImageConverter imageConverter = new ImageConverter(imageFile);
-                            imagePath[i] = "attribute/" + System.currentTimeMillis() + ".jpg";
-                            imageConverter.compressJpg(50, 50, MediaPather.getPicSiteRealPath(servletContext, imagePath[i]));
-                        }
-
-                    }
-                }
-            }
-            attributeService.addAttributeGroup(attributeGroup);
+            attributeGroup=attributeService.addAttributeGroup(attributeGroup);
         } catch (EntityExistException e) {
             e.printStackTrace();
         }
@@ -102,32 +83,6 @@ public class AttributeGroupController implements ServletContextAware {
             return toEditAttributeGroup(attributeGroup, modelMap);
         }
         try {
-//            if (attributeGroup.isShowAsImage()) {
-//                MediaPather.createPicSiteRealDir(servletContext, "attribute");
-//                String[] imagePath = attributeGroup.getImagePath();
-//                for (int i = 0; i < imagePath.length; i++) {
-//                    if (!imagePath[i].startsWith("attribute")) {
-//                        File imageFile = MediaPather.getPicStoreRealFile(servletContext,imagePath[i]);
-//                        ImageConverter imageConverter = new ImageConverter(imageFile);
-//                        imagePath[i] = "attribute/" + System.currentTimeMillis() + ".jpg";
-//                        imageConverter.compressJpg(50, 50, MediaPather.getPicSiteRealPath(servletContext, imagePath[i]));
-//                    }
-//                }
-//            }
-            MediaPather.createPicSiteRealDir(servletContext, "attribute");
-            String[] imagePath = attributeGroup.getImagePath();
-            if(LogicUtils.isNotNullAndEmpty(imagePath)) {
-                for (int i = 0; i < imagePath.length; i++) {
-                    if(LogicUtils.isNotNullAndEmpty(imagePath[i])){
-                        if (!imagePath[i].startsWith("attribute")) {
-                            File imageFile = MediaPather.getPicStoreRealFile(servletContext,imagePath[i]);
-                            ImageConverter imageConverter = new ImageConverter(imageFile);
-                            imagePath[i] = "attribute/" + System.currentTimeMillis() + ".jpg";
-                            imageConverter.compressJpg(50, 50, MediaPather.getPicSiteRealPath(servletContext, imagePath[i]));
-                        }
-                    }
-                }
-            }
             attributeGroup = attributeService.updateAttributeGroup(attributeGroup);
         } catch (EntityExistException e) {
             e.printStackTrace();

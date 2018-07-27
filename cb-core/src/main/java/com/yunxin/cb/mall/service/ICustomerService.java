@@ -162,7 +162,7 @@ public interface ICustomerService {
 
     public CustomerFriend addFriend(CustomerFriend customerFriend);
 
-    public void delFriendById(CustomerFriendId customerFriendId);
+    public void delFriendById(int customerId, int friendId) throws Exception;
 
     boolean isFriend(int customerId, int friendId);
     CustomerFriend getFriend(int customerId, int friendId);
@@ -189,6 +189,6 @@ public interface ICustomerService {
 
     List<CustomerFriend> getBlacklist(int customerId)throws Exception;
 
-    public void addTwoWayFriend(Customer myself,Customer customer);
+    public void addTwoWayFriend(Customer myself,Customer customer) throws Exception;
 
 }

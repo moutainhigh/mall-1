@@ -169,6 +169,9 @@
       },
       {
         "name": "角色管理", "code": "132", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../security/roles.do"
+      },
+      {
+        "name": "七牛图片管理", "code": "133", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../attachment/attachments.do"
       }
     ]
   },

@@ -25,7 +25,8 @@ import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CommonUtils;
-import com.yunxin.core.util.DmSequenceUtil;
+import com.yunxin.core.util.DmSequenceFourUtil;
+import com.yunxin.core.util.DmSequenceSixUtil;
 import com.yunxin.core.util.LogicUtils;
 import io.rong.models.response.BlackListResult;
 import io.rong.models.user.UserModel;
@@ -280,19 +281,20 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer generateCode(String invitationCode) {
+        logger.info("generateCode----------"+invitationCode);
         final int initialLevel=1;
        return new Customer(){
             {
                 try {
-                    String generateCode=checkLevelCode(DmSequenceUtil.getNoRepeatId());
-                    String invitationCodes=checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
+                    String generateCode=checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
+                    String invitationCodes=checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
                     if(StringUtils.isNotBlank(invitationCode)){
                         Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
                         if(recommendCustomer!=null){
                             int customerLevel=recommendCustomer.getCustomerLevel();
                             String recommendLevelCode=recommendCustomer.getLevelCode();
                             setCustomerLevel(customerLevel+initialLevel);
-
+                            logger.info("invitationCode----------"+invitationCode);
                             setLevelCode(checkGenerateCode(recommendLevelCode,generateCode));
                         }else{
                             setCustomerLevel(initialLevel);
@@ -303,6 +305,7 @@ public class CustomerService implements ICustomerService {
                         setLevelCode(generateCode);
                     }
                     setInvitationCode(invitationCodes);
+                    logger.info("invitationCodes----------"+invitationCodes);
                 } catch (Exception e) {
                     logger.error("生成编码异常",e);
                 }
@@ -343,7 +346,7 @@ public class CustomerService implements ICustomerService {
             Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
             if(recommendCustomer!=null) {
                 try {
-                    return  checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
+                    return  checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -360,7 +363,7 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer=getByLevelCode(levelCode+generateCode);
         if(recommendCustomer!=null) {
             try {
-                return  checkGenerateCode(levelCode,DmSequenceUtil.getNoRepeatId());
+                return  checkGenerateCode(levelCode,DmSequenceFourUtil.getNoRepeatId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -371,7 +374,7 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer=getByLevelCode(generateCode);
         if(recommendCustomer!=null) {
             try {
-                return  checkLevelCode(DmSequenceUtil.getNoRepeatId());
+                return  checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -564,8 +567,18 @@ public class CustomerService implements ICustomerService {
     }
 
     @Transactional
-    public void delFriendById(CustomerFriendId customerFriendId) {
-        customerFriendDao.delete(customerFriendId);
+    public void delFriendById(int customerId, int friendId) throws Exception{
+        CustomerFriendId customerFriendId1 = new CustomerFriendId();
+        customerFriendId1.setCustomerId(customerId);
+        customerFriendId1.setFriendId(friendId);
+        customerFriendDao.delete(customerFriendId1);
+        CustomerFriendId customerFriendId2 = new CustomerFriendId();
+        customerFriendId2.setCustomerId(friendId);
+        customerFriendId2.setFriendId(customerId);
+        customerFriendDao.delete(customerFriendId2);
+        Customer customer = customerDao.findByCustomerId(customerId);
+        Customer friendCustomer = customerDao.findByCustomerId(friendId);
+        rongCloudService.sendPrivateMessage(customer.getAccountName(), friendCustomer.getAccountName(),"DeleteFriend");
     }
 
     @Override
@@ -726,7 +739,7 @@ public class CustomerService implements ICustomerService {
      * @date        2018/7/19 20:16
      */
     @Transactional
-    public void addTwoWayFriend(Customer myself,Customer customer){
+    public void addTwoWayFriend(Customer myself,Customer customer) throws Exception{
         //修改添加好友记录为已同意
         customerFriendRequestService.updateCustomerFriendRequestState(customer.getCustomerId(), myself.getCustomerId(), CustomerFriendRequestState.AGREE.getState());
         CustomerFriend customerFriend = new CustomerFriend();
@@ -750,6 +763,7 @@ public class CustomerService implements ICustomerService {
         customerFriend.setCreateTime(new Date());
         customerFriend.setState(CustomerFriendState.NORMAL);
         addFriend(customerFriend);
+        rongCloudService.sendPrivateMessage(customer.getAccountName(), myself.getAccountName(),"AcceptResponse");
     }
 
 }

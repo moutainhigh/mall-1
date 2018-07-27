@@ -22,9 +22,7 @@ qiniu:
   accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
   secretKey: 9fglZdOXWmLXbU1rzroDOr2anFZydhnuKZjzBb-c
   bucket-1: crystal-ball
-  bucket-2: crystal-ball-paperwork
-  domain-1: http://pb9sg55i7.bkt.clouddn.com/
-  domain-2: http://pbf9p2pks.bkt.clouddn.com/
+  domain-1: http://test.resource.999shuijingqiu.com/
 
 #融云IM
 rongcloud:
@@ -35,3 +33,4 @@ rongcloud:
 application:
   default:
     avatarUrl: http://pb9sg55i7.bkt.clouddn.com/avatar.png
+  searchBaseUrl: http://localhost:8168/search/

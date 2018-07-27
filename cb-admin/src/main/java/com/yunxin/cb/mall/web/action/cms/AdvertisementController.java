@@ -128,6 +128,7 @@ public class AdvertisementController {
     @ResponseBody
     public boolean removeAdvertisementById(@RequestParam("advertId") int advertId) {
         try {
+            attachmentService.deleteAttachmentPictures(ObjectType.ADVERT,advertId);
             advertisementService.removeAdvertisementById(advertId);
             return true;
         } catch (Exception e) {

@@ -15,21 +15,21 @@ public class SeatchTest {
     public void addCommodity() throws JsonProcessingException {
         String url = "http://localhost:8168/search/mall/search/addCommodity";
         Commodity commodity = new Commodity();
-        commodity.setCommodityId(2);
-        commodity.setCommodityName("电磁加热电压力饭煲");
+        commodity.setCommodityId(4);
+        commodity.setCommodityName("宝马X5A4599");
         commodity.setCommodityCode("201807242026");
         Brand brand = new Brand();
         brand.setBrandId(169);
-        brand.setBrandEnName("Weloop");
-        brand.setBrandName("Weloop唯乐");
+        brand.setBrandEnName("BMW");
+        brand.setBrandName("唯乐");
         brand.setBrandNo("53662");
-        brand.setBrandTitle("Weloop唯乐");
+        brand.setBrandTitle("宝马");
         brand.setPicPath("//1459827630399.jpg");
         commodity.setBrand(brand);
         commodity.setCity("350100");
         commodity.setCommodityPYName("diancijiaredianyalifanbao");
-        commodity.setCommodityTitle("电磁加热电压力饭煲");
-        commodity.setDescription("保温 蒸煮 煲汤 煮粥 ");
+        commodity.setCommodityTitle("宝马x5");
+        commodity.setDescription("做人要厚道");
         commodity.setCreateTime(new Date());
         commodity.setMarketPrice(99.99);
         commodity.setDefaultPicPath("//1459827630399.jpg");

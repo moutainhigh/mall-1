@@ -2,9 +2,11 @@ package com.yunxin.cb.im;
 
 import com.yunxin.cb.mall.entity.Customer;
 import io.rong.RongCloud;
+import io.rong.messages.CmdMsgMessage;
 import io.rong.messages.ContactNtfMessage;
 import io.rong.methods.user.User;
 import io.rong.models.Result;
+import io.rong.models.message.PrivateMessage;
 import io.rong.models.message.SystemMessage;
 import io.rong.models.response.BlackListResult;
 import io.rong.models.response.ResponseResult;
@@ -30,9 +32,10 @@ public class RongCloudService {
     public String register(Customer customer) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         User User = rongCloud.user;
+        String nickName = StringUtils.isNotBlank(customer.getNickName()) ? customer.getNickName() : customer.getAccountName();
         UserModel user = new UserModel()
                 .setId(customer.getAccountName())
-                .setName(customer.getAccountName())
+                .setName(nickName)
                 .setPortrait(customer.getAvatarUrl());
 
         TokenResult result = User.register(user);
@@ -47,7 +50,7 @@ public class RongCloudService {
     public void update(Customer customer) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
         User User = rongCloud.user;
-        String nickName = StringUtils.isNotBlank(customer.getNickName())?customer.getNickName():customer.getAccountName();
+        String nickName = StringUtils.isNotBlank(customer.getNickName()) ? customer.getNickName() : customer.getAccountName();
         UserModel user = new UserModel()
                 .setId(customer.getAccountName())
                 .setName(nickName)
@@ -65,8 +68,8 @@ public class RongCloudService {
         String content = customer.getNickName() + "请求加您为好友";
         ContactNtfMessage txtMessage = new ContactNtfMessage("Request", customer.getNickName(), customer.getAccountName(), friend.getAccountName(), content);
         SystemMessage systemMessage = new SystemMessage()
-                .setSenderId(customer.getMobile())
-                .setTargetId(new String[]{friend.getMobile()})
+                .setSenderId(customer.getAccountName())
+                .setTargetId(new String[]{friend.getAccountName()})
                 .setObjectName(txtMessage.getType())
                 .setContent(txtMessage)
                 .setPushContent(content)
@@ -77,6 +80,20 @@ public class RongCloudService {
         ResponseResult result = rongCloud.message.system.send(systemMessage);
 
 
+        if (result.getCode() != 200) {
+            throw new Exception(result.getMsg());
+        }
+    }
+
+    public void sendPrivateMessage(String senderId, String targetId, String cmd) throws Exception {
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        CmdMsgMessage txtMessage = new CmdMsgMessage(cmd, cmd);
+        PrivateMessage privateMessage = new PrivateMessage()
+                .setSenderId(senderId)
+                .setTargetId(new String[]{targetId})
+                .setObjectName(txtMessage.getType())
+                .setContent(txtMessage);
+        ResponseResult result = rongCloud.message.msgPrivate.send(privateMessage);
         if (result.getCode() != 200) {
             throw new Exception(result.getMsg());
         }

@@ -44,22 +44,6 @@ public class FeedbackService implements IFeedbackService {
      * @return
      */
     public Page<Feedback> pageFeedback(final PageSpecification<Feedback> queryRequest){
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        List<PageSpecification.FilterDescriptor> list=queryRequest.getFilter().getFilters();
-        for (PageSpecification.FilterDescriptor filterDescriptor:list
-                ) {
-            if("createTime".equals(filterDescriptor.getField())){
-                Date createTime= null;
-                SimpleDateFormat simpleDateFormats=new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    Date dates=simpleDateFormats.parse(String.valueOf(filterDescriptor.getValue()));
-                    String createTimes=simpleDateFormat.format(dates);
-                    filterDescriptor.setValue(createTimes);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         queryRequest.setCustomSpecification(new CustomSpecification<Feedback>() {
             @Override
             public void buildFetch(Root<Feedback> root) {

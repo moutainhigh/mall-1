@@ -15,9 +15,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 
 /**
  * @author tanggangyi
@@ -48,19 +52,35 @@ public class CommodityServiceImpl implements CommodityService {
     public Page<Commodity> keywordSearch(String keyword, Pageable pageable) throws Exception {
 //                .field("categories.categoryName", keyword)
         CriteriaQuery criteriaQuery = new CriteriaQuery(new Criteria()
+
+                .or(new Criteria("commodityCode").contains(keyword))
                 .or(new Criteria("commodityName").contains(keyword))
                 .or(new Criteria("commodityPYName").contains(keyword))
                 .or(new Criteria("shortName").contains(keyword))
                 .or(new Criteria("commodityTitle").contains(keyword))
                 .or(new Criteria("description").contains(keyword))
 
+                .or(new Criteria("seller.sellerCode").contains(keyword))
+                .or(new Criteria("seller.sellerName").contains(keyword))
+
+                .or(new Criteria("brand.brandNo").contains(keyword))
                 .or(new Criteria("brand.brandName").contains(keyword))
                 .or(new Criteria("brand.brandEnName").contains(keyword))
-                .or(new Criteria("brand.brandTitle").contains(keyword)))
+                .or(new Criteria("brand.brandTitle").contains(keyword))
+                )
                 .setPageable(pageable)
                 .addSort(Sort.by(new Sort.Order(Sort.Direction.ASC, "commodityId")));
 
         Page<Commodity> page = elasticsearchTemplate.queryForPage(criteriaQuery, Commodity.class);
+
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(matchAllQuery())
+                .build();
+
+        Page<Commodity> sampleEntities =
+                elasticsearchTemplate.queryForPage(searchQuery,Commodity.class);
+
+
 
         return page;
     }
