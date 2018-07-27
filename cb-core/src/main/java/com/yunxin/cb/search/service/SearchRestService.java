@@ -4,10 +4,7 @@ package com.yunxin.cb.search.service;
 import com.yunxin.cb.search.vo.CommodityVO;
 import com.yunxin.cb.search.vo.ResponseResult;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.POST;
+import retrofit2.http.*;
 
 /**
  * @Author: tanggangyi
@@ -19,7 +16,7 @@ public interface SearchRestService {
      * @param commodityVo
      * @return
      */
-    @POST("mall/search/addCommodity")
+    @POST("mall/search/commodity")
     Call<ResponseResult> addCommodity(@Body CommodityVO commodityVo);
     /**
      * 修改商品
@@ -33,7 +30,6 @@ public interface SearchRestService {
      * @param commodityId
      * @return
      */
-    @FormUrlEncoded
-    @POST("mall/search/removeCommodity")
-    Call<ResponseResult> removeCommodity(@Field("commodityId") int commodityId);
+    @DELETE("mall/search/commodity/{commodityId}")
+    Call<ResponseResult> removeCommodity(@Path("commodityId") int commodityId);
 }
