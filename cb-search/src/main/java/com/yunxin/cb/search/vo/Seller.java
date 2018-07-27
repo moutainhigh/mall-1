@@ -1,6 +1,8 @@
 package com.yunxin.cb.search.vo;
 
 import com.yunxin.cb.search.vo.meta.SellerType;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * 供应商
@@ -15,6 +17,7 @@ public class Seller implements java.io.Serializable {
     /**
      * 商家名称
      **/
+    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String sellerName;
 
     /**

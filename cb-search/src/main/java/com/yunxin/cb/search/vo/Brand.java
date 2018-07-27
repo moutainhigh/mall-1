@@ -1,5 +1,8 @@
 package com.yunxin.cb.search.vo;
 
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 /**
  * 品牌
  */
@@ -14,6 +17,7 @@ public class Brand implements java.io.Serializable {
     /**
      * 品牌中文名称
      */
+    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String brandName;
     /**
      * 品牌英文名称
@@ -22,6 +26,7 @@ public class Brand implements java.io.Serializable {
     /**
      * 品牌标题
      */
+    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String brandTitle;
     /**
      * 图片路径  150*58 png
