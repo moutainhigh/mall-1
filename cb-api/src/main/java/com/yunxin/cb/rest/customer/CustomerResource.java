@@ -10,7 +10,6 @@ import com.yunxin.cb.mall.vo.CustomerInfoVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
-import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
@@ -141,12 +140,23 @@ public class CustomerResource extends BaseResource {
     public ResponseResult updateFriendsProfile(@RequestBody CustomerFriend customerFriend, @ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerService.updateFriendsProfile(customerFriend));
     }
-
+    @ApiOperation(value = "删除好友申请通知")
+    @DeleteMapping(value = "removeFriendRequest/{friendId}")
+    public ResponseResult removeFriendRequest(@PathVariable int friendId, @ModelAttribute("customerId") int customerId){
+        try{
+            customerFriendRequestService.deleteCustomerFriendRequestById(friendId,customerId);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return new ResponseResult(Result.FAILURE,"删除失败");
+        }
+        return new ResponseResult(Result.SUCCESS);
+    }
     @ApiOperation(value = "删除好友")
     @DeleteMapping(value = "removeFriend/{friendId}")
     public ResponseResult removeFriend(@PathVariable int friendId, @ModelAttribute("customerId") int customerId){
         try{
             customerService.delFriendById(customerId, friendId);
+            customerFriendRequestService.deleteCustomerFriendRequestById(friendId,customerId);
         }catch (Exception ex){
             ex.printStackTrace();
             return new ResponseResult(Result.FAILURE,"好友删除失败");

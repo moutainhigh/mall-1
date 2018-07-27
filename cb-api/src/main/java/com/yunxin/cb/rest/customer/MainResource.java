@@ -283,7 +283,7 @@ public class MainResource extends BaseResource {
             case LOGIN:
                 isSend = existMobile;
                 if (!existMobile) {
-                    responseResult.setMessage("手机号不存在！");
+                    responseResult.setMessage("该手机号未注册！");
                 }
                 break;
             case REGISTER:
