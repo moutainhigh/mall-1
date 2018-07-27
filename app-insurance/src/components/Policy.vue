@@ -15,20 +15,24 @@
           温馨提示：感谢使用水晶球生命投保功能，本单已自核通过。您可通过关注水晶球生命人寿在线公众号，享受更多保单服务。
         </div>
       </div>
+      <button class="returnButton" @click="comeBack">
+        完成
+      </button>
     </div>
     <!--<button class="i-footer" style="width: 50%;left: 0;background-color: #e0e0e0;color: #e1bb3a">-->
-      <!--<router-link to="/">返回首页</router-link>-->
+    <!--<router-link to="/">返回首页</router-link>-->
     <!--</button>-->
     <!--<button class="i-footer" style="width: 50%;right: 0">-->
-      <!--<router-link to="/">继续投保关联产品</router-link>-->
+    <!--<router-link to="/">继续投保关联产品</router-link>-->
     <!--</button>-->
-    <div style="height: 60px;" >
-      <div class="i-footer">
-        <button  @click="comeBack">
-          <div>继续投保关联产品</div>
-        </button>
-      </div>
-    </div>
+    <!--<div style="height: 60px;" >-->
+    <!--<div class="i-footer">-->
+    <!--<button  @click="comeBack">-->
+    <!--&lt;!&ndash;<div>继续投保关联产品</div>&ndash;&gt;-->
+    <!--完成-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -37,20 +41,33 @@
     name: "policy",
     data() {
       return {
-        orderCode:''
+        orderCode: '',
+        pageNum: 0
       }
     },
-    created(){
+    created() {
       this.orderCode = this.$route.query.orderCode;
+      this.pageNum = this.$route.query.pageNum;
+      console.log(this.pageNum)
     },
-    methods:{
-      comeBack(){
-        this.$router.push("/");
+    methods: {
+      comeBack() {
+        // this.$router.push("/");
+        this.$router.go(-this.pageNum)
       }
     }
   }
 </script>
 
 <style scoped>
-
+  .returnButton {
+    width: 75%;
+    height: 48px;
+    margin-top: 45px;
+    background-color: #f5ca1d;
+    font-size: 18px;
+    color: #ffffff;
+    border: unset;
+    border-radius: 50px;
+  }
 </style>
