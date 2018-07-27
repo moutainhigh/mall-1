@@ -25,7 +25,7 @@ import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CommonUtils;
-import com.yunxin.core.util.DmSequenceUtil;
+import com.yunxin.core.util.DmSequenceFourUtil;
 import com.yunxin.core.util.LogicUtils;
 import io.rong.models.response.BlackListResult;
 import io.rong.models.user.UserModel;
@@ -284,8 +284,8 @@ public class CustomerService implements ICustomerService {
        return new Customer(){
             {
                 try {
-                    String generateCode=checkLevelCode(DmSequenceUtil.getNoRepeatId());
-                    String invitationCodes=checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
+                    String generateCode=checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
+                    String invitationCodes=checkInvitationCode(DmSequenceFourUtil.getNoRepeatId());
                     if(StringUtils.isNotBlank(invitationCode)){
                         Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
                         if(recommendCustomer!=null){
@@ -343,7 +343,7 @@ public class CustomerService implements ICustomerService {
             Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
             if(recommendCustomer!=null) {
                 try {
-                    return  checkInvitationCode(DmSequenceUtil.getNoRepeatIdSix());
+                    return  checkInvitationCode(DmSequenceFourUtil.getNoRepeatId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -360,7 +360,7 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer=getByLevelCode(levelCode+generateCode);
         if(recommendCustomer!=null) {
             try {
-                return  checkGenerateCode(levelCode,DmSequenceUtil.getNoRepeatId());
+                return  checkGenerateCode(levelCode,DmSequenceFourUtil.getNoRepeatId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -371,7 +371,7 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer=getByLevelCode(generateCode);
         if(recommendCustomer!=null) {
             try {
-                return  checkLevelCode(DmSequenceUtil.getNoRepeatId());
+                return  checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
