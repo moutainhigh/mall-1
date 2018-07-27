@@ -24,6 +24,9 @@ public interface CatalogAttributeDao extends JpaRepository<CatalogAttribute, Int
     @Query("delete from CatalogAttribute attr where attr.catalogAttributeGroup=?1")
     void deleteByGroup(CatalogAttributeGroup catalogAttributeGroup);
 
+    @Query("select attr.attributeId from CatalogAttribute attr left join attr.catalogAttributeGroup ag where ag.groupId = ?1")
+    List<Integer> findAttributeIdByGroupid(int groupId);
+
     @Query("select ag.groupId from CatalogAttribute attr left join attr.catalogAttributeGroup ag where attr.attributeId in ?1")
     List<Integer> findGroupIdsByAttributeIdIn(int[] attributeIds);
 

@@ -112,6 +112,7 @@ public class ProgramaController {
     @ResponseBody
     public String removePrograma(@RequestParam("programaId") int programaId ) {
         try {
+            attachmentService.deleteAttachmentPictures(ObjectType.PROGRAMA,programaId);
             programaService.removeProgramaById(programaId);
             return "success";
         } catch (Exception e) {

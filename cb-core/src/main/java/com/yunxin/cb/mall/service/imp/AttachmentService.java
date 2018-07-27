@@ -6,8 +6,10 @@ package com.yunxin.cb.mall.service.imp;
 import com.yunxin.cb.mall.dao.AttachmentDao;
 import com.yunxin.cb.mall.dao.FeedbackDao;
 import com.yunxin.cb.mall.entity.Attachment;
+import com.yunxin.cb.mall.entity.Attachment_;
 import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.entity.Feedback_;
+import com.yunxin.cb.mall.entity.meta.AttachmentState;
 import com.yunxin.cb.mall.entity.meta.FileType;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.IAttachmentService;
@@ -70,6 +72,7 @@ public class AttachmentService implements IAttachmentService {
         attachment.setFileName(filePath.split(",")[1]);
         attachment.setInputId(filePath.split(",")[2]);
         attachment.setFileType(FileType.PICTURES);
+        attachment.setState(AttachmentState.RUNNING);
         attachment.setObjectType(objectType);
         attachment.setStaffId(0);
         attachmentDao.save(attachment);
@@ -90,4 +93,43 @@ public class AttachmentService implements IAttachmentService {
         attachmentDao.deleteByObjectTypeAndObjectId(objectType,objectId,FileType.PICTURES);
     }
 
+    /**
+     * 根据objecttype和objectIds修改state
+     * @author      likang
+     * @param objectType
+    * @param objectIds
+    * @param fileType
+    * @param attachmentState
+     * @return      void
+     * @exception
+     * @date        2018/7/26 18:31
+     */
+    @Override
+    public void updateStateByObjectTypeAndObjectId(ObjectType objectType, int objectId, AttachmentState attachmentState){
+        attachmentDao.updateStateByObjectTypeAndObjectId(objectType,objectId,attachmentState);
+    }
+
+    /**
+     * 分页信息
+     * @author      likang
+     * @param queryRequest
+     * @return      org.springframework.data.domain.Page<com.yunxin.cb.mall.entity.Attachment>
+     * @exception
+     * @date        2018/7/26 18:36
+     */
+    @Override
+    public Page<Attachment> pageAttachment(final PageSpecification<Attachment> queryRequest){
+        queryRequest.setCustomSpecification(new CustomSpecification<Attachment>() {
+            @Override
+            public void buildFetch(Root<Attachment> root) {
+            }
+            @Override
+            public void addConditions(Root<Attachment> root, CriteriaQuery<?> query,
+                                      CriteriaBuilder builder, List<Predicate> predicates) {
+                query.orderBy(builder.desc(root.get(Attachment_.createTime)));
+            }
+        });
+        Page<Attachment> page = attachmentDao.findAll(queryRequest, queryRequest.getPageRequest());
+        return page;
+    }
 }

@@ -16,8 +16,10 @@ import java.util.Map;
 
 
 /**
- * 七牛云文件上传
- */
+* @Description:    七牛云图片上传工具类
+* @Author:         likang
+* @CreateDate:     2018/7/18 20:21
+*/
 @Controller
 @RequestMapping(value = "/uploads")
 @SessionAttributes({SecurityConstants.LOGIN_SESSION})

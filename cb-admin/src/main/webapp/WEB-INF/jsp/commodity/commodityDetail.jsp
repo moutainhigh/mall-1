@@ -79,6 +79,9 @@
                         <li >
                             <a href="#content-tab-5">详细信息</a>
                         </li>
+                        <li >
+                            <a href="#content-tab-6">说明内容</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="pull-right">
@@ -434,6 +437,19 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 ${commodity.content}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-tab-6" class="tab-pane ">
+                    <div class="inner-padding">
+                        <div class="subheading">
+                            <h3>详细信息</h3>
+                        </div>
+                        <div class="spacer-25"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                ${commodity.explainContent}
                             </div>
                         </div>
                     </div>
