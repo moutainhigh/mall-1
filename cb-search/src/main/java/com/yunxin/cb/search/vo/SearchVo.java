@@ -1,24 +1,44 @@
 package com.yunxin.cb.search.vo;
 
 
+import com.yunxin.cb.search.vo.meta.SortBy;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.domain.Sort;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@ApiModel(value="商品搜索对象",description="商品搜索对象 SearchVo")
 public class SearchVo implements java.io.Serializable {
 
     private static final long serialVersionUID = -3123560903203859821L;
 
+    @ApiModelProperty(value="品牌ID",name="brandId",example="1")
     private int brandId;
-    private int categoryId;
-    private int sellerId;
-    private int lowestPrice;
-    private int highestPrice;
-    private PriceSection priceSection;
-    private Set<CommoditySpec> commoditySpecs = new HashSet<>();
-    private String sortBy;
 
+    @ApiModelProperty(value="分类ID",name="categoryId",example="1")
+    private int categoryId;
+
+    @ApiModelProperty(value="商家ID",name="sellerId",example="1")
+    private int sellerId;
+
+    @ApiModelProperty(value="最低销售价",name="lowestPrice",example="50")
+    private int lowestPrice;
+
+    @ApiModelProperty(value="最高销售价",name="highestPrice",example="500")
+    private int highestPrice;
+
+    @ApiModelProperty(value="价格段",name="priceSection",example="价格段")
+    private PriceSection priceSection;
+
+    @ApiModelProperty(value="商品筛选属性",name="commoditySpecs",example="商品筛选属性")
+    private Set<CommoditySpec> commoditySpecs = new HashSet<>();
+
+    @ApiModelProperty(value="排序字段",name="sortBy",example="排序字段")
+    private SortBy sortBy;
+
+    @ApiModelProperty(value="排序方向，枚举:升序or降序",name="direction",example="ASC|DESC")
     private Sort.Direction direction;
 
     public int getBrandId() {
@@ -69,11 +89,11 @@ public class SearchVo implements java.io.Serializable {
         this.commoditySpecs = commoditySpecs;
     }
 
-    public String getSortBy() {
+    public SortBy getSortBy() {
         return sortBy;
     }
 
-    public void setSortBy(String sortBy) {
+    public void setSortBy(SortBy sortBy) {
         this.sortBy = sortBy;
     }
 

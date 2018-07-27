@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.*;
 
-@ApiModel(value="商品搜索对象",description="商品搜索对象 CommodityVO")
+@ApiModel(value="商品对象",description="商品对象 CommodityVO")
 public class CommodityVO implements java.io.Serializable {
     private static final long serialVersionUID = -3968560903203859821L;
 
@@ -18,7 +18,7 @@ public class CommodityVO implements java.io.Serializable {
     /**
      * 商品所属价格段
      */
-    @ApiModelProperty(value="价格段",name="priceSection",example="1000-19999")
+    @ApiModelProperty(value="价格段",name="priceSection",example="500000-600000")
     private PriceSection priceSection;
     /**
      * 品牌
@@ -33,17 +33,17 @@ public class CommodityVO implements java.io.Serializable {
     /**
      * 商品编码
      */
-    @ApiModelProperty(value="商品编码",name="commodityCode",example="121233485")
+    @ApiModelProperty(value="商品编码",name="commodityCode",example="SN123456")
     private String commodityCode;
     /**
      * 商品名
      */
-    @ApiModelProperty(value="商品名",name="commodityName",example="BMWX1")
+    @ApiModelProperty(value="商品名",name="commodityName",example="宝马X5001")
     private String commodityName;
     /**
      * 商品拼音名
      */
-    @ApiModelProperty(value="商品拼音名",name="commodityPYName",example="BMWX")
+    @ApiModelProperty(value="商品拼音名",name="commodityPYName",example="BMWX5")
     private String commodityPYName;
     /**
      * 简称
@@ -53,32 +53,32 @@ public class CommodityVO implements java.io.Serializable {
     /**
      * 商品标题
      */
-    @ApiModelProperty(value="商品标题",name="commodityTitle",example="BMWX1")
+    @ApiModelProperty(value="商品标题",name="commodityTitle",example="宝马X5001 ....")
     private String commodityTitle;
     /**
      * 描述
      */
-    @ApiModelProperty(value="描述",name="description",example="1")
+    @ApiModelProperty(value="描述",name="description",example="宝马X5001 ....")
     private String description;
     /**
      * 销售价
      */
-    @ApiModelProperty(value="销售价",name="sellPrice",example="239888")
+    @ApiModelProperty(value="销售价",name="sellPrice",example="550000")
     private double sellPrice;
     /**
      * 市场价格
      */
-    @ApiModelProperty(value="市场价格",name="marketPrice",example="239888")
+    @ApiModelProperty(value="市场价格",name="marketPrice",example="580000")
     private double marketPrice;
     /**
      * 产地省份
      */
-    @ApiModelProperty(value="产地省份",name="province",example="广东省")
+    @ApiModelProperty(value="产地省份",name="province",example="辽宁")
     private String province;
     /**
      * 产地市区
      */
-    @ApiModelProperty(value="产地市区",name="city",example="深圳")
+    @ApiModelProperty(value="产地市区",name="city",example="沈阳")
     private String city;
     /**
      * 默认图片路径
@@ -88,7 +88,7 @@ public class CommodityVO implements java.io.Serializable {
     /**
      * 创建时间
      */
-    @ApiModelProperty(value="创建时间",name="createTime",example="bmw.jpg")
+    @ApiModelProperty(value="创建时间",name="createTime",example="2018-07-27")
     private Date createTime;
     /**
      * 是否为热门商品
@@ -122,11 +122,6 @@ public class CommodityVO implements java.io.Serializable {
     @ApiModelProperty(value="商品规格",name="commoditySpecs",example="商品规格")
     private Set<CommoditySpec> commoditySpecs = new HashSet<>();
 
-    /**
-     * 商品规格选项
-     */
-    @ApiModelProperty(value="商品规格选项",name="specMap",example="")
-    private Map<String,List<Object>> specMap=new TreeMap<>();
 
 
     public int getCommodityId() {
@@ -305,11 +300,4 @@ public class CommodityVO implements java.io.Serializable {
         this.commoditySpecs = commoditySpecs;
     }
 
-    public Map<String, List<Object>> getSpecMap() {
-        return specMap;
-    }
-
-    public void setSpecMap(Map<String, List<Object>> specMap) {
-        this.specMap = specMap;
-    }
 }
