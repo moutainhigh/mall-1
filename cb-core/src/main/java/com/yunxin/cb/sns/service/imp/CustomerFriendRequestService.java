@@ -48,6 +48,11 @@ public class CustomerFriendRequestService implements ICustomerFriendRequestServi
         customerFriendRequestDao.updateCustomerFriendRequestState(friendId,customerId,state);
     }
 
+    @Override
+    public void deleteCustomerFriendRequestById(int friendId,int customerId) {
+        customerFriendRequestDao.deleteCustomerFriendRequest(friendId,customerId);
+    }
+
     /**
      * 方法实现说明
      * @author      likang
