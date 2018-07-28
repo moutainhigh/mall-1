@@ -1,11 +1,21 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Order;
+import com.yunxin.cb.mall.vo.TempOrderVO;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 
 public interface OrderService {
 
+    /***
+     * 获取临时订单（订单确认页数据）
+     * @param customerId
+     * @param productId
+     * @param buyNum
+     * @param paymentType
+     * @return
+     */
+    public TempOrderVO getTempOrder(int customerId, int productId, int buyNum, String paymentType) throws Exception;
 
     /***
      * 创建订单

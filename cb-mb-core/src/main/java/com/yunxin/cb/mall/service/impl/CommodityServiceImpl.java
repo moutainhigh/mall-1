@@ -72,7 +72,7 @@ public class CommodityServiceImpl implements CommodityService {
         }
         Map paymentType=new HashMap();//支付方式
         for (PaymentType pay : PaymentType.values()){
-            paymentType.put(pay.ordinal(),pay.toString());
+            paymentType.put(pay,pay.toString());
         }
         Favorite favorite=null;
         if(customerId>0){//用户存在则查询商品收藏夹
