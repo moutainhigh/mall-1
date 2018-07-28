@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 @ResponseBody
@@ -47,6 +48,16 @@ public class WebExceptionHandler {
         logger.error("不支持当前媒体类型", e);
         return new ResponseResult(Result.FAILURE, e.getMessage());
     }
+
+//    /**
+//     * 404 - Not Found
+//     */
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ExceptionHandler(NoHandlerFoundException.class)
+//    public ResponseResult handleNotFound(NoHandlerFoundException e) {
+//        logger.error("URL不存在", e);
+//        return new ResponseResult(Result.FAILURE, e.getMessage());
+//    }
 
     /**
      * 500 - Internal Server Error

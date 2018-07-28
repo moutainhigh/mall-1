@@ -60,7 +60,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     @GetMapping(value = "getCommdityDetail/{productId}")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult getCommdityDetail(@PathVariable int productId){
+    public ResponseResult<CommodityVo> getCommdityDetail(@PathVariable int productId){
         CommodityVo commodityVo=new CommodityVo();
         try {
             int customerId=getCustomerId();
