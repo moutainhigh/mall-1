@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.entity;
 
-import com.yunxin.cb.mall.entity.meta.OrderState;
+import com.yunxin.cb.mall.entity.meta.*;
 
 import java.util.Date;
 import java.util.Set;
@@ -10,7 +10,7 @@ public class Order {
     private Integer orderId;
 
     /** 换货状态 */
-    private Integer barterState;
+    private BarterState barterState;
 
     /** 买家留言 */
     private String buyerMessage;
@@ -52,10 +52,10 @@ public class Order {
     private Double deliveryFeeTotal;
 
     /** 订单配送状态 */
-    private Integer deliveryState;
+    private DeliveryState deliveryState;
 
     /** 递送方式 */
-    private Integer deliveryType;
+    private DeliveryType deliveryType;
 
     /** 优惠配送费 */
     private Double discountDeliveryFeeTotal;
@@ -80,8 +80,6 @@ public class Order {
 
     /** 订单基本状态 */
     private OrderState orderState;
-    /** 订单基本状态数值 */
-    private int orderStateId;
 
     /** 退换货产生的新订单引用原定单 */
     private String originOrderCode;
@@ -96,7 +94,7 @@ public class Order {
     private Date paymentTime;
 
     /** 付款方式 */
-    private Integer paymentType;
+    private PaymentType paymentType;
 
     /** 邮政编码 */
     private String postCode;
@@ -111,7 +109,7 @@ public class Order {
     private String remark;
 
     /** 退货退款状态 */
-    private Integer returnRefundState;
+    private ReturnRefundState returnRefundState;
 
     /** 用户可获积分总计 */
     private Integer scoreTotal;
@@ -156,11 +154,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public Integer getBarterState() {
+    public BarterState getBarterState() {
         return barterState;
     }
 
-    public void setBarterState(Integer barterState) {
+    public void setBarterState(BarterState barterState) {
         this.barterState = barterState;
     }
 
@@ -268,19 +266,19 @@ public class Order {
         this.deliveryFeeTotal = deliveryFeeTotal;
     }
 
-    public Integer getDeliveryState() {
+    public DeliveryState getDeliveryState() {
         return deliveryState;
     }
 
-    public void setDeliveryState(Integer deliveryState) {
+    public void setDeliveryState(DeliveryState deliveryState) {
         this.deliveryState = deliveryState;
     }
 
-    public Integer getDeliveryType() {
+    public DeliveryType getDeliveryType() {
         return deliveryType;
     }
 
-    public void setDeliveryType(Integer deliveryType) {
+    public void setDeliveryType(DeliveryType deliveryType) {
         this.deliveryType = deliveryType;
     }
 
@@ -380,11 +378,11 @@ public class Order {
         this.paymentTime = paymentTime;
     }
 
-    public Integer getPaymentType() {
+    public PaymentType getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(Integer paymentType) {
+    public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
 
@@ -420,11 +418,11 @@ public class Order {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Integer getReturnRefundState() {
+    public ReturnRefundState getReturnRefundState() {
         return returnRefundState;
     }
 
-    public void setReturnRefundState(Integer returnRefundState) {
+    public void setReturnRefundState(ReturnRefundState returnRefundState) {
         this.returnRefundState = returnRefundState;
     }
 
@@ -536,8 +534,4 @@ public class Order {
         this.addressId = addressId;
     }
 
-    public void setOrderStateId(int orderStateId) {
-
-        this.orderStateId = orderStateId;
-    }
 }

@@ -1,5 +1,8 @@
 package com.yunxin.cb.mall.entity;
 
+import com.yunxin.cb.mall.entity.meta.AuditState;
+import com.yunxin.cb.mall.entity.meta.LoanState;
+
 import java.util.Date;
 
 public class OrderLoanApply {
@@ -16,7 +19,7 @@ public class OrderLoanApply {
     private Integer orderId;
 
     /** 贷款状态 0:申请贷款 1:贷款通过 2:贷款失败  */
-    private Integer loanState;
+    private LoanState loanState;
 
     /** 贷款金额 */
     private Double loanPrice;
@@ -25,7 +28,7 @@ public class OrderLoanApply {
     private String auditRemark;
 
     /** 审核状态 0:待审核 1:审核通过，2：审核失败 */
-    private Integer auditState;
+    private AuditState auditState;
 
     /** 申请时间 */
     private Date createTime;
@@ -68,11 +71,11 @@ public class OrderLoanApply {
         this.orderId = orderId;
     }
 
-    public Integer getLoanState() {
+    public LoanState getLoanState() {
         return loanState;
     }
 
-    public void setLoanState(Integer loanState) {
+    public void setLoanState(LoanState loanState) {
         this.loanState = loanState;
     }
 
@@ -92,11 +95,11 @@ public class OrderLoanApply {
         this.auditRemark = auditRemark == null ? null : auditRemark.trim();
     }
 
-    public Integer getAuditState() {
+    public AuditState getAuditState() {
         return auditState;
     }
 
-    public void setAuditState(Integer auditState) {
+    public void setAuditState(AuditState auditState) {
         this.auditState = auditState;
     }
 

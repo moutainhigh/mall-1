@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.ProductReturn;
+import com.yunxin.cb.mall.entity.meta.AuditState;
+import com.yunxin.cb.mall.entity.meta.ReturnReason;
 import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -42,7 +44,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
 
     /** 退货原因 */
     @ApiModelProperty(value="退货原因",name="returnReason",example="我不想买了")
-    private String returnReason;
+    private ReturnReason returnReason;
 
     /** 审核备注 */
     @ApiModelProperty(value="审核备注",name="auditRemark",example="通过")
@@ -50,7 +52,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
 
     /** 审核状态 */
     @ApiModelProperty(value="审核状态",name="auditState",example="1")
-    private Integer auditState;
+    private AuditState auditState;
 
     /** 处理时间 */
     @ApiModelProperty(value="处理时间 ",name="disposeTime",example="1")
@@ -104,11 +106,11 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         this.returnRefundState = returnRefundState;
     }
 
-    public String getReturnReason() {
+    public ReturnReason getReturnReason() {
         return returnReason;
     }
 
-    public void setReturnReason(String returnReason) {
+    public void setReturnReason(ReturnReason returnReason) {
         this.returnReason = returnReason;
     }
 
@@ -120,11 +122,11 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         this.auditRemark = auditRemark;
     }
 
-    public Integer getAuditState() {
+    public AuditState getAuditState() {
         return auditState;
     }
 
-    public void setAuditState(Integer auditState) {
+    public void setAuditState(AuditState auditState) {
         this.auditState = auditState;
     }
 
