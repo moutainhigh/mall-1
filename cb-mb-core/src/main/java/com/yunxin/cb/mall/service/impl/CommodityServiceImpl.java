@@ -72,7 +72,7 @@ public class CommodityServiceImpl implements CommodityService {
         }
         Map paymentType=new HashMap();//支付方式
         for (PaymentType pay : PaymentType.values()){
-            paymentType.put(pay.ordinal(),pay.toString());
+            paymentType.put(pay,pay.toString());
         }
         Favorite favorite=null;
         if(customerId>0){//用户存在则查询商品收藏夹
@@ -125,8 +125,8 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
-    public List<Product> getProductsByCommodityId(int commodityId) {
-        List<Product> products = productMapper.selectAllByCommodityId(commodityId);
+    public List<Product> getProductsByCommodityId(Integer commodityId,Integer state,Integer publish) {
+        List<Product> products = productMapper.selectAllByCommodityId(commodityId,state,publish);
         return products;
     }
 
