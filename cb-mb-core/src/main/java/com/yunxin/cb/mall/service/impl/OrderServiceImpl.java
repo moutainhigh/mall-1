@@ -3,15 +3,19 @@ package com.yunxin.cb.mall.service.impl;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.*;
 import com.yunxin.cb.mall.mapper.*;
+import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.mall.service.OrderService;
+import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -39,9 +43,60 @@ public class OrderServiceImpl implements OrderService {
     private CustomerWalletMapper customerWalletMapper;
     @Resource
     private DeliveryAddressMapper deliveryAddressMapper;
+    @Resource
+    private CommodityService commodityService;
 
     @Resource
     private ProductMapper productMapper;
+
+    /***
+     * 获取临时订单（订单确认页数据）
+     * @param customerId
+     * @param productId
+     * @param buyNum
+     * @param paymentType
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public TempOrderVO getTempOrder(int customerId, int productId, int buyNum, String paymentType) throws Exception {
+        //获取商品信息
+        TempOrderVO tempOrderVO = new TempOrderVO();
+        try {
+            CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
+            //商品信息
+            BeanUtils.copyProperties(tempOrderVO, commodityVo);
+            //货品信息组装
+            TempOrderItemVO tempOrderItemVO = null;
+            if(!StringUtils.isEmpty(commodityVo.getProductVo())){
+                tempOrderItemVO = new TempOrderItemVO();
+                BeanUtils.copyProperties(tempOrderItemVO, commodityVo.getProductVo());
+                tempOrderItemVO.setBuyNum(buyNum);
+            }
+            //获取默认地址
+            DeliveryAddress deliveryAddress = deliveryAddressMapper.selectDefaultByCustomerId(customerId);
+            if(!StringUtils.isEmpty(deliveryAddress)){
+                DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
+                BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
+                tempOrderVO.setDeliveryAddressVO(deliveryAddressVO);
+            }
+            //商家信息
+            tempOrderVO.setSellerVo(commodityVo.getSellerVo());
+            //规格信息
+            tempOrderVO.setSpecs(commodityVo.getSpecs());
+            //货品信息
+            tempOrderVO.setTempOrderItemVO(tempOrderItemVO);
+            //选择的支付方式
+            for (PaymentType pay : PaymentType.values()){
+                if (pay.equals(PaymentType.valueOf(paymentType))) {
+                    tempOrderVO.setSelectPaymentType(pay);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tempOrderVO;
+    }
 
     /***
      * 创建订单
