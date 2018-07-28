@@ -65,20 +65,20 @@ public class PayServiceImpl implements PayService {
         try {
             Payment payment = new Payment();
             String payFlowCode = "PAY" + DateUtils.getSeriNo();
-            payment.setChannelType(channelType.ordinal());
+            payment.setChannelType(channelType);
             payment.setOrderId(order.getOrderId());
             payment.setPayFlowCode(payFlowCode);
             payment.setCustomerId(customer.getCustomerId());
             payment.setPayAmount(order.getFeeTotal());
             payment.setCreateTime(new Date());
-            payment.setPayType(PayType.PAYMENT.ordinal());
-            payment.setPayState(PayState.PROCESSING.ordinal());
-            payment.setPayNotifyState(PayNotifyState.NOT_NOTIFY.ordinal());
+            payment.setPayType(PayType.PAYMENT);
+            payment.setPayState(PayState.PROCESSING);
+            payment.setPayNotifyState(PayNotifyState.NOT_NOTIFY);
             String htmlText = null;
             // 组织支付参数、加密，发送支付请求(根据支付通道选择相应的方法 方法计3个)。支付订单编号用payId
             if (channelType == ChannelType.ALIPAY) {// 支付宝
                 htmlText = aliPay(payment, servicePath);
-            } else if (payment.getChannelType() == ChannelType.UNIONPAY.ordinal()) {
+            } else if (payment.getChannelType() == ChannelType.UNIONPAY) {
                 //htmlText = unionPay(payment, request);
             }
             return htmlText;
@@ -146,7 +146,7 @@ public class PayServiceImpl implements PayService {
         sParaTemp.put("anti_phishing_key", anti_phishing_key);
         sParaTemp.put("exter_invoke_ip", "");
         Order order = orderMapper.selectByOrderCode(out_trade_no);
-        Payment dbpayment = paymentMapper.selectByOrderIdAndPayState(order.getOrderId(),PayState.PROCESSING.ordinal());
+        Payment dbpayment = paymentMapper.selectByOrderIdAndPayState(order.getOrderId(),PayState.PROCESSING);
         if (null == dbpayment) {
             paymentMapper.insert(payment);
         }
@@ -180,26 +180,26 @@ public class PayServiceImpl implements PayService {
             String error_code = params.get("error_code");
 
             Order order = orderMapper.selectByOrderCode(out_trade_no);
-            Payment payment = paymentMapper.selectByOrderIdAndPayState(order.getOrderId(), PayState.PROCESSING.ordinal());
+            Payment payment = paymentMapper.selectByOrderIdAndPayState(order.getOrderId(), PayState.PROCESSING);
             if (trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")) {
                 try {
                     /**已有支付记录**/
-                    if (order.getOrderState() == OrderState.PAID_PAYMENT && payment.getChannelType() == ChannelType.ALIPAY.ordinal()) {
+                    if (order.getOrderState() == OrderState.PAID_PAYMENT && payment.getChannelType() == ChannelType.ALIPAY) {
                         AlipayCore.logInfo("已有支付记录！支付宝前台同步回调已经执行，后台回调不再次做订单处理");
                     } else {
                         AlipayCore.logInfo("支付宝支付开始。。。");
                         Date curDate = new Date();
                         payment.setBuyerAccount(buyer_email);
                         payment.setPayFlowCode(trade_no);
-                        payment.setPayNotifyState(PayNotifyState.NOTIFY_SUCCESS.ordinal());
+                        payment.setPayNotifyState(PayNotifyState.NOTIFY_SUCCESS);
                         payment.setNotifyTime(DateUtils.parseTimestamp(notify_time));
                         //支付信息
-                        if (payment.getPayState() == PayState.PROCESSING.ordinal()) {/**0:处理中1:处理成功2:处理失败3:部分成功*/
+                        if (payment.getPayState() == PayState.PROCESSING) {/**0:处理中1:处理成功2:处理失败3:部分成功*/
                             if (payment.getErrorCode() != null) {
                                 payment.setErrorCode(error_code);
-                                payment.setPayState(!payment.getErrorCode().equals("00") ? PayState.PROCESSED_FAILURE.ordinal() : PayState.PROCESSED_SUCCESS.ordinal());//'0：处理中1：处理成功2：处理失败'
+                                payment.setPayState(!payment.getErrorCode().equals("00") ? PayState.PROCESSED_FAILURE : PayState.PROCESSED_SUCCESS);//'0：处理中1：处理成功2：处理失败'
                             } else if (payment.getErrorCode() == null || payment.getErrorCode().equals("00")) {
-                                payment.setPayState(PayState.PROCESSED_SUCCESS.ordinal());
+                                payment.setPayState(PayState.PROCESSED_SUCCESS);
                                 AlipayCore.logInfo("支付宝支付处理成功！");
                             }
                             payment.setCompleteTime(curDate);
@@ -207,7 +207,7 @@ public class PayServiceImpl implements PayService {
 
                         order.setOrderState(OrderState.PAID_PAYMENT);
                         order.setUpdateTime(curDate);
-                        order.setPaymentType(PaymentType.ALIPAY.ordinal());
+                        order.setPaymentType(PaymentType.ALIPAY);
                         order.setPaymentSequence(trade_no);
                         order.setPaymentTime(curDate);
                         //找到当前用户，更新用户积分，根据当前积分，更新用户等级 并在积分记录表插入数据
@@ -222,9 +222,9 @@ public class PayServiceImpl implements PayService {
                     return false;
                 }
             } else {
-                payment.setPayNotifyState(PayNotifyState.NOTIFY_FAILURE.ordinal());
+                payment.setPayNotifyState(PayNotifyState.NOTIFY_FAILURE);
                 payment.setNotifyTime(DateUtils.parseTimestamp(notify_time));
-                payment.setPayState(PayState.PROCESSED_FAILURE.ordinal());
+                payment.setPayState(PayState.PROCESSED_FAILURE);
                 payment.setErrorCode(error_code);
                 AlipayCore.logInfo("支付回调验证状态失败。。。失败信息，error_code=" + error_code);
                 return false;
@@ -259,7 +259,7 @@ public class PayServiceImpl implements PayService {
         StringBuffer sb = new StringBuffer();
         int i = 0;
         for (ProductReturn productReturn : productReturns) {
-            if (productReturn.getReturnRefundState() == ReturnRefundState.RETURNED_WAIT_REFUND.ordinal() || productReturn.getReturnRefundState() == ReturnRefundState.WAIT_REFUND.ordinal()) {
+            if (productReturn.getReturnRefundState() == ReturnRefundState.RETURNED_WAIT_REFUND || productReturn.getReturnRefundState() == ReturnRefundState.WAIT_REFUND) {
                 sb.append(payment.getPayFlowCode() + "^");
                 sb.append(productReturn.getRefundPrice() + "^");
                 String reason = null;
@@ -271,16 +271,16 @@ public class PayServiceImpl implements PayService {
                 sb.append(reason + "#");
                 i++;
                 Payment payment1 = new Payment();
-                payment1.setChannelType(ChannelType.ALIPAY.ordinal());
+                payment1.setChannelType(ChannelType.ALIPAY);
                 payment1.setOrder(payment.getOrder());
                 payment1.setBatchNo(batch_no);
                 payment1.setPayFlowCode(payment.getPayFlowCode());
                 payment1.setReturnCode(productReturn.getReturnCode());
                 payment1.setCustomerId(payment.getCustomerId());
                 payment1.setCreateTime(new Date());
-                payment1.setPayType(PayType.REIMBURSE.ordinal());
-                payment1.setPayState(PayState.PROCESSING.ordinal());
-                payment1.setPayNotifyState(PayNotifyState.NOT_NOTIFY.ordinal());
+                payment1.setPayType(PayType.REIMBURSE);
+                payment1.setPayState(PayState.PROCESSING);
+                payment1.setPayNotifyState(PayNotifyState.NOT_NOTIFY);
                 payment1.setPayAmount(productReturn.getRefundPrice());
                 payment1.setBatchNum(i);
                 paymentMapper.insert(payment1);
@@ -338,7 +338,7 @@ public class PayServiceImpl implements PayService {
             String result_details = params.get("result_details");
             AlipayCore.logInfo("支付宝退款回调验证成功！退款批次号：" + batch_no + " 退款详情数据：" + result_details);
             String notify_time = params.get("notify_time");
-            List<Payment> payments = paymentMapper.selectByBatchNoAndPayState(batch_no, PayState.PROCESSING.ordinal());
+            List<Payment> payments = paymentMapper.selectByBatchNoAndPayState(batch_no, PayState.PROCESSING);
             if (!success_num.equalsIgnoreCase("0")) {
                 for (Payment payment : payments) {
                     String[] results = result_details.split("$");
@@ -376,17 +376,17 @@ public class PayServiceImpl implements PayService {
     }
 
     private void setPaymentSate(Payment payment, String notify_time, String success_num) {
-        payment.setPayState(PayState.PROCESSED_SUCCESS.ordinal());
-        payment.setPayNotifyState(PayNotifyState.NOTIFY_SUCCESS.ordinal());
+        payment.setPayState(PayState.PROCESSED_SUCCESS);
+        payment.setPayNotifyState(PayNotifyState.NOTIFY_SUCCESS);
         payment.setNotifyTime(DateUtils.parseDate(notify_time));
         payment.setBatchNum(Integer.valueOf(success_num));
         paymentMapper.insert(payment);
 
         ProductReturn productReturn = productReturnMapper.selectByReturnCode(payment.getReturnCode());
         if (productReturn.getRefundOnly()) {
-            productReturn.setReturnRefundState(ReturnRefundState.REFUNDED.ordinal());
+            productReturn.setReturnRefundState(ReturnRefundState.REFUNDED);
         } else {
-            productReturn.setReturnRefundState(ReturnRefundState.RETURNED_REFUND.ordinal());
+            productReturn.setReturnRefundState(ReturnRefundState.RETURNED_REFUND);
         }
         AlipayCore.logInfo("支付宝退款成功！更新退款号：" + productReturn.getReturnCode() + " 状态为成功！通知时间：" + notify_time);
     }

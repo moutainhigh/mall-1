@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.mall.entity.meta.ReturnReason;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,7 +27,7 @@ public class ProductReturnApplyVO implements java.io.Serializable{
      * 退货原因
      */
     @ApiModelProperty(value="退货原因",name="returnReason",example="我不想买了")
-    private String returnReason;
+    private ReturnReason returnReason;
 
     /** 原因 */
     @ApiModelProperty(value="原因",name="reason",example="我不想买了")
@@ -48,11 +49,11 @@ public class ProductReturnApplyVO implements java.io.Serializable{
         this.itemId = itemId;
     }
 
-    public String getReturnReason() {
+    public ReturnReason getReturnReason() {
         return returnReason;
     }
 
-    public void setReturnReason(String returnReason) {
+    public void setReturnReason(ReturnReason returnReason) {
         this.returnReason = returnReason;
     }
 

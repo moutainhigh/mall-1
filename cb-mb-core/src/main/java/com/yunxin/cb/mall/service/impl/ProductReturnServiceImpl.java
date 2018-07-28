@@ -3,6 +3,7 @@ package com.yunxin.cb.mall.service.impl;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.ProductReturn;
+import com.yunxin.cb.mall.entity.meta.AuditState;
 import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.entity.meta.ReturnRefundState;
 import com.yunxin.cb.mall.mapper.OrderMapper;
@@ -42,12 +43,12 @@ public class ProductReturnServiceImpl implements ProductReturnService {
     @Transactional(rollbackFor = Exception.class)
     public ProductReturn applyOrderProductReturn(ProductReturn productReturn) throws Exception {
         List<ProductReturn> dbReturn = productReturnMapper.selectByOrderId(productReturn.getOrderId());
-        if (null != dbReturn) {
+        if (null != dbReturn && dbReturn.size() > 0) {
             throw new Exception("该订单已提交退货申请");
         }
         Order order = orderMapper.selectByOrderIdAndCustomerId(productReturn.getOrderId(), productReturn.getCustomerId());
         //判断订单是否是已支付待提货状态
-        if (order == null || (order.getOrderState() != OrderState.PAID_PAYMENT && order.getOrderState() != OrderState.OUT_STOCK)) {
+        if (order == null || (OrderState.PAID_PAYMENT.equals(order.getOrderState()) && OrderState.OUT_STOCK.equals(order.getOrderState()))) {
             throw new Exception("该订单不可以退货申请");
         }
         ProductReturn nReturn = new ProductReturn();
@@ -56,8 +57,8 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         nReturn.setItemId(productReturn.getItemId());
         nReturn.setApplyTime(new Date());
         nReturn.setPurchasingTime(order.getCreateTime());
-        nReturn.setReturnRefundState(ReturnRefundState.APPLY_REFUND.ordinal());
-        nReturn.setAuditState(0);
+        nReturn.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
+        nReturn.setAuditState(AuditState.WAIT_AUDIT);
         nReturn.setRefundOnly(true);
         //更新库存（是否需要）
         Set<OrderItem> orderItems = order.getOrderItems();
@@ -74,7 +75,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
             }
         }
         //更新订单状态
-        order.setReturnRefundState(ReturnRefundState.APPLY_REFUND.ordinal());
+        order.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
         orderMapper.updateByPrimaryKey(order);
         //添加退货申请
         productReturnMapper.insert(nReturn);
