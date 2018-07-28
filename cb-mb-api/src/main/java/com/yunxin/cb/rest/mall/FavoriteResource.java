@@ -5,7 +5,6 @@ import com.yunxin.cb.mall.entity.Favorite;
 import com.yunxin.cb.mall.service.FavoriteService;
 import com.yunxin.cb.mall.vo.FavoriteVo;
 import com.yunxin.cb.rest.BaseResource;
-import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import com.yunxin.cb.vo.ResponseResult;
@@ -45,11 +44,10 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "getCustomerFavorite")
     @ApiVersion(1)
-    @IgnoreAuthentication
     public ResponseResult<PageFinder<FavoriteVo>> getCustomerFavorite(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
         Query q = new Query(pageNo, pageSize);
         Favorite favorite=new Favorite();
-        favorite.setCustomerId(1);//getCustomerId());
+        favorite.setCustomerId(getCustomerId());
         q.setData(favorite);
         PageFinder<Favorite> pageFinder=favoriteService.pageCustomerFavorites(q);
         PageFinder<FavoriteVo> page=FavoriteVo.dOconvertVOPage(pageFinder);
