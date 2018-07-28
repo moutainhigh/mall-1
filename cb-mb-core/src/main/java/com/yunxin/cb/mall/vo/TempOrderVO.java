@@ -40,8 +40,8 @@ public class TempOrderVO implements java.io.Serializable{
     @ApiModelProperty(value="规格及参数",name="specs",example="厂商：华晨宝马")
     private Map specs;
 
-    /** 支付方式 */
-    @ApiModelProperty(value="支付方式",name="paymentType",example="FULL_SECTION：全款购车")
+    /** 支付方式 枚举类型：FULL_SECTION("全款购车"), LOAN("贷款购车")*/
+    @ApiModelProperty(value="支付方式",name="paymentType",example="枚举类型：FULL_SECTION(全款购车), LOAN(贷款购车)")
     private Map paymentType;
 
     /** 选择的支付方式 */
