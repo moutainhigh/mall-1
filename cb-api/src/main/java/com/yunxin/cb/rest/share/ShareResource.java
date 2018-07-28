@@ -32,8 +32,8 @@ public class ShareResource {
     @ApiOperation(value = "获取分享配置信息")
     @ApiImplicitParams({
     })
-    @GetMapping(value = "getinfo")
-    public ResponseResult checkUpdate() {
+    @GetMapping(value = "getShareInfo")
+    public ResponseResult getShareInfo() {
         return new ResponseResult(SUCCESS, profileService.getShareInfo());
     }
 }
