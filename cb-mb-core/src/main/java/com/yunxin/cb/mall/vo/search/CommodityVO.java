@@ -1,9 +1,12 @@
-package com.yunxin.cb.search.vo;
+package com.yunxin.cb.mall.vo.search;
 
+import com.yunxin.cb.mall.vo.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @ApiModel(value="商品对象",description="商品对象 CommodityVO")
 public class CommodityVO implements java.io.Serializable {

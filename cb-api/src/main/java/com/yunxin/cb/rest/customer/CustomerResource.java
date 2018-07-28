@@ -7,6 +7,7 @@ import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IFeedbackService;
 import com.yunxin.cb.mall.vo.CustomerInfoVo;
+import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
@@ -291,6 +292,15 @@ public class CustomerResource extends BaseResource {
     public ResponseResult getPraiseCustomer(@ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerService.getPraiseCustomers(customerId));
     }
-
+    @ApiOperation(value = "更新用户信息")
+    @PostMapping(value = "updateCustomer")
+    public ResponseResult  updateCustomer(@RequestBody CustomerUpdateVo customerUpdateVo, @ModelAttribute("customerId") int customerId){
+        try{
+            return new ResponseResult(customerService.updateCustomerMsg(customerId,customerUpdateVo));
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return new ResponseResult(Result.FAILURE,"服务器异常");
+        }
+    }
 
 }

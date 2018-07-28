@@ -248,6 +248,19 @@ public class CustomerService implements ICustomerService {
             customerDB.setRealName(customerUpdateVo.getRealName());
         if(StringUtils.isNotBlank(customerUpdateVo.getCardType()))
             customerDB.setCardType(customerUpdateVo.getCardType());
+        if(StringUtils.isNotBlank(customerUpdateVo.getCustomerCountry()))
+            customerDB.setCustomerCountry(customerUpdateVo.getCustomerCountry());
+        if(customerUpdateVo.getCustomerCardPeroid()!=null)
+            customerDB.setCustomerCardPeroid(customerUpdateVo.getCustomerCardPeroid());
+        if(StringUtils.isNotBlank(customerUpdateVo.getOccupationalCategory()))
+            customerDB.setOccupationalCategory(customerUpdateVo.getOccupationalCategory());
+        if(StringUtils.isNotBlank(customerUpdateVo.getSex())){
+            if("true".equals(customerUpdateVo.getSex()))
+                customerDB.setSex(true);
+            else if("false".equals(customerUpdateVo.getSex()))
+                customerDB.setSex(false);
+        }
+
         return customerDB;
     }
 

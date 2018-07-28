@@ -4,8 +4,11 @@
     <div style="margin-top: 3rem;">
       <div>
         <div class="order-head">
-          <div>进行退款中</div>
-          <div style="font-size: 0.8rem">您的售后服务已审核通过，进行退款中！</div>
+          <img style="vertical-align: middle" src="../../assets/img/order/ic_aftersale_finish.png"/>
+          <div style="display: inline-block;margin-left: 0.5rem;vertical-align: middle">进行退款中</div>
+        </div>
+        <div style="position:absolute;right: 0;margin: 2rem 1rem;font-size: 0.8rem;color: #ffffff;">
+          剩余59分 50秒
         </div>
         <img src="../../assets/img/common/aftersale_bg.png" width="100%">
       </div>
@@ -71,7 +74,7 @@
 
   .order-head {
     position: absolute;
-    margin: 1rem 1rem 1rem 1.5rem;
+    margin: 1.5rem;
     color: #fff;
     line-height: 2
   }

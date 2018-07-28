@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.restful.ResponseResult;
+import com.yunxin.cb.mall.vo.SearchResultVo;
 import com.yunxin.cb.mall.vo.SearchVo;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -14,8 +15,8 @@ public interface SearchRestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(value = "mall/search/keywordSearch")
-    Call<ResponseResult> keywordSearch(@Field("keyword") String keyword, @Field("page") int page, @Field("size") int size);
+    @POST(value = "mall/search/keywordSearch/{page}/{size}")
+    Call<ResponseResult<SearchResultVo>> keywordSearch(@Field("keyword") String keyword, @Path("page") int page, @Path("size") int size);
     /**
      * 分类/条件搜索
      *
@@ -25,5 +26,5 @@ public interface SearchRestService {
      * @throws Exception
      */
     @POST(value = "mall/search/categorySearch/{page}/{size}")
-    Call <ResponseResult> categorySearch(@Body SearchVo searchVo, @Path("page") int page, @Path("size") int size) throws Exception;
+    Call <ResponseResult<SearchResultVo>> categorySearch(@Body SearchVo searchVo, @Path("page") int page, @Path("size") int size);
 }
