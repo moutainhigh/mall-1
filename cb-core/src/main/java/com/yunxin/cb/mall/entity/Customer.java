@@ -277,7 +277,7 @@ public class Customer implements java.io.Serializable {
         this.accountName = accountName;
     }
 
-    @Column(length = 16, nullable = false)
+    @Column(length = 64, nullable = false)
     @JsonIgnore
     public String getPassword() {
         return password;
