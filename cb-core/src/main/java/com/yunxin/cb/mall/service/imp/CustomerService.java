@@ -420,14 +420,19 @@ public class CustomerService implements ICustomerService {
     @Transactional(readOnly = true)
     public Customer getCustomerByAccountNameAndPassword(String accountName, String password) {
         PBKDF2PasswordEncoder pbkdf2 = new PBKDF2PasswordEncoder();
-        Customer customer = customerDao.findByAccountNameAndPasswordAndEnabled(accountName, pbkdf2.encode(password), true);
+        Customer customer = customerDao.findByAccountNameAndEnabled(accountName, true);
+
         if(customer!=null){
-            if(StringUtils.isNotEmpty(customer.getRealName())&&StringUtils.isNotEmpty(customer.getCustomerCountry())
-                    &&StringUtils.isNotEmpty(customer.getCardType())&&StringUtils.isNotEmpty(customer.getCustomerCardNo())
-                    &&StringUtils.isNotEmpty(customer.getOccupationalCategory())&&null!=customer.getCustomerCardPeroid())
-                customer.setPerfect(true);
-            else
-                customer.setPerfect(false);
+            if(pbkdf2.matches(password, customer.getPassword())){
+                if(StringUtils.isNotEmpty(customer.getRealName())&&StringUtils.isNotEmpty(customer.getCustomerCountry())
+                        &&StringUtils.isNotEmpty(customer.getCardType())&&StringUtils.isNotEmpty(customer.getCustomerCardNo())
+                        &&StringUtils.isNotEmpty(customer.getOccupationalCategory())&&null!=customer.getCustomerCardPeroid())
+                    customer.setPerfect(true);
+                else
+                    customer.setPerfect(false);
+            }else {
+                return null;
+            }
         }
         return customer;
     }
