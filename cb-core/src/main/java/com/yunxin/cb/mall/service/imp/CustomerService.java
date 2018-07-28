@@ -420,8 +420,7 @@ public class CustomerService implements ICustomerService {
     @Transactional(readOnly = true)
     public Customer getCustomerByAccountNameAndPassword(String accountName, String password) {
         PBKDF2PasswordEncoder pbkdf2 = new PBKDF2PasswordEncoder();
-        return customerDao.findByAccountNameAndPasswordAndEnabled(accountName, pbkdf2.encode(password), true);
-        Customer customer=customerDao.findByAccountNameAndPasswordAndEnabled(accountName, password, true);
+        Customer customer = customerDao.findByAccountNameAndPasswordAndEnabled(accountName, pbkdf2.encode(password), true);
         if(customer!=null){
             if(StringUtils.isNotEmpty(customer.getRealName())&&StringUtils.isNotEmpty(customer.getCustomerCountry())
                     &&StringUtils.isNotEmpty(customer.getCardType())&&StringUtils.isNotEmpty(customer.getCustomerCardNo())
