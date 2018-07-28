@@ -112,3 +112,7 @@ CREATE TABLE `customer_wallet` (
 alter table customer add  CUSTOMER_COUNTRY VARCHAR(50) DEFAULT NULL COMMENT '国籍';
 alter table customer add  CUSTOMER_CARD_PEROID date DEFAULT NULL COMMENT '证件有效期';
 alter table customer add  OCCUPATIONAL_CATEGORY VARCHAR(50) DEFAULT NULL COMMENT '职业类别';
+
+
+##add by likang 2018-07-28
+ALTER TABLE profile ADD COLUMN `IS_PICTURE` int(2)    COMMENT '是否是图片';

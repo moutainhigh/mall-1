@@ -16,7 +16,12 @@
                 window.location.href = "toEditProfiles.do?fileId=" + dataItem.fileId;
             }
         }
-
+        function getprofileValue(value,isPicture){
+            if(isPicture==1){
+                return "<img src='"+value+"'  width='120px' height='120px'/>"
+            }
+            return value;
+        }
         function getprofileName(state){
             switch (state){
                 case "ANDROID_VERSION_CODE":{
@@ -32,7 +37,10 @@
                     return "安卓APP下载地址";
                 }
                 case "ANDROID_DESCRIPTION":{
-                    return "安卓APP更新描述";
+                return "安卓APP更新描述";
+            }
+                case "GIVE_THE_THUMBS_UP":{
+                    return "点赞推荐人及所有上级加5%的授信额度";
                 }
                 case "GIVE_THE_THUMBS_UP":{
                     return "点赞推荐人及所有上级加5%的授信额度";
@@ -40,7 +48,27 @@
                 case "LOAN_EXPECTED_RETURN_FIFTY":{
                     return "下单推荐人增加50%的贷款预期收益";
                 }
+                case "ANDROID_FORCE_UPGRADE":{
+                    return "安卓APP是否强制更新";
+                }
+
+                case "SHARE_PATH":{
+                    return "分享地址";
+                }
+                case "SHARE_TITLE":{
+                    return "分享标题";
+                }
+                case "SHARE_ICON":{
+                    return "分享图标";
+                }
+                case "SHARE_DESCRIPTION":{
+                    return "分享描述";
+                }
+                case "SHARE_SHORTMESSAGE_CONTENT":{
+                    return "分享短信内容";
+                }
             }
+            return state;
         }
 
     </script>
@@ -141,7 +169,7 @@
                 <div class="table-wrapper">
                     <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" selectable="true"
                                 height="450" resizable="true">
-                        <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="10"/>
+                        <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="20"/>
                         <kendo:grid-filterable extra="false">
                             <kendo:grid-filterable-messages filter="查询" clear="清除" info="请输入查询条件:"/>
                             <kendo:grid-filterable-operators>
@@ -152,7 +180,7 @@
                         <kendo:grid-columns>
                             <kendo:grid-column title="ID" field="fileId" width="30px"/>
                             <kendo:grid-column title="名称" field="profileName" template="#=getprofileName(profileName)#" width="200px"/>
-                            <kendo:grid-column title="值" field="fileValue" width="200px"/>
+                            <kendo:grid-column title="值" field="fileValue" template="#=getprofileValue(fileValue,isPicture)#" width="200px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
