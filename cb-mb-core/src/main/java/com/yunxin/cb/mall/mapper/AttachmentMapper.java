@@ -65,7 +65,7 @@ public interface AttachmentMapper {
             "ATTACH_ID, OBJECT_TYPE, OBJECT_ID, BUSINESS_SCENARIO, INPUT_ID, FILE_PATH, FILE_NAME, ",
             "FILE_TYPE, FILE_SIZE, FS_GUID, CREATE_TIME, STAFF_ID, STAFF_NAME, STATE, DESCRIPTION",
             "from attachment",
-            "where OBJECT_TYPE = #{objectType} and OBJECT_ID = #{objectId}"
+            "where OBJECT_TYPE = #{objectType} and OBJECT_ID = #{objectId} order by ATTACH_ID"
     })
     @Results({
             @Result(column="ATTACH_ID", property="attachId", jdbcType=JdbcType.INTEGER, id=true),
