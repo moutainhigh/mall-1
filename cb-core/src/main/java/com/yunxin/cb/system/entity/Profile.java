@@ -32,6 +32,8 @@ public class Profile implements Serializable {
     @Length(max = 5000)
     private String fileValue;
 
+    private int isPicture;
+
     public Profile() {
 
     }
@@ -72,6 +74,15 @@ public class Profile implements Serializable {
 
     public void setFileValue(String remark) {
         this.fileValue = remark;
+    }
+
+
+    public int getIsPicture() {
+        return isPicture;
+    }
+
+    public void setIsPicture(int isPicture) {
+        this.isPicture = isPicture;
     }
 
     @Override
