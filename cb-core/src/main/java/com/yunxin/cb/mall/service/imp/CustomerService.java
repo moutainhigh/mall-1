@@ -421,6 +421,16 @@ public class CustomerService implements ICustomerService {
     public Customer getCustomerByAccountNameAndPassword(String accountName, String password) {
         PBKDF2PasswordEncoder pbkdf2 = new PBKDF2PasswordEncoder();
         return customerDao.findByAccountNameAndPasswordAndEnabled(accountName, pbkdf2.encode(password), true);
+        Customer customer=customerDao.findByAccountNameAndPasswordAndEnabled(accountName, password, true);
+        if(customer!=null){
+            if(StringUtils.isNotEmpty(customer.getRealName())&&StringUtils.isNotEmpty(customer.getCustomerCountry())
+                    &&StringUtils.isNotEmpty(customer.getCardType())&&StringUtils.isNotEmpty(customer.getCustomerCardNo())
+                    &&StringUtils.isNotEmpty(customer.getOccupationalCategory())&&null!=customer.getCustomerCardPeroid())
+                customer.setPerfect(true);
+            else
+                customer.setPerfect(false);
+        }
+        return customer;
     }
 
     @Override
@@ -432,7 +442,16 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Customer getCustomerByMobile(String mobile) {
-        return customerDao.findByMobileAndEnabled(mobile, true);
+        Customer customer=customerDao.findByMobileAndEnabled(mobile, true);
+        if(customer!=null){
+            if(StringUtils.isNotEmpty(customer.getRealName())&&StringUtils.isNotEmpty(customer.getCustomerCountry())
+                    &&StringUtils.isNotEmpty(customer.getCardType())&&StringUtils.isNotEmpty(customer.getCustomerCardNo())
+                    &&StringUtils.isNotEmpty(customer.getOccupationalCategory())&&null!=customer.getCustomerCardPeroid())
+                customer.setPerfect(true);
+            else
+                customer.setPerfect(false);
+        }
+        return customer;
     }
 
     @Override

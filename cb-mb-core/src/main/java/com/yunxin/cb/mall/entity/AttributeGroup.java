@@ -23,7 +23,7 @@ public class AttributeGroup {
     /** 商品id */
     private Integer commodityId;
 
-    private List<Attribute> attributes = new ArrayList<>();
+    private Set<Attribute> attributes = new HashSet<>();
 
     public Integer getGroupId() {
         return groupId;
@@ -65,11 +65,11 @@ public class AttributeGroup {
         this.commodityId = commodityId;
     }
 
-    public List<Attribute> getAttributes() {
+    public Set<Attribute> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(List<Attribute> attributes) {
+    public void setAttributes(Set<Attribute> attributes) {
         this.attributes = attributes;
     }
 }

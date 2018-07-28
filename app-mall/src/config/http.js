@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {baseUrl} from "./env";
+import storage from "../store/storage";
 
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL ='';
@@ -12,10 +13,8 @@ axios.interceptors.request.use(
     config.data = JSON.stringify(config.data);
     config.headers = {
       'Content-Type':'application/x-www-form-urlencoded',
-    }
-    // if(token){
-    //   config.params = {'token':token}
-    // }
+      // 'Authorization':storage.fetchSession('token')
+    };
     return config;
   },
   error => {

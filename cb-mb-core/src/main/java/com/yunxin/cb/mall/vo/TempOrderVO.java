@@ -40,9 +40,13 @@ public class TempOrderVO implements java.io.Serializable{
     @ApiModelProperty(value="规格及参数",name="specs",example="厂商：华晨宝马")
     private Map specs;
 
-    /** 支付方式 */
-    @ApiModelProperty(value="支付方式",name="paymentType",example="0：全款购车")
-    private PaymentType paymentType;
+    /** 支付方式 枚举类型：FULL_SECTION("全款购车"), LOAN("贷款购车")*/
+    @ApiModelProperty(value="支付方式",name="paymentType",example="枚举类型：FULL_SECTION(全款购车), LOAN(贷款购车)")
+    private Map paymentType;
+
+    /** 选择的支付方式 */
+    @ApiModelProperty(value="选择的支付方式",name="selectPaymentType",example="FULL_SECTION：全款购车")
+    private PaymentType selectPaymentType;
 
     /** 购买货品信息 */
     @ApiModelProperty(value="购买货品信息",name="productVo",example="货品")
@@ -108,12 +112,12 @@ public class TempOrderVO implements java.io.Serializable{
         this.specs = specs;
     }
 
-    public PaymentType getPaymentType() {
-        return paymentType;
+    public PaymentType getSelectPaymentType() {
+        return selectPaymentType;
     }
 
-    public void setPaymentType(PaymentType paymentType) {
-        this.paymentType = paymentType;
+    public void setSelectPaymentType(PaymentType selectPaymentType) {
+        this.selectPaymentType = selectPaymentType;
     }
 
     public TempOrderItemVO getTempOrderItemVO() {
@@ -140,6 +144,14 @@ public class TempOrderVO implements java.io.Serializable{
         this.deliveryAddressVO = deliveryAddressVO;
     }
 
+    public Map getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(Map paymentType) {
+        this.paymentType = paymentType;
+    }
+
     @Override
     public String toString() {
         return "TempOrderVO{" +
@@ -150,6 +162,7 @@ public class TempOrderVO implements java.io.Serializable{
                 ", shortName='" + shortName + '\'' +
                 ", specs=" + specs +
                 ", paymentType=" + paymentType +
+                ", selectPaymentType=" + selectPaymentType +
                 ", tempOrderItemVO=" + tempOrderItemVO +
                 ", sellerVo=" + sellerVo +
                 ", deliveryAddressVO=" + deliveryAddressVO +
