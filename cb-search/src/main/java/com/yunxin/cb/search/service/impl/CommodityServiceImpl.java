@@ -74,12 +74,6 @@ public class CommodityServiceImpl implements CommodityService {
                 .addSort(Sort.by(new Sort.Order(Sort.Direction.DESC, "commodityId")));
 
         Page<Commodity> page = elasticsearchTemplate.queryForPage(criteriaQuery, Commodity.class);
-
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(matchAllQuery())
-                .build();
-        Page<Commodity> sampleEntities =
-                elasticsearchTemplate.queryForPage(searchQuery,Commodity.class);
         return page;
     }
 
