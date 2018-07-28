@@ -13,6 +13,13 @@ export default {
     let token = this.fetch('token');
     window.localStorage.clear();
     this.save("token",token);
-  }
+  },
 
+  fetchSession: function (key) {
+    return window.JSON.parse(window.sessionStorage.getItem(key) || '[]')
+  },
+
+  saveSession: function (key, items) {
+    window.sessionStorage.setItem(key,window.JSON.stringify(items));
+  }
 }
