@@ -37,6 +37,9 @@
 </template>
 
 <script>
+  var linstener = function () {
+    history.pushState(null, null, location.href);
+  }
   export default {
     name: "policy",
     data() {
@@ -48,11 +51,13 @@
     created() {
       this.orderCode = this.$route.query.orderCode;
       this.pageNum = this.$route.query.pageNum;
-      console.log(this.pageNum)
+      this.pageNum = this.pageNum + 1;
+      history.pushState(null, null, location.href);
+      window.addEventListener('popstate', linstener, false);
     },
     methods: {
       comeBack() {
-        // this.$router.push("/");
+        window.removeEventListener('popstate', linstener, false);
         this.$router.go(-this.pageNum)
       }
     }
