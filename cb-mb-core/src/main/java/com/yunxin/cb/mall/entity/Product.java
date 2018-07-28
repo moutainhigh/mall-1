@@ -52,9 +52,6 @@ public class Product {
     /** 预占库存数量 */
     private Integer reservedStoreNum;
 
-    /** 实际库存数量 */
-    private Integer realStoreNum;
-
     /** 体积 */
     private Float volume;
 
@@ -232,11 +229,4 @@ public class Product {
         this.commodity = commodity;
     }
 
-    public Integer getRealStoreNum() {
-        return storeNum-reservedStoreNum;//实际库存=库存-预占库存
-    }
-
-    public void setRealStoreNum(Integer realStoreNum) {
-        this.realStoreNum = realStoreNum;
-    }
 }

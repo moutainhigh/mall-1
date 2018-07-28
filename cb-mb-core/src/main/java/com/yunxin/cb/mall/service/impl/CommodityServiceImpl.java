@@ -125,8 +125,8 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
-    public List<Product> getProductsByCommodityId(int commodityId) {
-        List<Product> products = productMapper.selectAllByCommodityId(commodityId);
+    public List<Product> getProductsByCommodityId(Integer commodityId,Integer state,Integer publish) {
+        List<Product> products = productMapper.selectAllByCommodityId(commodityId,state,publish);
         return products;
     }
 

@@ -47,7 +47,7 @@ public class ProductVo  implements java.io.Serializable{
 
     /** 库存数量 */
     @ApiModelProperty(value="库存数量",name="storeNum",example="10000")
-    private Integer realStoreNum;
+    private Integer storeNum;
 
     /** 体积 */
     @ApiModelProperty(value="体积",name="volume",example="30")
@@ -129,12 +129,12 @@ public class ProductVo  implements java.io.Serializable{
         this.weight = weight;
     }
 
-    public Integer getRealStoreNum() {
-        return realStoreNum;
+    public Integer getStoreNum() {
+        return storeNum;
     }
 
-    public void setRealStoreNum(Integer realStoreNum) {
-        this.realStoreNum = realStoreNum;
+    public void setStoreNum(Integer storeNum) {
+        this.storeNum = storeNum;
     }
 
     @Override
@@ -147,7 +147,7 @@ public class ProductVo  implements java.io.Serializable{
                 ", productName='" + productName + '\'' +
                 ", productNo='" + productNo + '\'' +
                 ", salePrice=" + salePrice +
-                ", realStoreNum=" + realStoreNum +
+                ", storeNum=" + storeNum +
                 ", volume=" + volume +
                 ", weight=" + weight +
                 '}';
