@@ -60,10 +60,12 @@ public class Customer implements java.io.Serializable {
     /**
      * 真实姓名
      */
+    @ApiModelProperty(value="真实姓名",name="realName",example="张三")
     private String realName;
     /**
      * 昵称
      */
+    @ApiModelProperty(value="昵称",name="nickName",example="释然")
     private String nickName;
     /**
      * 性别
@@ -141,6 +143,7 @@ public class Customer implements java.io.Serializable {
     /**
      * 是否买过保单
      */
+    @ApiModelProperty(value="是否买过保单",name="policy",example="true")
     private boolean policy;
     /**
      * 邮箱是否验证
@@ -187,10 +190,12 @@ public class Customer implements java.io.Serializable {
     /**
      * 证件类型
      */
+    @ApiModelProperty(value="证件类型",name="cardType",example="居民身份证")
     private String cardType;
     /**
      * 证件号码
      */
+    @ApiModelProperty(value="证件号码",name="customerCardNo",example="432522984654655")
     private String customerCardNo;
     /**
      * 证件正面照
@@ -219,10 +224,12 @@ public class Customer implements java.io.Serializable {
     /**
      * 国籍
      */
+    @ApiModelProperty(value="国籍",name="customerCountry",example="中国")
     private String customerCountry;
     /**
      * 证件有效期
      */
+    @ApiModelProperty(value="证件有效期",name="customerCardPeroid",example="2018-08-12")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date customerCardPeroid;
     /**

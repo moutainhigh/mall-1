@@ -756,14 +756,15 @@
       line-height: 1.5;
       overflow: hidden;
       .cont_img {
-        flex: 0 0 40%;
+        flex: 0 0 9rem;;
         img {
           border-radius: 4px;
+          height: 6rem;
         }
       }
       .cont {
-        flex: 0 0 60%;
-        padding: 0 0.7rem 0.7rem 0.7rem;
+        flex: 1;
+        padding: 0 0 0.7rem 0.7rem;
         height: 6rem;
         border-bottom: #ececec 1px solid;
         .cont_title {

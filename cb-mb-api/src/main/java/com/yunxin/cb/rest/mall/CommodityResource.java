@@ -1,12 +1,10 @@
 package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.annotation.ApiVersion;
-import com.yunxin.cb.mall.entity.*;
-import com.yunxin.cb.mall.entity.PriceSection;
-import com.yunxin.cb.mall.entity.Seller;
+import com.yunxin.cb.mall.entity.Product;
+import com.yunxin.cb.mall.entity.ProductAttribute;
 import com.yunxin.cb.mall.service.CommodityService;
-import com.yunxin.cb.mall.vo.*;
-import com.yunxin.cb.meta.Result;
+import com.yunxin.cb.mall.vo.CommodityVo;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
@@ -14,8 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +20,9 @@ import org.springframework.web.context.ServletContextAware;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @title: 商城商品接口
@@ -60,55 +57,12 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     @GetMapping(value = "getCommdityDetail/{productId}")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult getCommdityDetail(@PathVariable int productId){
-        CommodityVo commodityVo=new CommodityVo();
+    public ResponseResult<CommodityVo> getCommdityDetail(@PathVariable int productId){
+        CommodityVo commodityVo= null;
         try {
             int customerId=getCustomerId();
-            Map map=commodityService.getCommdityDetail(productId,customerId);
-            if(map==null){
-                return new ResponseResult(Result.FAILURE,"货品为空");
-            }
-            Commodity commodity=(Commodity)map.get("commodity");
-            Product product=(Product)map.get("product");
-            PriceSection priceSection=(PriceSection)map.get("priceSection");
-            Seller seller=(Seller)map.get("seller");
-            String showLevel=String.valueOf(map.get("showLevel"));
-            Map specs=(Map)map.get("specs");
-            Map paymetType=(Map)map.get("paymentType");
-            Favorite favorite=(Favorite)map.get("favorite");
-            Set imageSet=(Set)map.get("imageSet");
-            ProductVo productVo=null;
-            PriceSectionVo priceSectionVo=null;
-            SellerVo sellerVo=null;
-            FavoriteVo favoriteVo=null;
-            BeanUtils.copyProperties(commodityVo,commodity);
-            if(!StringUtils.isEmpty(product)){
-                productVo=new ProductVo();
-                BeanUtils.copyProperties(productVo,product);
-            }
-            if(!StringUtils.isEmpty(priceSection)){
-                priceSectionVo=new PriceSectionVo();
-                BeanUtils.copyProperties(priceSectionVo,priceSection);
-            }
-            if(!StringUtils.isEmpty(seller)){
-                sellerVo=new SellerVo();
-                BeanUtils.copyProperties(sellerVo,seller);
-            }
-            if(!StringUtils.isEmpty(favorite)){
-                favoriteVo=new FavoriteVo();
-                BeanUtils.copyProperties(favoriteVo,favorite);
-            }
-            commodityVo.setProductVo(productVo);
-            commodityVo.setPriceSectionVo(priceSectionVo);
-            commodityVo.setSellerVo(sellerVo);
-            commodityVo.setFavoriteVo(favoriteVo);
-            commodityVo.setShowLevel(showLevel);
-            commodityVo.setSpecs(specs);
-            commodityVo.setPaymentType(paymetType);
-            commodityVo.setImageSet(imageSet);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+            commodityVo = commodityService.getCommdityDetail(productId,customerId);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseResult(commodityVo);
@@ -133,7 +87,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
         Map<String, Object> threeFloor = new HashMap<String, Object>();//第三层
         Map<String, Object> fourFloor = new HashMap<String, Object>();//第四层
         Map<String, Object> fiveFloor = new HashMap<String, Object>();//第五层
-        Set<String> sixValue=new HashSet<String>();
+        Map<String, Object> sixValue = new HashMap<String, Object>();
 //        Map<String, Object> sixFloor = new HashMap<String, Object>();//第六层
         String treeKey="";
         String fourKey="";
@@ -171,13 +125,13 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
                 } else if (i == 2) {
                     //获取key
                     fiveKey= attributeList.get(2).getAttribute().getAttributeGroup().getGroupName();
-                    sixKey = attributeList.get(2).getAttribute().getAttributeName()+"-"+pro.getProductId();
+                    sixKey = attributeList.get(2).getAttribute().getAttributeName();
                     twoFloor= (Map<String, Object>) firstFloor.get(oneKey);
                     threeFloor = (Map<String, Object>) twoFloor.get(twoKey);
                     fourFloor= (Map<String, Object>)threeFloor.get(treeKey);
-                    sixValue=fiveFloor.get(fiveKey)==null?new HashSet<String>():(Set<String>) fiveFloor.get(fiveKey);
+                    sixValue=fiveFloor.get(fiveKey)==null?new HashMap<String, Object>():(Map<String, Object>) fiveFloor.get(fiveKey);
                     //第六层放AttributeName
-                    sixValue.add(sixKey);
+                    sixValue.put(sixKey,pro.getProductId());
                     //第五层key放GroupName
                     fiveFloor.put(fiveKey,sixValue);
                 }

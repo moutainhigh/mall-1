@@ -47,7 +47,7 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "getCustomerFavorite")
     @ApiVersion(1)
-    public ResponseResult getCustomerFavorite(Query q){
+    public ResponseResult<FavoriteVo> getCustomerFavorite(Query q){
         PageFinder<FavoriteVo> page=new PageFinder<>();
         Favorite favorite=new Favorite();
         favorite.setCustomerId(getCustomerId());

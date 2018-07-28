@@ -2,8 +2,9 @@ package com.yunxin.cb.rest.mall;
 
 
 import com.yunxin.cb.annotation.ApiVersion;
-import com.yunxin.cb.mall.entity.*;
-import com.yunxin.cb.mall.entity.Seller;
+import com.yunxin.cb.mall.entity.DeliveryAddress;
+import com.yunxin.cb.mall.entity.Order;
+import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.entity.meta.PaymentType;
 import com.yunxin.cb.mall.service.CommodityService;
@@ -26,9 +27,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -62,29 +61,20 @@ public class OrderResource extends BaseResource {
     public ResponseResult<TempOrderVO> getOrderConfrim(@RequestParam(value = "productId")int productId,
                                                        @RequestParam(value = "buyNum")int buyNum, @RequestParam(value = "paymentType")int paymentType) {
         //获取商品信息
-        commodityService.getCommdityDetail(productId, 0);
         TempOrderVO tempOrderVO = new TempOrderVO();
         try {
             int customerId = getCustomerId();
-            Map map = commodityService.getCommdityDetail(productId, customerId);
-            if(map == null){
+            CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
+            if(commodityVo == null){
                 return new ResponseResult(Result.FAILURE,"货品为空");
             }
-            Commodity commodity = (Commodity)map.get("commodity");
-            Product product = (Product)map.get("product");
-            Seller seller = (Seller)map.get("seller");
-            Map specs = (Map)map.get("specs");
             TempOrderItemVO tempOrderItemVO = null;
-            SellerVo sellerVo = null;
-            BeanUtils.copyProperties(tempOrderVO, commodity);
-            if(!StringUtils.isEmpty(product)){
+            SellerVo sellerVo = commodityVo.getSellerVo();
+            BeanUtils.copyProperties(tempOrderVO, commodityVo);
+            if(!StringUtils.isEmpty(commodityVo.getProductVo())){
                 tempOrderItemVO = new TempOrderItemVO();
-                BeanUtils.copyProperties(tempOrderItemVO,product);
+                BeanUtils.copyProperties(tempOrderItemVO,commodityVo.getProductVo());
                 tempOrderItemVO.setBuyNum(buyNum);
-            }
-            if(!StringUtils.isEmpty(seller)){
-                sellerVo = new SellerVo();
-                BeanUtils.copyProperties(sellerVo,seller);
             }
             //获取默认地址
             DeliveryAddress deliveryAddress = deliveryAddressService.selectDefaultByCustomerId(getCustomerId());
@@ -94,7 +84,7 @@ public class OrderResource extends BaseResource {
                 tempOrderVO.setDeliveryAddressVO(deliveryAddressVO);
             }
             tempOrderVO.setSellerVo(sellerVo);
-            tempOrderVO.setSpecs(specs);
+            tempOrderVO.setSpecs(commodityVo.getSpecs());
             tempOrderVO.setTempOrderItemVO(tempOrderItemVO);
             //支付方式
             for (PaymentType pay : PaymentType.values()){
@@ -102,9 +92,7 @@ public class OrderResource extends BaseResource {
                     tempOrderVO.setPaymentType(pay);
                 }
             }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseResult(tempOrderVO);

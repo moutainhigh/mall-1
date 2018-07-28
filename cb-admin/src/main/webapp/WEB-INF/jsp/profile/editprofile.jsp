@@ -34,7 +34,36 @@
                 case "ANDROID_DESCRIPTION":{
                     return "安卓APP更新描述";
                 }
+                case "GIVE_THE_THUMBS_UP":{
+                    return "点赞推荐人及所有上级加5%的授信额度";
+                }
+                case "GIVE_THE_THUMBS_UP":{
+                    return "点赞推荐人及所有上级加5%的授信额度";
+                }
+                case "LOAN_EXPECTED_RETURN_FIFTY":{
+                    return "下单推荐人增加50%的贷款预期收益";
+                }
+                case "ANDROID_FORCE_UPGRADE":{
+                    return "安卓APP是否强制更新";
+                }
+
+                case "SHARE_PATH":{
+                    return "分享地址";
+                }
+                case "SHARE_TITLE":{
+                    return "分享标题";
+                }
+                case "SHARE_ICON":{
+                    return "分享图标";
+                }
+                case "SHARE_DESCRIPTION":{
+                    return "分享描述";
+                }
+                case "SHARE_SHORTMESSAGE_CONTENT":{
+                    return "分享短信内容";
+                }
             }
+            return state;
         }
         $(function () {
             $('#profileName').val(getprofileName('${profile.profileName}'))
@@ -129,14 +158,101 @@
                                 <form:hidden  readonly="true" path="profileName" cssClass="form-control validate[required,minSize[1]]"/>
                             </div>
                         </div>
-
                         <div class="spacer-10"></div>
                         <div class="row">
+                            <div class="col-sm-2">
+                                <label>是否图片：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="inline-labels">
+                                    <form:radiobutton onclick="radiaCheck(1)" path="isPicture" value="1"/>是
+                                    <form:radiobutton onclick="radiaCheck(0)" path="isPicture" value="0"/>否
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            function radiaCheck(value){
+                                if(value==1){
+                                    $('#fileValeDiv').hide();
+                                    $('#fileValeImg').show();
+                                    $('#fileValue').attr("readonly",true);
+                                }else{
+                                    $('#fileValeImg').hide();
+                                    $('#fileValeDiv').show();
+                                    $('#fileValue').attr("readonly",false);
+                                }
+                            }
+                            $(function () {
+                                 var isPicture=${profile.isPicture};
+                                 if(isPicture==1){
+                                     $('#fileValue').attr("readonly",true);
+                                     $('#fileValeDiv').hide();
+                                     $('#fileValeImg').show();
+                                 }
+                            });
+
+                            //建立一個可存取到該file的url
+                            function getObjectURL(file) {
+                                var url = null;
+                                if (window.createObjectURL != undefined) { // basic
+                                    url = window.createObjectURL(file);
+                                } else if (window.URL != undefined) { // mozilla(firefox)
+                                    url = window.URL.createObjectURL(file);
+                                } else if (window.webkitURL != undefined) { // webkit or chrome
+                                    url = window.webkitURL.createObjectURL(file);
+                                }
+                                return url;
+                            }
+                            /**
+                             *上传图片
+                             */
+                            function onchangeImg(imgId){
+                                var formData = new FormData();
+                                formData.append("file", $('#upload')[0].files[0]);
+                                $.ajax({
+                                    url: "/admin/uploads/upload/INSURANCEPRODUCT.do",
+                                    type: 'POST',
+                                    cache: false,
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (result) {
+                                        $('#'+imgId).val(result.url);
+                                    },
+                                    error: function (err) {
+                                    }
+                                });
+                            }
+                            $(function () {
+                                $("#headPic").click(function () {
+                                    $("#upload").click(); //隐藏了input:file样式后，点击头像就可以本地上传
+                                    $("#upload").on("change", function () {
+                                        var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+                                        if (objUrl) {
+                                            $("#headPic").attr("src", objUrl); //将图片路径存入src中，显示出图片
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                        <div class="spacer-10"></div>
+                        <div id="fileValeDiv" class="row">
                             <div class="col-sm-2">
                                 <label>参数值：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input  path="fileValue" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:input id="fileValue"    path="fileValue" cssClass="form-control validate[required,minSize[1]]"/>
+                            </div>
+                        </div>
+                        <div id="fileValeImg" class="row" style="display: none">
+                            <div class="col-sm-2">
+                                <label>参数值：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <img id="headPic" src="${profile.fileValue}" width="350px" height="350px"
+                                     style="padding: 5px">
+                                <input id="upload" onchange="onchangeImg('fileValue')" name="file" multiple="multiple" accept="image/*" type="file"
+                                       style="display: none"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
