@@ -133,6 +133,7 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setOrderItemPrice(product.getSalePrice() * productNum);
                 orderItem.setProductId(product.getProductId());
                 orderItem.setSalePrice(product.getSalePrice());
+                orderItem.setProductImg(product.getDefaultPicPath());
                 orderItem.setEvaluate(false);
                 orderItem.setCreateTime(createTime);
                 //减少库存
@@ -214,7 +215,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public PageFinder<Order> pageOrder(Query q) {
-        PageFinder<Order> page = new PageFinder<Order>(q.getPageNo(), q.getPageSize());
+        PageFinder<Order> page = null;
         List<Order> list = null;
         long rowCount = 0L;
         try {
@@ -228,9 +229,8 @@ public class OrderServiceImpl implements OrderService {
         //如list为null时，则改为返回一个空列表
         list = list == null ? new ArrayList<Order>(0) : list;
         //将分页数据和记录总数设置到分页结果对象中
+        page = new PageFinder<Order>(q.getPageNo(), q.getPageSize(), rowCount);
         page.setData(list);
-        page.setRowCount(rowCount);//记录总数
-        page.setPageCount((int)rowCount);//总页数
         return page;
     }
 

@@ -201,7 +201,7 @@
       </div>
 
       <div class="title" v-if="beneficiaries.length == 0">
-        收益人为法定收益人
+        受益人为法定受益人
       </div>
 
       <div class="title" v-if="beneficiaries.length != 0">

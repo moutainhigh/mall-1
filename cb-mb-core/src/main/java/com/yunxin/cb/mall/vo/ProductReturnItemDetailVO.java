@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 * @param 
 * @return
 */
-@ApiModel(value="商城订单商品详情",description="订单商品详情VO对象")
+@ApiModel(value="商城退货商品详情",description="退货商品详情VO对象")
 public class ProductReturnItemDetailVO implements java.io.Serializable{
 
     /** 订单明细id */

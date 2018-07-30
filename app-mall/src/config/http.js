@@ -2,7 +2,7 @@ import axios from 'axios';
 import {baseUrl} from "./env";
 import storage from "../store/storage";
 
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 10000;
 axios.defaults.baseURL ='';
 
 
@@ -82,11 +82,18 @@ export function get(url,params={}){
  * @param url
  * @param data
  * @param header
+ * @param params
  * @returns {Promise}
  */
 
-export function post(url,data = {},header = {}){
-  url = baseUrl + url;
+export function post(url,data = {},params = null,header = {}){
+  url = baseUrl + url ;
+  if (params) {
+    url = url + '?';
+    for (let key in params) {
+      url = url + key + '=' + params[key] + '&';
+    }
+  }
   return new Promise((resolve,reject) => {
     axios.post(url,data,header)
       .then(response => {
@@ -127,6 +134,25 @@ export function put(url,data = {}){
   url = baseUrl + url;
   return new Promise((resolve,reject) => {
     axios.put(url,data)
+      .then(response => {
+        resolve(response.data);
+      },err => {
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 封装delete请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function del(url,data = {}){
+  url = baseUrl + url;
+  return new Promise((resolve,reject) => {
+    axios.delete(url,data)
       .then(response => {
         resolve(response.data);
       },err => {

@@ -4,7 +4,6 @@
 package com.yunxin.cb.mall.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.hankcs.lucene.HanLPAnalyzer;
 import com.yunxin.cb.mall.entity.meta.CommodityState;
 import com.yunxin.cb.mall.entity.meta.CommodityUnit;
 import com.yunxin.cb.mall.entity.meta.DeliveryType;
@@ -13,7 +12,9 @@ import com.yunxin.core.util.LogicUtils;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 
 import javax.persistence.*;
@@ -228,6 +229,9 @@ public class Commodity implements java.io.Serializable {
      */
     private String explainContent;
 
+    //默认货品id
+    private Product defaultProduct;
+
     @Column(nullable = true, length = 4098)
     public String getExplainContent() {
         return explainContent;
@@ -235,6 +239,16 @@ public class Commodity implements java.io.Serializable {
 
     public void setExplainContent(String explainContent) {
         this.explainContent = explainContent;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DEFAULT_PRODUCT_ID", nullable = false)
+    public Product getDefaultProduct() {
+        return defaultProduct;
+    }
+
+    public void setDefaultProduct(Product defaultProduct) {
+        this.defaultProduct = defaultProduct;
     }
 
     public Commodity() {

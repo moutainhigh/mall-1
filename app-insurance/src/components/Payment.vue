@@ -190,18 +190,18 @@
       getVerifyCode() {
         if (this.bank.bankMobile) {
           if (this.computedTime === 0) {
-            this.computedTime = 60;
-            //倒计时
-            let timer = setInterval(() => {
-              this.computedTime--;
-              if (this.computedTime === 0) {
-                clearInterval(timer)
-              }
-            }, 1000);
             //获取验证信息
             let getCode = getVaildData(this.bank.bankMobile).then(res => {
               if (res.result == 'SUCCESS') {
                 this.toastText = "发送成功";
+                //倒计时
+                this.computedTime = 60;
+                let timer = setInterval(() => {
+                  this.computedTime--;
+                  if (this.computedTime === 0) {
+                    clearInterval(timer)
+                  }
+                }, 1000);
               } else {
                 this.toastText = "发送失败,请稍候重试"
               }

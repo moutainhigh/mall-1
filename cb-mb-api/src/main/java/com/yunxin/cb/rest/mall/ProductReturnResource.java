@@ -89,7 +89,7 @@ public class ProductReturnResource extends BaseResource {
             @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "post", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "productReturn/pageList")
-    public ResponseResult pageProductReturn(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
+    public ResponseResult<PageFinder<ProductReturnDetailVO>> pageProductReturn(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
                                             @RequestParam(value = "orderId", required = false) Integer orderId){
         Query q = new Query(pageNo, pageSize);
         ProductReturn productReturn = new ProductReturn();
@@ -112,7 +112,7 @@ public class ProductReturnResource extends BaseResource {
             @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "post", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "productReturn/list")
-    public ResponseResult listProductReturn(@RequestParam(value = "orderId", required = false) Integer orderId){
+    public ResponseResult<List<ProductReturnDetailVO>> listProductReturn(@RequestParam(value = "orderId", required = false) Integer orderId){
         Query q = new Query();
         ProductReturn productReturn = new ProductReturn();
         productReturn.setCustomerId(getCustomerId());
@@ -134,7 +134,7 @@ public class ProductReturnResource extends BaseResource {
             @ApiImplicitParam(name = "productReturnId", value = "退货id", required = true, paramType = "path", dataType = "int")})
     @ApiVersion(1)
     @GetMapping(value = "productReturn/{productReturnId}")
-    public ResponseResult getProductReturn(@PathVariable Integer productReturnId){
+    public ResponseResult<ProductReturnDetailVO> getProductReturn(@PathVariable Integer productReturnId){
         ProductReturn productReturn = productReturnService.getProductReturn(productReturnId, getCustomerId());
         ProductReturnDetailVO productReturnDetailVO = null;
         try {
