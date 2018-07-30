@@ -86,6 +86,8 @@ public class UserController {
         } catch (EntityExistException e) {
             result.addError(new FieldError("user", "userName", user.getUserName(), true, null, null,e.getMessage()));
             return toAddUser(user,seller,modelMap);
+        } catch (Exception ex) {
+            return toAddUser(user,seller,modelMap);
         }
         return "redirect:../common/success.do?reurl=security/users.do";
     }
@@ -138,9 +140,7 @@ public class UserController {
         try {
             User user = securityService.changePassword(userId, password);
             return "redirect:../common/success.do?reurl=security/users.do";
-        } catch (InvalidKeyException | NoSuchPaddingException
-                | NoSuchAlgorithmException | BadPaddingException
-                | IllegalBlockSizeException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "redirect:../common/simplefailure.do?reurl=security/users.do";
         }

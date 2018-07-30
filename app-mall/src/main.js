@@ -6,11 +6,13 @@ import router from './router'
 import './assets/css/defualt.css'
 import vuePicturePreview from 'vue-picture-preview'
 import { Group } from 'vux'
+import VueScroller from 'vue-scroller'
 
 
 Vue.config.productionTip = false;
 Vue.use(vuePicturePreview)
 Vue.component('group', Group);
+Vue.use(VueScroller);
 
 
 router.afterEach((to,from,next) => {

@@ -9,6 +9,30 @@
       </div>
     </head-top>
     <div class="user-order-list" style="margin-top: 3rem">
+      <scroller style="top: 0;font-size: 12px !important;margin-top: 3rem"
+                :on-refresh="refresh"
+                :on-infinite="infinite"
+                refresh-layer-color="#f5ca1d"
+                loading-layer-color="#f5ca1d">
+        <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
       <dl>
         <dd class="myorderList">
           <img v-if="isEdit && check" class="checkIcon" src="../../assets/img/common/Checkmark_sele.png"
@@ -23,6 +47,26 @@
           </div>
         </dd>
       </dl>
+    <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
+      <g>
+        <circle cx="16" cy="32" stroke-width="0" r="3">
+          <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                   repeatCount="indefinite"></animate>
+          <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+        </circle>
+        <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+          <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                   repeatCount="indefinite"></animate>
+          <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+        </circle>
+        <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+          <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                   repeatCount="indefinite"></animate>
+          <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+        </circle>
+      </g>
+    </svg>
+    </scroller>
     </div>
 
     <div style="height: 3.125rem" v-if="isEdit">
@@ -40,18 +84,48 @@
 
 <script>
   import headTop from '../../components/header/head'
+  import {getCustomerFavorite} from "../../service/getData";
 
   export default {
     name: "CollectList",
     components: {
-      headTop
+      headTop,
     },
     data() {
       return {
         headTitle: '我的收藏',
         isEdit: false,
-        check: false
+        check: false,
+        pageQuery:{
+          pageNo:1,
+          pageSize:10
+        },
+        collectList:[]
       }
+    },
+    methods:{
+      refresh(done) {
+
+          done()
+      },
+
+      infinite(done) {
+          done(true);
+      },
+      getCollects(){
+        let _this = this;
+        console.log(this.pageQuery);
+        getCustomerFavorite(_this.pageQuery).then(res=>{
+          if (res.result == 'SUCCESS') {
+            _this.collectList = res.data.data;
+          }
+          console.log(res);
+        })
+      }
+    },
+    created(){
+      this.getCollects();
+
     }
   }
 </script>
@@ -161,5 +235,24 @@
     width: 45vw;
     float: right;
     font-size: 1rem
+  }
+
+  ._v-container > ._v-content > .pull-to-refresh-layer {
+    width: 100%;
+    height: 60px;
+    margin-top: -60px;
+    text-align: center;
+    font-size: 12px !important;
+    color: #AAA;
+  }
+
+  ._v-container > ._v-content > .loading-layer {
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    font-size: 12px !important;
+    line-height: 60px;
+    color: #AAA;
+    position: relative;
   }
 </style>

@@ -2,6 +2,8 @@ package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.Seller;
+import com.yunxin.cb.mall.entity.meta.DeliveryState;
+import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
@@ -325,5 +327,5 @@ public interface OrderMapper {
             "and CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     int updateStateByOrderIdAndCustomerId(@Param("orderId") int orderId, @Param("customerId") int customerId,
-                                     @Param("orderState") int orderState, @Param("deliveryState") int deliveryState);
+                                          @Param("orderState") OrderState orderState, @Param("deliveryState") DeliveryState deliveryState);
 }

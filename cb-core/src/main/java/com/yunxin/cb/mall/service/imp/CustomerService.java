@@ -11,6 +11,7 @@ import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
+import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.entity.CustomerFriendId;
@@ -20,6 +21,7 @@ import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.system.entity.Profile;
 import com.yunxin.cb.system.meta.ProfileName;
 import com.yunxin.cb.system.service.IProfileService;
+import com.yunxin.cb.util.PasswordHash;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -132,6 +134,8 @@ public class CustomerService implements ICustomerService {
         }
         customer.setCreateTime(new Date());
         customer.setRank(rankDao.getRankByDefaultRank());
+        String pwd = PasswordHash.createHash(customer.getPassword());
+        customer.setPassword(pwd);
         Customer dbCustomer = customerDao.save(customer);
         String token = rongCloudService.register(dbCustomer);
         dbCustomer.setRongCloudToken(token);
@@ -415,7 +419,22 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(readOnly = true)
     public Customer getCustomerByAccountNameAndPassword(String accountName, String password) {
-        return customerDao.findByAccountNameAndPasswordAndEnabled(accountName, password, true);
+        PBKDF2PasswordEncoder pbkdf2 = new PBKDF2PasswordEncoder();
+        Customer customer = customerDao.findByAccountNameAndEnabled(accountName, true);
+
+        if(customer!=null){
+            if(pbkdf2.matches(password, customer.getPassword())){
+                if(StringUtils.isNotEmpty(customer.getRealName())&&StringUtils.isNotEmpty(customer.getCustomerCountry())
+                        &&StringUtils.isNotEmpty(customer.getCardType())&&StringUtils.isNotEmpty(customer.getCustomerCardNo())
+                        &&StringUtils.isNotEmpty(customer.getOccupationalCategory())&&null!=customer.getCustomerCardPeroid())
+                    customer.setPerfect(true);
+                else
+                    customer.setPerfect(false);
+            }else {
+                return null;
+            }
+        }
+        return customer;
     }
 
     @Override
@@ -427,7 +446,16 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Customer getCustomerByMobile(String mobile) {
-        return customerDao.findByMobileAndEnabled(mobile, true);
+        Customer customer=customerDao.findByMobileAndEnabled(mobile, true);
+        if(customer!=null){
+            if(StringUtils.isNotEmpty(customer.getRealName())&&StringUtils.isNotEmpty(customer.getCustomerCountry())
+                    &&StringUtils.isNotEmpty(customer.getCardType())&&StringUtils.isNotEmpty(customer.getCustomerCardNo())
+                    &&StringUtils.isNotEmpty(customer.getOccupationalCategory())&&null!=customer.getCustomerCardPeroid())
+                customer.setPerfect(true);
+            else
+                customer.setPerfect(false);
+        }
+        return customer;
     }
 
     @Override
@@ -779,4 +807,23 @@ public class CustomerService implements ICustomerService {
         rongCloudService.sendPrivateMessage(customer.getAccountName(), myself.getAccountName(),"AcceptResponse");
     }
 
+    /**
+     * 批量更新密码加密
+     */
+    @Override
+    public void batchPwdEncode() {
+        List<Customer> customers = customerDao.findAll();
+        if(customers != null) {
+            customers.forEach(customer -> {
+                if(!customer.getPassword().contains("sha1:")){
+                    try {
+                        String pwd = PasswordHash.createHash(customer.getPassword());
+                        customer.setPassword(pwd);
+                    } catch (PasswordHash.CannotPerformOperationException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    }
 }

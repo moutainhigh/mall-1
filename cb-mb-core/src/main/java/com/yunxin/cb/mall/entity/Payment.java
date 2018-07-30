@@ -1,5 +1,10 @@
 package com.yunxin.cb.mall.entity;
 
+import com.yunxin.cb.mall.entity.meta.ChannelType;
+import com.yunxin.cb.mall.entity.meta.PayNotifyState;
+import com.yunxin.cb.mall.entity.meta.PayState;
+import com.yunxin.cb.mall.entity.meta.PayType;
+
 import java.util.Date;
 
 public class Payment {
@@ -10,7 +15,7 @@ public class Payment {
     private String buyerAccount;
 
     /** 支付通道 */
-    private Integer channelType;
+    private ChannelType channelType;
 
     /** 交易完成时间 */
     private Date completeTime;
@@ -37,13 +42,13 @@ public class Payment {
     private String payFlowCode;
 
     /** 通知第三方支付平台 0:未通知1:通知成功(对方返回预期的响应结果)2:通知失败 */
-    private Integer payNotifyState;
+    private PayNotifyState payNotifyState;
 
     /** 支付状态0:处理中1:处理成功2:处理失败3:部分成功 */
-    private Integer payState;
+    private PayState payState;
 
     /** 支付类型1.支付2.退款 */
-    private Integer payType;
+    private PayType payType;
 
     /** 备注 */
     private String remark;
@@ -87,11 +92,11 @@ public class Payment {
         this.buyerAccount = buyerAccount == null ? null : buyerAccount.trim();
     }
 
-    public Integer getChannelType() {
+    public ChannelType getChannelType() {
         return channelType;
     }
 
-    public void setChannelType(Integer channelType) {
+    public void setChannelType(ChannelType channelType) {
         this.channelType = channelType;
     }
 
@@ -159,27 +164,27 @@ public class Payment {
         this.payFlowCode = payFlowCode == null ? null : payFlowCode.trim();
     }
 
-    public Integer getPayNotifyState() {
+    public PayNotifyState getPayNotifyState() {
         return payNotifyState;
     }
 
-    public void setPayNotifyState(Integer payNotifyState) {
+    public void setPayNotifyState(PayNotifyState payNotifyState) {
         this.payNotifyState = payNotifyState;
     }
 
-    public Integer getPayState() {
+    public PayState getPayState() {
         return payState;
     }
 
-    public void setPayState(Integer payState) {
+    public void setPayState(PayState payState) {
         this.payState = payState;
     }
 
-    public Integer getPayType() {
+    public PayType getPayType() {
         return payType;
     }
 
-    public void setPayType(Integer payType) {
+    public void setPayType(PayType payType) {
         this.payType = payType;
     }
 

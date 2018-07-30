@@ -52,14 +52,18 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public CommodityVo getCommdityDetail(int productId,int customerId) throws Exception {
+        //查询货品详情
         Product product = productMapper.selectProductById(productId,ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());//审核通过并上架状态
         if(product==null){
             return null;
         }
+        //查询货品的商品详情
         Commodity commodity = commodityMapper.selectCommodityDetailById(product.getCommodityId(),ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());//审核通过并上架状态
         if(commodity==null){
             return null;
         }
+        //查询商品的所有货品
+        List<Product> products = productMapper.selectAllByCommodityId(product.getCommodityId(),ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());//审核通过并上架状态
         PriceSection priceSection = commodity.getPriceSection();//商品价格段
         Seller seller = commodity.getSeller();//商家
         Map specs = new HashMap();//商品规格Map
@@ -72,7 +76,7 @@ public class CommodityServiceImpl implements CommodityService {
         }
         Map paymentType=new HashMap();//支付方式
         for (PaymentType pay : PaymentType.values()){
-            paymentType.put(pay.ordinal(),pay.toString());
+            paymentType.put(pay,pay.toString());
         }
         Favorite favorite=null;
         if(customerId>0){//用户存在则查询商品收藏夹
@@ -93,6 +97,7 @@ public class CommodityServiceImpl implements CommodityService {
         commodity.setCommoditySpecs(null);
         CommodityVo commodityVo=new CommodityVo();
         ProductVo productVo=null;
+        List<ProductVo> productVos=null;
         PriceSectionVo priceSectionVo=null;
         SellerVo sellerVo=null;
         FavoriteVo favoriteVo=null;
@@ -100,6 +105,15 @@ public class CommodityServiceImpl implements CommodityService {
         if(!StringUtils.isEmpty(product)){
             productVo=new ProductVo();
             BeanUtils.copyProperties(productVo,product);
+        }
+        if(!StringUtils.isEmpty(products)&&products.size()>0){
+            productVos=new ArrayList<ProductVo>();
+            for(Product pro:products){
+                pro.setProductAttributes(null);
+                BeanUtils.copyProperties(productVo,pro);
+                productVos.add(productVo);
+            }
+            commodityVo.setProductVos(productVos);
         }
         if(!StringUtils.isEmpty(priceSection)){
             priceSectionVo=new PriceSectionVo();
@@ -125,8 +139,8 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
-    public List<Product> getProductsByCommodityId(int commodityId) {
-        List<Product> products = productMapper.selectAllByCommodityId(commodityId);
+    public List<Product> getProductsByCommodityId(Integer commodityId,Integer state,Integer publish) {
+        List<Product> products = productMapper.selectAllByCommodityId(commodityId,state,publish);
         return products;
     }
 

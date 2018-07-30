@@ -38,7 +38,7 @@ public interface CommodityService {
      * @auther: eleven
      * @date: 2018/7/20 18:00
      */
-    public List<Product> getProductsByCommodityId(int commodityId);
+    public List<Product> getProductsByCommodityId(Integer commodityId,Integer state,Integer publish);
 
     /**
      * 获取该品牌下所有商品

@@ -7,7 +7,8 @@ import java.util.*;
  * @auther: eleven
  * @date: 2018/7/18 17:43
  */
-public class AttributeGroup {
+public class AttributeGroup implements java.io.Serializable {
+    private static final long serialVersionUID = -8474655123593357628L;
     /** 属性组id */
     private Integer groupId;
 
@@ -23,7 +24,7 @@ public class AttributeGroup {
     /** 商品id */
     private Integer commodityId;
 
-    private List<Attribute> attributes = new ArrayList<>();
+    private Set<Attribute> attributes = new HashSet<>();
 
     public Integer getGroupId() {
         return groupId;
@@ -65,11 +66,27 @@ public class AttributeGroup {
         this.commodityId = commodityId;
     }
 
-    public List<Attribute> getAttributes() {
+    public Set<Attribute> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(List<Attribute> attributes) {
+    public void setAttributes(Set<Attribute> attributes) {
         this.attributes = attributes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AttributeGroup that = (AttributeGroup) o;
+
+        return groupId == that.groupId;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return groupId;
     }
 }

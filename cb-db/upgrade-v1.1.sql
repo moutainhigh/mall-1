@@ -107,7 +107,7 @@ CREATE TABLE `customer_wallet` (
   KEY `CUSTOMER_ID` (`CUSTOMER_ID`),
   CONSTRAINT `customer_wallet_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='客户钱包表';
-
+####################################生产环境 2018-07-27
 ###add by wangteng 2018-07-27
 alter table customer add  CUSTOMER_COUNTRY VARCHAR(50) DEFAULT NULL COMMENT '国籍';
 alter table customer add  CUSTOMER_CARD_PEROID date DEFAULT NULL COMMENT '证件有效期';
@@ -116,3 +116,7 @@ alter table customer add  OCCUPATIONAL_CATEGORY VARCHAR(50) DEFAULT NULL COMMENT
 
 ##add by likang 2018-07-28
 ALTER TABLE profile ADD COLUMN `IS_PICTURE` int(2)    COMMENT '是否是图片';
+
+##add by tanggangyi 2018-07-28 修改客户密码长度为64
+ALTER TABLE `crystal_ball`.`customer`
+MODIFY COLUMN `PASSWORD` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL AFTER `MOBILE_CHECKED`;

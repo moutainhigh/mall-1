@@ -2,15 +2,14 @@ package com.yunxin.cb.rest.mall;
 
 
 import com.yunxin.cb.annotation.ApiVersion;
-import com.yunxin.cb.mall.entity.DeliveryAddress;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.meta.OrderState;
-import com.yunxin.cb.mall.entity.meta.PaymentType;
-import com.yunxin.cb.mall.service.CommodityService;
-import com.yunxin.cb.mall.service.DeliveryAddressService;
 import com.yunxin.cb.mall.service.OrderService;
-import com.yunxin.cb.mall.vo.*;
+import com.yunxin.cb.mall.vo.OrderConfirmProductVO;
+import com.yunxin.cb.mall.vo.OrderConfirmVO;
+import com.yunxin.cb.mall.vo.OrderDetailVO;
+import com.yunxin.cb.mall.vo.TempOrderVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
@@ -23,7 +22,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -46,52 +44,19 @@ public class OrderResource extends BaseResource {
 
     @Resource
     private OrderService orderService;
-    @Resource
-    private CommodityService commodityService;
-    @Resource
-    private DeliveryAddressService deliveryAddressService;
 
     @ApiOperation(value = "订单确认页面数据")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "paymentType", value = "支付方式", paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "paymentType", value = "支付方式", paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
-    public ResponseResult<TempOrderVO> getOrderConfrim(@RequestParam(value = "productId")int productId,
-                                                       @RequestParam(value = "buyNum")int buyNum, @RequestParam(value = "paymentType")int paymentType) {
-        //获取商品信息
-        TempOrderVO tempOrderVO = new TempOrderVO();
+    public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId")int productId,
+                                                       @RequestParam(value = "buyNum")int buyNum, @RequestParam(value = "paymentType")String paymentType) {
+        TempOrderVO tempOrderVO = null;
         try {
-            int customerId = getCustomerId();
-            CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
-            if(commodityVo == null){
-                return new ResponseResult(Result.FAILURE,"货品为空");
-            }
-            TempOrderItemVO tempOrderItemVO = null;
-            SellerVo sellerVo = commodityVo.getSellerVo();
-            BeanUtils.copyProperties(tempOrderVO, commodityVo);
-            if(!StringUtils.isEmpty(commodityVo.getProductVo())){
-                tempOrderItemVO = new TempOrderItemVO();
-                BeanUtils.copyProperties(tempOrderItemVO,commodityVo.getProductVo());
-                tempOrderItemVO.setBuyNum(buyNum);
-            }
-            //获取默认地址
-            DeliveryAddress deliveryAddress = deliveryAddressService.selectDefaultByCustomerId(getCustomerId());
-            if(!StringUtils.isEmpty(deliveryAddress)){
-                DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
-                BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
-                tempOrderVO.setDeliveryAddressVO(deliveryAddressVO);
-            }
-            tempOrderVO.setSellerVo(sellerVo);
-            tempOrderVO.setSpecs(commodityVo.getSpecs());
-            tempOrderVO.setTempOrderItemVO(tempOrderItemVO);
-            //支付方式
-            for (PaymentType pay : PaymentType.values()){
-                if (pay.ordinal() == paymentType) {
-                    tempOrderVO.setPaymentType(pay);
-                }
-            }
+            tempOrderVO = orderService.getTempOrder(getCustomerId(), productId, buyNum, paymentType);
         } catch (Exception e) {
             e.printStackTrace();
         }

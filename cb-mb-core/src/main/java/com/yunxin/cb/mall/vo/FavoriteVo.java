@@ -1,10 +1,16 @@
 package com.yunxin.cb.mall.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yunxin.cb.mall.entity.Favorite;
+import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.beanutils.BeanUtils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @title: 收藏夹VO
@@ -98,5 +104,34 @@ public class FavoriteVo implements java.io.Serializable{
                 ", commodity=" + commodityVo +
                 ", customerId=" + customerId +
                 '}';
+    }
+
+    /**
+     * 分页DO转换VO
+     */
+    public static PageFinder<FavoriteVo> dOconvertVOPage (PageFinder<Favorite> pageFinder){
+        PageFinder<FavoriteVo> page = new PageFinder<FavoriteVo> (pageFinder.getPageNo(), pageFinder.getPageSize());
+        if (pageFinder != null) {
+            try {
+                List<Favorite> list = pageFinder.getData();
+                List<FavoriteVo> volist = new ArrayList<>();
+                for (Favorite fa:list){
+                    CommodityVo commodityVo=new CommodityVo();
+                    BeanUtils.copyProperties(commodityVo,fa.getCommodity());
+                    FavoriteVo favoriteVo=new FavoriteVo();
+                    BeanUtils.copyProperties(favoriteVo,fa);
+                    favoriteVo.setCommodityVo(commodityVo);
+                    volist.add(favoriteVo);
+                }
+                page.setData(volist);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        page.setRowCount(pageFinder.getRowCount());//记录总数
+        page.setPageCount(pageFinder.getPageCount());//总页数
+        return page;
     }
 }

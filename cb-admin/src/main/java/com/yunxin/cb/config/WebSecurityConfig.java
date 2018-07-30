@@ -1,9 +1,9 @@
 package com.yunxin.cb.config;
 
 import com.yunxin.cb.console.service.imp.SecurityService;
-
 import com.yunxin.cb.security.LoginFailureHandler;
 import com.yunxin.cb.security.LoginSuccessHandler;
+import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(securityService);
+        auth.userDetailsService(securityService)
+                .passwordEncoder(new PBKDF2PasswordEncoder());
     }
 
     @Override
@@ -102,4 +103,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(filterSecurityInterceptor(), FilterSecurityInterceptor.class);
     }
+
 }

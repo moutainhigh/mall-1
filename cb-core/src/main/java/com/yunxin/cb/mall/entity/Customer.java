@@ -232,6 +232,8 @@ public class Customer implements java.io.Serializable {
     @ApiModelProperty(value="证件有效期",name="customerCardPeroid",example="2018-08-12")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date customerCardPeroid;
+    @ApiModelProperty(value="个人信息是否完善",name="isPerfect",example="true")
+    private boolean perfect;
     /**
      * 职业类别
      */
@@ -275,7 +277,7 @@ public class Customer implements java.io.Serializable {
         this.accountName = accountName;
     }
 
-    @Column(length = 16, nullable = false)
+    @Column(length = 64, nullable = false)
     @JsonIgnore
     public String getPassword() {
         return password;
@@ -701,6 +703,15 @@ public class Customer implements java.io.Serializable {
     public void setState(String state) {
         this.state = state;
     }
+    @Transient
+    public boolean isPerfect() {
+        return perfect;
+    }
+
+    public void setPerfect(boolean perfect) {
+        this.perfect = perfect;
+    }
+
     @Column(length = 60, nullable = true)
     public String getCustomerCountry() {
         return customerCountry;
