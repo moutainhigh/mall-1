@@ -208,8 +208,6 @@ public class ProductReturnDetailVO implements java.io.Serializable{
             List<ProductReturnDetailVO> list = ProductReturnDetailVO.dOconvertVOList(pageFinder.getData());
             page.setData(list);
         }
-        page.setRowCount(pageFinder.getRowCount());//记录总数
-        page.setPageCount(pageFinder.getPageCount());//总页数
         return page;
     }
 

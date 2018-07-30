@@ -229,6 +229,7 @@ public class OrderDetailVO implements java.io.Serializable{
                     if (commodity != null) {
                         oderItemDetailVO.setCommodityId(commodity.getCommodityId());
                         oderItemDetailVO.setCommodityName(commodity.getCommodityName());
+                        oderItemDetailVO.setCommodityTitle(commodity.getCommodityTitle());
                     }
                 }
                 orderItemDetails.add(oderItemDetailVO);
