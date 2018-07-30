@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class CustomerWallet {
     /** 客户钱包id */
+    private Integer walletId;
+    /** 客户id */
     private Integer customerId;
 
     /** 可用余额 */
@@ -78,5 +80,13 @@ public class CustomerWallet {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(Integer walletId) {
+        this.walletId = walletId;
     }
 }
