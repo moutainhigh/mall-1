@@ -120,8 +120,8 @@ public class OrderServiceImpl implements OrderService {
         Set<OrderItem> orderItems = order.getOrderItems();
         if (orderItems != null && !orderItems.isEmpty()) {
             for (OrderItem orderItem : orderItems) {
-                //根据货品id查询货品
-                Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
+                //根据货品id查询货品（审核通过且上架货品）
+                Product product = productMapper.selectProductById(orderItem.getProductId(), ProductState.AUDITED.ordinal(), PublishState.UP_SHELVES.ordinal());
                 //判断货品是否存在，且库存足够
                 if (product == null || product.getStoreNum() <= 0) {
                     //库存不足
@@ -133,6 +133,7 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setOrderItemPrice(product.getSalePrice() * productNum);
                 orderItem.setProductId(product.getProductId());
                 orderItem.setSalePrice(product.getSalePrice());
+                orderItem.setProductImg(product.getDefaultPicPath());
                 orderItem.setEvaluate(false);
                 orderItem.setCreateTime(createTime);
                 //减少库存

@@ -141,3 +141,22 @@ export function put(url,data = {}){
       })
   })
 }
+
+/**
+ * 封装delete请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function del(url,data = {}){
+  url = baseUrl + url;
+  return new Promise((resolve,reject) => {
+    axios.delete(url,data)
+      .then(response => {
+        resolve(response.data);
+      },err => {
+        reject(err)
+      })
+  })
+}

@@ -9,8 +9,8 @@ import org.apache.ibatis.type.JdbcType;
 import java.util.List;
 @Mapper
 public interface ProductReturnMapper {
-    final static String columns = "RETURN_ID, APPLY_TIME, PIC_PATH, PURCHASING_TIME, REASON, RETURN_REFUND_STATE, " +
-            " CUSTOMER_ID, ORDER_ID, ITEM_ID, AUDIT_REMARK, AUDIT_STATE, COURIER_NUMBER, DISPOSE_TIME, " +
+    final static String columns = "RETURN_ID, APPLY_TIME, PIC_PATH, PURCHASING_TIME, REFUND_TIME, REASON, RETURN_REFUND_STATE, " +
+            " CUSTOMER_ID, ORDER_ID, ITEM_ID, AUDIT_REMARK, AUDIT_STATE, AUDIT_TIME, COURIER_NUMBER, DISPOSE_TIME, " +
             " LOGISTIC_CODE, REASON_REMARK, RECEIVED_BUYER_PRODUCT, RECEIVED_SELLER_PRODUCT, " +
             " REFUND_PRICE, REFUND_REASON, RETURN_CODE, RETURN_REASON, REFUND_ONLY, REMARK, " +
             " REJECT_REASON";
@@ -36,11 +36,11 @@ public interface ProductReturnMapper {
             "insert into product_return (",
             columns,")",
             "values (#{returnId,jdbcType=INTEGER}, #{applyTime,jdbcType=TIMESTAMP}, ",
-            "#{picPath,jdbcType=VARCHAR}, #{purchasingTime,jdbcType=TIMESTAMP}, ",
+            "#{picPath,jdbcType=VARCHAR}, #{purchasingTime,jdbcType=TIMESTAMP}, #{refundTime,jdbcType=TIMESTAMP},",
             "#{reason,jdbcType=VARCHAR}, #{returnRefundState,jdbcType=INTEGER}, ",
             "#{customerId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, ",
             "#{itemId,jdbcType=INTEGER}, #{auditRemark,jdbcType=VARCHAR}, ",
-            "#{auditState,jdbcType=INTEGER}, #{courierNumber,jdbcType=VARCHAR}, ",
+            "#{auditState,jdbcType=INTEGER}, #{auditTime,jdbcType=TIMESTAMP},#{courierNumber,jdbcType=VARCHAR}, ",
             "#{disposeTime,jdbcType=TIMESTAMP}, #{logisticCode,jdbcType=VARCHAR}, ",
             "#{reasonRemark,jdbcType=VARCHAR}, #{receivedBuyerProduct,jdbcType=BIT}, ",
             "#{receivedSellerProduct,jdbcType=BIT}, #{refundPrice,jdbcType=DOUBLE}, ",
@@ -67,6 +67,7 @@ public interface ProductReturnMapper {
             @Result(column="APPLY_TIME", property="applyTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="PIC_PATH", property="picPath", jdbcType=JdbcType.VARCHAR),
             @Result(column="PURCHASING_TIME", property="purchasingTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="REFUND_TIME", property="refundTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="REASON", property="reason", jdbcType=JdbcType.VARCHAR),
             @Result(column="RETURN_REFUND_STATE", property="returnRefundState", jdbcType=JdbcType.INTEGER),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
@@ -74,6 +75,7 @@ public interface ProductReturnMapper {
             @Result(column="ITEM_ID", property="itemId", jdbcType=JdbcType.INTEGER),
             @Result(column="AUDIT_REMARK", property="auditRemark", jdbcType=JdbcType.VARCHAR),
             @Result(column="AUDIT_STATE", property="auditState", jdbcType=JdbcType.INTEGER),
+            @Result(column="AUDIT_TIME", property="auditTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="COURIER_NUMBER", property="courierNumber", jdbcType=JdbcType.VARCHAR),
             @Result(column="DISPOSE_TIME", property="disposeTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="LOGISTIC_CODE", property="logisticCode", jdbcType=JdbcType.VARCHAR),
@@ -103,6 +105,7 @@ public interface ProductReturnMapper {
             @Result(column="APPLY_TIME", property="applyTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="PIC_PATH", property="picPath", jdbcType=JdbcType.VARCHAR),
             @Result(column="PURCHASING_TIME", property="purchasingTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="REFUND_TIME", property="refundTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="REASON", property="reason", jdbcType=JdbcType.VARCHAR),
             @Result(column="RETURN_REFUND_STATE", property="returnRefundState", jdbcType=JdbcType.INTEGER),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
@@ -110,6 +113,7 @@ public interface ProductReturnMapper {
             @Result(column="ITEM_ID", property="itemId", jdbcType=JdbcType.INTEGER),
             @Result(column="AUDIT_REMARK", property="auditRemark", jdbcType=JdbcType.VARCHAR),
             @Result(column="AUDIT_STATE", property="auditState", jdbcType=JdbcType.INTEGER),
+            @Result(column="AUDIT_TIME", property="auditTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="COURIER_NUMBER", property="courierNumber", jdbcType=JdbcType.VARCHAR),
             @Result(column="DISPOSE_TIME", property="disposeTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="LOGISTIC_CODE", property="logisticCode", jdbcType=JdbcType.VARCHAR),
@@ -151,6 +155,7 @@ public interface ProductReturnMapper {
             "set APPLY_TIME = #{applyTime,jdbcType=TIMESTAMP},",
             "PIC_PATH = #{picPath,jdbcType=VARCHAR},",
             "PURCHASING_TIME = #{purchasingTime,jdbcType=TIMESTAMP},",
+            "REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},",
             "REASON = #{reason,jdbcType=VARCHAR},",
             "RETURN_REFUND_STATE = #{returnRefundState,jdbcType=INTEGER},",
             "CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
@@ -158,6 +163,7 @@ public interface ProductReturnMapper {
             "ITEM_ID = #{itemId,jdbcType=INTEGER},",
             "AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR},",
             "AUDIT_STATE = #{auditState,jdbcType=INTEGER},",
+            "AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},",
             "COURIER_NUMBER = #{courierNumber,jdbcType=VARCHAR},",
             "DISPOSE_TIME = #{disposeTime,jdbcType=TIMESTAMP},",
             "LOGISTIC_CODE = #{logisticCode,jdbcType=VARCHAR},",

@@ -2,7 +2,7 @@ package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.*;
-import com.yunxin.cb.mall.entity.FloorInfo;
+import com.yunxin.cb.mall.entity.meta.AdvertisementPlace;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.AdvertisementVO;
 import com.yunxin.cb.mall.vo.BrandVO;
@@ -48,8 +48,9 @@ public class IndexResource extends BaseResource {
     public ResponseResult index(){
         try{
             //获取首页banner
-            Integer homePlace = 0;
-            List<Advertisement> firstList = advertisementService.selectByPlace(homePlace);
+            AdvertisementPlace homePlace = AdvertisementPlace.HOME;
+            Boolean enabled = true;
+            List<Advertisement> firstList = advertisementService.selectByPlace(homePlace,enabled);
             List<AdvertisementVO> homeList = new ArrayList<>();
             for(Advertisement adm : firstList){
                 AdvertisementVO adVO = new AdvertisementVO();
@@ -57,8 +58,8 @@ public class IndexResource extends BaseResource {
                 homeList.add(adVO);
             }
             //获取中部banner
-            int middlePlace = 1;
-            List<Advertisement> secondList = advertisementService.selectByPlace(middlePlace);
+            AdvertisementPlace middlePlace = AdvertisementPlace.MIDDLE;
+            List<Advertisement> secondList = advertisementService.selectByPlace(middlePlace,enabled);
             List<AdvertisementVO> middleList = new ArrayList<>();
             for(Advertisement advment : secondList){
                 AdvertisementVO adVO = new AdvertisementVO();
@@ -72,14 +73,12 @@ public class IndexResource extends BaseResource {
             List<CategoryVO> categoryThreeList = new ArrayList<>();
             List<CategoryVO> categoryFiveList = new ArrayList<>();
             if(hList.size()>0){
-                for(int i=0;i<hList.size();i++){
-                    HomeFloor homeFloor = hList.get(i);
+                for(HomeFloor homeFloor :hList){
                     Integer floorId = homeFloor.getFloorId();
                     //获取品牌
                     if(homeFloor.getSortOrder() == 2){
                         List<FloorBrand> fbList = floorBrandService.selectByFloorId(floorId);
-                        for(int j=0;j<fbList.size();j++){
-                            FloorBrand floorBrand = fbList.get(j);
+                        for(FloorBrand floorBrand :fbList){
                             Integer brandId = floorBrand.getBrandId();
                             Brand brand = brandService.selectByPrimaryKey(brandId);
                             BrandVO bVO = new BrandVO();
@@ -90,8 +89,7 @@ public class IndexResource extends BaseResource {
                     //获取第三层分类
                     if(homeFloor.getSortOrder() == 3){
                         List<FloorCategory> fcyList = floorCategoryService.selectByFloorId(floorId);
-                        for(int k=0;k<fcyList.size();k++){
-                            FloorCategory floorCategory = fcyList.get(k);
+                        for(FloorCategory floorCategory : fcyList){
                             Integer categoryId = floorCategory.getCategoryId();
                             Category category = categoryService.selectByPrimaryKey(categoryId);
                             CategoryVO cVO = new CategoryVO();
@@ -102,8 +100,7 @@ public class IndexResource extends BaseResource {
                     //获取第五层分类
                     if(homeFloor.getSortOrder() == 5){
                         List<FloorCategory> fcy_List = floorCategoryService.selectByFloorId(floorId);
-                        for(int h=0;h<fcy_List.size();h++){
-                            FloorCategory floor_Category = fcy_List.get(h);
+                        for(FloorCategory floor_Category : fcy_List){
                             Integer categoryId = floor_Category.getCategoryId();
                             Category cate_gory = categoryService.selectByPrimaryKey(categoryId);
                             CategoryVO cVO = new CategoryVO();
