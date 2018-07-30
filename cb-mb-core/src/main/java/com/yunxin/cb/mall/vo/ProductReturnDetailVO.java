@@ -59,12 +59,12 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     private Date auditTime;
 
     /** 退款时间 */
-    @ApiModelProperty(value="退款时间 ",name="refundTime",example="2018-04-5-23 11:11:11")
+    @ApiModelProperty(value="退款时间",name="refundTime",example="2018-04-5-23 11:11:11")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date refundTime;
 
     /** 完成时间 */
-    @ApiModelProperty(value="处理时间 ",name="disposeTime",example="2018-04-5-23 11:11:11")
+    @ApiModelProperty(value="完成时间",name="disposeTime",example="2018-04-5-23 11:11:11")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date disposeTime;
 
