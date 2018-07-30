@@ -48,12 +48,12 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "订单确认页面数据")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "buyNum", value = "购买数量", defaultValue = "1", paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "paymentType", value = "支付方式", paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
     public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId")int productId,
-                                                       @RequestParam(value = "buyNum")int buyNum, @RequestParam(value = "paymentType")String paymentType) {
+                                                    @RequestParam(value = "buyNum", defaultValue = "1")int buyNum, @RequestParam(value = "paymentType")String paymentType) {
         TempOrderVO tempOrderVO = null;
         try {
             tempOrderVO = orderService.getTempOrder(getCustomerId(), productId, buyNum, paymentType);

@@ -42,15 +42,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
 
     @Transactional(rollbackFor = Exception.class)
     public ProductReturn applyOrderProductReturn(ProductReturn productReturn) throws Exception {
-        List<ProductReturn> dbReturn = productReturnMapper.selectByOrderId(productReturn.getOrderId());
-        if (null != dbReturn && dbReturn.size() > 0) {
-            throw new Exception("该订单已提交退货申请");
-        }
-        Order order = orderMapper.selectByOrderIdAndCustomerId(productReturn.getOrderId(), productReturn.getCustomerId());
-        //判断订单是否是已支付待提货状态
-        if (order == null || (OrderState.PAID_PAYMENT.equals(order.getOrderState()) && OrderState.OUT_STOCK.equals(order.getOrderState()))) {
-            throw new Exception("该订单不可以退货申请");
-        }
+        Order order = checkProductReturnApply(productReturn.getOrderId(), productReturn.getCustomerId());
         ProductReturn nReturn = new ProductReturn();
         BeanUtils.copyProperties(productReturn, nReturn);
         nReturn.setReturnCode(UUIDGeneratorUtil.getUUCode());
@@ -114,6 +106,20 @@ public class ProductReturnServiceImpl implements ProductReturnService {
     @Override
     public ProductReturn getProductReturn(Integer productReturnId, Integer customerId){
         return productReturnMapper.selectByProductReturnIdAndCustomerId(productReturnId, customerId);
+    }
+
+    @Override
+    public Order checkProductReturnApply(int orderId, int customerId) throws Exception{
+        List<ProductReturn> dbReturn = productReturnMapper.selectByOrderId(orderId);
+        if (null != dbReturn && dbReturn.size() > 0) {
+            throw new Exception("该订单已提交退货申请");
+        }
+        Order order = orderMapper.selectByOrderIdAndCustomerId(orderId, customerId);
+        //判断订单是否是已支付待提货状态
+        if (order == null || (OrderState.PAID_PAYMENT.equals(order.getOrderState()) && OrderState.OUT_STOCK.equals(order.getOrderState()))) {
+            throw new Exception("该订单不可以退货申请");
+        }
+        return order;
     }
 
 }

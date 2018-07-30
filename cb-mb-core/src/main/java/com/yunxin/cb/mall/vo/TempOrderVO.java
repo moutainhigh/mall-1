@@ -21,19 +21,19 @@ public class TempOrderVO implements java.io.Serializable{
     private Integer commodityId;
 
     /** 商品编码 */
-    @ApiModelProperty(value="商品编码",name="commodityCode",example="121233485")
+    @ApiModelProperty(value="商品编码",name="commodityCode",example="NO0001")
     private String commodityCode;
 
     /** 商品名 */
-    @ApiModelProperty(value="商品名",name="commodityName",example="BMWX1")
+    @ApiModelProperty(value="商品名",name="commodityName",example="BMW66666")
     private String commodityName;
 
     /** 商品标题 */
-    @ApiModelProperty(value="商品标题",name="commodityTitle",example="BMWX1")
+    @ApiModelProperty(value="商品标题",name="commodityTitle",example="宝马 宝马X1 2018款 sDrive18Li 尊享型")
     private String commodityTitle;
 
     /** 简称 */
-    @ApiModelProperty(value="简称",name="shortName",example="BMW")
+    @ApiModelProperty(value="简称",name="shortName",example="BMW X1")
     private String shortName;
 
     /** 规格及参数 */
@@ -41,7 +41,7 @@ public class TempOrderVO implements java.io.Serializable{
     private Map specs;
 
     /** 支付方式 枚举类型：FULL_SECTION("全款购车"), LOAN("贷款购车")*/
-    @ApiModelProperty(value="支付方式",name="paymentType",example="枚举类型：FULL_SECTION(全款购车), LOAN(贷款购车)")
+    @ApiModelProperty(value="支付方式集合",name="paymentType",example="枚举类型：FULL_SECTION(全款购车), LOAN(贷款购车)")
     private Map paymentType;
 
     /** 选择的支付方式 */
