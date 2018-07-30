@@ -1,6 +1,10 @@
 <template>
   <div>
-    <head-top :headTitle="headTitle"></head-top>
+    <div class="headTitle">
+      <span class="cancel" @click="cancelAdd">取消</span>
+      新增收货地址
+      <span class="complete" @click="save">完成</span>
+    </div>
 
     <group style="margin-top: 3.625rem; background: #ffffff">
       <x-input title="联系人" placeholder="名字" v-model="addressVo.consigneeName"></x-input>
@@ -16,19 +20,16 @@
       <img v-if="addressVo.defaultAddress" class="isDefault" src="../../assets/img/common/Checkmark_sele.png"
            @click="addressVo.defaultAddress = !addressVo.defaultAddress">
     </p>
-    <button @click="save">baocun</button>
   </div>
 </template>
 
 <script>
-  import headTop from '../../components/header/head'
   import {ChinaAddressData, Group, XAddress, XInput, XTextarea, Toast} from 'vux'
   import {saveDeliveryAddress} from "../../service/getData";
 
   export default {
     name: "AddAddress",
     components: {
-      headTop,
       Group,
       XInput,
       XAddress,
@@ -37,7 +38,6 @@
     },
     data() {
       return {
-        headTitle: '新增收货地址',
         addressData: ChinaAddressData,
         isDefault: false,
         addressVo: '',
@@ -45,10 +45,16 @@
       }
     },
     methods: {
+      cancelAdd() {
+        this.$router.go(-1);
+      },
       save() {
-        console.log(this.addressVo);
         saveDeliveryAddress(this.addressVo).then(res => {
-          console.log(res,'res');
+          if (res.result == 'SUCCESS') {
+            this.$router.go(-1);
+          } else {
+            alert(res.message);
+          }
         })
       }
     },
@@ -61,7 +67,8 @@
         district: '',
         consigneeAddress: '',
         postCode: '',
-        defaultAddress: false
+        defaultAddress: false,
+        customerId: 189 // 调试用，之后需去掉
       }
     },
     watch: {
@@ -81,6 +88,28 @@
 </script>
 
 <style scoped>
+  .headTitle {
+    position: fixed;
+    top: 0;
+    background: #ffffff;
+    line-height: 3rem;
+    width: 100vw;
+    text-align: center;
+    font-size: 1.2rem
+  }
+
+  .cancel {
+    float: left;
+    font-size: 1rem;
+    margin-left: 1rem
+  }
+
+  .complete {
+    float: right;
+    font-size: 1rem;
+    margin-right: 1rem
+  }
+
   .isDefault {
     width: 1.12rem;
     float: right;

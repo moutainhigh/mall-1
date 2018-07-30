@@ -1,4 +1,4 @@
-import {post, get, patch, put} from '../config/http'
+import {post, get, patch, put, del} from '../config/http'
 import fetch from '../config/fetch'
 
 //首页获取数据
@@ -17,7 +17,18 @@ export const getDeliveryAddress = function () {
 };
 
 export const saveDeliveryAddress = function (addressVo) {
-  // return post('/v1/mall/deliveryAddress.do', addressVo);
-  return fetch('/v1/mall/deliveryAddress.do', addressVo,"POST");
+  return post('/v1/mall/deliveryAddress.do', addressVo);
+};
+
+export const getDeliveryAddressByAdderssId = function (addressId) {
+  return get('/v1/mall/deliveryAddress/' + addressId);
+};
+
+export const updateDeliveryAddress = function (addressVo) {
+  return put('/v1/mall/deliveryAddress/' + addressVo.addressId, addressVo);
+};
+
+export const deleteDeliveryAddressByAdderssId = function (addressId) {
+  return del('/v1/mall/deliveryAddress/' + addressId);
 };
 

@@ -2,7 +2,8 @@
   <div>
     <head-top :headTitle="headTitle"></head-top>
     <div style="height: 3rem"></div>
-    <div v-if="addressList.length == 0" class="addAddress-item" style="margin-top: 0.875rem; background: #ffffff; line-height: 3">
+    <div v-if="addressList.length == 0" class="addAddress-item"
+         style="margin-top: 0.875rem; background: #ffffff; line-height: 3">
       <p style="margin-left: 0.875rem;font-size: 1rem" @click="addAddress">
         <img style="width: 1.125rem; float: left; margin-top: 0.875rem; margin-right: 0.46rem"
              src="../../assets/img/common/ic_aftersale_underway.png">
@@ -32,10 +33,12 @@
           </p>
           <img style="width: 1.125rem; position: absolute; right: 7.35rem; margin-top: 0.8rem"
                src="../../assets/img/common/ic_right.png">
-          <span style="font-size: 0.875rem; position: absolute; right: 4.875rem; margin-top: 0.8rem;">编辑</span>
+          <span style="font-size: 0.875rem; position: absolute; right: 4.875rem; margin-top: 0.8rem;"
+                @click="editAddress(address.addressId)">编辑</span>
           <img style="width: 1.125rem; position: absolute; right: 3.125rem; padding-top: 0.8rem"
                src="../../assets/img/common/ic_right.png">
-          <span style="font-size: 0.875rem; position: absolute; right: 0.6875rem; margin-top: 0.8rem;">删除</span>
+          <span style="font-size: 0.875rem; position: absolute; right: 0.6875rem; margin-top: 0.8rem;"
+                @click="deleteAddress(address.addressId)">删除</span>
         </div>
       </div>
     </div>
@@ -50,7 +53,7 @@
 
 <script>
   import headTop from '../../components/header/head'
-  import {getDeliveryAddress} from "../../service/getData";
+  import {deleteDeliveryAddressByAdderssId, getDeliveryAddress} from "../../service/getData";
 
   export default {
     name: "MyAddress",
@@ -67,6 +70,23 @@
       addAddress() {
         this.$router.push({
           path: "/add-address"
+        })
+      },
+      editAddress(addressId) {
+        this.$router.push({
+          path: "/edit-address",
+          query: {addressId: addressId}
+        })
+      },
+      deleteAddress(addressId) {
+        deleteDeliveryAddressByAdderssId(addressId).then(res => {
+          if (res.result == 'SUCCESS') {
+            getDeliveryAddress().then(res => {
+              if (res.result == 'SUCCESS') {
+                this.addressList = res.data;
+              }
+            })
+          }
         })
       }
     },

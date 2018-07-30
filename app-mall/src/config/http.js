@@ -12,7 +12,7 @@ axios.interceptors.request.use(
     // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
     config.data = JSON.stringify(config.data);
     config.headers = {
-      'Content-Type':'application/x-www-form-urlencoded',
+      'Content-Type':'application/json',
       'Authorization': 'Bearer ' + storage.fetchSession('token')
     };
     return config;
@@ -127,6 +127,25 @@ export function put(url,data = {}){
   url = baseUrl + url;
   return new Promise((resolve,reject) => {
     axios.put(url,data)
+      .then(response => {
+        resolve(response.data);
+      },err => {
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 封装delete请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function del(url,data = {}){
+  url = baseUrl + url;
+  return new Promise((resolve,reject) => {
+    axios.delete(url,data)
       .then(response => {
         resolve(response.data);
       },err => {
