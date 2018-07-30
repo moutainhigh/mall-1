@@ -6,6 +6,7 @@
 package com.yunxin.cb.insurance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -38,36 +39,44 @@ public class InsuranceOrderInformedMatter implements Serializable {
      * 事项采集ID
      */
     @Max(9999999999L)
+    @ApiModelProperty(value="事项采集ID",name="collectId",example="1")
     private int collectId;
     /**
      * 订单
      */
+    @ApiModelProperty(value="订单",name="insuranceOrder",example="订单")
     private InsuranceOrder insuranceOrder;
     /**
      * 告知事项
      */
     @NotNull
+    @ApiModelProperty(value="告知事项",name="insuranceInformedMatter",example="告知事项")
     private InsuranceInformedMatter insuranceInformedMatter;
     /**
      * 被保人采集结果
      */
     @NotNull
+    @ApiModelProperty(value="被保人采集结果",name="insuredResult",example="true")
     private boolean insuredResult;
     /**
      * 投保人采集结果
      */
+    @ApiModelProperty(value="投保人采集结果",name="policyholderResult",example="true")
     private boolean policyholderResult;
     /**
      * 选项值，可以为多个，以json方式存储
      */
+    @ApiModelProperty(value="选项值",name="collectValues",example="选项值")
     private String collectValues;
     /**
      * 被保人备注
      */
+    @ApiModelProperty(value="被保人备注",name="insuredRemark",example="被保人备注")
     private String insuredRemark;
     /**
      * 投保人备注
      */
+    @ApiModelProperty(value="投保人备注",name="policyholderRemark",example="投保人备注")
     private String policyholderRemark;
 
     public InsuranceOrderInformedMatter() {

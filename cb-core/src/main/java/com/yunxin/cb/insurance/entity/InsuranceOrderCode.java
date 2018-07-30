@@ -6,6 +6,7 @@ package com.yunxin.cb.insurance.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
@@ -42,24 +43,28 @@ public class InsuranceOrderCode implements Serializable {
      * 编码ID
      */
     @Max(9999999999L)
+    @ApiModelProperty(value="编码ID",name="codeId",example="1")
     private int codeId;
     /**
      * 编码
      */
     @NotBlank
     @Length(max = 32)
+    @ApiModelProperty(value="编码",name="codeNo",example="111111")
     private String codeNo;
     /**
      * 是否使用
      */
     @NotNull
     @Max(9999999999L)
+    @ApiModelProperty(value="是否使用",name="useed",example="1")
     private int useed;
     /**
      * 创建时间
      */
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @ApiModelProperty(value="创建时间",name="createTime",example="1990-10-12 20:10")
     private Date createTime;
     //columns END
 
