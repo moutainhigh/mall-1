@@ -161,6 +161,7 @@
 
 <script>
   import headTop from '../../components/header/head'
+  import {addCommodityFavorite, getCommodityFavoriteById} from "../../service/getData";
 
   export default {
     name: "CarDetail",
@@ -235,7 +236,31 @@
       }
     },
     watch: {
-      tab: {}
+      tab: {},
+      isCollect: {
+        handler(newVal, oldVal) {
+          if (newVal == true) {
+            let favoriteVo = {
+              commodityId: 404,
+              salePrice: 38.98
+            };
+            addCommodityFavorite(favoriteVo).then(res => {
+              console.log(res)
+            })
+          }
+        }
+      }
+    },
+    created() {
+      //获取商品是否已收藏
+      let commodityId = 404;//临时数据
+      getCommodityFavoriteById(commodityId).then(res => {
+        if (res.result == 'SUCCESS') {
+          this.isCollect = true;
+        } else {
+          this.isCollect = false;
+        }
+      })
     },
     mounted() {
       window.addEventListener('scroll', this.menu)
