@@ -5,7 +5,11 @@ import com.yunxin.cb.search.document.Commodity;
 import com.yunxin.cb.search.repository.CommodityDao;
 import com.yunxin.cb.search.service.CommodityService;
 import com.yunxin.cb.search.vo.CommoditySpec;
+import com.yunxin.cb.search.vo.CommodityVO;
 import com.yunxin.cb.search.vo.SearchVo;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +17,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.Criteria;
-import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import java.util.Optional;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 
@@ -118,7 +121,9 @@ public class CommodityServiceImpl implements CommodityService {
 
         return page;
     }
-
+    public void updateCommodity(Commodity commodity){
+        commodityDao.save(commodity);
+    }
 
 
 
