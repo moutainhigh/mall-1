@@ -52,11 +52,12 @@ public class Customer implements java.io.Serializable {
     /**
      * 密码
      */
+    @ApiModelProperty(value="密码",name="password",example="xxxxxx")
     private String password;
     /**
      * 创建时间
      */
-    @ApiModelProperty(value="创建时间",name="createTime",example="")
+    @ApiModelProperty(value="创建时间",name="createTime",example="2016-03-22 21:58:43")
     private Date createTime;
     /**
      * 真实姓名
@@ -71,75 +72,93 @@ public class Customer implements java.io.Serializable {
     /**
      * 性别
      */
+    @ApiModelProperty(value="性别",name="sex",example="true")
     private boolean sex = true;
     /**
      * 出生日期
      */
+    @ApiModelProperty(value="出生日期",name="birthday",example="2016-03-22 21:58:43")
     private Date birthday;
     /**
      * 用户头像
      */
+    @ApiModelProperty(value="用户头像",name="avatarUrl",example="xxx.jpg")
     private String avatarUrl;
     /**
      * 推荐人
      */
+    @ApiModelProperty(value="推荐人",name="recommendCustomer",example="")
     private Customer recommendCustomer;
     /**
      * 所在省
      */
+    @ApiModelProperty(value="所在省",name="province",example="广东省")
     private String province;
     /**
      * 所在市
      */
+    @ApiModelProperty(value="所在市",name="city",example="深圳市")
     private String city;
     /**
      * 所在区
      */
+    @ApiModelProperty(value="所在区",name="district",example="福田区")
     private String district;
     /**
      * 邮箱
      */
+    @ApiModelProperty(value="邮箱",name="email",example="4654686465@qq.com")
     private String email;
     /**
      * 手机号码
      * 长度设置为32，方便在用户进行QQ登录时，生成本平台新账号时，用openId(长度32)填充手机号字段，以严格保证mobile唯一。
      */
+    @ApiModelProperty(value="手机号码",name="mobile",example="18588888888")
     private String mobile;
     /**
      * 固定电话
      */
+    @ApiModelProperty(value="固定电话",name="telephone",example="0755-88888888")
     private String telephone;
     /**
      * 地址
      */
+    @ApiModelProperty(value="地址",name="address",example="广东省深圳市福田区平安大厦")
     private String address;
     /**
      * 邮编
      */
+    @ApiModelProperty(value="邮编",name="postCode",example="335500")
     private String postCode;
     /**
      * 当前可用积分
      */
+    @ApiModelProperty(value="当前可用积分",name="integral",example="5500")
     private int integral;
     /**
      * 总积分
      */
+    @ApiModelProperty(value="总积分",name="totalIntegral",example="5500")
     private int totalIntegral;
     /**
      * 已兑换积分
      */
+    @ApiModelProperty(value="已兑换积分",name="exchangeIntegral",example="5500")
     private int exchangeIntegral;
     /**
      * 会员卡号
      */
+    @ApiModelProperty(value="会员卡号",name="cardNo",example="5500")
     private String cardNo;
     /**
      * 状态：true 启用；false 停用
      */
+    @ApiModelProperty(value="状态",name="enabled",example="true")
     private boolean enabled;
     /**
      * 手机是否验证
      */
+    @ApiModelProperty(value="手机是否验证",name="mobileChecked",example="true")
     private boolean mobileChecked;
     /**
      * 是否买过保单
@@ -149,35 +168,43 @@ public class Customer implements java.io.Serializable {
     /**
      * 邮箱是否验证
      */
+    @ApiModelProperty(value="邮箱是否验证",name="emailChecked",example="true")
     private boolean emailChecked;
     /**
      * 备注
      */
+    @ApiModelProperty(value="备注",name="remark",example="第三方")
     private String remark;
     /**
      * 等级
      */
+    @ApiModelProperty(value="等级",name="rank",example="等级")
     private Rank rank;
     /**
      * 推荐人点赞
      */
+    @ApiModelProperty(value="推荐人点赞",name="praise",example="true")
     private boolean praise;
     /**
      * 收到点赞次数
      */
+    @ApiModelProperty(value="收到点赞次数",name="praiseNum",example="20")
     private int praiseNum;
     /**
      * 融云token
      */
+    @ApiModelProperty(value="融云token",name="rongCloudToken",example="")
     private String rongCloudToken;
     /**
      * openid是唯一对应用户身份的标识，将此ID进行存储便于用户下次登录时辨识其身份，或将其与用户在网站上的原有帐号进行绑定。
      * 以便用户下次登录时可对应到其之前的身份信息，不需要重新授权。
      */
+    @ApiModelProperty(value="用户身份的标识",name="qqOpenId",example="")
     private String qqOpenId;
     /**
      * 头像URL
      */
+    @ApiModelProperty(value="头像URL",name="qqFigureUrl",example="xxx.jpg")
     private String qqFigureUrl;
     /**
      * 表示当前用户在此网站/应用的登录状态与授权信息
@@ -187,6 +214,7 @@ public class Customer implements java.io.Serializable {
     /**
      * 用户账号类型
      */
+    @ApiModelProperty(value="用户账号类型",name="customerType",example="PLATFORM_SELF(\"平台账号\"), QQ(\"qq账号\")")
     private CustomerType customerType;
     /**
      * 证件类型
@@ -201,26 +229,32 @@ public class Customer implements java.io.Serializable {
     /**
      * 证件正面照
      */
+    @ApiModelProperty(value="证件正面照",name="cardPositiveImg",example="xxx.jpg")
     private String cardPositiveImg;
     /**
      * 证件反面照
      */
+    @ApiModelProperty(value="证件反面照",name="cardNegativeImg",example="xxx.jpg")
     private String cardNegativeImg;
     /**
      * 银行照片
      */
+    @ApiModelProperty(value="银行照片",name="bankCardImg",example="xxx.jpg")
     private String bankCardImg;
     /**
      * 等级
      */
+    @ApiModelProperty(value="等级",name="customerLevel",example="2")
     private int customerLevel;
     /**
      * 等级编码
      */
+    @ApiModelProperty(value="等级编码",name="levelCode",example="22")
     private String levelCode;
     /**
      * 邀请码
      */
+    @ApiModelProperty(value="邀请码",name="invitationCode",example="223344")
     private String  invitationCode;
     /**
      * 国籍
@@ -238,20 +272,24 @@ public class Customer implements java.io.Serializable {
     /**
      * 职业类别
      */
+    @ApiModelProperty(value="职业类别",name="occupationalCategory",example="教师")
     private String occupationalCategory;
     /**
      * 优惠券
      */
+    @ApiModelProperty(value="优惠券",name="coupons",example="优惠券")
     private Set<Coupon> coupons = new HashSet<>();
 
     /**
      * 我的食谱
      */
+    @ApiModelProperty(value="我的食谱",name="recipes",example="我的食谱")
     private Set<Recipe> recipes = new HashSet<>();
 
     /**
      * 我的厨房
      */
+    @ApiModelProperty(value="我的厨房",name="kitchens",example="我的厨房")
     private Set<Kitchen> kitchens = new HashSet<>();
 
     private String token;
