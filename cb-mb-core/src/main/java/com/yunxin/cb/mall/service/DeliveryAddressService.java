@@ -35,5 +35,5 @@ public interface DeliveryAddressService {
      * @param customerId
      * @return
      */
-    DeliveryAddress selectDefaultByCustomerId(Integer customerId,Boolean defaultAddress);
+    DeliveryAddress selectDefaultByCustomerId(Integer customerId);
 }

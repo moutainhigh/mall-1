@@ -168,7 +168,7 @@ public interface DeliveryAddressMapper {
             "CUSTOMER_ID",
             "from delivery_address",
             "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}",
-            "and DEFAULT_ADDRESS = #{defaultAddress,jdbcType=BIT}"
+            "and DEFAULT_ADDRESS = 1"
     })
     @Results({
             @Result(column="ADDRESS_ID", property="addressId", jdbcType=JdbcType.INTEGER, id=true),
@@ -185,5 +185,5 @@ public interface DeliveryAddressMapper {
             @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
     })
-    DeliveryAddress selectDefaultByCustomerId(@Param("customerId")Integer customerId,@Param("defaultAddress")Boolean defaultAddress);
+    DeliveryAddress selectDefaultByCustomerId(Integer customerId);
 }

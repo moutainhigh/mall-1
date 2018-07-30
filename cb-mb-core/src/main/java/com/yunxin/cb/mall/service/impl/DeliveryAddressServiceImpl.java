@@ -39,7 +39,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
     }
 
     @Override
-    public DeliveryAddress selectDefaultByCustomerId(Integer customerId,Boolean defaultAddress) {
-        return deliveryAddressMapper.selectDefaultByCustomerId(customerId,defaultAddress);
+    public DeliveryAddress selectDefaultByCustomerId(Integer customerId) {
+        return deliveryAddressMapper.selectDefaultByCustomerId(customerId);
     }
 }
