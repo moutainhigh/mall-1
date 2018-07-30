@@ -3,6 +3,7 @@ package com.yunxin.cb.mall.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -87,6 +88,10 @@ public class CommodityVo  implements java.io.Serializable{
     /** 货品 */
     @ApiModelProperty(value="货品",name="productVo",example="货品")
     private ProductVo productVo;
+
+    /** 所有货品 */
+    @ApiModelProperty(value="所有货品",name="productVos",example="所有货品")
+    private List<ProductVo> productVos;
 
     /** 价格段 */
     @ApiModelProperty(value="价格段",name="priceSectionVo",example="1000-19999")
@@ -268,6 +273,14 @@ public class CommodityVo  implements java.io.Serializable{
         this.explainContent = explainContent;
     }
 
+    public List<ProductVo> getProductVos() {
+        return productVos;
+    }
+
+    public void setProductVos(List<ProductVo> productVos) {
+        this.productVos = productVos;
+    }
+
     @Override
     public String toString() {
         return "CommodityVo{" +
@@ -289,6 +302,7 @@ public class CommodityVo  implements java.io.Serializable{
                 ", paymentType=" + paymentType +
                 ", imageSet=" + imageSet +
                 ", productVo=" + productVo +
+                ", productVos=" + productVos +
                 ", priceSectionVo=" + priceSectionVo +
                 ", sellerVo=" + sellerVo +
                 ", favoriteVo=" + favoriteVo +

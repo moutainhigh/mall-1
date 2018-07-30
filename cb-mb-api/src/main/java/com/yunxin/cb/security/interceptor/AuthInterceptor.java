@@ -33,24 +33,22 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         //用户访问日志
-        logger.info("AppAccess info: clientIp=" + getIpAddr(request) + " access_url=" + request.getRequestURI() + " attime="+new Date().toString()
+        logger.info("AppAccess info: clientIp=" + getIpAddr(request) + " access_url=" + request.getRequestURI() + " attime=" + new Date().toString()
                 + " Bymethod= " + request.getMethod() + ",user-Agent='" + request.getHeader("user-Agent") + "'");
 
-
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-
-        IgnoreAuthentication ignoreAuthentication = handlerMethod.getBeanType().getAnnotation(IgnoreAuthentication.class);
-
-        if (ignoreAuthentication == null)
-            ignoreAuthentication = handlerMethod.getMethod().getAnnotation(IgnoreAuthentication.class);
-
-        if (ignoreAuthentication != null)
-            // don't need token
-            return true;
-
-
-
         if (!request.getMethod().equals("OPTIONS")) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+
+            IgnoreAuthentication ignoreAuthentication = handlerMethod.getBeanType().getAnnotation(IgnoreAuthentication.class);
+
+            if (ignoreAuthentication == null)
+                ignoreAuthentication = handlerMethod.getMethod().getAnnotation(IgnoreAuthentication.class);
+
+            if (ignoreAuthentication != null)
+                // don't need token
+                return true;
+
+
             response.setContentType("application/json;charset=utf-8");
             response.setCharacterEncoding("UTF-8");
             String authHeader = request.getHeader(HEADER_STRING);
@@ -80,7 +78,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                 CustomerContextHolder.setCustomerId(customerId);
                 return true;
             } catch (final Exception e) {
-                logger.error("鉴权失败",e);
+                logger.error("鉴权失败", e);
                 ObjectMapper mapper = new ObjectMapper();
                 String mapJakcson = mapper.writeValueAsString(new ResponseResult(Result.NOT_LOGIN, "token信息错误，解析token出错或者token已经过期"));
                 PrintWriter writer = response.getWriter();

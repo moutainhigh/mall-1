@@ -2,19 +2,21 @@ package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.mall.dao.CustomerTradingRecordDao;
 import com.yunxin.cb.mall.dao.CustomerWalletDao;
-import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.CustomerTradingRecord;
-import com.yunxin.cb.mall.entity.CustomerWallet;
-import com.yunxin.cb.mall.entity.OperationType;
+import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
+import com.yunxin.core.persistence.CustomSpecification;
+import com.yunxin.core.persistence.PageSpecification;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -85,6 +87,41 @@ public class CustomerWalletService implements ICustomerWalletService {
         return customerWalletBea;
     }
 
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public Page<CustomerWallet> pageCustomerWallets(PageSpecification<CustomerWallet> specification) {
+        specification.setCustomSpecification(new CustomSpecification<CustomerWallet>() {
+            @Override
+            public void buildFetch(Root<CustomerWallet> root) {
+                root.fetch(CustomerWallet_.customer, JoinType.LEFT);
+            }
+            @Override
+            public void addConditions(Root<CustomerWallet> root, CriteriaQuery<?> query, CriteriaBuilder builder, List<Predicate> predicates) {
+                query.orderBy(builder.desc(root.get(CustomerWallet_.updateTime)));
+            }
+        });
+            Page<CustomerWallet> pages = CustomerWalletDao.findAll(specification, specification.getPageRequest());
+            return pages;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public Page<CustomerTradingRecord> pageCustomerTradingRecord(PageSpecification<CustomerTradingRecord> specification) {
+
+        specification.setCustomSpecification(new CustomSpecification<CustomerTradingRecord>() {
+            @Override
+            public void buildFetch(Root<CustomerTradingRecord> root) {
+                root.fetch(CustomerTradingRecord_.customer, JoinType.LEFT);
+            }
+            @Override
+            public void addConditions(Root<CustomerTradingRecord> root, CriteriaQuery<?> query, CriteriaBuilder builder, List<Predicate> predicates) {
+                query.orderBy(builder.desc(root.get(CustomerTradingRecord_.createTime)));
+            }
+        });
+        Page<CustomerTradingRecord> pages = customerTradingRecordDao.findAll(specification, specification.getPageRequest());
+        return pages;
+
+    }
 
 
 //    @Override

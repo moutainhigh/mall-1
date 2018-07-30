@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.service;
 
+import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.ProductReturn;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
@@ -37,4 +38,10 @@ public interface ProductReturnService {
      * @return
      */
     public ProductReturn getProductReturn(Integer productReturnId, Integer customerId);
+
+    /**
+     * 检查该订单是否可以申请售后
+     * @param orderId
+     */
+    public Order checkProductReturnApply(int orderId, int customerId) throws Exception;
 }
