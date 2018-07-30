@@ -13,7 +13,7 @@ axios.interceptors.request.use(
     config.data = JSON.stringify(config.data);
     config.headers = {
       'Content-Type':'application/x-www-form-urlencoded',
-      // 'Authorization':storage.fetchSession('token')
+      'Authorization': 'Bearer ' + storage.fetchSession('token')
     };
     return config;
   },
