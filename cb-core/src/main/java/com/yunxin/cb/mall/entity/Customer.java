@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.core.web.json.deserializer.JsonTimestampDeserializer;
+import com.yunxin.core.web.json.serializer.JsonDateSerializer;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -720,9 +721,8 @@ public class Customer implements java.io.Serializable {
     public void setCustomerCountry(String customerCountry) {
         this.customerCountry = customerCountry;
     }
-//    @Temporal(TemporalType.DATE)
-    @JsonSerialize(using = JsonTimestampSerializer.class)
-    @JsonDeserialize(using = JsonTimestampDeserializer.class)
+    @Temporal(TemporalType.DATE)
+    @JsonSerialize(using = JsonDateSerializer.class)
     @Column(length = 20,insertable = true, updatable = true)
     public Date getCustomerCardPeroid() {
         return customerCardPeroid;
