@@ -49,6 +49,8 @@ public interface ICommodityService {
 
     public void updateCommodityStatus(CommodityState commodityState, int commodityId);
 
+    public void updateCommodityStatus(Product product,int commodityId);
+
     public List<CommoditySpec> getCommoditySpecsByCommodityId(int commodityId);
 
     List<Commodity> getCommoditysByCreateTime(int limit);

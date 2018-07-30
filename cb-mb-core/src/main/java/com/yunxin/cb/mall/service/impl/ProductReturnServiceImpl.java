@@ -83,7 +83,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public PageFinder<ProductReturn> pageProductReturn(Query q) {
-        PageFinder<ProductReturn> page = new PageFinder<ProductReturn>(q.getPageNo(), q.getPageSize());
+        PageFinder<ProductReturn> page = null;
         List<ProductReturn> list = null;
         long rowCount = 0L;
         try {
@@ -97,9 +97,8 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         //如list为null时，则改为返回一个空列表
         list = list == null ? new ArrayList<ProductReturn>(0) : list;
         //将分页数据和记录总数设置到分页结果对象中
+        page = new PageFinder<ProductReturn>(q.getPageNo(), q.getPageSize(), rowCount);
         page.setData(list);
-        page.setRowCount(rowCount);//记录总数
-        page.setPageCount((int)rowCount);//总页数
         return page;
     }
 

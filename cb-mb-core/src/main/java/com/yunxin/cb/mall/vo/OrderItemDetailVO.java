@@ -49,6 +49,10 @@ public class OrderItemDetailVO implements java.io.Serializable{
     @ApiModelProperty(value="商品名称",name="commodityName",example="1")
     private String commodityName;
 
+    /** 商品标题*/
+    @ApiModelProperty(value="商品标题",name="commodityName",example="1")
+    private String commodityTitle;
+
     /** 商品ID */
     @ApiModelProperty(value="商品ID",name="commodityId",example="1")
     private Integer commodityId;
@@ -157,6 +161,14 @@ public class OrderItemDetailVO implements java.io.Serializable{
         this.productNo = productNo;
     }
 
+    public String getCommodityTitle() {
+        return commodityTitle;
+    }
+
+    public void setCommodityTitle(String commodityTitle) {
+        this.commodityTitle = commodityTitle;
+    }
+
     @Override
     public String toString() {
         return "OrderItemDetailVO{" +
@@ -169,6 +181,7 @@ public class OrderItemDetailVO implements java.io.Serializable{
                 ", salePrice=" + salePrice +
                 ", productId=" + productId +
                 ", commodityName='" + commodityName + '\'' +
+                ", commodityTitle='" + commodityTitle + '\'' +
                 ", commodityId=" + commodityId +
                 ", productName='" + productName + '\'' +
                 ", productNo='" + productNo + '\'' +

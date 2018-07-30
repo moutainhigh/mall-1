@@ -249,8 +249,7 @@ public class OrderController {
     @ResponseBody
     public boolean orderLoanApplyAudit(@RequestParam("loanId") int loanId, @RequestParam("auditState") AuditState auditState,@RequestParam("auditRemark") String auditRemark) {
         try {
-            orderService.orderLoanApplyAudit(loanId, auditState, auditRemark);
-            return true;
+            return orderService.orderLoanApplyAudit(loanId, auditState, auditRemark);
         } catch (Exception e) {
             return false;
         }

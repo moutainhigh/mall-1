@@ -124,3 +124,6 @@ MODIFY COLUMN `PASSWORD` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unico
 ##add by guwenshao 2018-07-30 添加退货审核时间和退款时间
 ALTER TABLE `product_return` add  `AUDIT_TIME` datetime DEFAULT NULL COMMENT '审核时间';
 ALTER TABLE `product_return` add  `REFUND_TIME` datetime DEFAULT NULL COMMENT '退款时间';
+
+##add by tangou 2018-07-30 16:13:05 添加默认货品id
+ALTER TABLE commodity ADD  DEFAULT_PRODUCT_ID INT(11) DEFAULT NULL COMMENT '默认货品';

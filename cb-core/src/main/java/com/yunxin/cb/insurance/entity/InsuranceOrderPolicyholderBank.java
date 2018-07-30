@@ -6,6 +6,7 @@
 package com.yunxin.cb.insurance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
@@ -42,60 +43,70 @@ public class InsuranceOrderPolicyholderBank implements Serializable {
      * 投保人银行ID
      */
     @Max(9999999999L)
+    @ApiModelProperty(value="投保人银行ID",name="bankId",example="1")
     private int bankId;
     /**
      * 持卡人姓名
      */
     @NotBlank
     @Length(max = 32)
+    @ApiModelProperty(value="持卡人姓名",name="bankName",example="张三")
     private String bankName;
     /**
      * 交易金额
      */
     @NotNull
     @Max(9999999999L)
+    @ApiModelProperty(value="交易金额",name="amount",example="5000")
     private int amount;
     /**
      * 手机号
      */
     @NotBlank
     @Length(max = 11)
+    @ApiModelProperty(value="手机号",name="bankMobile",example="18888888888")
     private String bankMobile;
     /**
      * 开户行
      */
     @NotBlank
     @Length(max = 32)
+    @ApiModelProperty(value="开户行",name="accountBank",example="中国银行")
     private String accountBank;
     /**
      * 开户行省
      */
     @NotBlank
     @Length(max = 6)
+    @ApiModelProperty(value="开户行省",name="bankProvince",example="开户行省")
     private String bankProvince;
     /**
      * 开户行市
      */
     @NotBlank
     @Length(max = 6)
+    @ApiModelProperty(value="开户行市",name="bankCity",example="开户行市")
     private String bankCity;
     /**
      * 账户类型
      */
     @NotBlank
     @Length(max = 32)
+    @ApiModelProperty(value="账户类型",name="accountType",example="储蓄")
     private String accountType;
     /**
      * 账户号
      */
     @NotBlank
     @Length(max = 32)
+    @ApiModelProperty(value="账户号",name="accountNo",example="888888666666555555777")
     private String accountNo;
     /**
      * 银行卡照片
      */
     @NotBlank
     @Length(max = 255)
+    @ApiModelProperty(value="银行卡照片",name="bankCardImg",example="xxx.jpg")
     private String bankCardImg;
 
     private Set insuranceOrders = new HashSet(0);

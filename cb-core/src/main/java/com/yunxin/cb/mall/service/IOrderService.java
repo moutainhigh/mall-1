@@ -194,5 +194,5 @@ public interface IOrderService {
     * @param
     * @return void
     */
-    public void orderLoanApplyAudit(int loanId, AuditState auditState, String auditRemark);
+    public boolean orderLoanApplyAudit(int loanId, AuditState auditState, String auditRemark);
 }

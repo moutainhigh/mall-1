@@ -340,6 +340,11 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
+    public void updateCommodityStatus(Product product,int commodityId) {
+        commodityDao.updateDefaultProductById(product, commodityId);
+    }
+
+    @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Commodity> getCommoditysByCreateTime(int limit) {
         PageRequest pr = new PageRequest(0, limit);

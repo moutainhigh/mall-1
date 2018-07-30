@@ -12,6 +12,8 @@ import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import com.yunxin.core.persistence.PageSpecification;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,9 @@ public class InsuranceOrderResource extends BaseResource {
     private ICustomerService customerService;
 
     @ApiOperation(value = "保存订单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "saveOrder")
     @JsonFilter(value = "data.insuranceOrderBeneficiarys,data.insuranceOrderInformedMatters")
     public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code, @ModelAttribute("customerId") int customerId) {
@@ -63,6 +68,8 @@ public class InsuranceOrderResource extends BaseResource {
 
 
     @ApiOperation(value = "查询用户订单列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "getOrders")
     public ResponseResult getOrders(@RequestBody PageSpecification<InsuranceOrder> query, @ModelAttribute("customerId") int customerId) {
         PageSpecification.FilterDescriptor filterDescriptor = new PageSpecification.FilterDescriptor();
@@ -77,6 +84,9 @@ public class InsuranceOrderResource extends BaseResource {
     }
 
     @ApiOperation(value = "查询用户订单详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderCode", value = "订单号", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "getOrder/{orderCode}")
     public ResponseResult getOrders(@PathVariable String orderCode, @ModelAttribute("customerId") int customerId) {
 
