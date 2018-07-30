@@ -203,7 +203,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
      * 分页DO转换VO
      */
     public static PageFinder<ProductReturnDetailVO> dOconvertVOPage (PageFinder<ProductReturn> pageFinder) throws Exception{
-        PageFinder<ProductReturnDetailVO> page = new PageFinder<ProductReturnDetailVO> (pageFinder.getPageNo(), pageFinder.getPageSize());
+        PageFinder<ProductReturnDetailVO> page = new PageFinder<ProductReturnDetailVO> (pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
         if (pageFinder != null) {
             List<ProductReturnDetailVO> list = ProductReturnDetailVO.dOconvertVOList(pageFinder.getData());
             page.setData(list);

@@ -179,13 +179,12 @@ public class OrderDetailVO implements java.io.Serializable{
      * 分页DO转换VO
      */
     public static PageFinder<OrderDetailVO> dOconvertVOPage (PageFinder<Order> pageFinder) throws Exception{
-        PageFinder<OrderDetailVO> page = new PageFinder<OrderDetailVO> (pageFinder.getPageNo(), pageFinder.getPageSize());
+        PageFinder<OrderDetailVO> page = new PageFinder<OrderDetailVO> (pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
         if (pageFinder != null) {
             List<OrderDetailVO> list = OrderDetailVO.dOconvertVOList(pageFinder.getData());
             page.setData(list);
         }
         page.setRowCount(pageFinder.getRowCount());//记录总数
-        page.setPageCount(pageFinder.getPageCount());//总页数
         return page;
     }
 
