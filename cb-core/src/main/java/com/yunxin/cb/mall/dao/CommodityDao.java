@@ -3,10 +3,7 @@
  */
 package com.yunxin.cb.mall.dao;
 
-import com.yunxin.cb.mall.entity.Brand;
-import com.yunxin.cb.mall.entity.Catalog;
-import com.yunxin.cb.mall.entity.Category;
-import com.yunxin.cb.mall.entity.Commodity;
+import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.CommodityState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.core.orm.BaseDao;
@@ -30,11 +27,15 @@ public interface CommodityDao extends CommodityPlusDao, JpaRepository<Commodity,
     public void updateCommodityStatusById(CommodityState commodityState, int commodityId);
 
     @Modifying
+    @Query("update Commodity c set c.defaultProduct = ?1 where c.commodityId=?2")
+    public void updateDefaultProductById(Product product, int commodityId);
+
+    @Modifying
     @Query("update Commodity c set c.commodityState = ?2,c.auditRemark=?3 where c.commodityId=?1")
     public void commodityAudit(int commodityId, CommodityState commodityState, String auditRemark);
 
     //    @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
-    @Query("select c from Commodity c left join fetch c.brand left join fetch c.catalog left join fetch c.priceSection left join fetch c.seller left join fetch c.logisticPrices where c.commodityId=?1")
+    @Query("select c from Commodity c left join fetch c.brand left join fetch c.catalog left join fetch c.priceSection left join fetch c.seller left join fetch c.logisticPrices left join fetch c.defaultProduct where c.commodityId=?1")
     public Commodity getCommodityDetailById(int commodityId);
 
     public List<Commodity> findByCommodityStateOrderByCreateTimeDesc(CommodityState commodityState, Pageable pageable);
