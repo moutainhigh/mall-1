@@ -49,8 +49,8 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "订单确认页面数据")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "buyNum", value = "购买数量", defaultValue = "1", paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "paymentType", value = "支付方式", paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
     public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId")int productId,
@@ -143,7 +143,7 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "根据订单id取消订单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "cancelReason", value = "取消原因", paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "cancelReason", value = "取消原因", required = true, paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
     public ResponseResult cancelOrder(@RequestParam("orderId") int orderId, @RequestParam("cancelReason")String cancelReason)throws Exception{
