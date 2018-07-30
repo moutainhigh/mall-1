@@ -18,7 +18,7 @@ import java.util.*;
 * @param 
 * @return
 */
-@ApiModel(value="商城订单详情",description="订单详情VO对象")
+@ApiModel(value="商城退货详情",description="退货详情VO对象")
 public class ProductReturnDetailVO implements java.io.Serializable{
 
     /** 退货id */
