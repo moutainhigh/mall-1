@@ -85,7 +85,7 @@ public class ProductService implements IProductService {
     public Product updateProduct(Product product) {
         Product dbProduct = productDao.findOne(product.getProductId());
         AttributeReplication.copying(product, dbProduct, Product_.productNo, Product_.costPrice, Product_.salePrice, Product_.marketPrice, Product_.weight,
-                Product_.volume, Product_.store, Product_.storeNum);
+                Product_.volume, Product_.store, Product_.storeNum,Product_.defaultPicPath);
         return dbProduct;
     }
 
