@@ -7,6 +7,6 @@ export const getIndex = function () {
 
 //获取收藏夹
 export const getCustomerFavorite = function (query) {
-  return post('/v1/mall/favorite/getCustomerFavorite.do',JSON.stringify(query));
+  return post('/v1/mall/favorite/getCustomerFavorite.do',query);
 }
 
