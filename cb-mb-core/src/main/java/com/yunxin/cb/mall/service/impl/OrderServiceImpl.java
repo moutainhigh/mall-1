@@ -144,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         //支付方式
-        if (order.getPaymentType()== PaymentType.LOAN.ordinal()) {
+        if (order.getPaymentType()== PaymentType.LOAN) {
             CustomerWallet customerWallet = customerWalletMapper.selectByPrimaryKey(order.getCustomerId());
             if (customerWallet != null) {
                 double expectedReturnAmount = customerWallet.getExpectedReturnAmount() == null ? 0 : customerWallet.getExpectedReturnAmount();
@@ -158,7 +158,7 @@ public class OrderServiceImpl implements OrderService {
                 throw new Exception("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
             }
             //自提
-            order.setDeliveryType(DeliveryType.ZT.ordinal());
+            order.setDeliveryType(DeliveryType.ZT);
         }
         //收货地址
         DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());
@@ -188,15 +188,15 @@ public class OrderServiceImpl implements OrderService {
             order.getOrderInvoice().setOrderId(order.getOrderId());
             orderInvoiceMapper.insert(order.getOrderInvoice());
         }
-        if (order.getPaymentType()== PaymentType.LOAN.ordinal()) {
+        if (order.getPaymentType()== PaymentType.LOAN) {
             //添加订单借款申请数据
             OrderLoanApply orderLoanApply = new OrderLoanApply();
             orderLoanApply.setLoanCode(UUIDGeneratorUtil.getUUCode());
             orderLoanApply.setOrderId(order.getOrderId());
             orderLoanApply.setCustomerId(order.getCustomerId());
             orderLoanApply.setLoanPrice(totalPrice);
-            orderLoanApply.setLoanState(LoanState.WAIT_LOAN.ordinal());
-            orderLoanApply.setAuditState(AuditState.WAIT_AUDIT.ordinal());
+            orderLoanApply.setLoanState(LoanState.WAIT_LOAN);
+            orderLoanApply.setAuditState(AuditState.WAIT_AUDIT);
             orderLoanApply.setCreateTime(createTime);
             orderLoanApply.setUpdateTime(createTime);
             orderLoanApplyMapper.insert(orderLoanApply);
@@ -270,7 +270,7 @@ public class OrderServiceImpl implements OrderService {
             orderMapper.updateByPrimaryKey(orderDb);
             //更改订单贷款申请为取消
             OrderLoanApply orderLoanApply = orderLoanApplyMapper.selectByOrderId(orderDb.getOrderId());
-            orderLoanApply.setLoanState(LoanState.CANCELED.ordinal());
+            orderLoanApply.setLoanState(LoanState.CANCELED);
             orderLoanApplyMapper.updateByPrimaryKey(orderLoanApply);
             //添加订单日志
             OrderLog orderLog = new OrderLog();
@@ -291,7 +291,7 @@ public class OrderServiceImpl implements OrderService {
         //已付款订单才可确认收货
         if (orderDb != null &&
                 (orderDb.getOrderState() == OrderState.PAID_PAYMENT || orderDb.getOrderState() == OrderState.OUT_STOCK)){
-            int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED.ordinal(), DeliveryState.RECEIVED.ordinal());
+            int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED, DeliveryState.RECEIVED);
             //添加订单日志
             if (count > 0) {
                 OrderLog orderLog = new OrderLog();
@@ -311,9 +311,8 @@ public class OrderServiceImpl implements OrderService {
         order.setCouponsFee(0d);
         order.setDelivery(false);
         order.setDeliveryFeeTotal(0d);
-        order.setDeliveryState(0);
         if (order.getDeliveryType() == null) {
-            order.setDeliveryType(DeliveryType.ZT.ordinal());
+            order.setDeliveryType(DeliveryType.ZT);
         }
         order.setScoreTotal(0);
         order.setEnabled(true);

@@ -112,6 +112,8 @@ public class ProductController {
             result.addError(fieldError);
             return editProducts(product.getCommodity().getCommodityId(), product, modelMap);
         }
+        Commodity commodity = commodityService.getCommodityDetailById(product.getCommodity().getCommodityId());
+        product.setDefaultPicPath(commodity.getDefaultPicPath());
         product = productService.addProduct(product);
         return "redirect:editProducts.do?commodityId=" + product.getCommodity().getCommodityId();
     }
@@ -156,6 +158,8 @@ public class ProductController {
     @RequestMapping(value = "editProduct", method = RequestMethod.POST)
     public String editProduct(@ModelAttribute("product") Product product, BindingResult result ) {
         int commodityId=product.getCommodity().getCommodityId();
+        Commodity commodity = commodityService.getCommodityDetailById(product.getCommodity().getCommodityId());
+        product.setDefaultPicPath(commodity.getDefaultPicPath());
         productService.updateProduct(product);
         return "redirect:editProducts.do?commodityId="+commodityId;
     }

@@ -146,6 +146,20 @@ public class CommodityService implements ICommodityService {
     }
 
     /**
+     * 更新搜索器ES中的商品
+     * @param commodityId
+     */
+    public void updateCommodityES(int commodityId)throws Exception{
+        Commodity commodity = commodityDao.findOne(commodityId);
+        if (commodity.getPublishState() == PublishState.WAIT_UP_SHELVES || commodity.getPublishState() == PublishState.UP_SHELVES) {
+            SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+            CommodityVO commodityVO = new CommodityVO(commodity);
+            Call<ResponseResult> call = restService.updateCommodity(commodityVO);
+            ResponseResult result = call.execute().body();
+            logger.info("[elasticsearch] updateCommodityES:", result.getResult());
+        }
+    }
+    /**
      * 删除未选中的图
      */
     private void deleteUnSelectImg(String imagesDir, Commodity commodity) {

@@ -142,6 +142,13 @@ public class SearchResource extends BaseResource {
         commodityService.deleteById(commodityId);
         return new ResponseResult(Result.SUCCESS);
     }
-
+    @ApiOperation(value = "更新ES对象")
+    @PutMapping(value = "commodity")
+    public ResponseResult updateCommodity(@RequestBody CommodityVO commodityVO){
+        Commodity commodity = new Commodity();
+        BeanUtils.copyProperties(commodityVO, commodity);
+        commodityService.updateCommodity(commodity);
+        return new ResponseResult(Result.SUCCESS);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.Payment;
+import com.yunxin.cb.mall.entity.meta.PayState;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
@@ -138,7 +139,7 @@ public interface PaymentMapper {
             "and PAY_STATE = #{payState,jdbcType=INTEGER}"
     })
     @ResultMap(value="paymentMap")
-    Payment selectByOrderIdAndPayState(@Param("orderId")int orderId,@Param("payState")int payState);
+    Payment selectByOrderIdAndPayState(@Param("orderId")int orderId,@Param("payState")PayState payState);
 
     /**
      * 根据订单id查询支付记录
@@ -165,5 +166,5 @@ public interface PaymentMapper {
             "and PAY_STATE = #{payState}"
     })
     @ResultMap(value="paymentMap")
-    List<Payment> selectByBatchNoAndPayState(@Param("batchNo")String batchNo, @Param("payState")int payState);
+    List<Payment> selectByBatchNoAndPayState(@Param("batchNo")String batchNo, @Param("payState")PayState payState);
 }

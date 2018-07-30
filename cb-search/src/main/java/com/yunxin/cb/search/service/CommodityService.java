@@ -1,6 +1,7 @@
 package com.yunxin.cb.search.service;
 
 import com.yunxin.cb.search.document.Commodity;
+import com.yunxin.cb.search.vo.CommodityVO;
 import com.yunxin.cb.search.vo.SearchVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,5 +36,11 @@ public interface CommodityService {
      * @throws Exception
      */
     Page<Commodity> categorySearch(SearchVo searchVo, Pageable pageable) throws Exception;
+
+    /**
+     * 更新ES搜索器中的商品
+     * @param commodity
+     */
+    void updateCommodity(Commodity commodity);
 
 }

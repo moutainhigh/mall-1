@@ -25,6 +25,8 @@ public interface ICommodityService {
 
     public Commodity updateCommodity(Commodity commodity) throws EntityExistException;
 
+    public void updateCommodityES(int commodityId)throws Exception;
+
     @Transactional(readOnly = true)
     List<CommoditySpec> getCommoditySpecsByCommodity(Commodity commodity);
 

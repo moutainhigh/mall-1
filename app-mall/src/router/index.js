@@ -18,6 +18,7 @@ import AddAddress from '../page/address/AddAddress'
 import EditAddress from '../page/address/EditAddress'
 import CollectList from '../page/collect/CollectList'
 import MyBrowse from '../page/collect/MyBrowse'
+import Login from '../page/Login'
 
 Vue.use(Router)
 
@@ -109,6 +110,10 @@ export default new Router({
       path: '/my-browse',
       name: 'MyBrowse',
       component: MyBrowse
+    },{
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
   ]
 })
