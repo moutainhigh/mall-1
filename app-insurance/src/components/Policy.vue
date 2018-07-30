@@ -12,7 +12,7 @@
       <img src="../assets/img/risk-frame.png" width="322">
       <div>
         <div class="r-tip">
-          温馨提示：感谢使用水晶球生命投保功能，本单已自核通过。您可通过关注水晶球生命人寿在线公众号，享受更多保单服务。
+          温馨提示：感谢使用水晶球生命投保功能，本单已自核通过。
         </div>
       </div>
       <button class="returnButton" @click="comeBack">

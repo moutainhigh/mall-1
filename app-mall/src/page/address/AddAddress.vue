@@ -16,12 +16,14 @@
       <img v-if="addressVo.defaultAddress" class="isDefault" src="../../assets/img/common/Checkmark_sele.png"
            @click="addressVo.defaultAddress = !addressVo.defaultAddress">
     </p>
+    <button @click="save">baocun</button>
   </div>
 </template>
 
 <script>
   import headTop from '../../components/header/head'
   import {ChinaAddressData, Group, XAddress, XInput, XTextarea, Toast} from 'vux'
+  import {saveDeliveryAddress} from "../../service/getData";
 
   export default {
     name: "AddAddress",
@@ -38,8 +40,16 @@
         headTitle: '新增收货地址',
         addressData: ChinaAddressData,
         isDefault: false,
-        addressVo: null,
-        pcd: ''
+        addressVo: '',
+        pcd: []
+      }
+    },
+    methods: {
+      save() {
+        console.log(this.addressVo);
+        saveDeliveryAddress(this.addressVo).then(res => {
+          console.log(res,'res');
+        })
       }
     },
     created() {
