@@ -36,7 +36,12 @@
               };
             });
           }
-        }
+        },
+      created(){
+        Fetch("http://192.168.0.43:8159/mb-api/v1/mall/index/getIndex.do",{},"GET").then(res=>{
+          console.log(res);
+        });
+      }
     }
 </script>
 
