@@ -105,7 +105,7 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
             attributeGroup.getAttributes().addAll(attributeGroups.get(attributeGroup));
             groups.add(attributeGroup);
         }
-        //转换成VO返回
+        //转换成VO返回(需实现VO中Comparable的compareTo排序方法)
         return new ResponseResult(AttributeGroupVO.convertVO(groups));
     }
 
