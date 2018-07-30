@@ -10,11 +10,12 @@ axios.defaults.baseURL ='';
 axios.interceptors.request.use(
   config => {
     // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
-    config.data = JSON.stringify(config.data);
     config.headers = {
-      'Content-Type':'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + storage.fetchSession('token')
+      'Content-Type':'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + storage.fetchSession('token'),
     };
+    config.data = JSON.stringify(config.data);
     return config;
   },
   error => {
@@ -27,7 +28,6 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     var status = response.status;
-    console.log(response);
     if (status == 502){
 
     }

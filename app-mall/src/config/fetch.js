@@ -26,9 +26,9 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			credentials: 'include',
 			method: type,
 			headers: {
-        'Authorization': 'Bearer ' + storage.fetch('token'),
+        'Authorization': 'Bearer ' + storage.fetchSession('token'),
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+        'Content-Type':'application/json',
       },
 			mode: "cors",
 			cache: "force-cache"
@@ -63,7 +63,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 
 			requestObj.open(type, url, true);
 			requestObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			requestObj.setRequestHeader("Authorization",'Bearer ' + storage.fetch('token'));
+			// requestObj.setRequestHeader("Authorization",'Bearer ' + storage.fetch('token'));
 			requestObj.send(sendData);
 
 			console.log(requestObj)
