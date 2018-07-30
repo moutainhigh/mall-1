@@ -2,39 +2,81 @@
   <div>
     <head-top :headTitle="headTitle"></head-top>
     <div class="tab">
-      <div class="tabItem"><p class="itemButton" :class="{'active': tab == 1}" @click="select(1)">全部</p></div>
-      <div class="tabItem"><p class="itemButton" :class="{'active': tab == 2}" @click="select(2)">待付款</p></div>
-      <div class="tabItem"><p class="itemButton" :class="{'active': tab == 3}" @click="select(3)">待收货</p></div>
-      <div class="tabItem"><p class="itemButton" :class="{'active': tab == 4}" @click="select(4)">已完成</p></div>
-      <div class="tabItem"><p class="itemButton" :class="{'active': tab == 5}" @click="select(5)">已取消</p></div>
+      <div class="tabItem"><p class="itemButton" :class="{'active': tab == ''}" @click="select('')">全部</p></div>
+      <div class="tabItem"><p class="itemButton" :class="{'active': tab == 'PENDING_PAYMENT'}" @click="select('PENDING_PAYMENT')">待付款</p></div>
+      <div class="tabItem"><p class="itemButton" :class="{'active': tab == 'OUT_STOCK'}" @click="select('OUT_STOCK')">待收货</p></div>
+      <div class="tabItem"><p class="itemButton" :class="{'active': tab == 'SUCCESS'}" @click="select('SUCCESS')">已完成</p></div>
+      <div class="tabItem"><p class="itemButton" :class="{'active': tab == 'CANCELED'}" @click="select('CANCELED')">已取消</p></div>
     </div>
-
-    <div class="user-order-list">
-      <dl>
-        <dt style="border-top: 0;padding-left: 0.875rem">
-          <span class="orderNo">订单编号：1549856</span>
-          <span class="orderState">等待付款</span>
-        </dt>
-        <dd class="myorderList">
-          <img class="imgs" src="../../assets/logo.png">
+    <scroller style="top: 0;font-size: 12px !important;margin-top: 5.7rem"
+              :on-refresh="refresh"
+              :on-infinite="infinite"
+              refresh-layer-color="#f5ca1d"
+              loading-layer-color="#f5ca1d">
+      <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
+        <g>
+          <circle cx="16" cy="32" stroke-width="0" r="3">
+            <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                     repeatCount="indefinite"></animate>
+            <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+          </circle>
+          <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+            <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                     repeatCount="indefinite"></animate>
+            <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+          </circle>
+          <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+            <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                     repeatCount="indefinite"></animate>
+            <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+          </circle>
+        </g>
+      </svg>
+      <div class="user-order-list">
+        <dl>
+          <dt style="border-top: 0;padding-left: 0.875rem">
+            <span class="orderNo">订单编号：1549856</span>
+            <span class="orderState">等待付款</span>
+          </dt>
+          <dd class="myorderList">
+            <img class="imgs" src="../../assets/logo.png">
+            <div>
+              <p style="white-space: normal; font-size: 0.93rem">2018款 240TURBO自动两驱舒适版</p>
+              <p style="font-size: 0.81rem;color: #999">颜色：天漠金<span style="float: right; font-size: 0.81rem">x1</span></p>
+              <p style="font-size: 0.81rem;color: #999">深圳东通上汽大众 <span
+                style="background: #f5ca1d; color: #ffffff; padding: 0 5px; border-radius: 2px; font-size: 0.75rem">4s</span>
+              </p>
+            </div>
+          </dd>
+          <dt style="border-top: 0">
+            <p style="float: right; font-size: 0.81rem; margin-right: 15px">共1件商品 合计：￥<span
+              style="font-size: 0.93rem; font-weight: bold">23</span>.98万</p>
+          </dt>
           <div>
-            <p style="white-space: normal; font-size: 0.93rem">2018款 240TURBO自动两驱舒适版</p>
-            <p style="font-size: 0.81rem;color: #999">颜色：天漠金<span style="float: right; font-size: 0.81rem">x1</span></p>
-            <p style="font-size: 0.81rem;color: #999">深圳东通上汽大众 <span
-              style="background: #f5ca1d; color: #ffffff; padding: 0 5px; border-radius: 2px; font-size: 0.75rem">4s</span>
-            </p>
+            <button class="order-button" @click="cancelOrder = true">取消订单</button>
           </div>
-        </dd>
-        <dt style="border-top: 0">
-          <p style="float: right; font-size: 0.81rem; margin-right: 15px">共1件商品 合计：￥<span
-            style="font-size: 0.93rem; font-weight: bold">23</span>.98万</p>
-        </dt>
-        <div>
-          <button class="order-button" @click="cancelOrder = true">取消订单</button>
-        </div>
-      </dl>
-    </div>
-
+        </dl>
+      </div>
+      <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
+        <g>
+          <circle cx="16" cy="32" stroke-width="0" r="3">
+            <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                     repeatCount="indefinite"></animate>
+            <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+          </circle>
+          <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+            <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                     repeatCount="indefinite"></animate>
+            <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+          </circle>
+          <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+            <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                     repeatCount="indefinite"></animate>
+            <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+          </circle>
+        </g>
+      </svg>
+    </scroller>
     <div class="carType" v-if="cancelOrder">
       <div style="height: 40vh; background: #ffffff; position: fixed; bottom: 0.875rem; left: 0.875rem; right: 0.875rem; border-radius: 10px">
         <div style="text-align: center; line-height: 3; border-bottom: 1px solid #ECECEC; position: relative">
@@ -65,6 +107,7 @@
 
 <script>
   import headTop from '../../components/header/head'
+  import {getCustomerOrder} from "../../service/getData";
 
   export default {
     name: "OrderList",
@@ -73,15 +116,72 @@
     },
     data() {
       return {
+        orders: [],
         headTitle: '我的订单',
-        tab: 1,
-        cancelOrder: false
+        tab: '',
+        cancelOrder: false,
+        pageQuery: {
+          pageNo: 1,
+          pageSize: 10,
+          orderState: ''
+        },
+        isInfinite: true
       }
     },
     methods: {
+      refresh(done) {
+        this.pageQuery.pageNo = 1;
+        getCustomerOrder(this.pageQuery).then(res => {
+          if (res.result == 'SUCCESS') {
+            this.orders = res.data.data;
+            if ( res.data.pageCount <= this.pageQuery.pageNo) {
+              this.isInfinite = false;
+            } else {
+              this.pageQuery.page++;
+            }
+          }
+          done()
+        });
+      },
+
+      infinite(done) {
+        if (!this.isInfinite) {
+          done(true);
+          return;
+        }
+        this.getOrderList(done);
+      },
       select(index) {
-        this.tab = index;
+        if (this.tab != index) {
+          this.tab = index;
+          this.pageQuery = {
+            pageNo: 1,
+            pageSize: 10,
+            orderState: index
+          };
+          this.orders = [];
+          this.getOrderList();
+        }
+      },
+      async getOrderList(done) {
+        let _this = this;
+        await getCustomerOrder(this.pageQuery).then(res => {
+          if (res.result == 'SUCCESS') {
+            this.orders = this.orders.concat(res.data.data);
+            if (res.data.pageCount <= _this.pageQuery.pageNo) {
+              done(true);
+            } else {
+              _this.pageQuery.pageNo++;
+              done();
+            }
+          } else {
+            _this.isInfinite = false;
+            done();
+          }
+        })
       }
+    },
+    created() {
     }
   }
 </script>
@@ -105,7 +205,7 @@
 
   .active {
     color: #f5ca1d;
-    border-bottom: 3px solid #f5ca1d;
+    border-bottom: 2px solid #f5ca1d;
     margin: 0 20px
   }
 

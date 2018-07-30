@@ -36,3 +36,6 @@ export const deleteDeliveryAddressByAdderssId = function (addressId) {
   return del('/v1/mall/deliveryAddress/' + addressId);
 };
 
+export const getCustomerOrder = function (query) {
+  return post('/v1/mall/order/pageList',{},query);
+}

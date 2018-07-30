@@ -213,7 +213,7 @@
         </div>
       </div>
       <div class="car_list">
-        <div class="list_item" v-for="commodity in commodities" @click="openDetail">
+        <div class="list_item" v-for="commodity in commodities" @click="openDetail()">
           <div class="cont_img">
             <img src="../../assets/img/home/1.png" width="100%">
           </div>
@@ -226,7 +226,7 @@
             </div>
             <div class="cont_local">
               <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1rem;">
-              <span>深圳中升汇宝宝马4S店</span>
+              深圳中升汇宝宝马4S店
             </div>
           </div>
         </div>
@@ -298,7 +298,8 @@
       },
       openDetail(carId){
         this.$router.push({
-          path:'/car-detail'
+          path:'/car-detail',
+          query:{carId:carId}
         })
       }
     },
@@ -774,6 +775,7 @@
         height: 6rem;
         border-bottom: #ececec 1px solid;
         .cont_title {
+          height: 3rem;
           overflow:hidden;
           text-overflow:ellipsis;
           display:-webkit-box;
@@ -789,11 +791,13 @@
         .cont_local {
           font-size: 0.8rem;
           color: #999;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          display:-webkit-box;
+          -webkit-box-orient:vertical;
+          -webkit-line-clamp:1;
           img {
-            vertical-align: middle;
-          }
-          span {
-            vertical-align: middle;
+            vertical-align: top;
           }
         }
       }
