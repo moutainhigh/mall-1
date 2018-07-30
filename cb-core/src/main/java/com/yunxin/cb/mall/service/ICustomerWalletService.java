@@ -1,7 +1,10 @@
 package com.yunxin.cb.mall.service;
 
+import com.yunxin.cb.mall.entity.CustomerTradingRecord;
 import com.yunxin.cb.mall.entity.CustomerWallet;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
+import com.yunxin.core.persistence.PageSpecification;
+import org.springframework.data.domain.Page;
 
 /**
  * @author wangteng
@@ -23,13 +26,15 @@ public interface ICustomerWalletService {
      * @return
      */
     public CustomerWallet updateCustomerWallet(int customerId,Double ratios,String remark,BusinessType businessType,int price);
-//
-//    /**
-//     * 更新授信额度
-//     * @param customerWallet
-//     * @return
-//     */
-//    public CustomerWallet updateExpectedReturnAmount(CustomerWallet customerWallet);
+
+    /**
+     * 钱包列表
+     * @param specification
+     * @return
+     */
+    public  Page<CustomerWallet> pageCustomerWallets(PageSpecification<CustomerWallet> specification);
+
+    public  Page<CustomerTradingRecord> pageCustomerTradingRecord(PageSpecification<CustomerTradingRecord> specification);
 
 
 
