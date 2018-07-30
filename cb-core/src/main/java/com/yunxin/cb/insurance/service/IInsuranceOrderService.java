@@ -5,6 +5,7 @@ import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public interface IInsuranceOrderService {
      * @param orderId
      * @return
      */
-    boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState);
+    boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState,HttpServletRequest request);
 
     /**
      * 获取事项
