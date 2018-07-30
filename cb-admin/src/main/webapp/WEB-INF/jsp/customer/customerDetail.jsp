@@ -28,6 +28,8 @@
         var district=$.citySelector.getAddress("${customer.district}")
         var address='${customer.address}';
       $("#pdcDetail").html(province+city+district+address);
+      $("#region").html(province+city+district);
+      $("#region1").html(province+city+district);
         for (var i=1;i<4;i++){
             $('#example'+i).viewer({
                 url: 'data-original',
@@ -338,10 +340,13 @@
         <div class="inner-padding">
           <ul class="ext-tabs">
             <li class="active">
-              <a href="#content-tab-6-a">客户基本信息</a>
+              <a href="#content-tab-6-a">基本信息</a>
             </li>
             <li>
-              <a href="#content-tab-6-b">收货地址</a>
+              <a href="#content-tab-6-b">详细信息</a>
+            </li>
+            <li>
+              <a href="#content-tab-6-c">收货地址</a>
             </li>
           </ul><!-- End .ext-tabs -->
           <div class="tab-content">
@@ -349,7 +354,7 @@
               <div class="inner-padding" style="margin-left: -20px">
                   <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                   <fieldset>
-                    <legend>客户详情</legend>
+                    <legend>基本信息</legend>
                     <div class="row">
                       <div class="inline-labels">
                         <div class="col-sm-2">
@@ -381,15 +386,13 @@
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
-                          <label>真实姓名：<span class="asterisk"></span></label>
+                          <label>地区：<span class="asterisk"></span></label>
                         </div>
-                        <div class="col-sm-2 col-label">
-                          ${customer.realName}
+                        <div class="col-sm-2 col-label" id="region">
                         </div>
                         <div class="col-sm-1"></div>
                       </div>
                     </div>
-
                     <div class="spacer-10"></div>
 
                     <div class="row">
@@ -402,170 +405,153 @@
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-2">
-                          <label>固定电话：<span class="asterisk"></span></label>
-                        </div>
-                        <div class="col-sm-2 col-label">
-                          ${customer.telephone}
-                        </div>
-                        <div class="col-sm-1"></div>
-                      </div>
-                    </div>
-
-
-                    <div class="row">
-                      <div class="inline-labels">
-                        <div class="col-sm-2">
                           <label>邮编：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-2 col-label">
                           ${customer.postCode}
                         </div>
                         <div class="col-sm-1"></div>
-                        <div class="col-sm-2">
-                          <label>邀请码：<span class="asterisk"></span></label>
-                        </div>
-                        <div class="col-sm-2 col-label">
-                          ${customer.invitationCode}
-                        </div>
-                        <div class="col-sm-1"></div>
                       </div>
                     </div>
 
-
-                    <div class="spacer-30"></div>
-                    <hr>
-                    <div class="spacer-30"></div>
-
+                    <div class="spacer-10"></div>
                     <div class="row">
                       <div class="inline-labels">
+                        <div class="col-sm-2">
+                          <label>固定电话：<span class="asterisk"></span></label>
+                        </div>
+                        <div class="col-sm-2 col-label">
+                          ${customer.telephone}
+                        </div>
+                        <div class="col-sm-1"></div>
                         <div class="col-sm-2">
                           <label>出生日期：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-2 col-label">
-                           ${fn:substring(customer.birthday, 0, 10)}
-                          </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-2">
-                          <label>性别：<span class="asterisk"></span></label>
-                        </div>
-                        <div class="col-sm-2 col-label">
-                          ${customer.sex==true?'男':'女'}
+                          ${fn:substring(customer.birthday, 0, 10)}
                         </div>
                         <div class="col-sm-1"></div>
                       </div>
                     </div>
-
-
-                    <div class="row">
-                      <div class="inline-labels">
-                        <div class="col-sm-2">
-                          <label>证件类型：<span class="asterisk"></span></label>
-                        </div>
-                        <div class="col-sm-2 col-label">
-                          ${customer.cardType}
-                        </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-2">
-                          <label>证件号码：<span class="asterisk"></span></label>
-                        </div>
-                        <div class="col-sm-2 col-label">
-                          ${customer.customerCardNo}
-                        </div>
-                        <div class="col-sm-1"></div>
-                      </div>
-                    </div>
-
-
-                    <div class="row">
-                      <div class="inline-labels">
-                        <div class="col-sm-2">
-                          <label>国籍：<span class="asterisk"></span></label>
-                        </div>
-                        <div class="col-sm-2 col-label">
-                          ${customer.customerCountry}
-                        </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-2">
-                          <label>证件有效期：<span class="asterisk"></span></label>
-                        </div>
-                        <div class="col-sm-2 col-label">
-                          ${customer.customerCardPeroid}
-                        </div>
-                        <div class="col-sm-1"></div>
-                      </div>
-                    </div>
-
-                    <div class="spacer-10"></div>
-                    <div class="row">
-                      <div class="col-sm-2">
-                        <label>详细地址：<span class="asterisk"></span>
-                          <span id="district"></span>
-                        </label>
-                      </div>
-                      <div class="col-sm-9" id="pdcDetail">
-
-                      </div>
-                    </div>
-                    <div class="spacer-10"></div>
-                    <div class="row">
-                      <div class="col-sm-2">
-                        <label>备注：<span class="asterisk"></span>
-                          <span id=""></span>
-                        </label>
-                      </div>
-                      <div class="col-sm-2 col-label">
-                        ${customer.remark}
-                      </div>
-                    </div>
-
                     <div class="spacer-30"></div>
                     <hr>
                     <div class="spacer-30"></div>
-
-                    <div class="row">
-                      <div class="col-sm-2">
-                        <label><span class="asterisk"></span> 银行卡正面 ：</label>
-                      </div>
-                      <div class="col-sm-2 col-label" id="example1">
-                        <c:if test="${customer.bankCardImg!=null&&customer.bankCardImg!=''}">
-                          <img data-original="${customer.bankCardImg}"  src="${customer.bankCardImg}" alt="投保人银行卡正面" width="200" height="150"/>
-                        </c:if>
-                      </div>
-                      <div class="col-sm-2">
-                        <label><span class="asterisk"></span> 身份证正面 ：</label>
-                      </div>
-                      <div class="col-sm-2 col-label"  id="example2">
-                      <c:if test="${customer.cardPositiveImg!=null&&customer.cardPositiveImg!=''}">
-                        <img data-original="${customer.cardPositiveImg}" src="${customer.cardPositiveImg}" alt="投保人身份证正面" width="200" height="150"/>
-                      </c:if>
-                      </div>
-
-                      <div class="col-sm-2">
-                        <label><span class="asterisk"></span> 身份证反面 ：</label>
-                      </div>
-                      <div class="col-sm-2 col-label"  id="example3">
-                      <c:if test="${customer.cardNegativeImg!=null&&customer.cardNegativeImg!=''}">
-                        <img data-original="${customer.cardNegativeImg}" src="${customer.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
-                      </c:if>
-                      </div>
-                    </div>
-
-                    <div class="spacer-30"></div>
-                    <hr>
-                    <div class="spacer-30"></div>
-
                     <div class="row">
                       <div class="col-sm-3"></div>
                       <div class="col-sm-9">
-
                         <a class="btn btn-default pull-right" href="customers.do">返回</a>
                       </div>
                     </div>
                   </fieldset>
-
               </div>
             </div>
+
+
             <div id="content-tab-6-b" class="tab-pane">
+              <div class="inner-padding" style="margin-left: -20px">
+                <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
+                <fieldset>
+                  <legend>详细信息</legend>
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>真实姓名：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${customer.realName}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>性别：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${customer.sex==true?'男':'女'}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+                  <div class="spacer-10"></div>
+
+                  <div class="row">
+                    <div class="inline-labels">
+
+                      <div class="col-sm-2">
+                        <label>所在地区：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label" id="region1">
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>详细地址：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label" id="pdcDetail">
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+                  <div class="spacer-10"></div>
+
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>证件类型：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${customer.cardType}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>证件号码：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${customer.customerCardNo}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+
+                  <div class="spacer-10"></div>
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <label><span class="asterisk"></span> 银行卡正面 ：</label>
+                    </div>
+                    <div class="col-sm-2 col-label" id="example1">
+                      <c:if test="${customer.bankCardImg!=null&&customer.bankCardImg!=''}">
+                        <img data-original="${customer.bankCardImg}"  src="${customer.bankCardImg}" alt="投保人银行卡正面" width="200" height="150"/>
+                      </c:if>
+                    </div>
+                    <div style="width: 10px">
+                    </div>
+                    <div class="col-sm-2 col-label"  id="example2">
+                      <c:if test="${customer.cardPositiveImg!=null&&customer.cardPositiveImg!=''}">
+                        <img data-original="${customer.cardPositiveImg}" src="${customer.cardPositiveImg}" alt="投保人身份证正面" width="200" height="150"/>
+                      </c:if>
+                    </div>
+
+                    <div class="col-sm-2">
+                      <label><span class="asterisk"></span> 身份证反面 ：</label>
+                    </div>
+                    <div class="col-sm-2 col-label"  id="example3">
+                      <c:if test="${customer.cardNegativeImg!=null&&customer.cardNegativeImg!=''}">
+                        <img data-original="${customer.cardNegativeImg}" src="${customer.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
+                      </c:if>
+                    </div>
+                  </div>
+                  <div class="spacer-30"></div>
+                  <hr>
+                  <div class="spacer-30"></div>
+                  <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                      <a class="btn btn-default pull-right" href="customers.do">返回</a>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+
+            <div id="content-tab-6-c" class="tab-pane">
               <div class="spacer-10"></div>
               <div class="toolbar responsive-helper">
                 <header>
@@ -602,11 +588,9 @@
                 </c:forEach>
                 </tbody>
               </table>
-
               <div class="spacer-30"></div>
               <hr>
               <div class="spacer-30"></div>
-
               <div class="row">
                 <div class="col-sm-12">
                   <div class="btn-group pull-right">
