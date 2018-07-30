@@ -1,13 +1,20 @@
 package com.yunxin.cb.system.vo;
 
-public class AppCheckUpdate {
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel(value="APP版本信息",description="APP版本信息 AppCheckUpdate")
+public class AppCheckUpdate {
+    @ApiModelProperty(value="版本号",name="versionCode",example="1.0")
     private int versionCode;
 
+    @ApiModelProperty(value="版本名称",name="versionName",example="2.0")
     private String versionName;
 
+    @ApiModelProperty(value="APP名称",name="name",example="水晶球")
     private String name;
 
+    @ApiModelProperty(value="APP下载url",name="url",example="www.baidu.com")
     private String url;
 
     public AppCheckUpdate(){

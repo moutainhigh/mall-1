@@ -4,6 +4,7 @@ import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Favorite;
 import com.yunxin.cb.mall.service.FavoriteService;
 import com.yunxin.cb.mall.vo.FavoriteVo;
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
@@ -65,9 +66,9 @@ public class FavoriteResource extends BaseResource {
         favorite.setCustomerId(getCustomerId());
         favorite=favoriteService.findByCustomerAndCommodity(favorite);
         if(favorite==null){
-            return new ResponseResult(false);//收藏夹不存在
+            return new ResponseResult(Result.FAILURE);//收藏夹不存在
         }else{
-            return new ResponseResult(true);//收藏夹已存在
+            return new ResponseResult(Result.SUCCESS);//收藏夹已存在
         }
     }
 
@@ -92,16 +93,16 @@ public class FavoriteResource extends BaseResource {
             favorite.setCustomerId(getCustomerId());
             int result = favoriteService.addFavorite(favorite);
             if (result > 0) {
-                return new ResponseResult(true);//成功
+                return new ResponseResult(Result.SUCCESS);//成功
             } else {
-                return new ResponseResult(false);//失败
+                return new ResponseResult(Result.FAILURE);//失败
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        return new ResponseResult(true);//成功
+        return new ResponseResult(Result.SUCCESS);//成功
     }
 
     /**
@@ -119,9 +120,9 @@ public class FavoriteResource extends BaseResource {
     public ResponseResult delFavorite(@PathVariable(value = "favoriteId") int favoriteId){
         int result=favoriteService.removeFavorite(favoriteId);
         if(result>0){
-            return new ResponseResult(true);//成功
+            return new ResponseResult(Result.SUCCESS);//成功
         }else{
-            return new ResponseResult(false);//失败
+            return new ResponseResult(Result.FAILURE);//失败
         }
     }
 }

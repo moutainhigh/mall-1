@@ -23,7 +23,7 @@ public interface SearchRestService {
      * @param commodityVo
      * @return
      */
-    @POST("mall/search/updateCommodity")
+    @PUT("mall/search/commodity")
     Call<ResponseResult> updateCommodity(@Body CommodityVO commodityVo);
     /**
      * 删除商品
