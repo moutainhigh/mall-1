@@ -368,6 +368,7 @@
                                             maxFileSize : 2000,
                                             autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
                                             overwriteInitial: false,//不覆盖已存在的图片
+                                            allowedFileExtensions: ["jpg", "png", "gif"],
                                             browseClass:"btn btn-primary", //按钮样式
                                             // layoutTemplates:{
                                             //     actionUpload:''    //设置为空可去掉上传按钮
