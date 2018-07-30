@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.Advertisement;
+import com.yunxin.cb.mall.entity.meta.AdvertisementPlace;
 import com.yunxin.cb.mall.mapper.AdvertisementMapper;
 import com.yunxin.cb.mall.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private AdvertisementMapper advertisementMapper;
 
     @Override
-    public List<Advertisement> selectByPlace(Integer advertisementPlace) {
-        return advertisementMapper.selectByPlace(advertisementPlace);
+    public List<Advertisement> selectByPlace(AdvertisementPlace advertisementPlace,Boolean enabled) {
+        return advertisementMapper.selectByPlace(advertisementPlace,enabled);
     }
 }
