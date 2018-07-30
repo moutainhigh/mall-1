@@ -205,6 +205,10 @@ public class MainResource extends BaseResource {
 
     @ApiOperation(value = "手机号验证码登录")
     @PostMapping(value = "loginByCode")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "mobile", value = "用户手机号码", required = true, paramType = "path", dataType = "String"),
+            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String")
+    })
     public ResponseResult loginByCode(@RequestParam String mobile, @RequestParam String code) {
         //校验验证码
         VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(mobile);
@@ -231,6 +235,9 @@ public class MainResource extends BaseResource {
 
     @ApiOperation(value = "通过邀请码查询推荐人手机号和邀请人名称")
     @GetMapping(value = "recommendCustomer/{invitationCode}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "invitationCode", value = "邀请码", required = true, paramType = "get", dataType = "String")
+    })
     public ResponseResult recommendCustomer(@PathVariable String invitationCode) {
         Customer customer = customerService.getCustomerByInvitationCode(invitationCode);
         RecommendCustomerVo recommendCustomerVo = new RecommendCustomerVo(customer);
@@ -239,6 +246,11 @@ public class MainResource extends BaseResource {
 
     @ApiOperation(value ="修改密码")
     @PostMapping(value = "updatePwd/{mobile}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "mobile", value = "用户手机号码", required = true, paramType = "path", dataType = "String"),
+            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "newPwd", value = "新密码", required = true, paramType = "post", dataType = "String")
+    })
     public ResponseResult updatePwd(@PathVariable String mobile, @RequestParam String code, @RequestParam String newPwd) {
         Customer customer = customerService.getCustomerByMobile(mobile);
         if(customer == null){
@@ -265,6 +277,10 @@ public class MainResource extends BaseResource {
 
     @ApiOperation(value = "发送验证码")
     @PostMapping("sendMobileValidCode/{sendType}/{mobile}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "mobile", value = "用户手机号码", required = true, paramType = "path", dataType = "String"),
+            @ApiImplicitParam(name = "sendType", value = "验证码类型", required = true, paramType = "path", dataType = "String")
+    })
     public ResponseResult sendMobileValidCode(@PathVariable SendType sendType, @PathVariable String mobile, HttpSession session, HttpServletRequest request) {
         ResponseResult responseResult = new ResponseResult(Result.FAILURE);
         //send to mobile

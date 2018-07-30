@@ -115,7 +115,7 @@ alter table customer add  OCCUPATIONAL_CATEGORY VARCHAR(50) DEFAULT NULL COMMENT
 
 
 ##add by likang 2018-07-28
-ALTER TABLE profile ADD COLUMN `IS_PICTURE` int(2)    COMMENT '是否是图片';
+ALTER TABLE profile ADD COLUMN `IS_PICTURE` int(2) DEFAULT 0   COMMENT '是否是图片';
 
 ##add by tanggangyi 2018-07-28 修改客户密码长度为64
 ALTER TABLE `crystal_ball`.`customer`
