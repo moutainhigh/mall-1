@@ -44,6 +44,8 @@ public class ProductReturn implements java.io.Serializable {
      * 购买时间
      */
     private Date purchasingTime;
+    /** 退款时间 */
+    private Date refundTime;
     /**
      * 申请时间
      */
@@ -100,6 +102,9 @@ public class ProductReturn implements java.io.Serializable {
      * 审核备注
      */
     private String auditRemark;
+
+    /** 审核时间 */
+    private Date auditTime;
 
     /***物流公司编码*/
     private String logisticCode;
@@ -165,6 +170,28 @@ public class ProductReturn implements java.io.Serializable {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(length = 7, nullable = true)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    public Date getRefundTime() {
+        return refundTime;
+    }
+
+    public void setRefundTime(Date refundTime) {
+        this.refundTime = refundTime;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(length = 7, nullable = true)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
