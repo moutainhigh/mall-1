@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -101,11 +102,13 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "String")})
     @PostMapping(value = "order/pageList")
     public ResponseResult<PageFinder<OrderDetailVO>> pageOrder(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
-                                                               @RequestParam(value = "orderState") String orderState){
+                                                               @RequestParam(value = "orderState", required = false) String orderState){
         Order order = new Order();
         Query q = new Query(pageNo, pageSize);
         order.setCustomerId(getCustomerId());
-        order.setOrderState(OrderState.valueOf(orderState));
+        if (StringUtils.isNotBlank(orderState)) {
+            order.setOrderState(OrderState.valueOf(orderState));
+        }
         q.setData(order);
         PageFinder<Order> pageFinder = orderService.pageOrder(q);
         PageFinder<OrderDetailVO> page = null;
