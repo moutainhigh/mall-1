@@ -133,6 +133,7 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setOrderItemPrice(product.getSalePrice() * productNum);
                 orderItem.setProductId(product.getProductId());
                 orderItem.setSalePrice(product.getSalePrice());
+                orderItem.setProductImg(product.getDefaultPicPath());
                 orderItem.setEvaluate(false);
                 orderItem.setCreateTime(createTime);
                 //减少库存

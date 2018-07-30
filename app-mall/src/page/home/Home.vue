@@ -24,7 +24,7 @@
         </swiper>
       </div>
       <div style="margin: 1rem;border-radius: 0.5rem;">
-        <div class="car-type" v-for="brand in brandList" @click="openCarList(brand.brandId)">
+        <div class="car-type" v-for="brand in brandList" @click="openCarListByBrand(brand)">
           <img :src="brand.picPath" style="width: 3rem;height: 3rem;">
           <div style="font-size: 0.8rem;line-height: 3;">{{brand.brandName}}</div>
         </div>
@@ -34,7 +34,7 @@
     <div class="card-adv">
       <img src="../../assets/img/home/home_floor_title01.png" width="100%"/>
       <div style="text-align: center;">
-        <div class="adv-ban" v-for="item in categoryThreeList">
+        <div class="adv-ban" v-for="item in categoryThreeList" @click="openCarListByCategory(item)">
           <img :src="item.iconPath" style="height: 7.4rem" width="100%"/>
         </div>
       </div>
@@ -50,7 +50,7 @@
         <div style="font-size: 1rem;color: #999999;">
           热门车系
         </div>
-        <div class="cont" v-for="item in categoryFiveList" @click="openCarDetail">
+        <div class="cont" v-for="item in categoryFiveList" @click="openCarListByCategory(item)">
           <div style="flex: 0 0 8rem;">
             <img :src="item.iconPath" width="100%" style="border-radius: 4px;height: 5.4rem;">
           </div>
@@ -75,7 +75,7 @@
 
 <script>
   import headTop from "../../components/header/head"
-  import {getIndex, getIndex2, getVaildData} from "../../service/getData";
+  import {getIndex} from "../../service/getData";
   import { Swiper,SwiperItem} from 'vux'
   import AMap from 'AMap';
 
@@ -103,9 +103,22 @@
           path:"/car-detail"
         })
       },
-      openCarList(){
+      openCarListByBrand(brand){
         this.$router.push({
-          path:"/car-list"
+          path:"/car-list",
+          query:{
+            brandId:brand.brandId,
+            brandName:brand.brandName
+          }
+        })
+      },
+      openCarListByCategory(category){
+        this.$router.push({
+          path:'/car-list',
+          query:{
+            categoryId:category.categoryId,
+            categoryName:category.categoryName
+          }
         })
       },
       toSearch() {
@@ -116,7 +129,7 @@
       selectLocal() {
         let vm = this;
         AMap.plugin('AMap.CitySearch', function () {
-          var citySearch = new AMap.CitySearch()
+          var citySearch = new AMap.CitySearch();
           citySearch.getLocalCity(function (status, result) {
             if (status === 'complete' && result.info === 'OK') {
               vm.localCity = result.city.substr(0, 2);

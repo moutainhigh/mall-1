@@ -119,7 +119,6 @@
           if (res.result == 'SUCCESS') {
             _this.collectList = res.data.data;
           }
-          console.log(res);
         })
       }
     },

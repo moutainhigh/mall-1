@@ -282,7 +282,7 @@
                v-if="!$v.beneficiary1.beneficiaryCardNo.required && $v.beneficiary1.beneficiaryCardNo.$dirty">请输入证件号
           </div>
           <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.vali">请输入正确的证件号码</div>
-          <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.maxLength">证件号码最多不超过32位数</div>
+          <div class="error" v-if="!$v.beneficiary1.beneficiaryCardNo.maxLength">证件号码最多不超过18位数</div>
 
           <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary1.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary1.beneficiaryCardPeroid.$error}"-->
           <!--@input="$v.beneficiary1.beneficiaryCardPeroid.$touch()"></x-input>-->
@@ -399,7 +399,7 @@
                v-if="!$v.beneficiary2.beneficiaryCardNo.required && $v.beneficiary2.beneficiaryCardNo.$dirty">请输入证件号
           </div>
           <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.vali">请输入正确的证件号码</div>
-          <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.maxLength">证件号码最多不超过32位数</div>
+          <div class="error" v-if="!$v.beneficiary2.beneficiaryCardNo.maxLength">证件号码最多不超过18位数</div>
 
           <!--<x-input title="证件有效期" placeholder="请选择证件有效期" v-model="beneficiary2.beneficiaryCardPeroid" v-bind:class="{'errorInput': $v.beneficiary2.beneficiaryCardPeroid.$error}"-->
           <!--@input="$v.beneficiary2.beneficiaryCardPeroid.$touch()"></x-input>-->
@@ -548,7 +548,7 @@
             beneficiaryProportion: {required, between: between(1, 100), numeric},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
-            beneficiaryCardNo: {required, vali: this.valiBene1, maxLength: maxLength(32)},
+            beneficiaryCardNo: {required, vali: this.valiBene1, maxLength: maxLength(18)},
             beneficiaryCardPeroid: {required},
             insuredRelation: {required}
           },
@@ -559,7 +559,7 @@
             beneficiaryProportion: {required, between: between(1, 100), numeric},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
-            beneficiaryCardNo: {required, vali: this.valiBene2, maxLength: maxLength(32)},
+            beneficiaryCardNo: {required, vali: this.valiBene2, maxLength: maxLength(18)},
             beneficiaryCardPeroid: {required},
             insuredRelation: {required}
           },
@@ -592,7 +592,7 @@
             beneficiaryProportion: {required, between: between(1, 100), numeric},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
-            beneficiaryCardNo: {required, vali: this.valiBene1, maxLength: maxLength(32)},
+            beneficiaryCardNo: {required, vali: this.valiBene1, maxLength: maxLength(18)},
             beneficiaryCardPeroid: {required},
             insuredRelation: {required}
           },
@@ -603,7 +603,7 @@
             beneficiaryProportion: {required, between: between(1, 100), numeric},
             beneficiaryBirthday: {required},
             beneficiaryCardType: {required},
-            beneficiaryCardNo: {required, vali: this.valiBene2, maxLength: maxLength(32)},
+            beneficiaryCardNo: {required, vali: this.valiBene2, maxLength: maxLength(18)},
             beneficiaryCardPeroid: {required},
             insuredRelation: {required}
           },

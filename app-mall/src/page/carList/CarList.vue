@@ -205,61 +205,15 @@
         </div>
       </section>
       <div class="car_type_list">
-        <div class="type_item">
+        <div class="type_item" v-for="(item,index) in conditions">
           <p>
-            日系
+            {{item.val}}
           </p>
-          <img src="../../assets/img/common/ic_screen_close.png">
-        </div>
-        <div class="type_item">
-          <p>
-            20-35万
-          </p>
-          <img src="../../assets/img/common/ic_screen_close.png">
-        </div>
-        <div class="type_item">
-          <p>
-            20-35万
-          </p>
-          <img src="../../assets/img/common/ic_screen_close.png">
+          <img src="../../assets/img/common/ic_screen_close.png" @click="delCondition(item,index)">
         </div>
       </div>
       <div class="car_list">
-        <div class="list_item">
-          <div class="cont_img">
-            <img src="../../assets/img/home/1.png" width="100%">
-          </div>
-          <div class="cont">
-            <div class="cont_title">
-              2018款 240TURBO自动两驱舒适版
-            </div>
-            <div class="cont_price">
-              <span style="font-size: 1rem;">￥</span>8.98万
-            </div>
-            <div class="cont_local">
-              <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1rem;">
-              <span>深圳中升汇宝宝马4S店</span>
-            </div>
-          </div>
-        </div>
-        <div class="list_item">
-          <div class="cont_img">
-            <img src="../../assets/img/home/1.png" width="100%">
-          </div>
-          <div class="cont">
-            <div class="cont_title">
-              2018款 240TURBO自动两驱舒适版
-            </div>
-            <div class="cont_price">
-              <span style="font-size: 1rem;">￥</span>8.98万
-            </div>
-            <div class="cont_local">
-              <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1rem;">
-              <span>深圳中升汇宝宝马4S店</span>
-            </div>
-          </div>
-        </div>
-        <div class="list_item">
+        <div class="list_item" v-for="commodity in commodities" @click="openDetail">
           <div class="cont_img">
             <img src="../../assets/img/home/1.png" width="100%">
           </div>
@@ -284,6 +238,7 @@
 
 <script>
   import headTop from "../../components/header/head"
+  import {categorySearch} from "../../service/getData";
 
   export default {
     name: "Carlist",
@@ -292,11 +247,22 @@
     },
     data() {
       return {
+        commodities:[],
         sortBy: '', // 筛选的条件
         sortTitle:'默认排序', //排序名称
         sortByType: 0, // 根据何种方式排序
         enFocus:false,//是否焦点在input上
         conditions:[], //已选择的条件
+        searchVo : {
+          brandId: null,
+          categoryId: null,
+          sellerId: null,
+          lowestPrice: null,
+          highestPrice: null,
+          priceSection: null,
+          commoditySpecs: null,
+          sortBy: null
+        }
       }
     },
     methods: {
@@ -326,6 +292,46 @@
         this.sortTitle = title;
         this.sortBy = '';
       },
+      delCondition(condition,index){
+        this.searchVo[condition.type] = null;
+        this.conditions.splice(index,1);
+      },
+      openDetail(carId){
+        this.$router.push({
+          path:'/car-detail'
+        })
+      }
+    },
+    created(){
+      let _this = this;
+      if (this.$route.query.brandId) {
+        let brandId = this.$route.query.brandId;
+        let brandName = this.$route.query.brandName;
+        this.searchVo.brandId = brandId;
+        this.conditions.push({
+          key:brandId,
+          val:brandName,
+          type:'brandId'
+        })
+      }
+
+      if (this.$route.query.categoryId) {
+        let categoryId = this.$route.query.categoryId;
+        let categoryName = this.$route.query.categoryName;
+        this.searchVo.categoryId = categoryId;
+        this.conditions.push({
+          key:categoryId,
+          val:categoryName,
+          type:'categoryId'
+        })
+      }
+      categorySearch(this.searchVo,0,10).then(res=>{
+        console.log(res);
+        if (res.result == 'SUCCESS') {
+          _this.commodities = res.data.pageFinder.data;
+        }
+      })
+
     }
   }
 </script>

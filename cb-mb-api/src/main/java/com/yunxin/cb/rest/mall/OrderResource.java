@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +49,8 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "订单确认页面数据")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "buyNum", value = "购买数量", defaultValue = "1", paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "paymentType", value = "支付方式", paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
     public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId")int productId,
@@ -101,11 +102,13 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "String")})
     @PostMapping(value = "order/pageList")
     public ResponseResult<PageFinder<OrderDetailVO>> pageOrder(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
-                                                               @RequestParam(value = "orderState") String orderState){
+                                                               @RequestParam(value = "orderState", required = false) String orderState){
         Order order = new Order();
         Query q = new Query(pageNo, pageSize);
         order.setCustomerId(getCustomerId());
-        order.setOrderState(OrderState.valueOf(orderState));
+        if (StringUtils.isNotBlank(orderState)) {
+            order.setOrderState(OrderState.valueOf(orderState));
+        }
         q.setData(order);
         PageFinder<Order> pageFinder = orderService.pageOrder(q);
         PageFinder<OrderDetailVO> page = null;
@@ -140,7 +143,7 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "根据订单id取消订单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "cancelReason", value = "取消原因", paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "cancelReason", value = "取消原因", required = true, paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
     public ResponseResult cancelOrder(@RequestParam("orderId") int orderId, @RequestParam("cancelReason")String cancelReason)throws Exception{
