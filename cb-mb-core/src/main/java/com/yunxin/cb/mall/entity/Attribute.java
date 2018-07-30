@@ -5,7 +5,9 @@ package com.yunxin.cb.mall.entity;
  * @auther: eleven
  * @date: 2018/7/18 17:40
  */
-public class Attribute {
+public class Attribute implements java.io.Serializable, Comparable {
+
+    private static final long serialVersionUID = 3560156621440619711L;
     /** 属性ID */
     private Integer attributeId;
 
@@ -16,7 +18,7 @@ public class Attribute {
     private String imagePath;
 
     /** 排序 */
-    private Short sortOrder;
+    private short sortOrder;
 
     /** 属性组id */
     private Integer groupId;
@@ -48,14 +50,6 @@ public class Attribute {
         this.imagePath = imagePath == null ? null : imagePath.trim();
     }
 
-    public Short getSortOrder() {
-        return sortOrder;
-    }
-
-    public void setSortOrder(Short sortOrder) {
-        this.sortOrder = sortOrder;
-    }
-
     public Integer getGroupId() {
         return groupId;
     }
@@ -70,5 +64,42 @@ public class Attribute {
 
     public void setAttributeGroup(AttributeGroup attributeGroup) {
         this.attributeGroup = attributeGroup;
+    }
+
+    public short getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(short sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Attribute o1 = (Attribute) o;
+        if (sortOrder > o1.getSortOrder()) {
+            return 1;
+        } else if (sortOrder == o1.getSortOrder()) {
+            return 0;
+        } else {
+            return -1;
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Attribute attribute = (Attribute) o;
+
+        return attributeId == attribute.attributeId;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return attributeId;
     }
 }
