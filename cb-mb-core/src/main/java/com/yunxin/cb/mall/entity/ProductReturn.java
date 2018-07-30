@@ -18,6 +18,8 @@ public class ProductReturn {
 
     /** 购买时间 */
     private Date purchasingTime;
+    /** 退款时间 */
+    private Date refundTime;
 
     /** 原因 */
     private String reason;
@@ -38,7 +40,10 @@ public class ProductReturn {
     private String auditRemark;
 
     /** 审核状态 */
-    private AuditState AuditState;
+    private AuditState auditState;
+
+    /** 审核时间 */
+    private Date auditTime;
 
     /** 快递单号 */
     private String courierNumber;
@@ -162,11 +167,11 @@ public class ProductReturn {
     }
 
     public AuditState getAuditState() {
-        return AuditState;
+        return auditState;
     }
 
     public void setAuditState(AuditState auditState) {
-        AuditState = auditState;
+        auditState = auditState;
     }
 
     public String getCourierNumber() {
@@ -279,5 +284,21 @@ public class ProductReturn {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public Date getRefundTime() {
+        return refundTime;
+    }
+
+    public void setRefundTime(Date refundTime) {
+        this.refundTime = refundTime;
+    }
+
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
     }
 }

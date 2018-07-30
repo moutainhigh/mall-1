@@ -53,9 +53,18 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     /** 审核状态 */
     @ApiModelProperty(value="审核状态",name="auditState",example="1")
     private AuditState auditState;
+    /** 审核时间 */
+    @ApiModelProperty(value="审核时间",name="auditTime",example="2018-04-5-23 11:11:11")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date auditTime;
 
-    /** 处理时间 */
-    @ApiModelProperty(value="处理时间 ",name="disposeTime",example="1")
+    /** 退款时间 */
+    @ApiModelProperty(value="处理时间 ",name="refundTime",example="2018-04-5-23 11:11:11")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date refundTime;
+
+    /** 完成时间 */
+    @ApiModelProperty(value="处理时间 ",name="disposeTime",example="2018-04-5-23 11:11:11")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date disposeTime;
 
@@ -154,6 +163,22 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         this.productReturnItemDetails = productReturnItemDetails;
     }
 
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
+    }
+
+    public Date getRefundTime() {
+        return refundTime;
+    }
+
+    public void setRefundTime(Date refundTime) {
+        this.refundTime = refundTime;
+    }
+
     @Override
     public String toString() {
         return "ProductReturnDetailVO{" +
@@ -162,14 +187,17 @@ public class ProductReturnDetailVO implements java.io.Serializable{
                 ", orderId=" + orderId +
                 ", applyTime=" + applyTime +
                 ", returnRefundState=" + returnRefundState +
-                ", returnReason='" + returnReason + '\'' +
+                ", returnReason=" + returnReason +
                 ", auditRemark='" + auditRemark + '\'' +
                 ", auditState=" + auditState +
+                ", auditTime=" + auditTime +
+                ", refundTime=" + refundTime +
                 ", disposeTime=" + disposeTime +
                 ", refundPrice=" + refundPrice +
                 ", productReturnItemDetails=" + productReturnItemDetails +
                 '}';
     }
+
     /**
      * 分页DO转换VO
      */
