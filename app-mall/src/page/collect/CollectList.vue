@@ -95,25 +95,37 @@
       return {
         headTitle: '我的收藏',
         isEdit: false,
-        check: false
+        check: false,
+        pageQuery:{
+          pageNo:1,
+          pageSize:10
+        },
+        collectList:[]
       }
     },
     methods:{
       refresh(done) {
+
           done()
       },
 
       infinite(done) {
           done(true);
       },
+      getCollects(){
+        let _this = this;
+        console.log(this.pageQuery);
+        getCustomerFavorite(_this.pageQuery).then(res=>{
+          if (res.result == 'SUCCESS') {
+            _this.collectList = res.data.data;
+          }
+          console.log(res);
+        })
+      }
     },
     created(){
-      let query = {
-        pageNo : 1,
-        pageSize : 10
-      };
-      getCustomerFavorite().then(res=>{
-      });
+      this.getCollects();
+
     }
   }
 </script>
