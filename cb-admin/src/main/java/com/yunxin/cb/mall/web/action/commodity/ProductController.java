@@ -8,17 +8,11 @@ import com.yunxin.cb.mall.service.IAttributeService;
 import com.yunxin.cb.mall.service.ICommodityService;
 import com.yunxin.cb.mall.service.IProductService;
 import com.yunxin.cb.mall.service.IStoreService;
-import com.yunxin.cb.console.service.ILogsService;
-import com.yunxin.cb.mall.entity.meta.ProductState;
-import com.yunxin.cb.mall.entity.meta.PublishState;
-import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.cb.mall.service.IAttributeService;
-import com.yunxin.cb.mall.service.ICommodityService;
-import com.yunxin.cb.mall.service.IProductService;
-import com.yunxin.cb.mall.service.IStoreService;
 import com.yunxin.cb.mall.web.vo.ResponseResult;
 import com.yunxin.cb.mall.web.vo.ResultType;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
+import com.yunxin.core.exception.EntityExistException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -171,6 +165,33 @@ public class ProductController {
         try {
             productService.removeProductById(productId);
             responseResult.setResultType(ResultType.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            responseResult.setResultType(ResultType.FAILURE);
+        }
+        return responseResult;
+    }
+
+    /**
+     * @title: 设置默认货品
+     * @param: [productId]
+     * @return: com.yunxin.cb.mall.web.vo.ResponseResult
+     * @auther: eleven
+     * @date: 2018/7/30 16:47
+     */
+    @RequestMapping( value = "defaultProductById",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult defaultProductById(@RequestParam("productId") int productId,@RequestParam("commodityId") int commodityId) {
+        ResponseResult responseResult = new ResponseResult();
+        try {
+            Product product=productService.findOne(productId);
+            if (product.getPublishState() == PublishState.UP_SHELVES){
+                commodityService.updateCommodityStatus(product,commodityId);
+                responseResult.setResultType(ResultType.SUCCESS);
+            }else {
+                responseResult.setResultType(ResultType.FAILURE);
+                responseResult.setData("请先上架货品");
+            }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             responseResult.setResultType(ResultType.FAILURE);

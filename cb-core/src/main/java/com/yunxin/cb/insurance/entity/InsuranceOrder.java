@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
@@ -44,75 +45,91 @@ public class InsuranceOrder implements Serializable {
     /**
      * 保险订单ID
      */
+    @ApiModelProperty(value="保险订单ID",name="orderId",example="1")
     @Max(9999999999L)
     private int orderId;
     /**
      * 订单号
      */
+    @ApiModelProperty(value="订单号",name="orderCode",example="1453245")
     @Length(max = 32)
     private String orderCode;
     /**
      * 条形码 base64
      */
+    @ApiModelProperty(value="条形码",name="barCode",example="条形码")
     private String barCode;
     /**
      * 合同编号
      */
+    @ApiModelProperty(value="合同编号",name="contractNo",example="14548735438637548")
     @Length(max = 32)
     private String contractNo;
     /**
      * 产品
      */
+    @ApiModelProperty(value="产品",name="insuranceProduct",example="产品")
     @NotNull
     private InsuranceProduct insuranceProduct;
     /**
      * 保额
      */
+    @ApiModelProperty(value="保额",name="insuranceProductPrice",example="保额")
     private InsuranceProductPrice insuranceProductPrice;
     /**
      * 客户
      */
+    @ApiModelProperty(value="客户",name="customer",example="客户")
     private Customer customer;
     /**
      * 被保人
      */
+    @ApiModelProperty(value="被保人",name="insuranceOrderInsured",example="被保人")
     @NotNull
     private InsuranceOrderInsured insuranceOrderInsured;
     /**
      * 投保人
      */
+    @ApiModelProperty(value="投保人",name="insuranceOrderPolicyholder",example="投保人")
     @NotNull
     private InsuranceOrderPolicyholder insuranceOrderPolicyholder;
     /**
      * 投保人银行
      */
+    @ApiModelProperty(value="投保人银行",name="insuranceOrderPolicyholderBank",example="投保人银行")
     @NotNull
     private InsuranceOrderPolicyholderBank insuranceOrderPolicyholderBank;
     /**
      * 异地投保
      */
+    @ApiModelProperty(value="异地投保",name="insuranceOrderOffsite",example="异地投保")
     private InsuranceOrderOffsite insuranceOrderOffsite;
     /**
      * 是否法定收益人
      */
+    @ApiModelProperty(value="是否法定收益人",name="legalBeneficiary",example="true")
     @NotNull
     private boolean legalBeneficiary;
     /**
      * 订单状态
      */
+    @ApiModelProperty(value="订单状态",name="orderState",example="UN_PAID(\"待支付\"),ON_PAID(\"已支付\"),BEEN_COMPLETED(\"已完成\"),UN_SURRENDER(\"退保审核\"),ON_SURRENDER(\"已退保\")")
     private InsuranceOrderState orderState;
     /**
      * 订单创建时间
      */
+    @ApiModelProperty(value="订单创建时间",name="createTime",example="2018-07-09 20:10")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
     /**
      * 受益人
      */
+    @ApiModelProperty(value="受益人",name="insuranceOrderBeneficiarys",example="受益人")
     private Set insuranceOrderBeneficiarys = new HashSet(0);
     /**
      * 告知事项
      */
+    @ApiModelProperty(value="告知事项",name="insuranceOrderInformedMatters",example="告知事项")
     private Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = new HashSet(0);
     //columns END
 

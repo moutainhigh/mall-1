@@ -311,6 +311,7 @@
                             showPreview :true, //是否显示预览
                             showCaption:false,//是否显示标题
                             browseOnZoneClick: true,//是否显示点击选择文件
+                            allowedFileExtensions: ["jpg", "png", "gif"],
                             language: "zh" ,
                             showBrowse : false,
                             maxFileSize : 2000,

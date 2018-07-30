@@ -159,65 +159,7 @@ public class CommodityService implements ICommodityService {
             logger.info("[elasticsearch] updateCommodityES:", result.getResult());
         }
     }
-    /**
-     * 删除未选中的图
-     */
-    private void deleteUnSelectImg(String imagesDir, Commodity commodity) {
-        // 更新图片
-        // 原来的图,1466766940169_500_539.jpg
-        String[] imagesOld = getImagePath(imagesDir, commodity);
-        // 重新选择后的图，commodity/101415/1466766940169
-        String[] imagesSelect = commodity.getImagePath();
-        if (null != imagesOld && imagesOld.length > 0 && (imagesOld.length > imagesSelect.length)) {
-            // 重新选择后的图片代码，1466766940169
-            String[] imageCodesSelect = new String[imagesSelect.length];
-            for (int i = 0; i < imagesSelect.length; i++) {
-                String[] strArr = imagesSelect[i].split("/");
-                imageCodesSelect[i] = strArr[strArr.length - 1];
-            }
-            // 原来的图
-            for (String strOld : imagesOld) {
-                boolean deleteFlag = true;
-                // 遍历重新选择后的图
-                for (String imgCode : imageCodesSelect) {
-                    if (strOld.contains(imgCode)) {
-                        deleteFlag = false;
-                        break;
-                    }
-                }
-                // 要删除的图
-                if (deleteFlag) {
-                    File filDelete = new File(imagesDir + commodity.getCommodityCode() + "/" + strOld);
-                    if (filDelete.exists()) {
-                        filDelete.delete();
-                    }
-                }
-            }
-        }
-    }
 
-
-    /**
-     * 获取 原来的图
-     *
-     * @param imagesDir
-     * @param commodity
-     * @return
-     */
-    private String[] getImagePath(String imagesDir, Commodity commodity) {
-
-        File imageDir = new File(imagesDir + commodity.getCommodityCode());
-        String[] images = imageDir.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                if (name.endsWith("jpg")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        return images;
-    }
 
 
     @Override
@@ -395,6 +337,11 @@ public class CommodityService implements ICommodityService {
     public void updateCommodityStatus(CommodityState commodityState,
                                       int commodityId) {
         commodityDao.updateCommodityStatusById(commodityState, commodityId);
+    }
+
+    @Override
+    public void updateCommodityStatus(Product product,int commodityId) {
+        commodityDao.updateDefaultProductById(product, commodityId);
     }
 
     @Override

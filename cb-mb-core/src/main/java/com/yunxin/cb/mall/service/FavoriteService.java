@@ -18,7 +18,7 @@ public interface FavoriteService {
 	 * @auther: eleven
 	 * @date: 2018/7/19 10:41
 	 */
-	public int addFavorite(Favorite favorite);
+	public Favorite addFavorite(Favorite favorite);
 
 	/**
 	 * @title: 移除收藏夹
@@ -28,6 +28,15 @@ public interface FavoriteService {
 	 * @date: 2018/7/19 10:41
 	 */
 	public int removeFavorite(int favoriteId);
+
+	/**
+	 * @title: 商品移出收藏夹(批量)
+	 * @param: [commodityId]
+	 * @return: com.yunxin.cb.vo.ResponseResult
+	 * @auther: eleven
+	 * @date: 2018/7/17 18:27
+	 */
+	public int removeFavoriteBatch(String[] favoriteIds);
 
 	/**
 	 * @title: 分页查询收藏夹
@@ -46,4 +55,6 @@ public interface FavoriteService {
 	 * @date: 2018/7/19 10:42
 	 */
 	public Favorite findByCustomerAndCommodity(Favorite favorite);
+
+
 }

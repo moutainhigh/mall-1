@@ -7,6 +7,7 @@ package com.yunxin.cb.insurance.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
@@ -44,37 +45,44 @@ public class InsuranceInformedMatter implements Serializable {
     /**
      * 事项ID
      */
+    @ApiModelProperty(value="事项ID",name="matterId",example="1")
     @Max(9999999999L)
     private int matterId;
     /**
      * 事项描述
      */
+    @ApiModelProperty(value="事项描述",name="matterDescription",example="事项描述")
     @NotBlank
     @Length(max = 512)
     private String matterDescription;
     /**
      * 创建时间
      */
+    @ApiModelProperty(value="创建时间",name="createTime",example="2018-07-05 20:14")
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
     /**
      * 序号
      */
+    @ApiModelProperty(value="序号",name="serNo",example="1")
     @Max(9999999999L)
     private int serNo;
     /**
      * 是否启用
      */
+    @ApiModelProperty(value="是否启用",name="enabled",example="1")
     @Max(9999999999L)
     private int enabled;
     /**
      * 类型
      */
-        private int matterType;
+    @ApiModelProperty(value="类型",name="matterType",example="1")
+    private int matterType;
     /**
      * 所属组
      */
+    @ApiModelProperty(value="所属组",name="matterGroup",example="所属组")
     private InsuranceInformedMatterGroup matterGroup;
 
     private Set<InsuranceProduct> insuranceProducts = new HashSet(0);

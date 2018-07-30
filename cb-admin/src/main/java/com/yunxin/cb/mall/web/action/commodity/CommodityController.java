@@ -47,14 +47,7 @@ public class CommodityController implements ServletContextAware {
     private IBrandService brandService;
 
     @Resource
-    private ISellerService sellerService;
-
-    @Resource
     private IPriceService priceService;
-
-
-    @Resource
-    private IAttributeService attributeService;
 
     @Resource
     private ICatalogService catalogService;

@@ -115,7 +115,7 @@ alter table customer add  OCCUPATIONAL_CATEGORY VARCHAR(50) DEFAULT NULL COMMENT
 
 
 ##add by likang 2018-07-28
-ALTER TABLE profile ADD COLUMN `IS_PICTURE` int(2)    COMMENT '是否是图片';
+ALTER TABLE profile ADD COLUMN `IS_PICTURE` int(2) DEFAULT 0   COMMENT '是否是图片';
 
 ##add by tanggangyi 2018-07-28 修改客户密码长度为64
 ALTER TABLE `crystal_ball`.`customer`
@@ -124,3 +124,6 @@ MODIFY COLUMN `PASSWORD` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unico
 ##add by guwenshao 2018-07-30 添加退货审核时间和退款时间
 ALTER TABLE `product_return` add  `AUDIT_TIME` datetime DEFAULT NULL COMMENT '审核时间';
 ALTER TABLE `product_return` add  `REFUND_TIME` datetime DEFAULT NULL COMMENT '退款时间';
+
+##add by tangou 2018-07-30 16:13:05 添加默认货品id
+ALTER TABLE commodity ADD  DEFAULT_PRODUCT_ID INT(11) DEFAULT NULL COMMENT '默认货品';
