@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.ProductReturn;
 import com.yunxin.cb.mall.entity.meta.AuditState;
 import com.yunxin.cb.mall.entity.meta.ReturnReason;
+import com.yunxin.cb.mall.entity.meta.ReturnRefundState;
 import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -39,8 +40,8 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     private Date applyTime;
 
     /** 退货退款状态 0:申请退货退款 1:待退货退款 2:已退货待退款 3:已退货退款 4:拒绝退货退款 5:申请退款 6:待退款 7:已退款 8:拒绝退款 */
-    @ApiModelProperty(value="退货退款状态 ",name="returnRefundState",example="1")
-    private Integer returnRefundState;
+    @ApiModelProperty(value="退货款状态 ",name="returnRefundState",example="1")
+    private ReturnRefundState returnRefundState;
 
     /** 退货原因 */
     @ApiModelProperty(value="退货原因",name="returnReason",example="我不想买了")
@@ -107,11 +108,11 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         this.applyTime = applyTime;
     }
 
-    public Integer getReturnRefundState() {
+    public ReturnRefundState getReturnRefundState() {
         return returnRefundState;
     }
 
-    public void setReturnRefundState(Integer returnRefundState) {
+    public void setReturnRefundState(ReturnRefundState returnRefundState) {
         this.returnRefundState = returnRefundState;
     }
 
