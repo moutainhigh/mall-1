@@ -774,8 +774,10 @@ public class CommodityService implements ICommodityService {
             List<Commodity> list = commodityDao.findAll();
             List<CommodityVO> listVo = new ArrayList<>();
             for(Commodity commodity : list){
-                CommodityVO commodityVO = new CommodityVO(commodity);
-                listVo.add(commodityVO);
+                if(commodity.getPublishState() == PublishState.UP_SHELVES){
+                    CommodityVO commodityVO = new CommodityVO(commodity);
+                    listVo.add(commodityVO);
+                }
             }
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
             Call<ResponseResult> call = restService.bulkIndex(listVo);
