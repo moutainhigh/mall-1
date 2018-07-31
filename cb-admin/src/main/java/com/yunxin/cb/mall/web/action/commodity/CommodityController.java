@@ -47,14 +47,7 @@ public class CommodityController implements ServletContextAware {
     private IBrandService brandService;
 
     @Resource
-    private ISellerService sellerService;
-
-    @Resource
     private IPriceService priceService;
-
-
-    @Resource
-    private IAttributeService attributeService;
 
     @Resource
     private ICatalogService catalogService;
@@ -175,8 +168,9 @@ public class CommodityController implements ServletContextAware {
                     attachmentService.addAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId(),imgpath);
                 }
             }
+            commodityService.updateCommodityES(commodity.getCommodityId());
 
-        } catch (EntityExistException e) {
+        } catch (Exception e) {
             result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
                     messageSource.getMessage("commodity_commodityName_repeat", null, locale)));
             return toEditCommodity(commodity.getCommodityId(), modelMap, locale);

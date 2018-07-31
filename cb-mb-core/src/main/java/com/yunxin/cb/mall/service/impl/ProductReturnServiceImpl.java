@@ -3,6 +3,7 @@ package com.yunxin.cb.mall.service.impl;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.ProductReturn;
+import com.yunxin.cb.mall.entity.meta.AuditState;
 import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.entity.meta.ReturnRefundState;
 import com.yunxin.cb.mall.mapper.OrderMapper;
@@ -41,23 +42,15 @@ public class ProductReturnServiceImpl implements ProductReturnService {
 
     @Transactional(rollbackFor = Exception.class)
     public ProductReturn applyOrderProductReturn(ProductReturn productReturn) throws Exception {
-        List<ProductReturn> dbReturn = productReturnMapper.selectByOrderId(productReturn.getOrderId());
-        if (null != dbReturn) {
-            throw new Exception("该订单已提交退货申请");
-        }
-        Order order = orderMapper.selectByOrderIdAndCustomerId(productReturn.getOrderId(), productReturn.getCustomerId());
-        //判断订单是否是已支付待提货状态
-        if (order == null || (order.getOrderState() != OrderState.PAID_PAYMENT && order.getOrderState() != OrderState.OUT_STOCK)) {
-            throw new Exception("该订单不可以退货申请");
-        }
+        Order order = checkProductReturnApply(productReturn.getOrderId(), productReturn.getCustomerId());
         ProductReturn nReturn = new ProductReturn();
         BeanUtils.copyProperties(productReturn, nReturn);
         nReturn.setReturnCode(UUIDGeneratorUtil.getUUCode());
         nReturn.setItemId(productReturn.getItemId());
         nReturn.setApplyTime(new Date());
         nReturn.setPurchasingTime(order.getCreateTime());
-        nReturn.setReturnRefundState(ReturnRefundState.APPLY_REFUND.ordinal());
-        nReturn.setAuditState(0);
+        nReturn.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
+        nReturn.setAuditState(AuditState.WAIT_AUDIT);
         nReturn.setRefundOnly(true);
         //更新库存（是否需要）
         Set<OrderItem> orderItems = order.getOrderItems();
@@ -74,7 +67,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
             }
         }
         //更新订单状态
-        order.setReturnRefundState(ReturnRefundState.APPLY_REFUND.ordinal());
+        order.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
         orderMapper.updateByPrimaryKey(order);
         //添加退货申请
         productReturnMapper.insert(nReturn);
@@ -90,7 +83,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public PageFinder<ProductReturn> pageProductReturn(Query q) {
-        PageFinder<ProductReturn> page = new PageFinder<ProductReturn>(q.getPageNo(), q.getPageSize());
+        PageFinder<ProductReturn> page = null;
         List<ProductReturn> list = null;
         long rowCount = 0L;
         try {
@@ -104,15 +97,28 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         //如list为null时，则改为返回一个空列表
         list = list == null ? new ArrayList<ProductReturn>(0) : list;
         //将分页数据和记录总数设置到分页结果对象中
+        page = new PageFinder<ProductReturn>(q.getPageNo(), q.getPageSize(), rowCount);
         page.setData(list);
-        page.setRowCount(rowCount);//记录总数
-        page.setPageCount((int)rowCount);//总页数
         return page;
     }
 
     @Override
     public ProductReturn getProductReturn(Integer productReturnId, Integer customerId){
         return productReturnMapper.selectByProductReturnIdAndCustomerId(productReturnId, customerId);
+    }
+
+    @Override
+    public Order checkProductReturnApply(int orderId, int customerId) throws Exception{
+        List<ProductReturn> dbReturn = productReturnMapper.selectByOrderId(orderId);
+        if (null != dbReturn && dbReturn.size() > 0) {
+            throw new Exception("该订单已提交退货申请");
+        }
+        Order order = orderMapper.selectByOrderIdAndCustomerId(orderId, customerId);
+        //判断订单是否是已支付待提货状态
+        if (order == null || (OrderState.PAID_PAYMENT.equals(order.getOrderState()) && OrderState.OUT_STOCK.equals(order.getOrderState()))) {
+            throw new Exception("该订单不可以退货申请");
+        }
+        return order;
     }
 
 }

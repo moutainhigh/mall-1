@@ -1,5 +1,9 @@
 package com.yunxin.cb.mall.entity;
 
+import com.yunxin.cb.mall.entity.meta.AuditState;
+import com.yunxin.cb.mall.entity.meta.ReturnReason;
+import com.yunxin.cb.mall.entity.meta.ReturnRefundState;
+
 import java.util.Date;
 
 public class ProductReturn {
@@ -14,12 +18,14 @@ public class ProductReturn {
 
     /** 购买时间 */
     private Date purchasingTime;
+    /** 退款时间 */
+    private Date refundTime;
 
     /** 原因 */
     private String reason;
 
     /** 退货退款状态 0:申请退货退款 1:待退货退款 2:已退货待退款 3:已退货退款 4:拒绝退货退款 5:申请退款 6:待退款 7:已退款 8:拒绝退款 */
-    private Integer returnRefundState;
+    private ReturnRefundState returnRefundState;
 
     /** 客户id */
     private Integer customerId;
@@ -34,7 +40,10 @@ public class ProductReturn {
     private String auditRemark;
 
     /** 审核状态 */
-    private Integer auditState;
+    private AuditState auditState;
+
+    /** 审核时间 */
+    private Date auditTime;
 
     /** 快递单号 */
     private String courierNumber;
@@ -64,7 +73,7 @@ public class ProductReturn {
     private String returnCode;
 
     /** 退货原因 */
-    private Integer returnReason;
+    private ReturnReason returnReason;
 
     /** 首次退货 */
     private Boolean refundOnly;
@@ -117,11 +126,11 @@ public class ProductReturn {
         this.reason = reason == null ? null : reason.trim();
     }
 
-    public Integer getReturnRefundState() {
+    public ReturnRefundState getReturnRefundState() {
         return returnRefundState;
     }
 
-    public void setReturnRefundState(Integer returnRefundState) {
+    public void setReturnRefundState(ReturnRefundState returnRefundState) {
         this.returnRefundState = returnRefundState;
     }
 
@@ -157,12 +166,12 @@ public class ProductReturn {
         this.auditRemark = auditRemark == null ? null : auditRemark.trim();
     }
 
-    public Integer getAuditState() {
+    public AuditState getAuditState() {
         return auditState;
     }
 
-    public void setAuditState(Integer auditState) {
-        this.auditState = auditState;
+    public void setAuditState(AuditState auditState) {
+        auditState = auditState;
     }
 
     public String getCourierNumber() {
@@ -237,11 +246,11 @@ public class ProductReturn {
         this.returnCode = returnCode == null ? null : returnCode.trim();
     }
 
-    public Integer getReturnReason() {
+    public ReturnReason getReturnReason() {
         return returnReason;
     }
 
-    public void setReturnReason(Integer returnReason) {
+    public void setReturnReason(ReturnReason returnReason) {
         this.returnReason = returnReason;
     }
 
@@ -275,5 +284,21 @@ public class ProductReturn {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public Date getRefundTime() {
+        return refundTime;
+    }
+
+    public void setRefundTime(Date refundTime) {
+        this.refundTime = refundTime;
+    }
+
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
     }
 }

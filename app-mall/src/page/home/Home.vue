@@ -24,7 +24,7 @@
         </swiper>
       </div>
       <div style="margin: 1rem;border-radius: 0.5rem;">
-        <div class="car-type" v-for="brand in brandList" @click="openCarList(brand.brandId)">
+        <div class="car-type" v-for="brand in brandList" @click="openCarListByBrand(brand)">
           <img :src="brand.picPath" style="width: 3rem;height: 3rem;">
           <div style="font-size: 0.8rem;line-height: 3;">{{brand.brandName}}</div>
         </div>
@@ -34,32 +34,37 @@
     <div class="card-adv">
       <img src="../../assets/img/home/home_floor_title01.png" width="100%"/>
       <div style="text-align: center;">
-        <div class="adv-ban" v-for="item in categoryThreeList">
-          <img :src="item.iconPath" width="100%"/>
+        <div class="adv-ban" v-for="item in categoryThreeList" @click="openCarListByCategory(item)">
+          <img :src="item.iconPath" style="height: 7.4rem" width="100%"/>
         </div>
       </div>
       <div class="adv-scroll">
-        <div style="height: 5rem;padding-left: 0.7rem;" v-bind:style="{ width: milldeList.length* 14 + 'rem' }">
+        <div style="height: 5rem;padding-left: 0.7rem;" v-bind:style="{ width: milldeList.length* 14.2 + 'rem' }">
           <div style="display: inline-block;height: 5rem;" v-for="millde in milldeList">
-            <img :src="millde.picPath" height="100%" style="margin: 0 5px;border-radius: 8px;">
+            <img :src="millde.picPath" height="100%" style="margin: 0 5px;border-radius: 8px;width: 13rem;">
           </div>
         </div>
       </div>
 
       <div class="card-list">
         <div style="font-size: 1rem;color: #999999;">
-          猜你喜欢
+          热门车系
         </div>
-        <div class="cont" v-for="item in categoryFiveList" @click="openCarDetail">
-          <div style="height: 5rem;flex: 0 0 7rem;">
-            <img :src="item.iconPath" width="100%" style="border-radius: 4px">
+        <div class="cont" v-for="item in categoryFiveList" @click="openCarListByCategory(item)">
+          <div style="flex: 0 0 8rem;">
+            <img :src="item.iconPath" width="100%" style="border-radius: 4px;height: 5.4rem;">
           </div>
-          <div style="margin-left:0.8rem;height: 5rem;width: 100%;border-bottom: #ECECEC solid 1px;padding-bottom: 0.5rem;">
-            <div style="font-size: 1rem;height: 3rem;">
+          <div style="margin-left:0.8rem;height: 5.5rem;width: 100%;border-bottom: #ECECEC solid 1px;padding-bottom: 0.5rem;">
+            <div style="font-size: 1rem;height: 1.5rem;">
               {{item.categoryName}}
             </div>
-            <div style="color: #F54E4E;font-size: 1rem;font-weight: bold;">
-              <span style="font-size: 0.8rem;">￥</span>{{item.lowestPrice}}万
+            <div style="height: 1.5rem;font-size: 0.9rem;color: #888;">
+              {{item.description}}
+            </div>
+            <div style="color: #F54E4E;font-size: 1.3rem;font-weight: bold;margin-top: 0.2rem;">
+              <span style="font-size: 0.9rem;">￥</span>{{item.lowestPrice}}
+                <span style="margin: 0 -0.1rem;font-weight: normal">-</span>
+              {{item.highestPrice}}万
             </div>
           </div>
         </div>
@@ -70,7 +75,7 @@
 
 <script>
   import headTop from "../../components/header/head"
-  import {getIndex, getIndex2, getVaildData} from "../../service/getData";
+  import {getIndex} from "../../service/getData";
   import { Swiper,SwiperItem} from 'vux'
   import AMap from 'AMap';
 
@@ -98,9 +103,22 @@
           path:"/car-detail"
         })
       },
-      openCarList(){
+      openCarListByBrand(brand){
         this.$router.push({
-          path:"/car-list"
+          path:"/car-list",
+          query:{
+            brandId:brand.brandId,
+            brandName:brand.brandName
+          }
+        })
+      },
+      openCarListByCategory(category){
+        this.$router.push({
+          path:'/car-list',
+          query:{
+            categoryId:category.categoryId,
+            categoryName:category.categoryName
+          }
         })
       },
       toSearch() {
@@ -111,7 +129,7 @@
       selectLocal() {
         let vm = this;
         AMap.plugin('AMap.CitySearch', function () {
-          var citySearch = new AMap.CitySearch()
+          var citySearch = new AMap.CitySearch();
           citySearch.getLocalCity(function (status, result) {
             if (status === 'complete' && result.info === 'OK') {
               vm.localCity = result.city.substr(0, 2);
@@ -154,7 +172,7 @@
   .card-adv .adv-ban {
     overflow: hidden;
     display: inline-block;
-    width: 28%;
+    width: 6rem;
     background-color: #dcdcdc;
     margin: 0 0.2rem 0.1rem 0.2rem;
     border-radius: 8px;

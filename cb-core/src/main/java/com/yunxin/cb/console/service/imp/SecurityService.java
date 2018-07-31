@@ -8,7 +8,9 @@ import com.yunxin.cb.console.service.ISecurityService;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.entity.Seller_;
 import com.yunxin.cb.security.IPermission;
+import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import com.yunxin.cb.security.SecurityProvider;
+import com.yunxin.cb.util.PasswordHash;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -69,7 +71,8 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public User findByUserNameAndPassword(String userName, String password) {
-        return userDao.findByUserNameAndPassword(userName, password);
+        PBKDF2PasswordEncoder pbkdf2 = new PBKDF2PasswordEncoder();
+        return userDao.findByUserNameAndPassword(userName,pbkdf2.encode(password));
     }
 
     @Override
@@ -80,7 +83,7 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
 
 
     @Override
-    public User addUser(User user) throws EntityExistException {
+    public User addUser(User user) throws Exception {
         if (!userDao.isUnique(user, User_.userName)) {
             throw new EntityExistException("用户名已存在");
         }
@@ -94,6 +97,7 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         Date date = new Date();
         user.setCreateTime(date);
         user.setLastTime(date);
+        user.setPassword(PasswordHash.createHash(user.getPassword()));
         return userDao.save(user);
     }
 
@@ -248,7 +252,7 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
     }
 
     @Override
-    public void initAdminAccount() {
+    public void initAdminAccount() throws Exception{
         Role superRole = roleDao.findFirstByRoleCode(SUPER_ROLE);
         if (superRole == null) {
             superRole = new Role();
@@ -261,11 +265,31 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         if (admin == null) {
             admin = new User();
             admin.setUserName(ADMINISTRATOR);
-            admin.setPassword("123456");
+            String pwd = PasswordHash.createHash("123456");
+            admin.setPassword(pwd);
             admin.setCreateTime(new Date());
             admin = userDao.save(admin);
             admin.getRoles().add(superRole);
         }
+    }
+
+    /**
+     * 批量更新密码加密
+     */
+    @Override
+    public void batchPwdEncode() {
+       List<User> users = userDao.findAll();
+       users.forEach(user -> {
+           try {
+               if(!user.getPassword().contains("sha1:")){
+                   String pwd = PasswordHash.createHash(user.getPassword());
+                   user.setPassword(pwd);
+               }
+           } catch (PasswordHash.CannotPerformOperationException e) {
+               e.printStackTrace();
+           }
+
+       });
     }
 
 
@@ -301,19 +325,18 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
     }
 
     @Override
-    public User changePassword(int userId, String password)
-            throws InvalidKeyException, NoSuchPaddingException,
-            NoSuchAlgorithmException, BadPaddingException,
-            IllegalBlockSizeException {
+    public User changePassword(int userId, String password) {
         User user = userDao.findOne(userId);
-        user.setPassword(password);
+        PBKDF2PasswordEncoder pbkdf2 = new PBKDF2PasswordEncoder();
+        user.setPassword(pbkdf2.encode(password));
         return user;
     }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public User findByUserNameAndPassword1(String userName, String password) {
-        return userDao.findByUserNameAndPassword(userName, password);
+        PBKDF2PasswordEncoder pbkdf2 = new PBKDF2PasswordEncoder();
+        return userDao.findByUserNameAndPassword(userName, pbkdf2.encode(password));
     }
 
     /**

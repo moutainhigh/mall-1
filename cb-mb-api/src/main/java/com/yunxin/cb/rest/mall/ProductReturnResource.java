@@ -2,8 +2,11 @@ package com.yunxin.cb.rest.mall;
 
 
 import com.yunxin.cb.annotation.ApiVersion;
+import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.ProductReturn;
+import com.yunxin.cb.mall.entity.meta.ReturnReason;
 import com.yunxin.cb.mall.service.ProductReturnService;
+import com.yunxin.cb.mall.vo.ProductReturnApplyDataVO;
 import com.yunxin.cb.mall.vo.ProductReturnApplyVO;
 import com.yunxin.cb.mall.vo.ProductReturnDetailVO;
 import com.yunxin.cb.meta.Result;
@@ -21,7 +24,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商城退货接口
@@ -38,6 +43,25 @@ public class ProductReturnResource extends BaseResource {
     private static Logger logger = LoggerFactory.getLogger(ProductReturnResource.class);
     @Resource
     private ProductReturnService productReturnService;
+
+    @ApiOperation(value = "退货申请页数据获取")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "path", dataType = "int")})
+    @ApiVersion(1)
+    @PostMapping(value = "productReturn/apply/{orderId}")
+    public ResponseResult<ProductReturnApplyDataVO> getProductReturnData(@PathVariable(value = "orderId")int orderId) throws Exception{
+        ProductReturnApplyDataVO productReturnApplyDataVO = new ProductReturnApplyDataVO();
+        Order order = productReturnService.checkProductReturnApply(orderId, getCustomerId());
+        Map returnReason = new HashMap();//退货原因
+        for (ReturnReason reason : ReturnReason.values()){
+            returnReason.put(reason, reason.toString());
+        }
+        productReturnApplyDataVO.setReturnReason(returnReason);
+        productReturnApplyDataVO.setOrderId(order.getOrderId());
+        productReturnApplyDataVO.setReturnMobile(order.getConsigneeMobile());
+        productReturnApplyDataVO.setReturnName(order.getConsigneeName());
+        return new ResponseResult(productReturnApplyDataVO);
+    }
 
     @ApiOperation(value = "退货申请")
     @ApiImplicitParams({
@@ -65,7 +89,7 @@ public class ProductReturnResource extends BaseResource {
             @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "post", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "productReturn/pageList")
-    public ResponseResult pageProductReturn(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
+    public ResponseResult<PageFinder<ProductReturnDetailVO>> pageProductReturn(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
                                             @RequestParam(value = "orderId", required = false) Integer orderId){
         Query q = new Query(pageNo, pageSize);
         ProductReturn productReturn = new ProductReturn();
@@ -88,7 +112,7 @@ public class ProductReturnResource extends BaseResource {
             @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "post", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "productReturn/list")
-    public ResponseResult listProductReturn(@RequestParam(value = "orderId", required = false) Integer orderId){
+    public ResponseResult<List<ProductReturnDetailVO>> listProductReturn(@RequestParam(value = "orderId", required = false) Integer orderId){
         Query q = new Query();
         ProductReturn productReturn = new ProductReturn();
         productReturn.setCustomerId(getCustomerId());
@@ -110,7 +134,7 @@ public class ProductReturnResource extends BaseResource {
             @ApiImplicitParam(name = "productReturnId", value = "退货id", required = true, paramType = "path", dataType = "int")})
     @ApiVersion(1)
     @GetMapping(value = "productReturn/{productReturnId}")
-    public ResponseResult getProductReturn(@PathVariable Integer productReturnId){
+    public ResponseResult<ProductReturnDetailVO> getProductReturn(@PathVariable Integer productReturnId){
         ProductReturn productReturn = productReturnService.getProductReturn(productReturnId, getCustomerId());
         ProductReturnDetailVO productReturnDetailVO = null;
         try {

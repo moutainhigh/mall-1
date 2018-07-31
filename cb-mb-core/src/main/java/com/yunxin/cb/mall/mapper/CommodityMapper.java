@@ -104,7 +104,9 @@ public interface CommodityMapper {
 			@Result(column="SECTION_ID", property="sectionId", jdbcType=JdbcType.INTEGER),
 			@Result(column="SELLER_ID", property="sellerId", jdbcType=JdbcType.INTEGER),
 			@Result(column="PACKING_LIST", property="packingList", jdbcType=JdbcType.VARCHAR),
-			@Result(column="EXPLAIN_CONTENT", property="explainContent", jdbcType=JdbcType.VARCHAR)
+			@Result(column="EXPLAIN_CONTENT", property="explainContent", jdbcType=JdbcType.VARCHAR),
+			@Result(column="SELLER_ID", property="seller", jdbcType=JdbcType.INTEGER,
+					one = @One(select = "com.yunxin.cb.mall.mapper.SellerMapper.selectByPrimaryKey"))
 	})
 	Commodity selectByPrimaryKey(Integer commodityId);
 

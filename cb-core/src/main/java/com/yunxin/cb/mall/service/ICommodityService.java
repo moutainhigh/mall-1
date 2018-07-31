@@ -25,6 +25,8 @@ public interface ICommodityService {
 
     public Commodity updateCommodity(Commodity commodity) throws EntityExistException;
 
+    public void updateCommodityES(int commodityId)throws Exception;
+
     @Transactional(readOnly = true)
     List<CommoditySpec> getCommoditySpecsByCommodity(Commodity commodity);
 
@@ -46,6 +48,8 @@ public interface ICommodityService {
     List<Commodity> getCommoditiesByRecommendTopN(boolean recommend);
 
     public void updateCommodityStatus(CommodityState commodityState, int commodityId);
+
+    public void updateCommodityStatus(Product product,int commodityId);
 
     public List<CommoditySpec> getCommoditySpecsByCommodityId(int commodityId);
 

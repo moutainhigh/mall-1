@@ -15,6 +15,16 @@ public interface FavoriteMapper {
     })
     int deleteByPrimaryKey(Integer favoriteId);
 
+    @Delete({"<script>",
+            "delete from favorite",
+            "WHERE FAVORITE_ID IN",
+            "<foreach item='item' index='index' collection='array'",
+            "open='(' separator=',' close=')'>",
+            "#{item}",
+            "</foreach>",
+            "</script>"})
+    int removeFavoriteBatch(String[] favoriteIds);
+
     @Insert({
         "insert into favorite (FAVORITE_ID, CREATE_TIME, ",
         "SALE_PRICE, COMMODITY_ID, ",

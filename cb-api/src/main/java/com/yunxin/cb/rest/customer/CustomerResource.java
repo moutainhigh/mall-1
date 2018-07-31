@@ -15,6 +15,7 @@ import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
@@ -48,12 +49,17 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "我的好友")
     @GetMapping(value = "myFriends")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "get", dataType = "int")})
     public ResponseResult myFriends(@ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerService.getFriendByCustomerId(customerId));
     }
 
     @ApiOperation(value = "通过手机号搜索好友")
     @PostMapping(value = "queryFriend")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "mobile", value = "手机号", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")})
     public ResponseResult queryFriend(@RequestParam("mobile") String mobile, @ModelAttribute("customerId") int customerId) {
         Customer friend = customerService.getCustomerByMobile(mobile);
         if (friend != null) {
@@ -67,6 +73,9 @@ public class CustomerResource extends BaseResource {
     }
     @ApiOperation(value = "通过用户名查询用户")
     @GetMapping(value = "queryByAccountName")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "accountName", value = "用户名", required = true, paramType = "get", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "get", dataType = "int")})
     public ResponseResult queryByAccountName(@RequestParam("accountName") String accountName,@ModelAttribute("customerId") int customerId) {
         Customer customer = customerService.getAccountName(accountName);
         if (customer != null) {
@@ -81,6 +90,9 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "添加好友")
     @PostMapping(value = "addFriend")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "mobile", value = "手机号", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")})
     public ResponseResult addFriend(@RequestParam("mobile") String mobile, @ModelAttribute("customerId") int customerId) {
         try {
             Customer myself = customerService.getCustomerById(customerId);
@@ -109,7 +121,7 @@ public class CustomerResource extends BaseResource {
      */
     @ApiOperation(value = "根据邀请添加好友ID查询所有添加记录")
     @ApiImplicitParams({
-
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
     })
     @GetMapping(value = "getCustomerFriendRequestList")
     public ResponseResult getCustomerFriendRequestList(@ModelAttribute("customerId") int customerId) {
@@ -118,6 +130,11 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "添加好友通知")
     @PostMapping(value = "addFriendNotice")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "friendId", value = "好友ID", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "requestMessage", value = "通知消息", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult addFriendNoitce(@RequestParam("friendId") String friendId, @RequestParam("requestMessage") String requestMessage, @ModelAttribute("customerId") int customerId) {
         try {
             Customer myself = customerService.getCustomerById(customerId);
@@ -138,11 +155,18 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "修改好友备注")
     @PostMapping(value = "updateFriendsProfile")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult updateFriendsProfile(@RequestBody CustomerFriend customerFriend, @ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerService.updateFriendsProfile(customerFriend));
     }
     @ApiOperation(value = "删除好友申请通知")
     @DeleteMapping(value = "removeFriendRequest/{friendId}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "friendId", value = "好友ID", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult removeFriendRequest(@PathVariable int friendId, @ModelAttribute("customerId") int customerId){
         try{
             customerFriendRequestService.deleteCustomerFriendRequestById(friendId,customerId);
@@ -154,6 +178,10 @@ public class CustomerResource extends BaseResource {
     }
     @ApiOperation(value = "删除好友")
     @DeleteMapping(value = "removeFriend/{friendId}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "friendId", value = "好友ID", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult removeFriend(@PathVariable int friendId, @ModelAttribute("customerId") int customerId){
         try{
             customerService.delFriendById(customerId, friendId);
@@ -167,6 +195,10 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "修改用户头像")
     @PostMapping(value = "updateAvatar")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "avatar", value = "头像地址", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult updateAvatar(@RequestParam("avatar") String avatar, @ModelAttribute("customerId") int customerId) throws Exception {
         Customer customer = customerService.updateAvatar(customerId, avatar);
         return new ResponseResult(Result.SUCCESS);
@@ -174,6 +206,10 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "修改用户昵称")
     @PostMapping(value = "updateNickName")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "nickName", value = "用户昵称", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult updateNickName(@RequestParam("nickName") String nickName, @ModelAttribute("customerId") int customerId) throws Exception {
         Customer customer = customerService.updateNickName(customerId, nickName);
         return new ResponseResult(Result.SUCCESS);
@@ -181,6 +217,10 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "修改用户性别")
     @PostMapping(value = "updateSex")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "sex", value = "用户性别", required = true, paramType = "post", dataType = "boolean"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult updateSex(@RequestParam("sex") boolean sex, @ModelAttribute("customerId") int customerId) {
         Customer customer = customerService.updateSex(customerId, sex);
         return new ResponseResult(Result.SUCCESS);
@@ -188,6 +228,13 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "修改用户所在地")
     @PostMapping(value = "updateAddress")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "province", value = "所在省", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "city", value = "所在市", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "district", value = "所在区", required = false, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "address", value = "用户地址", required = false, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult updateAddress(@RequestParam("province") String province, @RequestParam("city") String city,
                                         @RequestParam(value = "district", required = false) String district, @RequestParam(value = "address", required = false) String address, @ModelAttribute("customerId") int customerId) {
         Customer customer = customerService.updateAddress(customerId, province, city, district, address);
@@ -196,6 +243,11 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "修改手机号")
     @PostMapping(value = "updateMobile")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "moblie", value = "手机号", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult updateMobile(String moblie, String code, @ModelAttribute("customerId") int customerId) {
         //校验验证码
         VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(moblie);
@@ -217,6 +269,9 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "查询客户基本信息")
     @PostMapping(value = "getCustomerInfo")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult getCustomerInfo(@ModelAttribute("customerId") int customerId) throws Exception{
         Customer customer = customerService.getCustomerById(customerId);
         CustomerInfoVo customerInfoVo = new CustomerInfoVo();
@@ -226,6 +281,9 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "提交反馈")
     @PostMapping(value = "addFeedback")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult addFeedback(@RequestBody Feedback feedback, @ModelAttribute("customerId") int customerId) {
         Customer customer = new Customer();
         customer.setCustomerId(customerId);
@@ -236,6 +294,10 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "添加黑名单")
     @GetMapping(value = "addBlacklist/{friendId}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "friendId", value = "朋友ID", required = true, paramType = "path", dataType = "int"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "get", dataType = "int")
+    })
     public ResponseResult addBlacklist(@PathVariable int friendId, @ModelAttribute("customerId") int customerId) {
         try {
             customerService.addBlacklist(friendId, customerId);
@@ -249,6 +311,10 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "移除黑名单")
     @GetMapping(value = "removeBlacklist/{friendId}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "friendId", value = "朋友ID", required = true, paramType = "path", dataType = "int"),
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "get", dataType = "int")
+    })
     public ResponseResult removeBlacklist(@PathVariable int friendId, @ModelAttribute("customerId") int customerId) {
         try {
             customerService.removeBlacklist(friendId, customerId);
@@ -261,6 +327,9 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "获取黑名单")
     @GetMapping(value = "getBlacklist")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "get", dataType = "int")
+    })
     public ResponseResult getBlacklist(@ModelAttribute("customerId") int customerId) {
         try {
             List<CustomerFriend> blackList = customerService.getBlacklist(customerId);
@@ -274,6 +343,9 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "用户点赞")
     @PostMapping(value = "praise")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult praise(@ModelAttribute("customerId") int customerId) {
         try{
             if(customerService.customerPraise(customerId))
@@ -289,11 +361,17 @@ public class CustomerResource extends BaseResource {
 
     @ApiOperation(value = "查询点赞用户")
     @PostMapping(value = "getPraiseCustomer")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult getPraiseCustomer(@ModelAttribute("customerId") int customerId) {
         return new ResponseResult(customerService.getPraiseCustomers(customerId));
     }
     @ApiOperation(value = "更新用户信息")
     @PostMapping(value = "updateCustomer")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")
+    })
     public ResponseResult  updateCustomer(@RequestBody CustomerUpdateVo customerUpdateVo, @ModelAttribute("customerId") int customerId){
         try{
             return new ResponseResult(customerService.updateCustomerMsg(customerId,customerUpdateVo));

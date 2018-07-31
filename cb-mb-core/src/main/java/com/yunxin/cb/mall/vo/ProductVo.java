@@ -49,10 +49,6 @@ public class ProductVo  implements java.io.Serializable{
     @ApiModelProperty(value="库存数量",name="storeNum",example="10000")
     private Integer storeNum;
 
-    /** 预占库存数量 */
-    @ApiModelProperty(value="预占库存数量",name="reservedStoreNum",example="10")
-    private Integer reservedStoreNum;
-
     /** 体积 */
     @ApiModelProperty(value="体积",name="volume",example="30")
     private Float volume;
@@ -117,22 +113,6 @@ public class ProductVo  implements java.io.Serializable{
         this.salePrice = salePrice;
     }
 
-    public Integer getStoreNum() {
-        return storeNum;
-    }
-
-    public void setStoreNum(Integer storeNum) {
-        this.storeNum = storeNum;
-    }
-
-    public Integer getReservedStoreNum() {
-        return reservedStoreNum;
-    }
-
-    public void setReservedStoreNum(Integer reservedStoreNum) {
-        this.reservedStoreNum = reservedStoreNum;
-    }
-
     public Float getVolume() {
         return volume;
     }
@@ -149,6 +129,14 @@ public class ProductVo  implements java.io.Serializable{
         this.weight = weight;
     }
 
+    public Integer getStoreNum() {
+        return storeNum;
+    }
+
+    public void setStoreNum(Integer storeNum) {
+        this.storeNum = storeNum;
+    }
+
     @Override
     public String toString() {
         return "ProductVo{" +
@@ -160,7 +148,6 @@ public class ProductVo  implements java.io.Serializable{
                 ", productNo='" + productNo + '\'' +
                 ", salePrice=" + salePrice +
                 ", storeNum=" + storeNum +
-                ", reservedStoreNum=" + reservedStoreNum +
                 ", volume=" + volume +
                 ", weight=" + weight +
                 '}';

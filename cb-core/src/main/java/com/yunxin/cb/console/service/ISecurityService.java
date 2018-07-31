@@ -40,13 +40,15 @@ public interface ISecurityService extends UserDetailsService {
      */
     User getUserByName(String userName);
 
-    void initAdminAccount();
+    void initAdminAccount() throws Exception;
+
+    void batchPwdEncode();
 
     List<Role> getAllRoles() throws Exception;
 
     public Set<Role> getRolesByUserId(int userId);
 
-    public User addUser(User user) throws EntityExistException;
+    public User addUser(User user)  throws Exception;
 
     public User updateUser(User user) throws EntityExistException;
 
@@ -63,7 +65,7 @@ public interface ISecurityService extends UserDetailsService {
 
     User getUserByEmail(String email);
 
-    User findByUserNameAndPassword(String userName, String password) throws Exception;
+    User findByUserNameAndPassword(String userName, String password);
 
     User findByUserNameAndPassword1(String userName, String password);
 
@@ -80,7 +82,7 @@ public interface ISecurityService extends UserDetailsService {
      * @param password
      * @return
      */
-    User changePassword(int userId, String password) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException;
+    User changePassword(int userId, String password);
 
 
     /**

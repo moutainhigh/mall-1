@@ -146,64 +146,20 @@ public class CommodityService implements ICommodityService {
     }
 
     /**
-     * 删除未选中的图
+     * 更新搜索器ES中的商品
+     * @param commodityId
      */
-    private void deleteUnSelectImg(String imagesDir, Commodity commodity) {
-        // 更新图片
-        // 原来的图,1466766940169_500_539.jpg
-        String[] imagesOld = getImagePath(imagesDir, commodity);
-        // 重新选择后的图，commodity/101415/1466766940169
-        String[] imagesSelect = commodity.getImagePath();
-        if (null != imagesOld && imagesOld.length > 0 && (imagesOld.length > imagesSelect.length)) {
-            // 重新选择后的图片代码，1466766940169
-            String[] imageCodesSelect = new String[imagesSelect.length];
-            for (int i = 0; i < imagesSelect.length; i++) {
-                String[] strArr = imagesSelect[i].split("/");
-                imageCodesSelect[i] = strArr[strArr.length - 1];
-            }
-            // 原来的图
-            for (String strOld : imagesOld) {
-                boolean deleteFlag = true;
-                // 遍历重新选择后的图
-                for (String imgCode : imageCodesSelect) {
-                    if (strOld.contains(imgCode)) {
-                        deleteFlag = false;
-                        break;
-                    }
-                }
-                // 要删除的图
-                if (deleteFlag) {
-                    File filDelete = new File(imagesDir + commodity.getCommodityCode() + "/" + strOld);
-                    if (filDelete.exists()) {
-                        filDelete.delete();
-                    }
-                }
-            }
+    public void updateCommodityES(int commodityId)throws Exception{
+        Commodity commodity = commodityDao.findOne(commodityId);
+        if (commodity.getPublishState() == PublishState.WAIT_UP_SHELVES || commodity.getPublishState() == PublishState.UP_SHELVES) {
+            SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+            CommodityVO commodityVO = new CommodityVO(commodity);
+            Call<ResponseResult> call = restService.updateCommodity(commodityVO);
+            ResponseResult result = call.execute().body();
+            logger.info("[elasticsearch] updateCommodityES:", result.getResult());
         }
     }
 
-
-    /**
-     * 获取 原来的图
-     *
-     * @param imagesDir
-     * @param commodity
-     * @return
-     */
-    private String[] getImagePath(String imagesDir, Commodity commodity) {
-
-        File imageDir = new File(imagesDir + commodity.getCommodityCode());
-        String[] images = imageDir.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                if (name.endsWith("jpg")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        return images;
-    }
 
 
     @Override
@@ -381,6 +337,11 @@ public class CommodityService implements ICommodityService {
     public void updateCommodityStatus(CommodityState commodityState,
                                       int commodityId) {
         commodityDao.updateCommodityStatusById(commodityState, commodityId);
+    }
+
+    @Override
+    public void updateCommodityStatus(Product product,int commodityId) {
+        commodityDao.updateDefaultProductById(product, commodityId);
     }
 
     @Override

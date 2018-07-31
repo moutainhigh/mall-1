@@ -1,5 +1,6 @@
 package com.yunxin.cb.insurance.service.imp;
 
+import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.insurance.dao.*;
 import com.yunxin.cb.insurance.entity.*;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -52,7 +54,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private ICustomerWalletService iCustomerWalletService;
     @Resource
     private IProfileService iProfileService;
-
+    @Resource
+    private InsuranceLogDao insuranceLogDao;
     /**
      * 根据用户ID查询保险订单列表
      * @return
@@ -115,15 +118,16 @@ public class InsuranceOrderService implements IInsuranceOrderService {
      */
     @Override
     @Transactional
-    public boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState) {
+    public boolean updInsuranceOrderState(int orderId,InsuranceOrderState orderState,HttpServletRequest request) {
         try {
+            InsuranceOrder insuranceOrder=insuranceOrderDao.findOne(orderId);
             insuranceOrderDao.updInsuranceOrderState(orderState,orderId);
             /**
              * 更新推荐人增加50%的预期收益金额
              */
             System.out.println(orderState);
             if(orderState.equals(InsuranceOrderState.ON_PAID)){
-                InsuranceOrder insuranceOrder=insuranceOrderDao.findOne(orderId);
+
                 int customerId=insuranceOrder.getCustomer().getCustomerId();
                 Customer customer= customerDao.findOne(customerId);
 
@@ -131,8 +135,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                         if(null!=customer.getRecommendCustomer()){
 
                                 int recommerdCustomerId=customer.getRecommendCustomer().getCustomerId();
-//                                CustomerWallet customerWallet= iCustomerWalletService.findCustomerWallet(recommerdCustomerId);
-//                                if(null!=customerWallet){
                                     Profile  Profile=iProfileService.getProfileByProfileName(ProfileName.LOAN_EXPECTED_RETURN_FIFTY);
                                     Double ration=0.5;
                                     try {
@@ -141,12 +143,36 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                         ration=0.5;
                                     }
                                     iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getInsuranceProductPrice().getPrice());
-//                             }
                         }
                         customer.setPolicy(true);
                     }
 
             }
+            /**
+             * 添加操作日志
+             */
+            User user = (User) request.getSession().getAttribute("loginSession");
+            InsuranceLog insuranceLog= new InsuranceLog(orderId,insuranceOrder.getOrderCode(),insuranceOrder.getInsuranceOrderInsured().getInsuredName(),insuranceOrder.getInsuranceOrderInsured().getInsuredMobile(),
+                    insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderName(),insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderMobile(),insuranceOrder.getInsuranceProductPrice().getPrice()
+            ,orderState,user.getRealName(),user.getUserName(),getIpAddr(request),new Date());
+
+//                    insuranceLog.setOrderId(orderId);
+//                    setOrderCode(insuranceOrder.getOrderCode());
+//                    setInsuredName(insuranceOrder.getInsuranceOrderInsured().getInsuredName());
+//                    setInsuredMobile(insuranceOrder.getInsuranceOrderInsured().getInsuredMobile());
+//                    setPolicyholderName(insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderName());
+//                    setPolicyholderMobile(insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderMobile());
+//                    setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
+//                    setOrderState(orderState);
+//                    User user = (User) request.getSession().getAttribute("loginSession");
+//                    setCreateName(user.getRealName());
+//                    setCreateOper(user.getUserName());
+//                    setCreateTime(new Date());
+////                    setIpAddress(request.getRemoteAddr());
+//                    setIpAddress(getIpAddr(request));
+
+
+            insuranceLogDao.save(insuranceLog);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -155,6 +181,35 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         return true;
     }
 
+    /**
+     * 获取真实Ip
+     * @param request
+     * @return
+     */
+    public String getIpAddr(HttpServletRequest request) {
+
+        String ip = request.getHeader("x-forwarded-for");
+
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+
+            ip = request.getHeader("Proxy-Client-IP");
+
+        }
+
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+
+            ip = request.getHeader("WL-Proxy-Client-IP");
+
+        }
+
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+
+            ip = request.getRemoteAddr();
+
+        }
+
+        return ip;
+    }
     /**
      * 获取事项
      * @param orderId

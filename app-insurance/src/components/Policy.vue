@@ -12,7 +12,7 @@
       <img src="../assets/img/risk-frame.png" width="322">
       <div>
         <div class="r-tip">
-          温馨提示：感谢使用水晶球生命投保功能，本单已自核通过。您可通过关注水晶球生命人寿在线公众号，享受更多保单服务。
+          温馨提示：感谢使用水晶球生命投保功能，本单已自核通过。
         </div>
       </div>
       <button class="returnButton" @click="comeBack">
@@ -37,6 +37,9 @@
 </template>
 
 <script>
+  var linstener = function () {
+    history.pushState(null, null, location.href);
+  }
   export default {
     name: "policy",
     data() {
@@ -48,11 +51,13 @@
     created() {
       this.orderCode = this.$route.query.orderCode;
       this.pageNum = this.$route.query.pageNum;
-      console.log(this.pageNum)
+      this.pageNum = this.pageNum + 1;
+      history.pushState(null, null, location.href);
+      window.addEventListener('popstate', linstener, false);
     },
     methods: {
       comeBack() {
-        // this.$router.push("/");
+        window.removeEventListener('popstate', linstener, false);
         this.$router.go(-this.pageNum)
       }
     }

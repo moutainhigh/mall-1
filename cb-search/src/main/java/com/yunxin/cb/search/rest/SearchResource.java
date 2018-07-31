@@ -145,4 +145,33 @@ public class SearchResource extends BaseResource {
         }
     }
 
+    @ApiOperation(value = "添加对象到ES")
+    @ApiImplicitParams({
+    })
+    @PostMapping(value = "commodity")
+    public ResponseResult addCommodity(@RequestBody CommodityVO commodityVO) {
+        Commodity commodity = new Commodity();
+        BeanUtils.copyProperties(commodityVO, commodity);
+        commodityService.addCommodity(commodity);
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "删除ES对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int"),
+    })
+    @DeleteMapping(value = "commodity/{commodityId}")
+    public ResponseResult removeCommodity(@PathVariable int commodityId) {
+        commodityService.deleteById(commodityId);
+        return new ResponseResult(Result.SUCCESS);
+    }
+    @ApiOperation(value = "更新ES对象")
+    @PutMapping(value = "commodity")
+    public ResponseResult updateCommodity(@RequestBody CommodityVO commodityVO){
+        Commodity commodity = new Commodity();
+        BeanUtils.copyProperties(commodityVO, commodity);
+        commodityService.updateCommodity(commodity);
+        return new ResponseResult(Result.SUCCESS);
+    }
+
 }

@@ -6,6 +6,7 @@ import com.yunxin.cb.system.entity.Profile;
 import com.yunxin.cb.system.meta.ProfileName;
 import com.yunxin.cb.system.service.IProfileService;
 import com.yunxin.cb.system.vo.AppCheckUpdate;
+import com.yunxin.cb.system.vo.ShareInfo;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.apache.commons.lang.StringUtils;
@@ -47,6 +48,14 @@ public class ProfileService implements IProfileService {
         return null;
     }
 
+    public ShareInfo getShareInfo(){
+        String sharePath = profileDao.getProfileByProfileName(ProfileName.SHARE_PATH).getFileValue();
+        String shareTitle = profileDao.getProfileByProfileName(ProfileName.SHARE_TITLE).getFileValue();
+        String shareIcon = profileDao.getProfileByProfileName(ProfileName.SHARE_ICON).getFileValue();
+        String shareDescription = profileDao.getProfileByProfileName(ProfileName.SHARE_DESCRIPTION).getFileValue();
+        String shareShortmessageContent = profileDao.getProfileByProfileName(ProfileName.SHARE_SHORTMESSAGE_CONTENT).getFileValue();
+        return new ShareInfo(sharePath,shareTitle,shareIcon,shareDescription,shareShortmessageContent);
+    }
 
     /**
      * 系统配置分页信息
@@ -136,5 +145,18 @@ public class ProfileService implements IProfileService {
     @Override
     public Profile getProfileByProfileName(ProfileName profileName) {
         return profileDao.getProfileByProfileName(profileName);
+    }
+
+    @Override
+    public void addProfileByProfileIsExit(){
+        for (ProfileName e : ProfileName.values()) {
+            Profile profile=profileDao.getProfileByProfileName(e);
+            if(profile==null){
+                profile=new Profile();
+                profile.setProfileName(e);
+                profile.setFileValue(e.getDefaultValue());
+                profileDao.save(profile);
+            }
+        }
     }
 }

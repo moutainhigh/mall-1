@@ -3,6 +3,7 @@ package com.yunxin.cb.mall.mapper;
 import com.yunxin.cb.mall.entity.Advertisement;
 import java.util.List;
 
+import com.yunxin.cb.mall.entity.meta.AdvertisementPlace;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 @Mapper
@@ -147,7 +148,7 @@ public interface AdvertisementMapper {
             "REMARK, TEMPLATE_PATH, VIDEO_PATH",
             "from advertisement",
             "where ADVERTISEMENT_PLACE = #{advertisementPlace,jdbcType=INTEGER}",
-            "and ENABLED = 1"
+            "and ENABLED = #{enabled,jdbcType=BIT}"
     })
     @Results({
             @Result(column="ADVERT_ID", property="advertId", jdbcType=JdbcType.INTEGER, id=true),
@@ -166,5 +167,5 @@ public interface AdvertisementMapper {
             @Result(column="TEMPLATE_PATH", property="templatePath", jdbcType=JdbcType.VARCHAR),
             @Result(column="VIDEO_PATH", property="videoPath", jdbcType=JdbcType.VARCHAR)
     })
-    List<Advertisement> selectByPlace(Integer advertisementPlace);
+    List<Advertisement> selectByPlace(@Param("advertisementPlace")AdvertisementPlace advertisementPlace,@Param("enabled")Boolean enabled);
 }

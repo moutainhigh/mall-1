@@ -35,6 +35,21 @@
             });
         }
 
+        function defaultProduct(productId,commodityId) {
+            bootbox.confirm("确认设置为默认货品吗?", function(result) {
+                if(result){
+                    $.post('defaultProductById.do', {productId:productId,commodityId:commodityId}, function(data) {
+                        if(data.resultType=="SUCCESS"){
+                            bootbox.alert("成功");
+                            window.location.reload();
+                        }else{
+                            bootbox.alert("失败"+data.data);
+                        }
+                    } );
+                }
+            });
+        }
+
         function removeGroup(groupId) {
             bootbox.confirm("确认删除吗?", function(result) {
                 if(result){
@@ -213,8 +228,9 @@
                                 <th scope="col" width="100">市场价</th>
                                 <th scope="col" width="140">仓库名称</th>
                                 <th scope="col" width="100">库存</th>
-                                <th scope="col" width="150">上下架</th>
-                                <th scope="col" width="120" class="text-center">操作</th>
+                                <th scope="col" width="120">上下架状态</th>
+                                <th scope="col" width="120">是否默认货品</th>
+                                <th scope="col" width="140" class="text-center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -227,8 +243,27 @@
                                     <td>${product.marketPrice}</td>
                                     <td>${product.store.storeName}</td>
                                     <td>${product.storeNum}</td>
-                                    <td>${product.publishState}</td>
-                                    <td class="text-center">
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${product.publishState=='WAIT_UP_SHELVES' || product.publishState=='DOWN_SHELVES'}">
+                                                已下架
+                                            </c:when>
+                                            <c:otherwise>
+                                                已上架
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${commodity.defaultProduct.productId!=product.productId}">
+                                                否
+                                            </c:when>
+                                            <c:otherwise>
+                                                默认
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="text-left">
                                         <c:choose>
                                             <c:when test="${product.publishState=='WAIT_UP_SHELVES' || product.publishState=='DOWN_SHELVES'}">
                                                 <a href="javascript:upOrDownShelvesProduct('${product.productId}','UP_SHELVES');" title="上架" class=" btn-less"><i class="fa fa-arrow-up"></i></a>
@@ -238,8 +273,10 @@
                                             </c:otherwise>
                                         </c:choose>
                                         <a href="toEditProduct.do?productId=${product.productId}" title="编辑" class=" btn-less"><i class="fa fa-edit"></i></a>
-
                                         <a href="javascript:removeProduct(${product.productId});" title="删除" class=" btn-less"><i class="fa fa-trash-o"></i></a>
+                                        <c:if test="${commodity.defaultProduct.productId!=product.productId}"><!-- 设置默认货品 -->
+                                            <a href="javascript:defaultProduct('${product.productId}','${commodity.commodityId}');" title="默认" class=" btn-less"><i class="fa fa-level-up"></i></a>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>

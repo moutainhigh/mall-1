@@ -5,6 +5,7 @@ import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.meta.OrderState;
+import com.yunxin.cb.mall.entity.meta.PaymentType;
 import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -52,16 +53,23 @@ public class OrderDetailVO implements java.io.Serializable{
      * 支付方式
      */
     @ApiModelProperty(value="支付方式",name="paymentType",example="0")
-    private Integer paymentType;
+    private PaymentType paymentType;
 
     /** 创建时间 */
     @ApiModelProperty(value="提交时间",name="createTime",example="2018-07-24")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
+    /** 创建时间 */
+    @ApiModelProperty(value="支付时间",name="paymentTime",example="2018-07-24")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date paymentTime;
+
     /** 商家地址 */
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市")
     private String sellerAddress;
+    /**货品信息*/
+    Set<OrderItemDetailVO> orderItemDetails;
 
     public Integer getOrderId() {
         return orderId;
@@ -111,11 +119,11 @@ public class OrderDetailVO implements java.io.Serializable{
         this.totalPrice = totalPrice;
     }
 
-    public Integer getPaymentType() {
+    public PaymentType getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(Integer paymentType) {
+    public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
 
@@ -142,9 +150,13 @@ public class OrderDetailVO implements java.io.Serializable{
     public void setOrderItemDetails(Set<OrderItemDetailVO> orderItemDetails) {
         this.orderItemDetails = orderItemDetails;
     }
+    public Date getPaymentTime() {
+        return paymentTime;
+    }
 
-    /**货品信息*/
-    Set<OrderItemDetailVO> orderItemDetails;
+    public void setPaymentTime(Date paymentTime) {
+        this.paymentTime = paymentTime;
+    }
 
     @Override
     public String toString() {
@@ -157,6 +169,7 @@ public class OrderDetailVO implements java.io.Serializable{
                 ", totalPrice=" + totalPrice +
                 ", paymentType=" + paymentType +
                 ", createTime=" + createTime +
+                ", paymentTime=" + paymentTime +
                 ", sellerAddress='" + sellerAddress + '\'' +
                 ", orderItemDetails=" + orderItemDetails +
                 '}';
@@ -166,13 +179,12 @@ public class OrderDetailVO implements java.io.Serializable{
      * 分页DO转换VO
      */
     public static PageFinder<OrderDetailVO> dOconvertVOPage (PageFinder<Order> pageFinder) throws Exception{
-        PageFinder<OrderDetailVO> page = new PageFinder<OrderDetailVO> (pageFinder.getPageNo(), pageFinder.getPageSize());
+        PageFinder<OrderDetailVO> page = new PageFinder<OrderDetailVO> (pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
         if (pageFinder != null) {
             List<OrderDetailVO> list = OrderDetailVO.dOconvertVOList(pageFinder.getData());
             page.setData(list);
         }
         page.setRowCount(pageFinder.getRowCount());//记录总数
-        page.setPageCount(pageFinder.getPageCount());//总页数
         return page;
     }
 
@@ -217,6 +229,7 @@ public class OrderDetailVO implements java.io.Serializable{
                     if (commodity != null) {
                         oderItemDetailVO.setCommodityId(commodity.getCommodityId());
                         oderItemDetailVO.setCommodityName(commodity.getCommodityName());
+                        oderItemDetailVO.setCommodityTitle(commodity.getCommodityTitle());
                     }
                 }
                 orderItemDetails.add(oderItemDetailVO);

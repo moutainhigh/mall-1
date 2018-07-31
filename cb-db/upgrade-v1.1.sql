@@ -107,8 +107,59 @@ CREATE TABLE `customer_wallet` (
   KEY `CUSTOMER_ID` (`CUSTOMER_ID`),
   CONSTRAINT `customer_wallet_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='客户钱包表';
-
+####################################生产环境 2018-07-27
 ###add by wangteng 2018-07-27
 alter table customer add  CUSTOMER_COUNTRY VARCHAR(50) DEFAULT NULL COMMENT '国籍';
 alter table customer add  CUSTOMER_CARD_PEROID date DEFAULT NULL COMMENT '证件有效期';
 alter table customer add  OCCUPATIONAL_CATEGORY VARCHAR(50) DEFAULT NULL COMMENT '职业类别';
+
+
+##add by likang 2018-07-28
+ALTER TABLE profile ADD COLUMN `IS_PICTURE` int(2) DEFAULT 0   COMMENT '是否是图片';
+
+##add by tanggangyi 2018-07-28 修改客户密码长度为64
+ALTER TABLE `crystal_ball`.`customer`
+MODIFY COLUMN `PASSWORD` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL AFTER `MOBILE_CHECKED`;
+
+##add by guwenshao 2018-07-30 添加退货审核时间和退款时间
+ALTER TABLE `product_return` add  `AUDIT_TIME` datetime DEFAULT NULL COMMENT '审核时间';
+ALTER TABLE `product_return` add  `REFUND_TIME` datetime DEFAULT NULL COMMENT '退款时间';
+
+##add by tangou 2018-07-30 16:13:05 添加默认货品id
+ALTER TABLE commodity ADD  DEFAULT_PRODUCT_ID INT(11) DEFAULT NULL COMMENT '默认货品';
+
+####add by wangteng 2018-07-30
+DROP TABLE IF EXISTS `reimbursement`;
+CREATE TABLE `reimbursement` (
+  `REIMBURSEMENT_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `REIMBURSEMENT_NO` varchar(21) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '报账单号',
+  `CUSTOMER_ID` int(11) NOT NULL COMMENT '用户',
+  `AMOUNT` decimal(10,2) DEFAULT NULL COMMENT '报账总金额',
+  `TAX` decimal(10,2) DEFAULT NULL COMMENT '税',
+  `ORDER_AMOUNT` decimal(10,2) DEFAULT NULL COMMENT '报账订单总金额',
+  `ORDER_ID` int(11) DEFAULT NULL COMMENT '报账订单',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`REIMBURSEMENT_ID`),
+  KEY `CUSTOMER_ID` (`CUSTOMER_ID`),
+  KEY `ORDER_ID` (`ORDER_ID`),
+  CONSTRAINT `reimbursement_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`),
+  CONSTRAINT `reimbursement_ibfk_2` FOREIGN KEY (`ORDER_ID`) REFERENCES `order_form` (`ORDER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='报账信息表';
+
+DROP TABLE IF EXISTS `insurance_log`;
+CREATE TABLE `insurance_log` (
+  `INSURANCE_LOG_ID` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `ORDER_ID` int(10) NOT NULL COMMENT '保单ID',
+  `ORDER_CODE` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '保单编号',
+  `INSURED_NAME` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '被保人姓名',
+  `INSURED_MOBILE` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '被保人手机号码',
+  `POLICYHOLDER_NAME` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '投保人姓名',
+  `POLICYHOLDER_MOBILE` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '投保人手机号码',
+  `PRICE` int(10) DEFAULT NULL COMMENT '投保金额',
+  `ORDER_STATE` int(10) DEFAULT NULL COMMENT '操作状态',
+  `IP_ADDRESS` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ip地址',
+  `CREATE_NAME` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作人',
+  `CREATE_OPER` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作人账号',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '操作时间',
+  PRIMARY KEY (`INSURANCE_LOG_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='保单操作日志';

@@ -2,9 +2,9 @@ package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.entity.Product;
+import com.yunxin.cb.mall.vo.CommodityVo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @title: 商品接口类
@@ -29,7 +29,7 @@ public interface CommodityService {
      * @auther: eleven
      * @date: 2018/7/19 10:40
      */
-    public Map getCommdityDetail(int productId,int customerId);
+    public CommodityVo getCommdityDetail(int productId, int customerId) throws Exception;
 
     /**
      * @title: 通过商品ID查询所有货品
@@ -38,7 +38,7 @@ public interface CommodityService {
      * @auther: eleven
      * @date: 2018/7/20 18:00
      */
-    public List<Product> getProductsByCommodityId(int commodityId);
+    public List<Product> getProductsByCommodityId(Integer commodityId,Integer state,Integer publish);
 
     /**
      * 获取该品牌下所有商品

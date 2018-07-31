@@ -8,6 +8,7 @@ package com.yunxin.cb.insurance.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
@@ -46,62 +47,72 @@ public class InsuranceProduct implements Serializable {
      * 产品ID
      */
     @Max(9999999999L)
+    @ApiModelProperty(value="产品ID",name="prodId",example="1")
     private int prodId;
     /**
      * 产品名称
      */
     @NotBlank
     @Length(max = 64)
+    @ApiModelProperty(value="产品名称",name="prodName",example="生命险")
     private String prodName;
     /**
      * 产品描述
      */
     @Length(max = 65535)
+    @ApiModelProperty(value="产品描述",name="description",example="该产品主要是用来XXXX")
     private String description;
     /**
      * 产品图片
      */
     @NotBlank
     @Length(max = 512)
+    @ApiModelProperty(value="产品图片",name="prodImg",example="xxx.jpg")
     private String prodImg;
     /**
      * 产品详情图片
      */
     @NotBlank
     @Length(max = 512)
+    @ApiModelProperty(value="产品详情图片",name="descriptionImg",example="xxx.jpg")
     private String descriptionImg;
     /**
      * 标签（多个用逗号隔开）
      */
     @Length(max = 255)
+    @ApiModelProperty(value="标签",name="tags",example="生命，年限")
     private String tags;
     /**
      * 保险期间
      */
     @NotBlank
     @Length(max = 32)
+    @ApiModelProperty(value="保险期间",name="insurePeriod",example="在")
     private String insurePeriod;
     /**
      * 保障年限(10年，20年，终生)
      */
     @NotBlank
     @Length(max = 32)
+    @ApiModelProperty(value="保障年限",name="protectionYear",example="10年")
     private String protectionYear;
     /**
      * 投保须知
      */
     @NotBlank
     @Length(max = 1024)
+    @ApiModelProperty(value="投保须知",name="instruction",example="投此保险需要知道与注意的")
     private String instruction;
     /**
      * 创建时间
      */
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @ApiModelProperty(value="创建时间",name="createTime",example="2018-06-05 10:20")
     private Date createTime;
-
+    @ApiModelProperty(value="保险订单",name="insuranceOrders",example="")
     private Set insuranceOrders = new HashSet(0);
-
+    @ApiModelProperty(value="保险产品价格",name="insuranceProductPrices",example="5454")
     private Set insuranceProductPrices = new HashSet(0);
 
     private Set<InsuranceInformedMatter> insuranceInformedMatters = new HashSet(0);

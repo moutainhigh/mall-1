@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.ProductReturn;
+import com.yunxin.cb.mall.entity.meta.AuditState;
+import com.yunxin.cb.mall.entity.meta.ReturnReason;
+import com.yunxin.cb.mall.entity.meta.ReturnRefundState;
 import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,7 +19,7 @@ import java.util.*;
 * @param 
 * @return
 */
-@ApiModel(value="商城订单详情",description="订单详情VO对象")
+@ApiModel(value="商城退货详情",description="退货详情VO对象")
 public class ProductReturnDetailVO implements java.io.Serializable{
 
     /** 退货id */
@@ -37,12 +40,12 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     private Date applyTime;
 
     /** 退货退款状态 0:申请退货退款 1:待退货退款 2:已退货待退款 3:已退货退款 4:拒绝退货退款 5:申请退款 6:待退款 7:已退款 8:拒绝退款 */
-    @ApiModelProperty(value="退货退款状态 ",name="returnRefundState",example="1")
-    private Integer returnRefundState;
+    @ApiModelProperty(value="退货款状态 ",name="returnRefundState",example="1")
+    private ReturnRefundState returnRefundState;
 
     /** 退货原因 */
     @ApiModelProperty(value="退货原因",name="returnReason",example="我不想买了")
-    private String returnReason;
+    private ReturnReason returnReason;
 
     /** 审核备注 */
     @ApiModelProperty(value="审核备注",name="auditRemark",example="通过")
@@ -50,10 +53,19 @@ public class ProductReturnDetailVO implements java.io.Serializable{
 
     /** 审核状态 */
     @ApiModelProperty(value="审核状态",name="auditState",example="1")
-    private Integer auditState;
+    private AuditState auditState;
+    /** 审核时间 */
+    @ApiModelProperty(value="审核时间",name="auditTime",example="2018-04-5-23 11:11:11")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date auditTime;
 
-    /** 处理时间 */
-    @ApiModelProperty(value="处理时间 ",name="disposeTime",example="1")
+    /** 退款时间 */
+    @ApiModelProperty(value="退款时间",name="refundTime",example="2018-04-5-23 11:11:11")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date refundTime;
+
+    /** 完成时间 */
+    @ApiModelProperty(value="完成时间",name="disposeTime",example="2018-04-5-23 11:11:11")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date disposeTime;
 
@@ -96,19 +108,19 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         this.applyTime = applyTime;
     }
 
-    public Integer getReturnRefundState() {
+    public ReturnRefundState getReturnRefundState() {
         return returnRefundState;
     }
 
-    public void setReturnRefundState(Integer returnRefundState) {
+    public void setReturnRefundState(ReturnRefundState returnRefundState) {
         this.returnRefundState = returnRefundState;
     }
 
-    public String getReturnReason() {
+    public ReturnReason getReturnReason() {
         return returnReason;
     }
 
-    public void setReturnReason(String returnReason) {
+    public void setReturnReason(ReturnReason returnReason) {
         this.returnReason = returnReason;
     }
 
@@ -120,11 +132,11 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         this.auditRemark = auditRemark;
     }
 
-    public Integer getAuditState() {
+    public AuditState getAuditState() {
         return auditState;
     }
 
-    public void setAuditState(Integer auditState) {
+    public void setAuditState(AuditState auditState) {
         this.auditState = auditState;
     }
 
@@ -152,6 +164,22 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         this.productReturnItemDetails = productReturnItemDetails;
     }
 
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
+    }
+
+    public Date getRefundTime() {
+        return refundTime;
+    }
+
+    public void setRefundTime(Date refundTime) {
+        this.refundTime = refundTime;
+    }
+
     @Override
     public String toString() {
         return "ProductReturnDetailVO{" +
@@ -160,25 +188,26 @@ public class ProductReturnDetailVO implements java.io.Serializable{
                 ", orderId=" + orderId +
                 ", applyTime=" + applyTime +
                 ", returnRefundState=" + returnRefundState +
-                ", returnReason='" + returnReason + '\'' +
+                ", returnReason=" + returnReason +
                 ", auditRemark='" + auditRemark + '\'' +
                 ", auditState=" + auditState +
+                ", auditTime=" + auditTime +
+                ", refundTime=" + refundTime +
                 ", disposeTime=" + disposeTime +
                 ", refundPrice=" + refundPrice +
                 ", productReturnItemDetails=" + productReturnItemDetails +
                 '}';
     }
+
     /**
      * 分页DO转换VO
      */
     public static PageFinder<ProductReturnDetailVO> dOconvertVOPage (PageFinder<ProductReturn> pageFinder) throws Exception{
-        PageFinder<ProductReturnDetailVO> page = new PageFinder<ProductReturnDetailVO> (pageFinder.getPageNo(), pageFinder.getPageSize());
+        PageFinder<ProductReturnDetailVO> page = new PageFinder<ProductReturnDetailVO> (pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
         if (pageFinder != null) {
             List<ProductReturnDetailVO> list = ProductReturnDetailVO.dOconvertVOList(pageFinder.getData());
             page.setData(list);
         }
-        page.setRowCount(pageFinder.getRowCount());//记录总数
-        page.setPageCount(pageFinder.getPageCount());//总页数
         return page;
     }
 

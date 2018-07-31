@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.mall.entity.meta.PaymentType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -18,7 +19,7 @@ public class OrderConfirmVO implements java.io.Serializable{
      * 支付方式
      */
     @ApiModelProperty(value="支付方式",name="paymentType",example="0")
-    private Integer paymentType;
+    private PaymentType paymentType;
 
     /**
      * 收货地址id
@@ -35,11 +36,11 @@ public class OrderConfirmVO implements java.io.Serializable{
      */
     private List<OrderConfirmProductVO> orderConfirmProductList;
 
-    public Integer getPaymentType() {
+    public PaymentType getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(Integer paymentType) {
+    public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
 

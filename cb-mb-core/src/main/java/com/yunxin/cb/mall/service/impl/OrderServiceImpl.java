@@ -3,15 +3,19 @@ package com.yunxin.cb.mall.service.impl;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.*;
 import com.yunxin.cb.mall.mapper.*;
+import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.mall.service.OrderService;
+import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -39,9 +43,60 @@ public class OrderServiceImpl implements OrderService {
     private CustomerWalletMapper customerWalletMapper;
     @Resource
     private DeliveryAddressMapper deliveryAddressMapper;
+    @Resource
+    private CommodityService commodityService;
 
     @Resource
     private ProductMapper productMapper;
+
+    /***
+     * 获取临时订单（订单确认页数据）
+     * @param customerId
+     * @param productId
+     * @param buyNum
+     * @param paymentType
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public TempOrderVO getTempOrder(int customerId, int productId, int buyNum, String paymentType) throws Exception {
+        //获取商品信息
+        TempOrderVO tempOrderVO = new TempOrderVO();
+        try {
+            CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
+            //商品信息
+            BeanUtils.copyProperties(tempOrderVO, commodityVo);
+            //货品信息组装
+            TempOrderItemVO tempOrderItemVO = null;
+            if(!StringUtils.isEmpty(commodityVo.getProductVo())){
+                tempOrderItemVO = new TempOrderItemVO();
+                BeanUtils.copyProperties(tempOrderItemVO, commodityVo.getProductVo());
+                tempOrderItemVO.setBuyNum(buyNum);
+            }
+            //获取默认地址
+            DeliveryAddress deliveryAddress = deliveryAddressMapper.selectDefaultByCustomerId(customerId);
+            if(!StringUtils.isEmpty(deliveryAddress)){
+                DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
+                BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
+                tempOrderVO.setDeliveryAddressVO(deliveryAddressVO);
+            }
+            //商家信息
+            tempOrderVO.setSellerVo(commodityVo.getSellerVo());
+            //规格信息
+            tempOrderVO.setSpecs(commodityVo.getSpecs());
+            //货品信息
+            tempOrderVO.setTempOrderItemVO(tempOrderItemVO);
+            //选择的支付方式
+            for (PaymentType pay : PaymentType.values()){
+                if (pay.equals(PaymentType.valueOf(paymentType))) {
+                    tempOrderVO.setSelectPaymentType(pay);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tempOrderVO;
+    }
 
     /***
      * 创建订单
@@ -65,8 +120,8 @@ public class OrderServiceImpl implements OrderService {
         Set<OrderItem> orderItems = order.getOrderItems();
         if (orderItems != null && !orderItems.isEmpty()) {
             for (OrderItem orderItem : orderItems) {
-                //根据货品id查询货品
-                Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
+                //根据货品id查询货品（审核通过且上架货品）
+                Product product = productMapper.selectProductById(orderItem.getProductId(), ProductState.AUDITED.ordinal(), PublishState.UP_SHELVES.ordinal());
                 //判断货品是否存在，且库存足够
                 if (product == null || product.getStoreNum() <= 0) {
                     //库存不足
@@ -78,6 +133,7 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setOrderItemPrice(product.getSalePrice() * productNum);
                 orderItem.setProductId(product.getProductId());
                 orderItem.setSalePrice(product.getSalePrice());
+                orderItem.setProductImg(product.getDefaultPicPath());
                 orderItem.setEvaluate(false);
                 orderItem.setCreateTime(createTime);
                 //减少库存
@@ -89,8 +145,8 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         //支付方式
-        if (order.getPaymentType()== PaymentType.LOAN.ordinal()) {
-            CustomerWallet customerWallet = customerWalletMapper.selectByPrimaryKey(order.getCustomerId());
+        if (order.getPaymentType()== PaymentType.LOAN) {
+            CustomerWallet customerWallet = customerWalletMapper.selectByCustomerId(order.getCustomerId());
             if (customerWallet != null) {
                 double expectedReturnAmount = customerWallet.getExpectedReturnAmount() == null ? 0 : customerWallet.getExpectedReturnAmount();
                 double loanQuota = customerWallet.getLoanQuota() == null ? 0 : customerWallet.getLoanQuota();
@@ -103,7 +159,7 @@ public class OrderServiceImpl implements OrderService {
                 throw new Exception("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
             }
             //自提
-            order.setDeliveryType(DeliveryType.ZT.ordinal());
+            order.setDeliveryType(DeliveryType.ZT);
         }
         //收货地址
         DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());
@@ -133,15 +189,15 @@ public class OrderServiceImpl implements OrderService {
             order.getOrderInvoice().setOrderId(order.getOrderId());
             orderInvoiceMapper.insert(order.getOrderInvoice());
         }
-        if (order.getPaymentType()== PaymentType.LOAN.ordinal()) {
+        if (order.getPaymentType()== PaymentType.LOAN) {
             //添加订单借款申请数据
             OrderLoanApply orderLoanApply = new OrderLoanApply();
             orderLoanApply.setLoanCode(UUIDGeneratorUtil.getUUCode());
             orderLoanApply.setOrderId(order.getOrderId());
             orderLoanApply.setCustomerId(order.getCustomerId());
             orderLoanApply.setLoanPrice(totalPrice);
-            orderLoanApply.setLoanState(LoanState.WAIT_LOAN.ordinal());
-            orderLoanApply.setAuditState(AuditState.WAIT_AUDIT.ordinal());
+            orderLoanApply.setLoanState(LoanState.WAIT_LOAN);
+            orderLoanApply.setAuditState(AuditState.WAIT_AUDIT);
             orderLoanApply.setCreateTime(createTime);
             orderLoanApply.setUpdateTime(createTime);
             orderLoanApplyMapper.insert(orderLoanApply);
@@ -159,7 +215,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public PageFinder<Order> pageOrder(Query q) {
-        PageFinder<Order> page = new PageFinder<Order>(q.getPageNo(), q.getPageSize());
+        PageFinder<Order> page = null;
         List<Order> list = null;
         long rowCount = 0L;
         try {
@@ -173,9 +229,8 @@ public class OrderServiceImpl implements OrderService {
         //如list为null时，则改为返回一个空列表
         list = list == null ? new ArrayList<Order>(0) : list;
         //将分页数据和记录总数设置到分页结果对象中
+        page = new PageFinder<Order>(q.getPageNo(), q.getPageSize(), rowCount);
         page.setData(list);
-        page.setRowCount(rowCount);//记录总数
-        page.setPageCount((int)rowCount);//总页数
         return page;
     }
 
@@ -215,7 +270,7 @@ public class OrderServiceImpl implements OrderService {
             orderMapper.updateByPrimaryKey(orderDb);
             //更改订单贷款申请为取消
             OrderLoanApply orderLoanApply = orderLoanApplyMapper.selectByOrderId(orderDb.getOrderId());
-            orderLoanApply.setLoanState(LoanState.CANCELED.ordinal());
+            orderLoanApply.setLoanState(LoanState.CANCELED);
             orderLoanApplyMapper.updateByPrimaryKey(orderLoanApply);
             //添加订单日志
             OrderLog orderLog = new OrderLog();
@@ -236,7 +291,7 @@ public class OrderServiceImpl implements OrderService {
         //已付款订单才可确认收货
         if (orderDb != null &&
                 (orderDb.getOrderState() == OrderState.PAID_PAYMENT || orderDb.getOrderState() == OrderState.OUT_STOCK)){
-            int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED.ordinal(), DeliveryState.RECEIVED.ordinal());
+            int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED, DeliveryState.RECEIVED);
             //添加订单日志
             if (count > 0) {
                 OrderLog orderLog = new OrderLog();
@@ -256,9 +311,8 @@ public class OrderServiceImpl implements OrderService {
         order.setCouponsFee(0d);
         order.setDelivery(false);
         order.setDeliveryFeeTotal(0d);
-        order.setDeliveryState(0);
         if (order.getDeliveryType() == null) {
-            order.setDeliveryType(DeliveryType.ZT.ordinal());
+            order.setDeliveryType(DeliveryType.ZT);
         }
         order.setScoreTotal(0);
         order.setEnabled(true);

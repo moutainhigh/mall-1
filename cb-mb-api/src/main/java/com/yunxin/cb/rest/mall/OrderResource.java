@@ -2,14 +2,14 @@ package com.yunxin.cb.rest.mall;
 
 
 import com.yunxin.cb.annotation.ApiVersion;
-import com.yunxin.cb.mall.entity.*;
-import com.yunxin.cb.mall.entity.Seller;
+import com.yunxin.cb.mall.entity.Order;
+import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.meta.OrderState;
-import com.yunxin.cb.mall.entity.meta.PaymentType;
-import com.yunxin.cb.mall.service.CommodityService;
-import com.yunxin.cb.mall.service.DeliveryAddressService;
 import com.yunxin.cb.mall.service.OrderService;
-import com.yunxin.cb.mall.vo.*;
+import com.yunxin.cb.mall.vo.OrderConfirmProductVO;
+import com.yunxin.cb.mall.vo.OrderConfirmVO;
+import com.yunxin.cb.mall.vo.OrderDetailVO;
+import com.yunxin.cb.mall.vo.TempOrderVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
@@ -20,15 +20,13 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -47,64 +45,20 @@ public class OrderResource extends BaseResource {
 
     @Resource
     private OrderService orderService;
-    @Resource
-    private CommodityService commodityService;
-    @Resource
-    private DeliveryAddressService deliveryAddressService;
 
     @ApiOperation(value = "订单确认页面数据")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "paymentType", value = "支付方式", paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
-    public ResponseResult<TempOrderVO> getOrderConfrim(@RequestParam(value = "productId")int productId,
-                                                       @RequestParam(value = "buyNum")int buyNum, @RequestParam(value = "paymentType")int paymentType) {
-        //获取商品信息
-        commodityService.getCommdityDetail(productId, 0);
-        TempOrderVO tempOrderVO = new TempOrderVO();
+    public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId")int productId,
+                                                    @RequestParam(value = "buyNum", defaultValue = "1")int buyNum, @RequestParam(value = "paymentType")String paymentType) {
+        TempOrderVO tempOrderVO = null;
         try {
-            int customerId = getCustomerId();
-            Map map = commodityService.getCommdityDetail(productId, customerId);
-            if(map == null){
-                return new ResponseResult(Result.FAILURE,"货品为空");
-            }
-            Commodity commodity = (Commodity)map.get("commodity");
-            Product product = (Product)map.get("product");
-            Seller seller = (Seller)map.get("seller");
-            Map specs = (Map)map.get("specs");
-            TempOrderItemVO tempOrderItemVO = null;
-            SellerVo sellerVo = null;
-            BeanUtils.copyProperties(tempOrderVO, commodity);
-            if(!StringUtils.isEmpty(product)){
-                tempOrderItemVO = new TempOrderItemVO();
-                BeanUtils.copyProperties(tempOrderItemVO,product);
-                tempOrderItemVO.setBuyNum(buyNum);
-            }
-            if(!StringUtils.isEmpty(seller)){
-                sellerVo = new SellerVo();
-                BeanUtils.copyProperties(sellerVo,seller);
-            }
-            //获取默认地址
-            DeliveryAddress deliveryAddress = deliveryAddressService.selectDefaultByCustomerId(getCustomerId());
-            if(!StringUtils.isEmpty(deliveryAddress)){
-                DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
-                BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
-                tempOrderVO.setDeliveryAddressVO(deliveryAddressVO);
-            }
-            tempOrderVO.setSellerVo(sellerVo);
-            tempOrderVO.setSpecs(specs);
-            tempOrderVO.setTempOrderItemVO(tempOrderItemVO);
-            //支付方式
-            for (PaymentType pay : PaymentType.values()){
-                if (pay.ordinal() == paymentType) {
-                    tempOrderVO.setPaymentType(pay);
-                }
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+            tempOrderVO = orderService.getTempOrder(getCustomerId(), productId, buyNum, paymentType);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseResult(tempOrderVO);
@@ -148,11 +102,13 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "String")})
     @PostMapping(value = "order/pageList")
     public ResponseResult<PageFinder<OrderDetailVO>> pageOrder(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
-                                                               @RequestParam(value = "orderState") String orderState){
+                                                               @RequestParam(value = "orderState", required = false) String orderState){
         Order order = new Order();
         Query q = new Query(pageNo, pageSize);
         order.setCustomerId(getCustomerId());
-        order.setOrderState(OrderState.valueOf(orderState));
+        if (StringUtils.isNotBlank(orderState)) {
+            order.setOrderState(OrderState.valueOf(orderState));
+        }
         q.setData(order);
         PageFinder<Order> pageFinder = orderService.pageOrder(q);
         PageFinder<OrderDetailVO> page = null;
@@ -187,7 +143,7 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "根据订单id取消订单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "cancelReason", value = "取消原因", paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "cancelReason", value = "取消原因", required = true, paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
     public ResponseResult cancelOrder(@RequestParam("orderId") int orderId, @RequestParam("cancelReason")String cancelReason)throws Exception{

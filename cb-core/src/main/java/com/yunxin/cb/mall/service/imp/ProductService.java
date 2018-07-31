@@ -3,10 +3,7 @@
  */
 package com.yunxin.cb.mall.service.imp;
 
-import com.yunxin.cb.mall.dao.AttributeDao;
-import com.yunxin.cb.mall.dao.CatalogDao;
-import com.yunxin.cb.mall.dao.ProductAttributeDao;
-import com.yunxin.cb.mall.dao.ProductDao;
+import com.yunxin.cb.mall.dao.*;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
@@ -44,6 +41,9 @@ public class ProductService implements IProductService {
 
     @Resource
     private ProductDao productDao;
+
+    @Resource
+    private CommodityDao commodityDao;
 
     @Resource
     private CatalogDao catalogDao;
@@ -85,7 +85,7 @@ public class ProductService implements IProductService {
     public Product updateProduct(Product product) {
         Product dbProduct = productDao.findOne(product.getProductId());
         AttributeReplication.copying(product, dbProduct, Product_.productNo, Product_.costPrice, Product_.salePrice, Product_.marketPrice, Product_.weight,
-                Product_.volume, Product_.store, Product_.storeNum);
+                Product_.volume, Product_.store, Product_.storeNum,Product_.defaultPicPath);
         return dbProduct;
     }
 
@@ -307,16 +307,32 @@ public class ProductService implements IProductService {
 
     @Override
     public boolean upOrDownShelvesProduct(int productId, PublishState publishState) {
-        Product product = productDao.findOne(productId);
+        Product product = productDao.findProductDetail(productId);
         if (product.getProductState() != ProductState.AUDITED) {
             return false;
         }
+        Commodity commodity = product.getCommodity();
         if ((product.getPublishState() == PublishState.WAIT_UP_SHELVES || product.getPublishState() == PublishState.DOWN_SHELVES)
                 && publishState == PublishState.UP_SHELVES) {
             productDao.updateUpOrDownShelvesInProductId(PublishState.UP_SHELVES, new int[]{productId});
+            //给商品设置默认货品
+            if (commodity.getDefaultProduct() == null) {
+                commodity.setDefaultProduct(product);
+                commodityDao.updateDefaultProductById(product, product.getCommodity().getCommodityId());
+            }
             return true;
         } else if ((product.getPublishState() == PublishState.WAIT_UP_SHELVES || product.getPublishState() == PublishState.UP_SHELVES)
                 && publishState == PublishState.DOWN_SHELVES) {
+            if (commodity.getDefaultProduct().getProductId() == productId) {//如果是默认货品下架
+                Product defaultProduct=null;//默认货品id
+                for(Product pro:commodity.getProducts()){//遍历所有货品
+                    if(pro.getProductId()!=productId&&pro.getPublishState()==PublishState.UP_SHELVES){//默认取该商品还在上架的第一个货品为默认货品
+                        defaultProduct=pro;
+                        break;
+                    }
+                }
+                commodityDao.updateDefaultProductById(defaultProduct, commodity.getCommodityId());
+            }
             productDao.updateUpOrDownShelvesInProductId(PublishState.DOWN_SHELVES, new int[]{productId});
             return true;
         }

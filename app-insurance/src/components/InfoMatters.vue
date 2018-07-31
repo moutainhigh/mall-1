@@ -2,7 +2,7 @@
   <div>
     <div class="title">告知事项<span @click="changeFalse">全选否</span></div>
     <div class="content" style="height: auto">
-      <p>1.您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承包公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和。住院每日补贴日额及保险合同生效日期。</p>
+      <p>1.您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承保公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和、住院每日补贴日额及保险合同生效日期。</p>
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(0)">
@@ -25,7 +25,7 @@
     </div>
 
     <div class="content">
-      <p>2.您的人寿保险、人身意外或健康保险的投保申请是否曾被拒保、推迟、加费、或作限制保障权益？是否有解除保险合同？是否曾向任何保险公司提出索赔申请？若“是”，请说明。</p>
+      <p>2.您的人寿保险、人身意外或健康保险的投保申请是否曾被拒保、推迟、加费或作限制保障权益？是否有解除保险合同？是否曾向任何保险公司提出索赔申请？若“是”，请说明。</p>
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(1)">
@@ -48,7 +48,7 @@
     </div>
 
     <div class="content">
-      <p>3.是否计划出国或改变居住地或工作地点？正在试图参加私人性质飞行，或携带氧气瓶潜水、或登山、或从事危险性的运动？若“是”，请填妥相关问卷，连同此投保单一并交回本公司。</p>
+      <p>3.是否计划出国或改变居住地或工作地点？正在或试图参加私人性质飞行，或携带氧气瓶潜水、或登山、或从事危险性的运动？若“是”，请填妥相关问卷，连同此投保单一并交回本公司。</p>
       <div class="content-state">
         <p class="recognizee">被保人</p>
         <div style="display: inline" @click="changeInsuredState(2)">
@@ -95,12 +95,12 @@
 
     <div class="content">
       <p style="padding: 15px 0">5.a.是否吸烟?若“是”，吸烟<input type="number" class="value-input" v-model="values5[0]"/>年<input
-        type="number" class="value-input" v-model="values5[1]"/>支/天；若现在已停止吸烟，停止吸烟原因及时间<input
+        type="number" class="value-input" v-model="values5[1]"/>支/天；若现已停止吸烟，停止吸烟原因及时间<input
         type="text" maxlength="24" class="value-input" v-model="values5[2]"/>。</p>
       <p style="padding: 15px 0">b.是否饮酒？若“是”，饮酒<input type="number" class="value-input" v-model="values5[3]"/>年，种类<input
         type="text" class="value-input" maxlength="24" v-model="values5[4]"/>，数量<input type="number" class="value-input"
                                                                                        v-model="values5[5]"/>
-        （两/周）；若现在已停止饮酒，停止饮酒原因及时间<input type="text" class="value-input" maxlength="64" style="width: 10rem"
+        （两/周）；若现已停止饮酒，停止饮酒原因及时间<input type="text" class="value-input" maxlength="64" style="width: 10rem"
                                        v-model="values5[6]"/>。
       </p>
       <div class="content-state">
@@ -608,7 +608,7 @@
         <p style="padding: 15px 0">e.是否曾进行婴幼儿体检且结果异常？</p>
         <p style="padding: 15px 0">f.是否经常患腹痛、婴幼儿腹泻等消化系统疾病？</p>
         <p style="padding: 15px 0">g.是否曾患哮喘、肺炎、扁桃体炎等呼吸系统疾病？</p>
-        <p style="padding: 15px 0">h.是否曾患疝气？i是否曾出现“高热惊厥”</p>
+        <p style="padding: 15px 0">h.是否曾患疝气？</p>
         <p style="padding: 15px 0">i.是否曾出现“高热惊厥”？</p>
         <div class="content-state">
           <p class="recognizee">被保人</p>

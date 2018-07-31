@@ -1,6 +1,7 @@
 package com.yunxin.cb;
 
 import com.yunxin.cb.console.service.imp.SecurityService;
+import com.yunxin.cb.mall.service.imp.CustomerService;
 import com.yunxin.cb.search.restful.RestfulFactory;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.cb.security.SecurityProvider;
@@ -29,11 +30,15 @@ public class StartupRunner implements CommandLineRunner {
     @Resource
     private SecurityService securityService;
 
+    @Resource
+    private CustomerService customerService;
+
 
     @Override
     public void run(String... strings) throws Exception {
         //初始化后台管理员账号
-        initAdminAccountIfNecessary();
+//        initAdminAccountIfNecessary();
+        batchPwdEncode();
         //全局加载资源表
         loadPrivileges();
 
@@ -45,8 +50,16 @@ public class StartupRunner implements CommandLineRunner {
     /**
      * 如有必要，则初始化默认账号
      */
-    private void initAdminAccountIfNecessary() {
+    private void initAdminAccountIfNecessary() throws Exception{
         securityService.initAdminAccount();
+    }
+
+    /**
+     * 批量更新密码加密
+     */
+    private void batchPwdEncode() throws Exception{
+        securityService.batchPwdEncode();
+        customerService.batchPwdEncode();
     }
 
     /**
