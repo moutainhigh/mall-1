@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Api(description = "商城商品搜索接口")
 @RestController
@@ -47,7 +44,8 @@ public class SearchResource extends BaseResource {
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
             Map<String, List<Object>> condition = new HashMap<>();
             SearchResultVo searchResultVo = new SearchResultVo();
-            dealResult(page, result, pageFinder, condition, searchResultVo);
+            List<PriceSection> priceSection = new ArrayList<>();
+            dealResult(page, result, pageFinder, condition, searchResultVo,priceSection);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("keywordSearch excption", e);
@@ -69,7 +67,8 @@ public class SearchResource extends BaseResource {
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
             Map<String, List<Object>> condition = new HashMap<>();
             SearchResultVo searchResultVo = new SearchResultVo();
-            dealResult(page, result, pageFinder, condition, searchResultVo);
+            List<PriceSection> priceSection = new ArrayList<>();
+            dealResult(page, result, pageFinder, condition, searchResultVo,priceSection);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("categorySearch excption", e);
@@ -117,7 +116,7 @@ public class SearchResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
-    private void dealResult( int page, Page<Commodity> result, PageFinder<CommodityVO> pageFinder, Map<String, List<Object>> condition, SearchResultVo searchResultVo) {
+    private void dealResult( int page, Page<Commodity> result, PageFinder<CommodityVO> pageFinder, Map<String, List<Object>> condition, SearchResultVo searchResultVo,List<PriceSection> priceSection) {
         if (result.getTotalElements() > 0) {
             List<Commodity> list = result.getContent();
             List<CommodityVO> voList = new ArrayList<>();
@@ -135,13 +134,19 @@ public class SearchResource extends BaseResource {
                     }
                     condition.put(commoditySpec.getSpecName(), values);
                 }
+                PriceSection price = commodity.getPriceSection();
+                priceSection.add(price);
             }
+            HashSet h = new HashSet(priceSection);
+            priceSection.clear();
+            priceSection.addAll(h);
             pageFinder.setData(voList);
             pageFinder.setPageCount(result.getTotalPages());
             pageFinder.setRowCount(result.getNumber());
             pageFinder.setPageNo(page);
             searchResultVo.setCondition(condition);
             searchResultVo.setPageFinder(pageFinder);
+            searchResultVo.setPriceSection(priceSection);
         }
     }
 

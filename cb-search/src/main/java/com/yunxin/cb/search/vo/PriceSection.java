@@ -2,6 +2,8 @@ package com.yunxin.cb.search.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Objects;
+
 /**
  * 商品价格段
  */
@@ -32,5 +34,20 @@ public class PriceSection implements java.io.Serializable {
 
     public void setEndPrice(int endPrice) {
         this.endPrice = endPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PriceSection that = (PriceSection) o;
+        return startPrice == that.startPrice &&
+                endPrice == that.endPrice;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(startPrice, endPrice);
     }
 }

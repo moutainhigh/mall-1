@@ -60,6 +60,12 @@
 
     function formatPayType(ptype){
       switch (ptype){
+        case "FULL_SECTION":{
+            return "线下支付";
+        }
+        case "LOAN":{
+            return "贷款支付";
+        }
         case "ALIPAY":{
           return "支付宝";
         }
@@ -201,6 +207,7 @@
                   <a href="javascript:viewItem()" class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;详情</a>
                   <a href="javascript:changePriceItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;调价</a>
                   <a href="javascript:initLogistic();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 设置物流</a>
+                  <a href="javascript:underLinePayConfirm();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 确认汇款</a>
                 </div>
               </div>
             </header>
@@ -452,6 +459,32 @@
           });
         }
       }
+    }
+
+    function underLinePayConfirm() {
+        var dataItem = getSelectedGridItem("grid");
+        if (dataItem) {
+            if (dataItem.orderState != "PENDING_PAYMENT") {
+                bootbox.alert("请选择待付款订单操作！");
+                return;
+            }
+            if (dataItem.paymentType != "FULL_SECTION") {
+                bootbox.alert("请选择线下支付订单操作！");
+                return;
+            }
+        }
+        bootbox.confirm("确认线下已汇款吗？", function (result) {
+            if (result) {
+                  $.get("underLinePayConfirm.do?orderId=" + dataItem.orderId, function (result) {
+                      if (result) {
+                          bootbox.alert("成功");
+                          $("#grid").data("kendoGrid").dataSource.read();
+                      } else {
+                          bootbox.alert("确认支付失败！");
+                      }
+                  });
+            }
+        });
     }
   </script>
 </body>
