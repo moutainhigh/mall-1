@@ -147,4 +147,34 @@ public interface BrandMapper {
         "where BRAND_ID = #{brandId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Brand record);
+
+    @Select({
+            "select",
+            "BRAND_ID, BRAND_EN_NAME, BRAND_KEY, BRAND_NAME, BRAND_NO, BRAND_TITLE, CREATE_TIME, ",
+            "DESCRIPTION, DISPLAY, ENABLED, HOT, PIC_PATH, REMARK, SEO_DESCRIPTION, SEO_KEY, ",
+            "SEO_TITLE, WEBSITE, CATEGORY_ID",
+            "from brand",
+            "where hot = 1"
+    })
+    @Results({
+            @Result(column="BRAND_ID", property="brandId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="BRAND_EN_NAME", property="brandEnName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="BRAND_KEY", property="brandKey", jdbcType=JdbcType.VARCHAR),
+            @Result(column="BRAND_NAME", property="brandName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="BRAND_NO", property="brandNo", jdbcType=JdbcType.VARCHAR),
+            @Result(column="BRAND_TITLE", property="brandTitle", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="DESCRIPTION", property="description", jdbcType=JdbcType.VARCHAR),
+            @Result(column="DISPLAY", property="display", jdbcType=JdbcType.BIT),
+            @Result(column="ENABLED", property="enabled", jdbcType=JdbcType.BIT),
+            @Result(column="HOT", property="hot", jdbcType=JdbcType.BIT),
+            @Result(column="PIC_PATH", property="picPath", jdbcType=JdbcType.VARCHAR),
+            @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR),
+            @Result(column="SEO_DESCRIPTION", property="seoDescription", jdbcType=JdbcType.VARCHAR),
+            @Result(column="SEO_KEY", property="seoKey", jdbcType=JdbcType.VARCHAR),
+            @Result(column="SEO_TITLE", property="seoTitle", jdbcType=JdbcType.VARCHAR),
+            @Result(column="WEBSITE", property="website", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CATEGORY_ID", property="categoryId", jdbcType=JdbcType.INTEGER)
+    })
+    List<Brand> selectHotBrand();
 }

@@ -777,14 +777,17 @@ public class CommodityService implements ICommodityService {
     public void syncESCommodity() {
         try {
             List<Commodity> list = commodityDao.findAll();
-
             List<CommodityVO> listVo = new ArrayList<>();
-
+            for(Commodity commodity : list){
+                if(commodity.getPublishState() == PublishState.UP_SHELVES){
+                    CommodityVO commodityVO = new CommodityVO(commodity);
+                    listVo.add(commodityVO);
+                }
+            }
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
             Call<ResponseResult> call = restService.bulkIndex(listVo);
             ResponseResult result = call.execute().body();
             logger.info("[elasticsearch] remove commodity state:" + result.getResult());
-
         } catch (Exception e) {
             logger.error("syncESCommodity failed", e);
         }

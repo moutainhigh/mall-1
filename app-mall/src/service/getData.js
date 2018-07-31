@@ -15,6 +15,7 @@ export const categorySearch = function (searchVo, page, size) {
   return post('/mall/search/categorySearch/'+page + '/' + size,searchVo)
 }
 
+//############## 地址接口 ##################//
 //获取用户收货地址列表
 export const getDeliveryAddress = function () {
   return get('/v1/mall/deliveryAddress/list.do');
@@ -36,3 +37,23 @@ export const deleteDeliveryAddressByAdderssId = function (addressId) {
   return del('/v1/mall/deliveryAddress/' + addressId);
 };
 
+//################## 订单接口 ##########################//
+//获取用户商品订单列表
+export const getCustomerOrder = function (query) {
+  return post('/v1/mall/order/pageList',{},query);
+};
+
+//获取订单详情
+export const getOrderDetailById = orderId =>{
+  return get('/v1/mall/order/'+orderId);
+};
+
+//订单收货成功
+export const confirmOrder = orderId =>{
+  return put('/v1/mall/order/confirmOrder/'+orderId);
+};
+
+//订单取消
+export const cancelOrder = orderId =>{
+  return put('/v1/mall/order/cancelOrder/'+orderId);
+};

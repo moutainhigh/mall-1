@@ -1,6 +1,7 @@
 package com.yunxin.cb.search.service.impl;
 
 
+import com.google.gson.Gson;
 import com.yunxin.cb.search.document.Commodity;
 import com.yunxin.cb.search.repository.CommodityDao;
 import com.yunxin.cb.search.service.CommodityService;
@@ -17,13 +18,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.Criteria;
-import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
@@ -138,24 +137,23 @@ public class CommodityServiceImpl implements CommodityService {
     public long bulkIndex(List<Commodity> queries ) throws Exception
     {
         long count = 0;
-//        if(!elasticsearchTemplate.indexExists(Commodity.index_name)) {
-//            elasticsearchTemplate.createIndex(Commodity.index_name);
-//        }
-//        List<IndexQuery> indexQueries=new ArrayList<>();
-//        for (Commodity commodity :queries)
-//        {
-//            IndexQuery indexQuery = new IndexQuery();
-//            indexQuery.setId(String.valueOf(commodity.getCommodityId()));
-//            Gson gson = new Gson();
-//            indexQuery.setSource(gson.toJson(commodity));
-//            indexQuery.setIndexName(Commodity.index_name);
-//            indexQuery.setType(Commodity.index_type);
-//            indexQueries.add(indexQuery);
-//
-//            count++;
-//        }
-//        elasticsearchTemplate.bulkIndex(indexQueries);
-//        elasticsearchTemplate.refresh(Commodity.index_name);
+        if(!elasticsearchTemplate.indexExists(Commodity.index_name)) {
+            elasticsearchTemplate.createIndex(Commodity.index_name);
+        }
+        List<IndexQuery> indexQueries=new ArrayList<>();
+        for (Commodity commodity :queries)
+        {
+            IndexQuery indexQuery = new IndexQuery();
+            indexQuery.setId(String.valueOf(commodity.getCommodityId()));
+            Gson gson = new Gson();
+            indexQuery.setSource(gson.toJson(commodity));
+            indexQuery.setIndexName(Commodity.index_name);
+            indexQuery.setType(Commodity.index_type);
+            indexQueries.add(indexQuery);
+            count++;
+        }
+        elasticsearchTemplate.bulkIndex(indexQueries);
+        elasticsearchTemplate.refresh(Commodity.index_name);
         return count;
     }
 

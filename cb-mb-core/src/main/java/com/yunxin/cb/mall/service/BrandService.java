@@ -17,4 +17,9 @@ public interface BrandService {
      * @return
      */
     List<Brand> selectAll();
+
+    /**
+     * 查询热门品牌
+     */
+    List<Brand> selectHotBrand();
 }

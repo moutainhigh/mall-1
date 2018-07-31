@@ -5,6 +5,7 @@ import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.ProductReturn;
 import com.yunxin.cb.mall.entity.meta.ReturnReason;
+import com.yunxin.cb.mall.exception.CommonException;
 import com.yunxin.cb.mall.service.ProductReturnService;
 import com.yunxin.cb.mall.vo.ProductReturnApplyDataVO;
 import com.yunxin.cb.mall.vo.ProductReturnApplyVO;
@@ -19,8 +20,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,7 +39,6 @@ import java.util.Map;
 @RequestMapping(value = "{version}/mall")
 public class ProductReturnResource extends BaseResource {
 
-    private static Logger logger = LoggerFactory.getLogger(ProductReturnResource.class);
     @Resource
     private ProductReturnService productReturnService;
 
@@ -49,18 +47,26 @@ public class ProductReturnResource extends BaseResource {
             @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "path", dataType = "int")})
     @ApiVersion(1)
     @PostMapping(value = "productReturn/apply/{orderId}")
-    public ResponseResult<ProductReturnApplyDataVO> getProductReturnData(@PathVariable(value = "orderId")int orderId) throws Exception{
-        ProductReturnApplyDataVO productReturnApplyDataVO = new ProductReturnApplyDataVO();
-        Order order = productReturnService.checkProductReturnApply(orderId, getCustomerId());
-        Map returnReason = new HashMap();//退货原因
-        for (ReturnReason reason : ReturnReason.values()){
-            returnReason.put(reason, reason.toString());
+    public ResponseResult<ProductReturnApplyDataVO> getProductReturnData(@PathVariable(value = "orderId")int orderId) {
+        try {
+            ProductReturnApplyDataVO productReturnApplyDataVO = new ProductReturnApplyDataVO();
+            Order order = productReturnService.checkProductReturnApply(orderId, getCustomerId());
+            Map returnReason = new HashMap();//退货原因
+            for (ReturnReason reason : ReturnReason.values()){
+                returnReason.put(reason, reason.toString());
+            }
+            productReturnApplyDataVO.setReturnReason(returnReason);
+            productReturnApplyDataVO.setOrderId(order.getOrderId());
+            productReturnApplyDataVO.setReturnMobile(order.getConsigneeMobile());
+            productReturnApplyDataVO.setReturnName(order.getConsigneeName());
+            return new ResponseResult(productReturnApplyDataVO);
+        } catch (CommonException e) {
+            logger.info("productReturnApplyPageData failed", e.getMessage());
+            return new ResponseResult(Result.FAILURE, e.getMessage());
+        } catch (Exception e) {
+            logger.error("productReturnApplyPageData failed", e);
+            return new ResponseResult(Result.FAILURE);
         }
-        productReturnApplyDataVO.setReturnReason(returnReason);
-        productReturnApplyDataVO.setOrderId(order.getOrderId());
-        productReturnApplyDataVO.setReturnMobile(order.getConsigneeMobile());
-        productReturnApplyDataVO.setReturnName(order.getConsigneeName());
-        return new ResponseResult(productReturnApplyDataVO);
     }
 
     @ApiOperation(value = "退货申请")
@@ -68,18 +74,21 @@ public class ProductReturnResource extends BaseResource {
     })
     @ApiVersion(1)
     @PostMapping(value = "productReturn")
-    public ResponseResult addProductReturn(@RequestBody ProductReturnApplyVO productReturnApplyVO) throws Exception{
-        logger.info("productReturnApplyVO:" + productReturnApplyVO.toString());
-        ProductReturn productReturn = new ProductReturn();
+    public ResponseResult addProductReturn(@RequestBody ProductReturnApplyVO productReturnApplyVO){
         try {
+            logger.info("productReturnApplyVO:" + productReturnApplyVO.toString());
+            ProductReturn productReturn = new ProductReturn();
             BeanUtils.copyProperties(productReturn, productReturnApplyVO);
             productReturn.setCustomerId(getCustomerId());
+            productReturnService.applyOrderProductReturn(productReturn);
+            return new ResponseResult(Result.SUCCESS);
+        } catch (CommonException e) {
+            logger.info("addProductReturn failed", e.getMessage());
+            return new ResponseResult(Result.FAILURE, e.getMessage());
         } catch (Exception e) {
-            logger.info("addProductReturn failed", e);
+            logger.error("addProductReturn failed", e);
             return new ResponseResult(Result.FAILURE);
         }
-        productReturnService.applyOrderProductReturn(productReturn);
-        return new ResponseResult(Result.SUCCESS);
     }
 
     @ApiOperation(value = "退货分页列表")
@@ -89,22 +98,21 @@ public class ProductReturnResource extends BaseResource {
             @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "post", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "productReturn/pageList")
-    public ResponseResult<PageFinder<ProductReturnDetailVO>> pageProductReturn(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
-                                            @RequestParam(value = "orderId", required = false) Integer orderId){
-        Query q = new Query(pageNo, pageSize);
-        ProductReturn productReturn = new ProductReturn();
-        productReturn.setCustomerId(getCustomerId());
-        productReturn.setOrderId(orderId);
-        q.setData(productReturn);
-        PageFinder<ProductReturn> pageFinder =  productReturnService.pageProductReturn(q);
-        PageFinder<ProductReturnDetailVO> page = null;
+    public ResponseResult<PageFinder<ProductReturnDetailVO>> pageProductReturn(@RequestParam(value = "pageNo") int pageNo,
+            @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "orderId", required = false) Integer orderId){
         try {
-            page = ProductReturnDetailVO.dOconvertVOPage(pageFinder);
+            Query q = new Query(pageNo, pageSize);
+            ProductReturn productReturn = new ProductReturn();
+            productReturn.setCustomerId(getCustomerId());
+            productReturn.setOrderId(orderId);
+            q.setData(productReturn);
+            PageFinder<ProductReturn> pageFinder =  productReturnService.pageProductReturn(q);
+            PageFinder<ProductReturnDetailVO> page = ProductReturnDetailVO.dOconvertVOPage(pageFinder);
+            return new ResponseResult(page);
         } catch (Exception e) {
-            logger.info("pageListProductReturn failed", e);
+            logger.error("pageListProductReturn failed", e);
             return new ResponseResult(Result.FAILURE);
         }
-        return new ResponseResult(page);
     }
 
     @ApiOperation(value = "退货列表")
@@ -113,20 +121,19 @@ public class ProductReturnResource extends BaseResource {
     @ApiVersion(1)
     @PostMapping(value = "productReturn/list")
     public ResponseResult<List<ProductReturnDetailVO>> listProductReturn(@RequestParam(value = "orderId", required = false) Integer orderId){
-        Query q = new Query();
-        ProductReturn productReturn = new ProductReturn();
-        productReturn.setCustomerId(getCustomerId());
-        productReturn.setOrderId(orderId);
-        q.setData(productReturn);
-        List<ProductReturn> listProductReturn =  productReturnService.listProductReturn(q);
-        List<ProductReturnDetailVO> list = null;
         try {
-            list = ProductReturnDetailVO.dOconvertVOList(listProductReturn);
+            Query q = new Query();
+            ProductReturn productReturn = new ProductReturn();
+            productReturn.setCustomerId(getCustomerId());
+            productReturn.setOrderId(orderId);
+            q.setData(productReturn);
+            List<ProductReturn> listProductReturn =  productReturnService.listProductReturn(q);
+            List<ProductReturnDetailVO> list = ProductReturnDetailVO.dOconvertVOList(listProductReturn);
+            return new ResponseResult(list);
         } catch (Exception e) {
-            logger.info("listProductReturn failed", e);
+            logger.error("listProductReturn failed", e);
             return new ResponseResult(Result.FAILURE);
         }
-        return new ResponseResult(list);
     }
 
     @ApiOperation(value = "退货详情")
@@ -135,16 +142,14 @@ public class ProductReturnResource extends BaseResource {
     @ApiVersion(1)
     @GetMapping(value = "productReturn/{productReturnId}")
     public ResponseResult<ProductReturnDetailVO> getProductReturn(@PathVariable Integer productReturnId){
-        ProductReturn productReturn = productReturnService.getProductReturn(productReturnId, getCustomerId());
-        ProductReturnDetailVO productReturnDetailVO = null;
         try {
-            productReturnDetailVO =  ProductReturnDetailVO.dOconvertVO(productReturn);
+            ProductReturn productReturn = productReturnService.getProductReturn(productReturnId, getCustomerId());
+            ProductReturnDetailVO productReturnDetailVO =  ProductReturnDetailVO.dOconvertVO(productReturn);
+            return new ResponseResult(productReturnDetailVO);
         } catch (Exception e) {
-            logger.info("getProductReturn failed", e);
+            logger.error("getProductReturn failed", e);
             return new ResponseResult(Result.FAILURE);
         }
-        return new ResponseResult(productReturnDetailVO);
     }
-
 
 }
