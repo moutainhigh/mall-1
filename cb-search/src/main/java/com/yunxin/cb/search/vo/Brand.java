@@ -1,5 +1,6 @@
 package com.yunxin.cb.search.vo;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
@@ -9,28 +10,34 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 public class Brand implements java.io.Serializable {
 
+    @ApiModelProperty(value="品牌ID",name="brandId",example="1")
     private int brandId;
     /**
      * 品牌编号
      */
+    @ApiModelProperty(value="品牌编号",name="brandNo",example="xcode001")
     private String brandNo;
     /**
      * 品牌中文名称
      */
+    @ApiModelProperty(value="品牌名称",name="brandNo",example="宝马")
     @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String brandName;
     /**
      * 品牌英文名称
      */
+    @ApiModelProperty(value="品牌英文名称",name="brandEnName",example="BMW")
     private String brandEnName;
     /**
      * 品牌标题
      */
+    @ApiModelProperty(value="品牌标题",name="brandTitle",example="sheer driving pleasure")
     @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String brandTitle;
     /**
      * 图片路径  150*58 png
      */
+    @ApiModelProperty(value="图片路径",name="picPath",example="/pic/bmw.png")
     private String picPath;
 
 

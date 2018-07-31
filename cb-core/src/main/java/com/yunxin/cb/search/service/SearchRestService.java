@@ -6,6 +6,8 @@ import com.yunxin.cb.search.vo.ResponseResult;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import java.util.List;
+
 /**
  * @Author: tanggangyi
  **/
@@ -32,4 +34,8 @@ public interface SearchRestService {
      */
     @DELETE("mall/search/commodity/{commodityId}")
     Call<ResponseResult> removeCommodity(@Path("commodityId") int commodityId);
+
+
+    @POST("mall/search/bulkIndex")
+    Call<ResponseResult> bulkIndex(@Body List<CommodityVO> voList);
 }

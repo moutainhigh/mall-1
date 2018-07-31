@@ -13,23 +13,23 @@ import java.util.Date;
 public class SeatchTest {
 
     public void addCommodity() throws JsonProcessingException {
-        String url = "http://localhost:8168/search/mall/search/addCommodity";
+        String url = "http://localhost:8168/search/mall/search/commodity";
         Commodity commodity = new Commodity();
-        commodity.setCommodityId(4);
-        commodity.setCommodityName("宝马X5A4599");
-        commodity.setCommodityCode("201807242026");
+        commodity.setCommodityId(5);
+        commodity.setCommodityName("保时捷911");
+        commodity.setCommodityCode("201807242011");
         Brand brand = new Brand();
-        brand.setBrandId(169);
-        brand.setBrandEnName("BMW");
-        brand.setBrandName("唯乐");
-        brand.setBrandNo("53662");
-        brand.setBrandTitle("宝马");
+        brand.setBrandId(235);
+        brand.setBrandEnName("Porsche");
+        brand.setBrandName("保时捷");
+        brand.setBrandNo("5366122");
+        brand.setBrandTitle("保时捷");
         brand.setPicPath("//1459827630399.jpg");
         commodity.setBrand(brand);
         commodity.setCity("350100");
         commodity.setCommodityPYName("diancijiaredianyalifanbao");
-        commodity.setCommodityTitle("宝马x5");
-        commodity.setDescription("做人要厚道");
+        commodity.setCommodityTitle("保时捷911");
+        commodity.setDescription("保时捷911");
         commodity.setCreateTime(new Date());
         commodity.setMarketPrice(99.99);
         commodity.setDefaultPicPath("//1459827630399.jpg");

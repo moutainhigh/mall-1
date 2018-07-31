@@ -2,6 +2,7 @@ package com.yunxin.cb.search.vo;
 
 import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.entity.CommodityCategory;
+import com.yunxin.cb.mall.entity.Product;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.beanutils.BeanUtils;
@@ -27,6 +28,7 @@ public class CommodityVO implements java.io.Serializable {
             this.commodityPYName = commodity.getCommodityPYName();
             this.description = commodity.getDescription();
             this.brand = new Brand(commodity.getBrand());
+            this.defaultProduct = commodity.getDefaultProduct().getProductId();
             this.province = commodity.getProvince();
             this.city = commodity.getCity();
             this.marketPrice = commodity.getMarketPrice();
@@ -169,7 +171,11 @@ public class CommodityVO implements java.io.Serializable {
      */
     @ApiModelProperty(value="商品规格",name="commoditySpecs",example="商品规格")
     private Set<CommoditySpec> commoditySpecs = new HashSet<>();
-
+    /**
+     * 默认货品id
+     */
+    @ApiModelProperty(value="默认货品id",name="defaultProduct",example="11")
+    private int defaultProduct;
 
     public int getCommodityId() {
         return commodityId;
@@ -345,5 +351,13 @@ public class CommodityVO implements java.io.Serializable {
 
     public void setCommoditySpecs(Set<CommoditySpec> commoditySpecs) {
         this.commoditySpecs = commoditySpecs;
+    }
+
+    public int getDefaultProduct() {
+        return defaultProduct;
+    }
+
+    public void setDefaultProduct(int defaultProduct) {
+        this.defaultProduct = defaultProduct;
     }
 }

@@ -122,7 +122,7 @@ public class CommodityService implements ICommodityService {
                 Commodity_.commodityCode, Commodity_.commodityName, Commodity_.commodityPYName, Commodity_.shortName, Commodity_.commodityTitle,
                 Commodity_.costPrice, Commodity_.sellPrice, Commodity_.marketPrice, Commodity_.unit, Commodity_.province, Commodity_.city, Commodity_.seoKey,
                 Commodity_.seoTitle, Commodity_.seoDescription, Commodity_.popular, Commodity_.special, Commodity_.recommend, Commodity_.giveaway,
-                Commodity_.barter, Commodity_.preSell, Commodity_.content, Commodity_.deliveryType, Commodity_.weight, Commodity_.volume, Commodity_.defaultPicPath,Commodity_.explainContent);
+                Commodity_.barter, Commodity_.preSell, Commodity_.content, Commodity_.deliveryType, Commodity_.weight, Commodity_.volume, Commodity_.defaultPicPath, Commodity_.explainContent);
         List<CommoditySpec> commoditySpecs = commoditySpecDao.getCommoditySpecsByCommodityId(commodity.getCommodityId());
         for (CommoditySpec cSpec : commoditySpecs) {
             commoditySpecDao.delete(cSpec);
@@ -612,12 +612,13 @@ public class CommodityService implements ICommodityService {
 
     /**
      * 商品上下架
+     *
      * @param commodityId
      * @param publishState
      * @return
      */
     @Override
-    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception{
+    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception {
         Commodity commodity = commodityDao.findOne(commodityId);
         if (commodity.getCommodityState() != CommodityState.AUDITED) {
             return false;
@@ -765,6 +766,24 @@ public class CommodityService implements ICommodityService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Commodity> getCommoditySellerByCommodityCode(List<String> commodityCodes) {
         return commodityDao.getCommoditySellerByCommodityCode(commodityCodes);
+    }
+
+
+    public void syncESCommodity() {
+        try {
+            List<Commodity> list = commodityDao.findAll();
+            List<CommodityVO> listVo = new ArrayList<>();
+            for(Commodity commodity : list){
+                CommodityVO commodityVO = new CommodityVO(commodity);
+                listVo.add(commodityVO);
+            }
+            SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+            Call<ResponseResult> call = restService.bulkIndex(listVo);
+            ResponseResult result = call.execute().body();
+            logger.info("[elasticsearch] remove commodity state:" + result.getResult());
+        } catch (Exception e) {
+            logger.error("syncESCommodity failed", e);
+        }
     }
 
 }
