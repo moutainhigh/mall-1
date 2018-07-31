@@ -195,4 +195,13 @@ public interface IOrderService {
     * @return void
     */
     public boolean orderLoanApplyAudit(int loanId, AuditState auditState, String auditRemark);
+
+    /**
+     * 线下支付确认支付成功
+     * @author gws
+     * @date 2018/7/25 15:14
+     * @param
+     * @return boolean
+     */
+    public boolean underLinePayConfirm(int orderId);
 }
