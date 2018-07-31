@@ -775,6 +775,8 @@ public class CommodityService implements ICommodityService {
 
             List<CommodityVO> listVo = new ArrayList<>();
 
+
+
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
             Call<ResponseResult> call = restService.bulkIndex(listVo);
             ResponseResult result = call.execute().body();
