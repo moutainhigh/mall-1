@@ -322,6 +322,7 @@ export const arrayContain = function (compareVal,array,key) {
   }
 };
 
+//根据生日计算岁数
 export const ageYear = function (birthday) {
   let birthDate = new Date(birthday);
   let nowDate = new Date();
@@ -341,4 +342,4 @@ export const ageYear = function (birthday) {
     }
   }
   return age;
-}
+};

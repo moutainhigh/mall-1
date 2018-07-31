@@ -147,6 +147,9 @@
       let _this = this;
       //获取当前城市定位
       this.selectLocal();
+      _this.$vux.loading.show({
+        text: '加载中...'
+      });
       getIndex().then(res=>{
         if (res.result == 'SUCCESS'){
           _this.homeList = res.data.homeList;
@@ -155,7 +158,7 @@
           _this.categoryFiveList = res.data.categoryFiveList;
           _this.milldeList = res.data.milldeList;
         }
-        console.log(res);
+        _this.$vux.loading.hide();
       })
     },
   }

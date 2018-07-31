@@ -8,77 +8,87 @@
       <div class="tabItem"><p class="itemButton" :class="{'active': tab == 'SUCCESS'}" @click="select('SUCCESS')">已完成</p></div>
       <div class="tabItem"><p class="itemButton" :class="{'active': tab == 'CANCELED'}" @click="select('CANCELED')">已取消</p></div>
     </div>
-    <scroller style="top: 0;font-size: 12px !important;margin-top: 5.7rem"
-              :on-refresh="refresh"
-              :on-infinite="infinite"
-              refresh-layer-color="#f5ca1d"
-              loading-layer-color="#f5ca1d">
-      <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
-        <g>
-          <circle cx="16" cy="32" stroke-width="0" r="3">
-            <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
-                     repeatCount="indefinite"></animate>
-            <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
-          </circle>
-          <circle cx="32" cy="32" stroke-width="0" r="3.09351">
-            <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
-                     repeatCount="indefinite"></animate>
-            <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
-          </circle>
-          <circle cx="48" cy="32" stroke-width="0" r="4.09351">
-            <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
-                     repeatCount="indefinite"></animate>
-            <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
-          </circle>
-        </g>
-      </svg>
-      <div class="user-order-list">
-        <dl>
-          <dt style="border-top: 0;padding-left: 0.875rem">
-            <span class="orderNo">订单编号：1549856</span>
-            <span class="orderState">等待付款</span>
-          </dt>
-          <dd class="myorderList">
-            <img class="imgs" src="../../assets/logo.png">
-            <div>
-              <p style="white-space: normal; font-size: 0.93rem">2018款 240TURBO自动两驱舒适版</p>
-              <p style="font-size: 0.81rem;color: #999">颜色：天漠金<span style="float: right; font-size: 0.81rem">x1</span></p>
-              <p style="font-size: 0.81rem;color: #999">深圳东通上汽大众 <span
-                style="background: #f5ca1d; color: #ffffff; padding: 0 5px; border-radius: 2px; font-size: 0.75rem">4s</span>
-              </p>
+    <div style="position: absolute;top: 0;width: 100%;height: 100%;overflow: hidden;z-index: -1;">
+      <scroller style="margin-top: 5.7rem;font-size: 12px !important;position:relative;"
+                :on-refresh="refresh"
+                :on-infinite="infinite"
+                refresh-layer-color="#f5ca1d"
+                loading-layer-color="#f5ca1d">
+        <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
+        <div class="user-order-list" v-for="order in orders"  @click="openDetail(order.orderId)">
+          <dl>
+            <dt style="border-top: 0;padding-left: 0.875rem">
+              <span class="orderNo">{{order.sellerAddress}}</span>
+              <span class="orderState">{{setState(order.orderState)}}</span>
+            </dt>
+            <div class="car_list">
+              <div class="list_item" v-for="product in order.orderItemDetails">
+                <div class="cont_img">
+                  <img src="../../assets/img/home/1.png" width="100%">
+                </div>
+                <div class="cont">
+                  <div class="cont_title">
+                    {{product.commodityTitle}}
+                  </div>
+                  <div class="cont_spec">
+                    {{setSpec(product.productName)}}
+                    <span style="float: right">X {{product.productNum}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </dd>
-          <dt style="border-top: 0">
-            <p style="float: right; font-size: 0.81rem; margin-right: 15px">共1件商品 合计：￥<span
-              style="font-size: 0.93rem; font-weight: bold">23</span>.98万</p>
-          </dt>
-          <div>
-            <button class="order-button" @click="cancelOrder = true">取消订单</button>
-          </div>
-        </dl>
-      </div>
-      <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
-        <g>
-          <circle cx="16" cy="32" stroke-width="0" r="3">
-            <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
-                     repeatCount="indefinite"></animate>
-            <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
-          </circle>
-          <circle cx="32" cy="32" stroke-width="0" r="3.09351">
-            <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
-                     repeatCount="indefinite"></animate>
-            <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
-          </circle>
-          <circle cx="48" cy="32" stroke-width="0" r="4.09351">
-            <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
-                     repeatCount="indefinite"></animate>
-            <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
-          </circle>
-        </g>
-      </svg>
-    </scroller>
+            <dt style="border-top: 0">
+              <p style="float: right; font-size: 0.81rem; margin-right: 15px">共1件商品 合计：￥<span
+                style="font-size: 0.93rem; font-weight: bold">23</span>.98万</p>
+            </dt>
+            <div>
+              <button v-if="order.orderState == 'PENDING_PAYMENT'" class="order-button" @click="cancelOrder = true">取消订单</button>
+              <button v-if="order.orderState == 'OUT_STOCK' || order.orderState == 'PAID_PAYMENT'" class="order-button" @click="cancelOrder = true">确认收货</button>
+              <!--<button class="order-button" @click="cancelOrder = true">申请售后</button>-->
+            </div>
+          </dl>
+        </div>
+        <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
+      </scroller>
+    </div>
     <div class="carType" v-if="cancelOrder">
-      <div style="height: 40vh; background: #ffffff; position: fixed; bottom: 0.875rem; left: 0.875rem; right: 0.875rem; border-radius: 10px">
+      <div style="background: #ffffff; position: fixed; bottom: 0.875rem; left: 0.875rem; right: 0.875rem; border-radius: 10px">
         <div style="text-align: center; line-height: 3; border-bottom: 1px solid #ECECEC; position: relative">
           <img style="float: right; width: 0.93rem; position: absolute; right: 1rem; top: 1rem;" src="../../assets/img/common/ic_screen_close.png" @click="cancelOrder = false">
           取消订单
@@ -94,7 +104,7 @@
         <div style="font-size: 0.81rem; color: #999999; padding-left: 0.875rem; line-height: 2">
           重复下单/误下单
         </div>
-        <div style="color: #F54E4E; text-align: center; border-top: 1px solid #ECECEC; line-height: 2">
+        <div style="color: #F54E4E; text-align: center; border-top: 1px solid #ECECEC; line-height: 2;padding: 0.3rem;">
           确定
         </div>
       </div>
@@ -108,6 +118,7 @@
 <script>
   import headTop from '../../components/header/head'
   import {getCustomerOrder} from "../../service/getData";
+  import {goodsSpec, orderState} from "../../config/dataFormat";
 
   export default {
     name: "OrderList",
@@ -134,10 +145,11 @@
         getCustomerOrder(this.pageQuery).then(res => {
           if (res.result == 'SUCCESS') {
             this.orders = res.data.data;
-            if ( res.data.pageCount <= this.pageQuery.pageNo) {
+            if (res.data.pageCount <= this.pageQuery.pageNo) {
               this.isInfinite = false;
             } else {
               this.pageQuery.page++;
+              this.isInfinite = true;
             }
           }
           done()
@@ -169,16 +181,28 @@
           if (res.result == 'SUCCESS') {
             this.orders = this.orders.concat(res.data.data);
             if (res.data.pageCount <= _this.pageQuery.pageNo) {
-              done(true);
+              _this.isInfinite = false;
             } else {
               _this.pageQuery.pageNo++;
-              done();
+              this.isInfinite = true;
             }
           } else {
             _this.isInfinite = false;
-            done();
           }
+          done();
         })
+      },
+      openDetail(orderId){
+        this.$router.push({
+          path:'/order-detail',
+          query:{orderId:orderId}
+        })
+      },
+      setState(state){
+        return orderState(state);
+      },
+      setSpec(spec){
+        return goodsSpec(spec);
       }
     },
     created() {
@@ -186,7 +210,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .tab {
     position: relative;
     width: 100vw;
@@ -211,7 +235,7 @@
 
   .itemButton {
     font-size: 0.91rem;
-    padding: 10px 0;
+    padding: 0.56rem 0;
     margin: 0;
     display: inline-block;
   }
@@ -219,6 +243,7 @@
   .user-order-list {
     background: #ffffff;
     overflow: hidden;
+    margin-bottom: 0.5rem;
   }
 
   .user-order-list dl {
@@ -295,5 +320,63 @@
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
+  }
+
+  .good-info {
+    display: flex;
+    height: 7rem;
+    background-color: #F5F5F5;
+    .good-detail {
+      flex: 1;
+      padding: 1rem 0.6rem 0 0;
+      color: #333;
+      font-size: 1rem;
+      .good-cate {
+        margin-top: 0.7rem;
+        font-size: 0.8rem;
+        color: #999;
+      }
+    }
+    .good-img {
+      width: 7.5rem;
+      padding: 1rem 0.5rem 1rem 1rem;
+    }
+  }
+
+  .car_list {
+    background-color: #fff;
+    .list_item {
+      background-color: #f5f5f5;
+      display: flex;
+      padding: 0.5rem;
+      line-height: 1.5;
+      overflow: hidden;
+      .cont_img {
+        flex: 0 0 8rem;;
+        img {
+          border-radius: 4px;
+          height: 5.3rem;
+        }
+      }
+      .cont {
+        flex: 1;
+        padding: 0 0 0.7rem 0.7rem;
+        height: 5rem;
+        .cont_title {
+          font-size: 1rem;
+          height: 3rem;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          display:-webkit-box;
+          -webkit-box-orient:vertical;
+          -webkit-line-clamp:2;
+        }
+        .cont_spec {
+          margin-top: 0.2rem;
+          color: #999999;
+          font-size: 0.8rem;
+        }
+      }
+    }
   }
 </style>
