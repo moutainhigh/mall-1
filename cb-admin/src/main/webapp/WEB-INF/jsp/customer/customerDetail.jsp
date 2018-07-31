@@ -513,14 +513,12 @@
                   <div class="spacer-10"></div>
                   <div class="row">
                     <div class="col-sm-2">
-                      <label><span class="asterisk"></span> 银行卡正面 ：</label>
+                      <label><span class="asterisk"></span> 身份证:</label>
                     </div>
-                    <div class="col-sm-2 col-label" id="example1">
-                      <c:if test="${customer.bankCardImg!=null&&customer.bankCardImg!=''}">
-                        <img data-original="${customer.bankCardImg}"  src="${customer.bankCardImg}" alt="投保人银行卡正面" width="200" height="150"/>
+                    <div class="col-sm-2 col-label"  id="example3">
+                      <c:if test="${customer.cardNegativeImg!=null&&customer.cardNegativeImg!=''}">
+                        <img data-original="${customer.cardNegativeImg}" src="${customer.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
                       </c:if>
-                    </div>
-                    <div style="width: 10px">
                     </div>
                     <div class="col-sm-2 col-label"  id="example2">
                       <c:if test="${customer.cardPositiveImg!=null&&customer.cardPositiveImg!=''}">
@@ -528,12 +526,12 @@
                       </c:if>
                     </div>
 
-                    <div class="col-sm-2">
-                      <label><span class="asterisk"></span> 身份证反面 ：</label>
+                    <div class="col-sm-2" style="margin-left: -145px">
+                      <label><span class="asterisk"></span> 银行卡 ：</label>
                     </div>
-                    <div class="col-sm-2 col-label"  id="example3">
-                      <c:if test="${customer.cardNegativeImg!=null&&customer.cardNegativeImg!=''}">
-                        <img data-original="${customer.cardNegativeImg}" src="${customer.cardNegativeImg}" alt="投保人身份证反面" width="200" height="150"/>
+                    <div class="col-sm-2 col-label" id="example1">
+                      <c:if test="${customer.bankCardImg!=null&&customer.bankCardImg!=''}">
+                        <img data-original="${customer.bankCardImg}"  src="${customer.bankCardImg}" alt="投保人银行卡正面" width="200" height="150"/>
                       </c:if>
                     </div>
                   </div>
