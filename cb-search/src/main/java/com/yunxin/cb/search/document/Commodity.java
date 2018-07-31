@@ -18,6 +18,9 @@ import java.util.Set;
 @Document(indexName = "crystal_ball", type = "commodity")
 public class Commodity implements java.io.Serializable {
 
+    public static final String index_name="crystal_ball";
+    public static final String index_type="commodity";
+
     private static final long serialVersionUID = -3993560903203859821L;
 
     /**

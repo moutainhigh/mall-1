@@ -36,4 +36,7 @@ public interface CommodityService {
      */
     Page<Commodity> categorySearch(SearchVo searchVo, Pageable pageable) throws Exception;
 
+
+    long bulkIndex(List<Commodity> queries ) throws Exception;
+
 }

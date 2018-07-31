@@ -193,4 +193,6 @@ public interface ICommodityService {
     public Commodity getCommodityAndCatalogByComId(int commodityId);
 
     public List<Commodity> getCommoditySellerByCommodityCode(List<String> commodityCodes);
+
+    public void syncESCommodity();
 }
