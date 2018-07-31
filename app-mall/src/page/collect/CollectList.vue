@@ -9,6 +9,7 @@
       </div>
     </head-top>
     <div class="user-order-list" style="margin-top: 3rem">
+      <div style="position: absolute;top: 0;width: 100%;height: 100%;overflow: hidden;z-index: -1;">
       <scroller style="top: 0;font-size: 12px !important;margin-top: 3rem"
                 :on-refresh="refresh"
                 :on-infinite="infinite"
@@ -69,6 +70,7 @@
           </g>
         </svg>
       </scroller>
+      </div>
     </div>
 
     <div style="height: 3.125rem" v-if="isEdit">
@@ -150,8 +152,15 @@
       },
       //删除勾选的收藏商品
       delFavoriteList() {
-        delFavoriteListByFavoriteIds(this.checkList.toString()).then(res => {
-            console.log(res);
+        let _this = this;
+        delFavoriteListByFavoriteIds(_this.checkList.toString()).then(res => {
+            if (res.result == 'SUCCESS') {
+              getCustomerFavorite(_this.pageQuery).then(res => {
+                if (res.result == 'SUCCESS') {
+                  _this.collectList = res.data.data;
+                }
+              })
+            }
         })
       }
     },
@@ -224,6 +233,7 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
+    line-height: 1.2;
   }
 
   .price {
@@ -232,6 +242,7 @@
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
+    line-height: 1.3;
   }
 
   .price span {
@@ -245,6 +256,7 @@
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
+    line-height: 1.2;
   }
 
   .carLocal img {

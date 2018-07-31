@@ -5,6 +5,7 @@ export const getIndex = function () {
   return get('/v1/mall/index/getIndex.do');
 };
 
+//############## 收藏接口 ##################//
 //获取收藏夹
 export const getCustomerFavorite = function (query) {
   return post('/v1/mall/favorite/getCustomerFavorite.do',{},query);
@@ -27,12 +28,17 @@ export const delFavoriteByFavoriteId = function (favoriteId) {
 
 //删除勾选的收藏商品
 export const delFavoriteListByFavoriteIds = function (favoriteIds) {
-  return del('/v1/mall/favorite/delFavorite/' + favoriteIds);
+  return del('/v1/mall/favorite/delFavorites/' + favoriteIds);
 };
 
 //分类搜索
 export const categorySearch = function (searchVo, page, size) {
   return post('/mall/search/categorySearch/'+page + '/' + size,searchVo)
+}
+
+//关键词搜索
+export const keywordSearch = function (keyword, page, size) {
+  return post('/mall/search/keywordSearch/'+page + '/' + size + '?keyword=' + keyword)
 }
 
 //############## 地址接口 ##################//
