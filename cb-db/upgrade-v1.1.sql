@@ -163,3 +163,22 @@ CREATE TABLE `insurance_log` (
   `CREATE_TIME` datetime DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`INSURANCE_LOG_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='保单操作日志';
+
+
+SET FOREIGN_KEY_CHECKS=0;
+
+####add by likang 2018-07-31
+DROP TABLE IF EXISTS `bank_info`;
+CREATE TABLE `bank_info` (
+  `BANK_ID` int(5) NOT NULL AUTO_INCREMENT,
+  `BANK_CARD_NUMBER` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '银行卡号',
+  `EFFECTIVE_TIME` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp() COMMENT '有效期',
+  `CARDHOLDER` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '持卡人',
+  `CARD_TYPE` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '证件类型',
+  `CUSTOMER_CARD_NO` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '证件号',
+  `MOBILE` varchar(22) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '手机号',
+  `CUSTOMER_ID` int(10) NOT NULL COMMENT '客户ID',
+  PRIMARY KEY (`BANK_ID`),
+  KEY `bank_info_fk` (`CUSTOMER_ID`),
+  CONSTRAINT `bank_info_fk` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
