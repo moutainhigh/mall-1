@@ -1,7 +1,9 @@
 package com.yunxin.cb.mall.web.action.insurance;
 
+import com.yunxin.cb.insurance.entity.InsuranceLog;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.meta.InsuranceOrderState;
+import com.yunxin.cb.insurance.service.IInsuranceLogService;
 import com.yunxin.cb.insurance.service.IInsuranceOrderOffsiteService;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.core.persistence.PageSpecification;
@@ -11,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -26,7 +29,8 @@ public class InsuranceController {
 
     @Resource
     private IInsuranceOrderOffsiteService InsuranceOrderOffsiteService;
-
+    @Resource
+    private IInsuranceLogService iInsuranceLogService;
     @RequestMapping(value = "insurances", method = RequestMethod.GET)
     public String insurances() {
         return "insurance/insurances";
@@ -62,6 +66,8 @@ public class InsuranceController {
         return "insurance/insuranceOrderDetail";
     }
 
+
+
     /**
      * 修改支付状态
      *
@@ -71,8 +77,8 @@ public class InsuranceController {
      */
     @ResponseBody
     @RequestMapping(value = "updInsuranceOrderState", method = RequestMethod.GET)
-    public boolean updInsuranceOrderState(@RequestParam("orderId") int orderId, @RequestParam("orderState") InsuranceOrderState orderState) {
-        return iInsuranceOrderService.updInsuranceOrderState(orderId, orderState);
+    public boolean updInsuranceOrderState(@RequestParam("orderId") int orderId, @RequestParam("orderState") InsuranceOrderState orderState, HttpServletRequest request) {
+        return iInsuranceOrderService.updInsuranceOrderState(orderId, orderState,request);
     }
     /**
      * 获取异地投保详情
@@ -171,4 +177,43 @@ public class InsuranceController {
 //        }
         return "insurance/orderDetailPrint";
     }
+
+    /**
+     * 操作日志
+     * @return
+     */
+    @RequestMapping(value = "insuranceLog", method = RequestMethod.GET)
+    public String insuranceLog() {
+        return "insurance/insuranceLog";
+    }
+
+    /**
+     * 操作日志分页
+     * @param query
+     * @return
+     */
+    @RequestMapping(value = "pageInsuranceLog", method = RequestMethod.POST)
+    @ResponseBody
+    public Page<InsuranceLog> pageInsuranceLog(@RequestBody PageSpecification<InsuranceLog> query) {
+        Page<InsuranceLog> page = iInsuranceLogService.pageInsuranceLog(query);
+        return page;
+    }
+
+    /**
+     * 操作日志详情
+     *
+     * @param orderId
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "insuranceLogDetail", method = RequestMethod.GET)
+    public String insuranceLogDetail(@RequestParam("orderId") int orderId, ModelMap modelMap) throws Exception {
+        InsuranceOrder InsuranceOrder = iInsuranceOrderService.getInsuranceOrderDetailById(orderId);
+        modelMap.addAttribute("insuranceOrder", InsuranceOrder);
+
+        modelMap.addAttribute("matterList", iInsuranceOrderService.findMatter(orderId));
+        return "insurance/insuranceLogDetail";
+    }
+
 }

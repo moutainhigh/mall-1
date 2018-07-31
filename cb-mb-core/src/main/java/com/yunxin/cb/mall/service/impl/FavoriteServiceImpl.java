@@ -34,25 +34,29 @@ public class FavoriteServiceImpl implements FavoriteService {
 	private CommodityMapper commodityMapper;
 
 	@Override
-	public int addFavorite(Favorite favorite) {
-		int result=0;
+	public Favorite addFavorite(Favorite favorite) {
 		if(null==commodityMapper.selectByPrimaryKey(favorite.getCommodityId())){
-			return result;//商品不存在，返回失败
+			return null;//商品不存在，返回失败
 		}else{
 			Favorite getFavorite = favoriteMapper.findByCustomerAndCommodity(favorite);
 			if (getFavorite == null) {//不存在，则新增
 				favorite.setCreateTime(new Date());
-				result=favoriteMapper.insert(favorite);
+				favoriteMapper.insert(favorite);
 			}else{
-				result=1;//已存在，则返回成功
+				favorite=getFavorite;//已存在，则返回成功
 			}
-			return result;
+			return favorite;
 		}
 	}
 
 	@Override
 	public int removeFavorite(int favoriteId) {
 		return favoriteMapper.deleteByPrimaryKey(favoriteId);
+	}
+
+	@Override
+	public int removeFavoriteBatch(String[] favoriteIds){
+		return favoriteMapper.removeFavoriteBatch(favoriteIds);
 	}
 
 	@Override

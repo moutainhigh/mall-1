@@ -85,15 +85,16 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "salePrice", value = "销售价", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "addFavorite")
     @ApiVersion(1)
-    public ResponseResult addFavorite(@RequestBody FavoriteVo favoriteVo) {
+    public ResponseResult<FavoriteVo> addFavorite(@RequestBody FavoriteVo favoriteVo) {
         try {
             logger.info("input Parameter favoriteVo:" + favoriteVo.toString());
             Favorite favorite = new Favorite();
             BeanUtils.copyProperties(favorite, favoriteVo);
             favorite.setCustomerId(getCustomerId());
-            int result = favoriteService.addFavorite(favorite);
-            if (result > 0) {
-                return new ResponseResult(Result.SUCCESS);//成功
+            favorite = favoriteService.addFavorite(favorite);
+            if (favorite != null) {
+                BeanUtils.copyProperties(favoriteVo, favorite);
+                return new ResponseResult(favoriteVo);//成功
             } else {
                 return new ResponseResult(Result.FAILURE);//失败
             }
@@ -107,7 +108,7 @@ public class FavoriteResource extends BaseResource {
 
     /**
      * @title: 商品移出收藏夹
-     * @param: [commodityId]
+     * @param: [favoriteId]
      * @return: com.yunxin.cb.vo.ResponseResult
      * @auther: eleven
      * @date: 2018/7/17 18:27
@@ -119,6 +120,27 @@ public class FavoriteResource extends BaseResource {
     @ApiVersion(1)
     public ResponseResult delFavorite(@PathVariable(value = "favoriteId") int favoriteId){
         int result=favoriteService.removeFavorite(favoriteId);
+        if(result>0){
+            return new ResponseResult(Result.SUCCESS);//成功
+        }else{
+            return new ResponseResult(Result.FAILURE);//失败
+        }
+    }
+
+    /**
+     * @title: 商品移出收藏夹(批量)
+     * @param: [favoriteIds]
+     * @return: com.yunxin.cb.vo.ResponseResult
+     * @auther: eleven
+     * @date: 2018/7/17 18:27
+     */
+    @ApiOperation(value = "商品移出收藏夹(批量)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "favoriteIds", value = "收藏夹id,根据“,”拆分", required = true, paramType = "path", dataType = "String")})
+    @DeleteMapping(value = "delFavorites/{favoriteIds}")
+    @ApiVersion(1)
+    public ResponseResult delFavorites(@PathVariable(value = "favoriteIds") String favoriteIds){
+        int result=favoriteService.removeFavoriteBatch(favoriteIds.split(","));
         if(result>0){
             return new ResponseResult(Result.SUCCESS);//成功
         }else{

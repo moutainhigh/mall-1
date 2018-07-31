@@ -116,10 +116,13 @@ public class FavoriteVo implements java.io.Serializable{
                 List<Favorite> list = pageFinder.getData();
                 List<FavoriteVo> volist = new ArrayList<>();
                 for (Favorite fa:list){
+                    SellerVo sellerVo=new SellerVo();
+                    BeanUtils.copyProperties(sellerVo,fa.getCommodity().getSeller());
                     CommodityVo commodityVo=new CommodityVo();
                     BeanUtils.copyProperties(commodityVo,fa.getCommodity());
                     FavoriteVo favoriteVo=new FavoriteVo();
                     BeanUtils.copyProperties(favoriteVo,fa);
+                    commodityVo.setSellerVo(sellerVo);
                     favoriteVo.setCommodityVo(commodityVo);
                     volist.add(favoriteVo);
                 }

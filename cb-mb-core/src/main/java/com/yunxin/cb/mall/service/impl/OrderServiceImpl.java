@@ -146,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
         }
         //支付方式
         if (order.getPaymentType()== PaymentType.LOAN) {
-            CustomerWallet customerWallet = customerWalletMapper.selectByPrimaryKey(order.getCustomerId());
+            CustomerWallet customerWallet = customerWalletMapper.selectByCustomerId(order.getCustomerId());
             if (customerWallet != null) {
                 double expectedReturnAmount = customerWallet.getExpectedReturnAmount() == null ? 0 : customerWallet.getExpectedReturnAmount();
                 double loanQuota = customerWallet.getLoanQuota() == null ? 0 : customerWallet.getLoanQuota();
