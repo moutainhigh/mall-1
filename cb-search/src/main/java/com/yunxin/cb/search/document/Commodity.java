@@ -1,6 +1,7 @@
 package com.yunxin.cb.search.document;
 
 import com.yunxin.cb.search.vo.*;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -17,6 +18,9 @@ import java.util.Set;
  */
 @Document(indexName = "crystal_ball", type = "commodity")
 public class Commodity implements java.io.Serializable {
+
+    public static final String index_name="crystal_ball";
+    public static final String index_type="commodity";
 
     private static final long serialVersionUID = -3993560903203859821L;
 
@@ -116,6 +120,11 @@ public class Commodity implements java.io.Serializable {
      * 商品规格
      */
     private Set<CommoditySpec> commoditySpecs = new HashSet<>();
+
+    /**
+     * 默认货品id
+     */
+    private int defaultProduct;
 
 
     public int getCommodityId() {
@@ -292,5 +301,13 @@ public class Commodity implements java.io.Serializable {
 
     public void setCommoditySpecs(Set<CommoditySpec> commoditySpecs) {
         this.commoditySpecs = commoditySpecs;
+    }
+
+    public int getDefaultProduct() {
+        return defaultProduct;
+    }
+
+    public void setDefaultProduct(int defaultProduct) {
+        this.defaultProduct = defaultProduct;
     }
 }

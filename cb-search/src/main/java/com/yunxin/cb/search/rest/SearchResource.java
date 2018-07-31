@@ -46,38 +46,17 @@ public class SearchResource extends BaseResource {
             Page<Commodity> result = commodityService.keywordSearch(keyword, PageRequest.of(page, size));
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
             Map<String, List<Object>> condition = new HashMap<>();
-            SearchResultVo searchResultVo =new SearchResultVo();
-            if (result.getTotalElements() > 0) {
-                List<Commodity> list = result.getContent();
-                List<CommodityVO> voList = new ArrayList<>();
-                for (Commodity commodity : list) {
-                    CommodityVO commodityVO = new CommodityVO();
-                    BeanUtils.copyProperties(commodity, commodityVO);
-                    voList.add(commodityVO);
-                    for (CommoditySpec commoditySpec : commodity.getCommoditySpecs()) {
-                        List<Object> values = condition.get(commoditySpec.getSpecName());
-                        if (values == null || values.size() == 0) {
-                            values = new ArrayList<>();
-                            values.add(commoditySpec.getValue());
-                        } else {
-                            values.add(commoditySpec.getValue());
-                        }
-                        condition.put(commoditySpec.getSpecName(),values);
-                    }
-                }
-                pageFinder.setData(voList);
-                pageFinder.setPageCount(result.getTotalPages());
-                pageFinder.setRowCount(result.getNumber());
-                pageFinder.setPageNo(page);
-                searchResultVo.setCondition(condition);
-                searchResultVo.setPageFinder(pageFinder);
-            }
+            SearchResultVo searchResultVo = new SearchResultVo();
+            dealResult(page, result, pageFinder, condition, searchResultVo);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("keywordSearch excption", e);
             return new ResponseResult(Result.FAILURE);
         }
     }
+
+
+
     @ApiOperation(value = "分类搜索")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "post", dataType = "int"),
@@ -89,32 +68,8 @@ public class SearchResource extends BaseResource {
             Page<Commodity> result = commodityService.categorySearch(searchVo, PageRequest.of(page, size));
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
             Map<String, List<Object>> condition = new HashMap<>();
-            SearchResultVo searchResultVo =new SearchResultVo();
-            if (result.getTotalElements() > 0) {
-                List<Commodity> list = result.getContent();
-                List<CommodityVO> voList = new ArrayList<>();
-                for (Commodity commodity : list) {
-                    CommodityVO commodityVO = new CommodityVO();
-                    BeanUtils.copyProperties(commodity, commodityVO);
-                    voList.add(commodityVO);
-                    for (CommoditySpec commoditySpec : commodity.getCommoditySpecs()) {
-                        List<Object> values = condition.get(commoditySpec.getSpecName());
-                        if (values == null || values.size() == 0) {
-                            values = new ArrayList<>();
-                            values.add(commoditySpec.getValue());
-                        } else {
-                            values.add(commoditySpec.getValue());
-                        }
-                        condition.put(commoditySpec.getSpecName(),values);
-                    }
-                }
-                pageFinder.setData(voList);
-                pageFinder.setPageCount(result.getTotalPages());
-                pageFinder.setRowCount(result.getNumber());
-                pageFinder.setPageNo(page);
-                searchResultVo.setCondition(condition);
-                searchResultVo.setPageFinder(pageFinder);
-            }
+            SearchResultVo searchResultVo = new SearchResultVo();
+            dealResult(page, result, pageFinder, condition, searchResultVo);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("categorySearch excption", e);
@@ -142,6 +97,55 @@ public class SearchResource extends BaseResource {
         commodityService.deleteById(commodityId);
         return new ResponseResult(Result.SUCCESS);
     }
+
+    @ApiOperation(value = "批量添加对象到ES")
+    @ApiImplicitParams({
+    })
+    @PostMapping(value = "bulkIndex")
+    public ResponseResult bulkIndex(@RequestBody List<CommodityVO> voList) {
+        try {
+            List<Commodity> list = new ArrayList();
+            for (CommodityVO commodityVO : voList) {
+                Commodity commodity = new Commodity();
+                BeanUtils.copyProperties(commodityVO, commodity);
+                list.add(commodity);
+            }
+            commodityService.bulkIndex(list);
+        } catch (Exception e) {
+            logger.info("bulkIndex failled", e);
+        }
+        return new ResponseResult(Result.SUCCESS);
+    }
+
+    private void dealResult( int page, Page<Commodity> result, PageFinder<CommodityVO> pageFinder, Map<String, List<Object>> condition, SearchResultVo searchResultVo) {
+        if (result.getTotalElements() > 0) {
+            List<Commodity> list = result.getContent();
+            List<CommodityVO> voList = new ArrayList<>();
+            for (Commodity commodity : list) {
+                CommodityVO commodityVO = new CommodityVO();
+                BeanUtils.copyProperties(commodity, commodityVO);
+                voList.add(commodityVO);
+                for (CommoditySpec commoditySpec : commodity.getCommoditySpecs()) {
+                    List<Object> values = condition.get(commoditySpec.getSpecName());
+                    if (values == null || values.size() == 0) {
+                        values = new ArrayList<>();
+                        values.add(commoditySpec.getValue());
+                    } else {
+                        values.add(commoditySpec.getValue());
+                    }
+                    condition.put(commoditySpec.getSpecName(), values);
+                }
+            }
+            pageFinder.setData(voList);
+            pageFinder.setPageCount(result.getTotalPages());
+            pageFinder.setRowCount(result.getNumber());
+            pageFinder.setPageNo(page);
+            searchResultVo.setCondition(condition);
+            searchResultVo.setPageFinder(pageFinder);
+        }
+    }
+
+
     @ApiOperation(value = "更新ES对象")
     @PutMapping(value = "commodity")
     public ResponseResult updateCommodity(@RequestBody CommodityVO commodityVO){

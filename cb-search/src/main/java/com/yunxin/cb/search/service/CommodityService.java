@@ -43,4 +43,8 @@ public interface CommodityService {
      */
     void updateCommodity(Commodity commodity);
 
+
+
+    long bulkIndex(List<Commodity> queries ) throws Exception;
+
 }

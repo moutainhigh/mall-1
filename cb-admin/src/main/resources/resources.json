@@ -203,6 +203,9 @@
       },
       {
         "name": "产品管理", "code": "155", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceproduct/insuranceproducts.do"
+      },
+      {
+        "name": "保单操作日志", "code": "156", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/insuranceLog.do"
       }
     ]
   },
