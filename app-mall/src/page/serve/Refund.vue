@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top :headTitle="'服务单详情'"></head-top>
+    <head-top :headTitle="'售后申请'"></head-top>
     <div style="position:absolute;top: 0; height: 100%; width: 100%;z-index: 0">
 
     </div>

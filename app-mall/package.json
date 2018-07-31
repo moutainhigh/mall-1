@@ -20,7 +20,8 @@
     "vue-picture-preview": "^1.2.0",
     "vue-router": "^3.0.1",
     "vue-scroller": "^2.2.4",
-    "vux": "^2.9.2"
+    "vux": "^2.9.2",
+    "we-vue": "^2.1.5"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

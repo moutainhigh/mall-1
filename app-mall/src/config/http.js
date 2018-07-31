@@ -63,6 +63,7 @@ axios.interceptors.response.use(
 
 export function get(url,params={}){
   url = baseUrl + url;
+  let _this = this;
   return new Promise((resolve,reject) => {
     axios.get(url,{
       params:params
