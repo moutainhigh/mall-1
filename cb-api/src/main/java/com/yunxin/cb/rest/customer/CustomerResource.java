@@ -67,7 +67,7 @@ public class CustomerResource extends BaseResource {
             CustomerFriend customerFriend= customerService.getFriend(customerId,friend.getCustomerId());
             if(null!=customerFriend) {
                 friend.setState(customerFriend.getState().name());
-                friend.setAllasName(customerFriend.getAliasName());
+                friend.setAliasName(customerFriend.getAliasName());
             }
             return new ResponseResult(friend);
         }
@@ -85,7 +85,7 @@ public class CustomerResource extends BaseResource {
             CustomerFriend customerFriend= customerService.getFriend(customerId,customer.getCustomerId());
             if(null!=customerFriend) {
                 customer.setState(customerFriend.getState().name());
-                customer.setAllasName(customerFriend.getAliasName());
+                customer.setAliasName(customerFriend.getAliasName());
             }
             return new ResponseResult(customer);
         }

@@ -299,7 +299,7 @@ public class Customer implements java.io.Serializable {
     /**
      * 备注名
      */
-    private String allasName;
+    private String aliasName;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)
@@ -782,11 +782,11 @@ public class Customer implements java.io.Serializable {
         this.occupationalCategory = occupationalCategory;
     }
     @Transient
-    public String getAllasName() {
-        return allasName;
+    public String getAliasName() {
+        return aliasName;
     }
 
-    public void setAllasName(String allasName) {
-        this.allasName = allasName;
+    public void setAliasName(String aliasName) {
+        this.aliasName = aliasName;
     }
 }
