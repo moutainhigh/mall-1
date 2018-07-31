@@ -150,7 +150,7 @@
       },
       //删除勾选的收藏商品
       delFavoriteList() {
-        delFavoriteListByFavoriteIds(this.checkList).then(res => {
+        delFavoriteListByFavoriteIds(this.checkList.toString()).then(res => {
             console.log(res);
         })
       }
@@ -191,8 +191,8 @@
 
   .user-order-list .myorderList .imgs {
     float: left;
-    width: 7.75rem;
-    height: 5.52rem;
+    width: 35%;
+    height: 5rem;
     margin-right: 0.625rem;
     border-radius: 5px;
   }
@@ -214,16 +214,24 @@
     float: right;
     text-align: left;
     padding-bottom: 15px;
+    height: 5rem;
   }
 
   .title {
     white-space: normal;
-    font-size: 0.93rem
+    font-size: 0.93rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
 
   .price {
     font-size: 0.93rem;
     color: #F54E4E;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
   }
 
   .price span {
@@ -234,6 +242,9 @@
   .carLocal {
     font-size: 0.81rem;
     color: #999;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
   }
 
   .carLocal img {
