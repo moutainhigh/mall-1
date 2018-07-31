@@ -122,6 +122,13 @@ public class CommodityVO implements java.io.Serializable {
     @ApiModelProperty(value="商品规格",name="commoditySpecs",example="商品规格")
     private Set<CommoditySpec> commoditySpecs = new HashSet<>();
 
+    /**
+     * 默认货品id
+     */
+    @ApiModelProperty(value="默认货品id",name="defaultProduct",example="11")
+    private int defaultProduct;
+
+
 
 
     public int getCommodityId() {
@@ -300,4 +307,11 @@ public class CommodityVO implements java.io.Serializable {
         this.commoditySpecs = commoditySpecs;
     }
 
+    public int getDefaultProduct() {
+        return defaultProduct;
+    }
+
+    public void setDefaultProduct(int defaultProduct) {
+        this.defaultProduct = defaultProduct;
+    }
 }
