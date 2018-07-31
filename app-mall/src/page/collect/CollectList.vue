@@ -106,7 +106,7 @@
     methods:{
       refresh(done) {
 
-          done()
+        done();
       },
 
       infinite(done) {

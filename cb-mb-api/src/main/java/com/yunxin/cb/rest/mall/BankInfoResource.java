@@ -44,7 +44,7 @@ public class BankInfoResource extends BaseResource implements ServletContextAwar
     })
     @ApiVersion(1)
     @PostMapping(value = "addBankInfo")
-    public ResponseResult addBankInfo(@RequestBody BankInfoVO bankInfoVO) throws Exception{
+    public ResponseResult<BankInfoVO> addBankInfo(@RequestBody BankInfoVO bankInfoVO) throws Exception{
         logger.info("bankInfoVO:" + bankInfoVO.toString());
         BankInfo bankInfo = new BankInfo();
         try {
@@ -93,7 +93,7 @@ public class BankInfoResource extends BaseResource implements ServletContextAwar
     })
     @ApiVersion(1)
     @GetMapping(value = "selectBankInfo")
-    public ResponseResult selectBankInfo() throws Exception{
+    public ResponseResult<BankInfoVO> selectBankInfo() throws Exception{
         try {
             List<BankInfoVO> listVo = bankInfoService.selectAll(getCustomerId());
             return new ResponseResult(listVo);
@@ -108,7 +108,7 @@ public class BankInfoResource extends BaseResource implements ServletContextAwar
     })
     @ApiVersion(1)
     @GetMapping(value = "selectBankInfoDetail/{bankId}")
-    public ResponseResult selectBankInfoDetail(@PathVariable Integer bankId) throws Exception{
+    public ResponseResult<BankInfoVO> selectBankInfoDetail(@PathVariable Integer bankId) throws Exception{
         try {
             BankInfoVO bankInfoVO = bankInfoService.selectByPrimaryKey(bankId,getCustomerId());
             return new ResponseResult(bankInfoVO);

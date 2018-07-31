@@ -5,9 +5,7 @@ import storage from "../store/storage";
 
 export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 	type = type.toUpperCase();
-	if (baseUrl.indexOf('http') < 0) {
-    url = baseUrl + url;
-  }
+	// url = baseUrl + url;
 
 	if (type == 'GET') {
 		let dataStr = ''; //数据拼接字符串

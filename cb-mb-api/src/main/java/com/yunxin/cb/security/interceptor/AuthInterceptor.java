@@ -1,8 +1,6 @@
 package com.yunxin.cb.security.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yunxin.cb.jwt.JwtUtil;
-import com.yunxin.cb.jwt.Token;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.orm.CustomerContextHolder;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
@@ -16,9 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.Date;
-
-import static com.yunxin.cb.jwt.JwtUtil.HEADER_STRING;
-import static com.yunxin.cb.jwt.JwtUtil.TOKEN_PREFIX;
 
 
 /**
