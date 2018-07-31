@@ -9,6 +9,7 @@
       <input v-model="password"/>
     </div>
     <button @click="login">登录</button>
+    <button @click="tes">go</button>
   </div>
 </template>
 
@@ -21,8 +22,8 @@
         name: "Login",
         data(){
           return {
-            accountName:'13670150690',
-            password:'12345678'
+            accountName:'13407151506',
+            password:'123456'
           }
         },
         methods:{
@@ -35,6 +36,11 @@
                 storage.saveSession('token',res.data.token);
               };
             });
+          },
+          tes(){
+            this.$router.push({
+              path:"/order-list"
+            })
           }
         },
       created(){

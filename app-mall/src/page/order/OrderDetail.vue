@@ -23,35 +23,46 @@
         </div>
       </div>
 
-      <div class="good-info">
-        <img src="../../assets/img/home/1.png" class="good-img">
+      <div class="good-info" v-for="item in order.orderItemDetails">
+        <!--<img src="../../assets/img/home/1.png" class="good-img">-->
+        <img :src="item.productImg" class="good-img">
         <div class="good-detail">
-          <div style="height: 2.6rem;">2018款 240TURBO自动两驱舒适版</div>
-          <div class="good-cate">天漠金 <span>2.0L自动</span> <span style="float: right;line-height: 1.6">x 1</span></div>
+          <div style="height: 2.6rem;word-break: break-all;">{{item.commodityTitle}}</div>
+          <div class="good-cate">{{setSpec(item.productName)}} <span style="float: right;line-height: 1.6">x {{item.productNum}}</span></div>
         </div>
       </div>
 
       <div class="good-total">
-        <div style="display: inline-block;padding: 1rem;">共<span> 1 </span>件商品　合计：<span style="color: #F54E4E;">￥23.98 万</span></div>
+        <div style="display: inline-block;padding: 1rem;">共<span> {{order.prodQuantity}} </span>件商品　合计：<span style="color: #F54E4E;">￥23.98 万</span></div>
       </div>
 
       <div class="order-info">
         <div class="info-title">订单信息</div>
         <div class="info-detail">
-          <div>订单编号：<span style="">123132312</span>
+          <div>订单编号：<span style="">{{order.orderCode}}</span>
             <div class="info-copy">复制</div>
           </div>
-          <div>提交时间：<span>2018-01-01 11:19</span></div>
-          <div>支付方式：<span>线下支付</span></div>
+          <div>提交时间：<span>{{order.createTime}}</span></div>
+          <div>支付方式：<span>{{setPayType(order.paymentType)}}</span></div>
+          <div v-if="order.paymentTime">付款时间：<span>{{order.paymentTime}}</span></div>
         </div>
       </div>
     </div>
 
-    <footer class="order-pay">
-      <div class="order-price">
-        应付金额：<span>￥23.98万</span>
+    <footer class="order-pay" v-if="order.orderState == 'PAID_PAYMENT' || order.orderState == 'OUT_STOCK'">
+      <div class="order-btn" @click="takeGood">
+        确认收货
       </div>
-      <div class="order-btn">取消订单
+      <div class="order-btn" @click="openServe">
+        申请售后
+      </div>
+    </footer>
+    <footer class="order-pay" v-if="order.orderState == 'PENDING_PAYMENT'">
+      <div class="order-price">
+        应付金额：<span>￥{{order.totalPrice}}万</span>
+      </div>
+      <div class="order-btn" @click="cancelOrder">
+        取消订单
       </div>
     </footer>
 
@@ -60,13 +71,99 @@
 
 <script>
   import headTop from '../../components/header/head'
+  import {cancelOrder, confirmOrder, getOrderDetailById} from "../../service/getData";
+  import {goodsSpec, orderState, payType} from "../../config/dataFormat";
+  import {Dialog, Toast} from "we-vue";
 
   export default {
     name: "OrderDetail",
     components: {
       headTop
     },
-
+    data(){
+      return {
+        order : {}
+      }
+    },
+    methods:{
+      setState(state){
+        return orderState(state);
+      },
+      setSpec(spec){
+        return goodsSpec(spec);
+      },
+      setPayType(type){
+        return payType(type);
+      },
+      takeGood(){
+        let _this = this;
+        Dialog.alert({
+          title: "提示",
+          message: '确定收货？',
+          showCancelButton: true
+        }).then(() => {
+          confirmOrder(_this.order.orderId).then(res=>{
+            if (res.result == 'SUCCESS') {
+              Toast({
+                duration: 1000,
+                message: '修改成功',
+                type: 'text'
+              });
+              _this.order.orderState = 'RECEIVED';
+            } else {
+              Toast({
+                duration: 1000,
+                message: '修改失败，请稍后重试！',
+                type: 'text'
+              })
+            }
+          });
+        }).catch(() => {
+        })
+      },
+      openServe(){
+        let _this = this;
+        this.$router.push({
+          path:'/refund',
+          query:{
+            orderId:_this.order.orderId
+          }
+        })
+      },
+      cancelOrder(){
+        Dialog.alert({
+          title: "提示",
+          message: '确定要取消订单？',
+          showCancelButton: true
+        }).then(() => {
+          cancelOrder(_this.order.orderId).then(res=>{
+            if (res.result == 'SUCCESS') {
+              Toast({
+                duration: 1000,
+                message: '取消成功',
+                type: 'text'
+              });
+              _this.order.orderState = 'CANCELED';
+            } else {
+              Toast({
+                duration: 1000,
+                message: '取消成功，请稍后重试！',
+                type: 'text'
+              })
+            }
+          });
+        }).catch(() => {
+        })
+      }
+    },
+    created(){
+      let orderId = this.$route.query.orderId;
+      getOrderDetailById(orderId).then(res=>{
+        if (res.result == 'SUCCESS') {
+          this.order = res.data;
+        }
+      });
+    }
   }
 </script>
 
@@ -172,7 +269,7 @@
 
     .order-btn {
       display: inline-block;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: #666;
       float: right;
       border: #DCDCDC 1px solid;
