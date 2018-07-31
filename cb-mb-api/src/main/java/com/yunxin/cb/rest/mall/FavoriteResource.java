@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.service.FavoriteService;
 import com.yunxin.cb.mall.vo.FavoriteVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.util.LogicUtils;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import com.yunxin.cb.vo.ResponseResult;
@@ -115,10 +116,13 @@ public class FavoriteResource extends BaseResource {
      */
     @ApiOperation(value = "商品移出收藏夹")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "favoriteId", value = "收藏夹ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "favoriteId", value = "收藏夹ID", required = true, paramType = "path", dataType = "Integer")})
     @DeleteMapping(value = "delFavorite/{favoriteId}")
     @ApiVersion(1)
-    public ResponseResult delFavorite(@PathVariable(value = "favoriteId") int favoriteId){
+    public ResponseResult delFavorite(@PathVariable(value = "favoriteId") Integer favoriteId){
+        if(LogicUtils.isNull(favoriteId)){
+            return new ResponseResult(Result.FAILURE,"参数为空");//失败
+        }
         int result=favoriteService.removeFavorite(favoriteId);
         if(result>0){
             return new ResponseResult(Result.SUCCESS);//成功
@@ -140,6 +144,9 @@ public class FavoriteResource extends BaseResource {
     @DeleteMapping(value = "delFavorites/{favoriteIds}")
     @ApiVersion(1)
     public ResponseResult delFavorites(@PathVariable(value = "favoriteIds") String favoriteIds){
+        if(LogicUtils.isNullOrEmpty(favoriteIds)){
+            return new ResponseResult(Result.FAILURE,"参数为空");//失败
+        }
         int result=favoriteService.removeFavoriteBatch(favoriteIds.split(","));
         if(result>0){
             return new ResponseResult(Result.SUCCESS);//成功

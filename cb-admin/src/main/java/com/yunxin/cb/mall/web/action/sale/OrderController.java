@@ -253,7 +253,16 @@ public class OrderController {
         } catch (Exception e) {
             return false;
         }
+    }
 
+    @RequestMapping(value = "underLinePayConfirm",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean underLinePayConfirm(@RequestParam("orderId") int orderId,ModelMap modelMap){
+        try {
+            return orderService.underLinePayConfirm(orderId);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }
