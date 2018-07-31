@@ -34,8 +34,6 @@ import retrofit2.Call;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
-import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -627,18 +625,25 @@ public class CommodityService implements ICommodityService {
                 && publishState == PublishState.UP_SHELVES) {
             List<Product> products = productDao.findByCommodity_commodityId(commodityId);
             if (LogicUtils.isNotNullAndEmpty(products)) {
-                int[] prodIds = new int[products.size()];
+                List<Integer> prodIds=new ArrayList<Integer>();
+                Product defaultProduct=null;
                 for (int i = 0; i < products.size(); i++) {
-                    prodIds[i] = products.get(i).getProductId();
+                    if(products.get(i).getPublishState()==PublishState.UP_SHELVES){
+                        prodIds.add(products.get(i).getProductId());
+                    }
                 }
+                if(prodIds.size()<=0){//没有已上架的货品，商品不能上架
+                    return false;
+                }
+                commodity.setDefaultProduct(defaultProduct);
                 commodity.setPublishState(PublishState.UP_SHELVES);
-                productDao.updateUpOrDownShelvesInProductId(PublishState.UP_SHELVES, prodIds);
+                //productDao.updateUpOrDownShelvesInProductId(PublishState.UP_SHELVES, prodIds.toArray(new Integer[prodIds.size()]));//上架商品只上架已上架了的货品
                 //商品上架，将商品添加到搜索容器
                 SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
                 CommodityVO commodityVO = new CommodityVO(commodity);
                 Call<ResponseResult> call = restService.addCommodity(commodityVO);
                 ResponseResult result = call.execute().body();
-                logger.info("[elasticsearch] Commodity Sync State:" + result.getResult());
+                logger.info("[elasticsearch] Commodity Sync State:" + result);
                 return true;
             } else {
                 return false;
@@ -647,7 +652,7 @@ public class CommodityService implements ICommodityService {
                 && publishState == PublishState.DOWN_SHELVES) {
             List<Product> products = productDao.findByCommodity_commodityId(commodityId);
             if (LogicUtils.isNotNullAndEmpty(products)) {
-                int[] prodIds = new int[products.size()];
+                Integer[] prodIds = new Integer[products.size()];
                 for (int i = 0; i < products.size(); i++) {
                     prodIds[i] = products.get(i).getProductId();
                 }
@@ -657,7 +662,7 @@ public class CommodityService implements ICommodityService {
                 SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
                 Call<ResponseResult> call = restService.removeCommodity(commodityId);
                 ResponseResult result = call.execute().body();
-                logger.info("[elasticsearch] remove commodity state:" + result.getResult());
+                logger.info("[elasticsearch] remove commodity state:" + result);
                 return true;
             } else {
                 return false;
