@@ -296,6 +296,10 @@ public class Customer implements java.io.Serializable {
 
     private boolean friend;
     private String state;
+    /**
+     * 备注名
+     */
+    private String aliasName;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)
@@ -776,5 +780,13 @@ public class Customer implements java.io.Serializable {
 
     public void setOccupationalCategory(String occupationalCategory) {
         this.occupationalCategory = occupationalCategory;
+    }
+    @Transient
+    public String getAliasName() {
+        return aliasName;
+    }
+
+    public void setAliasName(String aliasName) {
+        this.aliasName = aliasName;
     }
 }

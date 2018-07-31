@@ -122,7 +122,7 @@ public class CommodityService implements ICommodityService {
                 Commodity_.commodityCode, Commodity_.commodityName, Commodity_.commodityPYName, Commodity_.shortName, Commodity_.commodityTitle,
                 Commodity_.costPrice, Commodity_.sellPrice, Commodity_.marketPrice, Commodity_.unit, Commodity_.province, Commodity_.city, Commodity_.seoKey,
                 Commodity_.seoTitle, Commodity_.seoDescription, Commodity_.popular, Commodity_.special, Commodity_.recommend, Commodity_.giveaway,
-                Commodity_.barter, Commodity_.preSell, Commodity_.content, Commodity_.deliveryType, Commodity_.weight, Commodity_.volume, Commodity_.defaultPicPath,Commodity_.explainContent);
+                Commodity_.barter, Commodity_.preSell, Commodity_.content, Commodity_.deliveryType, Commodity_.weight, Commodity_.volume, Commodity_.defaultPicPath, Commodity_.explainContent);
         List<CommoditySpec> commoditySpecs = commoditySpecDao.getCommoditySpecsByCommodityId(commodity.getCommodityId());
         for (CommoditySpec cSpec : commoditySpecs) {
             commoditySpecDao.delete(cSpec);
@@ -159,65 +159,7 @@ public class CommodityService implements ICommodityService {
             logger.info("[elasticsearch] updateCommodityES:", result.getResult());
         }
     }
-    /**
-     * 删除未选中的图
-     */
-    private void deleteUnSelectImg(String imagesDir, Commodity commodity) {
-        // 更新图片
-        // 原来的图,1466766940169_500_539.jpg
-        String[] imagesOld = getImagePath(imagesDir, commodity);
-        // 重新选择后的图，commodity/101415/1466766940169
-        String[] imagesSelect = commodity.getImagePath();
-        if (null != imagesOld && imagesOld.length > 0 && (imagesOld.length > imagesSelect.length)) {
-            // 重新选择后的图片代码，1466766940169
-            String[] imageCodesSelect = new String[imagesSelect.length];
-            for (int i = 0; i < imagesSelect.length; i++) {
-                String[] strArr = imagesSelect[i].split("/");
-                imageCodesSelect[i] = strArr[strArr.length - 1];
-            }
-            // 原来的图
-            for (String strOld : imagesOld) {
-                boolean deleteFlag = true;
-                // 遍历重新选择后的图
-                for (String imgCode : imageCodesSelect) {
-                    if (strOld.contains(imgCode)) {
-                        deleteFlag = false;
-                        break;
-                    }
-                }
-                // 要删除的图
-                if (deleteFlag) {
-                    File filDelete = new File(imagesDir + commodity.getCommodityCode() + "/" + strOld);
-                    if (filDelete.exists()) {
-                        filDelete.delete();
-                    }
-                }
-            }
-        }
-    }
 
-
-    /**
-     * 获取 原来的图
-     *
-     * @param imagesDir
-     * @param commodity
-     * @return
-     */
-    private String[] getImagePath(String imagesDir, Commodity commodity) {
-
-        File imageDir = new File(imagesDir + commodity.getCommodityCode());
-        String[] images = imageDir.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                if (name.endsWith("jpg")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        return images;
-    }
 
 
     @Override
@@ -670,12 +612,13 @@ public class CommodityService implements ICommodityService {
 
     /**
      * 商品上下架
+     *
      * @param commodityId
      * @param publishState
      * @return
      */
     @Override
-    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception{
+    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception {
         Commodity commodity = commodityDao.findOne(commodityId);
         if (commodity.getCommodityState() != CommodityState.AUDITED) {
             return false;
@@ -823,6 +766,24 @@ public class CommodityService implements ICommodityService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Commodity> getCommoditySellerByCommodityCode(List<String> commodityCodes) {
         return commodityDao.getCommoditySellerByCommodityCode(commodityCodes);
+    }
+
+
+    public void syncESCommodity() {
+        try {
+            List<Commodity> list = commodityDao.findAll();
+            List<CommodityVO> listVo = new ArrayList<>();
+            for(Commodity commodity : list){
+                CommodityVO commodityVO = new CommodityVO(commodity);
+                listVo.add(commodityVO);
+            }
+            SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+            Call<ResponseResult> call = restService.bulkIndex(listVo);
+            ResponseResult result = call.execute().body();
+            logger.info("[elasticsearch] remove commodity state:" + result.getResult());
+        } catch (Exception e) {
+            logger.error("syncESCommodity failed", e);
+        }
     }
 
 }

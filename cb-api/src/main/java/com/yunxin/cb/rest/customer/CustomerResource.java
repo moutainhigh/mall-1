@@ -65,8 +65,10 @@ public class CustomerResource extends BaseResource {
         if (friend != null) {
             friend.setFriend(customerService.isFriend(customerId, friend.getCustomerId()) || friend.getCustomerId() == customerId);
             CustomerFriend customerFriend= customerService.getFriend(customerId,friend.getCustomerId());
-            if(null!=customerFriend)
+            if(null!=customerFriend) {
                 friend.setState(customerFriend.getState().name());
+                friend.setAliasName(customerFriend.getAliasName());
+            }
             return new ResponseResult(friend);
         }
         return new ResponseResult(Result.FAILURE, "未找到相关好友");
@@ -81,8 +83,10 @@ public class CustomerResource extends BaseResource {
         if (customer != null) {
             customer.setFriend(customerService.isFriend(customerId, customer.getCustomerId()) || customer.getCustomerId() == customerId);
             CustomerFriend customerFriend= customerService.getFriend(customerId,customer.getCustomerId());
-            if(null!=customerFriend)
+            if(null!=customerFriend) {
                 customer.setState(customerFriend.getState().name());
+                customer.setAliasName(customerFriend.getAliasName());
+            }
             return new ResponseResult(customer);
         }
         return new ResponseResult(Result.FAILURE, "未找到用户信息");

@@ -72,13 +72,13 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     }
 
     /**
-     * @title: 通过商品ID查询所有货品
+     * @title: 通过商品ID查询所有货品属性
      * @param: [commodityId]
      * @return: com.yunxin.cb.vo.ResponseResult
      * @auther: eleven
      * @date: 2018/7/20 17:59
      */
-    @ApiOperation(value = "通过商品ID查询所有货品")
+    @ApiOperation(value = "通过商品ID查询所有货品属性")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")})
     @GetMapping(value = "getProductsByCommodityId/{commodityId}")

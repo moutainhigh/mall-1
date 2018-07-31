@@ -1,5 +1,6 @@
 package com.yunxin.cb.search.vo;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
@@ -8,9 +9,11 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
  */
 public class CommoditySpec implements java.io.Serializable {
 
+    @ApiModelProperty(value="规格名称",name="specName",example="排量")
     @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String specName;
 
+    @ApiModelProperty(value="规格值",name="value",example="2.0T")
     @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String value;
 
