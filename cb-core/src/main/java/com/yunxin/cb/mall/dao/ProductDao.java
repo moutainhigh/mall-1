@@ -108,7 +108,7 @@ public interface ProductDao extends ProductPlusDao, JpaRepository<Product, Integ
      */
     @Modifying
     @Query("update Product c set c.publishState=?1 where c.productId in (?2)")
-    void updateUpOrDownShelvesInProductId(PublishState publishState, int[] prodIds);
+    void updateUpOrDownShelvesInProductId(PublishState publishState, Integer[] prodIds);
 
 }
 
