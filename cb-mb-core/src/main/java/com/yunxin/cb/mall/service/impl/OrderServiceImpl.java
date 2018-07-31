@@ -2,10 +2,14 @@ package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.*;
+import com.yunxin.cb.mall.exception.CommonException;
 import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.mall.service.OrderService;
-import com.yunxin.cb.mall.vo.*;
+import com.yunxin.cb.mall.vo.CommodityVo;
+import com.yunxin.cb.mall.vo.DeliveryAddressVO;
+import com.yunxin.cb.mall.vo.TempOrderItemVO;
+import com.yunxin.cb.mall.vo.TempOrderVO;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
@@ -50,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
     private ProductMapper productMapper;
 
     /***
-     * 获取临时订单（订单确认页数据）
+     * 获取预下单数据（订单确认页数据）
      * @param customerId
      * @param productId
      * @param buyNum
@@ -58,42 +62,48 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public TempOrderVO getTempOrder(int customerId, int productId, int buyNum, String paymentType) throws Exception {
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public TempOrderVO getTempOrder(int customerId, int productId, int buyNum, PaymentType paymentType) throws Exception {
+        //根据货品id查询货品（审核通过且上架货品）
+        Product product = productMapper.selectProductById(productId, ProductState.AUDITED.ordinal(), PublishState.UP_SHELVES.ordinal());
+        //判断货品是否存在，且库存足够
+        if (product == null || product.getStoreNum() <= 0) {
+            //库存不足
+            throw new CommonException("库存不足");
+        }
         //获取商品信息
         TempOrderVO tempOrderVO = new TempOrderVO();
-        try {
-            CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
-            //商品信息
-            BeanUtils.copyProperties(tempOrderVO, commodityVo);
-            //货品信息组装
-            TempOrderItemVO tempOrderItemVO = null;
-            if(!StringUtils.isEmpty(commodityVo.getProductVo())){
-                tempOrderItemVO = new TempOrderItemVO();
-                BeanUtils.copyProperties(tempOrderItemVO, commodityVo.getProductVo());
-                tempOrderItemVO.setBuyNum(buyNum);
+        CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
+        if (commodityVo == null) {
+            return null;
+        }
+        //商品信息
+        BeanUtils.copyProperties(tempOrderVO, commodityVo);
+        //货品信息组装
+        TempOrderItemVO tempOrderItemVO = null;
+        if(!StringUtils.isEmpty(commodityVo.getProductVo())){
+            tempOrderItemVO = new TempOrderItemVO();
+            BeanUtils.copyProperties(tempOrderItemVO, commodityVo.getProductVo());
+            tempOrderItemVO.setBuyNum(buyNum);
+        }
+        //获取默认地址
+        DeliveryAddress deliveryAddress = deliveryAddressMapper.selectDefaultByCustomerId(customerId);
+        if(!StringUtils.isEmpty(deliveryAddress)){
+            DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
+            BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
+            tempOrderVO.setDeliveryAddressVO(deliveryAddressVO);
+        }
+        //商家信息
+        tempOrderVO.setSellerVo(commodityVo.getSellerVo());
+        //规格信息
+        tempOrderVO.setSpecs(commodityVo.getSpecs());
+        //货品信息
+        tempOrderVO.setTempOrderItemVO(tempOrderItemVO);
+        //选择的支付方式
+        for (PaymentType pay : PaymentType.values()){
+            if (pay.equals(paymentType)) {
+                tempOrderVO.setSelectPaymentType(pay);
             }
-            //获取默认地址
-            DeliveryAddress deliveryAddress = deliveryAddressMapper.selectDefaultByCustomerId(customerId);
-            if(!StringUtils.isEmpty(deliveryAddress)){
-                DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
-                BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
-                tempOrderVO.setDeliveryAddressVO(deliveryAddressVO);
-            }
-            //商家信息
-            tempOrderVO.setSellerVo(commodityVo.getSellerVo());
-            //规格信息
-            tempOrderVO.setSpecs(commodityVo.getSpecs());
-            //货品信息
-            tempOrderVO.setTempOrderItemVO(tempOrderItemVO);
-            //选择的支付方式
-            for (PaymentType pay : PaymentType.values()){
-                if (pay.equals(PaymentType.valueOf(paymentType))) {
-                    tempOrderVO.setSelectPaymentType(pay);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return tempOrderVO;
     }
@@ -125,7 +135,7 @@ public class OrderServiceImpl implements OrderService {
                 //判断货品是否存在，且库存足够
                 if (product == null || product.getStoreNum() <= 0) {
                     //库存不足
-                    throw new Exception("库存不足");
+                    throw new CommonException("库存不足");
                 }
                 int productNum = orderItem.getProductNum() == null ? 0 : orderItem.getProductNum();
                 totalQuantity += productNum;
@@ -152,14 +162,12 @@ public class OrderServiceImpl implements OrderService {
                 double loanQuota = customerWallet.getLoanQuota() == null ? 0 : customerWallet.getLoanQuota();
                 //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
                 if (expectedReturnAmount + loanQuota < totalPrice){
-                    throw new Exception("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
+                    throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
                 }
                 //在后台审核贷款申请通过是减少，优先减收益在减额度
             } else {
-                throw new Exception("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
+                throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
             }
-            //自提
-            order.setDeliveryType(DeliveryType.ZT);
         }
         //收货地址
         DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());
@@ -215,23 +223,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public PageFinder<Order> pageOrder(Query q) {
-        PageFinder<Order> page = null;
-        List<Order> list = null;
-        long rowCount = 0L;
         try {
             //调用dao查询满足条件的分页数据
-            list = orderMapper.pageList(q);
+            List<Order> list = orderMapper.pageList(q);
             //调用dao统计满足条件的记录总数
-            rowCount = orderMapper.count(q);
+            long rowCount = orderMapper.count(q);
+            //如list为null时，则改为返回一个空列表
+            list = list == null ? new ArrayList<Order>(0) : list;
+            //将分页数据和记录总数设置到分页结果对象中
+            PageFinder<Order> page = new PageFinder<Order>(q.getPageNo(), q.getPageSize(), rowCount);
+            page.setData(list);
+            return page;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            return null;
         }
-        //如list为null时，则改为返回一个空列表
-        list = list == null ? new ArrayList<Order>(0) : list;
-        //将分页数据和记录总数设置到分页结果对象中
-        page = new PageFinder<Order>(q.getPageNo(), q.getPageSize(), rowCount);
-        page.setData(list);
-        return page;
     }
 
     @Override
@@ -260,7 +266,7 @@ public class OrderServiceImpl implements OrderService {
                     productMapper.updateByPrimaryKey(product);
                 }
             } else {
-                throw new Exception("无可退货品");
+                throw new CommonException("无货品");
             }
             Date now = new Date();
             //更改订单为取消状态
@@ -280,12 +286,13 @@ public class OrderServiceImpl implements OrderService {
             orderLog.setRemark("订单取消");
             orderLogMapper.insert(orderLog);
         } else {
-            throw new Exception("该订单不可取消");
+            throw new CommonException("该订单不可取消");
         }
         return orderDb;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int confirmOrder(Integer orderId, Integer customerId) throws Exception {
         Order orderDb = orderMapper.selectByOrderIdAndCustomerId(orderId, customerId);
         //已付款订单才可确认收货
@@ -303,7 +310,7 @@ public class OrderServiceImpl implements OrderService {
             }
             return count;
         } else {
-            throw new Exception("该订单暂不可确认收货");
+            throw new CommonException("该订单暂不可确认收货");
         }
     }
 

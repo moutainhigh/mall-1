@@ -22,4 +22,9 @@ public class BrandServiceImpl implements BrandService {
     public List<Brand> selectAll() {
         return brandMapper.selectAll();
     }
+
+    @Override
+    public List<Brand> selectHotBrand() {
+        return brandMapper.selectHotBrand();
+    }
 }

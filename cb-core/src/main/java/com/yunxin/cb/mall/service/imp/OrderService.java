@@ -745,6 +745,7 @@ public class OrderService implements IOrderService {
         }
         productReturn.setAuditState(auditState);
         productReturn.setAuditRemark(auditRemark);
+        productReturn.setAuditTime(new Date());
     }
 
     public void confirmReceivedReturnProduct(int returnId) throws ProductReturnException {

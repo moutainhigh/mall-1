@@ -8,6 +8,9 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.service.IProductService;
+import com.yunxin.cb.search.restful.RestfulFactory;
+import com.yunxin.cb.search.service.SearchRestService;
+import com.yunxin.cb.search.vo.ResponseResult;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
@@ -21,12 +24,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import retrofit2.Call;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -314,26 +319,41 @@ public class ProductService implements IProductService {
         Commodity commodity = product.getCommodity();
         if ((product.getPublishState() == PublishState.WAIT_UP_SHELVES || product.getPublishState() == PublishState.DOWN_SHELVES)
                 && publishState == PublishState.UP_SHELVES) {
-            productDao.updateUpOrDownShelvesInProductId(PublishState.UP_SHELVES, new int[]{productId});
+            productDao.updateUpOrDownShelvesInProductId(PublishState.UP_SHELVES, new Integer[]{productId});
             //给商品设置默认货品
-            if (commodity.getDefaultProduct() == null) {
+            if (commodity.getDefaultProduct().getPublishState()!=PublishState.UP_SHELVES) {
                 commodity.setDefaultProduct(product);
                 commodityDao.updateDefaultProductById(product, product.getCommodity().getCommodityId());
             }
             return true;
         } else if ((product.getPublishState() == PublishState.WAIT_UP_SHELVES || product.getPublishState() == PublishState.UP_SHELVES)
                 && publishState == PublishState.DOWN_SHELVES) {
-            if (commodity.getDefaultProduct().getProductId() == productId) {//如果是默认货品下架
-                Product defaultProduct=null;//默认货品id
-                for(Product pro:commodity.getProducts()){//遍历所有货品
-                    if(pro.getProductId()!=productId&&pro.getPublishState()==PublishState.UP_SHELVES){//默认取该商品还在上架的第一个货品为默认货品
-                        defaultProduct=pro;
-                        break;
+
+            Product defaultProduct=null;//默认货品
+            for(Product pro:commodity.getProducts()){//遍历所有货品
+                if(pro.getProductId()!=productId&&pro.getPublishState()==PublishState.UP_SHELVES){//默认取该商品还在上架的第一个货品为默认货品
+                    defaultProduct=pro;
+                    break;
+                }
+            }
+            Commodity commodityDB = commodityDao.findOne(commodity.getCommodityId());
+            if(defaultProduct==null){//所有货品都下架，商品自动下架
+                if(commodity.getPublishState()==PublishState.UP_SHELVES){
+                    commodityDB.setPublishState(PublishState.DOWN_SHELVES);
+                    try {
+                        //商品下架，将搜索容器中的商品删除
+                        SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+                        Call<ResponseResult> call = restService.removeCommodity(commodity.getCommodityId());
+                        ResponseResult result = call.execute().body();
+                        logger.info("[elasticsearch] remove commodity state:" + result);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
-                commodityDao.updateDefaultProductById(defaultProduct, commodity.getCommodityId());
+            }else{
+                commodityDB.setDefaultProduct(defaultProduct);
             }
-            productDao.updateUpOrDownShelvesInProductId(PublishState.DOWN_SHELVES, new int[]{productId});
+            productDao.updateUpOrDownShelvesInProductId(PublishState.DOWN_SHELVES, new Integer[]{productId});
             return true;
         }
         return false;
