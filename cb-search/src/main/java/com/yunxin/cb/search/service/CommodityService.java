@@ -46,5 +46,11 @@ public interface CommodityService {
 
 
     long bulkIndex(List<Commodity> queries ) throws Exception;
+    /**
+     * 根据商品ID查询商品
+     * @param commodityId
+     * @return
+     */
+    Commodity selectByCommodityId(int commodityId);
 
 }
