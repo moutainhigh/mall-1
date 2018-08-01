@@ -40,6 +40,10 @@ public class SearchVo implements java.io.Serializable {
 
     @ApiModelProperty(value="排序方向，枚举:升序or降序",name="direction",example="ASC|DESC")
     private Sort.Direction direction;
+    @ApiModelProperty(value="返回行数",name="size",example="10")
+    private int size;
+    @ApiModelProperty(value="页码",name="page",example="0")
+    private int page;
 
     public int getBrandId() {
         return brandId;
@@ -111,5 +115,21 @@ public class SearchVo implements java.io.Serializable {
 
     public void setSellerId(int sellerId) {
         this.sellerId = sellerId;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }
