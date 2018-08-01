@@ -12,7 +12,7 @@ export const getCustomerFavorite = function (query) {
 
 //分类搜索
 export const categorySearch = function (searchVo, page, size) {
-  return post('/mall/search/categorySearch/'+page + '/' + size,searchVo)
+  return post('v1/mall/search/categorySearch/'+page + '/' + size,searchVo)
 }
 
 //############## 地址接口 ##################//
