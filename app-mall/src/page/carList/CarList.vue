@@ -84,11 +84,8 @@
                   <div class="choose_flex_type">
                     <p :class="{choose_type_sele: true}">不限</p>
                   </div>
-                  <div class="choose_flex_type">
-                    <p>15-25万</p>
-                  </div>
-                  <div class="choose_flex_type">
-                    <p>25-50万</p>
+                  <div class="choose_flex_type" v-for="section in priceSection.value">
+                    <p>{{setTranPrice(section.startPrice)}}-{{setTranPrice(section.endPrice)}}万</p>
                   </div>
                 </div>
               </section>
@@ -207,6 +204,7 @@
   import headTop from "../../components/header/head"
   import {categorySearch} from "../../service/getData";
   import {delArrayAll, delArrayOne} from "../../config/mUtils";
+  import {tranPrice} from "../../config/dataFormat";
 
   export default {
     name: "Carlist",
@@ -220,19 +218,11 @@
         sortTitle:'默认排序', //排序名称
         sortByType: 0, // 根据何种方式排序
         enFocus:false,//是否焦点在input上
-        conditions:[],//筛选
-        selecteds:[], //已选择的条件
+        selecteds:[], //已选择的所有条件
+        priceSection:{chooseIndex:-1,value:[]},
+        conditions:[],//展示的筛选
         chooseConditions:[],//确定选择的筛选
-        searchVo : {
-          brandId: null,
-          categoryId: null,
-          sellerId: null,
-          lowestPrice: null,
-          highestPrice: null,
-          priceSection: null,
-          commoditySpecs: [],
-          sortBy: null
-        },
+        searchVo : {brandId: null,categoryId: null,sellerId: null,lowestPrice: null,highestPrice: null,priceSection: null,commoditySpecs: [],sortBy: null},
         isInfinite:false,
       }
     },
@@ -276,14 +266,15 @@
           this.searchVo[selected.type] = null;
         }
         this.selecteds.splice(index,1);
-        console.log(this.searchVo);
       },
+      //跳转商品详情页
       openDetail(carId){
         this.$router.push({
           path:'/car-detail',
           query:{carId:carId}
         })
       },
+      //点击选择筛选项
       chooseItem(condition,index){
         if (condition.showNum != index) {
           condition.showNum = index;
@@ -291,6 +282,7 @@
           condition.showNum = -1;
         }
       },
+      //筛选确认
       submitItem(){
         this.sortBy = '';
         //重新录入筛选选项
@@ -317,12 +309,16 @@
         }
         //重新请求数据
       },
+      //重置筛选
       resItem(){
         for (let condition of this.conditions) {
           condition.showNum = -1;
         }
         this.selecteds = delArrayAll(this.selecteds,'commoditySpecs','type');
         this.searchVo.commoditySpecs = [];
+      },
+      setTranPrice(price){
+        return tranPrice(price);
       },
       refresh(done) {
         // this.pageQuery.pageNo = 1;
@@ -391,7 +387,7 @@
               })
             }
           }
-          // _this.conditions = res.data.condition;
+          _this.priceSection.value = res.data.priceSection;
         }
       })
 
