@@ -103,93 +103,13 @@
           <transition name="showlist">
             <section v-show="sortBy == 'activity'" class="sort_detail_type sort_activity">
               <div style="overflow-x: scroll;height: 75%;">
-                <div class="activity_type">
+                <div class="activity_type" v-for="condition in conditions">
                   <div class="type_title">
-                    国别
+                    {{condition.key}}
                   </div>
                   <div class="type_list">
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                    <div class="type_item">
-                      <p>进口</p>
-                    </div>
-                    <div class="type_item">
-                      <p>德系</p>
-                    </div>
-                    <div class="type_item">
-                      <p>韩系</p>
-                    </div>
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="activity_type">
-                  <div class="type_title">
-                    车型
-                  </div>
-                  <div class="type_list">
-                    <div class="type_item">
-                      <p>轿车</p>
-                    </div>
-                    <div class="type_item">
-                      <p>SUV</p>
-                    </div>
-                    <div class="type_item">
-                      <p>MVP</p>
-                    </div>
-                    <div class="type_item">
-                      <p>跑车</p>
-                    </div>
-                    <div class="type_item">
-                      <p>微面</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="activity_type">
-                  <div class="type_title">
-                    坐席
-                  </div>
-                  <div class="type_list">
-                    <div class="type_item">
-                      <p>两座</p>
-                    </div>
-                    <div class="type_item">
-                      <p>4-5座</p>
-                    </div>
-                    <div class="type_item">
-                      <p>6座</p>
-                    </div>
-                    <div class="type_item">
-                      <p>7座</p>
-                    </div>
-                    <div class="type_item">
-                      <p>7座以上</p>
+                    <div class="type_item" v-for="(item,index) in condition.value" @click="chooseItem(condition,index)">
+                      <p :class="{choose_item_sele: condition.showNum == index}">{{item}}</p>
                     </div>
                   </div>
                 </div>
@@ -205,13 +125,38 @@
         </div>
       </section>
       <div class="car_type_list">
-        <div class="type_item" v-for="(item,index) in conditions">
+        <div class="type_item" v-for="(item,index) in selecteds">
           <p>
             {{item.val}}
           </p>
-          <img src="../../assets/img/common/ic_screen_close.png" @click="delCondition(item,index)">
+          <img src="../../assets/img/common/ic_screen_close.png" @click="delSelected(item,index)">
         </div>
       </div>
+      <div style="position:absolute;top: 0;width: 100%;height: 100%;z-index: -1;background-color: #fff;">
+        <scroller style="font-size: 12px !important;position:relative;"
+                  :on-refresh="refresh"
+                :on-infinite="infinite"
+                refresh-layer-color="#f5ca1d"
+                loading-layer-color="#f5ca1d">
+        <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
       <div class="car_list">
         <div class="list_item" v-for="commodity in commodities" @click="openDetail()">
           <div class="cont_img">
@@ -231,6 +176,28 @@
           </div>
         </div>
       </div>
+        <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
+      </scroller>
+      </div>
+
     </div>
   </div>
 
@@ -252,7 +219,8 @@
         sortTitle:'默认排序', //排序名称
         sortByType: 0, // 根据何种方式排序
         enFocus:false,//是否焦点在input上
-        conditions:[], //已选择的条件
+        conditions:[],//筛选
+        selecteds:[], //已选择的条件
         searchVo : {
           brandId: null,
           categoryId: null,
@@ -262,7 +230,8 @@
           priceSection: null,
           commoditySpecs: null,
           sortBy: null
-        }
+        },
+        isInfinite:false
       }
     },
     methods: {
@@ -271,19 +240,9 @@
         if (this.sortBy !== type) {
           this.sortBy = type;
           //food选项中头部标题发生改变，需要特殊处理
-          if (type == 'food') {
-            this.foodTitle = '分类';
-          } else {
-            //将foodTitle 和 headTitle 进行同步
-            this.foodTitle = this.headTitle;
-          }
         } else {
           //再次点击相同选项时收回列表
           this.sortBy = '';
-          if (type == 'food') {
-            //将foodTitle 和 headTitle 进行同步
-            this.foodTitle = this.headTitle;
-          }
         }
       },
       //点击某个排序方式，获取事件对象的data值，并根据获取的值重新获取数据渲染
@@ -292,16 +251,62 @@
         this.sortTitle = title;
         this.sortBy = '';
       },
-      delCondition(condition,index){
-        this.searchVo[condition.type] = null;
-        this.conditions.splice(index,1);
+      delSelected(selected, index){
+        if (selected.type != 'commoditySpecs') {
+          this.searchVo[selected.type] = null;
+        }else {
+          // for (let i = 0 ; this.searchVo.length < i ; i ++) {
+          //   if (this.searchVo[i].key ) {}
+          //
+          // }
+        }
+        this.selecteds.splice(index,1);
       },
       openDetail(carId){
         this.$router.push({
           path:'/car-detail',
           query:{carId:carId}
         })
+      },
+      chooseItem(condition,index){
+        if (condition.showNum != index) {
+          condition.showNum = index;
+          if (this.selecteds.commoditySpecs == null) {
+            this.selecteds.commoditySpecs = [];
+          }
+          this.selecteds.commoditySpecs.push({
+            key:condition.key,
+            val:condition.value[index],
+            type:'commoditySpecs'
+          })
+        }else{
+          condition.showNum = -1;
+        }
       }
+      ,
+      refresh(done) {
+        this.pageQuery.pageNo = 1;
+        // getCustomerOrder(this.pageQuery).then(res => {
+        //   if (res.result == 'SUCCESS') {
+        //     this.orders = res.data.data;
+        //     if (res.data.pageCount <= this.pageQuery.pageNo) {
+        //       this.isInfinite = false;
+        //     } else {
+        //       this.pageQuery.page++;
+        //       this.isInfinite = true;
+        //     }
+        //   }
+        //   done()
+        // });
+      },
+
+      infinite(done) {
+        if (!this.isInfinite) {
+          done(true);
+          return;
+        }
+        // this.getOrderList(done);
+      },
     },
     created(){
       let _this = this;
@@ -309,7 +314,7 @@
         let brandId = this.$route.query.brandId;
         let brandName = this.$route.query.brandName;
         this.searchVo.brandId = brandId;
-        this.conditions.push({
+        this.selecteds.push({
           key:brandId,
           val:brandName,
           type:'brandId'
@@ -320,7 +325,7 @@
         let categoryId = this.$route.query.categoryId;
         let categoryName = this.$route.query.categoryName;
         this.searchVo.categoryId = categoryId;
-        this.conditions.push({
+        this.selecteds.push({
           key:categoryId,
           val:categoryName,
           type:'categoryId'
@@ -330,6 +335,14 @@
         console.log(res);
         if (res.result == 'SUCCESS') {
           _this.commodities = res.data.pageFinder.data;
+          // _this.conditions = res.data.condition;
+          for (let item in res.data.condition){
+            _this.conditions.push({
+              key:item,
+              value:res.data.condition[item],
+              showNum:-1
+            })
+          }
         }
       })
 
@@ -431,6 +444,7 @@
             box-sizing: border-box;
             border: 1px #BBBBBB solid;
             border-radius: 4px;
+            outline: unset;
           }
 
           .submit_true {
@@ -667,12 +681,6 @@
           border-radius: 4px;
           background-color: #F1F3F5;
         }
-
-        .choose_type_sele {
-          border: #f5ca1d 1px solid;
-          color: #f5ca1d;
-          background-color: #FFFBEB;
-        }
       }
       .confirm_filter {
         display: flex;
@@ -734,7 +742,8 @@
   }
 
   .car_type_list {
-    padding: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background-color: #f5f5f5;
     .type_item {
       border: #DDDDDD 1px solid;
       display: inline-block;
@@ -776,6 +785,7 @@
         border-bottom: #ececec 1px solid;
         .cont_title {
           height: 3rem;
+          font-size: 1rem;
           overflow:hidden;
           text-overflow:ellipsis;
           display:-webkit-box;
@@ -802,6 +812,18 @@
         }
       }
     }
+  }
+
+  .choose_type_sele {
+    border: #f5ca1d 1px solid;
+    color: #f5ca1d;
+    background-color: #FFFBEB !important;
+  }
+
+  .choose_item_sele{
+    border: #f5ca1d 1px solid;
+    color: #f5ca1d !important;
+    background-color: #FFFBEB !important;
   }
 
   .focus_input {
