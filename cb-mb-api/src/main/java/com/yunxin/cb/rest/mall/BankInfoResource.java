@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @title: 商城商品接口
+ * @title: 银行卡接口
  * @auther: eleven
  * @date: 2018/7/17 18:29
  */

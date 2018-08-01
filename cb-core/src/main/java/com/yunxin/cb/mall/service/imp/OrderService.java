@@ -106,6 +106,8 @@ public class OrderService implements IOrderService {
     private CustomerTradingRecordDao customerTradingRecordDaoDao;
     @Resource
     private CustomerWalletDao customerWalletDao;
+    @Resource
+    private OrdersLogDao orderLogDao;
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -745,6 +747,7 @@ public class OrderService implements IOrderService {
         }
         productReturn.setAuditState(auditState);
         productReturn.setAuditRemark(auditRemark);
+        productReturn.setAuditTime(new Date());
     }
 
     public void confirmReceivedReturnProduct(int returnId) throws ProductReturnException {
@@ -875,6 +878,27 @@ public class OrderService implements IOrderService {
         }
         orderLoanApply.setAuditState(auditState);
         orderLoanApply.setAuditRemark(auditRemark);
+        return true;
+    }
+
+    @Override
+    public boolean underLinePayConfirm(int orderId) {
+        Order order = orderDao.findOne(orderId);
+        if (order == null || order.getOrderState() != OrderState.PENDING_PAYMENT
+                || order.getPaymentType() != PaymentType.FULL_SECTION){
+            return false;
+        }
+        order.setOrderState(OrderState.OUT_STOCK);//直接跳过已支付到已发货
+        Date now = new Date();
+        order.setPaymentTime(now);
+        order.setUpdateTime(now);
+        //添加订单日志
+        OrderLog orderLog = new OrderLog();
+        orderLog.setTime(now);
+        orderLog.setOrderCode(order.getOrderCode());
+        orderLog.setHandler("后台操作人员");
+        orderLog.setRemark("订单线下支付确认");
+        orderLogDao.save(orderLog);
         return true;
     }
 }

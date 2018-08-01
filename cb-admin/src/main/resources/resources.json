@@ -95,8 +95,10 @@
       },
       {
         "name": "客户等级管理", "code": "63", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../customer/ranks.do"
+      },
+      {
+        "name": "报账管理", "code": "64", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursements.do"
       }
-
     ]
   },
   {

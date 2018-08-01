@@ -13,6 +13,7 @@ public class SearchResultVo {
 
     private PageFinder<CommodityVO> pageFinder;
 
+    private List<PriceSection> priceSection;
 
     public Map<String, List<Object>> getCondition() {
         return condition;
@@ -28,5 +29,13 @@ public class SearchResultVo {
 
     public void setPageFinder(PageFinder<CommodityVO> pageFinder) {
         this.pageFinder = pageFinder;
+    }
+
+    public List<PriceSection> getPriceSection() {
+        return priceSection;
+    }
+
+    public void setPriceSection(List<PriceSection> priceSection) {
+        this.priceSection = priceSection;
     }
 }

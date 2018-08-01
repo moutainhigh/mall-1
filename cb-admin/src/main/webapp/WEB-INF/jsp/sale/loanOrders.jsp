@@ -299,7 +299,7 @@
     var dataItem = getSelectedGridItem("grid");
     if (dataItem) {
       if(dataItem.auditState == "AUDITED"){
-        alert("已通过审核，请勿重复提交");
+        bootbox.alert("已通过审核，请勿重复提交");
         return ;
       }
       $('#auditDialog').modal();
