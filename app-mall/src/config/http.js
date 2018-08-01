@@ -49,6 +49,9 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
+    if (error.code == 'ECONNABORTED') {
+
+    }
     return Promise.reject(error)
   }
 )

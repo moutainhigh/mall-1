@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top :local="true"  v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
+    <head-top :local="true" v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
       <div slot="search" style="width: 100%;">
         <div class="search-con">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
@@ -34,17 +34,17 @@
                   </p>
                   <img v-if="sortByType == 'saleNum'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList('sellPriceDesc','价格最高',false)">
-                  <p :class="{sort_select: sortByType == 'sellPriceDesc'}">
+                <div class="sort_list_li" @click="sortList('sellPrice','价格最高',false)">
+                  <p :class="{sort_select: sortTitle == '价格最高'}">
                     <span>价格最高</span>
                   </p>
-                  <img v-if="sortByType == 'sellPriceDesc'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortTitle == '价格最高'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList('sellPriceAsc','价格最低',true)">
-                  <p :class="{sort_select: sortByType == 'sellPriceAsc'}">
+                <div class="sort_list_li" @click="sortList('sellPrice','价格最低',true)">
+                  <p :class="{sort_select: sortTitle == '价格最低'}">
                     <span>价格最低</span>
                   </p>
-                  <img v-if="sortByType == 'sellPriceAsc'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortTitle == '价格最低'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
               </div>
             </section>
@@ -121,7 +121,7 @@
           </transition>
         </div>
       </section>
-      <div class="car_type_list">
+      <div class="car_type_list" id="typeDivId">
         <div class="type_item" v-for="(item,index) in selecteds">
           <p>
             {{item.val}}
@@ -132,67 +132,67 @@
       <div style="position:absolute;top: 0;width: 100%;height: 100%;z-index: -1;background-color: #fff;">
         <scroller style="font-size: 12px !important;position:relative;top: 8rem;"
                   :on-refresh="refresh"
-                :on-infinite="infinite"
-                refresh-layer-color="#f5ca1d"
-                loading-layer-color="#f5ca1d">
-        <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
-          <g>
-            <circle cx="16" cy="32" stroke-width="0" r="3">
-              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
-                       repeatCount="indefinite"></animate>
-              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
-            </circle>
-            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
-              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
-                       repeatCount="indefinite"></animate>
-              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
-            </circle>
-            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
-              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
-                       repeatCount="indefinite"></animate>
-              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
-            </circle>
-          </g>
-        </svg>
-      <div class="car_list">
-        <div class="list_item" v-for="commodity in commodities" @click="openDetail()">
-          <div class="cont_img">
-            <img src="../../assets/img/home/1.png" width="100%">
+                  :on-infinite="infinite"
+                  refresh-layer-color="#f5ca1d"
+                  loading-layer-color="#f5ca1d">
+          <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
+            <g>
+              <circle cx="16" cy="32" stroke-width="0" r="3">
+                <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                         repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+              </circle>
+              <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+                <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                         repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+              </circle>
+              <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+                <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                         repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+              </circle>
+            </g>
+          </svg>
+          <div class="car_list">
+            <div class="list_item" v-for="commodity in commodities" @click="openDetail()">
+              <div class="cont_img">
+                <img src="../../assets/img/home/1.png" width="100%">
+              </div>
+              <div class="cont">
+                <div class="cont_title">
+                  {{commodity.commodityName}}
+                </div>
+                <div class="cont_price">
+                  <span style="font-size: 1rem;">￥</span>{{setTranPrice(commodity.sellPrice)}}万
+                </div>
+                <div class="cont_local">
+                  <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1rem;">
+                  <span style="vertical-align: middle">{{commodity.seller.sellerName}}</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="cont">
-            <div class="cont_title">
-              2018款 240TURBO自动两驱舒适版
-            </div>
-            <div class="cont_price">
-              <span style="font-size: 1rem;">￥</span>8.98万
-            </div>
-            <div class="cont_local">
-              <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1rem;">
-              深圳中升汇宝宝马4S店
-            </div>
-          </div>
-        </div>
-      </div>
-        <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
-          <g>
-            <circle cx="16" cy="32" stroke-width="0" r="3">
-              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
-                       repeatCount="indefinite"></animate>
-              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
-            </circle>
-            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
-              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
-                       repeatCount="indefinite"></animate>
-              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
-            </circle>
-            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
-              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
-                       repeatCount="indefinite"></animate>
-              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
-            </circle>
-          </g>
-        </svg>
-      </scroller>
+          <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
+            <g>
+              <circle cx="16" cy="32" stroke-width="0" r="3">
+                <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                         repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+              </circle>
+              <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+                <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                         repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+              </circle>
+              <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+                <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                         repeatCount="indefinite"></animate>
+                <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+              </circle>
+            </g>
+          </svg>
+        </scroller>
       </div>
 
     </div>
@@ -213,18 +213,33 @@
     },
     data() {
       return {
-        commodities:[],
+        commodities: [],
         sortBy: '', // 筛选的条件
-        sortTitle:'默认排序', //排序名称
+        sortTitle: '默认排序', //排序名称
         sortByType: '', // 根据何种方式排序
-        enFocus:false,//是否焦点在input上
-        selecteds:[], //已选择的所有条件
-        priceSection:{chooseIndex:-1,value:[]}, //价格区间块
-        priceSect:{lowPrice:'',highPrice:''}, //自定义价格区间
-        conditions:[],//展示的筛选
-        chooseConditions:[],//确定选择的筛选
-        searchVo : {brandId: null,categoryId: null,sellerId: null,lowestPrice: '',highestPrice: '',priceSection: null,commoditySpecs: [],sortBy: null,direction:String},
-        isInfinite:false,
+        enFocus: false,//是否焦点在input上
+        selecteds: [], //已选择的所有条件
+        priceSection: {chooseIndex: -1, value: []}, //价格区间块
+        priceSect: {lowPrice: '', highPrice: ''}, //自定义价格区间
+        conditions: [],//展示的筛选
+        chooseConditions: [],//确定选择的筛选
+        searchVo: {
+          size: 10,
+          page: 0,
+          totalPage: 0,
+          brandId: null,
+          categoryId: null,
+          sellerId: null,
+          lowestPrice: '',
+          highestPrice: '',
+          priceSection: null,
+          commoditySpecs: [],
+          sortBy: null,
+          direction: String
+        },
+        isInfinite: true,
+        scrollerHeight:'',
+        marginHeight:''
       }
     },
     methods: {
@@ -233,165 +248,234 @@
         //重置自定义价格区间
         if (!this.searchVo.lowestPrice) {
           this.priceSect = {
-            lowPrice:'',
-            highPrice:''
+            lowPrice: '',
+            highPrice: ''
           }
         }
         //重置筛选数据
         this.conditions = [];
-        for (let item of this.chooseConditions){
+        for (let item of this.chooseConditions) {
           this.conditions.push({
-            specName:item.specName,
-            value:item.value,
-            showNum:item.showNum
+            specName: item.specName,
+            value: item.value,
+            showNum: item.showNum
           })
         }
         if (this.sortBy !== type) {
           this.sortBy = type;
-          //food选项中头部标题发生改变，需要特殊处理
         } else {
-          //再次点击相同选项时收回列表
           this.sortBy = '';
         }
       },
       //点击某个排序方式，获取事件对象的data值，并根据获取的值重新获取数据渲染
-      sortList(sort,title,asc) {
-        if (this.sortByType != sort){
+      sortList(sort, title, asc) {
+        if (this.sortTitle != title) {
           this.sortByType = sort;
           this.sortTitle = title;
-          this.searchVo.sortBy = sort;
-          if (asc) {
+          if (this.sortByType == '') {
+            this.searchVo.sortBy = null;
+          } else {
+            this.searchVo.sortBy = sort;
+          }
+          if (asc || this.sortByType == '') {
             this.searchVo.direction = "ASC";
-          }else {
+          } else {
             this.searchVo.direction = "DESC";
           }
+          this.refreshData();
         }
         this.sortBy = '';
       },
-      delSelected(selected, index){
+      delSelected(selected, index) {
         if (selected.type == 'commoditySpecs') {
           console.log(this.searchVo.commoditySpecs);
-          this.searchVo.commoditySpecs = delArrayOne(this.searchVo.commoditySpecs,selected.key,'specName');
-          for (let condition of this.chooseConditions){
+          this.searchVo.commoditySpecs = delArrayOne(this.searchVo.commoditySpecs, selected.key, 'specName');
+          for (let condition of this.chooseConditions) {
             if (condition.specName == selected.key) {
               condition.showNum = -1;
               break;
             }
           }
-        }else {
+        } else {
           this.searchVo[selected.type] = null;
         }
-        this.selecteds.splice(index,1);
+        this.selecteds.splice(index, 1);
       },
       //跳转商品详情页
-      openDetail(carId){
+      openDetail(carId) {
         this.$router.push({
-          path:'/car-detail',
-          query:{carId:carId}
+          path: '/car-detail',
+          query: {carId: carId}
         })
       },
       //点击选择筛选项
-      chooseItem(condition,index){
+      chooseItem(condition, index) {
         if (condition.showNum != index) {
           condition.showNum = index;
-        }else{
+        } else {
           condition.showNum = -1;
         }
       },
       //筛选确认
-      submitItem(){
+      submitItem() {
         this.sortBy = '';
         //重新录入筛选选项
         this.chooseConditions = [];
         this.searchVo.commoditySpecs = [];
-        this.selecteds = delArrayAll(this.selecteds,'commoditySpecs','type');
-        for (let item of this.conditions){
+        this.selecteds = delArrayAll(this.selecteds, 'commoditySpecs', 'type');
+        for (let item of this.conditions) {
           this.chooseConditions.push({
-            specName:item.specName,
-            value:item.value,
-            showNum:item.showNum
+            specName: item.specName,
+            value: item.value,
+            showNum: item.showNum
           });
-          if (item.showNum >= 0){
+          if (item.showNum >= 0) {
             this.searchVo.commoditySpecs.push({
-              specName:item.specName,
-              value:item.value[item.showNum],
+              specName: item.specName,
+              value: item.value[item.showNum],
             });
             this.selecteds.push({
-              key:item.specName,
-              val:item.value[item.showNum],
-              type:'commoditySpecs'
+              key: item.specName,
+              val: item.value[item.showNum],
+              type: 'commoditySpecs'
             });
           }
         }
         //重新请求数据
+        this.refreshData();
       },
       //重置筛选
-      resItem(){
+      resItem() {
         for (let condition of this.conditions) {
           condition.showNum = -1;
         }
-        this.selecteds = delArrayAll(this.selecteds,'commoditySpecs','type');
+        this.selecteds = delArrayAll(this.selecteds, 'commoditySpecs', 'type');
         this.searchVo.commoditySpecs = [];
       },
-      choosePrice(index){
+      choosePrice(index) {
         if (this.priceSection.chooseIndex != index) {
           this.priceSection.chooseIndex = index;
           if (index == -1) {
-
-          }else{
-
+            this.searchVo.priceSection = null;
+          } else {
+            this.searchVo.priceSection = this.priceSection.value[index];
           }
           this.searchVo.lowestPrice = '';
           this.searchVo.highestPrice = '';
+          this.refreshData();
         }
         this.sortBy = '';
       },
-      setPriceSect(){
+      setPriceSect() {
         if (this.priceSect.lowPrice && this.priceSect.highPrice) {
           this.searchVo.lowestPrice = this.priceSect.lowPrice;
           this.searchVo.highestPrice = this.priceSect.highPrice;
           this.searchVo.priceSection = null;
           this.priceSection.chooseIndex = -2;
           this.sortBy = '';
+          this.refreshData();
         }
       },
-      setTranPrice(price){
+      setTranPrice(price) {
         return tranPrice(price);
       },
       refresh(done) {
-        // this.pageQuery.pageNo = 1;
-        // getCustomerOrder(this.pageQuery).then(res => {
-        //   if (res.result == 'SUCCESS') {
-        //     this.orders = res.data.data;
-        //     if (res.data.pageCount <= this.pageQuery.pageNo) {
-        //       this.isInfinite = false;
-        //     } else {
-        //       this.pageQuery.page++;
-        //       this.isInfinite = true;
-        //     }
-        //   }
-        //   done()
-        // });
+        this.refreshData(done);
       },
-
       infinite(done) {
         if (!this.isInfinite) {
           done(true);
           return;
+        } else {
+          let _this = this;
+          this.searchVo.page++;
+          this.$vux.loading.show("加载中");
+          categorySearch(this.searchVo).then(res => {
+            if (res.result == 'SUCCESS') {
+              if (res.data.pageFinder) {
+                _this.commodities = _this.commodities.concat(res.data.pageFinder.data);
+                _this.searchVo.totalPage = res.data.pageFinder.pageCount;
+                if (_this.searchVo.page >= _this.searchVo.totalPage - 1) {
+                  _this.isInfinite = false;
+                }
+              }
+              if (res.data.condition) {
+                for (let item in res.data.condition) {
+                  _this.conditions.push({
+                    specName: item,
+                    value: res.data.condition[item],
+                    showNum: -1
+                  });
+                  _this.chooseConditions.push({
+                    specName: item,
+                    value: res.data.condition[item],
+                    showNum: -1
+                  })
+                }
+              }
+              _this.priceSection.value = res.data.priceSection;
+            } else {
+              this.$vux.toast.text("请求失败，请稍后重试！")
+            }
+            this.$vux.loading.hide();
+          });
+          done();
         }
-        // this.getOrderList(done);
       },
+      async refreshData(done) {
+        let _this = this;
+        this.searchVo.page = 0;
+        this.$vux.loading.show("加载中");
+        await categorySearch(this.searchVo).then(res => {
+          if (res.result == 'SUCCESS') {
+            if (res.data.pageFinder) {
+              _this.commodities = res.data.pageFinder.data;
+              _this.searchVo.totalPage = res.data.pageFinder.pageCount;
+              if (_this.searchVo.page >= _this.searchVo.totalPage - 1) {
+                _this.isInfinite = false;
+              }
+            }
+            if (res.data.condition) {
+              for (let item in res.data.condition) {
+                _this.conditions.push({
+                  specName: item,
+                  value: res.data.condition[item],
+                  showNum: -1
+                });
+                _this.chooseConditions.push({
+                  specName: item,
+                  value: res.data.condition[item],
+                  showNum: -1
+                })
+              }
+            }
+            _this.priceSection.value = res.data.priceSection;
+          }
+        });
+        this.$vux.loading.hide();
+        if (done) {
+          done();
+        }
+      }
     },
-    created(){
-      let _this = this;
+    watch:{
+      selecteds(newVal){
+        setTimeout(function () {
+          this.scrollerHeight = document.documentElement.clientHeight - document.getElementById("typeDivId").offsetTop - document.getElementById("typeDivId").clientHeight;
+          this.marginHeight = document.getElementById("typeDivId").offsetTop + document.getElementById("typeDivId").clientHeight ;
+        },100)
+
+      }
+    },
+    created() {
       if (this.$route.query.brandId) {
         let brandId = this.$route.query.brandId;
         let brandName = this.$route.query.brandName;
         this.searchVo.brandId = brandId;
         this.selecteds.push({
-          key:brandId,
-          val:brandName,
-          type:'brandId'
+          key: brandId,
+          val: brandName,
+          type: 'brandId'
         })
       }
 
@@ -400,35 +484,13 @@
         let categoryName = this.$route.query.categoryName;
         this.searchVo.categoryId = categoryId;
         this.selecteds.push({
-          key:categoryId,
-          val:categoryName,
-          type:'categoryId'
+          key: categoryId,
+          val: categoryName,
+          type: 'categoryId'
         })
       }
-      categorySearch(this.searchVo,0,10).then(res=>{
-        console.log(res);
-        if (res.result == 'SUCCESS') {
-          if (res.data.pageFinder) {
-            _this.commodities = res.data.pageFinder.data;
-          }
-          if (res.data.condition) {
-            for (let item in res.data.condition){
-              _this.conditions.push({
-                specName:item,
-                value:res.data.condition[item],
-                showNum:-1
-              });
-              _this.chooseConditions.push({
-                specName:item,
-                value:res.data.condition[item],
-                showNum:-1
-              })
-            }
-          }
-          _this.priceSection.value = res.data.priceSection;
-        }
-      })
 
+      this.refreshData();
     }
   }
 </script>
@@ -869,11 +931,11 @@
         .cont_title {
           height: 3rem;
           font-size: 1rem;
-          overflow:hidden;
-          text-overflow:ellipsis;
-          display:-webkit-box;
-          -webkit-box-orient:vertical;
-          -webkit-line-clamp:2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
         }
         .cont_price {
           color: #F54E4E;
@@ -884,13 +946,13 @@
         .cont_local {
           font-size: 0.8rem;
           color: #999;
-          overflow:hidden;
-          text-overflow:ellipsis;
-          display:-webkit-box;
-          -webkit-box-orient:vertical;
-          -webkit-line-clamp:1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
           img {
-            vertical-align: top;
+            vertical-align: middle;
           }
         }
       }
@@ -903,7 +965,7 @@
     background-color: #FFFBEB !important;
   }
 
-  .choose_item_sele{
+  .choose_item_sele {
     border: #f5ca1d 1px solid;
     color: #f5ca1d !important;
     background-color: #FFFBEB !important;
