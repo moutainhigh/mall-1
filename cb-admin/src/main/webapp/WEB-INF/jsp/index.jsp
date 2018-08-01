@@ -133,7 +133,7 @@
 
   <div style="position: relative">
     <img style="width: 100%; position: absolute" src="images/indexBg/loginBg.png" alt=""/>
-    <div  style="width: 100%; position: absolute;text-align: center;font-size: 20px;color: red"> ${SPRING_SECURITY_LAST_EXCEPTION.message}</div>
+
     <form id="form-login" style="width: 100%; margin-top: 40px" action="login" method="post">
       <%--<div class="login-avatar">--%>
         <%--<img src="images/users/logo.png" alt="" id="login-avatar"/>--%>
@@ -150,8 +150,9 @@
             <input class="form-control input-lg" style="width: 85%; height: 50px; margin: 0 7.5%; border: 2px solid #e5e5e5; border-radius: 6px" id="j_password" name="password" type="password" placeholder="请输入密码" tabindex="2" />
           </div>
         </div>
-        <div class="spacer-20"></div>
+        <div class="spacer-20"><div  style="width: 100%;position:relative;  font-size: 14px;color: red;margin-left: 30px"> ${SPRING_SECURITY_LAST_EXCEPTION.message}</div></div>
         <div class="row">
+
           <div class="col-lg-12">
             <!-- this needs to be a button/input element -->
             <button type="submit" class="btn btn-default btn-lg" style="width: 85%; margin: 0 7.5%; height: 50px; color: #fff; background: #e1bb3a; font-size: 20px; border: 0; font-weight: normal">登录</button>
