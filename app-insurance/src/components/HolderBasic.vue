@@ -106,7 +106,7 @@
 
 <script>
   import storage from "../store/storage"
-  import {Datetime, PopupPicker} from 'vux'
+  import {Datetime, PopupPicker, Toast} from 'vux'
   import XInput from "vux/src/components/x-input/index";
   import {required} from 'vuelidate/lib/validators'
   import {dateFormat} from "../config/mUtils";
@@ -116,7 +116,8 @@
     components: {
       XInput,
       PopupPicker,
-      Datetime
+      Datetime,
+      Toast
     },
     data() {
       return {
@@ -177,7 +178,7 @@
           return false;
         }
         if (this.state !== true) {
-          window.alert('请勾选投保须知')
+          this.$vux.toast.text("请勾选投保须知",'middle');
           return false;
         } else {
           this.$router.push('/insured');

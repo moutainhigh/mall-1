@@ -5,6 +5,16 @@ export const getIndex = function () {
   return get('/v1/mall/index/getIndex.do');
 };
 
+//根据货品id获取商品详情数据
+export const getCommdityDetailById = function (productId) {
+  return get('/v1/mall/commodity/getCommdityDetail/' + productId);
+};
+
+//通过商品ID查询所有货品属性
+export const getProductsByCommodityId = function (commodityId) {
+  return get('/v1/mall/commodity/getProductsByCommodityId/' + commodityId);
+};
+
 //############## 收藏接口 ##################//
 //获取收藏夹
 export const getCustomerFavorite = function (query) {

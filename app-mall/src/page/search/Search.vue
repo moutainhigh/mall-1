@@ -48,6 +48,7 @@
         this.searchContent = '';
       },
       clearHistory() {
+        this.histories = [];
         storage.save("keywordSearch", []);
       },
       toDetail(result) {

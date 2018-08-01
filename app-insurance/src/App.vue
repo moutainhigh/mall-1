@@ -17,11 +17,12 @@
       }
     },
     created: function () {
+      let _this = this;
       if (!window.navigator.onLine) {
-        window.alert("网络未连接");
+        _this.$vux.toast.text("网络未连接",'middle');
       }
       window.addEventListener('offline', function () {
-        window.alert("网络未连接");
+        _this.$vux.toast.text("网络未连接",'middle');
       });
       // alert(process.env.VERSION);
       if (storage.fetch('version').length == 0 || storage.fetch('version') != process.env.VERSION) {
