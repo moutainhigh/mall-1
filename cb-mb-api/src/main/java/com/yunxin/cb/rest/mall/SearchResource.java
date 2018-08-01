@@ -1,6 +1,7 @@
 package com.yunxin.cb.rest.mall;
 
 
+import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.restful.RestfulFactory;
 import com.yunxin.cb.mall.restful.meta.Result;
@@ -18,7 +19,7 @@ import retrofit2.Call;
 
 @Api(description = "商城商品搜索接口")
 @RestController
-@RequestMapping(value = "/mall/search")
+@RequestMapping(value = "/{version}/mall/search")
 public class SearchResource extends BaseResource {
 
     @ApiOperation(value = "关键字搜索")
@@ -27,9 +28,10 @@ public class SearchResource extends BaseResource {
             @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "post", dataType = "int")
     })
-    @PostMapping(value = "keywordSearch/{page}/{size}")
+    @PostMapping(value = "keywordSearch")
+    @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<SearchResultVo> keywordSearch(@RequestParam(value = "keyword") String keyword, @PathVariable(value = "page") int page, @PathVariable(value = "size") int size) {
+    public ResponseResult<SearchResultVo> keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
         try {
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
             Call<ResponseResult<SearchResultVo>> call = restService.keywordSearch(keyword, page, size);
@@ -46,12 +48,13 @@ public class SearchResource extends BaseResource {
             @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "post", dataType = "int")
     })
-    @PostMapping(value = "categorySearch/{page}/{size}")
+    @PostMapping(value = "categorySearch")
+    @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<SearchResultVo> categorySearch(@RequestBody SearchVo searchVo, @PathVariable(value = "page") int page, @PathVariable(value = "size") int size) {
+    public ResponseResult<SearchResultVo> categorySearch(@RequestBody SearchVo searchVo) {
         try {
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
-            Call<ResponseResult<SearchResultVo>> call = restService.categorySearch(searchVo, page, size);
+            Call<ResponseResult<SearchResultVo>> call = restService.categorySearch(searchVo);
             ResponseResult result = call.execute().body();
             return result;
         } catch (Exception e) {

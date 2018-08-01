@@ -15,8 +15,8 @@ public interface SearchRestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(value = "mall/search/keywordSearch/{page}/{size}")
-    Call<ResponseResult<SearchResultVo>> keywordSearch(@Field("keyword") String keyword, @Path("page") int page, @Path("size") int size);
+    @POST(value = "mall/search/keywordSearch")
+    Call<ResponseResult<SearchResultVo>> keywordSearch(@Field("keyword") String keyword, @Field("page") int page, @Field("size") int size);
     /**
      * 分类/条件搜索
      *
@@ -25,6 +25,6 @@ public interface SearchRestService {
      * @return
      * @throws Exception
      */
-    @POST(value = "mall/search/categorySearch/{page}/{size}")
-    Call <ResponseResult<SearchResultVo>> categorySearch(@Body SearchVo searchVo, @Path("page") int page, @Path("size") int size);
+    @POST(value = "mall/search/categorySearch")
+    Call <ResponseResult<SearchResultVo>> categorySearch(@Body SearchVo searchVo);
 }
