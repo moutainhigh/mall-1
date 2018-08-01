@@ -105,7 +105,7 @@
               <div style="overflow-x: scroll;height: 75%;">
                 <div class="activity_type" v-for="condition in conditions">
                   <div class="type_title">
-                    {{condition.key}}
+                    {{condition.specName}}
                   </div>
                   <div class="type_list">
                     <div class="type_item" v-for="(item,index) in condition.value" @click="chooseItem(condition,index)">
@@ -115,8 +115,8 @@
                 </div>
                 <div class="activity_submit">
                   <div style="padding: 0.5rem;">
-                    <button>重置</button>
-                    <button class="submit_true">确认</button>
+                    <button @click="resItem">重置</button>
+                    <button class="submit_true" @click="submitItem">确认</button>
                   </div>
                 </div>
               </div>
@@ -133,7 +133,7 @@
         </div>
       </div>
       <div style="position:absolute;top: 0;width: 100%;height: 100%;z-index: -1;background-color: #fff;">
-        <scroller style="font-size: 12px !important;position:relative;"
+        <scroller style="font-size: 12px !important;position:relative;top: 8rem;"
                   :on-refresh="refresh"
                 :on-infinite="infinite"
                 refresh-layer-color="#f5ca1d"
@@ -206,6 +206,7 @@
 <script>
   import headTop from "../../components/header/head"
   import {categorySearch} from "../../service/getData";
+  import {delArrayAll, delArrayOne} from "../../config/mUtils";
 
   export default {
     name: "Carlist",
@@ -221,6 +222,7 @@
         enFocus:false,//是否焦点在input上
         conditions:[],//筛选
         selecteds:[], //已选择的条件
+        chooseConditions:[],//确定选择的筛选
         searchVo : {
           brandId: null,
           categoryId: null,
@@ -228,15 +230,24 @@
           lowestPrice: null,
           highestPrice: null,
           priceSection: null,
-          commoditySpecs: null,
+          commoditySpecs: [],
           sortBy: null
         },
-        isInfinite:false
+        isInfinite:false,
       }
     },
     methods: {
       // 点击顶部三个选项，展示不同的列表，选中当前选项进行展示，同时收回其他选项
       async chooseType(type) {
+        //重置筛选数据
+        this.conditions = [];
+        for (let item of this.chooseConditions){
+          this.conditions.push({
+            specName:item.specName,
+            value:item.value,
+            showNum:item.showNum
+          })
+        }
         if (this.sortBy !== type) {
           this.sortBy = type;
           //food选项中头部标题发生改变，需要特殊处理
@@ -252,15 +263,20 @@
         this.sortBy = '';
       },
       delSelected(selected, index){
-        if (selected.type != 'commoditySpecs') {
-          this.searchVo[selected.type] = null;
+        if (selected.type == 'commoditySpecs') {
+          console.log(this.searchVo.commoditySpecs);
+          this.searchVo.commoditySpecs = delArrayOne(this.searchVo.commoditySpecs,selected.key,'specName');
+          for (let condition of this.chooseConditions){
+            if (condition.specName == selected.key) {
+              condition.showNum = -1;
+              break;
+            }
+          }
         }else {
-          // for (let i = 0 ; this.searchVo.length < i ; i ++) {
-          //   if (this.searchVo[i].key ) {}
-          //
-          // }
+          this.searchVo[selected.type] = null;
         }
         this.selecteds.splice(index,1);
+        console.log(this.searchVo);
       },
       openDetail(carId){
         this.$router.push({
@@ -271,21 +287,45 @@
       chooseItem(condition,index){
         if (condition.showNum != index) {
           condition.showNum = index;
-          if (this.selecteds.commoditySpecs == null) {
-            this.selecteds.commoditySpecs = [];
-          }
-          this.selecteds.commoditySpecs.push({
-            key:condition.key,
-            val:condition.value[index],
-            type:'commoditySpecs'
-          })
         }else{
           condition.showNum = -1;
         }
-      }
-      ,
+      },
+      submitItem(){
+        this.sortBy = '';
+        //重新录入筛选选项
+        this.chooseConditions = [];
+        this.searchVo.commoditySpecs = [];
+        this.selecteds = delArrayAll(this.selecteds,'commoditySpecs','type');
+        for (let item of this.conditions){
+          this.chooseConditions.push({
+            specName:item.specName,
+            value:item.value,
+            showNum:item.showNum
+          });
+          if (item.showNum >= 0){
+            this.searchVo.commoditySpecs.push({
+              specName:item.specName,
+              value:item.value[item.showNum],
+            });
+            this.selecteds.push({
+              key:item.specName,
+              val:item.value[item.showNum],
+              type:'commoditySpecs'
+            });
+          }
+        }
+        //重新请求数据
+      },
+      resItem(){
+        for (let condition of this.conditions) {
+          condition.showNum = -1;
+        }
+        this.selecteds = delArrayAll(this.selecteds,'commoditySpecs','type');
+        this.searchVo.commoditySpecs = [];
+      },
       refresh(done) {
-        this.pageQuery.pageNo = 1;
+        // this.pageQuery.pageNo = 1;
         // getCustomerOrder(this.pageQuery).then(res => {
         //   if (res.result == 'SUCCESS') {
         //     this.orders = res.data.data;
@@ -334,15 +374,24 @@
       categorySearch(this.searchVo,0,10).then(res=>{
         console.log(res);
         if (res.result == 'SUCCESS') {
-          _this.commodities = res.data.pageFinder.data;
-          // _this.conditions = res.data.condition;
-          for (let item in res.data.condition){
-            _this.conditions.push({
-              key:item,
-              value:res.data.condition[item],
-              showNum:-1
-            })
+          if (res.data.pageFinder) {
+            _this.commodities = res.data.pageFinder.data;
           }
+          if (res.data.condition) {
+            for (let item in res.data.condition){
+              _this.conditions.push({
+                specName:item,
+                value:res.data.condition[item],
+                showNum:-1
+              });
+              _this.chooseConditions.push({
+                specName:item,
+                value:res.data.condition[item],
+                showNum:-1
+              })
+            }
+          }
+          // _this.conditions = res.data.condition;
         }
       })
 
