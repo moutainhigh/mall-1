@@ -1,29 +1,36 @@
 package com.yunxin.cb.mall.service.imp;
 
-import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.mall.dao.CategoryDao;
 import com.yunxin.cb.mall.dao.CommodityCategoryDao;
+import com.yunxin.cb.mall.dao.CommodityDao;
 import com.yunxin.cb.mall.dao.FilterItemDao;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.CommodityState;
+import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.service.ICategoryService;
 import com.yunxin.cb.mall.vo.CategoryNode;
 import com.yunxin.cb.mall.vo.TreeViewItem;
+import com.yunxin.cb.search.restful.RestfulFactory;
+import com.yunxin.cb.search.service.SearchRestService;
+import com.yunxin.cb.search.vo.CommodityVO;
+import com.yunxin.cb.search.vo.ResponseResult;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import retrofit2.Call;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Aidy_He on 16/1/15.
@@ -32,8 +39,12 @@ import java.util.List;
 @Transactional
 public class CategoryService implements ICategoryService {
 
+    private static final Logger logger = LoggerFactory.getLogger(CategoryService.class);
     @Resource
     private CategoryDao categoryDao;
+
+    @Resource
+    private CommodityDao commodityDao;
 
     @Resource
     private CommodityCategoryDao commodityCategoryDao;
@@ -192,27 +203,75 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public boolean addCommodityCategories(int categoryId, int[] commodityId) {
-        Category category = categoryDao.findById(categoryId);
-        if (commodityId != null) {
-            for (int cid : commodityId) {
-                Long count = commodityCategoryDao.countByCategoryAndCommodity_CommodityId(category, cid);
-                if (count == null || count.intValue() == 0) {
-                    CommodityCategory cc = new CommodityCategory();
-                    cc.setCategory(category);
-                    cc.setCommodity(new Commodity(cid));
-                    commodityCategoryDao.save(cc);
-                } else {
-                    return false;
+        try{
+            Category category = categoryDao.findById(categoryId);
+            if (commodityId != null) {
+                for (int cid : commodityId) {
+                    Long count = commodityCategoryDao.countByCategoryAndCommodity_CommodityId(category, cid);
+                    Commodity commodity = commodityDao.findById(cid);
+                    if (count == null || count.intValue() == 0) {
+                        CommodityCategory cc = new CommodityCategory();
+                        cc.setCategory(category);
+                        cc.setCommodity(new Commodity(cid));
+                        commodityCategoryDao.save(cc);
+                        //添加商品到运营分类里的同时把运营分类属性更新到ES搜索器里的对应商品
+                        if(commodity.getPublishState() == PublishState.UP_SHELVES){
+                            SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+                            Call<ResponseResult<CommodityVO>> call = restService.selectByCommodityId(cid);
+                            ResponseResult<CommodityVO> result = call.execute().body();
+                            CommodityVO commodityVO = (CommodityVO)result.getData();
+                            Set<com.yunxin.cb.search.vo.Category> categories = new HashSet<>();
+                            com.yunxin.cb.search.vo.Category cate_gory = new com.yunxin.cb.search.vo.Category();
+                            cate_gory.setCategoryId(category.getCategoryId());
+                            cate_gory.setCategoryName(category.getCategoryName());
+                            cate_gory.setCategoryNo(category.getCategoryNo());
+                            cate_gory.setIconPath(category.getIconPath());
+                            cate_gory.setSortOrder(category.getSortOrder());
+                            categories.add(cate_gory);
+                            commodityVO.setCategories(categories);
+                            Call<ResponseResult> call1 = restService.updateCommodity(commodityVO);
+                            ResponseResult result1 = call1.execute().body();
+                            logger.info("[elasticsearch] update commodity state:" + result1.getResult());
+                        }
+                    } else {
+                        return false;
+                    }
                 }
+                return true;
             }
-            return true;
+        }catch (Exception e){
+            logger.error("updateCommodity failed", e);
         }
         return false;
     }
 
     @Override
     public void removeCommodityCategoryById(int cocaId) {
-        commodityCategoryDao.delete(cocaId);
+        try{
+            //删除运营分类里的商品的同时删除ES里商品运营分类属性
+            CommodityCategory commodityCategory = commodityCategoryDao.findOne(cocaId);
+            Commodity commodity = commodityCategory.getCommodity();
+            Category category = commodityCategory.getCategory();
+            if(commodity.getPublishState() == PublishState.UP_SHELVES){
+                SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+                Call<ResponseResult<CommodityVO>> call = restService.selectByCommodityId(commodity.getCommodityId());
+                ResponseResult<CommodityVO> result = call.execute().body();
+                CommodityVO commodityVO = (CommodityVO)result.getData();
+                Set<com.yunxin.cb.search.vo.Category> categories = commodityVO.getCategories();
+                Iterator<com.yunxin.cb.search.vo.Category> iterator = categories.iterator();
+                if(iterator.next().getCategoryId() == category.getCategoryId()){
+                    iterator.remove();
+                }
+                commodityVO.setCategories(categories);
+                Call<ResponseResult> call1 = restService.updateCommodity(commodityVO);
+                ResponseResult result1 = call1.execute().body();
+                logger.info("[elasticsearch] update commodity state:" + result1.getResult());
+            }
+            commodityCategoryDao.delete(cocaId);
+        }catch (Exception e){
+            logger.error("removeCommodity failed", e);
+        }
+
     }
 
     @Override

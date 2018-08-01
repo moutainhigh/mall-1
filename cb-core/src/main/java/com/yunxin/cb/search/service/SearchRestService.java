@@ -38,4 +38,12 @@ public interface SearchRestService {
 
     @POST("mall/search/bulkIndex")
     Call<ResponseResult> bulkIndex(@Body List<CommodityVO> voList);
+
+    /**
+     * 查询商品
+     * @param commodityId
+     * @return
+     */
+    @GET("mall/search/commodity/{commodityId}")
+    Call<ResponseResult<CommodityVO>> selectByCommodityId(@Path("commodityId") int commodityId);
 }

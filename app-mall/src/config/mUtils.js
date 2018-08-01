@@ -306,6 +306,14 @@ export const dateFormat = function (date,fmt) { //author: meizz
   return fmt;
 };
 
+/**
+ * 获取数组中指定的元素
+ * @param compareVal 比较的数据
+ * @param array 对比的数组
+ * @param key 对比元素的字段
+ * @returns {*}
+ */
+
 export const arrayContain = function (compareVal,array,key) {
   let length = array.length;
   while (length > 0) {
@@ -342,4 +350,56 @@ export const ageYear = function (birthday) {
     }
   }
   return age;
+};
+
+/**
+ * 删除数组指定一个元素
+ * @param array 指定的数组
+ * @param compareVal 对比的数据
+ * @param type 对比对象的字段名称
+ * @returns {*}
+ */
+export const delArrayOne = function (array,compareVal,type=null) {
+  let delIndex = null;
+  console.log("test",'test');
+  for (let i = 0; i < array.length; i++) {
+    if (type) {
+      if (array[i][type] == compareVal){
+        delIndex = i;
+        break;
+      }
+    } else {
+      if (array[i] == compareVal){
+        delIndex = i;
+        break;
+      }
+    }
+  }
+  if (delIndex != null) {
+    array.splice(delIndex,1);
+  }
+  return array;
+};
+
+/**
+ * 删除数组指定所有元素
+ * @param array 指定的数组
+ * @param compareVal 对比的数据
+ * @param type 对比对象的字段名称
+ * @returns {*}
+ */
+export const delArrayAll = function (array,compareVal,type=null) {
+  let dbArray = [];
+  for (let i = 0; i < array.length; i++) {
+    if (type) {
+      if (array[i][type] != compareVal){
+        dbArray.push(array[i]);
+      }
+    } else {
+      if (array[i] != compareVal){
+        dbArray.push(array[i]);
+      }
+    }
+  }
+  return dbArray;
 };

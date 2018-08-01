@@ -22,29 +22,29 @@
           <transition name="showlist">
             <section v-show="sortBy == 'sort'" class="sort_detail_type">
               <div class="sort_list_container">
-                <div class="sort_list_li" @click="sortList(0,'默认排序')">
-                  <p :class="{sort_select: sortByType == 0}">
+                <div class="sort_list_li" @click="sortList('','默认排序',true)">
+                  <p :class="{sort_select: sortByType == ''}">
                     <span>默认排序</span>
                   </p>
-                  <img v-if="sortByType == 0" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortByType == ''" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList(1,'最畅销')">
-                  <p data="1" :class="{sort_select: sortByType == 1}">
+                <div class="sort_list_li" @click="sortList('saleNum','最畅销',false)">
+                  <p :class="{sort_select: sortByType == 'saleNum'}">
                     <span>最畅销</span>
                   </p>
-                  <img v-if="sortByType == 1" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortByType == 'saleNum'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList(2,'价格最高')">
-                  <p data="2" :class="{sort_select: sortByType == 2}">
+                <div class="sort_list_li" @click="sortList('sellPriceDesc','价格最高',false)">
+                  <p :class="{sort_select: sortByType == 'sellPriceDesc'}">
                     <span>价格最高</span>
                   </p>
-                  <img v-if="sortByType == 2" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortByType == 'sellPriceDesc'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList(3,'价格最低')">
-                  <p data="3" :class="{sort_select: sortByType == 3}">
+                <div class="sort_list_li" @click="sortList('sellPriceAsc','价格最低',true)">
+                  <p :class="{sort_select: sortByType == 'sellPriceAsc'}">
                     <span>价格最低</span>
                   </p>
-                  <img v-if="sortByType == 3" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortByType == 'sellPriceAsc'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
               </div>
             </section>
@@ -71,24 +71,21 @@
               <section style="width: 100%;background-color: #ffffff;">
                 <header class="filter_header_style">自定义</header>
                 <div class="choose_input">
-                  <input @focus="enFocus = true" @blur="enFocus = false"/>
+                  <input @focus="enFocus = true" @blur="enFocus = false" v-model="priceSect.lowPrice"/>
                   <div style="position: relative;margin-left: -1.2rem;">万</div>
                   <span style="margin: 0 0.2rem 0 0.5rem;">—</span>
-                  <input @focus="enFocus = true" @blur="enFocus = false"/>
+                  <input @focus="enFocus = true" @blur="enFocus = false" v-model="priceSect.highPrice"/>
                   <div style="position: relative;margin-left: -1.2rem;">万</div>
-                  <div class="input_button" :class="{input_button_sele:true}"><p>确定</p></div>
+                  <div class="input_button" :class="{input_button_sele:(priceSect.lowPrice && priceSect.highPrice)}" @click="setPriceSect"><p>确定</p></div>
                 </div>
               </section>
               <section style="width: 100%;background-color: #ffffff;">
                 <div style="display: flex;padding: 1rem;flex-wrap: wrap">
-                  <div class="choose_flex_type">
-                    <p :class="{choose_type_sele: true}">不限</p>
+                  <div class="choose_flex_type" @click="choosePrice(-1)">
+                    <p :class="{choose_type_sele: priceSection.chooseIndex == -1}">不限</p>
                   </div>
-                  <div class="choose_flex_type">
-                    <p>15-25万</p>
-                  </div>
-                  <div class="choose_flex_type">
-                    <p>25-50万</p>
+                  <div class="choose_flex_type" v-for="(section,index) in priceSection.value" @click="choosePrice(index)">
+                    <p :class="{choose_type_sele: priceSection.chooseIndex == index}">{{setTranPrice(section.startPrice)}}-{{setTranPrice(section.endPrice)}}万</p>
                   </div>
                 </div>
               </section>
@@ -103,100 +100,20 @@
           <transition name="showlist">
             <section v-show="sortBy == 'activity'" class="sort_detail_type sort_activity">
               <div style="overflow-x: scroll;height: 75%;">
-                <div class="activity_type">
+                <div class="activity_type" v-for="condition in conditions">
                   <div class="type_title">
-                    国别
+                    {{condition.specName}}
                   </div>
                   <div class="type_list">
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                    <div class="type_item">
-                      <p>进口</p>
-                    </div>
-                    <div class="type_item">
-                      <p>德系</p>
-                    </div>
-                    <div class="type_item">
-                      <p>韩系</p>
-                    </div>
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                    <div class="type_item">
-                      <p>自主</p>
-                    </div>
-                    <div class="type_item">
-                      <p>合资</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="activity_type">
-                  <div class="type_title">
-                    车型
-                  </div>
-                  <div class="type_list">
-                    <div class="type_item">
-                      <p>轿车</p>
-                    </div>
-                    <div class="type_item">
-                      <p>SUV</p>
-                    </div>
-                    <div class="type_item">
-                      <p>MVP</p>
-                    </div>
-                    <div class="type_item">
-                      <p>跑车</p>
-                    </div>
-                    <div class="type_item">
-                      <p>微面</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="activity_type">
-                  <div class="type_title">
-                    坐席
-                  </div>
-                  <div class="type_list">
-                    <div class="type_item">
-                      <p>两座</p>
-                    </div>
-                    <div class="type_item">
-                      <p>4-5座</p>
-                    </div>
-                    <div class="type_item">
-                      <p>6座</p>
-                    </div>
-                    <div class="type_item">
-                      <p>7座</p>
-                    </div>
-                    <div class="type_item">
-                      <p>7座以上</p>
+                    <div class="type_item" v-for="(item,index) in condition.value" @click="chooseItem(condition,index)">
+                      <p :class="{choose_item_sele: condition.showNum == index}">{{item}}</p>
                     </div>
                   </div>
                 </div>
                 <div class="activity_submit">
                   <div style="padding: 0.5rem;">
-                    <button>重置</button>
-                    <button class="submit_true">确认</button>
+                    <button @click="resItem">重置</button>
+                    <button class="submit_true" @click="submitItem">确认</button>
                   </div>
                 </div>
               </div>
@@ -205,13 +122,38 @@
         </div>
       </section>
       <div class="car_type_list">
-        <div class="type_item" v-for="(item,index) in conditions">
+        <div class="type_item" v-for="(item,index) in selecteds">
           <p>
             {{item.val}}
           </p>
-          <img src="../../assets/img/common/ic_screen_close.png" @click="delCondition(item,index)">
+          <img src="../../assets/img/common/ic_screen_close.png" @click="delSelected(item,index)">
         </div>
       </div>
+      <div style="position:absolute;top: 0;width: 100%;height: 100%;z-index: -1;background-color: #fff;">
+        <scroller style="font-size: 12px !important;position:relative;top: 8rem;"
+                  :on-refresh="refresh"
+                :on-infinite="infinite"
+                refresh-layer-color="#f5ca1d"
+                loading-layer-color="#f5ca1d">
+        <svg class="spinner" style="fill: #f5ca1d;" slot="refresh-spinner" viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
       <div class="car_list">
         <div class="list_item" v-for="commodity in commodities" @click="openDetail()">
           <div class="cont_img">
@@ -231,6 +173,28 @@
           </div>
         </div>
       </div>
+        <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
+      </scroller>
+      </div>
+
     </div>
   </div>
 
@@ -239,6 +203,8 @@
 <script>
   import headTop from "../../components/header/head"
   import {categorySearch} from "../../service/getData";
+  import {delArrayAll, delArrayOne} from "../../config/mUtils";
+  import {tranPrice} from "../../config/dataFormat";
 
   export default {
     name: "Carlist",
@@ -250,58 +216,171 @@
         commodities:[],
         sortBy: '', // 筛选的条件
         sortTitle:'默认排序', //排序名称
-        sortByType: 0, // 根据何种方式排序
+        sortByType: '', // 根据何种方式排序
         enFocus:false,//是否焦点在input上
-        conditions:[], //已选择的条件
-        searchVo : {
-          brandId: null,
-          categoryId: null,
-          sellerId: null,
-          lowestPrice: null,
-          highestPrice: null,
-          priceSection: null,
-          commoditySpecs: null,
-          sortBy: null
-        }
+        selecteds:[], //已选择的所有条件
+        priceSection:{chooseIndex:-1,value:[]}, //价格区间块
+        priceSect:{lowPrice:'',highPrice:''}, //自定义价格区间
+        conditions:[],//展示的筛选
+        chooseConditions:[],//确定选择的筛选
+        searchVo : {brandId: null,categoryId: null,sellerId: null,lowestPrice: '',highestPrice: '',priceSection: null,commoditySpecs: [],sortBy: null,direction:String},
+        isInfinite:false,
       }
     },
     methods: {
       // 点击顶部三个选项，展示不同的列表，选中当前选项进行展示，同时收回其他选项
       async chooseType(type) {
+        //重置自定义价格区间
+        if (!this.searchVo.lowestPrice) {
+          this.priceSect = {
+            lowPrice:'',
+            highPrice:''
+          }
+        }
+        //重置筛选数据
+        this.conditions = [];
+        for (let item of this.chooseConditions){
+          this.conditions.push({
+            specName:item.specName,
+            value:item.value,
+            showNum:item.showNum
+          })
+        }
         if (this.sortBy !== type) {
           this.sortBy = type;
           //food选项中头部标题发生改变，需要特殊处理
-          if (type == 'food') {
-            this.foodTitle = '分类';
-          } else {
-            //将foodTitle 和 headTitle 进行同步
-            this.foodTitle = this.headTitle;
-          }
         } else {
           //再次点击相同选项时收回列表
           this.sortBy = '';
-          if (type == 'food') {
-            //将foodTitle 和 headTitle 进行同步
-            this.foodTitle = this.headTitle;
-          }
         }
       },
       //点击某个排序方式，获取事件对象的data值，并根据获取的值重新获取数据渲染
-      sortList(sort,title) {
-        this.sortByType = sort;
-        this.sortTitle = title;
+      sortList(sort,title,asc) {
+        if (this.sortByType != sort){
+          this.sortByType = sort;
+          this.sortTitle = title;
+          this.searchVo.sortBy = sort;
+          if (asc) {
+            this.searchVo.direction = "ASC";
+          }else {
+            this.searchVo.direction = "DESC";
+          }
+        }
         this.sortBy = '';
       },
-      delCondition(condition,index){
-        this.searchVo[condition.type] = null;
-        this.conditions.splice(index,1);
+      delSelected(selected, index){
+        if (selected.type == 'commoditySpecs') {
+          console.log(this.searchVo.commoditySpecs);
+          this.searchVo.commoditySpecs = delArrayOne(this.searchVo.commoditySpecs,selected.key,'specName');
+          for (let condition of this.chooseConditions){
+            if (condition.specName == selected.key) {
+              condition.showNum = -1;
+              break;
+            }
+          }
+        }else {
+          this.searchVo[selected.type] = null;
+        }
+        this.selecteds.splice(index,1);
       },
+      //跳转商品详情页
       openDetail(carId){
         this.$router.push({
           path:'/car-detail',
           query:{carId:carId}
         })
-      }
+      },
+      //点击选择筛选项
+      chooseItem(condition,index){
+        if (condition.showNum != index) {
+          condition.showNum = index;
+        }else{
+          condition.showNum = -1;
+        }
+      },
+      //筛选确认
+      submitItem(){
+        this.sortBy = '';
+        //重新录入筛选选项
+        this.chooseConditions = [];
+        this.searchVo.commoditySpecs = [];
+        this.selecteds = delArrayAll(this.selecteds,'commoditySpecs','type');
+        for (let item of this.conditions){
+          this.chooseConditions.push({
+            specName:item.specName,
+            value:item.value,
+            showNum:item.showNum
+          });
+          if (item.showNum >= 0){
+            this.searchVo.commoditySpecs.push({
+              specName:item.specName,
+              value:item.value[item.showNum],
+            });
+            this.selecteds.push({
+              key:item.specName,
+              val:item.value[item.showNum],
+              type:'commoditySpecs'
+            });
+          }
+        }
+        //重新请求数据
+      },
+      //重置筛选
+      resItem(){
+        for (let condition of this.conditions) {
+          condition.showNum = -1;
+        }
+        this.selecteds = delArrayAll(this.selecteds,'commoditySpecs','type');
+        this.searchVo.commoditySpecs = [];
+      },
+      choosePrice(index){
+        if (this.priceSection.chooseIndex != index) {
+          this.priceSection.chooseIndex = index;
+          if (index == -1) {
+
+          }else{
+
+          }
+          this.searchVo.lowestPrice = '';
+          this.searchVo.highestPrice = '';
+        }
+        this.sortBy = '';
+      },
+      setPriceSect(){
+        if (this.priceSect.lowPrice && this.priceSect.highPrice) {
+          this.searchVo.lowestPrice = this.priceSect.lowPrice;
+          this.searchVo.highestPrice = this.priceSect.highPrice;
+          this.searchVo.priceSection = null;
+          this.priceSection.chooseIndex = -2;
+          this.sortBy = '';
+        }
+      },
+      setTranPrice(price){
+        return tranPrice(price);
+      },
+      refresh(done) {
+        // this.pageQuery.pageNo = 1;
+        // getCustomerOrder(this.pageQuery).then(res => {
+        //   if (res.result == 'SUCCESS') {
+        //     this.orders = res.data.data;
+        //     if (res.data.pageCount <= this.pageQuery.pageNo) {
+        //       this.isInfinite = false;
+        //     } else {
+        //       this.pageQuery.page++;
+        //       this.isInfinite = true;
+        //     }
+        //   }
+        //   done()
+        // });
+      },
+
+      infinite(done) {
+        if (!this.isInfinite) {
+          done(true);
+          return;
+        }
+        // this.getOrderList(done);
+      },
     },
     created(){
       let _this = this;
@@ -309,7 +388,7 @@
         let brandId = this.$route.query.brandId;
         let brandName = this.$route.query.brandName;
         this.searchVo.brandId = brandId;
-        this.conditions.push({
+        this.selecteds.push({
           key:brandId,
           val:brandName,
           type:'brandId'
@@ -320,7 +399,7 @@
         let categoryId = this.$route.query.categoryId;
         let categoryName = this.$route.query.categoryName;
         this.searchVo.categoryId = categoryId;
-        this.conditions.push({
+        this.selecteds.push({
           key:categoryId,
           val:categoryName,
           type:'categoryId'
@@ -329,7 +408,24 @@
       categorySearch(this.searchVo,0,10).then(res=>{
         console.log(res);
         if (res.result == 'SUCCESS') {
-          _this.commodities = res.data.pageFinder.data;
+          if (res.data.pageFinder) {
+            _this.commodities = res.data.pageFinder.data;
+          }
+          if (res.data.condition) {
+            for (let item in res.data.condition){
+              _this.conditions.push({
+                specName:item,
+                value:res.data.condition[item],
+                showNum:-1
+              });
+              _this.chooseConditions.push({
+                specName:item,
+                value:res.data.condition[item],
+                showNum:-1
+              })
+            }
+          }
+          _this.priceSection.value = res.data.priceSection;
         }
       })
 
@@ -431,6 +527,7 @@
             box-sizing: border-box;
             border: 1px #BBBBBB solid;
             border-radius: 4px;
+            outline: unset;
           }
 
           .submit_true {
@@ -667,12 +764,6 @@
           border-radius: 4px;
           background-color: #F1F3F5;
         }
-
-        .choose_type_sele {
-          border: #f5ca1d 1px solid;
-          color: #f5ca1d;
-          background-color: #FFFBEB;
-        }
       }
       .confirm_filter {
         display: flex;
@@ -734,7 +825,8 @@
   }
 
   .car_type_list {
-    padding: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background-color: #f5f5f5;
     .type_item {
       border: #DDDDDD 1px solid;
       display: inline-block;
@@ -776,6 +868,7 @@
         border-bottom: #ececec 1px solid;
         .cont_title {
           height: 3rem;
+          font-size: 1rem;
           overflow:hidden;
           text-overflow:ellipsis;
           display:-webkit-box;
@@ -802,6 +895,18 @@
         }
       }
     }
+  }
+
+  .choose_type_sele {
+    border: #f5ca1d 1px solid;
+    color: #f5ca1d;
+    background-color: #FFFBEB !important;
+  }
+
+  .choose_item_sele{
+    border: #f5ca1d 1px solid;
+    color: #f5ca1d !important;
+    background-color: #FFFBEB !important;
   }
 
   .focus_input {

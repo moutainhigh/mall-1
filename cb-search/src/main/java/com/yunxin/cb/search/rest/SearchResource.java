@@ -37,8 +37,8 @@ public class SearchResource extends BaseResource {
             @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "post", dataType = "int")
     })
-    @PostMapping(value = "keywordSearch/{page}/{size}")
-    public ResponseResult<SearchResultVo> keywordSearch(@RequestParam(value = "keyword") String keyword, @PathVariable(value = "page") int page, @PathVariable(value = "size") int size) {
+    @PostMapping(value = "keywordSearch")
+    public ResponseResult<SearchResultVo> keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
         try {
             Page<Commodity> result = commodityService.keywordSearch(keyword, PageRequest.of(page, size));
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
@@ -60,15 +60,15 @@ public class SearchResource extends BaseResource {
             @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "post", dataType = "int")
     })
-    @PostMapping(value = "categorySearch/{page}/{size}")
-    public ResponseResult<SearchResultVo> categorySearch(@RequestBody SearchVo searchVo, @PathVariable(value = "page") int page, @PathVariable(value = "size") int size) {
+    @PostMapping(value = "categorySearch")
+    public ResponseResult<SearchResultVo> categorySearch(@RequestBody SearchVo searchVo) {
         try {
-            Page<Commodity> result = commodityService.categorySearch(searchVo, PageRequest.of(page, size));
+            Page<Commodity> result = commodityService.categorySearch(searchVo, PageRequest.of(searchVo.getPage(), searchVo.getSize()));
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
             Map<String, List<Object>> condition = new HashMap<>();
             SearchResultVo searchResultVo = new SearchResultVo();
             List<PriceSection> priceSection = new ArrayList<>();
-            dealResult(page, result, pageFinder, condition, searchResultVo,priceSection);
+            dealResult(searchVo.getPage(), result, pageFinder, condition, searchResultVo,priceSection);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("categorySearch excption", e);
@@ -158,6 +158,18 @@ public class SearchResource extends BaseResource {
         BeanUtils.copyProperties(commodityVO, commodity);
         commodityService.updateCommodity(commodity);
         return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "查询ES对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int"),
+    })
+    @GetMapping(value = "commodity/{commodityId}")
+    public ResponseResult<CommodityVO> selectByCommodityId(@PathVariable int commodityId) {
+        Commodity commodity = commodityService.selectByCommodityId(commodityId);
+        CommodityVO commodityVO = new CommodityVO();
+        BeanUtils.copyProperties(commodity, commodityVO);
+        return new ResponseResult(commodityVO);
     }
 
 }
