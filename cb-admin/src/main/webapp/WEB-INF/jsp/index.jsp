@@ -133,7 +133,7 @@
 
   <div style="position: relative">
     <img style="width: 100%; position: absolute" src="images/indexBg/loginBg.png" alt=""/>
-    <h4> ${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>
+    <div  style="width: 100%; position: absolute;text-align: center;font-size: 20px;color: red"> ${SPRING_SECURITY_LAST_EXCEPTION.message}</div>
     <form id="form-login" style="width: 100%; margin-top: 40px" action="login" method="post">
       <%--<div class="login-avatar">--%>
         <%--<img src="images/users/logo.png" alt="" id="login-avatar"/>--%>
@@ -141,7 +141,7 @@
       <div class="login-fields-wrapper" style="float: none; width: 100%">
         <div class="row" style="">
           <div class="col-lg-12">
-            <input class="form-control input-lg" style="width: 85%; height: 50px; margin: 0 7.5%; border: 2px solid #e5e5e5; border-radius: 6px" id="j_username" name="username" type="text" placeholder="请输入用户名" tabindex="1" value="admin" />
+            <input class="form-control input-lg" style="width: 85%; height: 50px; margin: 0 7.5%; border: 2px solid #e5e5e5; border-radius: 6px" id="j_username" name="username" type="text" placeholder="请输入用户名" tabindex="1" value="" />
           </div>
         </div>
         <div class="spacer-10" style="height: 20px"></div>
