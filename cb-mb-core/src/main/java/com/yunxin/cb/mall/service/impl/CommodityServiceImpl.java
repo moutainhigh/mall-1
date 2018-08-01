@@ -110,8 +110,9 @@ public class CommodityServiceImpl implements CommodityService {
             productVos=new ArrayList<ProductVo>();
             for(Product pro:products){
                 pro.setProductAttributes(null);
-                BeanUtils.copyProperties(productVo,pro);
-                productVos.add(productVo);
+                ProductVo proVo=new ProductVo();
+                BeanUtils.copyProperties(proVo,pro);
+                productVos.add(proVo);
             }
             commodityVo.setProductVos(productVos);
         }

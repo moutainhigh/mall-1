@@ -158,7 +158,17 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer updatePassword(int customerId, String password) {
         Customer customer = customerDao.findOne(customerId);
-        customer.setPassword(password);
+        String pass="";
+        try {
+            if (StringUtils.isBlank(password)) {
+                // 初始密码
+                password=CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE);
+            }
+            pass = PasswordHash.createHash(password);
+        } catch (PasswordHash.CannotPerformOperationException e) {
+            e.printStackTrace();
+        }
+        customer.setPassword(pass);
         return customer;
     }
 
