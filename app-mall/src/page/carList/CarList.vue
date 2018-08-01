@@ -22,29 +22,29 @@
           <transition name="showlist">
             <section v-show="sortBy == 'sort'" class="sort_detail_type">
               <div class="sort_list_container">
-                <div class="sort_list_li" @click="sortList(0,'默认排序')">
-                  <p :class="{sort_select: sortByType == 0}">
+                <div class="sort_list_li" @click="sortList('','默认排序',true)">
+                  <p :class="{sort_select: sortByType == ''}">
                     <span>默认排序</span>
                   </p>
-                  <img v-if="sortByType == 0" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortByType == ''" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList(1,'最畅销')">
-                  <p data="1" :class="{sort_select: sortByType == 1}">
+                <div class="sort_list_li" @click="sortList('saleNum','最畅销',false)">
+                  <p :class="{sort_select: sortByType == 'saleNum'}">
                     <span>最畅销</span>
                   </p>
-                  <img v-if="sortByType == 1" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortByType == 'saleNum'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList(2,'价格最高')">
-                  <p data="2" :class="{sort_select: sortByType == 2}">
+                <div class="sort_list_li" @click="sortList('sellPriceDesc','价格最高',false)">
+                  <p :class="{sort_select: sortByType == 'sellPriceDesc'}">
                     <span>价格最高</span>
                   </p>
-                  <img v-if="sortByType == 2" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortByType == 'sellPriceDesc'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
-                <div class="sort_list_li" @click="sortList(3,'价格最低')">
-                  <p data="3" :class="{sort_select: sortByType == 3}">
+                <div class="sort_list_li" @click="sortList('sellPriceAsc','价格最低',true)">
+                  <p :class="{sort_select: sortByType == 'sellPriceAsc'}">
                     <span>价格最低</span>
                   </p>
-                  <img v-if="sortByType == 3" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortByType == 'sellPriceAsc'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
               </div>
             </section>
@@ -71,24 +71,21 @@
               <section style="width: 100%;background-color: #ffffff;">
                 <header class="filter_header_style">自定义</header>
                 <div class="choose_input">
-                  <input @focus="enFocus = true" @blur="enFocus = false"/>
+                  <input @focus="enFocus = true" @blur="enFocus = false" v-model="priceSect.lowPrice"/>
                   <div style="position: relative;margin-left: -1.2rem;">万</div>
                   <span style="margin: 0 0.2rem 0 0.5rem;">—</span>
-                  <input @focus="enFocus = true" @blur="enFocus = false"/>
+                  <input @focus="enFocus = true" @blur="enFocus = false" v-model="priceSect.highPrice"/>
                   <div style="position: relative;margin-left: -1.2rem;">万</div>
-                  <div class="input_button" :class="{input_button_sele:true}"><p>确定</p></div>
+                  <div class="input_button" :class="{input_button_sele:(priceSect.lowPrice && priceSect.highPrice)}" @click="setPriceSect"><p>确定</p></div>
                 </div>
               </section>
               <section style="width: 100%;background-color: #ffffff;">
                 <div style="display: flex;padding: 1rem;flex-wrap: wrap">
-                  <div class="choose_flex_type">
-                    <p :class="{choose_type_sele: true}">不限</p>
+                  <div class="choose_flex_type" @click="choosePrice(-1)">
+                    <p :class="{choose_type_sele: priceSection.chooseIndex == -1}">不限</p>
                   </div>
-                  <div class="choose_flex_type">
-                    <p>15-25万</p>
-                  </div>
-                  <div class="choose_flex_type">
-                    <p>25-50万</p>
+                  <div class="choose_flex_type" v-for="(section,index) in priceSection.value" @click="choosePrice(index)">
+                    <p :class="{choose_type_sele: priceSection.chooseIndex == index}">{{setTranPrice(section.startPrice)}}-{{setTranPrice(section.endPrice)}}万</p>
                   </div>
                 </div>
               </section>
@@ -207,6 +204,7 @@
   import headTop from "../../components/header/head"
   import {categorySearch} from "../../service/getData";
   import {delArrayAll, delArrayOne} from "../../config/mUtils";
+  import {tranPrice} from "../../config/dataFormat";
 
   export default {
     name: "Carlist",
@@ -218,27 +216,27 @@
         commodities:[],
         sortBy: '', // 筛选的条件
         sortTitle:'默认排序', //排序名称
-        sortByType: 0, // 根据何种方式排序
+        sortByType: '', // 根据何种方式排序
         enFocus:false,//是否焦点在input上
-        conditions:[],//筛选
-        selecteds:[], //已选择的条件
+        selecteds:[], //已选择的所有条件
+        priceSection:{chooseIndex:-1,value:[]}, //价格区间块
+        priceSect:{lowPrice:'',highPrice:''}, //自定义价格区间
+        conditions:[],//展示的筛选
         chooseConditions:[],//确定选择的筛选
-        searchVo : {
-          brandId: null,
-          categoryId: null,
-          sellerId: null,
-          lowestPrice: null,
-          highestPrice: null,
-          priceSection: null,
-          commoditySpecs: [],
-          sortBy: null
-        },
+        searchVo : {brandId: null,categoryId: null,sellerId: null,lowestPrice: '',highestPrice: '',priceSection: null,commoditySpecs: [],sortBy: null,direction:String},
         isInfinite:false,
       }
     },
     methods: {
       // 点击顶部三个选项，展示不同的列表，选中当前选项进行展示，同时收回其他选项
       async chooseType(type) {
+        //重置自定义价格区间
+        if (!this.searchVo.lowestPrice) {
+          this.priceSect = {
+            lowPrice:'',
+            highPrice:''
+          }
+        }
         //重置筛选数据
         this.conditions = [];
         for (let item of this.chooseConditions){
@@ -257,9 +255,17 @@
         }
       },
       //点击某个排序方式，获取事件对象的data值，并根据获取的值重新获取数据渲染
-      sortList(sort,title) {
-        this.sortByType = sort;
-        this.sortTitle = title;
+      sortList(sort,title,asc) {
+        if (this.sortByType != sort){
+          this.sortByType = sort;
+          this.sortTitle = title;
+          this.searchVo.sortBy = sort;
+          if (asc) {
+            this.searchVo.direction = "ASC";
+          }else {
+            this.searchVo.direction = "DESC";
+          }
+        }
         this.sortBy = '';
       },
       delSelected(selected, index){
@@ -276,14 +282,15 @@
           this.searchVo[selected.type] = null;
         }
         this.selecteds.splice(index,1);
-        console.log(this.searchVo);
       },
+      //跳转商品详情页
       openDetail(carId){
         this.$router.push({
           path:'/car-detail',
           query:{carId:carId}
         })
       },
+      //点击选择筛选项
       chooseItem(condition,index){
         if (condition.showNum != index) {
           condition.showNum = index;
@@ -291,6 +298,7 @@
           condition.showNum = -1;
         }
       },
+      //筛选确认
       submitItem(){
         this.sortBy = '';
         //重新录入筛选选项
@@ -317,12 +325,38 @@
         }
         //重新请求数据
       },
+      //重置筛选
       resItem(){
         for (let condition of this.conditions) {
           condition.showNum = -1;
         }
         this.selecteds = delArrayAll(this.selecteds,'commoditySpecs','type');
         this.searchVo.commoditySpecs = [];
+      },
+      choosePrice(index){
+        if (this.priceSection.chooseIndex != index) {
+          this.priceSection.chooseIndex = index;
+          if (index == -1) {
+
+          }else{
+
+          }
+          this.searchVo.lowestPrice = '';
+          this.searchVo.highestPrice = '';
+        }
+        this.sortBy = '';
+      },
+      setPriceSect(){
+        if (this.priceSect.lowPrice && this.priceSect.highPrice) {
+          this.searchVo.lowestPrice = this.priceSect.lowPrice;
+          this.searchVo.highestPrice = this.priceSect.highPrice;
+          this.searchVo.priceSection = null;
+          this.priceSection.chooseIndex = -2;
+          this.sortBy = '';
+        }
+      },
+      setTranPrice(price){
+        return tranPrice(price);
       },
       refresh(done) {
         // this.pageQuery.pageNo = 1;
@@ -391,7 +425,7 @@
               })
             }
           }
-          // _this.conditions = res.data.condition;
+          _this.priceSection.value = res.data.priceSection;
         }
       })
 
