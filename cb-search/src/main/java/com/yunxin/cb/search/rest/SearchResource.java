@@ -160,4 +160,16 @@ public class SearchResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
+    @ApiOperation(value = "查询ES对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int"),
+    })
+    @GetMapping(value = "commodity/{commodityId}")
+    public ResponseResult<CommodityVO> selectByCommodityId(@PathVariable int commodityId) {
+        Commodity commodity = commodityService.selectByCommodityId(commodityId);
+        CommodityVO commodityVO = new CommodityVO();
+        BeanUtils.copyProperties(commodity, commodityVO);
+        return new ResponseResult(commodityVO);
+    }
+
 }

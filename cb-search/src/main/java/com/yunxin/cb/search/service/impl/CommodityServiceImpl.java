@@ -114,7 +114,8 @@ public class CommodityServiceImpl implements CommodityService {
 
         if(!searchVo.getCommoditySpecs().isEmpty()) {
             for(CommoditySpec commoditySpec :searchVo.getCommoditySpecs()) {
-                criteria.and(new Criteria("commoditySpecs."+commoditySpec.getSpecName()).is(commoditySpec.getValue()));
+                criteria.and(new Criteria("commoditySpecs.specName").is(commoditySpec.getSpecName()));
+                criteria.and(new Criteria("commoditySpecs.value").is(commoditySpec.getValue()));
             }
         }
 
@@ -157,6 +158,15 @@ public class CommodityServiceImpl implements CommodityService {
         return count;
     }
 
-
+    /**
+     * 根据商品ID查询商品
+     * @param commodityId
+     * @return
+     */
+    public Commodity selectByCommodityId(int commodityId){
+        Optional<Commodity> commodity = commodityDao.findById(commodityId);
+        Commodity commod = commodity.get();
+        return commod;
+    }
 
 }
