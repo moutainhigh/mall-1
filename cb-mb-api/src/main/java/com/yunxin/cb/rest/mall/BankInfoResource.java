@@ -21,11 +21,6 @@ import javax.servlet.ServletContext;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @title: 银行卡接口
- * @auther: eleven
- * @date: 2018/7/17 18:29
- */
 @Api(description = "银行卡接口")
 @RestController
 @RequestMapping(value = "/{version}/mall/bankinfo")
@@ -43,8 +38,8 @@ public class BankInfoResource extends BaseResource implements ServletContextAwar
     @ApiImplicitParams({
     })
     @ApiVersion(1)
-    @PostMapping(value = "addBankInfo")
-    public ResponseResult<BankInfoVO> addBankInfo(@RequestBody BankInfoVO bankInfoVO) throws Exception{
+    @PostMapping(value = "add")
+    public ResponseResult<BankInfoVO> add(@RequestBody BankInfoVO bankInfoVO) throws Exception{
         logger.info("bankInfoVO:" + bankInfoVO.toString());
         BankInfo bankInfo = new BankInfo();
         try {
@@ -77,8 +72,8 @@ public class BankInfoResource extends BaseResource implements ServletContextAwar
     @ApiImplicitParams({
     })
     @ApiVersion(1)
-    @DeleteMapping(value = "deleteBankInfo/{bankId}")
-    public ResponseResult deleteBankInfo(@PathVariable Integer bankId) throws Exception{
+    @DeleteMapping(value = "delete/{bankId}")
+    public ResponseResult delete(@PathVariable Integer bankId) throws Exception{
         try {
             bankInfoService.deleteByPrimaryKey(bankId,getCustomerId());
         } catch (Exception e) {
@@ -92,8 +87,8 @@ public class BankInfoResource extends BaseResource implements ServletContextAwar
     @ApiImplicitParams({
     })
     @ApiVersion(1)
-    @GetMapping(value = "selectBankInfo")
-    public ResponseResult<BankInfoVO> selectBankInfo() throws Exception{
+    @GetMapping(value = "select")
+    public ResponseResult<BankInfoVO> select() throws Exception{
         try {
             List<BankInfoVO> listVo = bankInfoService.selectAll(getCustomerId());
             return new ResponseResult(listVo);
@@ -103,20 +98,20 @@ public class BankInfoResource extends BaseResource implements ServletContextAwar
         }
     }
 
-    @ApiOperation(value = "获取银行卡信息")
-    @ApiImplicitParams({
-    })
-    @ApiVersion(1)
-    @GetMapping(value = "selectBankInfoDetail/{bankId}")
-    public ResponseResult<BankInfoVO> selectBankInfoDetail(@PathVariable Integer bankId) throws Exception{
-        try {
-            BankInfoVO bankInfoVO = bankInfoService.selectByPrimaryKey(bankId,getCustomerId());
-            return new ResponseResult(bankInfoVO);
-        } catch (Exception e) {
-            logger.info("addProductReturn failed", e);
-            return new ResponseResult(Result.FAILURE);
-        }
-    }
+//    @ApiOperation(value = "获取银行卡信息")
+//    @ApiImplicitParams({
+//    })
+//    @ApiVersion(1)
+//    @GetMapping(value = "selectBankInfoDetail/{bankId}")
+//    public ResponseResult<BankInfoVO> selectBankInfoDetail(@PathVariable Integer bankId) throws Exception{
+//        try {
+//            BankInfoVO bankInfoVO = bankInfoService.selectByPrimaryKey(bankId,getCustomerId());
+//            return new ResponseResult(bankInfoVO);
+//        } catch (Exception e) {
+//            logger.info("addProductReturn failed", e);
+//            return new ResponseResult(Result.FAILURE);
+//        }
+//    }
 
 
 }
