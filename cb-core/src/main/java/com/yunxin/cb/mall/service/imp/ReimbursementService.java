@@ -1,7 +1,9 @@
 package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.mall.dao.ReimbursementDao;
+import com.yunxin.cb.mall.dao.ReimbursementOrderDao;
 import com.yunxin.cb.mall.entity.Reimbursement;
+import com.yunxin.cb.mall.entity.ReimbursementOrder;
 import com.yunxin.cb.mall.entity.Reimbursement_;
 import com.yunxin.cb.mall.service.IReimbursementService;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -25,6 +27,8 @@ public class ReimbursementService implements IReimbursementService {
     private static final Logger logger = LoggerFactory.getLogger(ReimbursementService.class);
     @Resource
     private ReimbursementDao reimbursementDao;
+    @Resource
+    private ReimbursementOrderDao reimbursementOrderDao;
 
     @Override
     public Page<Reimbursement> pageReimbursement(PageSpecification<Reimbursement> query) {
@@ -42,5 +46,11 @@ public class ReimbursementService implements IReimbursementService {
             }
         });
         return reimbursementDao.findAll(query,query.getPageRequest());
+    }
+
+    @Override
+    public List<ReimbursementOrder> queryOrderByIds(int reimbursementId) {
+        List<ReimbursementOrder> listOrder= reimbursementOrderDao.getReimbursementOrderById(reimbursementId);
+        return listOrder;
     }
 }

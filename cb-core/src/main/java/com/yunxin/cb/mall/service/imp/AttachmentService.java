@@ -4,16 +4,12 @@
 package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.mall.dao.AttachmentDao;
-import com.yunxin.cb.mall.dao.FeedbackDao;
 import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.Attachment_;
-import com.yunxin.cb.mall.entity.Feedback;
-import com.yunxin.cb.mall.entity.Feedback_;
 import com.yunxin.cb.mall.entity.meta.AttachmentState;
 import com.yunxin.cb.mall.entity.meta.FileType;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.IAttachmentService;
-import com.yunxin.cb.mall.service.IFeedbackService;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.slf4j.Logger;
@@ -23,9 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.persistence.criteria.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.List;
 
