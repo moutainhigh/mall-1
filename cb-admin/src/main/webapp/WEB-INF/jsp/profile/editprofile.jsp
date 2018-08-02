@@ -255,6 +255,15 @@
                                        style="display: none"/>
                             </div>
                         </div>
+                        <div class="spacer-10"></div>
+                        <div  class="row">
+                            <div class="col-sm-2">
+                                <label>备注：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input id="remarks"    path="remarks" cssClass="form-control"/>
+                            </div>
+                        </div>
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>

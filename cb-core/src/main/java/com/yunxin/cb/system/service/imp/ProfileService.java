@@ -139,6 +139,8 @@ public class ProfileService implements IProfileService {
     public Profile updateProfile(Profile profile) {
         Profile oldProfile = profileDao.findOne(profile.getFileId());
         oldProfile.setFileValue(profile.getFileValue());
+        oldProfile.setRemarks(profile.getRemarks());
+        oldProfile.setIsPicture(profile.getIsPicture());
         return oldProfile;
     }
 
@@ -155,6 +157,7 @@ public class ProfileService implements IProfileService {
                 profile=new Profile();
                 profile.setProfileName(e);
                 profile.setFileValue(e.getDefaultValue());
+                profile.setRemarks(e.getDefaultValue());
                 profileDao.save(profile);
             }
         }

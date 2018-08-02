@@ -21,11 +21,6 @@ import javax.servlet.ServletContext;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @title: 银行卡接口
- * @auther: eleven
- * @date: 2018/7/17 18:29
- */
 @Api(description = "银行卡接口")
 @RestController
 @RequestMapping(value = "/{version}/mall/bankinfo")
