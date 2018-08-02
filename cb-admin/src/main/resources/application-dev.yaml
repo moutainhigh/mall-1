@@ -39,4 +39,4 @@ application:
   default:
     avatarUrl: http://test.resource.999shuijingqiu.com/avatar.png
   uploadPath: D:/www/
-  searchBaseUrl: http://localhost:8168/search/
+  searchBaseUrl: http://192.168.0.205:8168/search/
