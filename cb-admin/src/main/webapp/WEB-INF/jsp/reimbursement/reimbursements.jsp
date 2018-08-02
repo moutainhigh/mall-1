@@ -36,54 +36,23 @@
                     return "审批不通过";
             }
         }
-        function formatReimbursementOrder(reimbursementOrder){
-                alert(reimbursementOrder);
-        }
+        function auditItem(reimbursementId){
+            $('#auditDialog').modal();
+            $("#trs").html("");
+            $.get("reimbursementOrders.do?reimbursementId="+reimbursementId,$("#tables").serialize(),function(result){
+                var rem=result.data;
+                    for(var i=0;i<rem.length;i++){
+                        $("#trs").append("<tr name='trtd'><td>"+rem[i].order.orderCode+"</td><td>"+rem[i].order.feeTotal+"</td><td>"+rem[i].order.createTime+"</td></tr>");
+                    }
+            });
 
-        function excelInsuranceOrder() {
-            window.location.href = "excelInsuranceOrder.do";
-        };
 
-        function orderPrint() {
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                window.location.href = "prints.do?orderId=" + dataItem.orderId;
-            }
-        }
-
-        function orderPrintSurvey() {
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                // window.location.href = "printsSurvey.do?orderId=" + dataItem.orderId;
-                window.open("printsSurvey.do?orderId=" + dataItem.orderId);
-            }
-        }
-
-        function orderPrint3() {
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                window.location.href = "prints3.do?orderId=" + dataItem.orderId;
-            }
-        }
-
-        function orderPrint4() {
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                window.location.href = "prints4.do?orderId=" + dataItem.orderId;
-            }
         }
 
         function checkTime() {
             if ($('#createTime').val() > $('#createTimes').val() && '' != $('#createTimes').val()) {
                 alert("开始时间不能大于结束时间")
                 $('#createTimes').val('')
-            }
-        }
-
-        function orderPDF() {
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                window.location.href = "prints.do?orderId=" + dataItem.orderId;
             }
         }
     </script>
@@ -266,8 +235,10 @@
                                                 width="100"/>
                             <kendo:grid-column title="报账订单总金额" filterable="false" field="orderAmount"
                                                 width="100"/>
+                            <%--<kendo:grid-column title="报账订单" filterable="false"--%>
+                                               <%--width="100" template="<a href='reimbursementOrders.do?reimbursementId=#= reimbursementId#' style='color:blue'>查看</a>" />--%>
                             <kendo:grid-column title="报账订单" filterable="false"
-                                               width="100" template="查看" />
+                                               width="100" template="<a href=javascript:void(0)' onclick='auditItem(#= reimbursementId#)' style='color:blue'>查看</a>" />
                             <kendo:grid-column title="申报时间" filterable="false" field="createTime"
                                                format="{0:yyyy-MM-dd HH:mm}" width="100"/>
                             <kendo:grid-column title="状态" filterable="false" field="orderState"
@@ -309,6 +280,36 @@
         <!-- End #footer-main -->
     </div>
     <!-- End #content -->
+</div>
+
+<div class="modal fade" id="auditDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">订单详情</h4>
+            </div>
+            <div class="modal-body" id="reimbursementIds">
+                <table class="table table-bordered table-striped" id="tables">
+                    <thead>
+                    <tr>
+                        <th scope="col" data-rt-column="code">订单编号</th>
+                        <th scope="col" data-rt-column="operate">订单总额</th>
+                        <th scope="col" data-rt-column="name">创建时间</th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="trs">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <%--<button class="btn btn-primary pull-right" onclick="submitAudit();" id="btnComfrim">确认</button>--%>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- End #main -->
 
