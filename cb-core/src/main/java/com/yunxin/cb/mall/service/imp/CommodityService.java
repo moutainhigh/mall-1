@@ -34,10 +34,7 @@ import retrofit2.Call;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author gonglei
@@ -780,14 +777,32 @@ public class CommodityService implements ICommodityService {
             List<CommodityVO> listVo = new ArrayList<>();
             for(Commodity commodity : list){
                 if(commodity.getPublishState() == PublishState.UP_SHELVES){
-                    CommodityVO commodityVO = new CommodityVO(commodity);
-                    listVo.add(commodityVO);
+                    List<CommodityCategory> listCC = commodityCategoryDao.findByCommodity_CommodityId(commodity.getCommodityId());
+                    if(listCC.size()>0){
+                        Set<com.yunxin.cb.search.vo.Category> categories = new HashSet<>();
+                        for(CommodityCategory commodityCategory : listCC){
+                            Category category = commodityCategory.getCategory();
+                            com.yunxin.cb.search.vo.Category category1 = new com.yunxin.cb.search.vo.Category();
+                            category1.setCategoryId(category.getCategoryId());
+                            category1.setCategoryName(category.getCategoryName());
+                            category1.setCategoryNo(category.getCategoryNo());
+                            category1.setIconPath(category.getIconPath());
+                            category1.setSortOrder(category.getSortOrder());
+                            categories.add(category1);
+                        }
+                        CommodityVO commodityVO = new CommodityVO(commodity);
+                        commodityVO.setCategories(categories);
+                        listVo.add(commodityVO);
+                    }else{
+                        CommodityVO commodityVO = new CommodityVO(commodity);
+                        listVo.add(commodityVO);
+                    }
                 }
             }
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
             Call<ResponseResult> call = restService.bulkIndex(listVo);
             ResponseResult result = call.execute().body();
-            logger.info("[elasticsearch] remove commodity state:" + result.getResult());
+            logger.info("[elasticsearch] syncESCommodity state:" + result.getResult());
         } catch (Exception e) {
             logger.error("syncESCommodity failed", e);
         }

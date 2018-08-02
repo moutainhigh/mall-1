@@ -28,4 +28,6 @@ public interface CommodityCategoryDao extends JpaRepository<CommodityCategory, I
 
     Long countByCategoryAndCommodity_CommodityId(Category category, int commodityId);
 
+    List<CommodityCategory> findByCommodity_CommodityId(int commodityId);
+
 }
