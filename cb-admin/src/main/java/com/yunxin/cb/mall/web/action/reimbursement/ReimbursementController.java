@@ -5,12 +5,11 @@ import com.yunxin.cb.mall.service.IReimbursementService;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author wangteng
@@ -35,5 +34,15 @@ public class ReimbursementController {
     public Page<Reimbursement> pageReimbursement(@RequestBody PageSpecification<Reimbursement> query) {
         Page<Reimbursement> page = iReimbursementService.pageReimbursement(query);
         return page;
+    }
+
+    @RequestMapping(value = "reimbursementOrders", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> reimbursementOrders(@RequestParam("reimbursementId") int reimbursementId) {
+        return new HashMap<String,Object>(){
+            {
+                put("data",iReimbursementService.queryOrderByIds(reimbursementId));
+            }
+        };
     }
 }
