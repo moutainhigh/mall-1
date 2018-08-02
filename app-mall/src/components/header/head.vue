@@ -1,6 +1,9 @@
 <template>
   <header id='head_top' style="display: flex;">
-    <section class="head_goback">
+    <section class="head_goback" v-if="goBack" @click="back">
+      <img src="../../assets/img/common/back.png" height="23" style="vertical-align: middle;margin-left: 5px;">
+    </section>
+    <section class="head_goback" style="margin-left: 0;">
       <img src="../../assets/img/common/ic_nav_close.png" height="23" style="vertical-align: middle;margin-left: 5px;">
     </section>
     <slot name='search' class="head_search"></slot>
@@ -28,6 +31,11 @@
       return {}
     },
     props: ['signinUp', 'headTitle', 'goBack', 'local', 'edit'],
+    methods:{
+      back(){
+        this.$router.go(-1);
+      }
+    }
   }
 
 </script>

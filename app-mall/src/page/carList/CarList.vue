@@ -9,7 +9,7 @@
       </div>
     </head-top>
     <div style="margin-top: 5rem;">
-      <section class="sort_container">
+      <section id="section" class="sort_container">
         <div @click="chooseType('')" v-show="sortBy != ''" style="position:fixed; z-index:2;height: 100%;width: 100%;background-color: rgba(0,0,0,0.3);"></div>
         <div class="sort_item" :class="{choose_type:sortBy == 'sort'}">
           <div class="sort_item_container" @click="chooseType('sort')">
@@ -50,7 +50,7 @@
             </section>
           </transition>
         </div>
-        <div class="sort_item">
+        <div class="sort_item" @click="openDetail(1)">
           <div class="sort_item_container">
             <div class="sort_item_border">
               <span :class="{category_title: sortBy == 'sort'}">品牌</span>
@@ -121,16 +121,16 @@
           </transition>
         </div>
       </section>
-      <div class="car_type_list" id="typeDivId">
-        <div class="type_item" v-for="(item,index) in selecteds">
-          <p>
-            {{item.val}}
-          </p>
-          <img src="../../assets/img/common/ic_screen_close.png" @click="delSelected(item,index)">
+      <div style="position:absolute;height: 100%;width: 100%;z-index: -1;background-color: #fff;overflow: hidden;"  :style="{height: scrollerHeight + 'px'}">
+        <div class="car_type_list" id="typeDivId">
+          <div class="type_item" v-for="(item,index) in selecteds">
+            <p>
+              {{item.val}}
+            </p>
+            <img src="../../assets/img/common/ic_screen_close.png" @click="delSelected(item,index)">
+          </div>
         </div>
-      </div>
-      <div style="position:absolute;top: 0;width: 100%;height: 100%;z-index: -1;background-color: #fff;">
-        <scroller style="font-size: 12px !important;position:relative;top: 8rem;"
+        <scroller style="font-size: 12px;position:relative;" :style="{height:scrollerHeight - marginHeight + 'px' }"
                   :on-refresh="refresh"
                   :on-infinite="infinite"
                   refresh-layer-color="#f5ca1d"
@@ -155,7 +155,7 @@
             </g>
           </svg>
           <div class="car_list">
-            <div class="list_item" v-for="commodity in commodities" @click="openDetail()">
+            <div class="list_item" v-for="commodity in commodities" @click="openDetail(commodity.defaultProduct)">
               <div class="cont_img">
                 <img src="../../assets/img/home/1.png" width="100%">
               </div>
@@ -238,8 +238,8 @@
           direction: String
         },
         isInfinite: true,
-        scrollerHeight:'',
-        marginHeight:''
+        scrollerHeight: '',
+        marginHeight: ''
       }
     },
     methods: {
@@ -282,7 +282,7 @@
           } else {
             this.searchVo.direction = "DESC";
           }
-          this.refreshData();
+          this.getData();
         }
         this.sortBy = '';
       },
@@ -302,10 +302,10 @@
         this.selecteds.splice(index, 1);
       },
       //跳转商品详情页
-      openDetail(carId) {
+      openDetail(productId) {
         this.$router.push({
           path: '/car-detail',
-          query: {carId: carId}
+          query: {productId: productId}
         })
       },
       //点击选择筛选项
@@ -342,7 +342,7 @@
           }
         }
         //重新请求数据
-        this.refreshData();
+        this.getData();
       },
       //重置筛选
       resItem() {
@@ -362,7 +362,7 @@
           }
           this.searchVo.lowestPrice = '';
           this.searchVo.highestPrice = '';
-          this.refreshData();
+          this.getData();
         }
         this.sortBy = '';
       },
@@ -373,14 +373,14 @@
           this.searchVo.priceSection = null;
           this.priceSection.chooseIndex = -2;
           this.sortBy = '';
-          this.refreshData();
+          this.getData();
         }
       },
       setTranPrice(price) {
         return tranPrice(price);
       },
       refresh(done) {
-        this.refreshData(done);
+        this.getData(done);
       },
       infinite(done) {
         if (!this.isInfinite) {
@@ -390,15 +390,29 @@
           let _this = this;
           this.searchVo.page++;
           this.$vux.loading.show("加载中");
-          categorySearch(this.searchVo).then(res => {
-            if (res.result == 'SUCCESS') {
-              if (res.data.pageFinder) {
+          this.getData(done, 'loading');
+        }
+      },
+      async getData(done, isInf) {
+        let _this = this;
+        if (isInf != 'loading') {
+          this.searchVo.page = 0;
+        }
+        this.$vux.loading.show("加载中");
+        await categorySearch(this.searchVo).then(res => {
+          if (res.result == 'SUCCESS') {
+            if (res.data.pageFinder) {
+              if (!isInf) {
+                _this.commodities = res.data.pageFinder.data;
+              } else {
                 _this.commodities = _this.commodities.concat(res.data.pageFinder.data);
-                _this.searchVo.totalPage = res.data.pageFinder.pageCount;
-                if (_this.searchVo.page >= _this.searchVo.totalPage - 1) {
-                  _this.isInfinite = false;
-                }
               }
+              _this.searchVo.totalPage = res.data.pageFinder.pageCount;
+              if (_this.searchVo.page >= _this.searchVo.totalPage - 1) {
+                _this.isInfinite = false;
+              }
+            }
+            if (isInf != 'loading') {
               if (res.data.condition) {
                 for (let item in res.data.condition) {
                   _this.conditions.push({
@@ -414,57 +428,23 @@
                 }
               }
               _this.priceSection.value = res.data.priceSection;
-            } else {
-              this.$vux.toast.text("请求失败，请稍后重试！")
             }
-            this.$vux.loading.hide();
-          });
-          done();
-        }
-      },
-      async refreshData(done) {
-        let _this = this;
-        this.searchVo.page = 0;
-        this.$vux.loading.show("加载中");
-        await categorySearch(this.searchVo).then(res => {
-          if (res.result == 'SUCCESS') {
-            if (res.data.pageFinder) {
-              _this.commodities = res.data.pageFinder.data;
-              _this.searchVo.totalPage = res.data.pageFinder.pageCount;
-              if (_this.searchVo.page >= _this.searchVo.totalPage - 1) {
-                _this.isInfinite = false;
-              }
+          } else {
+            if (isInf) {
+              _this.isInfinite = false;
             }
-            if (res.data.condition) {
-              for (let item in res.data.condition) {
-                _this.conditions.push({
-                  specName: item,
-                  value: res.data.condition[item],
-                  showNum: -1
-                });
-                _this.chooseConditions.push({
-                  specName: item,
-                  value: res.data.condition[item],
-                  showNum: -1
-                })
-              }
-            }
-            _this.priceSection.value = res.data.priceSection;
           }
         });
-        this.$vux.loading.hide();
+        _this.$vux.loading.hide();
         if (done) {
           done();
         }
       }
     },
-    watch:{
-      selecteds(newVal){
-        setTimeout(function () {
-          this.scrollerHeight = document.documentElement.clientHeight - document.getElementById("typeDivId").offsetTop - document.getElementById("typeDivId").clientHeight;
-          this.marginHeight = document.getElementById("typeDivId").offsetTop + document.getElementById("typeDivId").clientHeight ;
-        },100)
-
+    watch: {
+      selecteds(newVal) {
+        this.scrollerHeight = document.documentElement.clientHeight - document.getElementById("section").offsetTop - document.getElementById("section").clientHeight;
+        this.marginHeight = document.getElementById("typeDivId").clientHeight;
       }
     },
     created() {
@@ -489,9 +469,9 @@
           type: 'categoryId'
         })
       }
+      this.getData();
+    },
 
-      this.refreshData();
-    }
   }
 </script>
 

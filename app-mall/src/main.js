@@ -5,10 +5,10 @@ import App from './App'
 import router from './router'
 import './assets/css/defualt.css'
 import vuePicturePreview from 'vue-picture-preview'
-import { Group,LoadingPlugin } from 'vux'
+import { Group,LoadingPlugin,ToastPlugin,AlertPlugin } from 'vux'
 import VueScroller from 'vue-scroller'
 import WeVue from 'we-vue'
-import 'we-vue/lib/style.css'
+// import 'we-vue/lib/style.css'
 
 
 Vue.config.productionTip = false;
@@ -17,6 +17,8 @@ Vue.component('group', Group);
 Vue.use(VueScroller);
 Vue.use(WeVue);
 Vue.use(LoadingPlugin);
+Vue.use(ToastPlugin);
+Vue.use(AlertPlugin);
 
 router.afterEach((to,from,next) => {
   window.scrollTo(0,0);

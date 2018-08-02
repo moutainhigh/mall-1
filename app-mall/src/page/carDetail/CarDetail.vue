@@ -240,6 +240,15 @@
     mounted() {
       window.addEventListener('scroll', this.menu)
     },
+
+    beforeRouteLeave(to, from, next) {
+      // 设置下一个路由的 meta
+      if(to.path=='/car-list'){
+        to.meta.keepAlive = true;  // B 跳转到 A 时，让 A 缓存，即不刷新
+      }
+      next();
+    },
+
   }
 </script>
 

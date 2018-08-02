@@ -161,6 +161,15 @@
         _this.$vux.loading.hide();
       })
     },
+
+    beforeRouteLeave(to, from, next) {
+      // 设置下一个路由的 meta
+      if(to.path=='/car-list'){
+        to.meta.keepAlive = false;  // C 跳转到 A 时，让 A不缓存，即刷新
+      }
+      next();
+    },
+
   }
 </script>
 
