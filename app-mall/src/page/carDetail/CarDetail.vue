@@ -103,6 +103,7 @@
     </div>
 
     <div v-show="checkType != 'none'" class="carType">
+      <div style="height: 30vh; width: 100vw" @click="checkType = 'none'"></div>
       <transition name="toggle-cart">
         <div v-if="checkType == 'standard'" class="type-standard">
           <div class="car-sale">
@@ -116,12 +117,13 @@
             </div>
           </div>
           <div style="overflow-y: auto; height: 300px">
-            <div v-for="product in products">
-              <p class="carType-title">{{product.groupName}}</p>
-              <div style="padding: 0px 14px">
-                <button v-for="(attribute, index) in product.attributes" class="carColor"
-                        :class="{'activeColor': index == activeColor}"
-                        @click="checkColor(index)">
+            <div v-for="(productGroup, index2) in productGroups" :key="index2">
+              <p class="carType-title">{{productGroup.groupName}}</p>
+              <div style="padding: 0 14px">
+                <button v-for="(attribute, index) in productGroup.attributes" class="carColor"
+                        :class="{'activeColor':index === iac[index2] && disabledButton.indexOf(attribute.attributeName) < 0}"
+                        @click="checkAttribute(index2, index)"
+                        :disabled="disabledButton.indexOf(attribute.attributeName) > -1">
                   {{attribute.attributeName}}
                 </button>
               </div>
@@ -144,7 +146,7 @@
             <img src="../../assets/img/cardetail/ic_sku_close.png" @click="checkType = 'none'">
           </div>
           <div style="margin-left: 14px">
-            <button v-for="type in commodityData.paymentType" class="carColor"
+            <button v-for="(type, index) in commodityData.paymentType" class="carColor"
                     :class="{'activeColor': type == activeMode}"
                     @click="checkMode(type)">
               {{type}}
@@ -190,10 +192,10 @@
         checkType: 'none',
         isCollect: false,
         commodityData: {},
-        products: [],
-        activeColor: 0,
-        activeVolume: 0,
-        activeAM: 0,
+        productGroups: [],
+        defaultAttribute: [],
+        iac: [],
+        disabledButton: [],
         activeMode: '',
         standard: ['', '', ''],
         mode: '',
@@ -212,22 +214,52 @@
         }
       },
       checkProducts() {
-        this.popupVisible = true;
         this.checkType = 'standard';
         getProductsByCommodityId(this.commodityData.commodityId).then(res => {
           if (res.result == 'SUCCESS') {
-            this.products = res.data;
+            this.productGroups = res.data;
+            this.defaultAttribute = this.commodityData.productVo.productName.split("&");
+            for (let i = 0; i < this.productGroups.length; i++) {
+              for (let j = 0; j < this.productGroups[i].attributes.length; j++) {
+                //判断默认货品
+                if (this.defaultAttribute[i].indexOf(this.productGroups[i].groupName) > -1 && this.defaultAttribute[i].indexOf(this.productGroups[i].attributes[j].attributeName) > -1) {
+                  this.iac[i] = j;
+                  this.iac = this.iac.concat([]);
+                }
+              }
+            }
           }
         })
       },
-      checkColor(index) {
-        this.activeColor = index;
-      },
-      checkVolume(index) {
-        this.activeVolume = index;
-      },
-      checkAM(index) {
-        this.activeAM = index;
+      checkAttribute(index2, index) {
+        this.iac[index2] = index;
+        this.iac = this.iac.concat([]);
+        this.disabledButton = '';
+        let productName = '';
+        for (let k = 0; k < this.commodityData.productVos.length; k++) {
+          if (index2 != 0) {
+            if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) > -1 && this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2 - 1].attributes[this.iac[index2 - 1]].attributeName) > -1) {
+              productName = productName + '：' + this.commodityData.productVos[k].productName;
+            }
+          } else {
+            if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) > -1) {
+              productName = productName + '：' + this.commodityData.productVos[k].productName;
+            }
+          }
+        }
+
+        for (let j = 0; j < this.productGroups.length; j++) {
+          if (j > index2 && index2 != this.productGroups.length) {
+            console.log(index2)
+            console.log(productName)
+            for (let i = 0; i < this.productGroups[j].attributes.length; i++) {
+              if (productName.indexOf(this.productGroups[j].attributes[i].attributeName) == -1) {
+                this.disabledButton = this.disabledButton + this.productGroups[j].attributes[i].attributeName;
+              }
+            }
+            console.log(this.disabledButton);
+          }
+        }
       },
       checkMode(type) {
         this.activeMode = type;
@@ -613,7 +645,7 @@
     width: 100% !important;
   }
 
-  .content >>>img {
+  .content >>> img {
     max-width: 100%;
   }
 
