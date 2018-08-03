@@ -10,6 +10,7 @@ import Home from '../page/home/Home'
 import Search from '../page/search/Search'
 import Location from '../page/location/Location'
 import ChooseCarType from '../page/carList/ChooseCarType'
+import ChooseCarBrand from '../page/carList/ChooseCarBrand'
 import ServeDetail from '../page/serve/ServeDetail'
 import Refund from '../page/serve/Refund'
 import ServerList from '../page/serve/ServerList'
@@ -60,6 +61,10 @@ export default new Router({
       path: '/choose-type',
       name: 'ChooseCarType',
       component: ChooseCarType
+    },{
+      path: '/choose-brand',
+      name: 'ChooseCarBrand',
+      component: ChooseCarBrand
     },
     {
       path: '/order-comfirm',
