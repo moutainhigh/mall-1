@@ -8,6 +8,7 @@ import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
+import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
@@ -26,15 +27,13 @@ import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.core.util.CommonUtils;
-import com.yunxin.core.util.DmSequenceFourUtil;
-import com.yunxin.core.util.DmSequenceSixUtil;
-import com.yunxin.core.util.LogicUtils;
+import com.yunxin.core.util.*;
 import io.rong.models.response.BlackListResult;
 import io.rong.models.user.UserModel;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -52,6 +51,8 @@ import java.util.*;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class CustomerService implements ICustomerService {
+    @Value("${application.default.avatarUrl}")
+    private String avatarUrl;
     private static Logger logger = LoggerFactory.getLogger(CustomerService.class);
     @Resource
     private CustomerDao customerDao;
@@ -134,6 +135,46 @@ public class CustomerService implements ICustomerService {
         }
         customer.setCreateTime(new Date());
         customer.setRank(rankDao.getRankByDefaultRank());
+        String pwd = PasswordHash.createHash(customer.getPassword());
+        customer.setPassword(pwd);
+        Customer dbCustomer = customerDao.save(customer);
+        String token = rongCloudService.register(dbCustomer);
+        dbCustomer.setRongCloudToken(token);
+        return dbCustomer;
+    }
+
+    @Override
+    public Customer addAdminCustomer(Customer customer) throws Exception {
+        if (!customerDao.isUnique(customer, Customer_.mobile)) {
+            throw new EntityExistException("客户手机号已存在");
+        }
+        if (StringUtils.isBlank(customer.getPassword())) {
+            // 初始密码
+            customer.setPassword(CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE));
+        }
+        customer.setAccountName(IdGenerate.generateRandomStr(10));
+        customer.setCustomerType(CustomerType.PLATFORM_SELF);
+        customer.setCreateTime(new Date());
+        customer.setAvatarUrl(avatarUrl);
+        customer.setEnabled(true);
+        customer.setRank(rankDao.getRankByDefaultRank());
+        customer.setCardPositiveImg(" ");
+        customer.setCardNegativeImg(" ");
+        customer.setBankCardImg(" ");
+        customer.setRecommendCustomer(new Customer(){
+            {
+                setCustomerId(1);
+            }
+        });
+        Customer customer1= customerDao.getOne(1);
+        if(customer1!=null){
+            Customer customerCode=generateCode(customer1.getInvitationCode());
+            if(customerCode!=null){
+                customer.setLevelCode(customerCode.getLevelCode());
+                customer.setCustomerLevel(customerCode.getCustomerLevel());
+                customer.setInvitationCode(customerCode.getInvitationCode());
+            }
+        }
         String pwd = PasswordHash.createHash(customer.getPassword());
         customer.setPassword(pwd);
         Customer dbCustomer = customerDao.save(customer);

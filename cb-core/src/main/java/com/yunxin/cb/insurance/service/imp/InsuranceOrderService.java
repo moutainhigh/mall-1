@@ -156,22 +156,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                     insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderName(),insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderMobile(),insuranceOrder.getInsuranceProductPrice().getPrice()
             ,orderState,user.getRealName(),user.getUserName(),getIpAddr(request),new Date());
 
-//                    insuranceLog.setOrderId(orderId);
-//                    setOrderCode(insuranceOrder.getOrderCode());
-//                    setInsuredName(insuranceOrder.getInsuranceOrderInsured().getInsuredName());
-//                    setInsuredMobile(insuranceOrder.getInsuranceOrderInsured().getInsuredMobile());
-//                    setPolicyholderName(insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderName());
-//                    setPolicyholderMobile(insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderMobile());
-//                    setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
-//                    setOrderState(orderState);
-//                    User user = (User) request.getSession().getAttribute("loginSession");
-//                    setCreateName(user.getRealName());
-//                    setCreateOper(user.getUserName());
-//                    setCreateTime(new Date());
-////                    setIpAddress(request.getRemoteAddr());
-//                    setIpAddress(getIpAddr(request));
-
-
             insuranceLogDao.save(insuranceLog);
 
         }catch (Exception e){

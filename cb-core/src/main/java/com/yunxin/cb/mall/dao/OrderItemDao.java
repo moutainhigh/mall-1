@@ -24,6 +24,10 @@ public interface OrderItemDao extends JpaRepository<OrderItem, Integer>, JpaSpec
     @Query("select o from OrderItem o  left join fetch o.order ord left join fetch o.product p left join fetch p.commodity where o.itemId=?1")
     public OrderItem getOrderItemById(int orderDetailId);
 
+
+    @Query("select o from OrderItem o  left join fetch o.order ord left join fetch o.product p left join o.reimbursementOrders d   where d.reimbursement.reimbursementId=?1")
+    public List<OrderItem> getOrderItemByReimbursement(int reimbursementId);
+
     @Query("select count(distinct product.commodity.commodityId) from OrderItem od left join od.product product")
     public Long getDisctinctCommodityCount();
 

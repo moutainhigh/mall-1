@@ -75,11 +75,11 @@ public class CustomerController {
             return customers();
         }
         try {
-            customerService.addCustomer(customer);
+            customerService.addAdminCustomer(customer);
             return "redirect:../common/success.do?reurl=customer/customers.do";
         } catch (Exception e) {
             e.printStackTrace();
-            request.getSession().setAttribute("exception", e.getMessage());
+            request.getSession().setAttribute("msgContent", e.getMessage());
             return "redirect:../common/failure.do?reurl=customer/customers.do";
         }
     }

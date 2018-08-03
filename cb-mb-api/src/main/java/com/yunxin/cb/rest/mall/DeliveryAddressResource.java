@@ -80,6 +80,7 @@ public class DeliveryAddressResource extends BaseResource {
         try {
             logger.info("deliveryAddressVO:" + deliveryAddressVO.toString());
             //判断当前是否有默认收货地址
+            deliveryAddressVO.setCustomerId(getCustomerId());
             DeliveryAddress  deliveryAddr = deliveryAddressService.selectDefaultByCustomerId(getCustomerId());
             if(deliveryAddr == null){
                 DeliveryAddress deliveryAddress = new DeliveryAddress();
@@ -124,6 +125,8 @@ public class DeliveryAddressResource extends BaseResource {
                 address.setDefaultAddress(true);
                 deliveryAddressService.updateByPrimaryKey(address);
             }
+        }else{
+            deliveryAddressService.deleteByPrimaryKey(addressId);
         }
         return new ResponseResult(Result.SUCCESS);
     }
@@ -137,6 +140,7 @@ public class DeliveryAddressResource extends BaseResource {
     public ResponseResult updateDeliveryAddress(@PathVariable(value = "addressId") int addressId, @RequestBody DeliveryAddressVO deliveryAddressVO) {
         try {
             logger.info("input Parameter deliveryAddressVO:" + deliveryAddressVO.toString());
+            deliveryAddressVO.setCustomerId(getCustomerId());
             DeliveryAddress  addr = deliveryAddressService.selectByPrimaryKey(addressId,getCustomerId());
             //判断当前地址是否是默认地址
             if(addr.getDefaultAddress() == true){

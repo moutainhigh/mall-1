@@ -4,7 +4,6 @@ import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Fridge;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.sns.entity.CustomerFriend;
-import com.yunxin.cb.sns.entity.CustomerFriendId;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
@@ -35,7 +34,7 @@ public interface ICustomerService {
     List<Fridge> getFridgesByCustomerId(int customerId);
 
     public Customer addCustomer(Customer customer) throws Exception;
-
+    public Customer addAdminCustomer(Customer customer) throws Exception;
     Customer updateMobile(int customerId, String mobile);
 
     Customer updateMobileChecked(int customerId, boolean mobileChecked);

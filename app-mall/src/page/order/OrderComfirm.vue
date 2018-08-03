@@ -4,11 +4,11 @@
     <div style="margin-top: 3rem;" v-if="isShow">
       <div style="background-color: #ffffff" @click="chooseAddr">
         <div style="font-size: 1.2rem;padding: 0.9rem 0.8rem 0.5rem 0.8rem;font-weight: bold">
-          {{address.consigneeName}} {{address.consigneeMobile}}
+          {{tempOrder.deliveryAddressVO.consigneeName}} {{tempOrder.deliveryAddressVO.consigneeMobile}}
         </div>
         <div style="padding: 0 0.9rem;font-size: 1rem;">
           <div style="float:right;"><img src="../../assets/img/common/ic_right.png" style="width: 1.2rem;"></div>
-          <span class="default_addr" v-if="address.defaultAddress">默认</span>{{address.consigneeAddress}}
+          <span class="default_addr" v-if="tempOrder.deliveryAddressVO.defaultAddress">默认</span>{{tempOrder.deliveryAddressVO.consigneeAddress}}
         </div>
         <img src="../../assets/img/order/ic_indent_sitetx.png" width="100%" style="vertical-align: bottom;">
       </div>
@@ -70,8 +70,10 @@
 <script>
   import headTop from '../../components/header/head'
   import {XInput, Cell, Alert} from 'vux'
-  import {addOrder, getDeliveryAddress, getTempOrder} from "../../service/getData";
+  import {addOrder, getTempOrder} from "../../service/getData";
   import {goodsSpec, tranPrice} from "../../config/dataFormat";
+  import storage from "../../store/storage";
+  import {ADDRESS} from "../../config/constant";
 
   export default {
     name: "OrderComfirm",
@@ -85,11 +87,9 @@
       return {
         headTitle: '订单确认',
         buyType: '',
-        buyModes: [],
         checkType: false,
         isAlert: false,
         isShow:false,
-        address:'',
         tempOrder:'',
         orderConfirm:{
           paymentType:null,
@@ -121,50 +121,43 @@
         })
       },
       submit() {
-        // if (this.buyType == '贷款支付') {
-        //   this.isAlert = true;
-        // } else {
-        //   this.$router.push({
-        //     path: "/order-success"
-        //   })
-        // }
-
-        addOrder(this.orderConfirm);
+        addOrder(this.orderConfirm).then(res=>{
+          if (res.result == 'SUCCESS') {
+            this.$router.push({
+              path:'/order-success'
+            })
+          }else {
+            this.$vux.toast.text("提交失败,请稍后重试！",'middle');
+          }
+        });
       },
       async getCustomerAddr(productId,payType) {
         await getTempOrder(productId,payType).then(res=>{
           if (res.result == 'SUCCESS') {
             this.tempOrder = res.data;
             this.orderConfirm.sellerId = this.tempOrder.sellerVo.sellerId;
-            if (this.tempOrder.deliveryAddressVO) {
+            if (storage.fetchSession(ADDRESS) && storage.fetchSession(ADDRESS).length != 0) {
+              this.tempOrder.deliveryAddressVO = storage.fetchSession(ADDRESS);
               this.orderConfirm.addressId = this.tempOrder.deliveryAddressVO.addressId;
+              this.isShow = true;
+            }else if (this.tempOrder.deliveryAddressVO) {
+              this.orderConfirm.addressId = this.tempOrder.deliveryAddressVO.addressId;
+              this.isShow = true;
             }else {
-              this.$vux.alert.show({
-                title: '您尚未填写地址',
-                onShow () {
-                  console.log('Plugin: I\'m showing')
+              let _this = this;
+              this.$vux.confirm.show({
+                title:'未填写地址',
+                content:'立即去填写地址?',
+                // 组件除show外的属性
+                onCancel () {
+                  _this.$router.go(-1);
                 },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
+                onConfirm () {
+                  _this.$router.push({
+                    path:"/my-address"
+                  });
                 }
               })
-            }
-          }
-        });
-        getDeliveryAddress().then(res => {
-          if (res.result == 'SUCCESS') {
-            let addrList = res.data;
-            if (addrList.length > 0) {
-              let defaultAddr = addrList[0];
-              for (let addr of addrList) {
-                if (addr.defaultAddress) {
-                  defaultAddr = addr;
-                }
-              }
-              this.isShow = true;
-              this.address = defaultAddr;
-            }else {
-              this.isShow = false;
             }
           }
         });
@@ -177,9 +170,25 @@
       },
     },
     created() {
-      this.getCustomerAddr(476,"AFTERREVICED");
-      this.orderConfirm.orderConfirmProductList[0].productId = 476;
-      this.orderConfirm.paymentType = 'AFTERREVICED';
+      let productId = this.$route.query.productId;
+      let payType = this.$route.query.payType;
+      if (productId && payType){
+        this.getCustomerAddr(productId,payType);
+        this.orderConfirm.orderConfirmProductList[0].productId = productId;
+        this.orderConfirm.paymentType = payType;
+        this.buyType = payType;
+      }else {
+        let _this = this;
+        this.$vux.alert.show({
+          content: '未能获取到订单信息',
+          onHide () {
+            _this.$router.go(-1);
+          }
+        })
+      }
+    },
+    beforeDestroy(){
+      storage.removeSession(ADDRESS);
     }
   }
 </script>

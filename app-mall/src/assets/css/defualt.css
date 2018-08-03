@@ -111,16 +111,7 @@ p {
   top: 40% !important;
 }
 
-/*.weui-dialog {*/
-  /*position: fixed;*/
-  /*z-index: 5000;*/
-  /*width: 80%;*/
-  /*max-width: 300px;*/
-  /*left: 50% !important;*/
-  /*-webkit-transform: translate(-50%,-50%);*/
-  /*transform: translate(-50%,-50%);*/
-  /*background-color: #fff;*/
-  /*text-align: center;*/
-  /*border-radius: 3px;*/
-  /*overflow: hidden;*/
-/*}*/
+.weui-textarea {
+  font-size: 17px !important;
+  padding: 0 !important;;
+}

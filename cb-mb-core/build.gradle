@@ -65,6 +65,15 @@ dependencies {
             'com.squareup.okhttp3:logging-interceptor:3.8.1'
     )
 
+    //IJPay支付
+    compile('com.github.javen205:IJPay:1.1.4')
+    //支付宝
+    compile(
+            "com.alipay.sdk:alipay-sdk-java:3.0.52.ALL",
+            //"com.alibaba:fastjson:1.2.6",
+            //"commons-logging:commons-logging:1.2"
+    )
+
     //汉字转拼音
     compile group: 'com.belerweb', name: 'pinyin4j', version: '2.5.0'
 

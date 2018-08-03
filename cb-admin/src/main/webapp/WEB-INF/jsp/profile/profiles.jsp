@@ -51,7 +51,6 @@
                 case "ANDROID_FORCE_UPGRADE":{
                     return "安卓APP是否强制更新";
                 }
-
                 case "SHARE_PATH":{
                     return "分享地址";
                 }

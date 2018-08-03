@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.restful.ResponseResult;
+import com.yunxin.cb.mall.vo.CombinationVO;
 import com.yunxin.cb.mall.vo.SearchResultVo;
 import com.yunxin.cb.mall.vo.SearchVo;
 import retrofit2.Call;
@@ -27,4 +28,11 @@ public interface SearchRestService {
      */
     @POST(value = "mall/search/categorySearch")
     Call <ResponseResult<SearchResultVo>> categorySearch(@Body SearchVo searchVo);
+
+    /**
+     * 查询所有规格属性等
+     * @return
+     */
+    @GET(value = "mall/search/commodity")
+    Call<ResponseResult<CombinationVO>> selectAll();
 }

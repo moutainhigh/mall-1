@@ -34,7 +34,7 @@ public interface DeliveryAddressMapper {
             "DISTRICT, POST_CODE, ",
             "PROVINCE, REMARK, ",
             "CUSTOMER_ID)",
-            "values (#{addressId,jdbcType=INTEGER}, #{addressType,jdbcType=INTEGER,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, ",
+            "values (#{addressId,jdbcType=INTEGER}, #{addressType,jdbcType=INTEGER}, ",
             "#{city,jdbcType=VARCHAR}, #{consigneeAddress,jdbcType=VARCHAR}, ",
             "#{consigneeMobile,jdbcType=VARCHAR}, #{consigneeName,jdbcType=VARCHAR}, ",
             "#{consigneeTelephone,jdbcType=VARCHAR}, #{defaultAddress,jdbcType=BIT}, ",
@@ -61,7 +61,7 @@ public interface DeliveryAddressMapper {
     })
     @Results({
             @Result(column="ADDRESS_ID", property="addressId", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="ADDRESS_TYPE", property="addressType",typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler.class),
+            @Result(column="ADDRESS_TYPE", property="addressType"),
             @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
             @Result(column="CONSIGNEE_ADDRESS", property="consigneeAddress", jdbcType=JdbcType.VARCHAR),
             @Result(column="CONSIGNEE_MOBILE", property="consigneeMobile", jdbcType=JdbcType.VARCHAR),
@@ -91,7 +91,7 @@ public interface DeliveryAddressMapper {
     })
     @Results({
             @Result(column="ADDRESS_ID", property="addressId", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="ADDRESS_TYPE", property="addressType", typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler.class),
+            @Result(column="ADDRESS_TYPE", property="addressType"),
             @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
             @Result(column="CONSIGNEE_ADDRESS", property="consigneeAddress", jdbcType=JdbcType.VARCHAR),
             @Result(column="CONSIGNEE_MOBILE", property="consigneeMobile", jdbcType=JdbcType.VARCHAR),
@@ -114,7 +114,7 @@ public interface DeliveryAddressMapper {
      */
     @Update({
             "update delivery_address",
-            "set ADDRESS_TYPE = #{addressType,jdbcType=INTEGER,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},",
+            "set ADDRESS_TYPE = #{addressType,jdbcType=INTEGER},",
             "CITY = #{city,jdbcType=VARCHAR},",
             "CONSIGNEE_ADDRESS = #{consigneeAddress,jdbcType=VARCHAR},",
             "CONSIGNEE_MOBILE = #{consigneeMobile,jdbcType=VARCHAR},",
@@ -143,7 +143,7 @@ public interface DeliveryAddressMapper {
     })
     @Results({
             @Result(column="ADDRESS_ID", property="addressId", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="ADDRESS_TYPE", property="addressType", typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler.class),
+            @Result(column="ADDRESS_TYPE", property="addressType"),
             @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
             @Result(column="CONSIGNEE_ADDRESS", property="consigneeAddress", jdbcType=JdbcType.VARCHAR),
             @Result(column="CONSIGNEE_MOBILE", property="consigneeMobile", jdbcType=JdbcType.VARCHAR),
@@ -172,7 +172,7 @@ public interface DeliveryAddressMapper {
     })
     @Results({
             @Result(column="ADDRESS_ID", property="addressId", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="ADDRESS_TYPE", property="addressType", typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler.class),
+            @Result(column="ADDRESS_TYPE", property="addressType"),
             @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
             @Result(column="CONSIGNEE_ADDRESS", property="consigneeAddress", jdbcType=JdbcType.VARCHAR),
             @Result(column="CONSIGNEE_MOBILE", property="consigneeMobile", jdbcType=JdbcType.VARCHAR),

@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="overflow: hidden">
-    <!--<img src="./assets/logo.png">-->
+    <!--<img src="./assets/logo.png"> -->
     <router-view/>
     <lg-preview></lg-preview>
   </div>

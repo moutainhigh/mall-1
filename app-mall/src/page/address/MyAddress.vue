@@ -12,8 +12,8 @@
              src="../../assets/img/common/ic_right.png"></p>
     </div>
 
-    <div v-if="addressList.length > 0">
-      <div style="margin-top: 0.875rem" v-for="address in addressList">
+    <div v-if="addressList.length > 0" style="margin-bottom: 4rem;">
+      <div style="margin-top: 0.875rem;border-top: 1px #DCDCDC solid;border-bottom:1px #DCDCDC solid; " v-for="address in addressList">
         <div style="border-bottom: 1px solid #DCDCDC">
           <p style="background: #ffffff; line-height: 1.5; padding-left: 0.75rem; font-size: 1rem; padding-top: 10px">
             {{address.consigneeName}}<span style="padding-left: 10px">{{address.consigneeMobile}}</span></p>
@@ -22,21 +22,21 @@
             {{address.consigneeAddress}}</p>
         </div>
         <div style="background: #ffffff; height: 2.75rem; position: relative">
-          <img v-if="address.defaultAddress"
+          <img v-if="address.defaultAddress" @click="setDefaultAddress(address)"
                style="width: 1.125rem; float: left; padding-top: 0.81rem; margin-right: 0.46rem; margin-left: 0.75rem"
                src="../../assets/img/common/Checkmark_sele.png">
-          <img v-if="!address.defaultAddress"
+          <img v-if="!address.defaultAddress" @click="setDefaultAddress(address)"
                style="width: 1.125rem; float: left; padding-top: 0.81rem; margin-right: 0.46rem; margin-left: 0.75rem"
                src="../../assets/img/common/Checkmark_nor.png">
           <p style="font-size: 0.875rem; padding-top: 0.8rem; display: inline-block">
             默认地址
           </p>
           <img style="width: 1.125rem; position: absolute; right: 7.35rem; margin-top: 0.8rem"
-               src="../../assets/img/common/ic_right.png">
+               src="../../assets/img/common/ic_edit.png">
           <span style="font-size: 0.875rem; position: absolute; right: 4.875rem; margin-top: 0.8rem;"
                 @click="editAddress(address.addressId)">编辑</span>
           <img style="width: 1.125rem; position: absolute; right: 3.125rem; padding-top: 0.8rem"
-               src="../../assets/img/common/ic_right.png">
+               src="../../assets/img/common/ic_delete.png">
           <span style="font-size: 0.875rem; position: absolute; right: 0.6875rem; margin-top: 0.8rem;"
                 @click="deleteAddress(address.addressId)">删除</span>
         </div>
@@ -44,16 +44,16 @@
     </div>
 
     <footer v-if="addressList.length > 0" @click="addAddress"
-            style="position: fixed; width: 100vw; bottom: 0; text-align: center; line-height: 3; background: #ffffff">
-      <img src="">
-      新增地址
+            style="position: fixed; width: 100vw; bottom: 0; text-align: center; line-height: 3; background: #ffffff;border-top: 1px #DCDCDC solid;">
+      <img src="../../assets/img/common/ic_add.png" style="vertical-align: middle;width: 1.2rem;margin-right: 0.2rem;">
+      <span style="vertical-align: middle">新增地址</span>
     </footer>
   </div>
 </template>
 
 <script>
   import headTop from '../../components/header/head'
-  import {deleteDeliveryAddressByAdderssId, getDeliveryAddress} from "../../service/getData";
+  import {deleteDeliveryAddressByAdderssId, getDeliveryAddress, updateDeliveryAddress} from "../../service/getData";
 
   export default {
     name: "MyAddress",
@@ -79,15 +79,42 @@
         })
       },
       deleteAddress(addressId) {
-        deleteDeliveryAddressByAdderssId(addressId).then(res => {
-          if (res.result == 'SUCCESS') {
-            getDeliveryAddress().then(res => {
+        let _this = this;
+        this.$vux.confirm.show({
+          content:'确定要删除此地址?',
+          // 组件除show外的属性
+          onCancel () {
+          },
+          onConfirm () {
+            deleteDeliveryAddressByAdderssId(addressId).then(res => {
               if (res.result == 'SUCCESS') {
-                this.addressList = res.data;
+                getDeliveryAddress().then(res => {
+                  if (res.result == 'SUCCESS') {
+                    _this.addressList = res.data;
+                  }
+                })
               }
             })
           }
-        })
+        });
+      },
+      setDefaultAddress(address){
+        if (!address.defaultAddress) {
+          this.$vux.loading.show('加载中');
+          let dbAddress = JSON.parse(JSON.stringify(address));
+          dbAddress.defaultAddress = true;
+          updateDeliveryAddress(dbAddress).then(res => {
+            if (res.result == 'SUCCESS') {
+              for (let addr of this.addressList) {
+                addr.defaultAddress = false;
+              }
+              address.defaultAddress = true;
+            } else {
+              this.$vux.toast.text("修改失败！",'middle');
+            }
+            this.$vux.loading.hide();
+          })
+        }
       }
     },
     created() {
