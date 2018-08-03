@@ -15,7 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @JsonAutoDetect
 @Entity
-@Table
+@Table(name = "rb_reimbursement_order")
 @DynamicInsert
 @DynamicUpdate
 @ApiModel(value="报账订单信息",description="报账订单信息ReimbursementOrder")
