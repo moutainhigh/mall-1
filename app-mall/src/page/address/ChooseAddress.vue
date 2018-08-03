@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top :headTitle="'选择地址'"></head-top>
+    <head-top :headTitle="'选择地址'" :go-back="true"></head-top>
     <div style="height: 3rem"></div>
     <div v-if="addressList.length == 0" class="addAddress-item"
          style="margin-top: 0.875rem; background: #ffffff; line-height: 3">
@@ -13,7 +13,7 @@
     </div>
 
     <div v-if="addressList.length > 0">
-      <div style="margin-top: 0.875rem" v-for="address in addressList">
+      <div style="margin-top: 0.875rem" v-for="address in addressList" @click="chooseAddr(address)">
         <div style="border-bottom: 1px solid #DCDCDC">
           <p style="background: #ffffff; line-height: 1.5; padding: 10px 0.75rem; font-size: 1rem;">
             {{address.consigneeName}}<span style="padding-left: 10px">{{address.consigneeMobile}}</span>
@@ -31,49 +31,38 @@
 <script>
   import headTop from '../../components/header/head'
   import {deleteDeliveryAddressByAdderssId, getDeliveryAddress} from "../../service/getData";
+  import storage from "../../store/storage";
+  import {ADDRESS} from "../../config/constant";
 
   export default {
-        name: "ChooseAddress",
-      components: {
-        headTop,
-      },
-      data() {
-        return {
-          addressList: [],
-        }
-      },
-      methods: {
-        addAddress() {
-          this.$router.push({
-            path: "/add-address"
-          })
-        },
-        editAddress(addressId) {
-          this.$router.push({
-            path: "/edit-address",
-            query: {addressId: addressId}
-          })
-        },
-        deleteAddress(addressId) {
-          deleteDeliveryAddressByAdderssId(addressId).then(res => {
-            if (res.result == 'SUCCESS') {
-              getDeliveryAddress().then(res => {
-                if (res.result == 'SUCCESS') {
-                  this.addressList = res.data;
-                }
-              })
-            }
-          })
-        }
-      },
-      created() {
-        getDeliveryAddress().then(res => {
-          if (res.result == 'SUCCESS') {
-            this.addressList = res.data;
-          }
-        })
+    name: "ChooseAddress",
+    components: {
+      headTop,
+    },
+    data() {
+      return {
+        addressList: [],
       }
+    },
+    methods: {
+      addAddress() {
+        this.$router.push({
+          path: "/add-address"
+        })
+      },
+      chooseAddr(address){
+        storage.saveSession(ADDRESS,address);
+        this.$router.go(-1);
+      },
+    },
+    created() {
+      getDeliveryAddress().then(res => {
+        if (res.result == 'SUCCESS') {
+          this.addressList = res.data;
+        }
+      })
     }
+  }
 
 </script>
 

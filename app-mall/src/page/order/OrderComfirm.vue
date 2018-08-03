@@ -72,6 +72,8 @@
   import {XInput, Cell, Alert} from 'vux'
   import {addOrder, getTempOrder} from "../../service/getData";
   import {goodsSpec, tranPrice} from "../../config/dataFormat";
+  import storage from "../../store/storage";
+  import {ADDRESS} from "../../config/constant";
 
   export default {
     name: "OrderComfirm",
@@ -85,7 +87,6 @@
       return {
         headTitle: '订单确认',
         buyType: '',
-        buyModes: [],
         checkType: false,
         isAlert: false,
         isShow:false,
@@ -135,7 +136,11 @@
           if (res.result == 'SUCCESS') {
             this.tempOrder = res.data;
             this.orderConfirm.sellerId = this.tempOrder.sellerVo.sellerId;
-            if (this.tempOrder.deliveryAddressVO) {
+            if (storage.fetchSession(ADDRESS) && storage.fetchSession(ADDRESS).length != 0) {
+              this.tempOrder.deliveryAddressVO = storage.fetchSession(ADDRESS);
+              this.orderConfirm.addressId = this.tempOrder.deliveryAddressVO.addressId;
+              this.isShow = true;
+            }else if (this.tempOrder.deliveryAddressVO) {
               this.orderConfirm.addressId = this.tempOrder.deliveryAddressVO.addressId;
               this.isShow = true;
             }else {
@@ -165,9 +170,25 @@
       },
     },
     created() {
-      this.getCustomerAddr(476,"AFTERREVICED");
-      this.orderConfirm.orderConfirmProductList[0].productId = 476;
-      this.orderConfirm.paymentType = 'AFTERREVICED';
+      let productId = this.$route.query.productId;
+      let payType = this.$route.query.payType;
+      if (productId && payType){
+        this.getCustomerAddr(productId,payType);
+        this.orderConfirm.orderConfirmProductList[0].productId = productId;
+        this.orderConfirm.paymentType = payType;
+        this.buyType = payType;
+      }else {
+        let _this = this;
+        this.$vux.alert.show({
+          content: '未能获取到订单信息',
+          onHide () {
+            _this.$router.go(-1);
+          }
+        })
+      }
+    },
+    beforeDestroy(){
+      storage.removeSession(ADDRESS);
     }
   }
 </script>
