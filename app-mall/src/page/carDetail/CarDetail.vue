@@ -29,7 +29,7 @@
       <div class="carPrice">
         <div class="price">
           <p class="presentPrice">￥<span>{{commodityData.sellPrice}}</span>万</p>
-          <p class="guidePrice" style="">指导价：￥{{commodityData.priceSectionVo.startPrice}} -
+          <p class="guidePrice">指导价：￥{{commodityData.priceSectionVo.startPrice}} -
             {{commodityData.priceSectionVo.endPrice}}万</p>
         </div>
         <div class="collect" @click="collectCommodity">
@@ -54,7 +54,7 @@
       <div class="selectItem" @click="checkProducts">
         <p class="selectItem-title">规格选择</p>
         <p v-if="standard[0] == ''" class="selectItem-detail">请选择</p>
-        <p v-if="standard[0] != ''" class="selectItem-detail">2018款 {{standard[0]}} {{standard[1]}} {{standard[2]}}
+        <p v-if="standard[0] != ''" class="selectItem-detail">2018款 <span>{{standard[0]}} {{standard[1]}} {{standard[2]}}</span>
           1辆</p>
         <img src="../../assets/img/cardetail/ic_right.png">
       </div>
@@ -196,8 +196,9 @@
         defaultAttribute: [],
         iac: [],
         disabledButton: [],
+        checkProductId: null,
+        standard: [],
         activeMode: '',
-        standard: ['', '', ''],
         mode: '',
         show: false,
         favoriteId: null,
@@ -265,7 +266,25 @@
         this.activeMode = type;
       },
       selectStandard() {
+        let name = '';
+        this.standard = [];
+        //判断选中货品属性
+        for (let i = 0; i < this.iac.length; i++) {
+          if (this.productGroups[i].attributes[this.iac[i]]) {
+            if (name != '') {
+              name = name + '&'
+            }
+            name = name + this.productGroups[i].groupName + '：' + this.productGroups[i].attributes[this.iac[i]].attributeName;
+            //页面显示选中信息
+            this.standard.push(this.productGroups[i].attributes[this.iac[i]].attributeName);
+          }
+        }
 
+        for (let j = 0; j < this.commodityData.productVos.length; j++) {
+          if (name == this.commodityData.productVos[j].productName) {
+            this.checkProductId = this.commodityData.productVos[j].productId;
+          }
+        }
         this.checkType = 'none';
       },
       selectMode() {
@@ -282,7 +301,11 @@
       },
       toOrderComfirm() {
         this.$router.push({
-          path: "/order-comfirm"
+          path: "/order-comfirm",
+          query:{
+            productId: this.checkProductId,
+            mode:this.mode
+          }
         })
       },
       //收藏
