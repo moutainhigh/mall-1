@@ -15,6 +15,11 @@ export const getProductsByCommodityId = function (commodityId) {
   return get('/v1/mall/commodity/getProductsByCommodityId/' + commodityId);
 };
 
+//获取车系
+export const getCarSeries = function (categoryId) {
+  return get('/v1/mall/category/getCategoryById/'+categoryId);
+}
+
 //############## 收藏接口 ##################//
 //获取收藏夹
 export const getCustomerFavorite = function (query) {

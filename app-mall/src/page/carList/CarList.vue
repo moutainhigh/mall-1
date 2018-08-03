@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top :local="true" v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
+    <head-top :go-back="true" :local="true" v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
       <div slot="search" style="width: 100%;">
         <div class="search-con"  @click="toSearch">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
@@ -476,7 +476,16 @@
       }
       this.getData();
     },
-
+    beforeRouteLeave(to, from, next) {
+      // 设置下一个路由的 meta
+      if(to.path=='/car-detail'){
+        to.meta.keepAlive = true;
+        next();
+      }else {
+        to.meta.keepAlive = false;
+        next();
+      }
+    },
   }
 </script>
 

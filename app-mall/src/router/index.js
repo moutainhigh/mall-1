@@ -28,7 +28,10 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/search',
@@ -41,91 +44,142 @@ export default new Router({
     {
       path: '/location',
       name: 'Location',
-      component: Location
+      component: Location,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/car-list',
       name: 'CarList',
       component: CarList,
       meta: {
-        keepAlive: true // 需要被缓存
+        keepAlive: false // 需要被缓存
       },
     },
     {
       path: '/car-detail',
       name: 'CarDetail',
-      component: CarDetail
+      component: CarDetail,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/choose-type',
       name: 'ChooseCarType',
-      component: ChooseCarType
+      component: ChooseCarType,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/order-comfirm',
       name: 'OrderComfirm',
-      component: OrderComfirm
+      component: OrderComfirm,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/order-success',
       name: 'OrderSuccess',
-      component: OrderSuccess
+      component: OrderSuccess,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },{
       path: '/order-detail',
       name: 'OrderDetail',
-      component: OrderDetail
+      component: OrderDetail,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/order-list',
       name: 'OrderList',
-      component: OrderList
+      component: OrderList,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     }, {
       path: '/serve-detail',
       name: 'ServeDetail',
-      component: ServeDetail
+      component: ServeDetail,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     }, {
       path: '/refund',
       name: 'Refund',
-      component: Refund
+      component: Refund,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/serve-list',
       name: 'ServerList',
-      component: ServerList
+      component: ServerList,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/my-address',
       name: 'MyAddress',
-      component: MyAddress
+      component: MyAddress,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/add-address',
       name: 'AddAddress',
-      component: AddAddress
+      component: AddAddress,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/edit-address',
       name: 'EditAddress',
-      component: EditAddress
+      component: EditAddress,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/choose-address',
       name: 'ChooseAddress',
-      component: ChooseAddress
+      component: ChooseAddress,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/collect-list',
       name: 'CollectList',
-      component: CollectList
+      component: CollectList,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/my-browse',
       name: 'MyBrowse',
-      component: MyBrowse
+      component: MyBrowse,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },{
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
   ]
 })
