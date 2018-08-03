@@ -125,6 +125,8 @@ public class DeliveryAddressResource extends BaseResource {
                 address.setDefaultAddress(true);
                 deliveryAddressService.updateByPrimaryKey(address);
             }
+        }else{
+            deliveryAddressService.deleteByPrimaryKey(addressId);
         }
         return new ResponseResult(Result.SUCCESS);
     }
