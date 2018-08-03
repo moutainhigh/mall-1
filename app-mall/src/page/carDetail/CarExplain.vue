@@ -1,13 +1,13 @@
 <template>
-  <div>
-
+  <div style="background: #ffffff">
+    <div name="explainContent" v-html="explainContent"></div>
   </div>
 </template>
 
 <script>
-    export default {
-        name: "CarExplain"
-    }
+  export default {
+    props: ['explainContent']
+  }
 </script>
 
 <style scoped>

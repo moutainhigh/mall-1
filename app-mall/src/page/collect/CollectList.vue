@@ -9,6 +9,7 @@
       </div>
     </head-top>
     <div class="user-order-list" style="margin-top: 3rem">
+      <div style="position: absolute;top: 0;width: 100%;height: 100%;overflow: hidden;z-index: -1;">
       <scroller style="top: 0;font-size: 12px !important;margin-top: 3rem"
                 :on-refresh="refresh"
                 :on-infinite="infinite"
@@ -33,50 +34,55 @@
             </circle>
           </g>
         </svg>
-      <dl>
-        <dd class="myorderList">
-          <img v-if="isEdit && check" class="checkIcon" src="../../assets/img/common/Checkmark_sele.png"
-               @click="check = false">
-          <img v-if="isEdit && !check" class="checkIcon" src="../../assets/img/common/Checkmark_nor.png"
-               @click="check = true">
-          <img class="imgs" src="../../assets/logo.png">
-          <div class="carInfo" v-bind:class="{'isEdit': isEdit}">
-            <p class="title">2018款 240TURBO自动两驱舒适版</p>
-            <p class="price">￥<span>8.98</span>万</p>
-            <p class="carLocal"><img src="../../assets/img/common/ic_list_location.png">深圳中升汇宝宝马4S店</p>
-          </div>
-        </dd>
-      </dl>
-    <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
-      <g>
-        <circle cx="16" cy="32" stroke-width="0" r="3">
-          <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
-                   repeatCount="indefinite"></animate>
-          <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
-        </circle>
-        <circle cx="32" cy="32" stroke-width="0" r="3.09351">
-          <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
-                   repeatCount="indefinite"></animate>
-          <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
-        </circle>
-        <circle cx="48" cy="32" stroke-width="0" r="4.09351">
-          <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
-                   repeatCount="indefinite"></animate>
-          <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
-        </circle>
-      </g>
-    </svg>
-    </scroller>
+        <dl>
+          <dd class="myorderList" v-for="(collect, index) in collectList">
+            <img v-if="isEdit && checkList.indexOf(collect.favoriteId) > -1" class="checkIcon"
+                 src="../../assets/img/common/Checkmark_sele.png"
+                 @click="unCheck(collect.favoriteId)">
+            <img v-if="isEdit && checkList.indexOf(collect.favoriteId) == -1" class="checkIcon"
+                 src="../../assets/img/common/Checkmark_nor.png"
+                 @click="checkCommodity(collect.favoriteId)">
+            <img class="imgs" :src="collect.commodityVo.defaultPicPath">
+            <div class="carInfo" v-bind:class="{'isEdit': isEdit}">
+              <p class="title">{{collect.commodityVo.commodityTitle}}</p>
+              <p class="price">￥<span>{{collect.salePrice}}</span>万</p>
+              <p class="carLocal"><img src="../../assets/img/common/ic_list_location.png">深圳中升汇宝宝马4S店</p>
+            </div>
+          </dd>
+        </dl>
+        <svg class="spinner" style="fill: #f5ca1d;" slot="infinite-spinner" viewBox="0 0 64 64">
+          <g>
+            <circle cx="16" cy="32" stroke-width="0" r="3">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.6;.8;1;.8;.6;.5;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="3;3;4;5;6;5;4;3" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="32" cy="32" stroke-width="0" r="3.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".5;.5;.6;.8;1;.8;.6;.5"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="4;3;3;4;5;6;5;4" repeatCount="indefinite"></animate>
+            </circle>
+            <circle cx="48" cy="32" stroke-width="0" r="4.09351">
+              <animate attributeName="fill-opacity" dur="750ms" values=".6;.5;.5;.6;.8;1;.8;.6"
+                       repeatCount="indefinite"></animate>
+              <animate attributeName="r" dur="750ms" values="5;4;3;3;4;5;6;5" repeatCount="indefinite"></animate>
+            </circle>
+          </g>
+        </svg>
+      </scroller>
+      </div>
     </div>
 
     <div style="height: 3.125rem" v-if="isEdit">
       <div class="editFooter">
-        <img v-if="isEdit && check" class="allCheckIcon" src="../../assets/img/common/Checkmark_sele.png"
-             @click="check = false">
-        <img v-if="isEdit && !check" class="allCheckIcon" src="../../assets/img/common/Checkmark_nor.png"
-             @click="check = true">
+        <img v-if="isEdit && checkList.length == collectList.length" class="allCheckIcon"
+             src="../../assets/img/common/Checkmark_sele.png"
+             @click="allClearCheck">
+        <img v-if="isEdit && checkList.length != collectList.length" class="allCheckIcon"
+             src="../../assets/img/common/Checkmark_nor.png"
+             @click="allCheck">
         <span style="display: inline-block; padding-top: 0.9rem">全选</span>
-        <button class="deleteButton">删除</button>
+        <button class="deleteButton" @click="delFavoriteList">删除</button>
       </div>
     </div>
   </div>
@@ -84,7 +90,7 @@
 
 <script>
   import headTop from '../../components/header/head'
-  import {getCustomerFavorite} from "../../service/getData";
+  import {delFavoriteListByFavoriteIds, getCustomerFavorite} from "../../service/getData";
 
   export default {
     name: "CollectList",
@@ -95,36 +101,71 @@
       return {
         headTitle: '我的收藏',
         isEdit: false,
-        check: false,
-        pageQuery:{
-          pageNo:1,
-          pageSize:10
+        check: 0,
+        pageQuery: {
+          pageNo: 1,
+          pageSize: 10
         },
-        collectList:[]
+        collectList: [],
+        checkList: []
       }
     },
-    methods:{
+    methods: {
       refresh(done) {
 
-        done();
+        done()
       },
 
       infinite(done) {
-          done(true);
+        done(true);
       },
-      getCollects(){
+      getCollects() {
         let _this = this;
         console.log(this.pageQuery);
-        getCustomerFavorite(_this.pageQuery).then(res=>{
+        getCustomerFavorite(_this.pageQuery).then(res => {
           if (res.result == 'SUCCESS') {
             _this.collectList = res.data.data;
           }
         })
+      },
+      //勾选商品
+      checkCommodity(favoriteId) {
+        this.checkList.push(favoriteId);
+      },
+      //取消勾选商品
+      unCheck(favoriteId) {
+        let index = this.checkList.indexOf(favoriteId);
+        if (index > -1) {
+          this.checkList.splice(index, 1);
+        }
+      },
+      //全选勾选
+      allCheck() {
+        this.checkList = [];
+        for (let i = 0; i < this.collectList.length; i++) {
+          this.checkList.push(this.collectList[i].favoriteId);
+        }
+      },
+      //取消全选勾选
+      allClearCheck() {
+        this.checkList = [];
+      },
+      //删除勾选的收藏商品
+      delFavoriteList() {
+        let _this = this;
+        delFavoriteListByFavoriteIds(_this.checkList.toString()).then(res => {
+            if (res.result == 'SUCCESS') {
+              getCustomerFavorite(_this.pageQuery).then(res => {
+                if (res.result == 'SUCCESS') {
+                  _this.collectList = res.data.data;
+                }
+              })
+            }
+        })
       }
     },
-    created(){
+    created() {
       this.getCollects();
-
     }
   }
 </script>
@@ -159,11 +200,10 @@
 
   .user-order-list .myorderList .imgs {
     float: left;
-    width: 7.75rem;
-    height: 5.52rem;
+    width: 35%;
+    height: 5rem;
     margin-right: 0.625rem;
     border-radius: 5px;
-    border: 1px solid #000;
   }
 
   .isEdit {
@@ -183,16 +223,26 @@
     float: right;
     text-align: left;
     padding-bottom: 15px;
+    height: 5rem;
   }
 
   .title {
     white-space: normal;
-    font-size: 0.93rem
+    font-size: 0.93rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.2;
   }
 
   .price {
     font-size: 0.93rem;
     color: #F54E4E;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    line-height: 1.3;
   }
 
   .price span {
@@ -203,6 +253,10 @@
   .carLocal {
     font-size: 0.81rem;
     color: #999;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
   }
 
   .carLocal img {

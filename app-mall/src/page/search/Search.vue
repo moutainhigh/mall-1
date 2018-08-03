@@ -18,23 +18,29 @@
       </div>
     </div>
 
-    <div class="history" style="position: relative">
-      <p class="history-title" v-if="searchContent == ''">搜索历史<span class="history-clear"
-                                                                    @click="clearHistory">清除历史</span></p>
-      <div style="height: 50px; margin: 0 16px; border-bottom: 1px solid #ECECEC" v-for="history in histories"><p
-        style="padding: 18px 0; font-size: 14px; color: #666666;">{{history}}</p></div>
+    <div class="history" v-if="searchContent == ''">
+      <p class="history-title">搜索历史<span class="history-clear"
+                                         @click="clearHistory">清除历史</span></p>
+      <div class="listItem" v-for="history in histories"><p>{{history}}</p></div>
+    </div>
+    <div class="history" v-if="searchContent != ''">
+      <div class="listItem" v-for="result in resultList" @click="toDetail(result)"><p>{{result}}</p></div>
     </div>
   </div>
 </template>
 
 <script>
+  import {keywordSearch} from "../../service/getData";
+  import storage from "../../store/storage";
+
   export default {
     name: "Search",
     data() {
       return {
         hotSearchs: ['昂克赛拉', '卡罗拉', '福克斯', '思域', '凯美瑞', '迈腾', '雷克萨斯CT'],
-        histories: ['凯迪拉克XTS', '奥迪A8L', '保时捷718', '迈巴赫S级'],
-        searchContent: ''
+        histories: storage.fetch("keywordSearch"),
+        searchContent: '',
+        resultList: [],
       }
     },
     methods: {
@@ -43,10 +49,42 @@
       },
       clearHistory() {
         this.histories = [];
+        storage.save("keywordSearch", []);
+      },
+      toDetail(result) {
+        this.saveSearch(result);
+      },
+      saveSearch(result) {
+        let keywordSearch = storage.fetch("keywordSearch");
+        if (keywordSearch.length == 0) {
+          let list = [];
+          list.push(result);
+          storage.save("keywordSearch", list);
+        } else {
+          if (keywordSearch.length == 10) {
+            keywordSearch.splice(0, 1);
+          }
+          keywordSearch.push(result);
+          storage.save("keywordSearch", keywordSearch);
+        }
       },
     },
     watch: {
-      searchContent: {}
+      searchContent: {
+        handler(newVal, oldVal) {
+          keywordSearch(newVal, 0, 10).then(res => {
+            if (res.result == 'SUCCESS') {
+              if (res.data.pageFinder) {
+                let pageData = res.data.pageFinder.data;
+                this.resultList = [];
+                for (let i = 0; i < pageData.length; i++) {
+                  this.resultList.push(pageData[i].commodityTitle);
+                }
+              }
+            }
+          })
+        }
+      }
     },
   }
 </script>
@@ -118,7 +156,7 @@
   }
 
   .history {
-    height: 450px;
+    /*height: 450px;*/
     padding-top: 7px;
     background: #ffffff
   }
@@ -133,5 +171,17 @@
     color: #f5ca1d;
     float: right;
     font-size: 15px;
+  }
+
+  .listItem {
+    height: 50px;
+    margin: 0 16px;
+    border-bottom: 1px solid #ECECEC
+  }
+
+  .listItem p {
+    padding: 18px 0;
+    font-size: 14px;
+    color: #666666;
   }
 </style>

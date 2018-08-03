@@ -327,7 +327,7 @@ export const ageYear = function (birthday) {
   let nowDate = new Date();
   let yearBirth = birthDate.getFullYear();
   let monthBirth = birthDate.getMonth();
-  let dayBirth = birthDate.getDay();
+  let dayBirth = birthDate.getDate();
 
   let age = nowDate.getFullYear() - yearBirth;
 

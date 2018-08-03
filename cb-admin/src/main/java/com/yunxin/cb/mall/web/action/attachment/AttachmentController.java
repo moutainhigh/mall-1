@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 * @CreateDate:     2018/7/26 20:20
 */
 @Controller
-@RequestMapping(value = "/attachment")
+@RequestMapping(value = "/securityattachment")
 @SessionAttributes({SecurityConstants.LOGIN_SESSION})
 public class AttachmentController {
 

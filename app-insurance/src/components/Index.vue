@@ -4,7 +4,7 @@
       <img src="../assets/img/banner.png">
     </div>
 
-    <div class="i-list" style="margin-top: 0" v-for="(product, index) in products">
+    <div class="i-list" style="margin-top: 0" v-for="(product, index) in products" @click="goToPro(index)">
       <div style="display: inline-block;">
         <img style="height: 85px" :src="product.prodImg">
       </div>
@@ -17,7 +17,7 @@
             <div class="dt-price-pro">
               2万/5万/10万
             </div>
-            <button @click="goToPro(index)">
+            <button >
              立即投保
             </button>
           </div>

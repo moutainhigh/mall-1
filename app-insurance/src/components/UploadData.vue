@@ -30,7 +30,7 @@
         <div style="position: absolute; width: 100%; height: 120px"></div>
         <img src="../assets/img/upload.png">
       </div>
-      <input id="image4" type="file" accept="image/*" @change="onFileChange"
+      <input id="image4" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="imgUrls.image4 !== '' && imgUrls.image4 !== undefined">
         <img style="padding: 0;" :src="imgUrls.image4">
@@ -45,7 +45,7 @@
         <div style="position: absolute; width: 100%; height: 120px"></div>
         <img src="../assets/img/upload.png">
       </div>
-      <input id="image5" type="file" accept="image/*" @change="onFileChange"
+      <input id="image5" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined">
         <img style="padding: 0;" :src="imgUrls.image5">
@@ -60,7 +60,7 @@
         <div style="position: absolute; width: 100%; height: 120px"></div>
         <img src="../assets/img/upload.png">
       </div>
-      <input id="image6" type="file" accept="image/*" @change="onFileChange"
+      <input id="image6" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined">
         <img style="padding: 0;" :src="imgUrls.image6">

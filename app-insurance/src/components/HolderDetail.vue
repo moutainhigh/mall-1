@@ -618,11 +618,15 @@
       next() {
         //判断表情包输入
         let input = document.getElementsByTagName("input");
+        let isPass = true;
         for (let i = 0; i < input.length; i++) {
           if (emoji.test(input[i].value)) {
-            alert("输入信息不得带表情");
-            return false;
+            isPass= false;
           }
+        }
+        if (!isPass) {
+          this.$vux.toast.text("输入信息不得带表情",'middle');
+          return;
         }
 
         if (this.holder.unifyAddr) {

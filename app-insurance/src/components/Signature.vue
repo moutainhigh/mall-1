@@ -1,14 +1,17 @@
 <template>
 	<div :style="{width:w,height:h}">
 		<canvas :id="uid" class="canvas" :data-uid="uid"></canvas>
+    <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
 	</div>
 
 </template>
 
 <script>
 	import SignaturePad from 'signature_pad'
+  import {Toast} from 'vux'
 	export default {
 		name:"vueSignature",
+    components: {Toast},
 		props:{
 			sigOption: {
 				type:Object,
@@ -39,7 +42,9 @@
 					backgroundColor:'rgb(255,255,255)',
 					penColor : 'rgb(0, 0, 0)'
 				},
-				uid:""
+				uid:"",
+        showPositionValue: false,
+        toastText: '',
 			}
 		},
 		created(){
@@ -77,7 +82,8 @@
 			save(format){
 				var _this = this;
 				if (_this.sig.isEmpty()) {
-				  window.alert("请签名后点击完成");
+          this.showPositionValue = true;
+          this.toastText = "请签名后点击完成";
 				  return false;
         }
 				return format ? _this.sig.toDataURL(format) :  _this.sig.toDataURL()

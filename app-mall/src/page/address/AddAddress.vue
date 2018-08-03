@@ -68,7 +68,7 @@
         consigneeAddress: '',
         postCode: '',
         defaultAddress: false,
-        customerId: 189 // 调试用，之后需去掉
+        customerId: 306 // 调试用，之后需去掉
       }
     },
     watch: {

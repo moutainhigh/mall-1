@@ -32,6 +32,9 @@ public class Profile implements Serializable {
     @Length(max = 5000)
     private String fileValue;
 
+    @Length(max = 500)
+    private String remarks;
+
     private int isPicture;
 
     public Profile() {
@@ -42,8 +45,8 @@ public class Profile implements Serializable {
            this.fileValue=fileValue;
     }
 
-    public Profile(int userId) {
-        this.fileId = userId;
+    public Profile(int fileId) {
+        this.fileId = fileId;
     }
 
     @Id
@@ -53,8 +56,8 @@ public class Profile implements Serializable {
         return this.fileId;
     }
 
-    public void setFileId(int userId) {
-        this.fileId = userId;
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
     }
 
     @Column(length = 128, nullable = false, unique = true)
@@ -63,8 +66,8 @@ public class Profile implements Serializable {
         return this.profileName;
     }
 
-    public void setProfileName(ProfileName userName) {
-        this.profileName = userName;
+    public void setProfileName(ProfileName profileName) {
+        this.profileName = profileName;
     }
 
     @Column(length = 5000)
@@ -72,10 +75,18 @@ public class Profile implements Serializable {
         return fileValue;
     }
 
-    public void setFileValue(String remark) {
-        this.fileValue = remark;
+    public void setFileValue(String fileValue) {
+        this.fileValue = fileValue;
     }
 
+    @Column(length = 500)
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
     public int getIsPicture() {
         return isPicture;
