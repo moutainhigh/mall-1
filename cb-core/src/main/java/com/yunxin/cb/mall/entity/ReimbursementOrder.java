@@ -21,7 +21,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @ApiModel(value="报账订单信息",description="报账订单信息ReimbursementOrder")
 public class ReimbursementOrder implements java.io.Serializable {
     private int reimbursementOrderId;
-    private Order order;
+    private OrderItem orderItem;
     private Reimbursement reimbursement;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
@@ -35,17 +35,22 @@ public class ReimbursementOrder implements java.io.Serializable {
     public void setReimbursementOrderId(int reimbursementOrderId) {
         this.reimbursementOrderId = reimbursementOrderId;
     }
+
+
     @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "ORDER_ID", nullable = false, insertable = true, updatable = true)
+            @JoinColumn(name = "ORDER_ITEM_ID", nullable = false, insertable = true, updatable = true)
     })
-    public Order getOrder() {
-        return order;
+    public OrderItem getOrderItem() {
+        return orderItem;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderItem(OrderItem orderItem) {
+        this.orderItem = orderItem;
     }
+
+
+
 
     @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
     @JoinColumns({

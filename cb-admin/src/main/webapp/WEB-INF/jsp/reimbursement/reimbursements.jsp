@@ -42,7 +42,7 @@
             $.get("reimbursementOrders.do?reimbursementId="+reimbursementId,$("#tables").serialize(),function(result){
                 var rem=result.data;
                     for(var i=0;i<rem.length;i++){
-                        $("#trs").append("<tr name='trtd'><td>"+rem[i].order.orderCode+"</td><td>"+rem[i].order.feeTotal+"</td><td>"+rem[i].order.createTime+"</td></tr>");
+                        $("#trs").append("<tr name='trtd'><td>"+rem[i].orderItem.orderCode+"</td><td>"+rem[i].order.feeTotal+"</td><td>"+rem[i].order.createTime+"</td></tr>");
                     }
             });
 
@@ -54,6 +54,14 @@
                 alert("开始时间不能大于结束时间")
                 $('#createTimes').val('')
             }
+        }
+
+        function approval(){
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                window.location.href = "reimbursementOrders.do?reimbursementId=" + dataItem.reimbursementId;
+            }
+
         }
     </script>
 </head>
@@ -203,7 +211,7 @@
                         <div class="pull-right">
 
                             <div class="btn-group">
-                                <a href="javascript:void(0);" onclick="orderPrint()" class="btn btn-default"><i
+                                <a href="javascript:void(0);" onclick="approval()" class="btn btn-default"><i
                                         class="fa fa-info-circle"></i>&nbsp;审批</a>
                             </div>
                         </div>
