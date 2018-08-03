@@ -20,6 +20,10 @@
           <img :src="brand.picPath" style="width: 3rem;height: 3rem;">
           <div style="font-size: 0.8rem;line-height: 3;">{{brand.brandName}}</div>
         </div>
+        <div class="car-type">
+          <img src="../../assets/img/home/ic_more.png" style="width: 3rem;height: 3rem;">
+          <div style="font-size: 0.8rem;line-height: 3;">更多</div>
+        </div>
       </div>
     </div>
 

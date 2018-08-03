@@ -67,8 +67,7 @@
         district: '',
         consigneeAddress: '',
         postCode: '',
-        defaultAddress: false,
-        customerId: 306 // 调试用，之后需去掉
+        defaultAddress: false
       }
     },
     watch: {
