@@ -1,14 +1,17 @@
 <template>
   <header id='head_top' style="display: flex;">
-    <section class="head_goback">
+    <section class="head_goback" v-if="goBack" @click="back">
+      <img src="../../assets/img/common/back.png" height="23" style="vertical-align: middle;margin-left: 5px;">
+    </section>
+    <section class="head_goback" style="margin-left: 0;">
       <img src="../../assets/img/common/ic_nav_close.png" height="23" style="vertical-align: middle;margin-left: 5px;">
     </section>
     <slot name='search' class="head_search"></slot>
     <slot name="local" style="flex: 0 0 2rem;" v-if="local">
-      <div slot="local" style="flex: none;margin-top: 0.8rem;padding: 0 0.8rem;">
+      <div slot="local" style="flex: none;margin-top: 0.8rem;padding: 0 0.8rem;" @click="location">
         <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1.2rem;vertical-align: middle;">
         <span>
-          定位
+          {{localCity}}
         </span>
       </div>
     </slot>
@@ -23,11 +26,36 @@
 </template>
 
 <script>
+  import AMap from 'AMap';
+
   export default {
     data() {
-      return {}
+      return {
+        localCity:'定位'
+      }
     },
     props: ['signinUp', 'headTitle', 'goBack', 'local', 'edit'],
+    methods:{
+      back(){
+        this.$router.go(-1);
+      },
+      location() {
+        this.$router.push({
+          path:"/location"
+        })
+      }
+    },
+    created(){
+      let vm = this;
+      AMap.plugin('AMap.CitySearch', function () {
+        var citySearch = new AMap.CitySearch();
+        citySearch.getLocalCity(function (status, result) {
+          if (status === 'complete' && result.info === 'OK') {
+            vm.localCity = result.city.substr(0, 2);
+          }
+        })
+      })
+    }
   }
 
 </script>

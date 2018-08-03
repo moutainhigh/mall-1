@@ -16,11 +16,12 @@ import ServerList from '../page/serve/ServerList'
 import MyAddress from '../page/address/MyAddress'
 import AddAddress from '../page/address/AddAddress'
 import EditAddress from '../page/address/EditAddress'
+import ChooseAddress from '../page/address/ChooseAddress'
 import CollectList from '../page/collect/CollectList'
 import MyBrowse from '../page/collect/MyBrowse'
 import Login from '../page/Login'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -32,7 +33,10 @@ export default new Router({
     {
       path: '/search',
       name: 'Search',
-      component: Search
+      component: Search,
+      meta: {
+        keepAlive: false // 需要被缓存
+      },
     },
     {
       path: '/location',
@@ -42,7 +46,10 @@ export default new Router({
     {
       path: '/car-list',
       name: 'CarList',
-      component: CarList
+      component: CarList,
+      meta: {
+        keepAlive: true // 需要被缓存
+      },
     },
     {
       path: '/car-detail',
@@ -100,6 +107,11 @@ export default new Router({
       path: '/edit-address',
       name: 'EditAddress',
       component: EditAddress
+    },
+    {
+      path: '/choose-address',
+      name: 'ChooseAddress',
+      component: ChooseAddress
     },
     {
       path: '/collect-list',

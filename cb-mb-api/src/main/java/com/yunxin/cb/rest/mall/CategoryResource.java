@@ -5,6 +5,7 @@ import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.service.BrandService;
 import com.yunxin.cb.mall.service.CategoryService;
 import com.yunxin.cb.mall.vo.BrandVO;
+import com.yunxin.cb.mall.vo.CategoryVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
@@ -37,7 +38,7 @@ public class CategoryResource extends BaseResource {
     @GetMapping(value = "category/list/carBrand")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<BrandVO>> carBrand() {
+    public ResponseResult<List<CategoryVO>> carBrand() {
         try {
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
@@ -52,7 +53,7 @@ public class CategoryResource extends BaseResource {
     @GetMapping(value = "category/list/carBrand/{categoryId}")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<BrandVO>> carCatena(@PathVariable("categoryId") int categoryId) {
+    public ResponseResult<List<CategoryVO>> carCatena(@PathVariable("categoryId") int categoryId) {
         try {
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
