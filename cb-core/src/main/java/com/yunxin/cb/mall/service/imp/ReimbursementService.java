@@ -1,9 +1,9 @@
 package com.yunxin.cb.mall.service.imp;
 
+import com.yunxin.cb.mall.dao.OrderItemDao;
 import com.yunxin.cb.mall.dao.ReimbursementDao;
-import com.yunxin.cb.mall.dao.ReimbursementOrderDao;
+import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.Reimbursement;
-import com.yunxin.cb.mall.entity.ReimbursementOrder;
 import com.yunxin.cb.mall.entity.Reimbursement_;
 import com.yunxin.cb.mall.service.IReimbursementService;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -28,8 +28,7 @@ public class ReimbursementService implements IReimbursementService {
     @Resource
     private ReimbursementDao reimbursementDao;
     @Resource
-    private ReimbursementOrderDao reimbursementOrderDao;
-
+    private OrderItemDao orderItemDao;
     @Override
     public Page<Reimbursement> pageReimbursement(PageSpecification<Reimbursement> query) {
         query.setCustomSpecification(new CustomSpecification<Reimbursement>(){
@@ -49,8 +48,12 @@ public class ReimbursementService implements IReimbursementService {
     }
 
     @Override
-    public List<ReimbursementOrder> queryOrderByIds(int reimbursementId) {
-        List<ReimbursementOrder> listOrder= reimbursementOrderDao.getReimbursementOrderById(reimbursementId);
-        return listOrder;
+    public List<OrderItem> queryOrderItemByIds(int reimbursementId) {
+        return orderItemDao.getOrderItemByReimbursement(reimbursementId);
+    }
+
+    @Override
+    public Reimbursement getReimbursement(int reimbursementId) {
+        return  reimbursementDao.getOne(reimbursementId);
     }
 }
