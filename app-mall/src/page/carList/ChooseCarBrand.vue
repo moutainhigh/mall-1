@@ -3,18 +3,18 @@
     <head-top :head-title="'选择品牌'"></head-top>
 
     <div class="list-view" ref="listView">
-      <div v-if="singers">
-        <div v-for="(group, index) in singers" class="list-group" :key="parseInt(group.id)" ref="listGroup">
+      <div v-if="brandList">
+        <div v-for="(group, index) in brandList" class="list-group" :key="parseInt(group.id)" ref="listGroup">
           <h2 v-if="index != 0 && index !=1" class="list-group-title">{{ group.title }}</h2>
           <div v-if="index != 0 && index !=1">
             <div v-for="item in group.items" class="list-group-item" :key="parseInt(item.id)">
               <span class="name">{{ item.name }}</span>
             </div>
           </div>
-          <div v-if="index == 1" style="background: #ffffff">
-            <p class="cityTitle">热门城市</p>
-            <button class="hotCity" v-for="city in hotCitys">{{city}}</button>
-          </div>
+          <!--<div v-if="index == 1" style="background: #ffffff">-->
+            <!--<p class="cityTitle">热门城市</p>-->
+            <!--<button class="hotCity" v-for="city in hotCitys">{{city}}</button>-->
+          <!--</div>-->
         </div>
       </div>
       <div class="list-shortcut">
@@ -38,6 +38,7 @@
 <script>
   import headTop from "../../components/header/head"
   import BScroll from 'better-scroll'
+  import {carBrand} from "../../service/getData";
 
   export default {
     name: "ChooseCarBrand",
@@ -49,6 +50,7 @@
         singers: null,
         scrollY: 0,
         currentIndex: 0,
+        brandList: [],
         hotCitys: ['北京', '深圳', '上海', '武汉', '长沙', '中山', '成都', '厦门', '珠海'],
         searchContent: '',
         localCity: ''
@@ -114,11 +116,19 @@
         }
       },
     },
+    created() {
+      carBrand(res => {
+        console.log(res);
+        if (res.result == 'SUCCESS') {
+          this.brandList = res.data;
+        }
+      })
+    },
     computed: {
       shortcutList() {
-        // return this.singers.map((group) => {
-        //   return group.title.substr(0, 1)
-        // })
+        return this.singers.map((group) => {
+          return group.title.substr(0, 1)
+        })
       }
     },
   }

@@ -61,7 +61,7 @@
       <div class="buyMode" @click="checkType = 'mode'">
         <p class="selectItem-title">支付方式</p>
         <p v-if="mode == ''" class="selectItem-detail">请选择</p>
-        <p v-if="mode != ''" class="selectItem-detail" style="color: #f5ca1d">{{mode}}</p>
+        <p v-if="mode != ''" class="selectItem-detail" style="color: #f5ca1d">{{commodityData.paymentType[mode]}}</p>
         <img src="../../assets/img/cardetail/ic_right.png">
       </div>
       <div style="background: #f3f3f3; height: 1px; margin-left: 10px; margin-right: 10px"></div>
@@ -146,9 +146,9 @@
             <img src="../../assets/img/cardetail/ic_sku_close.png" @click="checkType = 'none'">
           </div>
           <div style="margin-left: 14px">
-            <button v-for="(type, index) in commodityData.paymentType" class="carColor"
-                    :class="{'activeColor': type == activeMode}"
-                    @click="checkMode(type)">
+            <button v-for="(type, key) in commodityData.paymentType" class="carColor"
+                    :class="{'activeColor': key == activeMode}"
+                    @click="checkMode(key)">
               {{type}}
             </button>
           </div>
@@ -263,8 +263,8 @@
           }
         }
       },
-      checkMode(type) {
-        this.activeMode = type;
+      checkMode(key) {
+        this.activeMode = key;
       },
       selectStandard() {
         let name = '';
