@@ -151,7 +151,7 @@ public interface CategoryMapper {
             "CATEGORY_ID, CATEGORY_KEY, CATEGORY_NAME, CATEGORY_NO, CREATE_TIME, DESCRIPTION, ",
             "ICON_PATH, LEVEL, RECOMMEND, PARENT_CATEGORY_ID, LOWEST_PRICE, HIGHEST_PRICE",
             "from category",
-            "where PARENT_CATEGORY_ID = #{categoryNo,jdbcType=VARCHAR} and ENABLED=1 order by SORT_ORDER asc"
+            "where PARENT_CATEGORY_ID = #{parentCategoryId,jdbcType=INTEGER} and ENABLED=1 order by SORT_ORDER asc"
     })
     @Results({
             @Result(column="CATEGORY_ID", property="categoryId", jdbcType=JdbcType.INTEGER, id=true),
@@ -169,4 +169,28 @@ public interface CategoryMapper {
             @Result(column="HIGHEST_PRICE", property="highestPrice", jdbcType=JdbcType.DECIMAL)
     })
     List<Category> selectByParentCategoryId(Integer parentCategoryId);
+
+    @Select({
+            "select",
+            "CATEGORY_ID, CATEGORY_KEY, CATEGORY_NAME, CATEGORY_NO, CREATE_TIME, DESCRIPTION, ",
+            "ICON_PATH, LEVEL, RECOMMEND, PARENT_CATEGORY_ID, LOWEST_PRICE, HIGHEST_PRICE",
+            "from category",
+            "where CATEGORY_NO = #{categoryNo,jdbcType=VARCHAR} and ENABLED=1 order by SORT_ORDER asc"
+    })
+    @Results({
+            @Result(column="CATEGORY_ID", property="categoryId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="CATEGORY_KEY", property="categoryKey", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CATEGORY_NAME", property="categoryName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CATEGORY_NO", property="categoryNo", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="DESCRIPTION", property="description", jdbcType=JdbcType.VARCHAR),
+            @Result(column="ICON_PATH", property="iconPath", jdbcType=JdbcType.VARCHAR),
+            @Result(column="LEVEL", property="level", jdbcType=JdbcType.INTEGER),
+            @Result(column="RECOMMEND", property="recommend", jdbcType=JdbcType.BIT),
+            @Result(column="SORT_ORDER", property="sortOrder", jdbcType=JdbcType.INTEGER),
+            @Result(column="PARENT_CATEGORY_ID", property="parentCategoryId", jdbcType=JdbcType.INTEGER),
+            @Result(column="LOWEST_PRICE", property="lowestPrice", jdbcType=JdbcType.DECIMAL),
+            @Result(column="HIGHEST_PRICE", property="highestPrice", jdbcType=JdbcType.DECIMAL)
+    })
+    Category selectByParentCategoryNo(String categoryNo);
 }

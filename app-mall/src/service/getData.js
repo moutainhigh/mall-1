@@ -42,8 +42,8 @@ export const delFavoriteListByFavoriteIds = function (favoriteIds) {
 };
 
 //分类搜索
-export const categorySearch = function (searchVo, page, size) {
-  return post('v1/mall/search/categorySearch/'+page + '/' + size,searchVo)
+export const categorySearch = function (searchVo) {
+  return post('/v1/mall/search/categorySearch',searchVo)
 }
 
 //关键词搜索
@@ -78,6 +78,20 @@ export const deleteDeliveryAddressByAdderssId = function (addressId) {
 };
 
 //################## 订单接口 ##########################//
+
+//确认订单接口
+export const getTempOrder = function (productId, paymentType) {
+  return post('/v1/mall/order/tempOrder',{},{
+    productId:productId,
+    paymentType:paymentType
+  });
+};
+
+//下单接口
+export const addOrder = function (orderConfirmVO) {
+  return post('/v1/mall/order',orderConfirmVO);
+}
+
 //获取用户商品订单列表
 export const getCustomerOrder = function (query) {
   return post('/v1/mall/order/pageList',{},query);

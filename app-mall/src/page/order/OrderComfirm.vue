@@ -1,60 +1,66 @@
 <template>
   <div>
-    <head-top :headTitle="headTitle"></head-top>
-    <div style="height: 30px"></div>
-    <group>
-      <x-input title="姓名" placeholder="请填写真实姓名"></x-input>
-      <x-input title="手机号" placeholder="请填写联系手机号"></x-input>
-      <cell title="提车地址" value-align="left" align-items="flex-start" value="广东省深圳市龙华区油松社区中裕冠大道1号1018号"></cell>
-    </group>
+    <head-top :go-back="true" :headTitle="headTitle"></head-top>
+    <div style="margin-top: 3rem;" v-if="isShow">
+      <div style="background-color: #ffffff" @click="chooseAddr">
+        <div style="font-size: 1.2rem;padding: 0.9rem 0.8rem 0.5rem 0.8rem;font-weight: bold">
+          {{address.consigneeName}} {{address.consigneeMobile}}
+        </div>
+        <div style="padding: 0 0.9rem;font-size: 1rem;">
+          <div style="float:right;"><img src="../../assets/img/common/ic_right.png" style="width: 1.2rem;"></div>
+          <span class="default_addr" v-if="address.defaultAddress">默认</span>{{address.consigneeAddress}}
+        </div>
+        <img src="../../assets/img/order/ic_indent_sitetx.png" width="100%" style="vertical-align: bottom;">
+      </div>
 
-    <div class="buyMode" @click="checkType = true">
-      <p class="selectItem-title">支付方式</p>
-      <p class="selectItem-detail" style="color: #f5ca1d">{{buytype}}</p>
-      <img src="../../assets/img/cardetail/ic_right.png">
-    </div>
+      <div class="buyMode" @click="checkType = true">
+        <p class="selectItem-title">支付方式</p>
+        <p class="selectItem-detail" style="color: #f5ca1d">{{tempOrder.paymentType[orderConfirm.paymentType]}}</p>
+        <img src="../../assets/img/cardetail/ic_right.png" style="width: 1.2rem;">
+      </div>
 
-    <div style="background: #ffffff">
-      <p class="shopName">深圳中升汇宝宝马4S店</p>
-      <div class="orderIntro">
-        <img src="../../assets/logo.png">
-        <p class="orderCarTitle">宝马 宝马X1 2018款 sDrive18Li 尊享型尊享型</p>
-        <span class="orderCarConfig">雪山白 2.0L 自动</span>
-        <p class="orderCarPrice">￥<span>26.98</span>万</p>
+      <div style="background: #ffffff">
+        <p class="shopName">{{tempOrder.sellerVo.sellerName}}</p>
+        <div class="orderIntro">
+          <img :src="tempOrder.tempOrderItemVO.defaultPicPath">
+          <p class="orderCarTitle">{{tempOrder.commodityTitle}}</p>
+          <span class="orderCarConfig">{{setSpec(tempOrder.tempOrderItemVO.productName)}}</span>
+          <p class="orderCarPrice">￥<span>{{setTranPrice(tempOrder.tempOrderItemVO.salePrice)}}</span>万</p>
+        </div>
+        <div style="padding: 2px 0">
+          <p class="carInfo" v-for="(spec,key) in tempOrder.specs">{{key}}<span>{{spec}}</span></p>
+        </div>
       </div>
-      <div style="padding: 2px 0">
-        <p class="carInfo">车型<span>轿车</span></p>
-        <p class="carInfo">坐席<span>4-5座</span></p>
-        <p class="carInfo">燃料<span>汽油</span></p>
-      </div>
-    </div>
-    <p class="agree">点击提交即视为同意<span style="color: #333333">《隐私政策》</span>
-    </p>
-    <div style="height: 70px">
-      <div class="i-footer">
-        <button @click="submit">
-          <div>提交</div>
-        </button>
-      </div>
-    </div>
-    <alert v-model="isAlert" :title="'温馨提示'" :content="'您的信用额度不够，无法贷款购买此款车型，请选择其他车型'" :button-text="'我知道了'"></alert>
-
-    <div class="type-mode" v-if="checkType">
-      <div class="modeTitle">
-        <span>支付方式</span>
-        <img @click="checkType = false" src="../../assets/img/cardetail/ic_sku_close.png">
-      </div>
-      <div style="margin-left: 14px">
-        <button v-for="(buyMode, index) in buyModes" class="carColor" :class="{'activeColor': index == activeMode}"
-                @click="checkMode(index)">
-          {{buyMode}}
-        </button>
-      </div>
+      <p class="agree">点击提交即视为同意<span style="color: #333333">《隐私政策》</span>
+      </p>
       <div style="height: 70px">
         <div class="i-footer">
-          <button @click="checkType = false">
-            <div>确认</div>
+          <button @click="submit">
+            <div>提交</div>
           </button>
+        </div>
+      </div>
+      <alert v-model="isAlert" :title="'温馨提示'" :content="'您的信用额度不够，无法贷款购买此款车型，请选择其他车型'" :button-text="'我知道了'"></alert>
+
+      <div v-if="checkType" @click="openChoose" style="background-color: rgba(0,0,0,0.6);position:fixed;top: 0;width: 100%;height: 100%;z-index: 1"></div>
+
+      <div class="type-mode" style="z-index: 3" v-if="checkType" >
+        <div class="modeTitle">
+          <span>支付方式</span>
+          <img @click="checkType = false" src="../../assets/img/cardetail/ic_sku_close.png">
+        </div>
+        <div style="margin-left: 14px">
+          <button v-for="(type,key) in tempOrder.paymentType" class="carColor" :class="{'activeColor': key == buyType}"
+                  @click="checkMode(key)">
+            {{type}}
+          </button>
+        </div>
+        <div style="height: 70px">
+          <div class="i-footer">
+            <button @click="subType">
+              <div>确认</div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -64,6 +70,8 @@
 <script>
   import headTop from '../../components/header/head'
   import {XInput, Cell, Alert} from 'vux'
+  import {addOrder, getDeliveryAddress, getTempOrder} from "../../service/getData";
+  import {goodsSpec, tranPrice} from "../../config/dataFormat";
 
   export default {
     name: "OrderComfirm",
@@ -76,27 +84,102 @@
     data() {
       return {
         headTitle: '订单确认',
-        buytype: '贷款支付',
-        buyModes: ['贷款支付', '在线支付'],
+        buyType: '',
+        buyModes: [],
         checkType: false,
-        activeMode: 0,
         isAlert: false,
+        isShow:false,
+        address:'',
+        tempOrder:'',
+        orderConfirm:{
+          paymentType:null,
+          addressId:0,
+          sellerId:0,
+          orderConfirmProductList:[{
+            productNum:1,
+            productId:0
+          }]
+        }
       }
     },
     methods: {
-      checkMode(index) {
-        this.activeMode = index;
-        this.buytype = this.buyModes[index];
+      checkMode(key) {
+        this.buyType = key;
+      },
+      subType(){
+        this.orderConfirm.paymentType = this.buyType;
+        this.checkType = false;
+      },
+      openChoose(){
+        this.checkType = false;
+        this.buyType = this.orderConfirm.paymentType;
+      }
+      ,
+      chooseAddr() {
+        this.$router.push({
+          path: '/choose-address'
+        })
       },
       submit() {
-        if (this.buytype == '贷款支付') {
-          this.isAlert = true;
-        } else {
-          this.$router.push({
-            path: "/order-success"
-          })
-        }
-      }
+        // if (this.buyType == '贷款支付') {
+        //   this.isAlert = true;
+        // } else {
+        //   this.$router.push({
+        //     path: "/order-success"
+        //   })
+        // }
+
+        addOrder(this.orderConfirm);
+      },
+      async getCustomerAddr(productId,payType) {
+        await getTempOrder(productId,payType).then(res=>{
+          if (res.result == 'SUCCESS') {
+            this.tempOrder = res.data;
+            this.orderConfirm.sellerId = this.tempOrder.sellerVo.sellerId;
+            if (this.tempOrder.deliveryAddressVO) {
+              this.orderConfirm.addressId = this.tempOrder.deliveryAddressVO.addressId;
+            }else {
+              this.$vux.alert.show({
+                title: '您尚未填写地址',
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
+            }
+          }
+        });
+        getDeliveryAddress().then(res => {
+          if (res.result == 'SUCCESS') {
+            let addrList = res.data;
+            if (addrList.length > 0) {
+              let defaultAddr = addrList[0];
+              for (let addr of addrList) {
+                if (addr.defaultAddress) {
+                  defaultAddr = addr;
+                }
+              }
+              this.isShow = true;
+              this.address = defaultAddr;
+            }else {
+              this.isShow = false;
+            }
+          }
+        });
+      },
+      setTranPrice(price) {
+        return tranPrice(price);
+      },
+      setSpec(spec){
+        return goodsSpec(spec);
+      },
+    },
+    created() {
+      this.getCustomerAddr(476,"AFTERREVICED");
+      this.orderConfirm.orderConfirmProductList[0].productId = 476;
+      this.orderConfirm.paymentType = 'AFTERREVICED';
     }
   }
 </script>
@@ -107,6 +190,7 @@
     height: 40px;
     background: #ffffff;
     margin-bottom: 10px;
+    margin-top: 10px;
   }
 
   .buyMode img {
@@ -220,5 +304,14 @@
     color: #f5ca1d;
     border: 1px solid #f5ca1d;
     background: #fffbeb;
+  }
+
+  .default_addr {
+    font-size: 0.8rem;
+    background-color: #f5ca1d;
+    color: #fff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 25px;
+    margin-right: 0.2rem;
   }
 </style>
