@@ -42,10 +42,8 @@ public class SearchResource extends BaseResource {
         try {
             Page<Commodity> result = commodityService.keywordSearch(keyword, PageRequest.of(page, size));
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
-            Map<String, List<Object>> condition = new HashMap<>();
             SearchResultVo searchResultVo = new SearchResultVo();
-            List<PriceSection> priceSection = new ArrayList<>();
-            dealResult(page, result, pageFinder, condition, searchResultVo,priceSection);
+            dealResult(page, result, pageFinder, searchResultVo);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("keywordSearch excption", e);
@@ -65,10 +63,8 @@ public class SearchResource extends BaseResource {
         try {
             Page<Commodity> result = commodityService.categorySearch(searchVo, PageRequest.of(searchVo.getPage(), searchVo.getSize()));
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
-            Map<String, List<Object>> condition = new HashMap<>();
             SearchResultVo searchResultVo = new SearchResultVo();
-            List<PriceSection> priceSection = new ArrayList<>();
-            dealResult(searchVo.getPage(), result, pageFinder, condition, searchResultVo,priceSection);
+            dealResult(searchVo.getPage(), result, pageFinder, searchResultVo);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("categorySearch excption", e);
@@ -116,7 +112,7 @@ public class SearchResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
-    private void dealResult( int page, Page<Commodity> result, PageFinder<CommodityVO> pageFinder, Map<String, List<Object>> condition, SearchResultVo searchResultVo,List<PriceSection> priceSection) {
+    private void dealResult( int page, Page<Commodity> result, PageFinder<CommodityVO> pageFinder, SearchResultVo searchResultVo) {
         if (result.getTotalElements() > 0) {
             List<Commodity> list = result.getContent();
             List<CommodityVO> voList = new ArrayList<>();
@@ -124,29 +120,12 @@ public class SearchResource extends BaseResource {
                 CommodityVO commodityVO = new CommodityVO();
                 BeanUtils.copyProperties(commodity, commodityVO);
                 voList.add(commodityVO);
-                for (CommoditySpec commoditySpec : commodity.getCommoditySpecs()) {
-                    List<Object> values = condition.get(commoditySpec.getSpecName());
-                    if (values == null || values.size() == 0) {
-                        values = new ArrayList<>();
-                        values.add(commoditySpec.getValue());
-                    } else {
-                        values.add(commoditySpec.getValue());
-                    }
-                    condition.put(commoditySpec.getSpecName(), values);
-                }
-                PriceSection price = commodity.getPriceSection();
-                priceSection.add(price);
             }
-            HashSet h = new HashSet(priceSection);
-            priceSection.clear();
-            priceSection.addAll(h);
             pageFinder.setData(voList);
             pageFinder.setPageCount(result.getTotalPages());
             pageFinder.setRowCount(result.getNumber());
             pageFinder.setPageNo(page);
-            searchResultVo.setCondition(condition);
             searchResultVo.setPageFinder(pageFinder);
-            searchResultVo.setPriceSection(priceSection);
         }
     }
 
@@ -172,4 +151,53 @@ public class SearchResource extends BaseResource {
         return new ResponseResult(commodityVO);
     }
 
+    /**
+     * 查询所有ES中所有商品
+     */
+    @ApiOperation(value = "查询ES对象")
+    @GetMapping(value = "commodity")
+    public ResponseResult<CombinationVO> selectAll(){
+        try{
+            List<Commodity> list = commodityService.findByAll();
+            Map<String, List<Object>> condition = new HashMap<>();
+            CombinationVO combinationVO = new CombinationVO();
+            List<PriceSection> priceSection = new ArrayList<>();
+            Set<Category> categories = new HashSet<>();
+            assemblingResult(list,combinationVO,condition,priceSection,categories);
+            return new ResponseResult(combinationVO);
+        }catch (Exception e){
+            logger.info("categorySearch excption", e);
+            return new ResponseResult(Result.FAILURE);
+        }
+    }
+
+    private void assemblingResult(List<Commodity> list,CombinationVO combinationVO,Map<String, List<Object>> condition,List<PriceSection> priceSection,Set<Category> categories){
+        if(list.size()>0){
+            for (Commodity commodity : list) {
+                for (CommoditySpec commoditySpec : commodity.getCommoditySpecs()) {
+                    List<Object> values = condition.get(commoditySpec.getSpecName());
+                    if (values == null || values.size() == 0) {
+                        values = new ArrayList<>();
+                        values.add(commoditySpec.getValue());
+                    } else {
+                        values.add(commoditySpec.getValue());
+                    }
+                    condition.put(commoditySpec.getSpecName(), values);
+                }
+                PriceSection price = commodity.getPriceSection();
+                priceSection.add(price);
+                for(Category category : commodity.getCategories()){
+                    Category cate_gory = new Category();
+                    BeanUtils.copyProperties(category, cate_gory);
+                    categories.add(cate_gory);
+                }
+            }
+            HashSet h = new HashSet(priceSection);
+            priceSection.clear();
+            priceSection.addAll(h);
+            combinationVO.setCondition(condition);
+            combinationVO.setPriceSection(priceSection);
+            combinationVO.setCategories(categories);
+        }
+    }
 }

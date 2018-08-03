@@ -53,4 +53,9 @@ public interface CommodityService {
      */
     Commodity selectByCommodityId(int commodityId);
 
+    /**
+     * 查询所有ES中所有商品
+     */
+    public List<Commodity> findByAll();
+
 }

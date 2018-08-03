@@ -8,7 +8,9 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
     window.alert("网络未连接");
   }
 	type = type.toUpperCase();
-	url = baseUrl + url;
+  if (url.indexOf("http://") > 0){
+    url = baseUrl + url;
+  }
 
 	if (type == 'GET') {
 		let dataStr = ''; //数据拼接字符串
