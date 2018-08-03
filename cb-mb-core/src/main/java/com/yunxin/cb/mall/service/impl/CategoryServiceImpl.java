@@ -21,4 +21,14 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> selectByParentCategoryId(Integer parentCategoryId) {
         return categoryMapper.selectByParentCategoryId(parentCategoryId);
     }
+
+    /**
+     * 根据分类NO查询子类
+     * @param parentCategoryId
+     * @return
+     */
+    @Override
+    public Category selectByParentCategoryNo(String categoryNo){
+        return categoryMapper.selectByParentCategoryNo(categoryNo);
+    }
 }

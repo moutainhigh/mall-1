@@ -18,4 +18,11 @@ public interface CategoryService {
      * @return
      */
     List<Category> selectByParentCategoryId(Integer parentCategoryId);
+
+    /**
+     * 根据分类NO查询子类
+     * @param categoryNo
+     * @return
+     */
+    Category selectByParentCategoryNo(String categoryNo);
 }
