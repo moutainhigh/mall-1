@@ -186,15 +186,15 @@ CREATE TABLE `bank_info` (
 DROP TABLE IF EXISTS `reimbursement_order`;
 CREATE TABLE `reimbursement_order` (
   `REIMBURSEMENT_ORDER_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `ORDER_ID` int(11) DEFAULT NULL COMMENT '订单',
-  `ORDER_CODE` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '订单编号',
+  `ORDER_ITEM_ID` int(11) DEFAULT NULL COMMENT '订单',
   `REIMBURSEMENT_ID` int(11) DEFAULT NULL COMMENT '报账信息',
   `CREATE_TIME` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`REIMBURSEMENT_ORDER_ID`),
-  KEY `ORDER_ID` (`ORDER_ID`),
   KEY `REIMBURSEMENT_ID` (`REIMBURSEMENT_ID`),
-  CONSTRAINT `reimbursement_order_ibfk_2` FOREIGN KEY (`REIMBURSEMENT_ID`) REFERENCES `reimbursement` (`REIMBURSEMENT_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; COMMENT='报账订单表';
+  KEY `reimbursement_order_ibfk_3` (`ORDER_ITEM_ID`),
+  CONSTRAINT `reimbursement_order_ibfk_2` FOREIGN KEY (`REIMBURSEMENT_ID`) REFERENCES `reimbursement` (`REIMBURSEMENT_ID`),
+  CONSTRAINT `reimbursement_order_ibfk_3` FOREIGN KEY (`ORDER_ITEM_ID`) REFERENCES `order_item` (`ITEM_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='报账订单表';
 
 DROP TABLE IF EXISTS `reimbursement_process`;
 CREATE TABLE `reimbursement_process` (

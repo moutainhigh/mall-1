@@ -73,7 +73,6 @@
   import headTop from '../../components/header/head'
   import {cancelOrder, confirmOrder, getOrderDetailById} from "../../service/getData";
   import {goodsSpec, orderState, payType} from "../../config/dataFormat";
-  import {Dialog, Toast} from "we-vue";
 
   export default {
     name: "OrderDetail",
@@ -97,25 +96,17 @@
       },
       takeGood(){
         let _this = this;
-        Dialog.alert({
+        this.$vux.alert({
           title: "提示",
           message: '确定收货？',
           showCancelButton: true
         }).then(() => {
           confirmOrder(_this.order.orderId).then(res=>{
             if (res.result == 'SUCCESS') {
-              Toast({
-                duration: 1000,
-                message: '修改成功',
-                type: 'text'
-              });
+              this.$vux.toast.text('修改成功','middle');
               _this.order.orderState = 'RECEIVED';
             } else {
-              Toast({
-                duration: 1000,
-                message: '修改失败，请稍后重试！',
-                type: 'text'
-              })
+              this.$vux.toast.text('修改失败，请稍后重试！','middle');
             }
           });
         }).catch(() => {
@@ -131,7 +122,7 @@
         })
       },
       cancelOrder(){
-        Dialog.alert({
+        this.$vux.alert({
           title: "提示",
           message: '确定要取消订单？',
           showCancelButton: true

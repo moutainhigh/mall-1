@@ -118,7 +118,7 @@
 <script>
   import headTop from '../../components/header/head'
   import {getCustomerOrder} from "../../service/getData";
-  import {goodsSpec, orderState} from "../../config/dataFormat";
+  import {goodsSpec, orderState, tranPrice} from "../../config/dataFormat";
 
   export default {
     name: "OrderList",
@@ -203,7 +203,10 @@
       },
       setSpec(spec){
         return goodsSpec(spec);
-      }
+      },
+      setTranPrice(price) {
+        return tranPrice(price);
+      },
     },
     created() {
     }
