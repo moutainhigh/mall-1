@@ -2,8 +2,10 @@ package com.yunxin.cb;
 
 
 import com.yunxin.cb.mall.restful.RestfulFactory;
+import com.yunxin.cb.pay.entity.AliPayBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -25,11 +27,14 @@ public class StartupRunner implements CommandLineRunner {
     @Value("${application.searchBaseUrl}")
     private String searchBaseUrl;
 
+    @Autowired
+    private AliPayBean aliPayBean;
+
 
     @Override
     public void run(String... strings) throws Exception {
         RestfulFactory.getInstance().init(searchBaseUrl);
-
+        aliPayBean.init();
     }
 
 
