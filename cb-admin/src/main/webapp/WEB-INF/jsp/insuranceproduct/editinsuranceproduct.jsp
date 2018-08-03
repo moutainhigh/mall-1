@@ -528,42 +528,243 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>图片：</label>
+                                <label>产品图片：</label>
                             </div>
-                            <div class="col-sm-3">
-                                <div style="float: left">
-                                    <div style="padding-left: 5px"><span>产品图片</span></div>
-                                    <div>
-                                        <img id="headPic" src="${insuranceProduct.prodImg}" width="150px" height="150px"
-                                             style="padding: 5px">
-                                        <input id="upload" onchange="onchangeImg('prodImg')" name="file" multiple="multiple" accept="image/*" type="file"
-                                               style="display: none"/>
-                                    </div>
-                                    <form:hidden path="prodImg" id="prodImg"/>
+                            <div class="col-sm-9">
+                                    <%--图片上传控件--%>
+                                <link href="../js/plugins/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
+                                <script src="../js/plugins/fileinput/fileinput.min.js" type="text/javascript"></script>
+                                <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#validateSubmitForm").validationEngine({
+                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
+                                            onValidationComplete: function (form, valid) {
+                                                if (valid) {
+                                                    var defaultPicPath = $('input[name="imgurl"]');
+                                                    if (defaultPicPath.size()==0) {
+                                                        bootbox.alert("请至少选择一张图片!");
+                                                        return false;
+                                                    } else {
+                                                        return true;
+                                                    }
+                                                }
+                                            }
+                                        });
+                                        var initPreview = new Array();//展示元素
+                                        var initPreviewConfig = new Array();//展示设置
+                                        //初始化图片上传组件
+                                        $("#picUrl").fileinput({
+                                            uploadUrl: "/admin/uploads/uploadFile/HOMEFLOORICO.do",
+                                            showCaption: true,
+                                            minImageWidth: 50,
+                                            minImageHeight: 50,
+                                            showUpload:true, //是否显示上传按钮
+                                            showRemove :false, //显示移除按钮
+                                            showPreview :true, //是否显示预览
+                                            showCaption:false,//是否显示标题
+                                            browseOnZoneClick: true,//是否显示点击选择文件
+                                            allowedFileExtensions: ["jpg", "png", "gif"],
+                                            language: "zh" ,
+                                            showBrowse : false,
+                                            maxFileSize : 2000,
+                                            autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                                            overwriteInitial: false,//不覆盖已存在的图片
+                                            browseClass:"btn btn-primary", //按钮样式
+                                            // layoutTemplates:{
+                                            //     actionUpload:''    //设置为空可去掉上传按钮
+                                            // },
+                                            maxFileCount: 10  //上传的个数
+                                        }).on("fileuploaded", function (event, data) {
+                                            var response = data.response;
+                                            //添加url到隐藏域
+                                            var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
+                                            $('#imgDiv').html($('#imgDiv').html()+html);
+                                            //上传完成回调
+                                            var index=0;
+                                            if(initPreview.length>0 ){
+                                                index=initPreview.length;
+                                            }
+                                            initPreview[index]  = response.url;
+                                            var config = new Object();
+                                            config.caption = "";
+                                            config.url="/admin/uploads/delete/HOMEFLOORICO.do";
+                                            config.key=response.timeStr;
+                                            initPreviewConfig[index]=config;
+                                            $("#picUrl").fileinput('refresh', {
+                                                initialPreview: initPreview,
+                                                initialPreviewConfig: initPreviewConfig,
+                                                initialPreviewAsData: true
+                                            });
+                                            $(".btn-default").attr("disabled",false);
+                                        }).on("filepredelete", function(jqXHR) {
+                                            var abort = true;
+                                            if (confirm("确定要删除吗？(删除后不会恢复)")) {
+                                                abort = false;
+                                            }
+                                            return abort;
+                                        }).on('filedeleted', function(event, id) {
+                                            $("#"+id).remove();
+                                            for (var i=0;i<initPreview.length;i++)
+                                            {
+                                                if(initPreview[i].indexOf(id) != -1){
+                                                    initPreview.splice(i)
+                                                    initPreviewConfig.splice(i)
+                                                }
+                                            }
+                                        }).on('filebatchselected', function (event, files) {//选中文件事件
+                                            $(".kv-file-upload").click();
+                                        });
+                                        //加载图片
+                                        var a='${listAttachment}';
+                                        var json=eval('(' + a + ')')
+                                        for(var i=0,l=json.length;i<l;i++){
+                                            initPreview[i]  = json[i].filePath;
+                                            var config = new Object();
+                                            config.caption = "";
+                                            config.url="/admin/uploads/delete/HOMEFLOORICO.do";
+                                            config.key=json[i].inputId;
+                                            initPreviewConfig[i]=config;
+                                            $("#picUrl").fileinput('refresh', {
+                                                initialPreview: initPreview,
+                                                initialPreviewConfig: initPreviewConfig,
+                                                initialPreviewAsData: true
+                                            });
+                                            var html='<input name="imgurl" type="hidden" id="'+json[i].inputId+'" value="'+json[i].filePath+','+json[i].fileName+','+json[i].inputId+'">';
+                                            $('#imgDiv').html($('#imgDiv').html()+html);
+                                        }
+                                    })
+                                </script>
+                                <input id="picUrl" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                                <div id="imgDiv">
                                 </div>
-                                <div style="float: left;margin-left: 20px">
-                                    <div style="padding-left: 5px"><span>产品详情图片</span></div>
-                                    <div>
-                                        <img id="headPic1" src="${insuranceProduct.descriptionImg}" width="150px"
-                                             height="150px" style="padding: 5px">
-                                        <input onchange="onchangeImg('descriptionImg')" id="upload1" name="file" multiple="multiple" accept="image/*" type="file"
-                                               style="display: none"/>
-                                    </div>
-                                    <form:hidden path="descriptionImg" id="descriptionImg"/>
-                                </div>
+                                    <%--图片上传控件结束--%>
+                            </div>
+                        </div>
 
-                                <div class="spacer-30"></div>
-                                <hr>
-                                <div class="spacer-30"></div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="btn-group pull-right">
-                                            <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;
-                                            </button>
-                                            <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
-                                            </button>
-                                        </div>
-                                    </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>详情图片：</label>
+                            </div>
+                            <div class="col-sm-9">
+                                    <%--图片上传控件--%>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#validateSubmitForm").validationEngine({
+                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
+                                            onValidationComplete: function (form, valid) {
+                                                if (valid) {
+                                                    var defaultPicPath = $('input[name="imgurl1"]');
+                                                    if (defaultPicPath.size()==0) {
+                                                        bootbox.alert("请至少选择一张图片!");
+                                                        return false;
+                                                    } else {
+                                                        return true;
+                                                    }
+                                                }
+                                            }
+                                        });
+                                        var initPreview= new Array();//展示元素
+                                        var initPreviewConfig = new Array();//展示设置
+                                        //初始化图片上传组件
+                                        $("#picUrl1").fileinput({
+                                            uploadUrl: "/admin/uploads/uploadFile/INSURANCEPRODUCTDETAIL.do",
+                                            showCaption: true,
+                                            minImageWidth: 50,
+                                            minImageHeight: 50,
+                                            showUpload:true, //是否显示上传按钮
+                                            showRemove :false, //显示移除按钮
+                                            showPreview :true, //是否显示预览
+                                            showCaption:false,//是否显示标题
+                                            browseOnZoneClick: true,//是否显示点击选择文件
+                                            language: "zh" ,
+                                            showBrowse : false,
+                                            maxFileSize : 2000,
+                                            autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                                            overwriteInitial: false,//不覆盖已存在的图片
+                                            browseClass:"btn btn-primary", //按钮样式
+                                            // layoutTemplates:{
+                                            //     actionUpload:''    //设置为空可去掉上传按钮
+                                            // },
+                                            maxFileCount: 10  //上传的个数
+                                        }).on("fileuploaded", function (event, data) {
+                                            var response = data.response;
+                                            //添加url到隐藏域
+                                            var html='<input name="imgurl1" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
+                                            $('#imgDiv1').html($('#imgDiv1').html()+html);
+                                            //上传完成回调
+                                            var index=0;
+                                            if(initPreview.length>0 ){
+                                                index=initPreview.length;
+                                            }
+                                            initPreview[index]  = response.url;
+                                            var config = new Object();
+                                            config.caption = "";
+                                            config.url="/admin/uploads/delete/INSURANCEPRODUCTDETAIL.do";
+                                            config.key=response.timeStr;
+                                            initPreviewConfig[index]=config;
+                                            $("#picUrl1").fileinput('refresh', {
+                                                initialPreview: initPreview,
+                                                initialPreviewConfig: initPreviewConfig,
+                                                initialPreviewAsData: true
+                                            });
+                                            $(".btn-default").attr("disabled",false);
+                                        }).on("filepredelete", function(jqXHR) {
+                                            var abort = true;
+                                            if (confirm("确定要删除吗？(删除后不会恢复)")) {
+                                                abort = false;
+                                            }
+                                            return abort;
+                                        }).on('filedeleted', function(event, id) {
+                                            $("#"+id).remove();
+                                            for (var i=0;i<initPreview.length;i++)
+                                            {
+                                                if(initPreview[i].indexOf(id) != -1){
+                                                    initPreview.splice(i)
+                                                    initPreviewConfig.splice(i)
+                                                }
+                                            }
+                                        }).on('filebatchselected', function (event, files) {//选中文件事件
+                                            $(".kv-file-upload").click();
+                                        });
+                                        //加载图片
+                                        var a1='${listAttachment1}';
+                                        var json1=eval('(' + a1 + ')')
+                                        for(var i=0,l=json1.length;i<l;i++){
+                                            initPreview[i]  = json1[i].filePath;
+                                             var config = new Object();
+                                            config.caption = "";
+                                            config.url="/admin/uploads/delete/HOMEFLOORICO.do";
+                                            config.key=json1[i].inputId;
+                                            initPreviewConfig[i]=config;
+                                            $("#picUrl1").fileinput('refresh', {
+                                                initialPreview: initPreview,
+                                                initialPreviewConfig: initPreviewConfig,
+                                                initialPreviewAsData: true
+                                            });
+                                            var html='<input name="imgurl1" type="hidden" id="'+json1[i].inputId+'" value="'+json1[i].filePath+','+json1[i].fileName+','+json1[i].inputId+'">';
+                                            $('#imgDiv1').html($('#imgDiv1').html()+html);
+                                        }
+                                    })
+                                </script>
+                                <input id="picUrl1" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                                <div id="imgDiv1">
+                                </div>
+                                    <%--图片上传控件结束--%>
+                            </div>
+                        </div>
+
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="btn-group pull-right">
+                                    <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;
+                                    </button>
+                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
+                                    </button>
                                 </div>
                             </div>
                         </div>
