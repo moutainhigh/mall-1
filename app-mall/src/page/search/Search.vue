@@ -8,7 +8,7 @@
       <input type="text" style="padding-left: 40px" v-model="searchContent" placeholder="输入搜索内容">
       <img style="position: absolute; right: 70px; top: 18px; width: 16px" v-if="searchContent != ''"
            src="../../assets/img/common/search_ic_eliminate.png" @click="clearInput">
-      <button class="cancel">取消</button>
+      <button class="cancel" @click="back">取消</button>
     </div>
 
     <div class="hotSearch" v-if="searchContent == ''">
@@ -68,6 +68,9 @@
           storage.save("keywordSearch", keywordSearch);
         }
       },
+      back(){
+        this.$router.go(-1);
+      }
     },
     watch: {
       searchContent: {

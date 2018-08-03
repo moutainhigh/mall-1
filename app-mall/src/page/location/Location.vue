@@ -8,7 +8,7 @@
       <input type="text" style="padding-left: 40px" v-model="searchContent" placeholder="输入城市或拼音">
       <img style="position: absolute; right: 70px; top: 18px; width: 16px" v-if="searchContent != ''"
            src="../../assets/img/common/search_ic_eliminate.png" @click="clearInput">
-      <button class="cancel">取消</button>
+      <button class="cancel" @click="back">取消</button>
     </div>
 
     <div class="list-view" ref="listView">
@@ -26,7 +26,7 @@
           </div>
           <div v-if="index == 1" style="background: #ffffff">
             <p class="cityTitle">热门城市</p>
-            <button class="hotCity" v-for="city in hotCitys">{{city}}</button>
+            <button class="hotCity" v-for="city in hotCitys" @click="chooseCity(city)">{{city}}</button>
           </div>
         </div>
       </div>
@@ -52,6 +52,8 @@
   import BScroll from 'better-scroll'
   import {cityData} from '../../js/city.js'
   import AMap from 'AMap';
+  import storage from "../../store/storage";
+  import {LOCATION} from "../../config/constant";
 
   export default {
     name: "Location",
@@ -137,15 +139,26 @@
       },
       local() {
         let vm = this;
-        AMap.plugin('AMap.CitySearch', function () {
-          var citySearch = new AMap.CitySearch()
-          citySearch.getLocalCity(function (status, result) {
-            if (status === 'complete' && result.info === 'OK') {
-              vm.localCity = result.city.substr(0, 2);
-              console.log(vm.localCity)
-            }
+        if (storage.fetchSession(LOCATION).length <= 0) {
+          AMap.plugin('AMap.CitySearch', function () {
+            var citySearch = new AMap.CitySearch();
+            citySearch.getLocalCity(function (status, result) {
+              if (status === 'complete' && result.info === 'OK') {
+                vm.localCity = result.city.substr(0, 2);
+                storage.saveSession(LOCATION,vm.localCity);
+              }
+            })
           })
-        })
+        }else {
+          this.localCity = storage.fetchSession(LOCATION);
+        }
+      },
+      chooseCity(city){
+        this.localCity = city;
+        storage.saveSession(LOCATION,city);
+      },
+      back(){
+        this.$router.go(-1);
       }
     },
     watch: {
