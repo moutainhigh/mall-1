@@ -2,7 +2,7 @@
   <div>
     <head-top :local="true" v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
       <div slot="search" style="width: 100%;">
-        <div class="search-con">
+        <div class="search-con"  @click="toSearch">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
           <p class="search-text">输入搜索内容</p>
         </div>
@@ -439,7 +439,12 @@
         if (done) {
           done();
         }
-      }
+      },
+      toSearch() {
+        this.$router.push({
+          path:"/search"
+        })
+      },
     },
     watch: {
       selecteds(newVal) {

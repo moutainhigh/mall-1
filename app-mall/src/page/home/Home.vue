@@ -33,15 +33,15 @@
 
     <div class="card-adv">
       <img src="../../assets/img/home/home_floor_title01.png" width="100%"/>
-      <div style="text-align: center;">
+      <div style="display:flex; padding: 0 1rem;">
         <div class="adv-ban" v-for="item in categoryThreeList" @click="openCarListByCategory(item)">
-          <img :src="item.iconPath" style="height: 7.4rem" width="100%"/>
+          <img :src="item.iconPath" width="100%"/>
         </div>
       </div>
       <div class="adv-scroll">
-        <div style="height: 5rem;padding-left: 0.7rem;" v-bind:style="{ width: milldeList.length* 14.2 + 'rem' }">
-          <div style="display: inline-block;height: 5rem;" v-for="millde in milldeList">
-            <img :src="millde.picPath" height="100%" style="margin: 0 5px;border-radius: 8px;width: 13rem;">
+        <div style="padding-left: 0.7rem;" v-bind:style="{ width: milldeList.length* 16.2 + 'rem' }">
+          <div style="display: inline-block;width:47%;margin: 0 5px;" v-for="millde in milldeList">
+            <img :src="millde.picPath" width="100%" style="border-radius: 8px;">
           </div>
         </div>
       </div>
@@ -188,6 +188,7 @@
     background-color: #dcdcdc;
     margin: 0 0.2rem 0.1rem 0.2rem;
     border-radius: 8px;
+    flex: 1;
   }
 
   .car-type {

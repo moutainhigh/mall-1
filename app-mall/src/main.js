@@ -7,15 +7,13 @@ import './assets/css/defualt.css'
 import vuePicturePreview from 'vue-picture-preview'
 import { Group,LoadingPlugin,ToastPlugin,AlertPlugin } from 'vux'
 import VueScroller from 'vue-scroller'
-import WeVue from 'we-vue'
-// import 'we-vue/lib/style.css'
+
 
 
 Vue.config.productionTip = false;
 Vue.use(vuePicturePreview)
 Vue.component('group', Group);
 Vue.use(VueScroller);
-Vue.use(WeVue);
 Vue.use(LoadingPlugin);
 Vue.use(ToastPlugin);
 Vue.use(AlertPlugin);
