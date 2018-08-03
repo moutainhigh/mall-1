@@ -210,3 +210,6 @@ CREATE TABLE `reimbursement_process` (
   CONSTRAINT `reimbursement_process_ibfk_1` FOREIGN KEY (`REIMBURSEMENT_ID`) REFERENCES `reimbursement` (`REIMBURSEMENT_ID`),
   CONSTRAINT `reimbursement_process_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `user_info` (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='报账审批表';
+
+####add by likang 2018-08-03
+ALTER TABLE `profile` add  `REMARKS` VARCHAR(255) DEFAULT NULL COMMENT '备注';
