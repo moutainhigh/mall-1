@@ -54,7 +54,7 @@
           var citySearch = new AMap.CitySearch();
           citySearch.getLocalCity(function (status, result) {
             if (status === 'complete' && result.info === 'OK') {
-              vm.localCity = result.city.substr(0, 2);
+              vm.localCity = result.city.substr(0, city.lastIndexOf("市"));
               storage.saveSession(LOCATION,vm.localCity);
             }
           })

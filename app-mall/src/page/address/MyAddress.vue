@@ -12,8 +12,8 @@
              src="../../assets/img/common/ic_right.png"></p>
     </div>
 
-    <div v-if="addressList.length > 0">
-      <div style="margin-top: 0.875rem" v-for="address in addressList">
+    <div v-if="addressList.length > 0" style="margin-bottom: 4rem;">
+      <div style="margin-top: 0.875rem;border-top: 1px #DCDCDC solid;border-bottom:1px #DCDCDC solid; " v-for="address in addressList">
         <div style="border-bottom: 1px solid #DCDCDC">
           <p style="background: #ffffff; line-height: 1.5; padding-left: 0.75rem; font-size: 1rem; padding-top: 10px">
             {{address.consigneeName}}<span style="padding-left: 10px">{{address.consigneeMobile}}</span></p>
@@ -32,11 +32,11 @@
             默认地址
           </p>
           <img style="width: 1.125rem; position: absolute; right: 7.35rem; margin-top: 0.8rem"
-               src="../../assets/img/common/ic_right.png">
+               src="../../assets/img/common/ic_edit.png">
           <span style="font-size: 0.875rem; position: absolute; right: 4.875rem; margin-top: 0.8rem;"
                 @click="editAddress(address.addressId)">编辑</span>
           <img style="width: 1.125rem; position: absolute; right: 3.125rem; padding-top: 0.8rem"
-               src="../../assets/img/common/ic_right.png">
+               src="../../assets/img/common/ic_delete.png">
           <span style="font-size: 0.875rem; position: absolute; right: 0.6875rem; margin-top: 0.8rem;"
                 @click="deleteAddress(address.addressId)">删除</span>
         </div>
@@ -44,9 +44,9 @@
     </div>
 
     <footer v-if="addressList.length > 0" @click="addAddress"
-            style="position: fixed; width: 100vw; bottom: 0; text-align: center; line-height: 3; background: #ffffff">
-      <img src="">
-      新增地址
+            style="position: fixed; width: 100vw; bottom: 0; text-align: center; line-height: 3; background: #ffffff;border-top: 1px #DCDCDC solid;">
+      <img src="../../assets/img/common/ic_add.png" style="vertical-align: middle;width: 1.2rem;margin-right: 0.2rem;">
+      <span style="vertical-align: middle">新增地址</span>
     </footer>
   </div>
 </template>
