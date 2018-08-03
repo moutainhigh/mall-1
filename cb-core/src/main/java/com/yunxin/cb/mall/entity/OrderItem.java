@@ -8,7 +8,9 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -62,6 +64,10 @@ public class OrderItem implements java.io.Serializable {
     private String buyerMessage;
 
     private Activity activity;
+    /**
+     * 报账信息
+     */
+    private List<ReimbursementOrder> reimbursementOrders=new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -171,4 +177,13 @@ public class OrderItem implements java.io.Serializable {
         this.activity = activity;
     }
 
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "orderItem")
+    public List<ReimbursementOrder> getReimbursementOrders() {
+        return reimbursementOrders;
+    }
+
+    public void setReimbursementOrders(List<ReimbursementOrder> reimbursementOrders) {
+        this.reimbursementOrders = reimbursementOrders;
+    }
 }

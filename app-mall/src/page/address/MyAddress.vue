@@ -22,10 +22,10 @@
             {{address.consigneeAddress}}</p>
         </div>
         <div style="background: #ffffff; height: 2.75rem; position: relative">
-          <img v-if="address.defaultAddress"
+          <img v-if="address.defaultAddress" @click="setDefaultAddress(address)"
                style="width: 1.125rem; float: left; padding-top: 0.81rem; margin-right: 0.46rem; margin-left: 0.75rem"
                src="../../assets/img/common/Checkmark_sele.png">
-          <img v-if="!address.defaultAddress"
+          <img v-if="!address.defaultAddress" @click="setDefaultAddress(address)"
                style="width: 1.125rem; float: left; padding-top: 0.81rem; margin-right: 0.46rem; margin-left: 0.75rem"
                src="../../assets/img/common/Checkmark_nor.png">
           <p style="font-size: 0.875rem; padding-top: 0.8rem; display: inline-block">
@@ -53,7 +53,7 @@
 
 <script>
   import headTop from '../../components/header/head'
-  import {deleteDeliveryAddressByAdderssId, getDeliveryAddress} from "../../service/getData";
+  import {deleteDeliveryAddressByAdderssId, getDeliveryAddress, updateDeliveryAddress} from "../../service/getData";
 
   export default {
     name: "MyAddress",
@@ -79,15 +79,42 @@
         })
       },
       deleteAddress(addressId) {
-        deleteDeliveryAddressByAdderssId(addressId).then(res => {
-          if (res.result == 'SUCCESS') {
-            getDeliveryAddress().then(res => {
+        let _this = this;
+        this.$vux.confirm.show({
+          content:'确定要删除此地址?',
+          // 组件除show外的属性
+          onCancel () {
+          },
+          onConfirm () {
+            deleteDeliveryAddressByAdderssId(addressId).then(res => {
               if (res.result == 'SUCCESS') {
-                this.addressList = res.data;
+                getDeliveryAddress().then(res => {
+                  if (res.result == 'SUCCESS') {
+                    _this.addressList = res.data;
+                  }
+                })
               }
             })
           }
-        })
+        });
+      },
+      setDefaultAddress(address){
+        if (!address.defaultAddress) {
+          this.$vux.loading.show('加载中');
+          let dbAddress = JSON.parse(JSON.stringify(address));
+          dbAddress.defaultAddress = true;
+          updateDeliveryAddress(dbAddress).then(res => {
+            if (res.result == 'SUCCESS') {
+              for (let addr of this.addressList) {
+                addr.defaultAddress = false;
+              }
+              address.defaultAddress = true;
+            } else {
+              this.$vux.toast.text("修改失败！",'middle');
+            }
+            this.$vux.loading.hide();
+          })
+        }
       }
     },
     created() {

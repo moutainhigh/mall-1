@@ -4,13 +4,14 @@
 package com.yunxin.cb.mall.entity.meta;
 
 /**
- * @author apple
+ * 终端
+ * @author gws
  */
-public enum ChannelType {
-    UNIONPAY("银联"), ALIPAY("支付宝"), TENPAY("财付通"), WXPAY("微信");
+public enum TerminalType {
+    PC("PC"), WAP("H5"), APP("APP");
     private String name;
 
-    private ChannelType(String name) {
+    private TerminalType(String name) {
         this.name = name;
     }
 

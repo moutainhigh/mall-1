@@ -151,39 +151,30 @@
             </div>
             <!-- End .actionbar-->
             <div class="inner-padding">
-
-                <div class="toolbar responsive-helper">
-                    <header>
-                        <div class="pull-left">
-                            <h3>订单</h3>
-                        </div>
-                    </header>
-                </div>
-
                 <div class="table-wrapper">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col" data-rt-column="code">订单编号</th>
-                            <th scope="col" data-rt-column="name">创建时间</th>
-                            <th scope="col" data-rt-column="operate">订单总额</th>
-                            <th scope="col" data-rt-column="operate">备注</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div id="content-tab-1" class="tab-pane active">
+                        <div class="inner-padding">
+                            <div class="spacer-30">报账订单：
+                            </div>
+                        </div>
+                        <div style="width: 30%;height: 300px;">
+                            <div style="margin-left: 20px;width: 100px;">
+                                <label>订单号：fdsfsd </label>
+                            </div>
+                            <div style="margin-left: 30px;">
+                                <img src="http://test.resource.999shuijingqiu.com/FgbdBSuPK_3QMselUrmfBYE89b_d" alt="" width="50px" height="50px"> 2018款C200L运动版
 
-                        <c:forEach var="reimbursementOrder" items="${list}">
-                            <tr>
-                                <td>${reimbursementOrder.order.orderCode}</td>
-                                <td>
-                                    <fmt:formatDate value="${reimbursementOrder.order.createTime}" pattern="yyyy-MM-dd HH:mm:ss" type="date" dateStyle="long"/>
-                                        </td>
-                                <td>${reimbursementOrder.order.feeTotal}</td>
-                                <td>${reimbursementOrder.order.remark}</td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+                            </div>
+                            <div style="margin-left: 20px;width: 300px;">
+                                <label>订单金额：28.22万，应缴纳税：7.07万
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+
+
+                        </div>
+                    </div>
                 </div>
 
             </div>
