@@ -27,6 +27,8 @@
 
 <script>
   import AMap from 'AMap';
+  import storage from "../../store/storage";
+  import {LOCATION} from "../../config/constant";
 
   export default {
     data() {
@@ -47,14 +49,21 @@
     },
     created(){
       let vm = this;
-      AMap.plugin('AMap.CitySearch', function () {
-        var citySearch = new AMap.CitySearch();
-        citySearch.getLocalCity(function (status, result) {
-          if (status === 'complete' && result.info === 'OK') {
-            vm.localCity = result.city.substr(0, 2);
-          }
+      if (storage.fetchSession(LOCATION).length <= 0) {
+        AMap.plugin('AMap.CitySearch', function () {
+          var citySearch = new AMap.CitySearch();
+          citySearch.getLocalCity(function (status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              vm.localCity = result.city.substr(0, 2);
+              storage.saveSession(LOCATION,vm.localCity);
+            }
+          })
         })
-      })
+      }else {
+        this.localCity = storage.fetchSession(LOCATION);
+      }
+
+
     }
   }
 

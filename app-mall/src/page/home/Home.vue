@@ -7,14 +7,6 @@
           <p class="search-text">输入搜索内容</p>
         </div>
       </div>
-      <slot style="flex: 0 0 2rem;">
-        <div slot="local" style="flex: none;margin-top: 0.8rem;padding: 0 0.8rem;">
-          <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1.2rem;vertical-align: middle;">
-          <span @click="location()">
-          {{localCity}}
-        </span>
-        </div>
-      </slot>
     </head-top>
 
     <div style="background-color: #FFFFFF;padding: 0.1rem 0;font-size: 0;margin-top: 3rem;">
