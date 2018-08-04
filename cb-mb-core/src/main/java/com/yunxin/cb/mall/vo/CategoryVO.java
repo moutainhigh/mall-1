@@ -1,5 +1,7 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.util.LogicUtils;
+import com.yunxin.cb.util.PinyinUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -24,6 +26,12 @@ public class CategoryVO implements java.io.Serializable{
      */
     @ApiModelProperty(value="分类名称",name="categoryName",example="分类名称")
     private String categoryName;
+
+    /**
+     * 简写名称
+     */
+    @ApiModelProperty(value="简写名称",name="shortName",example="简写名称")
+    private String shortName;
     /**
      * 图标路径
      */
@@ -86,5 +94,16 @@ public class CategoryVO implements java.io.Serializable{
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+        if(LogicUtils.isNotNull(categoryName)){
+            this.shortName=PinyinUtils.getAlpha(this.categoryName.substring(0,1));
+        }
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 }
