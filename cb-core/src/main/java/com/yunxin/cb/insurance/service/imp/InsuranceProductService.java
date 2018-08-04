@@ -154,4 +154,10 @@ public class InsuranceProductService implements IInsuranceProductService {
         insuranceProductDao.delete(prodId);
     }
 
+    @Override
+    @Transactional
+    public void enableInsuranceProductById(int proId,int enabled){
+        insuranceProductDao.enableInsuranceProductById(proId,enabled);
+    }
+
 }

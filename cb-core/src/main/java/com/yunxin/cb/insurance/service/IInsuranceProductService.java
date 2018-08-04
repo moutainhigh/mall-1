@@ -3,6 +3,7 @@ package com.yunxin.cb.insurance.service;
 import com.yunxin.cb.insurance.entity.InsuranceProduct;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -50,6 +51,8 @@ public interface IInsuranceProductService {
      * @param prodId
      */
     public void removeById(int prodId);
+
+    public void enableInsuranceProductById(int matterId,int enabled);
 
 
 }
