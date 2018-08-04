@@ -216,7 +216,9 @@ ALTER TABLE `profile` add  `REMARKS` VARCHAR(255) DEFAULT NULL COMMENT '备注';
 
 ####add by dengchenggang 2018-08-03
 
-
+-- ----------------------------
+-- Table structure for finacial_bill
+-- ----------------------------
 DROP TABLE IF EXISTS `finacial_bill`;
 CREATE TABLE `finacial_bill`  (
   `BILL_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -243,7 +245,6 @@ CREATE TABLE `finacial_loan`  (
   `TERM` int(11) DEFAULT NULL COMMENT '还款期数',
   `INTEREST_RATE` decimal(20, 4) DEFAULT NULL COMMENT '贷款利率',
   `TYPE` int(2) DEFAULT NULL COMMENT '贷款类型：1.信用贷款，2.预期收益贷',
-  `SEQ` int(11) DEFAULT NULL COMMENT '贷款次数序号，每个用户总共只能贷5次',
   `REPAY_DAY` int(11) DEFAULT NULL COMMENT '每月几日还款',
   `STATE` int(11) DEFAULT NULL COMMENT '贷款状态：1.申请，2.审核，3.发放',
   `CREATE_TIME` datetime(0) DEFAULT NULL COMMENT '贷款日期',
@@ -305,7 +306,7 @@ CREATE TABLE `finacial_wallet_log`  (
   `ASSETS` decimal(20, 4) NOT NULL COMMENT '资产总额',
   `BALANCE` decimal(20, 4) NOT NULL COMMENT '可用余额',
   `EXPECTED_AMOUNT` decimal(20, 4) NOT NULL COMMENT '预期收益',
-  `DEBT_TOTAL` decimal(20, 4) NOT NULL COMMENT '总负责',
+  `DEBT_TOTAL` decimal(20, 4) NOT NULL COMMENT '总负债',
   `DEBT_EXPECTED` decimal(20, 4) NOT NULL COMMENT '预期收益贷',
   `DEBT_CREDIT` decimal(20, 4) NOT NULL COMMENT '信用贷',
   `CREDIT_AMOUNT` decimal(20, 4) NOT NULL COMMENT '信用额度',
@@ -326,9 +327,12 @@ CREATE TABLE `finacial_wallet_log`  (
 DROP TABLE IF EXISTS `finacial_withdraw`;
 CREATE TABLE `finacial_withdraw`  (
   `WITHDRAW_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `CUSTOMER_ID` int(11) DEFAULT NULL,
-  `AMOUNT` decimal(20, 4) DEFAULT NULL COMMENT '提现金额',
-  `BANK_CARD_ID` int(11) DEFAULT NULL COMMENT '关联银行卡ID',
+  `CUSTOMER_ID` int(11) NOT NULL,
+  `AMOUNT` decimal(20, 4) NOT NULL COMMENT '提现金额',
+  `BANK_CARD_NO` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '关联银行卡号',
+  `BANK_NAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '银行名称',
+  `BRANCH_NAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '支行名称，可选',
+  `CARD_HOLD_NAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '持卡人姓名',
   `STATE` int(11) DEFAULT NULL COMMENT '状态',
   `APPLY_DATE` datetime(0) DEFAULT NULL COMMENT '申请时间',
   `AUDIT_DATE` datetime(0) DEFAULT NULL COMMENT '审核时间',
@@ -348,8 +352,9 @@ DROP TABLE IF EXISTS `rb_funds_pool`;
 CREATE TABLE `rb_funds_pool`  (
   `POOL_ID` int(11) NOT NULL AUTO_INCREMENT,
   `CATEGORY_ID` int(11) NOT NULL COMMENT '一级运营分类ID',
-  `POOL_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '分类名+“资金池”',
-  `FUNDS` decimal(10, 4) DEFAULT NULL COMMENT '资金',
+  `POOL_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '分类名+“资金池”',
+  `FUNDS` decimal(20, 4) NOT NULL COMMENT '资金',
+  `VERSION` int(11) NOT NULL COMMENT '版本号',
   PRIMARY KEY (`POOL_ID`) USING BTREE,
   INDEX `fk_fund_pool_category_id`(`CATEGORY_ID`) USING BTREE,
   CONSTRAINT `fk_fund_pool_category_id` FOREIGN KEY (`CATEGORY_ID`) REFERENCES `category` (`CATEGORY_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -362,12 +367,15 @@ DROP TABLE IF EXISTS `rb_funds_pool_log`;
 CREATE TABLE `rb_funds_pool_log`  (
   `POOL_LOG_ID` int(11) NOT NULL AUTO_INCREMENT,
   `POOL_ID` int(11) NOT NULL,
+  `CATEGORY_ID` int(11) NOT NULL COMMENT '分类ID',
+  `POOL_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '分类名+“资金池”',
+  `FUNDS` decimal(20, 4) NOT NULL,
   `TYPE` int(2) NOT NULL COMMENT '类型：1.累计，2.报帐',
   `TRANSACTION_ID` int(11) NOT NULL COMMENT '交易ID,累计为订单号，报帐为报帐ID',
   `COMMODITY_ID` int(11) NOT NULL COMMENT '商品ID',
-  `CATEGORY_ID` int(11) NOT NULL COMMENT '分类ID',
   `AMOUNT` decimal(20, 4) NOT NULL COMMENT '金额',
   `CREATE_TIME` datetime(0) NOT NULL COMMENT '操作时间',
+  `VERSION` int(11) NOT NULL COMMENT '版本号',
   PRIMARY KEY (`POOL_LOG_ID`) USING BTREE,
   INDEX `fk_funds_pool_log_pool_id`(`POOL_ID`) USING BTREE,
   CONSTRAINT `fk_funds_pool_log_pool_id` FOREIGN KEY (`POOL_ID`) REFERENCES `rb_funds_pool` (`POOL_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -392,6 +400,10 @@ CREATE TABLE `rb_reimbursement`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '报账信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of rb_reimbursement
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for rb_reimbursement_order
 -- ----------------------------
 DROP TABLE IF EXISTS `rb_reimbursement_order`;
@@ -406,6 +418,10 @@ CREATE TABLE `rb_reimbursement_order`  (
   CONSTRAINT `rb_reimbursement_order_ibfk_2` FOREIGN KEY (`REIMBURSEMENT_ID`) REFERENCES `rb_reimbursement` (`REIMBURSEMENT_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `rb_reimbursement_order_ibfk_3` FOREIGN KEY (`ORDER_ITEM_ID`) REFERENCES `order_item` (`ITEM_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of rb_reimbursement_order
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for rb_reimbursement_process
