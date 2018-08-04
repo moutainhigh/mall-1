@@ -202,7 +202,7 @@
 
 <script>
   import headTop from "../../components/header/head"
-  import {categorySearch} from "../../service/getData";
+  import {categorySearch, getSearch} from "../../service/getData";
   import {delArrayAll, delArrayOne} from "../../config/mUtils";
   import {tranPrice} from "../../config/dataFormat";
 
@@ -300,6 +300,7 @@
           this.searchVo[selected.type] = null;
         }
         this.selecteds.splice(index, 1);
+        this.getData();
       },
       //跳转商品详情页
       openDetail(productId) {
@@ -389,13 +390,12 @@
         } else {
           let _this = this;
           this.searchVo.page++;
-          this.$vux.loading.show("加载中");
-          this.getData(done, 'loading');
+          this.getData(done, true);
         }
       },
       async getData(done, isInf) {
         let _this = this;
-        if (isInf != 'loading') {
+        if (!isInf) {
           this.searchVo.page = 0;
         }
         this.$vux.loading.show("加载中");
@@ -411,23 +411,8 @@
               if (_this.searchVo.page >= _this.searchVo.totalPage - 1) {
                 _this.isInfinite = false;
               }
-            }
-            if (isInf != 'loading') {
-              if (res.data.condition) {
-                for (let item in res.data.condition) {
-                  _this.conditions.push({
-                    specName: item,
-                    value: res.data.condition[item],
-                    showNum: -1
-                  });
-                  _this.chooseConditions.push({
-                    specName: item,
-                    value: res.data.condition[item],
-                    showNum: -1
-                  })
-                }
-              }
-              _this.priceSection.value = res.data.priceSection;
+            }else {
+              _this.commodities = [];
             }
           } else {
             if (isInf) {
@@ -439,6 +424,28 @@
         if (done) {
           done();
         }
+      },
+      async getSearchVo() {
+        getSearch().then(res=>{
+          console.log(res);
+          if (res.result == 'SUCCESS'){
+            if (res.data.condition) {
+              for (let item in res.data.condition) {
+                this.conditions.push({
+                  specName: item,
+                  value: res.data.condition[item],
+                  showNum: -1
+                });
+                this.chooseConditions.push({
+                  specName: item,
+                  value: res.data.condition[item],
+                  showNum: -1
+                })
+              }
+            }
+            this.priceSection.value = res.data.priceSection;
+          }
+        })
       },
       toSearch() {
         this.$router.push({
@@ -453,17 +460,6 @@
       }
     },
     created() {
-      if (this.$route.query.brandId) {
-        let brandId = this.$route.query.brandId;
-        let brandName = this.$route.query.brandName;
-        this.searchVo.brandId = brandId;
-        this.selecteds.push({
-          key: brandId,
-          val: brandName,
-          type: 'brandId'
-        })
-      }
-
       if (this.$route.query.categoryId) {
         let categoryId = this.$route.query.categoryId;
         let categoryName = this.$route.query.categoryName;
@@ -473,8 +469,15 @@
           val: categoryName,
           type: 'categoryId'
         })
+      }else {
+        this.selecteds.push({
+          key: 0,
+          val: '全部',
+          type: 'all'
+        })
       }
       this.getData();
+      this.getSearchVo();
     },
     beforeRouteLeave(to, from, next) {
       // 设置下一个路由的 meta

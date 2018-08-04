@@ -18,6 +18,11 @@ export const getProductsByCommodityId = function (commodityId) {
 //获取车系
 export const getCarSeries = function (categoryId) {
   return get('/v1/mall/category/getCategoryById/'+categoryId);
+};
+
+//获取查询所有规格属性等
+export const getSearch = function () {
+  return get('/v1/mall/search/commodity');
 }
 
 //############## 收藏接口 ##################//
