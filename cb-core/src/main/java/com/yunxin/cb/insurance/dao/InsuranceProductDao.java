@@ -15,7 +15,7 @@ public interface InsuranceProductDao extends JpaRepository<InsuranceProduct, Int
        @Query("select i from InsuranceProduct i left join fetch i.insuranceInformedMatters m left join fetch m.matterGroup where i.prodId=?1")
        public InsuranceProduct getInsuranceProductById(int prodId);
 
-       @Query("select i from InsuranceProduct i left join fetch i.insuranceInformedMatters m left join fetch m.matterGroup where i.enabled=1")
+       @Query("select i from InsuranceProduct i  where i.enabled=1")
        public List<InsuranceProduct> findInsuranceProductList();
 
        @Modifying
