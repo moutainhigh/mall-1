@@ -213,3 +213,5 @@ CREATE TABLE `rb_reimbursement_process` (
 
 ####add by likang 2018-08-03
 ALTER TABLE `profile` add  `REMARKS` VARCHAR(255) DEFAULT NULL COMMENT '备注';
+##add by likang 2018-08-04
+ALTER TABLE insurance_product ADD COLUMN `ENABLED` int(10) DEFAULT 0   COMMENT '是否启用';

@@ -39,7 +39,7 @@ public class InsuranceProductService implements IInsuranceProductService {
      */
     @Override
     public List<InsuranceProduct> getInsuranceProducts() {
-        return insuranceProductDao.findAll();
+        return insuranceProductDao.findInsuranceProductList();
     }
 
     /**
@@ -124,6 +124,7 @@ public class InsuranceProductService implements IInsuranceProductService {
         oldProduct.setInstruction(insuranceProduct.getInstruction());
         oldProduct.setProdImg(insuranceProduct.getProdImg());
         oldProduct.setDescriptionImg(insuranceProduct.getDescriptionImg());
+        oldProduct.setEnabled(insuranceProduct.getEnabled());
         return oldProduct;
     }
 

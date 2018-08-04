@@ -103,6 +103,13 @@ public class InsuranceProduct implements Serializable {
     @Length(max = 1024)
     @ApiModelProperty(value="投保须知",name="instruction",example="投此保险需要知道与注意的")
     private String instruction;
+
+    /**
+     * 是否启用
+     */
+    @ApiModelProperty(value="是否启用",name="enabled",example="1")
+    @Max(9999999999L)
+    private int enabled;
     /**
      * 创建时间
      */
@@ -138,6 +145,14 @@ public class InsuranceProduct implements Serializable {
         this.prodId = prodId;
     }
 
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 10)
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
