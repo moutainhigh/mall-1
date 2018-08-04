@@ -15,6 +15,8 @@ public enum ObjectType {
     CHANNER,//频道
     PROGRAMA,//栏目
     ACTIVITY,//活动
+    INSURANCEPRODUCT,//产品图片
+    INSURANCEPRODUCTDETAIL,//产品详情图片
     OTHER//其它
     ;
 }

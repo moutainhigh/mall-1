@@ -7,7 +7,7 @@
       <div style="margin-right: 15px">
         <x-input title="姓名" placeholder="请输入姓名" v-model="holder.policyholderName"
                  v-bind:class="{'errorInput': $v.holder.policyholderName.$error}"
-                 @input="$v.holder.policyholderName.$touch()" readonly></x-input>
+                 @input="$v.holder.policyholderName.$touch()"></x-input>
         <div class="error" v-if="!$v.holder.policyholderName.required && $v.holder.policyholderName.$dirty">姓名不能为空</div>
         <div class="error" v-if="!$v.holder.policyholderName.minLength">姓名最少为
           {{$v.holder.policyholderName.$params.minLength.min}}
@@ -46,16 +46,17 @@
           出生日期不能为空
         </div>
 
-        <x-input title="证件类型" v-model="holder.policyholderCardType"
-                 v-bind:class="{'errorInput': $v.holder.policyholderCardType.$error}"
-                 @input="$v.holder.policyholderCardType.$touch()" readonly></x-input>
+        <popup-picker id="cardType" title="证件类型" placeholder="请选择证件类型" v-model="holder.policyholderCardType"
+                      :data="cardTypes"
+                      value-text-align="left"
+                      v-bind:class="{'errorInput': $v.holder.policyholderCardType.$error}"></popup-picker>
         <div class="error" v-if="!$v.holder.policyholderCardType.required && $v.holder.policyholderCardType.$dirty">
           证件类型不能为空
         </div>
 
         <x-input title="证件号码" v-model="holder.policyholderCardNo" placeholder="请输入证件号"
                  v-bind:class="{'errorInput': $v.holder.policyholderCardNo.$error}"
-                 @input="$v.holder.policyholderCardNo.$touch()" readonly></x-input>
+                 @input="$v.holder.policyholderCardNo.$touch()"></x-input>
         <div class="error" v-if="!$v.holder.policyholderCardNo.required && $v.holder.policyholderCardNo.$dirty">
           证件号码不能为空
         </div>
@@ -140,7 +141,7 @@
 
         <x-input title="移动电话" v-model="holder.policyholderMobile" placeholder="请输入移动电话"
                  v-bind:class="{'errorInput': $v.holder.policyholderMobile.$error}"
-                 @input="$v.holder.policyholderMobile.$touch()" readonly></x-input>
+                 @input="$v.holder.policyholderMobile.$touch()"></x-input>
         <div class="error" v-if="!$v.holder.policyholderMobile.mobile">请输入正确的手机号码</div>
 
         <x-input title="E-mail" v-model="holder.policyholderEmail" placeholder="请输入邮箱地址（选填）"

@@ -15,7 +15,7 @@ export const getProductsByCommodityId = function (commodityId) {
   return get('/v1/mall/commodity/getProductsByCommodityId/' + commodityId);
 };
 
-//############## 收藏接口 ##################//
+//############## 商品接口 ##################//
 //获取收藏夹
 export const getCustomerFavorite = function (query) {
   return post('/v1/mall/favorite/getCustomerFavorite.do',{},query);
@@ -50,6 +50,11 @@ export const categorySearch = function (searchVo) {
 export const keywordSearch = function (keyword, page, size) {
   return post('/mall/search/keywordSearch/'+page + '/' + size + '?keyword=' + keyword)
 }
+
+//获取品牌数据
+export const carBrand = function () {
+  return get('/v1/mall/category/list/carBrand.do');
+};
 
 //############## 地址接口 ##################//
 //获取用户收货地址列表
