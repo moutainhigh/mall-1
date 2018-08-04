@@ -21,5 +21,9 @@ export default {
 
   saveSession: function (key, items) {
     window.sessionStorage.setItem(key,window.JSON.stringify(items));
+  },
+
+  removeSession: function (key) {
+    window.sessionStorage.removeItem(key);
   }
 }

@@ -37,7 +37,6 @@
             window.location.href = "toEditInsuranceOrderOffsite.do?orderId=" + orderId;
         }
         $(document).ready(function () {
-            debugger;
             var province=$.citySelector.getAddress('${insuranceOrder.insuranceOrderPolicyholderBank.bankProvince}');
            $("#province").html(province);
            var city=  $.citySelector.getAddress('${insuranceOrder.insuranceOrderPolicyholderBank.bankCity}');

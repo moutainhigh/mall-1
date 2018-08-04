@@ -293,8 +293,8 @@
                                                 }
                                             }
                                         });
-                                        var initPreview1= new Array();//展示元素
-                                        var initPreviewConfig1 = new Array();//展示设置
+                                        var initPreview= new Array();//展示元素
+                                        var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
                                         $("#picUrl1").fileinput({
                                             uploadUrl: "/admin/uploads/uploadFile/HOMEFLOORPROPAGANDA.do",
@@ -309,6 +309,7 @@
                                             language: "zh" ,
                                             showBrowse : false,
                                             maxFileSize : 2000,
+                                            allowedFileExtensions: ["jpg", "png", "gif"],
                                             autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
                                             overwriteInitial: false,//不覆盖已存在的图片
                                             browseClass:"btn btn-primary", //按钮样式
@@ -324,17 +325,17 @@
                                             //上传完成回调
                                             var index=0;
                                             if(initPreview.length>0 ){
-                                                index=initPreview1.length;
+                                                index=initPreview.length;
                                             }
-                                            initPreview1[index]  = response.url;
+                                            initPreview[index]  = response.url;
                                             var config = new Object();
                                             config.caption = "";
                                             config.url="/admin/uploads/delete/HOMEFLOORPROPAGANDA.do";
                                             config.key=response.timeStr;
-                                            initPreviewConfig1[index]=config;
+                                            initPreviewConfig[index]=config;
                                             $("#picUrl1").fileinput('refresh', {
-                                                initialPreview: initPreview1,
-                                                initialPreviewConfig: initPreviewConfig1,
+                                                initialPreview: initPreview,
+                                                initialPreviewConfig: initPreviewConfig,
                                                 initialPreviewAsData: true
                                             });
                                             $(".btn-default").attr("disabled",false);
@@ -348,9 +349,9 @@
                                             $("#"+id).remove();
                                             for (var i=0;i<initPreview1.length;i++)
                                             {
-                                                if(initPreview1[i].indexOf(id) != -1){
-                                                    initPreview1.splice(i)
-                                                    initPreviewConfig1.splice(i)
+                                                if(initPreview[i].indexOf(id) != -1){
+                                                    initPreview.splice(i)
+                                                    initPreviewConfig.splice(i)
                                                 }
                                             }
                                         }).on('filebatchselected', function (event, files) {//选中文件事件
@@ -365,10 +366,10 @@
                                             config.caption = "";
                                             config.url="/admin/uploads/delete/HOMEFLOORICO.do";
                                             config.key=json1[i].inputId;
-                                            initPreviewConfig1[i]=config;
+                                            initPreviewConfig[i]=config;
                                             $("#picUrl1").fileinput('refresh', {
-                                                initialPreview: initPreview1,
-                                                initialPreviewConfig: initPreviewConfig1,
+                                                initialPreview: initPreview,
+                                                initialPreviewConfig: initPreviewConfig,
                                                 initialPreviewAsData: true
                                             });
                                             var html='<input name="imgurl1" type="hidden" id="'+json1[i].inputId+'" value="'+json1[i].filePath+','+json1[i].fileName+','+json1[i].inputId+'">';

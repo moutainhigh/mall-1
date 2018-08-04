@@ -50,3 +50,7 @@ export const getOrderDetail = function (orderCode) {
 export const getCustomerInfo = function () {
   return fetch('/customer/getCustomerInfo', {},'POST');
 };
+
+export const getProDetail = function () {
+  return fetch("http://192.168.0.99:8158/api/insurance/product/getImagesByProdId/3");
+}

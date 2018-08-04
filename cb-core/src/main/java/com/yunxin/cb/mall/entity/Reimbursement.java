@@ -26,7 +26,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @JsonAutoDetect
 @Entity
-@Table
+@Table(name = "rb_reimbursement")
 @DynamicInsert
 @DynamicUpdate
 @ApiModel(value="报账信息对象",description="报账信息Reimbursement")
@@ -54,6 +54,8 @@ public class Reimbursement  implements java.io.Serializable {
     private Date createTime;
 
     private ReimbursementState orderState;
+
+    private List<ReimbursementProcess> reimbursementProcess=new ArrayList<>();
 
     @ApiModelProperty(value="报账订单",name="reimbursementOrder",example="")
     private List<ReimbursementOrder> reimbursementOrder=new ArrayList<>();
@@ -142,5 +144,15 @@ public class Reimbursement  implements java.io.Serializable {
 
     public void setOrderState(ReimbursementState orderState) {
         this.orderState = orderState;
+    }
+
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "reimbursement")
+    public List<ReimbursementProcess> getReimbursementProcess() {
+        return reimbursementProcess;
+    }
+
+    public void setReimbursementProcess(List<ReimbursementProcess> reimbursementProcess) {
+        this.reimbursementProcess = reimbursementProcess;
     }
 }

@@ -169,4 +169,13 @@ public class CommodityServiceImpl implements CommodityService {
         return commod;
     }
 
+    /**
+     * 查询所有ES中所有商品
+     */
+    public List<Commodity> findByAll(){
+        CriteriaQuery criteriaQuery = new CriteriaQuery(new Criteria());
+        List<Commodity> list = elasticsearchTemplate.queryForList(criteriaQuery,Commodity.class);
+        return list;
+    }
+
 }

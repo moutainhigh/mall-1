@@ -1,5 +1,7 @@
 const LOCATION = 'location'
+const ADDRESS = 'address'
 
 export {
-  LOCATION
+  LOCATION,
+  ADDRESS
 }

@@ -14,6 +14,7 @@ import Admin from './admin/Admin'
 import Vuelidate from 'vuelidate'
 import  { LoadingPlugin } from 'vux'
 import VueScroller from 'vue-scroller'
+import vuePicturePreview from 'vue-picture-preview'
 
 Vue.component('group', Group);
 Vue.use(AlertPlugin);
@@ -21,6 +22,7 @@ Vue.use(ToastPlugin);
 Vue.use(datetime);
 Vue.use(LoadingPlugin)
 Vue.use(VueScroller)
+Vue.use(vuePicturePreview)
 
 
 Vue.config.productionTip = false;
