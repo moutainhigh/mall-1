@@ -10,6 +10,7 @@ import Home from '../page/home/Home'
 import Search from '../page/search/Search'
 import Location from '../page/location/Location'
 import ChooseCarType from '../page/carList/ChooseCarType'
+import ChooseCarBrand from '../page/carList/ChooseCarBrand'
 import ServeDetail from '../page/serve/ServeDetail'
 import Refund from '../page/serve/Refund'
 import ServerList from '../page/serve/ServerList'
@@ -28,10 +29,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: Home
     },
     {
       path: '/search',
@@ -44,142 +42,95 @@ export default new Router({
     {
       path: '/location',
       name: 'Location',
-      component: Location,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: Location
     },
     {
       path: '/car-list',
       name: 'CarList',
       component: CarList,
       meta: {
-        keepAlive: false // 需要被缓存
+        keepAlive: true // 需要被缓存
       },
     },
     {
       path: '/car-detail',
       name: 'CarDetail',
-      component: CarDetail,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: CarDetail
     },
     {
       path: '/choose-type',
       name: 'ChooseCarType',
-      component: ChooseCarType,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: ChooseCarType
+    },{
+      path: '/choose-brand',
+      name: 'ChooseCarBrand',
+      component: ChooseCarBrand
     },
     {
       path: '/order-comfirm',
       name: 'OrderComfirm',
-      component: OrderComfirm,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: OrderComfirm
     },
     {
       path: '/order-success',
       name: 'OrderSuccess',
-      component: OrderSuccess,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: OrderSuccess
     },{
       path: '/order-detail',
       name: 'OrderDetail',
-      component: OrderDetail,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: OrderDetail
     },
     {
       path: '/order-list',
       name: 'OrderList',
-      component: OrderList,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: OrderList
     }, {
       path: '/serve-detail',
       name: 'ServeDetail',
-      component: ServeDetail,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: ServeDetail
     }, {
       path: '/refund',
       name: 'Refund',
-      component: Refund,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: Refund
     },
     {
       path: '/serve-list',
       name: 'ServerList',
-      component: ServerList,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: ServerList
     },
     {
       path: '/my-address',
       name: 'MyAddress',
-      component: MyAddress,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: MyAddress
     },
     {
       path: '/add-address',
       name: 'AddAddress',
-      component: AddAddress,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: AddAddress
     },
     {
       path: '/edit-address',
       name: 'EditAddress',
-      component: EditAddress,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: EditAddress
     },
     {
       path: '/choose-address',
       name: 'ChooseAddress',
-      component: ChooseAddress,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: ChooseAddress
     },
     {
       path: '/collect-list',
       name: 'CollectList',
-      component: CollectList,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: CollectList
     },
     {
       path: '/my-browse',
       name: 'MyBrowse',
-      component: MyBrowse,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: MyBrowse
     },{
       path: '/login',
       name: 'Login',
-      component: Login,
-      meta: {
-        keepAlive: false // 需要被缓存
-      },
+      component: Login
     },
   ]
 })

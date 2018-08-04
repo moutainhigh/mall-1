@@ -50,7 +50,7 @@
             </section>
           </transition>
         </div>
-        <div class="sort_item" @click="openDetail(1)">
+        <div class="sort_item" @click="chooseBrand()">
           <div class="sort_item_container">
             <div class="sort_item_border">
               <span :class="{category_title: sortBy == 'sort'}">品牌</span>
@@ -452,6 +452,11 @@
           path:"/search"
         })
       },
+      chooseBrand() {
+        this.$router.push({
+          path:"/choose-brand"
+        })
+      }
     },
     watch: {
       selecteds(newVal) {
