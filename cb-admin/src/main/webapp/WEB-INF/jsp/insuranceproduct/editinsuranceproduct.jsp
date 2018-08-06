@@ -524,6 +524,17 @@
                             </div>
                         </div>
                         <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>是否启用：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="inline-labels">
+                                    <form:radiobutton path="enabled" value="1"/>是
+                                    <form:radiobutton path="enabled" value="0"/>否
+                                </div>
+                            </div>
+                        </div>
                         <div class="spacer-10"></div>
 
                         <div class="row">
