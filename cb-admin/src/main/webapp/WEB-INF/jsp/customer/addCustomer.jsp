@@ -120,6 +120,9 @@
         <div class="pull-left">
           <h2>新增客户</h2>
         </div>
+        <div class="pull-right">
+          <a class="btn btn-default" href="customers.do"><i class="fa fa-reply"></i></a>
+        </div>
         <%--<div class="pull-right">--%>
           <%--<div class="dropdown">--%>
             <%--<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">--%>
