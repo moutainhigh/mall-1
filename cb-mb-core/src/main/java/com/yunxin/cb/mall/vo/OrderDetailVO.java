@@ -34,7 +34,8 @@ public class OrderDetailVO implements java.io.Serializable{
     private String orderCode;
 
     /** 订单基本状态 */
-    @ApiModelProperty(value="订单基本状态",name="orderState",example="1")
+    @ApiModelProperty(value="订单基本状态：PENDING_PAYMENT(\"待付款\"), PAID_PAYMENT(\"已付款\"), OUT_STOCK(\"待收货\"), RECEIVED(\"已收货\"), REFUSE(\"拒签收\"),\n" +
+            "    RETURN_GOODS(\"退货\"), CHANGE_GOODS(\"换货\"), CANCELED(\"已取消\"), TIMEOUT(\"超时\"), WAIT_EVALUATE(\"待评价\"), EVALUATED(\"已评价\"), SUCCESS(\"交易成功\")",name="orderState",example="PENDING_PAYMENT")
     private OrderState orderState;
 
     /** 货品数量 */

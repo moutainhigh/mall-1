@@ -459,3 +459,19 @@ MODIFY COLUMN `CARD_POSITIVE_IMG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf
 MODIFY COLUMN `CARD_NEGATIVE_IMG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '证件反面照' AFTER `CARD_POSITIVE_IMG`,
 MODIFY COLUMN `BANK_CARD_IMG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '银行卡图片' AFTER `CARD_NEGATIVE_IMG`;
 
+###add by wangteng 2018-08-06
+DROP TABLE IF EXISTS `customer_group`;
+CREATE TABLE `customer_group` (
+  `CUSTOMER_GROUP_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `CUSTOMER_ID` int(11) NOT NULL COMMENT '创建人',
+  `GROUP_NAME` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '群名称',
+  `CRATE_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`CUSTOMER_GROUP_ID`),
+  KEY `CUSTOMER_ID` (`CUSTOMER_ID`),
+  CONSTRAINT `customergroup_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMIT ='用户群组';
+
+
+####add by likang 2018-08-06
+alter table feedback modify column images varchar(9000);
+

@@ -504,14 +504,14 @@
                             </div>
                             <div class="col-sm-3">
                                 <form:input path="prodName" value="" cssClass="form-control validate[required,minSize[2]]"
-                                            maxlength="32"/>
+                                            maxlength="50"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>保障年限：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input path="protectionYear"
-                                            cssClass="form-control validate[required,minSize[1]]"/>
+                                            cssClass="form-control validate[required,minSize[1]]" maxlength="15"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -520,13 +520,13 @@
                                 <label><span class="asterisk">*</span>保险期间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="insurePeriod" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:input path="insurePeriod" cssClass="form-control validate[required,minSize[1]]" maxlength="15"/>
                             </div>
                             <div class="col-sm-2">
                                 <label>标签：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="tags" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:input path="tags" cssClass="form-control" maxlength="50"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -535,13 +535,13 @@
                                 <label><span class="asterisk">*</span>投保须知：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="instruction" cssClass="form-control validate[required,minSize[2]]"/>
+                                <form:input path="instruction" cssClass="form-control validate[required,minSize[2]]" maxlength="50"/>
                             </div>
                             <div class="col-sm-2">
                                 <label>产品描述：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea path="description" cssClass="form-control validate[required,minSize[2]]"/>
+                                <form:textarea path="description" cssClass="form-control" maxlength="500"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -560,7 +560,7 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>产品图片：</label>
+                                <label>产品图片：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>
@@ -677,7 +677,7 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>详情图片：</label>
+                                <label>详情图片：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>
