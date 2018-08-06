@@ -5,8 +5,6 @@ import com.yunxin.cb.mall.entity.DeliveryAddress;
 import com.yunxin.cb.mall.service.IAddressService;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IRankService;
-import com.yunxin.cb.mall.vo.CustomerTreeVo;
-import com.yunxin.cb.mall.vo.CustomerVo;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.context.MessageSource;
