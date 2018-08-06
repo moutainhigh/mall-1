@@ -16,7 +16,9 @@
   <title>新增客户</title>
   <script type="text/javascript">
     $(document).ready(function() {
-
+        $("#validateSubmitForm").validationEngine({
+            autoHidePrompt: true, scroll: false, showOneMessage: true
+        });
       // $.citySelector.init({
       //   province: "province",
       //   city: "city",
@@ -304,14 +306,14 @@
                   <label>真实姓名：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input path="realName" cssClass="form-control validate[required]" maxlength="14" />
+                  <form:input path="realName" cssClass="form-control validate[required,minSize[1]]" maxlength="14" />
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
                   <label>手机号：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input cssClass="form-control validate[required]" path="mobile" maxlength="16"/>
+                  <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="16"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -344,7 +346,7 @@
                   <label>证件号码：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input cssClass="form-control validate[required]" path="customerCardNo" maxlength="25"/>
+                  <form:input cssClass="form-control validate[required,custom[onlyLetterNumber]]" path="customerCardNo" maxlength="25"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
