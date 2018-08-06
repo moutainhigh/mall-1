@@ -6,7 +6,8 @@
         <div class="search-con">
           <img src="../../assets/img/common/ic_search.png"
                style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
-          <input type="text" class="search-text" v-model="searchContent" placeholder="输入城市或拼音">
+          <input type="text" class="search-text" :class="{'text': searchContent != ''}" v-model="searchContent"
+                 placeholder="输入城市或拼音">
           <img style="position: absolute; right: 4.5rem; top: 1rem; width: 16px" v-if="searchContent != ''"
                src="../../assets/img/common/search_ic_eliminate.png" @click="clearInput">
         </div>
@@ -19,7 +20,8 @@
         <div v-for="(sort, index) in sortedData" class="list-group" :key="sort.detail.id" ref="listGroup">
           <h2 v-if="index != 0 && index != 1" class="list-group-title">{{ sort.initials }}</h2>
           <div v-if="index != 0 && index != 1">
-            <div v-for="detail in sort.detail" class="list-group-item" :key="detail.id" @click="chooseCity(detail.city)">
+            <div v-for="detail in sort.detail" class="list-group-item" :key="detail.id"
+                 @click="chooseCity(detail.city)">
               <span class="name">{{ detail.city }}</span>
             </div>
           </div>
@@ -51,7 +53,7 @@
     </div>
 
     <div class="history" v-if="searchContent != ''">
-      <div class="listItem" v-for="result in resultList" @click="toDetail(result)"><p>{{result.title}}</p></div>
+      <div class="listItem" v-for="result in resultList" @click="chooseCity(result)"><p>{{result}}</p></div>
     </div>
   </div>
 </template>
@@ -202,6 +204,7 @@
         }
       },
       chooseCity(city) {
+        this.clearInput();
         this.localCity = city;
         storage.saveSession(LOCATION, city);
       },
@@ -219,13 +222,15 @@
     watch: {
       searchContent: {
         handler(newVal, oldVal) {
-          // console.log(this.sortedData)
           for (let sort of this.sortedData) {
-            console.log(sort)
-            for (let detail of sort.detail) {
-              // if (detail.city.indexOf(newVal) > -1) {
-              //   this.resultList.push(detail.city);
-              // }
+            if (sort.detail.length > 0) {
+              for (let detail of sort.detail) {
+                if (detail.city) {
+                  if (detail.city.indexOf(newVal) != -1) {
+                    this.resultList.push(detail.city);
+                  }
+                }
+              }
             }
           }
         }
@@ -390,5 +395,33 @@
         }
       }
     }
+  }
+
+  .history {
+    /*height: 450px;*/
+    padding-top: 7px;
+    background: #ffffff
+  }
+
+  .history-clear {
+    color: #f5ca1d;
+    float: right;
+    font-size: 15px;
+  }
+
+  .listItem {
+    height: 50px;
+    margin: 0 16px;
+    border-bottom: 1px solid #ECECEC
+  }
+
+  .listItem p {
+    padding: 18px 0;
+    font-size: 1rem;
+    color: #666666;
+  }
+
+  .text {
+    padding-top: 0.4rem!important;
   }
 </style>

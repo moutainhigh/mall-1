@@ -13,7 +13,7 @@
              style="display: none;">
       <div style="height: 140px; overflow: hidden; position: relative" v-if="imgUrls.image1 !== '' && imgUrls.image1 !== undefined">
         <!--<img style="width: 30px; position: absolute; right: 20vw; top: -1rem; padding: 0; z-index: 999" src="../assets/img/close.png">-->
-        <img style="padding: 0;" :src="imgUrls.image1" v-preview="imgUrls.image1">
+        <img style="padding: 0;" :src="imgUrls.image1" v-preview="imgUrls.image1" preview-nav-enable="false">
       </div>
     </div>
 
@@ -28,7 +28,7 @@
       <input id="image2" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
       <div style="height: 140px; overflow: hidden" v-if="imgUrls.image2 !== '' && imgUrls.image2 !== undefined">
-        <img style="padding: 0;" :src="imgUrls.image2" v-preview="imgUrls.image2">
+        <img style="padding: 0;" :src="imgUrls.image2" v-preview="imgUrls.image2" preview-nav-enable="false">
       </div>
     </div>
 
@@ -43,7 +43,7 @@
       <input id="image3" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
       <div style="height: 140px; overflow: hidden" v-if="imgUrls.image3 !== '' && imgUrls.image3 !== undefined">
-        <img style="padding: 0;" :src="imgUrls.image3" v-preview="imgUrls.image3">
+        <img style="padding: 0;" :src="imgUrls.image3" v-preview="imgUrls.image3" preview-nav-enable="false">
       </div>
     </div>
 
@@ -58,7 +58,7 @@
       <input id="image4" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
       <div style="height: 140px; overflow: hidden" v-if="imgUrls.image4 !== '' && imgUrls.image4 !== undefined">
-        <img style="padding: 0;" :src="imgUrls.image4" v-preview="imgUrls.image4">
+        <img style="padding: 0;" :src="imgUrls.image4" v-preview="imgUrls.image4" preview-nav-enable="false">
       </div>
     </div>
 
@@ -73,7 +73,7 @@
       <input id="image5" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
       <div style="height: 140px; overflow: hidden" v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined">
-        <img style="padding: 0;" :src="imgUrls.image5" v-preview="imgUrls.image5">
+        <img style="padding: 0;" :src="imgUrls.image5" v-preview="imgUrls.image5" preview-nav-enable="false">
       </div>
     </div>
 
@@ -88,7 +88,7 @@
       <input id="image6" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
       <div style="height: 140px; overflow: hidden" v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined">
-        <img style="padding: 0;" :src="imgUrls.image6" v-preview="imgUrls.image6">
+        <img style="padding: 0;" :src="imgUrls.image6" v-preview="imgUrls.image6" preview-nav-enable="false">
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
