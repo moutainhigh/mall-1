@@ -11,6 +11,8 @@ import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
+import com.yunxin.cb.mall.vo.CustomerMatchVo;
+import com.yunxin.cb.mall.vo.CustomerMatchsVo;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
@@ -22,6 +24,7 @@ import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.system.entity.Profile;
 import com.yunxin.cb.system.meta.ProfileName;
 import com.yunxin.cb.system.service.IProfileService;
+import com.yunxin.cb.util.CachedUtil;
 import com.yunxin.cb.util.PasswordHash;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
@@ -764,6 +767,64 @@ public class CustomerService implements ICustomerService {
         return customerDao.findByRecommendCustomer_CustomerIdAndPraise(customerId, true);
     }
 
+    @Override
+    public List<CustomerMatchVo> matchAddressBook(CustomerMatchsVo[] customerMatchsVo) {
+            return new ArrayList<CustomerMatchVo>(){
+                {
+                    if(null!=customerMatchsVo&&customerMatchsVo.length>0){
+
+                        List<CustomerMatchsVo> listVo=Arrays.asList(customerMatchsVo);
+                        Map<String,Object> map=getCustomer();
+                        if(null!=map){
+                            Map<String,Object> mp=(Map<String, Object>) map.get("customers");
+                            for(CustomerMatchsVo customerMatchVos:listVo){
+                                if(null!=mp.get("customer_"+customerMatchVos.getMobile())){
+                                    Customer customer=(Customer)mp.get("customer_"+customerMatchVos.getMobile());
+                                    add(new CustomerMatchVo(){
+                                        {
+                                            setCustomerId(customer.getCustomerId());
+                                            setAvatarUrl(customer.getAvatarUrl());
+                                            setNickName(customer.getNickName());
+                                            setRealName(customerMatchVos.getRealName());
+                                            setMobile(customer.getMobile());
+                                        }
+                                    });
+                                }
+
+                            }
+                        }
+
+
+
+                    }
+                }
+            };
+    }
+    public Map<String,Object> getCustomer(){
+
+                Map<String,Object> map=new HashMap<>();
+                if(null!=CachedUtil.getInstance().getContext("customers")){
+
+                    map= (Map<String,Object>)CachedUtil.getInstance().getContext("customers");
+
+                }else{
+                    List<Customer> list= customerDao.findAll();
+                    if(null!=list&&list.size()>0){
+
+                        map.put("customers",new HashMap<String,Object>(){
+                            {
+                                for (Customer customer:list) {
+                                    put("customer_"+customer.getMobile(),customer);
+                                }
+                            }
+                        });
+
+                    }
+
+                }
+        return map;
+
+    }
     /**
      * 添加黑名单
      *
