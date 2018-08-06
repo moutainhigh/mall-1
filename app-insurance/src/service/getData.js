@@ -51,6 +51,6 @@ export const getCustomerInfo = function () {
   return fetch('/customer/getCustomerInfo', {},'POST');
 };
 
-export const getProDetail = function () {
-  return fetch("http://192.168.0.99:8158/api/insurance/product/getImagesByProdId/3");
+export const getProDetail = function (id) {
+  return fetch("/insurance/product/getImagesByProdId/" + id);
 }

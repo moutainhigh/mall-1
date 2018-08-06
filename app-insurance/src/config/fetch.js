@@ -8,7 +8,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
     window.alert("网络未连接");
   }
 	type = type.toUpperCase();
-  if (url.indexOf("http://") > 0){
+  if (url.indexOf("http://") < 0){
     url = baseUrl + url;
   }
 

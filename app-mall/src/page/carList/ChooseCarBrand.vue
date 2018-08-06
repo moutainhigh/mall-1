@@ -1,44 +1,37 @@
 <template>
-  <div>
+  <div id="contact">
     <head-top :head-title="'选择品牌'"></head-top>
 
-    <div class="list-view" ref="listView">
-      <div v-if="brandList">
-        <div v-for="(group, index) in brandList" class="list-group" :key="parseInt(group.id)" ref="listGroup">
-          <h2 v-if="index != 0 && index !=1" class="list-group-title">{{ group.title }}</h2>
-          <div v-if="index != 0 && index !=1">
-            <div v-for="item in group.items" class="list-group-item" :key="parseInt(item.id)">
-              <span class="name">{{ item.name }}</span>
-            </div>
-          </div>
-          <!--<div v-if="index == 1" style="background: #ffffff">-->
-            <!--<p class="cityTitle">热门城市</p>-->
-            <!--<button class="hotCity" v-for="city in hotCitys">{{city}}</button>-->
-          <!--</div>-->
+    <div class="list-view" style="padding-top: 3rem" ref="listView">
+      <div style="background: #ffffff" class="list-group">
+        <p class="cityTitle">热门品牌</p>
+        <div style="display: inline-block; width: 25vw; text-align: center; height: 5.5rem"
+             v-for="brand in hotBrands">
+          <img style="width: 3rem;" :src="brand.picPath">
+          <p style="padding-bottom: 1rem">{{brand.brandName}}</p>
         </div>
       </div>
-      <div class="list-shortcut">
-        <div>
-          <div v-for="(item, index) in shortcutList"
-               class="item"
-               :data-index="index"
-               :key="parseInt(item.id)"
-               @touchstart="onShortcutStart"
-               @touchmove.stop.prevent="onShortcutMove"
-               :class="{'current': currentIndex === index}"
-          >
-            {{ item }}
+      <div>
+        <div v-for="(group, key) in brandList" class="list-group" ref="listGroup">
+          <h2 class="list-group-title" :ref="`key_${key}`">{{ key }}</h2>
+          <div>
+            <div v-for="category in group" class="list-group-item" :key="parseInt(category.categoryId)"
+                 @click="toCarType(category.categoryId, category.categoryName)">
+              <img style="width: 2rem; height: 2rem; margin-right: 1rem" :src="category.iconPath">
+              <span class="name">{{ category.categoryName }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="initial-bar"><span @click="toPs(key)" v-for="(group, key) in shortcutList">{{key}}</span></div>
   </div>
 </template>
 
 <script>
   import headTop from "../../components/header/head"
   import BScroll from 'better-scroll'
-  import {carBrand} from "../../service/getData";
+  import {carBrand, carHotBrand} from "../../service/getData";
 
   export default {
     name: "ChooseCarBrand",
@@ -47,93 +40,165 @@
     },
     data() {
       return {
-        singers: null,
         scrollY: 0,
         currentIndex: 0,
         brandList: [],
-        hotCitys: ['北京', '深圳', '上海', '武汉', '长沙', '中山', '成都', '厦门', '珠海'],
-        searchContent: '',
-        localCity: ''
+        hotBrands: [],
       }
     },
     methods: {
-      _initSrcoll() {
-        // console.log('didi')
-        this.scroll = new BScroll(this.$refs.listView, {
-          probeType: 3,
-          click: true
+      toPs(i) {
+        console.log(this.$refs['key_' + i][0].offsetTop)
+        window.scrollTo(0, this.$refs['key_' + i][0].offsetTop)
+      },
+      toCarType(categoryId, categoryName) {
+        this.$router.push({
+          path: '/choose-type',
+          query: {
+            categoryId: categoryId,
+            categoryName: categoryName
+          }
         })
-
-        this.scroll.on('scroll', (pos) => {
-          this.scrollY = pos.y
-        })
-      },
-      onShortcutStart(e) {
-        // 获取到绑定的 index
-        let index = e.target.getAttribute('data-index')
-        // 使用 better-scroll 的 scrollToElement 方法实现跳转
-        this.scrollToElement(index)
-
-        // 记录一下点击时候的 Y坐标 和 index
-        let firstTouch = e.touches[0].pageY
-        this.touch.y1 = firstTouch
-        this.touch.anchorIndex = index
-      },
-      onShortcutMove(e) {
-        // 再记录一下移动时候的 Y坐标，然后计算出移动了几个索引
-        let touchMove = e.touches[0].pageY
-        this.touch.y2 = touchMove
-        // 这里的 16.7 是索引元素的高度
-        let delta = Math.floor((this.touch.y2 - this.touch.y1) / 16.7)
-
-        // 计算最后的位置
-        // * 1 是因为 this.touch.anchorIndex 是字符串，用 * 1 偷懒的转化一下
-        let index = this.touch.anchorIndex * 1 + delta
-        this.scrollToElement(index)
-      },
-      scrollToElement(index) {
-        // 处理边界情况
-        // 因为 index 通过滑动距离计算出来的
-        // 所以向上滑超过索引框框的时候就会 < 0，向上就会超过最大值
-        if (index < 0) {
-          return
-        } else if (index > this.listHeight.length - 2) {
-          index = this.listHeight.length - 2
-        }
-        // listHeight 是正的， 所以加个 -
-        this.scrollY = -this.listHeight[index]
-        this.scroll.scrollToElement(this.$refs.listGroup[index])
-      },
-      _calculateHeight() {
-        this.listHeight = []
-        const list = this.$refs.listGroup
-        let height = 0
-        this.listHeight.push(height)
-        for (let i = 0; i < list.length; i++) {
-          let item = list[i]
-          height += item.clientHeight
-          this.listHeight.push(height)
-        }
-      },
+      }
     },
     created() {
-      carBrand(res => {
-        console.log(res);
+      carBrand().then(res => {
         if (res.result == 'SUCCESS') {
           this.brandList = res.data;
+        }
+      });
+      carHotBrand().then(res => {
+        if (res.result == 'SUCCESS') {
+          this.hotBrands = res.data;
         }
       })
     },
     computed: {
       shortcutList() {
-        return this.singers.map((group) => {
-          return group.title.substr(0, 1)
-        })
+        return this.brandList;
       }
     },
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  #contact {
+    .initial-bar {
+      position: fixed;
+      top: 50%;
+      font-size: 11px;
+      color: #f5ca1d;
+      line-height: 1.5;
+      right: 0.5rem;
+      width: 10px;
+      transform: translate3d(0, -50%, 0);
+      span {
+        display: block;
+        text-align: left;
+      }
+    }
+  }
 
+  .box {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cityTitle {
+    font-size: 1rem;
+    color: #333333;
+    font-weight: bold;
+    padding: 0.62rem 1rem
+  }
+
+  .locationCity {
+    background: none;
+    border: 1px solid #DDDDDD;
+    border-radius: 2px;
+    width: 26vw;
+    height: 2.5rem;
+    font-size: 1rem;
+    margin-left: 1rem
+  }
+
+  .hotCity {
+    background: none;
+    border: 1px solid #DDDDDD;
+    border-radius: 2px;
+    width: 26vw;
+    height: 2.5rem;
+    font-size: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 10px
+  }
+
+  .list-view {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: #ffffff;
+    .list-group {
+      .list-group-title {
+        height: 30px;
+        line-height: 30px;
+        padding-left: 1rem;
+        font-size: 0.91rem;
+        color: #888888;
+        background: #F5F5F5;
+        margin: 0;
+      }
+      .list-group-item {
+        display: flex;
+        align-items: center;
+        /*padding: 1rem 0 1rem 0;*/
+        line-height: 3;
+        margin-left: 1rem;
+        border-bottom: 1px solid #ececec;
+        .avatar {
+          width: 50px;
+          height: 50px;
+          border-radius: 5%;
+        }
+        .name {
+          color: black;
+          font-size: 1rem;
+        }
+      }
+    }
+    .list-shortcut {
+      position: absolute;
+      z-index: 30;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      padding: 20px 0;
+      border-radius: 10px;
+      text-align: center;
+      background: none;
+      font-family: Helvetica;
+      .item {
+        padding: 3px;
+        line-height: 1;
+        color: #f5ca1d;
+        font-size: 11px;
+        &.current {
+          color: #f5ca1d;;
+        }
+      }
+    }
+  }
+
+  .initial-bar {
+    position: fixed;
+    top: 50%;
+    font-size: 11px;
+    line-height: 1.2;
+    right: 2px;
+    width: 10px;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0)
+  }
 </style>

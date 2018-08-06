@@ -1,4 +1,4 @@
-import {post,get,patch,put,del} from '../config/http'
+import {post, get, patch, put, del} from '../config/http'
 
 //首页获取数据
 export const getIndex = function () {
@@ -17,7 +17,7 @@ export const getProductsByCommodityId = function (commodityId) {
 
 //获取车系
 export const getCarSeries = function (categoryId) {
-  return get('/v1/mall/category/getCategoryById/'+categoryId);
+  return get('/v1/mall/category/getCategoryById/' + categoryId);
 };
 
 //获取查询所有规格属性等
@@ -28,7 +28,7 @@ export const getSearch = function () {
 //############## 商品接口 ##################//
 //获取收藏夹
 export const getCustomerFavorite = function (query) {
-  return post('/v1/mall/favorite/getCustomerFavorite.do',{},query);
+  return post('/v1/mall/favorite/getCustomerFavorite.do', {}, query);
 };
 
 //商品是否收藏
@@ -53,17 +53,22 @@ export const delFavoriteListByFavoriteIds = function (favoriteIds) {
 
 //分类搜索
 export const categorySearch = function (searchVo) {
-  return post('/v1/mall/search/categorySearch',searchVo)
+  return post('/v1/mall/search/categorySearch', searchVo)
 }
 
 //关键词搜索
-export const keywordSearch = function (keyword, page, size) {
-  return post('/mall/search/keywordSearch/'+page + '/' + size + '?keyword=' + keyword)
+export const keywordSearch = function (query) {
+  return post('/v1/mall/search/keywordSearch', {}, query)
 }
 
 //获取品牌数据
 export const carBrand = function () {
   return get('/v1/mall/category/list/carBrand.do');
+};
+
+//获取热门品牌数据
+export const carHotBrand = function () {
+  return post('/v1/mall/brand/list.do');
 };
 
 //############## 地址接口 ##################//
@@ -96,33 +101,33 @@ export const deleteDeliveryAddressByAdderssId = function (addressId) {
 
 //确认订单接口
 export const getTempOrder = function (productId, paymentType) {
-  return post('/v1/mall/order/tempOrder',{},{
-    productId:productId,
-    paymentType:paymentType
+  return post('/v1/mall/order/tempOrder', {}, {
+    productId: productId,
+    paymentType: paymentType
   });
 };
 
 //下单接口
 export const addOrder = function (orderConfirmVO) {
-  return post('/v1/mall/order',orderConfirmVO);
+  return post('/v1/mall/order', orderConfirmVO);
 }
 
 //获取用户商品订单列表
 export const getCustomerOrder = function (query) {
-  return post('/v1/mall/order/pageList',{},query);
+  return post('/v1/mall/order/pageList', {}, query);
 };
 
 //获取订单详情
-export const getOrderDetailById = orderId =>{
-  return get('/v1/mall/order/'+orderId);
+export const getOrderDetailById = orderId => {
+  return get('/v1/mall/order/' + orderId);
 };
 
 //订单收货成功
-export const confirmOrder = orderId =>{
-  return put('/v1/mall/order/confirmOrder/'+orderId);
+export const confirmOrder = orderId => {
+  return put('/v1/mall/order/confirmOrder/' + orderId);
 };
 
 //订单取消
-export const cancelOrder = orderId =>{
-  return put('/v1/mall/order/cancelOrder/'+orderId);
+export const cancelOrder = orderId => {
+  return put('/v1/mall/order/cancelOrder/' + orderId);
 };

@@ -50,8 +50,9 @@
       }
     },
     created(){
-      let categoryId = 321;
-      this.categoryName = "奥迪";
+      let query = this.$route.query;
+      let categoryId = query.categoryId;
+      this.categoryName = query.categoryName;
       getCarSeries(categoryId).then(res=>{
         if (res.result == 'SUCCESS') {
           this.carTypeList = res.data;
