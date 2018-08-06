@@ -18,7 +18,7 @@ public class OrderConfirmVO implements java.io.Serializable{
     /**
      * 支付方式
      */
-    @ApiModelProperty(value="支付方式：FULL_SECTION(\"全款购车\"), LOAN(\"贷款购车\"), ALIPAY(\"支付宝\"), TENPAY(\"财付通\"), UNIONPAY(\"银联\"), AFTERREVICED(\"货到付款\")",name="paymentType",example="FULL_SECTION")
+    @ApiModelProperty(value="支付方式",name="paymentType",example="FULL_SECTION")
     private PaymentType paymentType;
 
     /**

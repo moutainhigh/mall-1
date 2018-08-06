@@ -21,6 +21,6 @@ public enum BarterState {
 
     @Override
     public String toString() {
-        return name;
+        return super.toString() + "("+name+")";
     }
 }
