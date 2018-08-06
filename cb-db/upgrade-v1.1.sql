@@ -214,6 +214,12 @@ CREATE TABLE `rb_reimbursement_process` (
 ####add by likang 2018-08-03
 ALTER TABLE `profile` add  `REMARKS` VARCHAR(255) DEFAULT NULL COMMENT '备注';
 
+
+
+
+
+
+
 ####add by dengchenggang 2018-08-03
 
 -- ----------------------------
