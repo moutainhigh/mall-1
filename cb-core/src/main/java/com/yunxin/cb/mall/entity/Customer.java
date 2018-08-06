@@ -211,6 +211,7 @@ public class Customer implements java.io.Serializable {
      */
     private String qqAccessToken;
 
+    private int parentCustomerId;
     /**
      * 用户账号类型
      */
@@ -274,23 +275,6 @@ public class Customer implements java.io.Serializable {
      */
     @ApiModelProperty(value="职业类别",name="occupationalCategory",example="教师")
     private String occupationalCategory;
-    /**
-     * 优惠券
-     */
-    @ApiModelProperty(value="优惠券",name="coupons",example="优惠券")
-    private Set<Coupon> coupons = new HashSet<>();
-
-    /**
-     * 我的食谱
-     */
-    @ApiModelProperty(value="我的食谱",name="recipes",example="我的食谱")
-    private Set<Recipe> recipes = new HashSet<>();
-
-    /**
-     * 我的厨房
-     */
-    @ApiModelProperty(value="我的厨房",name="kitchens",example="我的厨房")
-    private Set<Kitchen> kitchens = new HashSet<>();
 
     private String token;
 
@@ -591,34 +575,6 @@ public class Customer implements java.io.Serializable {
     }
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
-    @Fetch(FetchMode.SELECT)
-    public Set<Coupon> getCoupons() {
-        return coupons;
-    }
-
-    public void setCoupons(Set<Coupon> coupons) {
-        this.coupons = coupons;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
-    public Set<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(Set<Recipe> recipes) {
-        this.recipes = recipes;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
-    public Set<Kitchen> getKitchens() {
-        return kitchens;
-    }
-
-    public void setKitchens(Set<Kitchen> kitchens) {
-        this.kitchens = kitchens;
-    }
-
     @Column(unique = true, length = 32)
     public String getQqOpenId() {
         return qqOpenId;
@@ -788,5 +744,13 @@ public class Customer implements java.io.Serializable {
 
     public void setAliasName(String aliasName) {
         this.aliasName = aliasName;
+    }
+
+    @Transient
+    public Integer getParentCustomerId() {
+        if (recommendCustomer == null) {
+            return null;
+        }
+        return recommendCustomer.getCustomerId();
     }
 }

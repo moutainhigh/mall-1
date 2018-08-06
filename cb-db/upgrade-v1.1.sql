@@ -216,6 +216,12 @@ ALTER TABLE `profile` add  `REMARKS` VARCHAR(255) DEFAULT NULL COMMENT '备注';
 ##add by likang 2018-08-04
 ALTER TABLE insurance_product ADD COLUMN `ENABLED` int(20) DEFAULT 0   COMMENT '是否启用';
 
+
+
+
+
+
+
 ####add by dengchenggang 2018-08-03
 
 -- ----------------------------

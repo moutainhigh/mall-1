@@ -57,7 +57,10 @@ public class CustomerController {
 
     @RequestMapping(value = "customerDetail",method = RequestMethod.GET)
     public String customerDetail(@ModelAttribute("customerId") int customerId, ModelMap modelMap) {
-        modelMap.addAttribute("customer", customerService.getCustomerById(customerId));
+        Customer customer=customerService.getCustomerById(customerId);
+        List<Customer> listVo=customerService.findCustomerByLikeLevelCode(customer);
+        modelMap.addAttribute("listVo", listVo);
+        modelMap.addAttribute("customer", customer);
         List<DeliveryAddress> deliveryAddresses = addressService.getAllAddressesByCustomerId(customerId);
         modelMap.addAttribute("deliveryAddresses", deliveryAddresses);
         return "customer/customerDetail";
