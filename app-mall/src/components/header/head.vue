@@ -22,6 +22,9 @@
     <slot name="edit" v-if="edit">
       <span style="position: absolute; right: 1rem; top: 0.8rem;">编辑</span>
     </slot>
+    <section class="head_share" style="margin-left: 0;" v-if="share">
+      <img src="../../assets/img/common/ic_nav_share.png" height="23" style="vertical-align: middle;margin-left: 5px;">
+    </section>
   </header>
 </template>
 
@@ -36,7 +39,7 @@
         localCity:'定位'
       }
     },
-    props: ['headTitle', 'goBack', 'local', 'edit' , 'goClose'],
+    props: ['headTitle', 'goBack', 'local', 'edit' , 'goClose', 'share'],
     methods:{
       back(){
         this.$router.go(-1);
@@ -88,6 +91,14 @@
     line-height: 2.8rem;
     margin-left: .4rem;
     flex: 0 0 2.3rem;
+  }
+
+  .head_share {
+    @include wh(0.6rem, 1rem);
+    line-height: 2.8rem;
+    flex: 0 0 2.3rem;
+    position: absolute;
+    right: 2rem;
   }
 
   .head_search {

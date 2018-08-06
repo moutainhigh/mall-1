@@ -71,6 +71,11 @@ export const carHotBrand = function () {
   return post('/v1/mall/brand/list.do');
 };
 
+//根据品牌id查询车系
+export const getCategoryByBrandId = function (brandId) {
+  return get('/v1/mall/category/getCategoryByBrandId/' + brandId);
+};
+
 //############## 地址接口 ##################//
 //获取用户收货地址列表
 export const getDeliveryAddress = function () {
