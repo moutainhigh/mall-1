@@ -2,6 +2,7 @@ package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Fridge;
+import com.yunxin.cb.mall.vo.CustomerTreeVo;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.core.exception.EntityExistException;
@@ -191,4 +192,6 @@ public interface ICustomerService {
     public void addTwoWayFriend(Customer myself,Customer customer) throws Exception;
 
     void batchPwdEncode();
+
+    public List<Customer> findCustomerByLikeLevelCode(Customer customer);
 }

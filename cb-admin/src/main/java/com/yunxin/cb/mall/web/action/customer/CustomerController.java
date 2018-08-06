@@ -5,6 +5,8 @@ import com.yunxin.cb.mall.entity.DeliveryAddress;
 import com.yunxin.cb.mall.service.IAddressService;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IRankService;
+import com.yunxin.cb.mall.vo.CustomerTreeVo;
+import com.yunxin.cb.mall.vo.CustomerVo;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.context.MessageSource;
@@ -57,7 +59,10 @@ public class CustomerController {
 
     @RequestMapping(value = "customerDetail",method = RequestMethod.GET)
     public String customerDetail(@ModelAttribute("customerId") int customerId, ModelMap modelMap) {
-        modelMap.addAttribute("customer", customerService.getCustomerById(customerId));
+        Customer customer=customerService.getCustomerById(customerId);
+        List<Customer> listVo=customerService.findCustomerByLikeLevelCode(customer);
+        modelMap.addAttribute("listVo", listVo);
+        modelMap.addAttribute("customer", customer);
         List<DeliveryAddress> deliveryAddresses = addressService.getAllAddressesByCustomerId(customerId);
         modelMap.addAttribute("deliveryAddresses", deliveryAddresses);
         return "customer/customerDetail";
