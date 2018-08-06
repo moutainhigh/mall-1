@@ -27,7 +27,6 @@ import javax.annotation.Resource;
 @Api(description = "订单接口")
 @RestController
 @RequestMapping(value = "/insurance/order")
-@SessionAttributes("customerId")
 public class InsuranceOrderResource extends BaseResource {
 
     @Resource
@@ -38,12 +37,11 @@ public class InsuranceOrderResource extends BaseResource {
 
     @ApiOperation(value = "保存订单")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String"),
-            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String")})
     @PostMapping(value = "saveOrder")
     @JsonFilter(value = "data.insuranceOrderBeneficiarys,data.insuranceOrderInformedMatters")
-    public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code, @ModelAttribute("customerId") int customerId) {
-        Customer customer = customerService.getCustomerById(customerId);
+    public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code) {
+        Customer customer = customerService.getCustomerById(getCustomerId());
         if (customer == null) {
             return new ResponseResult(Result.FAILURE, "链接错误或用户不存在");
         }
@@ -68,15 +66,14 @@ public class InsuranceOrderResource extends BaseResource {
 
 
     @ApiOperation(value = "查询用户订单列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")})
+    @ApiImplicitParams({})
     @PostMapping(value = "getOrders")
-    public ResponseResult getOrders(@RequestBody PageSpecification<InsuranceOrder> query, @ModelAttribute("customerId") int customerId) {
+    public ResponseResult getOrders(@RequestBody PageSpecification<InsuranceOrder> query) {
         PageSpecification.FilterDescriptor filterDescriptor = new PageSpecification.FilterDescriptor();
         filterDescriptor.setField("customer.customerId");
         filterDescriptor.setLogic("and");
         filterDescriptor.setOperator("eq");
-        filterDescriptor.setValue(customerId);
+        filterDescriptor.setValue(getCustomerId());
         query.getFilter().getFilters().add(filterDescriptor);
         Page<InsuranceOrder> pagelist = insuranceOrderService.pageInsuranceOrder(query);
         return new ResponseResult(pagelist);
@@ -85,17 +82,16 @@ public class InsuranceOrderResource extends BaseResource {
 
     @ApiOperation(value = "查询用户订单详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderCode", value = "订单号", required = true, paramType = "post", dataType = "String"),
-            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "orderCode", value = "订单号", required = true, paramType = "post", dataType = "String")})
     @PostMapping(value = "getOrder/{orderCode}")
-    public ResponseResult getOrders(@PathVariable String orderCode, @ModelAttribute("customerId") int customerId) {
+    public ResponseResult getOrders(@PathVariable String orderCode) {
 
         InsuranceOrder  insuranceOrder =insuranceOrderService.getInsuranceOrderDetailByOrderCode(orderCode);
         if(insuranceOrder!=null)
         {
-            if(insuranceOrder.getCustomer().getCustomerId()!=customerId)
+            if(insuranceOrder.getCustomer().getCustomerId()!=getCustomerId())
             {
-                return new ResponseResult(null);
+                return new ResponseResult(Result.FAILURE,"该订单不存在");
             }
         }
         return new ResponseResult(insuranceOrder);
