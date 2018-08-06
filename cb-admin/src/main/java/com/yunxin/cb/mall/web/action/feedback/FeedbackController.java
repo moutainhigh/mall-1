@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.web.action.feedback;
 
+import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.service.IFeedbackService;
 import com.yunxin.cb.security.SecurityConstants;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @Description:    用户反馈
@@ -70,14 +73,15 @@ public class FeedbackController {
         Feedback feedback = feedbackService.getFeedbackByid(id);
         List<String> list=new ArrayList<String>();
         String info="";
+        JSONArray jsonArray=null;
         if(null!=feedback.getImages()&&!"".equals(feedback.getImages())){
-            JSONArray jsonArray = JSONArray.fromObject(feedback.getImages());
+            jsonArray = JSONArray.fromObject(feedback.getImages());
             list=(List)JSONArray.toCollection(jsonArray);
         }else{
             info="无";
         }
         modelMap.addAttribute("feedback", feedback);
-        modelMap.addAttribute("list", list);
+        modelMap.addAttribute("list", JSON.toJSON(list));
         modelMap.addAttribute("info", info);
         return "feedback/feedbackDetail";
     }
