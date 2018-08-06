@@ -46,9 +46,9 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "获取预下单数据")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "form", dataType = "int"),
+            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "form", dataType = "int"),
+            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "form", dataType = "String")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
     public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId") int productId,
@@ -101,9 +101,9 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "查询用户订单列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "form", dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "form", dataType = "int"),
+            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "form", dataType = "String")})
     @PostMapping(value = "order/pageList")
     public ResponseResult<PageFinder<OrderDetailVO>> pageOrder(@RequestParam(value = "pageNo") int pageNo,
             @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "orderState", required = false) OrderState orderState) {
@@ -143,8 +143,8 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "根据订单id取消订单")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "cancelReason", value = "取消原因", required = true, paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "form", dataType = "int"),
+            @ApiImplicitParam(name = "cancelReason", value = "取消原因", required = true, paramType = "form", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
     public ResponseResult cancelOrder(@RequestParam("orderId") int orderId, @RequestParam("cancelReason") String cancelReason) {
