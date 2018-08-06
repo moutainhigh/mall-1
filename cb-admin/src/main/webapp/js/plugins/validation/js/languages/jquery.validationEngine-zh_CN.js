@@ -142,6 +142,30 @@
                     "regex":/^[1-9]\d{5}[1-9]\d{3}(((0[13578]|1[02])(0[1-9]|[12]\d|3[0-1]))|((0[469]|11)(0[1-9]|[12]\d|30))|(02(0[1-9]|[12]\d)))(\d{4}|\d{3}[xX])$/,
                     "alertText":"* 无效的身份证号码"
                 },
+                "householdVali": {//居民户口蒲 9位数
+                    "regex": /^\d{9}$/,
+                    "alertText": "9位数"
+                },
+                "birthVali": {//出生证
+                    "regex": /[A-Z]{1}\d{9}$/,
+                    "alertText": "请输入正确的证件号码"
+                },
+                "hkmcPassVali": {//港澳通行证
+                    "regex": /^[HMhm]{1}([0-9]{10}|[0-9]{8})$/,
+                    "alertText": "请输入正确的证件号码"
+                },
+                "taiwanPassVali": {// 台湾通行证
+                    "regex": /^[0-9]{8}$/,
+                    "alertText": "请输入正确的证件号码"
+                },
+                "passportVali": {//护照
+                    "regex": /^[a-z0-9A-Z]{6,25}$/,
+                    "alertText": "请输入正确的证件号码"
+                },
+                "permanentResidenceVali": {//外国人永久居留证
+                    "regex": /^[a-zA-Z]{3}\d{12}$/,
+                    "alertText": "请输入正确的证件号码"
+                },
                 // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {
                     "url": "ajaxValidateFieldUser",
