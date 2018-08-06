@@ -1,5 +1,6 @@
 package com.yunxin.cb.rest;
 
+import com.yunxin.core.orm.CustomerContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -9,6 +10,14 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class BaseResource {
+
+    /**
+     * 获取请求中token参数解析的用户ID
+     * @return
+     */
+    protected int getCustomerId(){
+        return CustomerContextHolder.getCustomerId();
+    }
 
     /**
      * 获取IP地址
