@@ -32,7 +32,23 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        debugger;
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        var defaultPicPath1 = $('input[name="imgurl1"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        }else if(defaultPicPath1.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                }
             });
         });
         //建立一個可存取到該file的url
@@ -493,7 +509,7 @@
                                 <label>标签：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="tags" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:input path="tags" cssClass="form-control"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -508,7 +524,7 @@
                                 <label>产品描述：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea path="description" cssClass="form-control validate[required,minSize[2]]"/>
+                                <form:textarea path="description" cssClass="form-control"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -528,7 +544,7 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>产品图片：</label>
+                                <label>产品图片：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>
@@ -614,7 +630,7 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>产品详情图片：</label>
+                                <label>产品详情图片：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>
