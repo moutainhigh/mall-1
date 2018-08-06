@@ -5,7 +5,7 @@
     <div style="background-color: #FFFFFF;height: 100%;margin-top: 3rem;">
       <div class="ct-title" @click="openCarList()">全部车系</div>
       <div class="ct-list">
-        <div class="ct-list-title">
+        <div class="ct-list-title" v-if="carTypeList.length != 0">
           {{categoryName}}
         </div>
         <div class="ct-list-item" v-for="carType in carTypeList" @click="openCarList(carType)">
@@ -50,8 +50,9 @@
       }
     },
     created(){
-      let categoryId = 321;
-      this.categoryName = "奥迪";
+      let query = this.$route.query;
+      let categoryId = query.categoryId;
+      this.categoryName = query.categoryName;
       getCarSeries(categoryId).then(res=>{
         if (res.result == 'SUCCESS') {
           this.carTypeList = res.data;

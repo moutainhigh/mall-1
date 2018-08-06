@@ -3,26 +3,29 @@
  */
 package com.yunxin.core.orm;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
- * @author gonglei
+ * @author tanggangyi
  */
 public class CustomerContextHolder {
 
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
 
-    public static void setManageType() {
-        contextHolder.set("adminDataSource");
+    public static void setCustomerId(int customerId){
+        contextHolder.set(String.valueOf(customerId));
     }
 
-    public static void setCustomerType(String customerType) {
-        contextHolder.set(customerType);
+    public static int getCustomerId(){
+        String s = contextHolder.get();
+        if(StringUtils.isNotBlank(s)){
+            return Integer.parseInt(contextHolder.get());
+        }else {
+            return -1;
+        }
     }
 
-    public static String getCustomerType() {
-        return (String) contextHolder.get();
-    }
-
-    public static void clearCustomerType() {
+    public static void clearCustomerId(){
         contextHolder.remove();
     }
 

@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <p class="uploadTitle">投保人身份证正面上传（必传）
+    <p class="uploadTitle">投保人身份证件正面上传（必传）
       <button v-if="imgUrls.image2 !== '' && imgUrls.image2 !== undefined" @click='delImage(2)'>清除</button>
     </p>
     <div class="card">
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <p class="uploadTitle">投保人身份证背面上传（必传）
+    <p class="uploadTitle">投保人身份证件背面上传（必传）
       <button v-if="imgUrls.image3 !== '' && imgUrls.image3 !== undefined" @click='delImage(3)'>清除</button>
     </p>
     <div class="card">
@@ -262,12 +262,12 @@
         }
         if (!this.imgUrls.image2) {
           this.showPositionValue = true;
-          this.toastText = "请上传身份证正面图片";
+          this.toastText = "请上传身份证件正面图片";
           return ;
         }
         if (!this.imgUrls.image3) {
           this.showPositionValue = true;
-          this.toastText = "请上传身份证背面图片";
+          this.toastText = "请上传身份证件背面图片";
           return ;
         }
         let holder = storage.fetch("holder");

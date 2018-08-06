@@ -4,7 +4,7 @@
       <img src="../assets/img/banner.png">
     </div>
 
-    <div class="i-list" style="margin-top: 0" v-for="(product, index) in products" @click="goToPro(index)">
+    <div class="i-list" style="margin-top: 0" v-for="(product, index) in products" @click="goToPro(product)">
       <div style="display: inline-block;">
         <img style="height: 85px" :src="product.prodImg">
       </div>
@@ -61,29 +61,15 @@
       }
     },
     methods: {
-      goToPro(val){
-        console.log(val)
-        if (val === 0){
-          storage.save('packetId', 1);
-          this.$router.push({
-            path:'pro-detail',
-            query: {
-              id:1,
-              title:"生命福星高照终身寿险（分红型）",
-            }
-          });
-        }
-
-        if (val === 1){
-          storage.save('packetId', 2);
-          this.$router.push({
-            path:'/pro-detail',
-            query:{
-              id:2,
-              title:"富德生命鑫福来年金保险"
-            }
-          });
-        }
+      goToPro(pro){
+        storage.save('packetId', pro.prodId);
+        this.$router.push({
+          path:'/pro-detail',
+          query:{
+            id:pro.prodId,
+            title:pro.prodName
+          }
+        });
       },
       clear(){
         storage.clear();
@@ -102,10 +88,13 @@
       if (storage.fetch('insured').length ==0){
         storage.save('insured',Admin.insured);
       }
+      this.$vux.loading.show({
+        text: 'Loading'
+      });
       getProducts().then(res => {
         if (res.result == 'SUCCESS') {
           this.products = res.data;
-          console.log(this.products)
+          this.$vux.loading.hide();
         }
       });
       getCustomerInfo().then(res => {

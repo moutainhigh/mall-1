@@ -2,6 +2,7 @@ package com.yunxin.cb.config;
 
 import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.jwt.Token;
+import com.yunxin.core.orm.CustomerContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -37,8 +38,7 @@ public class RestTokenFilter extends GenericFilterBean {
             try {
                 authHeader = authHeader.replace(TOKEN_PREFIX, "");
                 Token token = JwtUtil.getToken(authHeader);
-                request.getSession().setAttribute("customerId", token.getAccountId());
-                request.getSession().setAttribute("mobile", token.getMobile());
+                CustomerContextHolder.setCustomerId(token.getAccountId());
             } catch (final Exception e) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 return;

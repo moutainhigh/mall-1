@@ -115,3 +115,7 @@ p {
   font-size: 17px !important;
   padding: 0 !important;;
 }
+
+.vux-slider > .vux-indicator > a > .vux-icon-dot.active{
+  background-color: #f5ca1d !important;
+}

@@ -337,8 +337,7 @@
         }
       },
       //初始化根据货品id获取商品数据
-      getCommodityDetail() {
-        let productId = 476;
+      getCommodityDetail(productId) {
         getCommdityDetailById(productId).then(res => {
           if (res.result == 'SUCCESS') {
             this.commodityData = res.data;
@@ -351,9 +350,8 @@
       },
     },
     created() {
-      // async function asyncFun() {
-        this.getCommodityDetail();
-      // }
+      let query = this.$route.query;
+        this.getCommodityDetail(query.productId);
     },
     mounted() {
       window.addEventListener('scroll', this.menu)
