@@ -1,23 +1,25 @@
 <template>
   <div>
-    <div class="title">投保资料上传</div>
-    <p class="uploadTitle">投保人银行卡正面上传（必传）
-      <button v-if="imgUrls.image1 !== '' && imgUrls.image1 !== undefined" @click='delImage(1)'>清除</button>
-    </p>
-    <div class="card">
-      <div v-if="imgUrls.image1 === '' || imgUrls.image1 === undefined" @click.stop="addPic1">
-        <div style="position: absolute; width: 100%; height: 120px"></div>
-        <img src="../assets/img/upload.png">
-      </div>
-      <input id="image1" type="file" accept="image/*" capture="camera" @change="onFileChange"
-             style="display: none;">
-      <div style="height: 140px; overflow: hidden; position: relative" v-if="imgUrls.image1 !== '' && imgUrls.image1 !== undefined">
-        <!--<img style="width: 30px; position: absolute; right: 20vw; top: -1rem; padding: 0; z-index: 999" src="../assets/img/close.png">-->
-        <img style="padding: 0;" :src="imgUrls.image1" v-preview="imgUrls.image1" preview-nav-enable="false">
-      </div>
+    <div class="title" style="text-align: left;margin-top: 0; font-weight: bold; font-size: 17px">
+      投保资料上传
     </div>
+    <!--<p class="uploadTitle">投保人银行卡正面上传-->
+      <!--<button v-if="imgUrls.image1 !== '' && imgUrls.image1 !== undefined" @click='delImage(1)'>清除</button>-->
+    <!--</p>-->
+    <!--<div class="card">-->
+      <!--<div v-if="imgUrls.image1 === '' || imgUrls.image1 === undefined" @click.stop="addPic1">-->
+        <!--<div style="position: absolute; width: 100%; height: 120px"></div>-->
+        <!--<img src="../assets/img/upload.png">-->
+      <!--</div>-->
+      <!--<input id="image1" type="file" accept="image/*" capture="camera" @change="onFileChange"-->
+             <!--style="display: none;">-->
+      <!--<div style="height: 140px; overflow: hidden; position: relative" v-if="imgUrls.image1 !== '' && imgUrls.image1 !== undefined">-->
+        <!--&lt;!&ndash;<img style="width: 30px; position: absolute; right: 20vw; top: -1rem; padding: 0; z-index: 999" src="../assets/img/close.png">&ndash;&gt;-->
+        <!--<img style="padding: 0;" :src="imgUrls.image1" v-preview="imgUrls.image1" preview-nav-enable="false">-->
+      <!--</div>-->
+    <!--</div>-->
 
-    <p class="uploadTitle">投保人身份证件正面上传（必传）
+    <p class="uploadTitle">投保人身份证件正面上传
       <button v-if="imgUrls.image2 !== '' && imgUrls.image2 !== undefined" @click='delImage(2)'>清除</button>
     </p>
     <div class="card">
@@ -32,7 +34,7 @@
       </div>
     </div>
 
-    <p class="uploadTitle">投保人身份证件背面上传（必传）
+    <p class="uploadTitle">投保人身份证件背面上传
       <button v-if="imgUrls.image3 !== '' && imgUrls.image3 !== undefined" @click='delImage(3)'>清除</button>
     </p>
     <div class="card">
@@ -47,7 +49,7 @@
       </div>
     </div>
 
-    <p class="uploadTitle">其它资料（资料）
+    <p class="uploadTitle">其它资料（选填）
       <button v-if="imgUrls.image4 !== '' && imgUrls.image4 !== undefined" @click='delImage(4)'>清除</button>
     </p>
     <div class="card">
@@ -62,7 +64,7 @@
       </div>
     </div>
 
-    <p class="uploadTitle">其它资料（资料）
+    <p class="uploadTitle">其它资料（选填）
       <button v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined" @click='delImage(5)'>清除</button>
     </p>
     <div class="card">
@@ -77,7 +79,7 @@
       </div>
     </div>
 
-    <p class="uploadTitle">其它资料（资料）
+    <p class="uploadTitle">其它资料（选填）
       <button v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined" @click='delImage(6)'>清除</button>
     </p>
     <div class="card">
@@ -134,10 +136,10 @@
     },
     methods: {
       //添加图片
-      addPic1: function () {
-        document.getElementById("image1").click();
-        return false;
-      },
+      // addPic1: function () {
+      //   document.getElementById("image1").click();
+      //   return false;
+      // },
       addPic2: function () {
         document.getElementById("image2").click();
         return false;
@@ -255,11 +257,11 @@
         storage.save("order", order);
       },
       next() {
-        if (!this.imgUrls.image1) {
-          this.showPositionValue = true;
-          this.toastText = "请上传银行卡正面图片";
-          return ;
-        }
+        // if (!this.imgUrls.image1) {
+        //   this.showPositionValue = true;
+        //   this.toastText = "请上传银行卡正面图片";
+        //   return ;
+        // }
         if (!this.imgUrls.image2) {
           this.showPositionValue = true;
           this.toastText = "请上传身份证件正面图片";
@@ -292,13 +294,14 @@
     background-color: #ffffff;
     padding: 15px;
     font-size: 13px;
+    color: #f5ca1d;
   }
 
   .uploadTitle {
 
     background: #ffffff;
     margin: 0;
-    color: #c01212;
+    color: #f5ca1d;
     font-size: 13px;
     text-align: center;
     padding: 10px;
