@@ -31,7 +31,7 @@
           <div style="float: right;margin-right: 16px;color: #c01212;" v-text="orderState(order.orderState)"></div>
         </div>
         <div style="display: inline-block;">
-          <img :src="order.insuranceProduct.prodImg">
+          <img style=" height: 85px" :src="order.insuranceProduct.prodImg">
         </div>
         <div class="i-list-detail">
           <div class="dt-title">{{order.insuranceProduct.prodName}}</div>

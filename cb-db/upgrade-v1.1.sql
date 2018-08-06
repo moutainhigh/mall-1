@@ -459,3 +459,6 @@ MODIFY COLUMN `CARD_POSITIVE_IMG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf
 MODIFY COLUMN `CARD_NEGATIVE_IMG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '证件反面照' AFTER `CARD_POSITIVE_IMG`,
 MODIFY COLUMN `BANK_CARD_IMG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '银行卡图片' AFTER `CARD_NEGATIVE_IMG`;
 
+####add by likang 2018-08-06
+alter table feedback modify column images varchar(9000);
+
