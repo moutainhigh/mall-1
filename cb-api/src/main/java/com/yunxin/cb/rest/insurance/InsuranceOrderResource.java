@@ -1,12 +1,12 @@
 package com.yunxin.cb.rest.insurance;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.meta.Result;
+import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
@@ -35,6 +35,9 @@ public class InsuranceOrderResource extends BaseResource {
     @Resource
     private ICustomerService customerService;
 
+    @Resource
+    private RedisService redisService;
+
     @ApiOperation(value = "保存订单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "post", dataType = "String")})
@@ -46,7 +49,7 @@ public class InsuranceOrderResource extends BaseResource {
             return new ResponseResult(Result.FAILURE, "链接错误或用户不存在");
         }
         //校验验证码
-        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(insuranceOrder.getInsuranceOrderPolicyholderBank().getBankMobile());
+        VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(insuranceOrder.getInsuranceOrderPolicyholderBank().getBankMobile());
         //验证码不存在
         if (verificationCode == null) {
             return new ResponseResult(Result.FAILURE, "验证码不存在");

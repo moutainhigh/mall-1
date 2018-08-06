@@ -1,6 +1,5 @@
 package com.yunxin.cb.rest.customer;
 
-import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
@@ -9,6 +8,7 @@ import com.yunxin.cb.mall.vo.CustomerVo;
 import com.yunxin.cb.mall.vo.RecommendCustomerVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.meta.SendType;
+import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sms.SmsHelper;
 import com.yunxin.cb.vo.ResponseResult;
@@ -43,6 +43,9 @@ public class MainResource extends BaseResource {
     @Resource
     private ICustomerService customerService;
 
+    @Resource
+    private RedisService redisService;
+
 
     @ApiOperation(value = "用户注册")
     @PostMapping(value = "register")
@@ -73,7 +76,8 @@ public class MainResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE, "手机号已经注册");
             }
             //校验验证码
-            VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(mobile);
+            redisService.getKey(mobile);
+            VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(mobile);
             //验证码不存在
             if (verificationCode == null) {
                 return new ResponseResult(Result.FAILURE, "验证码不存在");
@@ -123,7 +127,7 @@ public class MainResource extends BaseResource {
     public ResponseResult registerFirst(@RequestBody CustomerVo customerVo) {
         try {
             //校验验证码
-            VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(customerVo.getMobile());
+            VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(customerVo.getMobile());
             //验证码不存在
             if (verificationCode == null) {
                 return new ResponseResult(Result.FAILURE, "验证码不存在");
@@ -154,7 +158,7 @@ public class MainResource extends BaseResource {
             return new ResponseResult(Result.FAILURE, "用户注册验证异常");
         }
         String random = String.valueOf(System.currentTimeMillis());
-        CachedUtil.getInstance().setContext(customerVo.getMobile() + customerVo.getMobile(), random);
+        redisService.setKey(customerVo.getMobile() + customerVo.getMobile(), random);
         return new ResponseResult(random);
     }
 
@@ -166,7 +170,7 @@ public class MainResource extends BaseResource {
 //            if(!StringUtils.isNotBlank(customerVo.getRandom()))
 //                return new ResponseResult(Result.FAILURE, "注册失败");
 //            else{
-//               String random=(String)CachedUtil.getInstance().getContext(customerVo.getMobile()+customerVo.getMobile());
+//               String random=(String)redisService.getVerificationCode(customerVo.getMobile()+customerVo.getMobile());
 //                logger.info("register-randomNext"+random);
 //               if(!customerVo.getRandom().equals(random))
 //                   return new ResponseResult(Result.FAILURE, "注册失败");
@@ -240,7 +244,7 @@ public class MainResource extends BaseResource {
     })
     public ResponseResult loginByCode(@RequestParam String mobile, @RequestParam String code) {
         //校验验证码
-        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(mobile);
+        VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(mobile);
         //验证码不存在
         if (verificationCode == null) {
             return new ResponseResult(Result.FAILURE, "验证码不存在");
@@ -286,7 +290,7 @@ public class MainResource extends BaseResource {
             return new ResponseResult(Result.FAILURE, "用户不存在");
         }
         //校验验证码
-        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(customer.getMobile());
+        VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(customer.getMobile());
         //验证码不存在
         if (verificationCode == null) {
             return new ResponseResult(Result.FAILURE, "验证码不存在");
@@ -316,7 +320,7 @@ public class MainResource extends BaseResource {
         boolean existMobile = customerService.getCustomerByMobile(mobile) != null ? true : false;
         boolean isSend = false;
         //判断时间，1分钟只允许发送一次
-        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(mobile);
+        VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(mobile);
         // session.getAttribute(mobile);
         if (verificationCode != null && (System.currentTimeMillis() - verificationCode.getSendTime()) < 60000) {
             responseResult.setMessage("发送过于频繁，请稍后再试！");
@@ -348,7 +352,7 @@ public class MainResource extends BaseResource {
                 if (sendState) {
                     responseResult.setResult(Result.SUCCESS);
                     VerificationCode mobileCode = new VerificationCode(mobile, randomCode, System.currentTimeMillis());
-                    CachedUtil.getInstance().setContext(mobile, mobileCode);
+                    redisService.setVerificationCode(mobile, mobileCode);
                 } else {
                     responseResult.setMessage("短信发送失败，请确认手机号或稍后再试!");
                 }
@@ -373,7 +377,7 @@ public class MainResource extends BaseResource {
             return new ResponseResult(Result.FAILURE, "用户不存在");
         }
         //校验验证码
-        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(customer.getMobile());
+        VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(customer.getMobile());
         //验证码不存在
         if (verificationCode == null) {
             return new ResponseResult(Result.FAILURE, "验证码不存在");
