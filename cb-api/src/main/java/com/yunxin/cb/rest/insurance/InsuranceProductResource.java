@@ -1,5 +1,6 @@
 package com.yunxin.cb.rest.insurance;
 
+import com.yunxin.cb.insurance.entity.InsuranceInformedMatter;
 import com.yunxin.cb.insurance.service.IInsuranceProductService;
 import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
@@ -34,13 +35,14 @@ public class InsuranceProductResource {
         return new ResponseResult(insuranceProductService.getInsuranceProducts());
     }
 
-    @ApiOperation(value = "根据id获取一个保险产品信息")
+    @ApiOperation(value = "根据id获取一个保险产品的事项")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "prodId", value = "保险产品Id", required = true, paramType = "form", dataType = "int")
     })
     @PostMapping(value = "getResponseResultByProdId")
     public ResponseResult getResponseResultByProdId(int prodId){
-        return new ResponseResult(insuranceProductService.getInsuranceProductById(prodId));
+        Set<InsuranceInformedMatter> list=insuranceProductService.getInsuranceProductById(prodId).getInsuranceInformedMatters();
+        return new ResponseResult(list);
     }
 
 

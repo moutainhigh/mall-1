@@ -16,7 +16,9 @@
   <title>新增客户</title>
   <script type="text/javascript">
     $(document).ready(function() {
-
+        $("#validateSubmitForm").validationEngine({
+            autoHidePrompt: true, scroll: false, showOneMessage: true
+        });
       // $.citySelector.init({
       //   province: "province",
       //   city: "city",
@@ -38,6 +40,37 @@
 
     });
 
+    /**
+     * 根据证件类型修改验证方式.
+     * @param obj   选项内容
+     * @author lxc
+     */
+    function changeCardType(obj){
+        $('#customerCardNo').removeClass();
+        var cardtype = "chinaId";
+        if(obj == '居民身份证'){
+            cardtype = "chinaId";
+        }else if(obj == '居民户口薄'){
+            cardtype = "householdVali";
+        }else if(obj == '军人身份证'){
+            cardtype = "chinaId";
+        }else if(obj == '港澳居民往来内地通行证'){
+            cardtype = "hkmcPassVali";
+        }else if(obj == '出生证'){
+            cardtype = "birthVali";
+        }else if(obj == '台湾居民往来内地通行证'){
+            cardtype = "taiwanPassVali";
+        }else if(obj == '外国护照'){
+            cardtype = "passportVali";
+        }else if(obj == '外国人永久居留身份证'){
+            cardtype = "permanentResidenceVali";
+        }else if(obj == '武警身份证'){
+            cardtype = "chinaId";
+        }else if(obj == '其他证件'){
+            cardtype = "onlyLetterNumber";
+        }
+        $('#customerCardNo').addClass("form-control validate[required,custom["+cardtype+"]]");
+    }
 
   </script>
 </head>
@@ -119,6 +152,9 @@
       <div class="inner-padding">
         <div class="pull-left">
           <h2>新增客户</h2>
+        </div>
+        <div class="pull-right">
+          <a class="btn btn-default" href="customers.do"><i class="fa fa-reply"></i></a>
         </div>
         <%--<div class="pull-right">--%>
           <%--<div class="dropdown">--%>
@@ -301,14 +337,14 @@
                   <label>真实姓名：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input path="realName" cssClass="form-control validate[required]" maxlength="14" />
+                  <form:input path="realName" cssClass="form-control validate[required,minSize[1]]" maxlength="14" />
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
                   <label>手机号：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input cssClass="form-control validate[required]" path="mobile" maxlength="16"/>
+                  <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="16"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -322,7 +358,7 @@
                   <label>证件类型：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:select path="cardType" cssClass="form-control validate[required]" >
+                  <form:select path="cardType" cssClass="form-control validate[required]" onchange="changeCardType(this.value)">
                       <form:option value="居民身份证">居民身份证</form:option>
                     <form:option value="居民户口薄">居民户口薄</form:option>
                     <form:option value="军人身份证">军人身份证</form:option>
@@ -341,7 +377,7 @@
                   <label>证件号码：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input cssClass="form-control validate[required]" path="customerCardNo" maxlength="25"/>
+                  <form:input cssClass="form-control validate[required,custom[onlyLetterNumber]]" path="customerCardNo" maxlength="25" />
                 </div>
                 <div class="col-sm-1"></div>
               </div>

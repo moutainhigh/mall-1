@@ -6,7 +6,7 @@
         <div class="search-con">
           <img src="../../assets/img/common/ic_search.png"
                style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
-          <input type="text" class="search-text" v-model="searchContent" placeholder="输入搜索内容">
+          <input type="text" class="search-text" :class="{'text': searchContent != ''}" v-model="searchContent" placeholder="输入搜索内容">
           <img style="position: absolute; right: 4.5rem; top: 1rem; width: 16px" v-if="searchContent != ''"
                src="../../assets/img/common/search_ic_eliminate.png" @click="clearInput">
         </div>
@@ -229,5 +229,9 @@
     padding: 18px 0;
     font-size: 14px;
     color: #666666;
+  }
+
+  .text {
+    padding-top: 0.4rem!important;
   }
 </style>

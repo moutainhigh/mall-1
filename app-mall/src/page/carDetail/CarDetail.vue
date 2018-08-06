@@ -1,7 +1,8 @@
 <template>
   <div>
     <div style="height: 3rem"></div>
-    <head-top :go-back="true" :headTitle="headTitle">
+    <head-top :go-back="true" :headTitle="headTitle" :share="true">
+      <img style="width: 20px; position: absolute" src="../../assets/img/common/ic_nav_share.png">
       <div slot="head-tab" class="head-tab" v-if="scroll > 90 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
           详情
@@ -29,7 +30,8 @@
       <div class="carPrice">
         <div class="price">
           <p class="presentPrice">￥<span>{{setTranPrice(commodityData.sellPrice)}}</span>万</p>
-          <p class="guidePrice" v-if="commodityData.priceSectionVo">指导价：￥{{setTranPrice(commodityData.priceSectionVo.startPrice)}} -
+          <p class="guidePrice" v-if="commodityData.priceSectionVo">
+            指导价：￥{{setTranPrice(commodityData.priceSectionVo.startPrice)}} -
             {{setTranPrice(commodityData.priceSectionVo.endPrice)}}万</p>
         </div>
         <div class="collect" @click="collectCommodity">
@@ -49,7 +51,7 @@
 
       <div class="rank">
         <p class="rank-title">级别：</p>
-        <p class="rank-detail" v-if="commodityData.specs">{{commodityData.specs.级别}}</p>
+        <p class="rank-detail">{{commodityData.showLevel}}</p>
       </div>
       <div class="selectItem" @click="checkProducts">
         <p class="selectItem-title">规格选择</p>
@@ -95,7 +97,7 @@
     </div>
 
     <div v-if="tab == 2">
-      <CarConfig></CarConfig>
+      <carConfig :tableDatas="commodityData.specs"></carConfig>
     </div>
 
     <div v-if="tab == 3">
@@ -169,6 +171,7 @@
 <script>
   import headTop from '../../components/header/head'
   import carExplain from './CarExplain'
+  import carConfig from './CarConfig'
   import {
     addCommodityFavorite,
     delFavoriteByFavoriteId,
@@ -182,6 +185,7 @@
     components: {
       headTop,
       carExplain,
+      carConfig,
       Swiper,
       SwiperItem,
     },
@@ -203,6 +207,7 @@
         mode: '',
         show: false,
         favoriteId: null,
+        specs: [] //配置数据
       }
     },
     methods: {
@@ -215,8 +220,8 @@
           this.headTitle = '';
         }
       },
-      checkProducts() {
-        this.checkType = 'standard';
+      //根据商品id获取货品
+      getProducts() {
         getProductsByCommodityId(this.commodityData.commodityId).then(res => {
           if (res.result == 'SUCCESS') {
             this.productGroups = res.data;
@@ -232,6 +237,9 @@
             }
           }
         })
+      },
+      checkProducts() {
+        this.checkType = 'standard';
       },
       checkAttribute(index2, index) {
         this.iac[index2] = index;
@@ -266,6 +274,7 @@
       checkMode(key) {
         this.activeMode = key;
       },
+      //规格选择
       selectStandard() {
         let name = '';
         this.standard = [];
@@ -288,10 +297,12 @@
         }
         this.checkType = 'none';
       },
+      //支付方式
       selectMode() {
         this.mode = this.activeMode;
         this.checkType = 'none';
       },
+      //滑动
       menu() {
         this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
         if (this.scroll <= 90 && this.tab == 1) {
@@ -300,6 +311,7 @@
           this.headTitle = '';
         }
       },
+      //立即抢购
       toOrderComfirm() {
         this.$router.push({
           path: "/order-comfirm",
@@ -309,6 +321,7 @@
           }
         })
       },
+      //价格转换格式
       setTranPrice(price) {
         return tranPrice(price);
       },
@@ -345,13 +358,15 @@
               this.isCollect = true;
               this.favoriteId = this.commodityData.favoriteVo.favoriteId;
             }
+            //获取货品属性
+            this.getProducts();
           }
         });
       },
     },
     created() {
       let query = this.$route.query;
-        this.getCommodityDetail(query.productId);
+      this.getCommodityDetail(query.productId);
     },
     mounted() {
       window.addEventListener('scroll', this.menu)

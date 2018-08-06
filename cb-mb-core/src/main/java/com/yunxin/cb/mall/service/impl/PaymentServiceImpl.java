@@ -63,7 +63,6 @@ public class PaymentServiceImpl implements PaymentService {
                 payment.setPayType(PayType.PAYMENT);
                 payment.setPayState(PayState.PROCESSING);
                 payment.setPayNotifyState(PayNotifyState.NOT_NOTIFY);
-                String htmlText = null;
                 // 组织支付参数、加密，发送支付请求(根据支付通道选择相应的方法 方法计3个)。支付订单编号用payId
                 if (channelType == ChannelType.ALIPAY) {// 支付宝
                     if (terminalType == TerminalType.APP) {

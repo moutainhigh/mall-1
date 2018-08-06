@@ -52,6 +52,7 @@ import javax.persistence.criteria.Root;
 import java.util.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class CustomerService implements ICustomerService {
     @Value("${application.default.avatarUrl}")
     private String avatarUrl;
@@ -164,12 +165,14 @@ public class CustomerService implements ICustomerService {
         customer.setCardPositiveImg(" ");
         customer.setCardNegativeImg(" ");
         customer.setBankCardImg(" ");
+        customer.setNickName(customer.getMobile());//add by lxc 2018-08-06  默认手机号为昵称
         customer.setRecommendCustomer(new Customer() {
             {
                 setCustomerId(1);
             }
         });
-        Customer customer1 = customerDao.getOne(1);
+//        Customer customer1 = customerDao.getOne(1);//此方法会引起,org.hibernate.lazyinitializationexception错误,解决方法,用另外一个根据customerId查询的方法
+        Customer customer1 = customerDao.findRecommendCustomer(1);//add by lxc  2018-08-05
         if (customer1 != null) {
             Customer customerCode = generateCode(customer1.getInvitationCode());
             if (customerCode != null) {
@@ -960,6 +963,7 @@ public class CustomerService implements ICustomerService {
      * @date        2018/8/6 9:55
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Customer> findCustomerByLikeLevelCode(Customer customer) {
         String like = customer.getLevelCode()+"%";
         List<Customer> list = customerDao.findCustomerByLikeLevelCode(like);
