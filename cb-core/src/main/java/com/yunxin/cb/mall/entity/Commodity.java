@@ -229,6 +229,11 @@ public class Commodity implements java.io.Serializable {
      */
     private String explainContent;
 
+    /**
+     * 商品配置内容
+     */
+    private String settingContent;
+
     //默认货品id
     private Product defaultProduct;
 
@@ -239,6 +244,15 @@ public class Commodity implements java.io.Serializable {
 
     public void setExplainContent(String explainContent) {
         this.explainContent = explainContent;
+    }
+
+    @Column(nullable = true, length = 4098)
+    public String getSettingContent() {
+        return settingContent;
+    }
+
+    public void setSettingContent(String settingContent) {
+        this.settingContent = settingContent;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -698,4 +712,5 @@ public class Commodity implements java.io.Serializable {
     public void setAuditRemark(String auditRemark) {
         this.auditRemark = auditRemark;
     }
+
 }

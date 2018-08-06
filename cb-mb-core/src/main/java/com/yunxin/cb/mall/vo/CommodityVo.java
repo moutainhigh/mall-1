@@ -69,6 +69,10 @@ public class CommodityVo  implements java.io.Serializable{
     @ApiModelProperty(value="商品说明介绍",name="explainContent",example="BMW")
     private String explainContent;
 
+    /** 商品配置内容 */
+    @ApiModelProperty(value="商品配置内容",name="settingContent",example="BMW")
+    private String settingContent;
+
     /** 级别 */
     @ApiModelProperty(value="级别",name="showLevel",example="紧凑型车")
     private String showLevel;
@@ -271,6 +275,14 @@ public class CommodityVo  implements java.io.Serializable{
 
     public void setExplainContent(String explainContent) {
         this.explainContent = explainContent;
+    }
+
+    public String getSettingContent() {
+        return settingContent;
+    }
+
+    public void setSettingContent(String settingContent) {
+        this.settingContent = settingContent;
     }
 
     public List<ProductVo> getProductVos() {
