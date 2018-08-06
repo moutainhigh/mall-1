@@ -14,15 +14,16 @@
       <button class="cancel" @click="back">取消</button>
     </div>
 
-    <div class="list-view" ref="listView">
+    <div class="list-view" ref="listView" v-if="searchContent == ''">
       <div>
-        <div v-for="(group, index) in singers" class="list-group" :key="parseInt(group.id)" ref="listGroup">
-          <h2 v-if="index != 0 && index !=1" class="list-group-title">{{ group.title }}</h2>
-          <div v-if="index != 0 && index !=1">
-            <div v-for="item in group.items" class="list-group-item" :key="parseInt(item.id)">
-              <span class="name">{{ item.name }}</span>
+        <div v-for="(sort, index) in sortedData" class="list-group" :key="sort.detail.id" ref="listGroup">
+          <h2 v-if="index != 0 && index != 1" class="list-group-title">{{ sort.initials }}</h2>
+          <div v-if="index != 0 && index != 1">
+            <div v-for="detail in sort.detail" class="list-group-item" :key="detail.id" @click="chooseCity(detail.city)">
+              <span class="name">{{ detail.city }}</span>
             </div>
           </div>
+
           <div v-if="index == 0" style="background: #ffffff">
             <p class="cityTitle">定位城市</p>
             <button class="locationCity">{{localCity}}</button>
@@ -38,7 +39,7 @@
           <div v-for="(item, index) in shortcutList"
                class="item"
                :data-index="index"
-               :key="parseInt(item.id)"
+               :key="item.id"
                @touchstart="onShortcutStart"
                @touchmove.stop.prevent="onShortcutMove"
                :class="{'current': currentIndex === index}"
@@ -48,16 +49,21 @@
         </div>
       </div>
     </div>
+
+    <div class="history" v-if="searchContent != ''">
+      <div class="listItem" v-for="result in resultList" @click="toDetail(result)"><p>{{result.title}}</p></div>
+    </div>
   </div>
 </template>
 
 <script>
   import BScroll from 'better-scroll'
-  // import {cityData} from '../../js/city.js'
   import {cityData} from '../../js/cityList.js'
   import AMap from 'AMap';
   import storage from "../../store/storage";
   import {LOCATION} from "../../config/constant";
+
+  var pinyin = require("pinyin");
 
   export default {
     name: "Location",
@@ -68,10 +74,49 @@
         currentIndex: 0,
         hotCitys: ['北京', '深圳', '上海', '武汉', '长沙', '中山', '成都', '厦门', '珠海'],
         searchContent: '',
-        localCity: ''
+        localCity: '',
+        sortedData: [],
+        resultList: [],
       }
     },
     created() {
+      // 传入的汉字属性名必须为name
+      const pinyinData = this.singers.map(item => ({
+        detail: item,
+        initials: pinyin(item.city, {
+          style: pinyin.STYLE_FIRST_LETTER
+        })[0][0].toUpperCase()
+      }));
+      //定位与热门
+      let local = '定位';
+      let hot = '热门';
+      this.sortedData.push({initials: local});
+      this.sortedData.push({initials: hot});
+
+      // todo 生成26个字母的数组对象
+      this.letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+      for (let letter of this.letters) {
+        this.sortedData.push({initials: letter});
+      }
+      // todo 过滤掉没有信息的字母对象
+      this.sortedData = this.sortedData.filter(item => {
+        item.detail = [];
+        //自定义定位与热门
+        if (item.initials === '定位') {
+          item.detail.push('');
+        }
+        if (item.initials === '热门') {
+          item.detail.push('');
+        }
+        pinyinData.map(jtem => {
+          if (item.initials === jtem.initials) {
+            item.detail.push(jtem.detail);
+          }
+        });
+        return item.detail.length > 0;
+      });
+
+
       this.touch = {}
       // 初始化 better-scroll 必须要等 dom 加载完毕
       setTimeout(() => {
@@ -81,7 +126,6 @@
     },
     methods: {
       _initSrcoll() {
-        // console.log('didi')
         this.scroll = new BScroll(this.$refs.listView, {
           probeType: 3,
           click: true
@@ -149,52 +193,42 @@
             citySearch.getLocalCity(function (status, result) {
               if (status === 'complete' && result.info === 'OK') {
                 vm.localCity = result.city.substr(0, 2);
-                storage.saveSession(LOCATION,vm.localCity);
+                storage.saveSession(LOCATION, vm.localCity);
               }
             })
           })
-        }else {
+        } else {
           this.localCity = storage.fetchSession(LOCATION);
         }
       },
-      chooseCity(city){
+      chooseCity(city) {
         this.localCity = city;
-        storage.saveSession(LOCATION,city);
+        storage.saveSession(LOCATION, city);
       },
-      back(){
+      back() {
         this.$router.go(-1);
       }
     },
-    watch: {
-      // scrollY(newVal) {
-      //   // 向下滑动的时候 newVal 是一个负数，所以当 newVal > 0 时，currentIndex 直接为 0
-      //   if (newVal > 0) {
-      //     this.currentIndex = 0
-      //     return
-      //   }
-      //   // 计算 currentIndex 的值
-      //   for (let i = 0; i < this.listHeight.length - 1; i++) {
-      //     let height1 = this.listHeight[i]
-      //     let height2 = this.listHeight[i + 1]
-      //
-      //     if (-newVal >= height1 && -newVal < height2) {
-      //       this.currentIndex = i
-      //       return
-      //     }
-      //   }
-      //   // 当超 -newVal > 最后一个高度的时候
-      //   // 因为 this.listHeight 有头尾，所以需要 - 2
-      //   this.currentIndex = this.listHeight.length - 2
-      // },
-    },
     computed: {
       shortcutList() {
-        // console.log(this.singers.map((group) => {
-        //   return group
-        // }));
-        return this.singers.map((group) => {
-          return group.title.substr(0, 1)
+        return this.sortedData.map((sorted) => {
+          return sorted.initials
         })
+      }
+    },
+    watch: {
+      searchContent: {
+        handler(newVal, oldVal) {
+          // console.log(this.sortedData)
+          for (let sort of this.sortedData) {
+            console.log(sort)
+            for (let detail of sort.detail) {
+              // if (detail.city.indexOf(newVal) > -1) {
+              //   this.resultList.push(detail.city);
+              // }
+            }
+          }
+        }
       }
     },
     mounted() {
@@ -340,7 +374,7 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 20px;
+      width: 30px;
       padding: 20px 0;
       border-radius: 10px;
       text-align: center;
