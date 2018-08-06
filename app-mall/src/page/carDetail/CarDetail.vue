@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="height: 3rem"></div>
-    <head-top :headTitle="headTitle">
+    <head-top :go-back="true" :headTitle="headTitle">
       <div slot="head-tab" class="head-tab" v-if="scroll > 90 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
           详情
@@ -28,9 +28,9 @@
       </div>
       <div class="carPrice">
         <div class="price">
-          <p class="presentPrice">￥<span>{{commodityData.sellPrice}}</span>万</p>
-          <p class="guidePrice">指导价：￥{{commodityData.priceSectionVo.startPrice}} -
-            {{commodityData.priceSectionVo.endPrice}}万</p>
+          <p class="presentPrice">￥<span>{{setTranPrice(commodityData.sellPrice)}}</span>万</p>
+          <p class="guidePrice" v-if="commodityData.priceSectionVo">指导价：￥{{setTranPrice(commodityData.priceSectionVo.startPrice)}} -
+            {{setTranPrice(commodityData.priceSectionVo.endPrice)}}万</p>
         </div>
         <div class="collect" @click="collectCommodity">
           <div style="position: relative; width: 40px">
@@ -49,7 +49,7 @@
 
       <div class="rank">
         <p class="rank-title">级别：</p>
-        <p class="rank-detail">{{commodityData.specs.级别}}</p>
+        <p class="rank-detail" v-if="commodityData.specs">{{commodityData.specs.级别}}</p>
       </div>
       <div class="selectItem" @click="checkProducts">
         <p class="selectItem-title">规格选择</p>
@@ -61,15 +61,15 @@
       <div class="buyMode" @click="checkType = 'mode'">
         <p class="selectItem-title">支付方式</p>
         <p v-if="mode == ''" class="selectItem-detail">请选择</p>
-        <p v-if="mode != ''" class="selectItem-detail" style="color: #f5ca1d">{{mode}}</p>
+        <p v-if="mode != ''" class="selectItem-detail" style="color: #f5ca1d">{{commodityData.paymentType[mode]}}</p>
         <img src="../../assets/img/cardetail/ic_right.png">
       </div>
       <div style="background: #f3f3f3; height: 1px; margin-left: 10px; margin-right: 10px"></div>
 
       <div class="shopInfo">
-        <p class="shopName">{{commodityData.sellerVo.sellerName}}<span>【现货】</span></p>
-        <p class="shopAddress">{{commodityData.sellerVo.sellerAddress}}</p>
-        <p class="shopTel">联系电话：{{commodityData.sellerVo.mobile}}</p>
+        <p class="shopName" v-if="commodityData.sellerVo">{{commodityData.sellerVo.sellerName}}<span>【现货】</span></p>
+        <p class="shopAddress" v-if="commodityData.sellerVo">{{commodityData.sellerVo.sellerAddress}}</p>
+        <p class="shopTel" v-if="commodityData.sellerVo">联系电话：{{commodityData.sellerVo.mobile}}</p>
       </div>
       <div class="shopEnsure">
         <p><img src="../../assets/img/cardetail/ic_particulars_service.png">店铺发货</p>
@@ -112,7 +112,7 @@
             </div>
             <img class="car-close" src="../../assets/img/cardetail/ic_sku_close.png" @click="checkType = 'none'">
             <div style="width: 60vw; float: right">
-              <p class="sale-price">￥<span>23.98</span>万</p>
+              <p class="sale-price">￥<span>{{setTranPrice(commodityData.sellPrice)}}</span>万</p>
               <p class="sale-no">商品编号：{{commodityData.commodityCode}}</p>
             </div>
           </div>
@@ -146,9 +146,9 @@
             <img src="../../assets/img/cardetail/ic_sku_close.png" @click="checkType = 'none'">
           </div>
           <div style="margin-left: 14px">
-            <button v-for="(type, index) in commodityData.paymentType" class="carColor"
-                    :class="{'activeColor': type == activeMode}"
-                    @click="checkMode(type)">
+            <button v-for="(type, key) in commodityData.paymentType" class="carColor"
+                    :class="{'activeColor': key == activeMode}"
+                    @click="checkMode(key)">
               {{type}}
             </button>
           </div>
@@ -175,6 +175,7 @@
     getCommdityDetailById, getProductsByCommodityId
   } from "../../service/getData";
   import {Swiper, SwiperItem} from 'vux'
+  import {tranPrice} from "../../config/dataFormat";
 
   export default {
     name: "CarDetail",
@@ -262,8 +263,8 @@
           }
         }
       },
-      checkMode(type) {
-        this.activeMode = type;
+      checkMode(key) {
+        this.activeMode = key;
       },
       selectStandard() {
         let name = '';
@@ -302,11 +303,14 @@
       toOrderComfirm() {
         this.$router.push({
           path: "/order-comfirm",
-          query:{
+          query: {
             productId: this.checkProductId,
-            mode:this.mode
+            payType: this.mode
           }
         })
+      },
+      setTranPrice(price) {
+        return tranPrice(price);
       },
       //收藏
       collectCommodity() {
@@ -332,21 +336,22 @@
           }
         }
       },
-    },
-    watch: {
-      tab: {},
+      //初始化根据货品id获取商品数据
+      getCommodityDetail(productId) {
+        getCommdityDetailById(productId).then(res => {
+          if (res.result == 'SUCCESS') {
+            this.commodityData = res.data;
+            if (this.commodityData.favoriteVo) {
+              this.isCollect = true;
+              this.favoriteId = this.commodityData.favoriteVo.favoriteId;
+            }
+          }
+        });
+      },
     },
     created() {
-      let productId = 476;
-      getCommdityDetailById(productId).then(res => {
-        if (res.result == 'SUCCESS') {
-          this.commodityData = res.data;
-          if (this.commodityData.favoriteVo) {
-            this.isCollect = true;
-            this.favoriteId = this.commodityData.favoriteVo.favoriteId;
-          }
-        }
-      });
+      let query = this.$route.query;
+        this.getCommodityDetail(query.productId);
     },
     mounted() {
       window.addEventListener('scroll', this.menu)
@@ -354,7 +359,7 @@
 
     beforeRouteLeave(to, from, next) {
       // 设置下一个路由的 meta
-      if(to.path=='/car-list'){
+      if (to.path == '/car-list') {
         to.meta.keepAlive = true;  // B 跳转到 A 时，让 A 缓存，即不刷新
       }
       next();

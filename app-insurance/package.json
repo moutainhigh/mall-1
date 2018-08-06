@@ -13,6 +13,7 @@
     "axios": "^0.18.0",
     "lrz": "^4.9.40",
     "vue": "^2.5.2",
+    "vue-picture-preview": "^1.2.0",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
     "vue-scroller": "^2.2.4",

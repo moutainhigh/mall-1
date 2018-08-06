@@ -36,6 +36,25 @@
                 $('#createTimes').val('')
             }
         }
+
+        function enabledItem(enabled) {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                $.get("enableInsuranceProductById.do", {
+                    proId: dataItem.prodId,
+                    enabled: enabled,
+                    rad: Math.random()
+                }, function (data) {
+                    if (true == data) {
+                        commonNotify("操作成功！", "success");
+                        $("#grid").data("kendoGrid").dataSource.read();
+                    } else {
+                        commonNotify("操作失败!", "error");
+                    }
+                });
+            }
+        }
+
         function removeItem() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
@@ -181,11 +200,17 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
+                                <a href="javascript:void(0);" onclick="enabledItem(1)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
+                                <a href="javascript:void(0);" onclick="enabledItem(0)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
+                            </div>
+                            <div class="btn-group">
                                 <a href="toAddProduct.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
                                 <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                                 <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
+
                         </div>
+
                     </header>
                 </div>
                 <div class="table-wrapper">
@@ -205,6 +230,7 @@
                             <kendo:grid-column title="保险期间" field="insurePeriod"  width="50px"/>
                             <kendo:grid-column title="保障年限" field="protectionYear" width="50px"/>
                             <kendo:grid-column title="投保须知" field="instruction"  width="100px"/>
+                            <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="25px"/>
                             <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="30px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top :local="true" v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
+    <head-top :go-back="true" :local="true" v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
       <div slot="search" style="width: 100%;">
         <div class="search-con"  @click="toSearch">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
@@ -50,7 +50,7 @@
             </section>
           </transition>
         </div>
-        <div class="sort_item" @click="openDetail(1)">
+        <div class="sort_item" @click="chooseBrand()">
           <div class="sort_item_container">
             <div class="sort_item_border">
               <span :class="{category_title: sortBy == 'sort'}">品牌</span>
@@ -202,7 +202,7 @@
 
 <script>
   import headTop from "../../components/header/head"
-  import {categorySearch} from "../../service/getData";
+  import {categorySearch, getSearch} from "../../service/getData";
   import {delArrayAll, delArrayOne} from "../../config/mUtils";
   import {tranPrice} from "../../config/dataFormat";
 
@@ -300,6 +300,7 @@
           this.searchVo[selected.type] = null;
         }
         this.selecteds.splice(index, 1);
+        this.getData();
       },
       //跳转商品详情页
       openDetail(productId) {
@@ -389,13 +390,12 @@
         } else {
           let _this = this;
           this.searchVo.page++;
-          this.$vux.loading.show("加载中");
-          this.getData(done, 'loading');
+          this.getData(done, true);
         }
       },
       async getData(done, isInf) {
         let _this = this;
-        if (isInf != 'loading') {
+        if (!isInf) {
           this.searchVo.page = 0;
         }
         this.$vux.loading.show("加载中");
@@ -411,23 +411,8 @@
               if (_this.searchVo.page >= _this.searchVo.totalPage - 1) {
                 _this.isInfinite = false;
               }
-            }
-            if (isInf != 'loading') {
-              if (res.data.condition) {
-                for (let item in res.data.condition) {
-                  _this.conditions.push({
-                    specName: item,
-                    value: res.data.condition[item],
-                    showNum: -1
-                  });
-                  _this.chooseConditions.push({
-                    specName: item,
-                    value: res.data.condition[item],
-                    showNum: -1
-                  })
-                }
-              }
-              _this.priceSection.value = res.data.priceSection;
+            }else {
+              _this.commodities = [];
             }
           } else {
             if (isInf) {
@@ -440,11 +425,38 @@
           done();
         }
       },
+      async getSearchVo() {
+        getSearch().then(res=>{
+          console.log(res);
+          if (res.result == 'SUCCESS'){
+            if (res.data.condition) {
+              for (let item in res.data.condition) {
+                this.conditions.push({
+                  specName: item,
+                  value: res.data.condition[item],
+                  showNum: -1
+                });
+                this.chooseConditions.push({
+                  specName: item,
+                  value: res.data.condition[item],
+                  showNum: -1
+                })
+              }
+            }
+            this.priceSection.value = res.data.priceSection;
+          }
+        })
+      },
       toSearch() {
         this.$router.push({
           path:"/search"
         })
       },
+      chooseBrand() {
+        this.$router.push({
+          path:"/choose-brand"
+        })
+      }
     },
     watch: {
       selecteds(newVal) {
@@ -453,17 +465,6 @@
       }
     },
     created() {
-      if (this.$route.query.brandId) {
-        let brandId = this.$route.query.brandId;
-        let brandName = this.$route.query.brandName;
-        this.searchVo.brandId = brandId;
-        this.selecteds.push({
-          key: brandId,
-          val: brandName,
-          type: 'brandId'
-        })
-      }
-
       if (this.$route.query.categoryId) {
         let categoryId = this.$route.query.categoryId;
         let categoryName = this.$route.query.categoryName;
@@ -473,10 +474,26 @@
           val: categoryName,
           type: 'categoryId'
         })
+      }else {
+        this.selecteds.push({
+          key: 0,
+          val: '全部',
+          type: 'all'
+        })
       }
       this.getData();
+      this.getSearchVo();
     },
-
+    beforeRouteLeave(to, from, next) {
+      // 设置下一个路由的 meta
+      if(to.path=='/car-detail'){
+        to.meta.keepAlive = true;
+        next();
+      }else {
+        to.meta.keepAlive = false;
+        next();
+      }
+    },
   }
 </script>
 

@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.restful.RestfulFactory;
 import com.yunxin.cb.mall.restful.meta.Result;
 import com.yunxin.cb.mall.service.SearchRestService;
+import com.yunxin.cb.mall.vo.CombinationVO;
 import com.yunxin.cb.mall.vo.SearchResultVo;
 import com.yunxin.cb.mall.vo.SearchVo;
 import com.yunxin.cb.rest.BaseResource;
@@ -55,6 +56,21 @@ public class SearchResource extends BaseResource {
         try {
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
             Call<ResponseResult<SearchResultVo>> call = restService.categorySearch(searchVo);
+            ResponseResult result = call.execute().body();
+            return result;
+        } catch (Exception e) {
+            logger.info("categorySearch failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
+    }
+    @ApiOperation(value = "查询所有规格属性等")
+    @GetMapping(value = "commodity")
+    @ApiVersion(1)
+    @IgnoreAuthentication
+    public ResponseResult<CombinationVO> selectAll() {
+        try {
+            SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
+            Call<ResponseResult<CombinationVO>> call = restService.selectAll();
             ResponseResult result = call.execute().body();
             return result;
         } catch (Exception e) {

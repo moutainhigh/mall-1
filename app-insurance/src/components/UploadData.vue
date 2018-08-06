@@ -1,24 +1,49 @@
 <template>
   <div>
-    <div class="title">投保资料</div>
-    <p class="uploadTitle">投保人银行卡正面</p>
+    <div class="title">投保资料上传</div>
+    <p class="uploadTitle">投保人银行卡正面上传（必传）
+      <button v-if="imgUrls.image1 !== '' && imgUrls.image1 !== undefined" @click='delImage(1)'>清除</button>
+    </p>
     <div class="card">
-      <div>
-        <img style="padding: 0;" :src="imgUrls.image1">
+      <div v-if="imgUrls.image1 === '' || imgUrls.image1 === undefined" @click.stop="addPic1">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/upload.png">
+      </div>
+      <input id="image1" type="file" accept="image/*" capture="camera" @change="onFileChange"
+             style="display: none;">
+      <div style="height: 140px; overflow: hidden; position: relative" v-if="imgUrls.image1 !== '' && imgUrls.image1 !== undefined">
+        <!--<img style="width: 30px; position: absolute; right: 20vw; top: -1rem; padding: 0; z-index: 999" src="../assets/img/close.png">-->
+        <img style="padding: 0;" :src="imgUrls.image1" v-preview="imgUrls.image1">
       </div>
     </div>
 
-    <p class="uploadTitle">投保人身份证正面</p>
+    <p class="uploadTitle">投保人身份证件正面上传（必传）
+      <button v-if="imgUrls.image2 !== '' && imgUrls.image2 !== undefined" @click='delImage(2)'>清除</button>
+    </p>
     <div class="card">
-      <div>
-        <img style="padding: 0;" :src="imgUrls.image2">
+      <div v-if="imgUrls.image2 === '' || imgUrls.image2 === undefined" @click.stop="addPic2">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/takeIdCard.png">
+      </div>
+      <input id="image2" type="file" accept="image/*" capture="camera" @change="onFileChange"
+             style="display: none;">
+      <div style="height: 140px; overflow: hidden" v-if="imgUrls.image2 !== '' && imgUrls.image2 !== undefined">
+        <img style="padding: 0;" :src="imgUrls.image2" v-preview="imgUrls.image2">
       </div>
     </div>
 
-    <p class="uploadTitle">投保人身份证背面</p>
+    <p class="uploadTitle">投保人身份证件背面上传（必传）
+      <button v-if="imgUrls.image3 !== '' && imgUrls.image3 !== undefined" @click='delImage(3)'>清除</button>
+    </p>
     <div class="card">
-      <div>
-        <img style="padding: 0;" :src="imgUrls.image3">
+      <div v-if="imgUrls.image3 === '' || imgUrls.image3 === undefined" @click.stop="addPic3">
+        <div style="position: absolute; width: 100%; height: 120px"></div>
+        <img src="../assets/img/takeEmblem.png">
+      </div>
+      <input id="image3" type="file" accept="image/*" capture="camera" @change="onFileChange"
+             style="display: none;">
+      <div style="height: 140px; overflow: hidden" v-if="imgUrls.image3 !== '' && imgUrls.image3 !== undefined">
+        <img style="padding: 0;" :src="imgUrls.image3" v-preview="imgUrls.image3">
       </div>
     </div>
 
@@ -32,8 +57,8 @@
       </div>
       <input id="image4" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
-      <div v-if="imgUrls.image4 !== '' && imgUrls.image4 !== undefined">
-        <img style="padding: 0;" :src="imgUrls.image4">
+      <div style="height: 140px; overflow: hidden" v-if="imgUrls.image4 !== '' && imgUrls.image4 !== undefined">
+        <img style="padding: 0;" :src="imgUrls.image4" v-preview="imgUrls.image4">
       </div>
     </div>
 
@@ -47,8 +72,8 @@
       </div>
       <input id="image5" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
-      <div v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined">
-        <img style="padding: 0;" :src="imgUrls.image5">
+      <div style="height: 140px; overflow: hidden" v-if="imgUrls.image5 !== '' && imgUrls.image5 !== undefined">
+        <img style="padding: 0;" :src="imgUrls.image5" v-preview="imgUrls.image5">
       </div>
     </div>
 
@@ -62,8 +87,8 @@
       </div>
       <input id="image6" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
-      <div v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined">
-        <img style="padding: 0;" :src="imgUrls.image6">
+      <div style="height: 140px; overflow: hidden" v-if="imgUrls.image6 !== '' && imgUrls.image6 !== undefined">
+        <img style="padding: 0;" :src="imgUrls.image6" v-preview="imgUrls.image6">
       </div>
     </div>
     <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
@@ -82,6 +107,7 @@
   import '../lib/lrz.all.bundle'
   import storage from "../store/storage";
   import {uploadImage} from "../service/getData";
+
 
   //缓存
   let holder = storage.fetch("holder");
@@ -236,12 +262,12 @@
         }
         if (!this.imgUrls.image2) {
           this.showPositionValue = true;
-          this.toastText = "请上传身份证正面图片";
+          this.toastText = "请上传身份证件正面图片";
           return ;
         }
         if (!this.imgUrls.image3) {
           this.showPositionValue = true;
-          this.toastText = "请上传身份证背面图片";
+          this.toastText = "请上传身份证件背面图片";
           return ;
         }
         let holder = storage.fetch("holder");
