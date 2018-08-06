@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="height: 3rem"></div>
-    <head-top :headTitle="headTitle">
+    <head-top :go-back="true" :headTitle="headTitle">
       <div slot="head-tab" class="head-tab" v-if="scroll > 90 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
           详情
@@ -337,8 +337,7 @@
         }
       },
       //初始化根据货品id获取商品数据
-      getCommodityDetail() {
-        let productId = 476;
+      getCommodityDetail(productId) {
         getCommdityDetailById(productId).then(res => {
           if (res.result == 'SUCCESS') {
             this.commodityData = res.data;
@@ -351,9 +350,8 @@
       },
     },
     created() {
-      // async function asyncFun() {
-        this.getCommodityDetail();
-      // }
+      let query = this.$route.query;
+        this.getCommodityDetail(query.productId);
     },
     mounted() {
       window.addEventListener('scroll', this.menu)

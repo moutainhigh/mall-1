@@ -117,6 +117,11 @@
                 <div class="pull-left">
                     <h2>事项组</h2>
                 </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="insuranceInformedGroups.do">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </div>
             </div>
             <!-- End .inner-padding -->
         </header>

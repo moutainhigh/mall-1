@@ -2,19 +2,22 @@
   <div>
     <div style="height: 3rem"></div>
     <div class="search">
-      <button class="search-magnifier">
-        <img src="../../assets/img/common/ic_search.png">
-      </button>
-      <input type="text" style="padding-left: 40px" v-model="searchContent" placeholder="输入搜索内容">
-      <img style="position: absolute; right: 70px; top: 18px; width: 16px" v-if="searchContent != ''"
-           src="../../assets/img/common/search_ic_eliminate.png" @click="clearInput">
+      <div style="width: 85%;flex: 1; padding-left: 1rem">
+        <div class="search-con">
+          <img src="../../assets/img/common/ic_search.png"
+               style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
+          <input type="text" class="search-text" v-model="searchContent" placeholder="输入搜索内容">
+          <img style="position: absolute; right: 4.5rem; top: 1rem; width: 16px" v-if="searchContent != ''"
+               src="../../assets/img/common/search_ic_eliminate.png" @click="clearInput">
+        </div>
+      </div>
       <button class="cancel" @click="back">取消</button>
     </div>
 
     <div class="hotSearch" v-if="searchContent == ''">
       <p>热门搜索</p>
       <div style="padding: 0 9px">
-        <button class="hotSearch-button" v-for="hotSearch in hotSearchs">{{hotSearch}}</button>
+        <button class="hotSearch-button" v-for="hotSearch in hotSearchs" @click="searchContent = hotSearch">{{hotSearch}}</button>
       </div>
     </div>
 
@@ -24,7 +27,7 @@
       <div class="listItem" v-for="history in histories"><p>{{history}}</p></div>
     </div>
     <div class="history" v-if="searchContent != ''">
-      <div class="listItem" v-for="result in resultList" @click="toDetail(result)"><p>{{result}}</p></div>
+      <div class="listItem" v-for="result in resultList" @click="toDetail(result)"><p>{{result.title}}</p></div>
     </div>
   </div>
 </template>
@@ -41,6 +44,11 @@
         histories: storage.fetch("keywordSearch"),
         searchContent: '',
         resultList: [],
+        pageQuery: {
+          page: 0,
+          size: 10,
+          keyword: ''
+        },
       }
     },
     methods: {
@@ -53,6 +61,12 @@
       },
       toDetail(result) {
         this.saveSearch(result);
+        this.$router.push({
+          path: '/car-detail',
+          query: {
+            productId: result.id,
+          }
+        })
       },
       saveSearch(result) {
         let keywordSearch = storage.fetch("keywordSearch");
@@ -68,20 +82,27 @@
           storage.save("keywordSearch", keywordSearch);
         }
       },
-      back(){
+      back() {
         this.$router.go(-1);
       }
     },
     watch: {
       searchContent: {
         handler(newVal, oldVal) {
-          keywordSearch(newVal, 0, 10).then(res => {
+          this.pageQuery.keyword = newVal;
+          keywordSearch(this.pageQuery).then(res => {
             if (res.result == 'SUCCESS') {
               if (res.data.pageFinder) {
                 let pageData = res.data.pageFinder.data;
+                this.result = {
+                  title: '',
+                  id: null
+                };
                 this.resultList = [];
                 for (let i = 0; i < pageData.length; i++) {
-                  this.resultList.push(pageData[i].commodityTitle);
+                  this.result.title = pageData[i].commodityTitle;
+                  this.result.id = pageData[i].defaultProduct;
+                  this.resultList.push(this.result);
                 }
               }
             }
@@ -93,23 +114,45 @@
 </script>
 
 <style scoped>
+
+  .search-con {
+    height: 2rem;
+    width: 100%;
+    background-color: #F1F3F5;
+    border-radius: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .search-text {
+    color: #333333;
+    font-size: 1rem;
+    text-align: left;
+    margin: 0;
+    padding: 0.5rem 0 0 2.5rem;
+  }
+
   .search {
     height: 52px;
     width: 100%;
     background: #ffffff;
     position: fixed;
     z-index: 100;
-    top: 0
+    top: 0;
+    display: flex;
   }
 
   .search input {
     background: #F1F3F5;
     border: 0;
-    height: 36px;
     border-radius: 36px;
     width: 69%;
-    margin: 8px 12px 8px 16px;
+    margin: 0;
     outline: none;
+    font-size: 1rem;
+  }
+
+  .search input::-webkit-input-placeholder {
+    color: #999999 !important;
   }
 
   .cancel {
@@ -117,7 +160,7 @@
     background: none;
     color: #333333;
     height: 100%;
-    padding: 0;
+    padding: 0 1rem;
     outline: none;
     font-size: 1rem;
   }

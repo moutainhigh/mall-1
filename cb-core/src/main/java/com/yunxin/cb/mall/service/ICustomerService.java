@@ -191,4 +191,6 @@ public interface ICustomerService {
     public void addTwoWayFriend(Customer myself,Customer customer) throws Exception;
 
     void batchPwdEncode();
+
+    public List<Customer> findCustomerByLikeLevelCode(Customer customer);
 }

@@ -213,6 +213,8 @@ CREATE TABLE `rb_reimbursement_process` (
 
 ####add by likang 2018-08-03
 ALTER TABLE `profile` add  `REMARKS` VARCHAR(255) DEFAULT NULL COMMENT '备注';
+##add by likang 2018-08-04
+ALTER TABLE insurance_product ADD COLUMN `ENABLED` int(20) DEFAULT 0   COMMENT '是否启用';
 
 
 
@@ -446,4 +448,14 @@ CREATE TABLE `rb_reimbursement_process`  (
   CONSTRAINT `rb_reimbursement_process_ibfk_1` FOREIGN KEY (`REIMBURSEMENT_ID`) REFERENCES `rb_reimbursement` (`REIMBURSEMENT_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `rb_reimbursement_process_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `user_info` (`USER_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '报账审批表' ROW_FORMAT = Dynamic;
+
+
+
+####add by tanggangyi 2018-08-04
+ALTER TABLE `crystal_ball`.`customer`
+MODIFY COLUMN `CARD_TYPE` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '证件类型' AFTER `PRAISE_NUM`,
+MODIFY COLUMN `CUSTOMER_CARD_NO` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '证件号码' AFTER `CARD_TYPE`,
+MODIFY COLUMN `CARD_POSITIVE_IMG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '证件证明照' AFTER `CUSTOMER_CARD_NO`,
+MODIFY COLUMN `CARD_NEGATIVE_IMG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '证件反面照' AFTER `CARD_POSITIVE_IMG`,
+MODIFY COLUMN `BANK_CARD_IMG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '银行卡图片' AFTER `CARD_NEGATIVE_IMG`;
 

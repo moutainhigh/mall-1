@@ -34,14 +34,6 @@ public class InsuranceProductResource {
         return new ResponseResult(insuranceProductService.getInsuranceProducts());
     }
 
-    /**
-     * 根据id获取一个保险产品信息
-     * @author      likang
-     * @param prodId
-     * @return      com.yunxin.cb.vo.ResponseResult
-     * @exception
-     * @date        2018/7/18 20:07
-     */
     @ApiOperation(value = "根据id获取一个保险产品信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "prodId", value = "保险产品Id", required = true, paramType = "form", dataType = "int")

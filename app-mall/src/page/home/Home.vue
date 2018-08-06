@@ -1,6 +1,6 @@
 <template>
   <div>
-    <head-top :local="true">
+    <head-top :goClose="true" :local="true">
       <div slot="search" style="width: 100%;">
         <div class="search-con" @click="toSearch">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
@@ -12,7 +12,7 @@
     <div style="background-color: #FFFFFF;padding: 0.1rem 0;font-size: 0;margin-top: 3rem;">
       <div style="background-color: #999999;margin: 1rem;border-radius: 0.5rem;overflow: hidden">
         <swiper :aspect-ratio="350/800" auto style="margin:0 auto;" dots-position="center">
-          <swiper-item class="swiper-demo-img" v-for="(item, index) in homeList" :key="index"><img width="100%" :src="item.picPath"></swiper-item>
+          <swiper-item class="swiper-demo-img" v-for="(item, index) in homeList" :key="index"><img width="100%" style="border-radius: 0.5rem;" :src="item.picPath"></swiper-item>
         </swiper>
       </div>
       <div style="margin: 1rem;border-radius: 0.5rem;">
@@ -20,7 +20,7 @@
           <img :src="brand.picPath" style="width: 3rem;height: 3rem;">
           <div style="font-size: 0.8rem;line-height: 3;">{{brand.brandName}}</div>
         </div>
-        <div class="car-type">
+        <div class="car-type" @click="goCarBrand">
           <img src="../../assets/img/home/ic_more.png" style="width: 3rem;height: 3rem;">
           <div style="font-size: 0.8rem;line-height: 3;">更多</div>
         </div>
@@ -74,6 +74,8 @@
   import {getIndex} from "../../service/getData";
   import { Swiper,SwiperItem} from 'vux'
   import AMap from 'AMap';
+  import storage from "../../store/storage";
+  import {CAR_LIST_SESSION} from "../../config/constant";
 
   export default {
     name: "Home",
@@ -137,6 +139,11 @@
         this.$router.push({
           path:"/location"
         })
+      },
+      goCarBrand(){
+        this.$router.push({
+          path:"/choose-brand"
+        })
       }
     },
     created() {
@@ -159,9 +166,9 @@
     },
 
     beforeRouteLeave(to, from, next) {
-      // 设置下一个路由的 meta
+      // 下个页面为列表页 刷新
       if(to.path=='/car-list'){
-        to.meta.keepAlive = false;  // C 跳转到 A 时，让 A不缓存，即刷新
+        storage.saveSession(CAR_LIST_SESSION,true);
       }
       next();
     },

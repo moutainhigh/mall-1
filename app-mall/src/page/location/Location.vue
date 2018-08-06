@@ -2,12 +2,15 @@
   <div class="box">
     <div style="height: 3rem"></div>
     <div class="search">
-      <button class="search-magnifier">
-        <img src="../../assets/img/common/ic_search.png">
-      </button>
-      <input type="text" style="padding-left: 40px" v-model="searchContent" placeholder="输入城市或拼音">
-      <img style="position: absolute; right: 70px; top: 18px; width: 16px" v-if="searchContent != ''"
-           src="../../assets/img/common/search_ic_eliminate.png" @click="clearInput">
+      <div style="width: 85%;flex: 1; padding-left: 1rem">
+        <div class="search-con">
+          <img src="../../assets/img/common/ic_search.png"
+               style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
+          <input type="text" class="search-text" v-model="searchContent" placeholder="输入城市或拼音">
+          <img style="position: absolute; right: 4.5rem; top: 1rem; width: 16px" v-if="searchContent != ''"
+               src="../../assets/img/common/search_ic_eliminate.png" @click="clearInput">
+        </div>
+      </div>
       <button class="cancel" @click="back">取消</button>
     </div>
 
@@ -50,7 +53,8 @@
 
 <script>
   import BScroll from 'better-scroll'
-  import {cityData} from '../../js/city.js'
+  // import {cityData} from '../../js/city.js'
+  import {cityData} from '../../js/cityList.js'
   import AMap from 'AMap';
   import storage from "../../store/storage";
   import {LOCATION} from "../../config/constant";
@@ -185,6 +189,9 @@
     },
     computed: {
       shortcutList() {
+        // console.log(this.singers.map((group) => {
+        //   return group
+        // }));
         return this.singers.map((group) => {
           return group.title.substr(0, 1)
         })
@@ -197,6 +204,22 @@
 </script>
 
 <style scoped lang="scss">
+  .search-con {
+    height: 2rem;
+    width: 100%;
+    background-color: #F1F3F5;
+    border-radius: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .search-text {
+    color: #333333;
+    font-size: 1rem;
+    text-align: left;
+    margin: 0;
+    padding: 0.5rem 0 0 2.5rem;
+  }
+
   .box {
     position: fixed;
     width: 100%;
@@ -209,17 +232,22 @@
     background: #ffffff;
     position: fixed;
     z-index: 100;
-    top: 0
+    top: 0;
+    display: flex;
   }
 
   .search input {
     background: #F1F3F5;
     border: 0;
-    height: 36px;
     border-radius: 36px;
     width: 69%;
-    margin: 8px 12px 8px 16px;
+    margin: 0;
     outline: none;
+    font-size: 1rem;
+  }
+
+  .search input::-webkit-input-placeholder {
+    color: #999999 !important;
   }
 
   .cancel {
@@ -227,7 +255,7 @@
     background: none;
     color: #333333;
     height: 100%;
-    padding: 0;
+    padding: 0 1rem;
     outline: none;
     font-size: 1rem;
   }

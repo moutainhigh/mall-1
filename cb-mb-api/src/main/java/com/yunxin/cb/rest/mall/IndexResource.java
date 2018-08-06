@@ -49,7 +49,7 @@ public class IndexResource extends BaseResource {
         try{
             //获取首页banner
             AdvertisementPlace homePlace = AdvertisementPlace.HOME;
-            Boolean enabled = true;
+            boolean enabled = true;
             List<Advertisement> firstList = advertisementService.selectByPlace(homePlace,enabled);
             List<AdvertisementVO> homeList = new ArrayList<>();
             for(Advertisement adm : firstList){

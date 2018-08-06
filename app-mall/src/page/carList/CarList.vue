@@ -1,8 +1,8 @@
 <template>
   <div>
-    <head-top :local="true" v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
+    <head-top :go-back="true" :local="true" v-bind:style="{ 'z-index' : enFocus? 10 : 13  }">
       <div slot="search" style="width: 100%;">
-        <div class="search-con"  @click="toSearch">
+        <div class="search-con" @click="toSearch">
           <img src="../../assets/img/common/ic_search.png" style="width: 1rem;position: absolute;margin: 0.5rem 0 0 0.8rem;">
           <p class="search-text">输入搜索内容</p>
         </div>
@@ -23,16 +23,16 @@
             <section v-show="sortBy == 'sort'" class="sort_detail_type">
               <div class="sort_list_container">
                 <div class="sort_list_li" @click="sortList('','默认排序',true)">
-                  <p :class="{sort_select: sortByType == ''}">
+                  <p :class="{sort_select: sortTitle == '默认排序'}">
                     <span>默认排序</span>
                   </p>
-                  <img v-if="sortByType == ''" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortTitle == '默认排序'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
                 <div class="sort_list_li" @click="sortList('saleNum','最畅销',false)">
-                  <p :class="{sort_select: sortByType == 'saleNum'}">
+                  <p :class="{sort_select: sortTitle == '最畅销'}">
                     <span>最畅销</span>
                   </p>
-                  <img v-if="sortByType == 'saleNum'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
+                  <img v-if="sortTitle == '最畅销'" src="../../assets/img/common/ic_screen_select.png" width="1rem" style="flex: 0 0 1rem;margin-right: 1rem">
                 </div>
                 <div class="sort_list_li" @click="sortList('sellPrice','价格最高',false)">
                   <p :class="{sort_select: sortTitle == '价格最高'}">
@@ -121,7 +121,7 @@
           </transition>
         </div>
       </section>
-      <div style="position:absolute;height: 100%;width: 100%;z-index: -1;background-color: #fff;overflow: hidden;"  :style="{height: scrollerHeight + 'px'}">
+      <div style="position:absolute;height: 100%;width: 100%;z-index: -1;background-color: #fff;overflow: hidden;" :style="{height: scrollerHeight + 'px'}">
         <div class="car_type_list" id="typeDivId">
           <div class="type_item" v-for="(item,index) in selecteds">
             <p>
@@ -202,9 +202,11 @@
 
 <script>
   import headTop from "../../components/header/head"
-  import {categorySearch} from "../../service/getData";
+  import {categorySearch, getSearch} from "../../service/getData";
   import {delArrayAll, delArrayOne} from "../../config/mUtils";
   import {tranPrice} from "../../config/dataFormat";
+  import storage from "../../store/storage";
+  import {CAR_LIST_SESSION} from "../../config/constant";
 
   export default {
     name: "Carlist",
@@ -300,6 +302,7 @@
           this.searchVo[selected.type] = null;
         }
         this.selecteds.splice(index, 1);
+        this.getData();
       },
       //跳转商品详情页
       openDetail(productId) {
@@ -389,13 +392,12 @@
         } else {
           let _this = this;
           this.searchVo.page++;
-          this.$vux.loading.show("加载中");
-          this.getData(done, 'loading');
+          this.getData(done, true);
         }
       },
       async getData(done, isInf) {
         let _this = this;
-        if (isInf != 'loading') {
+        if (!isInf) {
           this.searchVo.page = 0;
         }
         this.$vux.loading.show("加载中");
@@ -411,23 +413,8 @@
               if (_this.searchVo.page >= _this.searchVo.totalPage - 1) {
                 _this.isInfinite = false;
               }
-            }
-            if (isInf != 'loading') {
-              if (res.data.condition) {
-                for (let item in res.data.condition) {
-                  _this.conditions.push({
-                    specName: item,
-                    value: res.data.condition[item],
-                    showNum: -1
-                  });
-                  _this.chooseConditions.push({
-                    specName: item,
-                    value: res.data.condition[item],
-                    showNum: -1
-                  })
-                }
-              }
-              _this.priceSection.value = res.data.priceSection;
+            } else {
+              _this.commodities = [];
             }
           } else {
             if (isInf) {
@@ -440,15 +427,61 @@
           done();
         }
       },
+      async getSearchVo() {
+        getSearch().then(res => {
+          if (res.result == 'SUCCESS') {
+            if (res.data.condition) {
+              for (let item in res.data.condition) {
+                this.conditions.push({
+                  specName: item,
+                  value: res.data.condition[item],
+                  showNum: -1
+                });
+              }
+              this.chooseConditions = JSON.parse(JSON.stringify(this.conditions));
+            }
+            this.priceSection.value = res.data.priceSection;
+          }
+        })
+      },
       toSearch() {
         this.$router.push({
-          path:"/search"
+          path: "/search"
         })
       },
       chooseBrand() {
         this.$router.push({
-          path:"/choose-brand"
+          path: "/choose-brand"
         })
+      },
+      createdData(){
+        if (this.$route.query.categoryId) {
+          let categoryId = this.$route.query.categoryId;
+          let categoryName = this.$route.query.categoryName;
+          this.searchVo.categoryId = categoryId;
+          this.selecteds.push({
+            key: categoryId,
+            val: categoryName,
+            type: 'categoryId'
+          })
+        }else if (this.$route.query.brandId) {
+          let brandId = this.$route.query.brandId;
+          let brandName = this.$route.query.brandName;
+          this.searchVo.brandId = brandId;
+          this.selecteds.push({
+            key: brandId,
+            val: brandName,
+            type: 'brandId'
+          })
+        } else {
+          this.selecteds.push({
+            key: 0,
+            val: '全部',
+            type: 'all'
+          })
+        }
+        this.getData();
+        this.getSearchVo();
       }
     },
     watch: {
@@ -458,30 +491,39 @@
       }
     },
     created() {
-      if (this.$route.query.brandId) {
-        let brandId = this.$route.query.brandId;
-        let brandName = this.$route.query.brandName;
-        this.searchVo.brandId = brandId;
-        this.selecteds.push({
-          key: brandId,
-          val: brandName,
-          type: 'brandId'
-        })
-      }
-
-      if (this.$route.query.categoryId) {
-        let categoryId = this.$route.query.categoryId;
-        let categoryName = this.$route.query.categoryName;
-        this.searchVo.categoryId = categoryId;
-        this.selecteds.push({
-          key: categoryId,
-          val: categoryName,
-          type: 'categoryId'
-        })
-      }
-      this.getData();
+      this.createdData();
     },
-
+    activated() {
+      //重置数据
+      if (storage.fetchSession(CAR_LIST_SESSION) && storage.fetchSession(CAR_LIST_SESSION).length != 0) {
+        this.searchVo = {
+          size: 10,
+          page: 0,
+          totalPage: 0,
+          brandId: null,
+          categoryId: null,
+          sellerId: null,
+          lowestPrice: '',
+          highestPrice: '',
+          priceSection: null,
+          commoditySpecs: [],
+          sortBy: null,
+          direction: String
+        };
+        this.sortBy = '';
+        this.sortByType = '';
+        this.sortTitle= '默认排序';
+        this.selecteds = [];
+        this.conditions = [];
+        this.priceSect= {lowPrice: '', highPrice: ''};
+        this.isInfinite = false;
+        this.createdData();
+      }
+    },
+    beforeRouteLeave(to, from, next) {
+      storage.removeSession(CAR_LIST_SESSION);
+      next();
+    },
   }
 </script>
 

@@ -427,6 +427,11 @@
                 <div class="pull-left">
                     <h2>保险产品</h2>
                 </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="insuranceproducts.do">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </div>
             </div>
             <!-- End .inner-padding -->
         </header>
@@ -438,6 +443,7 @@
              * the part which contains the main content *
              ******************************************** -->
         <div style="display: none" id="matterDiv"></div>
+
         <div class="window">
             <div class="actionbar">
                 <div class="pull-left">
@@ -503,6 +509,18 @@
                             </div>
                             <div class="col-sm-3">
                                 <form:textarea path="description" cssClass="form-control validate[required,minSize[2]]"/>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>是否启用：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="inline-labels">
+                                    <form:radiobutton path="enabled" value="1"/>是
+                                    <form:radiobutton path="enabled" value="0"/>否
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-10"></div>

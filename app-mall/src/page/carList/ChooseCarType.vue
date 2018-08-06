@@ -1,49 +1,16 @@
 <template>
   <div>
-    <head-top :head-title="'选择车型'">
+    <head-top :go-back="true" :head-title="'选择车型'">
     </head-top>
     <div style="background-color: #FFFFFF;height: 100%;margin-top: 3rem;">
-      <div class="ct-title">全部车系</div>
+      <div class="ct-title" @click="openCarList()">全部车系</div>
       <div class="ct-list">
-        <div class="ct-list-title">
-          奥迪(进口)
+        <div class="ct-list-title" v-if="carTypeList.length != 0">
+          {{categoryName}}
         </div>
-        <div class="ct-list-item">
-          <div class="item-left">奥迪A3</div>
-          <div class="item-right">19.08-25.30万</div>
-        </div>
-        <div class="ct-list-item">
-          <div class="item-left">奥迪A3</div>
-          <div class="item-right">19.08-25.30万</div>
-        </div>
-        <div class="ct-list-item">
-          <div class="item-left">奥迪A3</div>
-          <div class="item-right">19.08-25.30万</div>
-        </div>
-        <div class="ct-list-item">
-          <div class="item-left">奥迪A3</div>
-          <div class="item-right">19.08-25.30万</div>
-        </div>
-      </div>
-      <div class="ct-list">
-        <div class="ct-list-title">
-          奥迪(进口)
-        </div>
-        <div class="ct-list-item">
-          <div class="item-left">奥迪A3</div>
-          <div class="item-right">19.08-25.30万</div>
-        </div>
-        <div class="ct-list-item">
-          <div class="item-left">奥迪A3</div>
-          <div class="item-right">19.08-25.30万</div>
-        </div>
-        <div class="ct-list-item">
-          <div class="item-left">奥迪A3</div>
-          <div class="item-right">19.08-25.30万</div>
-        </div>
-        <div class="ct-list-item">
-          <div class="item-left">奥迪A3</div>
-          <div class="item-right">19.08-25.30万</div>
+        <div class="ct-list-item" v-for="carType in carTypeList" @click="openCarList(carType)">
+          <div class="item-left">{{carType.categoryName}}</div>
+          <div class="item-right">{{carType.lowestPrice}}-{{carType.highestPrice}}万</div>
         </div>
       </div>
     </div>
@@ -52,6 +19,7 @@
 
 <script>
   import headTop from "../../components/header/head"
+  import {getCarSeries} from "../../service/getData";
 
   export default {
     name: "ChooseCarType",
@@ -60,7 +28,36 @@
     },
     data() {
       return {
+        carTypeList:[],
+        categoryName:''
       }
+    },
+    methods: {
+      openCarList(carType){
+        if (carType) {
+          this.$router.push({
+            path:'/car-list',
+            query: {
+              categoryId : carType.categoryId,
+              categoryName : carType.categoryName
+            }
+          });
+        }else {
+          this.$router.push({
+            path:'/car-list'
+          });
+        }
+      }
+    },
+    created(){
+      let query = this.$route.query;
+      let categoryId = query.categoryId;
+      this.categoryName = query.categoryName;
+      getCarSeries(categoryId).then(res=>{
+        if (res.result == 'SUCCESS') {
+          this.carTypeList = res.data;
+        }
+      });
     }
   }
 </script>

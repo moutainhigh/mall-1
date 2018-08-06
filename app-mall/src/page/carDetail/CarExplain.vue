@@ -1,6 +1,6 @@
 <template>
-  <div style="background: #ffffff">
-    <div name="explainContent" v-html="explainContent"></div>
+  <div style="padding: 1rem;background: #fff;">
+    <div  name="explainContent" v-html="explainContent"></div>
   </div>
 </template>
 
