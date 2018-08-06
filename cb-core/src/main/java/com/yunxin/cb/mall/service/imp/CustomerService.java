@@ -170,7 +170,8 @@ public class CustomerService implements ICustomerService {
                 setCustomerId(1);
             }
         });
-        Customer customer1 = customerDao.getOne(1);
+//        Customer customer1 = customerDao.getOne(1);//此方法会引起,org.hibernate.lazyinitializationexception错误,解决方法,用另外一个根据customerId查询的方法
+        Customer customer1 = customerDao.findRecommendCustomer(1);//add by lxc  2018-08-05
         if (customer1 != null) {
             Customer customerCode = generateCode(customer1.getInvitationCode());
             if (customerCode != null) {
