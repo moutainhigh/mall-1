@@ -427,6 +427,11 @@
                 <div class="pull-left">
                     <h2>保险产品</h2>
                 </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="insuranceproducts.do">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </div>
             </div>
             <!-- End .inner-padding -->
         </header>
@@ -438,6 +443,7 @@
              * the part which contains the main content *
              ******************************************** -->
         <div style="display: none" id="matterDiv"></div>
+
         <div class="window">
             <div class="actionbar">
                 <div class="pull-left">
