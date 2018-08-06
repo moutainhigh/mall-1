@@ -78,6 +78,12 @@
       }
     },
     created(){
+      // let holder = storage.fetch("holder");
+      // let type = [];
+      // type = '居民身份证';
+      // holder.policyholderCardType.push(type);
+      // storage.save('holder',holder);
+      // holder.policyholderCardType.push(type);
       let query = this.$route.query;
       if (query.token) {
         storage.save('token',query.token);
@@ -89,7 +95,7 @@
         storage.save('insured',Admin.insured);
       }
       this.$vux.loading.show({
-        text: 'Loading'
+        text: '加载中'
       });
       getProducts().then(res => {
         if (res.result == 'SUCCESS') {
@@ -102,7 +108,11 @@
           let customerData = res.data;
           let holder = storage.fetch("holder");
           holder.policyholderName = customerData.realName;
-          holder.policyholderCardType = customerData.cardType;
+          if (customerData.cardType) {
+            holder.policyholderCardType = [customerData.cardType];
+          } else {
+            holder.policyholderCardType = [];
+          }
           holder.policyholderCardNo = customerData.customerCardNo;
           holder.policyholderMobile = customerData.mobile;
           holder.cardPositiveImg = customerData.cardPositiveImg;

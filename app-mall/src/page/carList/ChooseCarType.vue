@@ -5,7 +5,7 @@
     <div style="background-color: #FFFFFF;height: 100%;margin-top: 3rem;">
       <div class="ct-title" @click="openCarList()">全部车系</div>
       <div class="ct-list">
-        <div class="ct-list-title">
+        <div class="ct-list-title" v-if="carTypeList.length != 0">
           {{categoryName}}
         </div>
         <div class="ct-list-item" v-for="carType in carTypeList" @click="openCarList(carType)">
@@ -19,7 +19,7 @@
 
 <script>
   import headTop from "../../components/header/head"
-  import {getCarSeries} from "../../service/getData";
+  import {getCarSeries, getCategoryByBrandId} from "../../service/getData";
 
   export default {
     name: "ChooseCarType",
@@ -28,36 +28,46 @@
     },
     data() {
       return {
-        carTypeList:[],
-        categoryName:''
+        carTypeList: [],
+        categoryName: ''
       }
     },
     methods: {
-      openCarList(carType){
+      openCarList(carType) {
         if (carType) {
           this.$router.push({
-            path:'/car-list',
+            path: '/car-list',
             query: {
-              categoryId : carType.categoryId,
-              categoryName : carType.categoryName
+              categoryId: carType.categoryId,
+              categoryName: carType.categoryName
             }
           });
-        }else {
+        } else {
           this.$router.push({
-            path:'/car-list'
+            path: '/car-list'
           });
         }
       }
     },
-    created(){
+    created() {
       let query = this.$route.query;
-      let categoryId = query.categoryId;
+      let id = query.id;
+      let idType = query.idType;
       this.categoryName = query.categoryName;
-      getCarSeries(categoryId).then(res=>{
-        if (res.result == 'SUCCESS') {
-          this.carTypeList = res.data;
-        }
-      });
+      if (idType == 'category') {
+        getCarSeries(id).then(res => {
+          if (res.result == 'SUCCESS') {
+            this.carTypeList = res.data;
+          }
+        });
+      } else {
+        getCategoryByBrandId(id).then(res => {
+          if (res.result == 'SUCCESS') {
+            this.carTypeList = res.data;
+          }
+        })
+      }
+
     }
   }
 </script>
@@ -88,7 +98,6 @@
       }
     }
   }
-
 
 
 </style>

@@ -32,7 +32,23 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        debugger;
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        var defaultPicPath1 = $('input[name="imgurl1"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        }else if(defaultPicPath1.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                }
             });
         });
         //建立一個可存取到該file的url
@@ -427,6 +443,11 @@
                 <div class="pull-left">
                     <h2>保险产品</h2>
                 </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="insuranceproducts.do">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </div>
             </div>
             <!-- End .inner-padding -->
         </header>
@@ -438,6 +459,7 @@
              * the part which contains the main content *
              ******************************************** -->
         <div style="display: none" id="matterDiv"></div>
+
         <div class="window">
             <div class="actionbar">
                 <div class="pull-left">
@@ -465,14 +487,14 @@
                             </div>
                             <div class="col-sm-3">
                                 <form:input path="prodName" value="" cssClass="form-control validate[required,minSize[2]]"
-                                            maxlength="32"/>
+                                            maxlength="50"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>保障年限：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input path="protectionYear"
-                                            cssClass="form-control validate[required,minSize[1]]"/>
+                                            cssClass="form-control validate[required,minSize[1]]"  maxlength="15"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -481,13 +503,13 @@
                                 <label><span class="asterisk">*</span>保险期间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="insurePeriod" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:input path="insurePeriod" cssClass="form-control validate[required,minSize[1]]" maxlength="15"/>
                             </div>
                             <div class="col-sm-2">
                                 <label>标签：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="tags" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:input path="tags" cssClass="form-control" maxlength="50"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -496,13 +518,13 @@
                                 <label><span class="asterisk">*</span>投保须知：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="instruction" cssClass="form-control validate[required,minSize[2]]"/>
+                                <form:input path="instruction" cssClass="form-control validate[required,minSize[2]]" maxlength="50"/>
                             </div>
                             <div class="col-sm-2">
                                 <label>产品描述：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea path="description" cssClass="form-control validate[required,minSize[2]]"/>
+                                <form:textarea path="description" cssClass="form-control" maxlength="500"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -522,7 +544,7 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>产品图片：</label>
+                                <label>产品图片：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>
@@ -608,7 +630,7 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>产品详情图片：</label>
+                                <label>产品详情图片：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>

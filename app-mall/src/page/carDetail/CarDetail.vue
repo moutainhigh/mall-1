@@ -1,7 +1,8 @@
 <template>
   <div>
     <div style="height: 3rem"></div>
-    <head-top :go-back="true" :headTitle="headTitle">
+    <head-top :go-back="true" :headTitle="headTitle" :share="true">
+      <img style="width: 20px; position: absolute" src="../../assets/img/common/ic_nav_share.png">
       <div slot="head-tab" class="head-tab" v-if="scroll > 90 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
           详情
@@ -49,7 +50,7 @@
 
       <div class="rank">
         <p class="rank-title">级别：</p>
-        <p class="rank-detail" v-if="commodityData.specs">{{commodityData.specs.级别}}</p>
+        <p class="rank-detail">{{commodityData.showLevel}}</p>
       </div>
       <div class="selectItem" @click="checkProducts">
         <p class="selectItem-title">规格选择</p>
@@ -95,7 +96,7 @@
     </div>
 
     <div v-if="tab == 2">
-      <CarConfig></CarConfig>
+      <carConfig></carConfig>
     </div>
 
     <div v-if="tab == 3">
@@ -169,6 +170,7 @@
 <script>
   import headTop from '../../components/header/head'
   import carExplain from './CarExplain'
+  import carConfig from './CarConfig'
   import {
     addCommodityFavorite,
     delFavoriteByFavoriteId,
@@ -182,6 +184,7 @@
     components: {
       headTop,
       carExplain,
+      carConfig,
       Swiper,
       SwiperItem,
     },
