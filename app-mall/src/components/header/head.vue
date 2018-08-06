@@ -3,7 +3,7 @@
     <section class="head_goback" v-if="goBack" @click="back">
       <img src="../../assets/img/common/back.png" height="23" style="vertical-align: middle;margin-left: 5px;">
     </section>
-    <section class="head_goback" style="margin-left: 0;">
+    <section class="head_goback" style="margin-left: 0;" v-if="goClose">
       <img src="../../assets/img/common/ic_nav_close.png" height="23" style="vertical-align: middle;margin-left: 5px;">
     </section>
     <slot name='search' class="head_search"></slot>
@@ -36,7 +36,7 @@
         localCity:'定位'
       }
     },
-    props: ['signinUp', 'headTitle', 'goBack', 'local', 'edit'],
+    props: ['headTitle', 'goBack', 'local', 'edit' , 'goClose'],
     methods:{
       back(){
         this.$router.go(-1);
@@ -54,7 +54,7 @@
           var citySearch = new AMap.CitySearch();
           citySearch.getLocalCity(function (status, result) {
             if (status === 'complete' && result.info === 'OK') {
-              vm.localCity = result.city.substr(0, city.lastIndexOf("市"));
+              vm.localCity = result.city.substr(0, result.city.lastIndexOf("市"));
               storage.saveSession(LOCATION,vm.localCity);
             }
           })

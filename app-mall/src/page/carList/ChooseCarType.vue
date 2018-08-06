@@ -5,7 +5,7 @@
     <div style="background-color: #FFFFFF;height: 100%;margin-top: 3rem;">
       <div class="ct-title" @click="openCarList()">全部车系</div>
       <div class="ct-list">
-        <div class="ct-list-title">
+        <div class="ct-list-title" v-if="carTypeList.length != 0">
           {{categoryName}}
         </div>
         <div class="ct-list-item" v-for="carType in carTypeList" @click="openCarList(carType)">

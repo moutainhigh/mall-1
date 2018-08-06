@@ -1,6 +1,6 @@
 <template>
   <div id="contact">
-    <head-top :head-title="'选择品牌'"></head-top>
+    <head-top :go-back="true" :head-title="'选择品牌'"></head-top>
 
     <div class="list-view" style="padding-top: 3rem" ref="listView">
       <div style="background: #ffffff" class="list-group">
