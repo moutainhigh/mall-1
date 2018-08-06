@@ -39,7 +39,9 @@
       // });
 
     });
-
+    function changeCardType(obj){
+        alert(obj);
+    }
 
   </script>
 </head>
@@ -327,7 +329,7 @@
                   <label>证件类型：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:select path="cardType" cssClass="form-control validate[required]" >
+                  <form:select path="cardType" cssClass="form-control validate[required]" xonchange="changeCardType(this.value)">
                       <form:option value="居民身份证">居民身份证</form:option>
                     <form:option value="居民户口薄">居民户口薄</form:option>
                     <form:option value="军人身份证">军人身份证</form:option>
@@ -346,7 +348,7 @@
                   <label>证件号码：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input cssClass="form-control validate[required,custom[onlyLetterNumber]]" path="customerCardNo" maxlength="25"/>
+                  <form:input cssClass="form-control validate[required,minSize[18]]" path="customerCardNo" maxlength="25" id="z"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
