@@ -32,7 +32,23 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        debugger;
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        var defaultPicPath1 = $('input[name="imgurl1"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        }else if(defaultPicPath1.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                }
             });
         });
         //建立一個可存取到該file的url
@@ -443,6 +459,11 @@
             <div class="inner-padding">
                 <div class="pull-left">
                     <h2>保险产品</h2>
+                </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="insuranceproducts.do">
+                        <i class="fa fa-reply"></i>
+                    </a>
                 </div>
             </div>
             <!-- End .inner-padding -->
