@@ -164,6 +164,7 @@ public class CustomerService implements ICustomerService {
         customer.setCardPositiveImg(" ");
         customer.setCardNegativeImg(" ");
         customer.setBankCardImg(" ");
+        customer.setNickName(customer.getMobile());//add by lxc 2018-08-06  默认手机号为昵称
         customer.setRecommendCustomer(new Customer() {
             {
                 setCustomerId(1);
