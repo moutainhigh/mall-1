@@ -197,19 +197,19 @@ public class OrderServiceImpl implements OrderService {
             order.getOrderInvoice().setOrderId(order.getOrderId());
             orderInvoiceMapper.insert(order.getOrderInvoice());
         }
-        if (order.getPaymentType()== PaymentType.LOAN) {
-            //添加订单借款申请数据
-            OrderLoanApply orderLoanApply = new OrderLoanApply();
-            orderLoanApply.setLoanCode(UUIDGeneratorUtil.getUUCode());
-            orderLoanApply.setOrderId(order.getOrderId());
-            orderLoanApply.setCustomerId(order.getCustomerId());
-            orderLoanApply.setLoanPrice(totalPrice);
-            orderLoanApply.setLoanState(LoanState.WAIT_LOAN);
-            orderLoanApply.setAuditState(AuditState.WAIT_AUDIT);
-            orderLoanApply.setCreateTime(createTime);
-            orderLoanApply.setUpdateTime(createTime);
-            orderLoanApplyMapper.insert(orderLoanApply);
-        }
+//        if (order.getPaymentType()== PaymentType.LOAN) {
+//            //添加订单借款申请数据
+//            OrderLoanApply orderLoanApply = new OrderLoanApply();
+//            orderLoanApply.setLoanCode(UUIDGeneratorUtil.getUUCode());
+//            orderLoanApply.setOrderId(order.getOrderId());
+//            orderLoanApply.setCustomerId(order.getCustomerId());
+//            orderLoanApply.setLoanPrice(totalPrice);
+//            orderLoanApply.setLoanState(LoanState.WAIT_LOAN);
+//            orderLoanApply.setAuditState(AuditState.WAIT_AUDIT);
+//            orderLoanApply.setCreateTime(createTime);
+//            orderLoanApply.setUpdateTime(createTime);
+//            orderLoanApplyMapper.insert(orderLoanApply);
+//        }
         //添加订单日志
         OrderLog orderLog = new OrderLog();
         orderLog.setTime(createTime);
@@ -275,9 +275,11 @@ public class OrderServiceImpl implements OrderService {
             orderDb.setOrderState(OrderState.CANCELED);
             orderMapper.updateByPrimaryKey(orderDb);
             //更改订单贷款申请为取消
-            OrderLoanApply orderLoanApply = orderLoanApplyMapper.selectByOrderId(orderDb.getOrderId());
-            orderLoanApply.setLoanState(LoanState.CANCELED);
-            orderLoanApplyMapper.updateByPrimaryKey(orderLoanApply);
+//            if (orderDb.getPaymentType() == PaymentType.LOAN) {
+//                OrderLoanApply orderLoanApply = orderLoanApplyMapper.selectByOrderId(orderDb.getOrderId());
+//                orderLoanApply.setLoanState(LoanState.CANCELED);
+//                orderLoanApplyMapper.updateByPrimaryKey(orderLoanApply);
+//            }
             //添加订单日志
             OrderLog orderLog = new OrderLog();
             orderLog.setTime(now);
