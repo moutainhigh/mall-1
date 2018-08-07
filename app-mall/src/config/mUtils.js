@@ -328,6 +328,8 @@ export const arrayContain = function (compareVal, array, key) {
     }
     length--;
   }
+
+  return null;
 };
 
 //根据生日计算岁数

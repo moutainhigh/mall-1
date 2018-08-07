@@ -19,7 +19,7 @@
     <div :ref="`detail`">
       <div>
         <swiper :aspect-ratio="0.749" auto style="margin:0 auto;" dots-position="center">
-          <swiper-item class="swiper-demo-img" v-for="img in commodityData.imageSet">
+          <swiper-item class="swiper-demo-img" v-for="(img, index) in commodityData.imageSet" :key="index">
             <img width="100%" :src="img" v-preview="img"></swiper-item>
         </swiper>
       </div>
@@ -422,6 +422,9 @@
     },
     mounted() {
       window.addEventListener('scroll', this.menu)
+    },
+    destroyed(){
+      window.removeEventListener('scroll', this.menu)
     },
 
     beforeRouteLeave(to, from, next) {
