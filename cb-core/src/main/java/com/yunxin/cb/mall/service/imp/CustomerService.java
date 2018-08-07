@@ -14,6 +14,7 @@ import com.yunxin.cb.mall.service.ICustomerWalletService;
 import com.yunxin.cb.mall.vo.CustomerMatchVo;
 import com.yunxin.cb.mall.vo.CustomerMatchsVo;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
+import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
 import com.yunxin.cb.sns.entity.CustomerFriend;
@@ -24,7 +25,6 @@ import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.system.entity.Profile;
 import com.yunxin.cb.system.meta.ProfileName;
 import com.yunxin.cb.system.service.IProfileService;
-import com.yunxin.cb.util.CachedUtil;
 import com.yunxin.cb.util.PasswordHash;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
@@ -82,7 +82,8 @@ public class CustomerService implements ICustomerService {
     private IProfileService iProfileService;
     @Resource
     private InsuranceOrderDao insuranceOrderDao;
-
+    @Resource
+    private RedisService redisService;
     @Override
     public Fridge addFridge(Fridge fridge) {
         fridge.setCreateTime(new Date());
@@ -806,22 +807,20 @@ public class CustomerService implements ICustomerService {
     public Map<String,Object> getCustomer(){
 
                 Map<String,Object> map=new HashMap<>();
-                if(null!=CachedUtil.getInstance().getContext("customers")){
-
-                    map= (Map<String,Object>)CachedUtil.getInstance().getContext("customers");
-
-                }else{
+                if(null!=redisService.getKey("customers"))
+                    map= (Map<String,Object>)redisService.getKey("customers");
+                else{
                     List<Customer> list= customerDao.findAll();
                     if(null!=list&&list.size()>0){
-
-                        map.put("customers",new HashMap<String,Object>(){
+                        Map<String,Object> mp=new HashMap<String,Object>(){
                             {
                                 for (Customer customer:list) {
                                     put("customer_"+customer.getMobile(),customer);
                                 }
                             }
-                        });
-
+                        };
+                        map.put("customers",mp);
+                        redisService.setKey("customers",mp);
                     }
 
                 }

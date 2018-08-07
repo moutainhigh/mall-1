@@ -12,9 +12,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -26,30 +24,38 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table
 @DynamicInsert
 @DynamicUpdate
-@ApiModel(value="用户群组",description="用户群组CustomerGroup")
-public class CustomerGroup  implements java.io.Serializable {
-
-    @ApiModelProperty(value="用户群组ID",name="customerGroupId",example="1")
-    private int customerGroupId;
-    @ApiModelProperty(value="创建用户",name="customer",example="1")
+@ApiModel(value="用户群组成员",description="用户群组成员CustomerGroupUser")
+public class CustomerGroupUser  implements java.io.Serializable {
+    @ApiModelProperty(value="用户群组成员ID",name="customerGroupUserId",example="1")
+    private int customerGroupUserId;
+    @ApiModelProperty(value="用户群组",name="customerGroup",example="1")
+    private CustomerGroup customerGroup;
+    @ApiModelProperty(value="用户",name="customer",example="1")
     private Customer customer;
-    @ApiModelProperty(value="群组名",name="groupName",example="划拳")
-    private String groupName;
     @ApiModelProperty(value="创建时间",name="createTime",example="2018 07-21")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
-    private List<CustomerGroupUser> customerGroupUser=new ArrayList<>();
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)
-    public int getCustomerGroupId() {
-        return customerGroupId;
+    public int getCustomerGroupUserId() {
+        return customerGroupUserId;
     }
 
-    public void setCustomerGroupId(int customerGroupId) {
-        this.customerGroupId = customerGroupId;
+    public void setCustomerGroupUserId(int customerGroupUserId) {
+        this.customerGroupUserId = customerGroupUserId;
+    }
+    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "CUSTOMER_GROUP_ID",nullable = false, insertable = true, updatable = true)
+    })
+    public CustomerGroup getCustomerGroup() {
+        return customerGroup;
+    }
+
+    public void setCustomerGroup(CustomerGroup customerGroup) {
+        this.customerGroup = customerGroup;
     }
     @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
     @JoinColumns({
@@ -62,14 +68,6 @@ public class CustomerGroup  implements java.io.Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    @Column(unique = true, nullable = false, length = 250)
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
     @Temporal(TemporalType.TIMESTAMP)
     @Column(length = 7, nullable = false)
     @JsonSerialize(using = JsonTimestampSerializer.class)
@@ -80,13 +78,5 @@ public class CustomerGroup  implements java.io.Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "customerGroup")
-    public List<CustomerGroupUser> getCustomerGroupUser() {
-        return customerGroupUser;
-    }
-
-    public void setCustomerGroupUser(List<CustomerGroupUser> customerGroupUser) {
-        this.customerGroupUser = customerGroupUser;
     }
 }

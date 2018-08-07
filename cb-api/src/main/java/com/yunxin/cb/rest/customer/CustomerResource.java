@@ -394,5 +394,10 @@ public class CustomerResource extends BaseResource {
     public ResponseResult matchAddressBook(@RequestBody CustomerMatchsVo[] customerMatchsVo){
             return new ResponseResult( customerService.matchAddressBook(customerMatchsVo));
     }
+//    @ApiOperation(value = "创建群组")
+//    @PostMapping(value = "matchAddressBook")
+//    public ResponseResult matchAddressBook(@RequestBody CustomerMatchsVo[] customerMatchsVo){
+//        return new ResponseResult( customerService.matchAddressBook(customerMatchsVo));
+//    }
 
 }
