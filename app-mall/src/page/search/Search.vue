@@ -72,13 +72,13 @@
         let keywordSearch = storage.fetch("keywordSearch");
         if (keywordSearch.length == 0) {
           let list = [];
-          list.push(result);
+          list.push(result.title);
           storage.save("keywordSearch", list);
         } else {
           if (keywordSearch.length == 10) {
             keywordSearch.splice(0, 1);
           }
-          keywordSearch.push(result);
+          keywordSearch.push(result.title);
           storage.save("keywordSearch", keywordSearch);
         }
       },

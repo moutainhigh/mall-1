@@ -9,7 +9,7 @@
     <slot name='search' class="head_search"></slot>
     <slot name="local" style="flex: 0 0 2rem;" v-if="local">
       <div slot="local" style="flex: none;margin-top: 0.8rem;padding: 0 0.8rem;" @click="location">
-        <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1.2rem;vertical-align: middle;">
+        <img src="../../assets/img/common/ic_nav_ocation.png" style="width: 1.2rem;vertical-align: middle;margin-top: -5px;">
         <span>
           {{localCity}}
         </span>
@@ -52,6 +52,7 @@
     },
     created(){
       let vm = this;
+      console.log(storage.fetchSession(LOCATION))
       if (storage.fetchSession(LOCATION).length <= 0) {
         AMap.plugin('AMap.CitySearch', function () {
           var citySearch = new AMap.CitySearch();

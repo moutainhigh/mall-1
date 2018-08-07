@@ -17,10 +17,7 @@ import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import com.yunxin.cb.vo.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,8 +44,7 @@ public class OrderResource extends BaseResource {
     @ApiOperation(value = "获取预下单数据")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name = "paymentType", value = "支付方式", required = true, paramType = "form", dataType = "String")})
+            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "form", dataType = "int")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
     public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId") int productId,
@@ -101,9 +97,8 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "查询用户订单列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name = "orderStatus", value = "订单状态", paramType = "form", dataType = "String")})
+            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "query", dataType = "int")})
     @PostMapping(value = "order/pageList")
     public ResponseResult<PageFinder<OrderDetailVO>> pageOrder(@RequestParam(value = "pageNo") int pageNo,
             @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "orderState", required = false) OrderState orderState) {

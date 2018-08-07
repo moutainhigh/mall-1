@@ -1,18 +1,14 @@
-/**
- *
- */
-package com.yunxin.cb.mall.entity.meta;
+package com.yunxin.cb.sms;
 
 /**
- * @author Aidy
+ * Created by MWJ on 2018/1/30.
  */
-public enum PayType {
-
-    PAYMENT("支付"), REIMBURSE("退款");
+public enum SendType {
+    BANK("银行卡");
 
     private String name;
 
-    private PayType(String name) {
+    private SendType(String name) {
         this.name = name;
     }
 
@@ -26,7 +22,6 @@ public enum PayType {
 
     @Override
     public String toString() {
-        return super.toString() + "("+name+")";
+        return name;
     }
 }
-

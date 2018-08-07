@@ -28,7 +28,7 @@ public class SmsHelper {
         for (String phone : phones) {
             sbPhones.append(phone).append(",");
         }
-        SmsSendRequest smsSingleRequest = new SmsSendRequest(SmsConfig.account, SmsConfig.pswd, SmsConfig.VALID_CODE_CONTENT.replace("#XXXXXX#", content), sbPhones.toString(),"true");
+        SmsSendRequest smsSingleRequest = new SmsSendRequest(SmsConfig.account, SmsConfig.pswd, content, sbPhones.toString(),"true");
         String requestJson = JSON.toJSONString(smsSingleRequest);
         logger.info("before request string is: " + requestJson);
         String response = ChuangLanSmsUtil.sendSmsByPost(SmsConfig.smsUrl, requestJson);

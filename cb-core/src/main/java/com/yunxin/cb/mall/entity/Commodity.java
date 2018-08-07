@@ -3,6 +3,7 @@
  */
 package com.yunxin.cb.mall.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.meta.CommodityState;
 import com.yunxin.cb.mall.entity.meta.CommodityUnit;
@@ -256,6 +257,7 @@ public class Commodity implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "DEFAULT_PRODUCT_ID", nullable = false)
     public Product getDefaultProduct() {
         return defaultProduct;

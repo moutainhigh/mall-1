@@ -1,13 +1,13 @@
-package com.yunxin.cb.rest.mall;
+package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.meta.Result;
-import com.yunxin.cb.meta.SendType;
+import com.yunxin.cb.sms.SendType;
 import com.yunxin.cb.sms.SmsConfig;
 import com.yunxin.cb.sms.SmsHelper;
 import com.yunxin.cb.util.CommonUtils;
+import com.yunxin.cb.util.VerificationCode;
 import com.yunxin.cb.vo.ResponseResult;
-import com.yunxin.cb.vo.VerificationCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 
 @Api(description = "手机验证码")
 @RestController
-@RequestMapping(value = "/{version}/mall/mobile")
+@RequestMapping(value = "/{version}/rb/mobile")
 public class MobileVaildCode {
 
 
@@ -47,7 +47,7 @@ public class MobileVaildCode {
         try {
             String randomCode = CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_NUMBER);
             String content=SmsConfig.VALID_CODE_CONTENT.replace("#XXXXXX#",randomCode);
-            boolean sendState = SmsHelper.sendMobileValidCode(getIpAddr(request),content , mobile);
+            boolean sendState = SmsHelper.sendMobileValidCode(getIpAddr(request), content, mobile);
             if (sendState) {
                 responseResult.setResult(Result.SUCCESS);
                 responseResult.setMessage(randomCode);

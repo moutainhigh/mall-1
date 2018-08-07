@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.util.LogicUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -9,8 +10,14 @@ import java.util.Date;
 public class BankInfoVO implements java.io.Serializable{
     private static final long serialVersionUID = 3473099803823395986L;
 
+    @ApiModelProperty(value="银行名称类型和卡号",name="bankCardNumber",example="招商银行 信用卡 2316")
+    private String showBank;
+
     @ApiModelProperty(value="银行卡号",name="bankCardNumber",example="6222600260001072444")
     private String bankCardNumber;
+
+    @ApiModelProperty(value="银行名称",name="bankName",example="招商银行")
+    private String bankName;
 
     @ApiModelProperty(value="有效期",name="effectiveTime",example="2018-06-15")
     private Date effectiveTime;
@@ -39,6 +46,16 @@ public class BankInfoVO implements java.io.Serializable{
 
     public void setBankCardNumber(String bankCardNumber) {
         this.bankCardNumber = bankCardNumber;
+        setShowBank();
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+        setShowBank();
     }
 
     public Date getEffectiveTime() {
@@ -63,6 +80,7 @@ public class BankInfoVO implements java.io.Serializable{
 
     public void setCardType(String cardType) {
         this.cardType = cardType;
+        setShowBank();
     }
 
     public String getCustomerCardNo() {
@@ -97,10 +115,27 @@ public class BankInfoVO implements java.io.Serializable{
         this.code = code;
     }
 
+    public String getShowBank() {
+        return showBank;
+    }
+
+    public void setShowBank(String showBank) {
+        this.showBank = showBank;
+    }
+
+    //格式化前台展示：招商银行 信用卡 2316
+    private void setShowBank() {
+        if (LogicUtils.isNotNull(this.bankName) && LogicUtils.isNotNull(this.cardType) && LogicUtils.isNotNull(this.bankCardNumber)) {
+            this.showBank=this.bankName+" "+this.cardType+" "+this.bankCardNumber.substring(bankCardNumber.length()-4,bankCardNumber.length());
+        }
+    }
+
     @Override
     public String toString() {
         return "BankInfoVO{" +
-                "bankCardNumber='" + bankCardNumber + '\'' +
+                "showBank='" + showBank + '\'' +
+                ", bankCardNumber='" + bankCardNumber + '\'' +
+                ", bankName='" + bankName + '\'' +
                 ", effectiveTime=" + effectiveTime +
                 ", cardholder='" + cardholder + '\'' +
                 ", cardType='" + cardType + '\'' +

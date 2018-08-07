@@ -156,18 +156,19 @@ public class OrderServiceImpl implements OrderService {
         }
         //支付方式
         if (order.getPaymentType()== PaymentType.LOAN) {
-            CustomerWallet customerWallet = customerWalletMapper.selectByCustomerId(order.getCustomerId());
-            if (customerWallet != null) {
-                double expectedReturnAmount = customerWallet.getExpectedReturnAmount() == null ? 0 : customerWallet.getExpectedReturnAmount();
-                double loanQuota = customerWallet.getLoanQuota() == null ? 0 : customerWallet.getLoanQuota();
-                //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
-                if (expectedReturnAmount + loanQuota < totalPrice){
-                    throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
-                }
-                //在后台审核贷款申请通过是减少，优先减收益在减额度
-            } else {
-                throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
-            }
+
+//            CustomerWallet customerWallet = customerWalletMapper.selectByCustomerId(order.getCustomerId());
+//            if (customerWallet != null) {
+//                double expectedReturnAmount = customerWallet.getExpectedReturnAmount() == null ? 0 : customerWallet.getExpectedReturnAmount();
+//                double loanQuota = customerWallet.getLoanQuota() == null ? 0 : customerWallet.getLoanQuota();
+//                //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
+//                if (expectedReturnAmount + loanQuota < totalPrice){
+//                    throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
+//                }
+//                //在后台审核贷款申请通过是减少，优先减收益在减额度
+//            } else {
+//                throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
+//            }
         }
         //收货地址
         DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());
@@ -197,19 +198,6 @@ public class OrderServiceImpl implements OrderService {
             order.getOrderInvoice().setOrderId(order.getOrderId());
             orderInvoiceMapper.insert(order.getOrderInvoice());
         }
-//        if (order.getPaymentType()== PaymentType.LOAN) {
-//            //添加订单借款申请数据
-//            OrderLoanApply orderLoanApply = new OrderLoanApply();
-//            orderLoanApply.setLoanCode(UUIDGeneratorUtil.getUUCode());
-//            orderLoanApply.setOrderId(order.getOrderId());
-//            orderLoanApply.setCustomerId(order.getCustomerId());
-//            orderLoanApply.setLoanPrice(totalPrice);
-//            orderLoanApply.setLoanState(LoanState.WAIT_LOAN);
-//            orderLoanApply.setAuditState(AuditState.WAIT_AUDIT);
-//            orderLoanApply.setCreateTime(createTime);
-//            orderLoanApply.setUpdateTime(createTime);
-//            orderLoanApplyMapper.insert(orderLoanApply);
-//        }
         //添加订单日志
         OrderLog orderLog = new OrderLog();
         orderLog.setTime(createTime);
@@ -274,12 +262,6 @@ public class OrderServiceImpl implements OrderService {
             orderDb.setCancelTime(now);
             orderDb.setOrderState(OrderState.CANCELED);
             orderMapper.updateByPrimaryKey(orderDb);
-            //更改订单贷款申请为取消
-//            if (orderDb.getPaymentType() == PaymentType.LOAN) {
-//                OrderLoanApply orderLoanApply = orderLoanApplyMapper.selectByOrderId(orderDb.getOrderId());
-//                orderLoanApply.setLoanState(LoanState.CANCELED);
-//                orderLoanApplyMapper.updateByPrimaryKey(orderLoanApply);
-//            }
             //添加订单日志
             OrderLog orderLog = new OrderLog();
             orderLog.setTime(now);
