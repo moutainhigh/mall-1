@@ -1,5 +1,10 @@
 package com.yunxin.cb.rb.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -9,6 +14,10 @@ import java.math.BigDecimal;
  * @Return :
  * @DateTime: 2018/8/7 11:04
  */
+@Entity
+@Table(name = "rb_funds_pool")
+@DynamicInsert
+@DynamicUpdate
 public class FundsPool  implements Serializable {
     /**  */
     private Integer poolId;
