@@ -95,7 +95,7 @@
     </div>
 
     <div v-if="tab == 2">
-      <CarConfig></CarConfig>
+      <CarConfig :TableData="commodityData.specs"></CarConfig>
     </div>
 
     <div v-if="tab == 3">
@@ -169,6 +169,7 @@
 <script>
   import headTop from '../../components/header/head'
   import carExplain from './CarExplain'
+  import CarConfig from './CarConfig'
   import {
     addCommodityFavorite,
     delFavoriteByFavoriteId,
@@ -181,6 +182,7 @@
     name: "CarDetail",
     components: {
       headTop,
+      CarConfig,
       carExplain,
       Swiper,
       SwiperItem,
