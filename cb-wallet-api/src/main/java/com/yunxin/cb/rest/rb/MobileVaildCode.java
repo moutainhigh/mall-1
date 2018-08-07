@@ -49,6 +49,7 @@ public class MobileVaildCode {
             String content=SmsConfig.VALID_CODE_CONTENT.replace("#XXXXXX#",randomCode);
             boolean sendState = SmsHelper.sendMobileValidCode(getIpAddr(request), content, mobile);
             if (sendState) {
+
                 responseResult.setResult(Result.SUCCESS);
                 responseResult.setMessage(randomCode);
                 VerificationCode mobileCode = new VerificationCode(mobile, randomCode, System.currentTimeMillis());

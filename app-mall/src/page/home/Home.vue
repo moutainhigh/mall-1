@@ -189,7 +189,7 @@
     display: inline-block;
     width: 6rem;
     background-color: #dcdcdc;
-    margin: 0 0.2rem 0.1rem 0.2rem;
+    margin: 0 0.125rem 0.1rem 0.125rem;
     border-radius: 8px;
     flex: 1;
   }
@@ -207,7 +207,7 @@
     overflow: scroll;
     overflow-y: hidden;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
 
   .card-list {

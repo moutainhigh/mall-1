@@ -6,6 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+/**
+ * @title: 银行卡VO对象
+ * @auther: eleven
+ * @date: 2018/8/7 21:10
+ */
 @ApiModel(value="银行卡",description="银行卡VO对象 BankInfoVO")
 public class BankInfoVO implements java.io.Serializable{
     private static final long serialVersionUID = 3473099803823395986L;
@@ -20,7 +25,7 @@ public class BankInfoVO implements java.io.Serializable{
     private String bankName;
 
     @ApiModelProperty(value="有效期",name="effectiveTime",example="2018-06-15")
-    private Date effectiveTime;
+    private String effectiveTime;
 
     @ApiModelProperty(value="持卡人",name="cardholder",example="小明")
     private String cardholder;
@@ -58,11 +63,11 @@ public class BankInfoVO implements java.io.Serializable{
         setShowBank();
     }
 
-    public Date getEffectiveTime() {
+    public String getEffectiveTime() {
         return effectiveTime;
     }
 
-    public void setEffectiveTime(Date effectiveTime) {
+    public void setEffectiveTime(String effectiveTime) {
         this.effectiveTime = effectiveTime;
     }
 

@@ -20,6 +20,8 @@
 <script>
   import headTop from "../../components/header/head"
   import {getCarSeries, getCategoryByBrandId} from "../../service/getData";
+  import storage from "../../store/storage";
+  import {CAR_LIST_SESSION} from "../../config/constant";
 
   export default {
     name: "ChooseCarType",
@@ -68,7 +70,14 @@
         })
       }
 
-    }
+    },
+    beforeRouteLeave(to, from, next) {
+      // 下个页面为列表页 刷新
+      if(to.path=='/car-list'){
+        storage.saveSession(CAR_LIST_SESSION,true);
+      }
+      next();
+    },
   }
 </script>
 
