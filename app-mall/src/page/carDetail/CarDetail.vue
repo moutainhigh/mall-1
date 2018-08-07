@@ -96,7 +96,7 @@
     </div>
 
     <div v-if="tab == 2">
-      <carConfig :settingContent="commodityData.settingContent"></carConfig>
+      <carConfig :TableData="commodityData.specs"></carConfig>
     </div>
 
     <div v-if="tab == 3">
