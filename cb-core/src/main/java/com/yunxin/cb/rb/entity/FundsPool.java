@@ -1,8 +1,9 @@
 package com.yunxin.cb.rb.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class FundsPool {
+public class FundsPool  implements Serializable {
     /**  */
     private Integer poolId;
 
