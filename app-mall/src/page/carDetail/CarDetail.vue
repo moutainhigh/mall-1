@@ -16,7 +16,7 @@
       </div>
     </head-top>
 
-    <div v-if="tab == 1">
+    <div :ref="`detail`">
       <div>
         <swiper :aspect-ratio="0.749" auto style="margin:0 auto;" dots-position="center">
           <swiper-item class="swiper-demo-img" v-for="(img, index) in commodityData.imageSet" :key="index">
@@ -56,7 +56,8 @@
       <div class="selectItem" @click="checkProducts">
         <p class="selectItem-title">规格选择</p>
         <p v-if="standard[0] == ''" class="selectItem-detail">请选择</p>
-        <p v-if="standard[0] != ''" class="selectItem-detail"><span>{{standard[0]}} {{standard[1]}} {{standard[2]}}</span></p>
+        <p v-if="standard[0] != ''" class="selectItem-detail">
+          <span>{{standard[0]}} {{standard[1]}} {{standard[2]}}</span></p>
         <img src="../../assets/img/cardetail/ic_right.png">
       </div>
       <div class="buyMode" @click="checkType = 'mode'">
@@ -95,11 +96,11 @@
 
     </div>
 
-    <div v-if="tab == 2">
+    <div :ref="`config`">
       <carConfig :TableData="commodityData.specs"></carConfig>
     </div>
 
-    <div v-if="tab == 3">
+    <div :ref="`explain`">
       <carExplain :explainContent="commodityData.explainContent"></carExplain>
     </div>
 
@@ -211,11 +212,13 @@
     methods: {
       checkTab(tabNum) {
         this.tab = tabNum;
-        this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
-        if (this.scroll <= 350 && this.tab == 1) {
-          this.headTitle = '汽车详情';
-        } else {
-          this.headTitle = '';
+        switch (tabNum) {
+          case 1: window.scrollTo(0, this.$refs['detail'].offsetTop - 50);
+                break;
+          case 2: window.scrollTo(0, this.$refs['config'].offsetTop - 50);
+                break;
+          case 3: window.scrollTo(0, this.$refs['explain'].offsetTop - 50);
+                break
         }
       },
       //根据商品id获取货品
@@ -321,6 +324,16 @@
         } else {
           this.headTitle = '';
         }
+        //监听页面滚动切换tab
+        if (this.scroll >= 90 && this.scroll < this.$refs['config'].offsetTop) {
+          this.tab = 1;
+        }
+        if (this.scroll >= this.$refs['config'].offsetTop - 50 && this.scroll < this.$refs['explain'].offsetTop - 50) {
+          this.tab = 2;
+        }
+        if (this.scroll >= this.$refs['explain'].offsetTop - 50) {
+          this.tab = 3;
+        }
       },
       //立即抢购
       toOrderComfirm() {
@@ -378,6 +391,7 @@
     created() {
       let query = this.$route.query;
       this.getCommodityDetail(query.productId);
+
     },
     mounted() {
       window.addEventListener('scroll', this.menu)
