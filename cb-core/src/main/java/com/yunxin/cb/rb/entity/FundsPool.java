@@ -2,11 +2,13 @@ package com.yunxin.cb.rb.entity;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.search.annotations.DocumentId;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * @Description:    资金池模型类
@@ -34,6 +36,10 @@ public class FundsPool  implements Serializable {
     /** 版本号 */
     private Integer version;
 
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(unique = true, nullable = false, precision = 12, scale = 0)
+    @DocumentId
     public Integer getPoolId() {
         return poolId;
     }
@@ -42,6 +48,7 @@ public class FundsPool  implements Serializable {
         this.poolId = poolId;
     }
 
+    @Column(nullable = false, length = 11)
     public Integer getCatalogId() {
         return catalogId;
     }
@@ -50,6 +57,7 @@ public class FundsPool  implements Serializable {
         this.catalogId = catalogId;
     }
 
+    @Column(nullable = false, length = 128)
     public String getPoolName() {
         return poolName;
     }
@@ -58,6 +66,7 @@ public class FundsPool  implements Serializable {
         this.poolName = poolName == null ? null : poolName.trim();
     }
 
+    @Column(nullable = false, length = 20)
     public BigDecimal getFunds() {
         return funds;
     }
@@ -66,6 +75,7 @@ public class FundsPool  implements Serializable {
         this.funds = funds;
     }
 
+    @Column(nullable = false, length = 11)
     public Integer getVersion() {
         return version;
     }
