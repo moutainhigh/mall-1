@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="height: 3rem"></div>
-    <head-top :go-back="true" :headTitle="headTitle" :share="true">
+    <head-top :go-back="true" :headTitle="headTitle" :share="true" v-bind:style="{ opacity: opacity }">
       <img style="width: 20px; position: absolute" src="../../assets/img/common/ic_nav_share.png">
       <div slot="head-tab" class="head-tab" v-if="scroll > 90 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
@@ -16,17 +16,14 @@
       </div>
     </head-top>
 
-    <div v-if="tab == 1">
+    <div :ref="`detail`">
       <div>
         <swiper :aspect-ratio="0.749" auto style="margin:0 auto;" dots-position="center">
-          <swiper-item class="swiper-demo-img" v-for="(img, index) in commodityData.imageSet" :key="index">
+          <swiper-item class="swiper-demo-img" v-for="img in commodityData.imageSet">
             <img width="100%" :src="img" v-preview="img"></swiper-item>
         </swiper>
       </div>
 
-      <div style="display: none">
-        <img :src="commodityData.defaultPicPath" v-preview="commodityData.defaultPicPath" :key="0">
-      </div>
       <div class="carPrice">
         <div class="price">
           <p class="presentPrice">￥<span>{{setTranPrice(commodityData.sellPrice)}}</span>万</p>
@@ -56,7 +53,8 @@
       <div class="selectItem" @click="checkProducts">
         <p class="selectItem-title">规格选择</p>
         <p v-if="standard[0] == ''" class="selectItem-detail">请选择</p>
-        <p v-if="standard[0] != ''" class="selectItem-detail"><span>{{standard[0]}} {{standard[1]}} {{standard[2]}}</span></p>
+        <p v-if="standard[0] != ''" class="selectItem-detail">
+          <span>{{standard[0]}} {{standard[1]}} {{standard[2]}}</span></p>
         <img src="../../assets/img/cardetail/ic_right.png">
       </div>
       <div class="buyMode" @click="checkType = 'mode'">
@@ -84,7 +82,14 @@
         <div v-html="commodityData.content"></div>
       </div>
 
-      <div style="height: 40px; background: #fff"></div>
+      <div :ref="`config`">
+        <carConfig :TableData="commodityData.specs"></carConfig>
+      </div>
+
+      <div :ref="`explain`">
+        <carExplain :explainContent="commodityData.explainContent"></carExplain>
+      </div>
+
       <div style="height: 70px">
         <div class="i-footer">
           <button @click="toOrderComfirm">
@@ -92,15 +97,6 @@
           </button>
         </div>
       </div>
-
-    </div>
-
-    <div v-if="tab == 2">
-      <carConfig :TableData="commodityData.specs"></carConfig>
-    </div>
-
-    <div v-if="tab == 3">
-      <carExplain :explainContent="commodityData.explainContent"></carExplain>
     </div>
 
     <div v-show="checkType != 'none'" class="carType">
@@ -176,7 +172,7 @@
     delFavoriteByFavoriteId,
     getCommdityDetailById, getProductsByCommodityId
   } from "../../service/getData";
-  import {Swiper, SwiperItem} from 'vux'
+  import {Swiper, SwiperItem, Alert} from 'vux'
   import {tranPrice} from "../../config/dataFormat";
 
   export default {
@@ -187,6 +183,7 @@
       carConfig,
       Swiper,
       SwiperItem,
+      Alert
     },
     data() {
       return {
@@ -206,16 +203,22 @@
         mode: '',
         show: false,
         favoriteId: null,
+        opacity: 1, //顶部透明度
       }
     },
     methods: {
       checkTab(tabNum) {
         this.tab = tabNum;
-        this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
-        if (this.scroll <= 350 && this.tab == 1) {
-          this.headTitle = '汽车详情';
-        } else {
-          this.headTitle = '';
+        switch (tabNum) {
+          case 1:
+            window.scrollTo(0, this.$refs['detail'].offsetTop - 50);
+            break;
+          case 2:
+            window.scrollTo(0, this.$refs['config'].offsetTop - 50);
+            break;
+          case 3:
+            window.scrollTo(0, this.$refs['explain'].offsetTop - 50);
+            break
         }
       },
       //根据商品id获取货品
@@ -321,9 +324,45 @@
         } else {
           this.headTitle = '';
         }
+        //透明度
+        switch (this.scroll) {
+          case 50: this.opacity = 0.9;break;
+          case 70: this.opacity = 0.8;break;
+          case 90: this.opacity = 0.7;break;
+          case 110: this.opacity = 0.6;break;
+          case 130: this.opacity = 0.5;break;
+          case 150: this.opacity = 0.4;break;
+          case 170: this.opacity = 0.3;break;
+          case 190: this.opacity = 0.2;break;
+          case 210: this.opacity = 0.3;break;
+          case 230: this.opacity = 0.4;break;
+          case 250: this.opacity = 0.5;break;
+          case 270: this.opacity = 0.6;break;
+          case 290: this.opacity = 0.7;break;
+          case 310: this.opacity = 0.8;break;
+          case 330: this.opacity = 0.9;break;
+          case 350: this.opacity = 1;break;
+        }
+
+        //监听页面滚动切换tab
+        if (this.scroll >= 90 && this.scroll < this.$refs['config'].offsetTop) {
+          this.tab = 1;
+        }
+        if (this.scroll >= this.$refs['config'].offsetTop - 50 && this.scroll < this.$refs['explain'].offsetTop - 50) {
+          this.tab = 2;
+        }
+        if (this.scroll >= this.$refs['explain'].offsetTop - 50) {
+          this.tab = 3;
+        }
       },
       //立即抢购
       toOrderComfirm() {
+        if (this.mode == '') {
+          this.$vux.alert.show({
+            content: '请选择支付方式',
+          });
+          return false;
+        }
         this.$router.push({
           path: "/order-comfirm",
           query: {
@@ -365,6 +404,7 @@
         getCommdityDetailById(productId).then(res => {
           if (res.result == 'SUCCESS') {
             this.commodityData = res.data;
+            this.checkProductId = this.commodityData.productVo.productId;
             if (this.commodityData.favoriteVo) {
               this.isCollect = true;
               this.favoriteId = this.commodityData.favoriteVo.favoriteId;
@@ -378,6 +418,7 @@
     created() {
       let query = this.$route.query;
       this.getCommodityDetail(query.productId);
+
     },
     mounted() {
       window.addEventListener('scroll', this.menu)

@@ -28,7 +28,7 @@
 
           <div v-if="index == 0" style="background: #ffffff">
             <p class="cityTitle">定位城市</p>
-            <button class="locationCity">{{localCity}}</button>
+            <button class="locationCity" @click="chooseCity(localCity)">{{localCity}}</button>
           </div>
           <div v-if="index == 1" style="background: #ffffff">
             <p class="cityTitle">热门城市</p>
@@ -189,24 +189,25 @@
       },
       local() {
         let vm = this;
-        if (storage.fetchSession(LOCATION).length <= 0) {
+        // if (storage.fetchSession(LOCATION).length <= 0) {
           AMap.plugin('AMap.CitySearch', function () {
             var citySearch = new AMap.CitySearch();
             citySearch.getLocalCity(function (status, result) {
               if (status === 'complete' && result.info === 'OK') {
-                vm.localCity = result.city.substr(0, 2);
-                storage.saveSession(LOCATION, vm.localCity);
+                vm.localCity = result.city.substr(0, result.city.lastIndexOf("市"));
+                // storage.saveSession(LOCATION, vm.localCity);
               }
             })
           })
-        } else {
-          this.localCity = storage.fetchSession(LOCATION);
-        }
+        // } else {
+        //   this.localCity = storage.fetchSession(LOCATION);
+        // }
       },
       chooseCity(city) {
         this.clearInput();
-        this.localCity = city;
+        // this.localCity = city;
         storage.saveSession(LOCATION, city);
+        this.$router.go(-1);
       },
       back() {
         this.$router.go(-1);
