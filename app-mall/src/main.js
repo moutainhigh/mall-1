@@ -7,6 +7,7 @@ import './assets/css/defualt.css'
 import vuePicturePreview from 'vue-picture-preview'
 import { Group,LoadingPlugin,ToastPlugin,AlertPlugin,ConfirmPlugin } from 'vux'
 import VueScroller from 'vue-scroller'
+import Vuelidate from 'vuelidate'
 
 
 
@@ -18,6 +19,8 @@ Vue.use(LoadingPlugin);
 Vue.use(ToastPlugin);
 Vue.use(AlertPlugin);
 Vue.use(ConfirmPlugin);
+Vue.use(Vuelidate)
+
 
 router.afterEach((to,from,next) => {
   window.scrollTo(0,0);
