@@ -9,8 +9,10 @@ import com.yunxin.cb.mall.dao.RankDao;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
+import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
+import com.yunxin.cb.mall.vo.CustomerGratitudeVo;
 import com.yunxin.cb.mall.vo.CustomerMatchVo;
 import com.yunxin.cb.mall.vo.CustomerMatchsVo;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
@@ -805,7 +807,7 @@ public class CustomerService implements ICustomerService {
             };
     }
     public Map<String,Object> getCustomer(){
-
+        redisService.deleteKey("customers");
                 Map<String,Object> map=new HashMap<>();
                 if(null!=redisService.getKey("customers"))
                     map= (Map<String,Object>)redisService.getKey("customers");
@@ -820,7 +822,7 @@ public class CustomerService implements ICustomerService {
                             }
                         };
                         map.put("customers",mp);
-                        redisService.setKey("customers",mp);
+//                        redisService.setKey("customers",mp);
                     }
 
                 }
@@ -981,5 +983,48 @@ public class CustomerService implements ICustomerService {
             }
         }
         return listVo;
+    }
+
+    @Override
+    public CustomerGratitudeVo findCustomerGratitude(int customerId) {
+        Customer customer= customerDao.findRecommendCustomer(customerId);
+
+        return new CustomerGratitudeVo(){
+            {
+                int allGratitude=0;
+                int noGratitude=0;
+                int gratitudeMe=0;
+                int unpaid=0;
+                int notPurchased=0;
+                if(null!=customer){
+                    List<Customer> list= findCustomerByLikeLevelCode(customer);
+                    if(null!=list&&list.size()>0){
+                        //所有感恩人
+                        allGratitude=list.size();
+                        for (Customer customer:list
+                             ) {
+                            //已经感恩的
+                            if(customer.isPraise())
+                                gratitudeMe++;
+                            //未感恩的
+                            if(customer.getPolicy().equals(PolicyType.PAYMENT)&&!customer.isPraise())
+                                noGratitude++;
+                            //未付款
+                            if(customer.getPolicy().equals(PolicyType.UNPAID))
+                                unpaid++;
+                            //未购买
+                            if(customer.getPolicy().equals(PolicyType.NOTPURCHASED))
+                                notPurchased++;
+                        }
+
+                    }
+                }
+                setAllGratitude(allGratitude);
+                setNoGratitude(noGratitude);
+                setGratitudeMe(gratitudeMe);
+                setUnpaid(unpaid);
+                setNotPurchased(notPurchased);
+            }
+        };
     }
 }

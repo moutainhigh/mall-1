@@ -4,6 +4,7 @@
 package com.yunxin.cb.mall.dao;
 
 import com.yunxin.cb.mall.entity.Customer;
+import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.core.orm.BaseDao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -62,6 +63,9 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Modifying
     public void updateIntegralById(int integral, int customerId);
 
+    @Query("update Customer c set c.policy=?1 where c.customerId=?2")
+    @Modifying
+    public void updatePolicy(PolicyType policy,int customerId);
     @Query("select c from Customer c left join fetch c.rank where c.accountName=?1 ")
     public Customer findByAccountName(String accountName);
     @Query("select c from Customer c where c.accountName=?1")

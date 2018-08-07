@@ -490,6 +490,22 @@ alter table feedback modify column images varchar(9000);
 ##add by tangou 2018-08-06
 ALTER TABLE commodity ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商品配置内容';
 
+######add by wangteng 2018-08-07
+DROP TABLE IF EXISTS `insurance_order_log`;
+CREATE TABLE `insurance_order_log` (
+  `INSURANCE_LOG_ID` int(11) NOT NULL COMMENT '主键',
+  `CUSTOMER_ID` int(11) DEFAULT NULL COMMENT '用户',
+  `INSURANCE_ORDER_ID` int(11) DEFAULT NULL COMMENT '保单',
+  `ORDER_STATE` int(11) DEFAULT NULL COMMENT '状态',
+  `PROD_NAME` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品名称',
+  `PRICE` int(10) DEFAULT NULL COMMENT '价格',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '时间',
+  KEY `customer_id` (`customer_id`),
+  KEY `insurance_order_id` (`insurance_order_id`),
+  CONSTRAINT `insurance_order_log_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`),
+  CONSTRAINT `insurance_order_log_ibfk_2` FOREIGN KEY (`INSURANCE_ORDER_ID`) REFERENCES `insurance_order` (`ORDER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci   COMMENT '保单日志';
+
 -- ##add by tangou 2018-08-06
 -- ALTER TABLE finacial_wallet ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商品配置内容';
 -- ALTER TABLE finacial_wallet ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商品配置内容';

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
+import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.core.web.json.deserializer.JsonTimestampDeserializer;
 import com.yunxin.core.web.json.serializer.JsonDateSerializer;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
@@ -15,14 +16,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -164,7 +161,7 @@ public class Customer implements java.io.Serializable {
      * 是否买过保单
      */
     @ApiModelProperty(value="是否买过保单",name="policy",example="true")
-    private boolean policy;
+    private PolicyType policy;
     /**
      * 邮箱是否验证
      */
@@ -365,13 +362,18 @@ public class Customer implements java.io.Serializable {
     public void setInvitationCode(String invitationCode) {
         this.invitationCode = invitationCode;
     }
+
     @Column(precision = 1)
-    public boolean isPolicy() {
+    public PolicyType getPolicy() {
         return policy;
     }
 
-    public void setPolicy(boolean policy) {
+    public void setPolicy(PolicyType policy) {
         this.policy = policy;
+    }
+
+    public void setParentCustomerId(int parentCustomerId) {
+        this.parentCustomerId = parentCustomerId;
     }
 
     public void setCardNegativeImg(String cardNegativeImg) {
