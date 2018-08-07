@@ -6,6 +6,8 @@ import io.rong.messages.CmdMsgMessage;
 import io.rong.messages.ContactNtfMessage;
 import io.rong.methods.user.User;
 import io.rong.models.Result;
+import io.rong.models.group.GroupMember;
+import io.rong.models.group.GroupModel;
 import io.rong.models.message.PrivateMessage;
 import io.rong.models.message.SystemMessage;
 import io.rong.models.response.BlackListResult;
@@ -135,5 +137,31 @@ public class RongCloudService {
         UserModel user = new UserModel().setId(customer);
         BlackListResult result = rongCloud.user.blackList.getList(user);
         return result;
+    }
+
+    public boolean groupCreate(String customerId,String groupId,String groupName) throws Exception {
+
+        RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
+        GroupModel groupModel=new GroupModel(){
+            {
+                setId(groupId);
+                setName(groupName);
+                GroupMember[] groupMember=new GroupMember[1];
+                groupMember[0]=new GroupMember(){
+                    {
+                        setGroupId(groupId);
+                        setId(customerId);
+                        setName(groupName);
+                    }
+                };
+                setMembers(groupMember);
+            }
+        };
+        Result result = (Result)rongCloud.group.create(groupModel);
+        if (result.getCode() != 200)
+            return true;
+        else
+            return false;
+
     }
 }
