@@ -1,6 +1,5 @@
 package com.yunxin.cb.rest.customer;
 
-import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.im.RongCloudService;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Feedback;
@@ -10,6 +9,7 @@ import com.yunxin.cb.mall.vo.CustomerInfoVo;
 import com.yunxin.cb.mall.vo.CustomerMatchsVo;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.meta.Result;
+import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
@@ -46,6 +46,9 @@ public class CustomerResource extends BaseResource {
 
     @Resource
     private ICustomerFriendRequestService customerFriendRequestService;
+
+    @Resource
+    private RedisService redisService;
 
     @ApiOperation(value = "我的好友")
     @GetMapping(value = "myFriends")
@@ -256,7 +259,7 @@ public class CustomerResource extends BaseResource {
     })
     public ResponseResult updateMobile(String moblie, String code) {
         //校验验证码
-        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(moblie);
+        VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(moblie);
         //验证码不存在
         if (verificationCode == null) {
             return new ResponseResult(Result.FAILURE, "验证码不存在");
