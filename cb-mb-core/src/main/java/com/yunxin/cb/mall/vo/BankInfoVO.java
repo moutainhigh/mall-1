@@ -15,6 +15,10 @@ import java.util.Date;
 public class BankInfoVO implements java.io.Serializable{
     private static final long serialVersionUID = 3473099803823395986L;
 
+    /** 银行ID*/
+    @ApiModelProperty(value="银行ID",name="bankId",example="3")
+    private Integer bankId;
+
     @ApiModelProperty(value="银行名称类型和卡号",name="bankCardNumber",example="招商银行 信用卡 2316")
     private String showBank;
 
@@ -44,6 +48,14 @@ public class BankInfoVO implements java.io.Serializable{
 
     @ApiModelProperty(value="验证码",name="code",example="666666")
     private String code;
+
+    public Integer getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
+    }
 
     public String getBankCardNumber() {
         return bankCardNumber;
