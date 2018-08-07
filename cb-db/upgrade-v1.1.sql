@@ -469,7 +469,7 @@ CREATE TABLE `customer_group` (
   PRIMARY KEY (`CUSTOMER_GROUP_ID`),
   KEY `CUSTOMER_ID` (`CUSTOMER_ID`),
   CONSTRAINT `customergroup_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMIT ='用户群组';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT ='用户群组';
 
 
 ####add by likang 2018-08-06
