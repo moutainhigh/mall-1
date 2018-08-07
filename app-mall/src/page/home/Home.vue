@@ -149,7 +149,7 @@
     created() {
       let _this = this;
       //获取当前城市定位
-      this.selectLocal();
+      // this.selectLocal();
       _this.$vux.loading.show({
         text: '加载中...'
       });

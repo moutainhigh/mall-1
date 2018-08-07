@@ -14,12 +14,12 @@ public interface BankInfoMapper {
        int deleteByPrimaryKey(@Param("bankId")Integer bankId,@Param("customerId")Integer customerId);
 
        @Insert({
-               "insert into bank_info (BANK_ID, BANK_CARD_NUMBER, ",
+               "insert into bank_info (BANK_ID, BANK_CARD_NUMBER, BANK_NAME,",
                "EFFECTIVE_TIME, CARDHOLDER, ",
                "CARD_TYPE, CUSTOMER_CARD_NO, ",
                "MOBILE, CUSTOMER_ID, ",
                "CREATE_TIME)",
-               "values (#{bankId,jdbcType=INTEGER}, #{bankCardNumber,jdbcType=VARCHAR}, ",
+               "values (#{bankId,jdbcType=INTEGER}, #{bankCardNumber,jdbcType=VARCHAR},#{bankName,jdbcType=VARCHAR}, ",
                "#{effectiveTime,jdbcType=TIMESTAMP}, #{cardholder,jdbcType=VARCHAR}, ",
                "#{cardType,jdbcType=VARCHAR}, #{customerCardNo,jdbcType=VARCHAR}, ",
                "#{mobile,jdbcType=VARCHAR}, #{customerId,jdbcType=INTEGER}, ",
@@ -29,7 +29,7 @@ public interface BankInfoMapper {
 
        @Select({
                "select",
-               "BANK_ID, BANK_CARD_NUMBER, EFFECTIVE_TIME, CARDHOLDER, CARD_TYPE, CUSTOMER_CARD_NO, ",
+               "BANK_ID, BANK_CARD_NUMBER, BANK_NAME, EFFECTIVE_TIME, CARDHOLDER, CARD_TYPE, CUSTOMER_CARD_NO, ",
                "MOBILE, CUSTOMER_ID, CREATE_TIME",
                "from bank_info",
                "where BANK_ID = #{bankId,jdbcType=INTEGER} AND CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
@@ -37,6 +37,7 @@ public interface BankInfoMapper {
        @Results({
                @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER, id=true),
                @Result(column="BANK_CARD_NUMBER", property="bankCardNumber", jdbcType=JdbcType.VARCHAR),
+               @Result(column="BANK_NAME", property="bankName", jdbcType=JdbcType.VARCHAR),
                @Result(column="EFFECTIVE_TIME", property="effectiveTime", jdbcType=JdbcType.TIMESTAMP),
                @Result(column="CARDHOLDER", property="cardholder", jdbcType=JdbcType.VARCHAR),
                @Result(column="CARD_TYPE", property="cardType", jdbcType=JdbcType.VARCHAR),
@@ -49,13 +50,14 @@ public interface BankInfoMapper {
 
        @Select({
                "select",
-               "BANK_ID, BANK_CARD_NUMBER, EFFECTIVE_TIME, CARDHOLDER, CARD_TYPE, CUSTOMER_CARD_NO, ",
+               "BANK_ID, BANK_CARD_NUMBER, BANK_NAME, EFFECTIVE_TIME, CARDHOLDER, CARD_TYPE, CUSTOMER_CARD_NO, ",
                "MOBILE, CUSTOMER_ID, CREATE_TIME",
                "from bank_info where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
        })
        @Results({
                @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER, id=true),
                @Result(column="BANK_CARD_NUMBER", property="bankCardNumber", jdbcType=JdbcType.VARCHAR),
+               @Result(column="BANK_NAME", property="bankName", jdbcType=JdbcType.VARCHAR),
                @Result(column="EFFECTIVE_TIME", property="effectiveTime", jdbcType=JdbcType.TIMESTAMP),
                @Result(column="CARDHOLDER", property="cardholder", jdbcType=JdbcType.VARCHAR),
                @Result(column="CARD_TYPE", property="cardType", jdbcType=JdbcType.VARCHAR),
@@ -69,6 +71,7 @@ public interface BankInfoMapper {
        @Update({
                "update bank_info",
                "set BANK_CARD_NUMBER = #{bankCardNumber,jdbcType=VARCHAR},",
+               "BANK_NAME = #{bankName,jdbcType=VARCHAR},",
                "EFFECTIVE_TIME = #{effectiveTime,jdbcType=TIMESTAMP},",
                "CARDHOLDER = #{cardholder,jdbcType=VARCHAR},",
                "CARD_TYPE = #{cardType,jdbcType=VARCHAR},",

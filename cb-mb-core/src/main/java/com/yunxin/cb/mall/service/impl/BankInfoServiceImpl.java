@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -72,6 +71,7 @@ public class BankInfoServiceImpl implements BankInfoService {
      * @date        2018/7/31 11:40
      */
     public int deleteByPrimaryKey(Integer bankId,Integer customerId){
+        //此处需要判断银行卡是否有业务操作，比如此银行卡已经申请提现
         return bankInfoMapper.deleteByPrimaryKey(bankId,customerId);
     }
 }
