@@ -1,7 +1,9 @@
 package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.annotation.ApiVersion;
+import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.entity.Category;
+import com.yunxin.cb.mall.service.BrandService;
 import com.yunxin.cb.mall.service.CategoryService;
 import com.yunxin.cb.mall.vo.CategoryVO;
 import com.yunxin.cb.meta.Result;
@@ -20,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Api(description = "运营分类接口")
@@ -30,6 +35,9 @@ public class CategoryResource extends BaseResource {
 
     @Resource
     private CategoryService categoryService;
+
+    @Resource
+    private BrandService brandService;
     /**
      * 汽车运营分类编码
      */
@@ -85,6 +93,25 @@ public class CategoryResource extends BaseResource {
                 catagoryVOs.add(cVO);
             }
             return new ResponseResult(catagoryVOs);
+        } catch (Exception e) {
+            logger.info("carCatena failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
+    }
+
+    @ApiOperation(value = "根据汽车品牌ID查询车系 V1")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "brandId", value = "品牌ID", required = true, paramType = "path", dataType = "int")})
+    @GetMapping(value = "getCategoryByBrandId/{brandId}")
+    @ApiVersion(1)
+    @IgnoreAuthentication
+    public ResponseResult<List<CategoryVO>> getCategoryByBrandId(@PathVariable("brandId") int brandId) {
+        try {
+            Brand brand=brandService.selectByPrimaryKey(brandId);//获取品牌数据
+            if(LogicUtils.isNull(brand)){
+                return new ResponseResult(Result.FAILURE,"数据为空");
+            }
+            return getCategoryById(brand.getCategoryId());
         } catch (Exception e) {
             logger.info("carCatena failed", e);
             return new ResponseResult(Result.FAILURE);

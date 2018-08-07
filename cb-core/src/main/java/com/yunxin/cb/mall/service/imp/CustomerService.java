@@ -11,6 +11,8 @@ import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
+import com.yunxin.cb.mall.vo.CustomerMatchVo;
+import com.yunxin.cb.mall.vo.CustomerMatchsVo;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
@@ -22,6 +24,7 @@ import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.system.entity.Profile;
 import com.yunxin.cb.system.meta.ProfileName;
 import com.yunxin.cb.system.service.IProfileService;
+import com.yunxin.cb.util.CachedUtil;
 import com.yunxin.cb.util.PasswordHash;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
@@ -87,6 +90,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Fridge updateFridge(Fridge fridge) {
         Fridge fridgeDB = fridgeDao.findOne(fridge.getFridgeId());
         AttributeReplication.copying(fridge, fridgeDB, Fridge_.articleName, Fridge_.articleType,
@@ -161,15 +165,17 @@ public class CustomerService implements ICustomerService {
         customer.setCardPositiveImg(" ");
         customer.setCardNegativeImg(" ");
         customer.setBankCardImg(" ");
-        customer.setRecommendCustomer(new Customer(){
+        customer.setNickName(customer.getMobile());//add by lxc 2018-08-06  默认手机号为昵称
+        customer.setRecommendCustomer(new Customer() {
             {
                 setCustomerId(1);
             }
         });
-        Customer customer1= customerDao.getOne(1);
-        if(customer1!=null){
-            Customer customerCode=generateCode(customer1.getInvitationCode());
-            if(customerCode!=null){
+//        Customer customer1 = customerDao.getOne(1);//此方法会引起,org.hibernate.lazyinitializationexception错误,解决方法,用另外一个根据customerId查询的方法
+        Customer customer1 = customerDao.findRecommendCustomer(1);//add by lxc  2018-08-05
+        if (customer1 != null) {
+            Customer customerCode = generateCode(customer1.getInvitationCode());
+            if (customerCode != null) {
                 customer.setLevelCode(customerCode.getLevelCode());
                 customer.setCustomerLevel(customerCode.getCustomerLevel());
                 customer.setInvitationCode(customerCode.getInvitationCode());
@@ -197,6 +203,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updatePassword(int customerId, String password) {
         Customer customer = customerDao.findOne(customerId);
         try {
@@ -209,6 +216,7 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateMobile(int customerId, String mobile) {
         Customer customer = customerDao.findOne(customerId);
         customer.setMobile(mobile);
@@ -217,6 +225,7 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateAvatar(int customerId, String avatar) throws Exception {
         Customer customer = customerDao.findOne(customerId);
         customer.setAvatarUrl(avatar);
@@ -225,9 +234,10 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateNickName(int customerId, String nickName) throws Exception {
         Customer customer = customerDao.findOne(customerId);
-        if(StringUtils.isNotBlank(nickName)){
+        if (StringUtils.isNotBlank(nickName)) {
             customer.setNickName(nickName);
             rongCloudService.update(customer);
         }
@@ -235,6 +245,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateSex(int customerId, boolean sex) {
         Customer customer = customerDao.findOne(customerId);
         customer.setSex(sex);
@@ -242,6 +253,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateAddress(int customerId, String province, String city, String district, String address) {
         Customer customer = customerDao.findOne(customerId);
         customer.setProvince(province);
@@ -253,6 +265,7 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateMobileChecked(int customerId, boolean mobileChecked) {
         Customer customer = customerDao.findOne(customerId);
         customer.setMobileChecked(mobileChecked);
@@ -260,6 +273,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateEmail(int customerId, String email) {
         Customer customer = customerDao.findOne(customerId);
         customer.setEmail(email);
@@ -267,6 +281,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateEmailChecked(int customerId, boolean mailChecked) {
         Customer customer = customerDao.findOne(customerId);
         customer.setEmailChecked(mailChecked);
@@ -274,6 +289,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateCustomer(Customer customer) throws EntityExistException {
         if (!customerDao.isUnique(customer, Customer_.accountName)) {
             throw new EntityExistException("客户账户名已存在");
@@ -285,28 +301,29 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer updateCustomerMsg(int customerId,CustomerUpdateVo customerUpdateVo) {
+    @Transactional(rollbackFor = Exception.class)
+    public Customer updateCustomerMsg(int customerId, CustomerUpdateVo customerUpdateVo) {
         Customer customerDB = customerDao.findOne(customerId);
-        if(StringUtils.isNotBlank(customerUpdateVo.getBankCardImg()))
+        if (StringUtils.isNotBlank(customerUpdateVo.getBankCardImg()))
             customerDB.setBankCardImg(customerUpdateVo.getBankCardImg());
-        if(StringUtils.isNotBlank(customerUpdateVo.getCardNegativeImg()))
+        if (StringUtils.isNotBlank(customerUpdateVo.getCardNegativeImg()))
             customerDB.setCardNegativeImg(customerUpdateVo.getCardNegativeImg());
-        if(StringUtils.isNotBlank(customerUpdateVo.getCardPositiveImg()))
+        if (StringUtils.isNotBlank(customerUpdateVo.getCardPositiveImg()))
             customerDB.setCardPositiveImg(customerUpdateVo.getCardPositiveImg());
-        if(StringUtils.isNotBlank(customerUpdateVo.getRealName()))
+        if (StringUtils.isNotBlank(customerUpdateVo.getRealName()))
             customerDB.setRealName(customerUpdateVo.getRealName());
-        if(StringUtils.isNotBlank(customerUpdateVo.getCardType()))
+        if (StringUtils.isNotBlank(customerUpdateVo.getCardType()))
             customerDB.setCardType(customerUpdateVo.getCardType());
-        if(StringUtils.isNotBlank(customerUpdateVo.getCustomerCountry()))
+        if (StringUtils.isNotBlank(customerUpdateVo.getCustomerCountry()))
             customerDB.setCustomerCountry(customerUpdateVo.getCustomerCountry());
-        if(customerUpdateVo.getCustomerCardPeroid()!=null)
+        if (customerUpdateVo.getCustomerCardPeroid() != null)
             customerDB.setCustomerCardPeroid(customerUpdateVo.getCustomerCardPeroid());
-        if(StringUtils.isNotBlank(customerUpdateVo.getOccupationalCategory()))
+        if (StringUtils.isNotBlank(customerUpdateVo.getOccupationalCategory()))
             customerDB.setOccupationalCategory(customerUpdateVo.getOccupationalCategory());
-        if(StringUtils.isNotBlank(customerUpdateVo.getSex())){
-            if("true".equals(customerUpdateVo.getSex()))
+        if (StringUtils.isNotBlank(customerUpdateVo.getSex())) {
+            if ("true".equals(customerUpdateVo.getSex()))
                 customerDB.setSex(true);
-            else if("false".equals(customerUpdateVo.getSex()))
+            else if ("false".equals(customerUpdateVo.getSex()))
                 customerDB.setSex(false);
         }
 
@@ -314,6 +331,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateCustomerRank(Customer customer) {
         Customer customerDB = customerDao.findOne(customer
                 .getCustomerId());
@@ -322,6 +340,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateCustomerIntegral(Customer customer) {
         Customer customerDB = customerDao.findOne(customer
                 .getCustomerId());
@@ -333,7 +352,7 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Customer getCustomerById(int customerId) {
-        return customerDao.findOne(customerId);
+        return customerDao.findRecommendCustomer(customerId);
     }
 
     @Override
@@ -343,33 +362,33 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer generateCode(String invitationCode) {
-        logger.info("generateCode----------"+invitationCode);
-        final int initialLevel=1;
-       return new Customer(){
+        logger.info("generateCode----------" + invitationCode);
+        final int initialLevel = 1;
+        return new Customer() {
             {
                 try {
-                    String generateCode=checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
-                    String invitationCodes=checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
-                    if(StringUtils.isNotBlank(invitationCode)){
-                        Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
-                        if(recommendCustomer!=null){
-                            int customerLevel=recommendCustomer.getCustomerLevel();
-                            String recommendLevelCode=recommendCustomer.getLevelCode();
-                            setCustomerLevel(customerLevel+initialLevel);
-                            logger.info("invitationCode----------"+invitationCode);
-                            setLevelCode(checkGenerateCode(recommendLevelCode,generateCode));
-                        }else{
+                    String generateCode = checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
+                    String invitationCodes = checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
+                    if (StringUtils.isNotBlank(invitationCode)) {
+                        Customer recommendCustomer = getCustomerByInvitationCode(invitationCode);
+                        if (recommendCustomer != null) {
+                            int customerLevel = recommendCustomer.getCustomerLevel();
+                            String recommendLevelCode = recommendCustomer.getLevelCode();
+                            setCustomerLevel(customerLevel + initialLevel);
+                            logger.info("invitationCode----------" + invitationCode);
+                            setLevelCode(checkGenerateCode(recommendLevelCode, generateCode));
+                        } else {
                             setCustomerLevel(initialLevel);
                             setLevelCode(generateCode);
                         }
-                    }else{
+                    } else {
                         setCustomerLevel(initialLevel);
                         setLevelCode(generateCode);
                     }
                     setInvitationCode(invitationCodes);
-                    logger.info("invitationCodes----------"+invitationCodes);
+                    logger.info("invitationCodes----------" + invitationCodes);
                 } catch (Exception e) {
-                    logger.error("生成编码异常",e);
+                    logger.error("生成编码异常", e);
                 }
             }
         };
@@ -377,16 +396,16 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public List<Customer> findCustomerByLevelCode(String levelCode) {
-        final int indexSize=4;
-       return new ArrayList<Customer>(){
+        final int indexSize = 4;
+        return new ArrayList<Customer>() {
             {
-                if(StringUtils.isNotBlank(levelCode)){
-                    Customer customer= getByLevelCode(levelCode);
-                    if(customer!=null){
-                        int level=customer.getCustomerLevel();
-                        for (int i=1;i<level;i++){
-                            if(levelCode.length()-(i*indexSize)>0){
-                                Customer customers=getByLevelCode(levelCode.substring(0,levelCode.length()-(i*indexSize)));
+                if (StringUtils.isNotBlank(levelCode)) {
+                    Customer customer = getByLevelCode(levelCode);
+                    if (customer != null) {
+                        int level = customer.getCustomerLevel();
+                        for (int i = 1; i < level; i++) {
+                            if (levelCode.length() - (i * indexSize) > 0) {
+                                Customer customers = getByLevelCode(levelCode.substring(0, levelCode.length() - (i * indexSize)));
                                 add(customers);
                             }
 
@@ -401,48 +420,52 @@ public class CustomerService implements ICustomerService {
 
     /**
      * 校验邀请码
+     *
      * @param invitationCode
      * @return
      */
-    public String checkInvitationCode(String invitationCode){
-            Customer recommendCustomer=getCustomerByInvitationCode(invitationCode);
-            if(recommendCustomer!=null) {
-                try {
-                    return  checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    public String checkInvitationCode(String invitationCode) {
+        Customer recommendCustomer = getCustomerByInvitationCode(invitationCode);
+        if (recommendCustomer != null) {
+            try {
+                return checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
         return invitationCode;
     }
 
     /**
      * 校验等级编码
+     *
      * @param levelCode
      * @return
      */
-    public String checkGenerateCode(String levelCode,String generateCode){
-        Customer recommendCustomer=getByLevelCode(levelCode+generateCode);
-        if(recommendCustomer!=null) {
+    public String checkGenerateCode(String levelCode, String generateCode) {
+        Customer recommendCustomer = getByLevelCode(levelCode + generateCode);
+        if (recommendCustomer != null) {
             try {
-                return  checkGenerateCode(levelCode,DmSequenceFourUtil.getNoRepeatId());
+                return checkGenerateCode(levelCode, DmSequenceFourUtil.getNoRepeatId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return levelCode+generateCode;
+        return levelCode + generateCode;
     }
-    public String checkLevelCode(String generateCode){
-        Customer recommendCustomer=getByLevelCode(generateCode);
-        if(recommendCustomer!=null) {
+
+    public String checkLevelCode(String generateCode) {
+        Customer recommendCustomer = getByLevelCode(generateCode);
+        if (recommendCustomer != null) {
             try {
-                return  checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
+                return checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return generateCode;
     }
+
     @Override
     @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
@@ -467,15 +490,15 @@ public class CustomerService implements ICustomerService {
         PBKDF2PasswordEncoder pbkdf2 = new PBKDF2PasswordEncoder();
         Customer customer = customerDao.findByAccountNameAndEnabled(accountName, true);
 
-        if(customer!=null){
-            if(pbkdf2.matches(password, customer.getPassword())){
-                if(StringUtils.isNotEmpty(customer.getRealName())&&StringUtils.isNotEmpty(customer.getCustomerCountry())
-                        &&StringUtils.isNotEmpty(customer.getCardType())&&StringUtils.isNotEmpty(customer.getCustomerCardNo())
-                        &&StringUtils.isNotEmpty(customer.getOccupationalCategory())&&null!=customer.getCustomerCardPeroid())
+        if (customer != null) {
+            if (pbkdf2.matches(password, customer.getPassword())) {
+                if (StringUtils.isNotEmpty(customer.getRealName()) && StringUtils.isNotEmpty(customer.getCustomerCountry())
+                        && StringUtils.isNotEmpty(customer.getCardType()) && StringUtils.isNotEmpty(customer.getCustomerCardNo())
+                        && StringUtils.isNotEmpty(customer.getOccupationalCategory()) && null != customer.getCustomerCardPeroid())
                     customer.setPerfect(true);
                 else
                     customer.setPerfect(false);
-            }else {
+            } else {
                 return null;
             }
         }
@@ -491,11 +514,11 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Customer getCustomerByMobile(String mobile) {
-        Customer customer=customerDao.findByMobileAndEnabled(mobile, true);
-        if(customer!=null){
-            if(StringUtils.isNotEmpty(customer.getRealName())&&StringUtils.isNotEmpty(customer.getCustomerCountry())
-                    &&StringUtils.isNotEmpty(customer.getCardType())&&StringUtils.isNotEmpty(customer.getCustomerCardNo())
-                    &&StringUtils.isNotEmpty(customer.getOccupationalCategory())&&null!=customer.getCustomerCardPeroid())
+        Customer customer = customerDao.findByMobileAndEnabled(mobile, true);
+        if (customer != null) {
+            if (StringUtils.isNotEmpty(customer.getRealName()) && StringUtils.isNotEmpty(customer.getCustomerCountry())
+                    && StringUtils.isNotEmpty(customer.getCardType()) && StringUtils.isNotEmpty(customer.getCustomerCardNo())
+                    && StringUtils.isNotEmpty(customer.getOccupationalCategory()) && null != customer.getCustomerCardPeroid())
                 customer.setPerfect(true);
             else
                 customer.setPerfect(false);
@@ -529,6 +552,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Customer updateCustomerForPre(Customer customer) {
         Customer oldCustomer = customerDao.findByCustomerId(customer
                 .getCustomerId());
@@ -572,6 +596,7 @@ public class CustomerService implements ICustomerService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updatePwdById(String email, String pwds) {
         customerDao.updatePwdById(email, pwds);
     }
@@ -642,7 +667,7 @@ public class CustomerService implements ICustomerService {
     }
 
     public List<CustomerFriend> getFriendByCustomerId(int customerId) {
-        List<CustomerFriend> customerFriendss = customerFriendDao.findCustomerFriendByCustomerCustomerIdAndState(customerId,CustomerFriendState.NORMAL);
+        List<CustomerFriend> customerFriendss = customerFriendDao.findCustomerFriendByCustomerCustomerIdAndState(customerId, CustomerFriendState.NORMAL);
         return customerFriendss;
     }
 
@@ -653,7 +678,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Transactional
-    public void delFriendById(int customerId, int friendId) throws Exception{
+    public void delFriendById(int customerId, int friendId) throws Exception {
         CustomerFriendId customerFriendId1 = new CustomerFriendId();
         customerFriendId1.setCustomerId(customerId);
         customerFriendId1.setFriendId(friendId);
@@ -664,7 +689,7 @@ public class CustomerService implements ICustomerService {
         customerFriendDao.delete(customerFriendId2);
         Customer customer = customerDao.findByCustomerId(customerId);
         Customer friendCustomer = customerDao.findByCustomerId(friendId);
-        rongCloudService.sendPrivateMessage(customer.getAccountName(), friendCustomer.getAccountName(),"DeleteFriend");
+        rongCloudService.sendPrivateMessage(customer.getAccountName(), friendCustomer.getAccountName(), "DeleteFriend");
     }
 
     @Override
@@ -676,7 +701,7 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(readOnly = true)
     public CustomerFriend getFriend(int customerId, int friendId) {
-        return customerFriendDao.findOne(new CustomerFriendId(customerId,friendId));
+        return customerFriendDao.findOne(new CustomerFriendId(customerId, friendId));
     }
 
 
@@ -706,25 +731,25 @@ public class CustomerService implements ICustomerService {
         /**
          * 查保单
          */
-        List<InsuranceOrder>  list= insuranceOrderDao.findOrderPriceByCustomerId(customer.getCustomerId());
-        if(list==null||list.size()==0)
+        List<InsuranceOrder> list = insuranceOrderDao.findOrderPriceByCustomerId(customer.getCustomerId());
+        if (list == null || list.size() == 0)
             return false;
         //给推荐人增加一个点赞次数
         Customer recommendCustomer = customer.getRecommendCustomer();
         recommendCustomer.setPraiseNum(recommendCustomer.getPraiseNum() + 1);
         //TODO 实现推荐人以及所有上级增加5%的授信额度
-        if(!customer.isPraise()){
-            List<Customer>  listCustomer=findCustomerByLevelCode(customer.getLevelCode());
-            Profile Profile=iProfileService.getProfileByProfileName(ProfileName.GIVE_THE_THUMBS_UP);
-            Double ration=0.05;
+        if (!customer.isPraise()) {
+            List<Customer> listCustomer = findCustomerByLevelCode(customer.getLevelCode());
+            Profile Profile = iProfileService.getProfileByProfileName(ProfileName.GIVE_THE_THUMBS_UP);
+            Double ration = 0.05;
             try {
                 ration = Double.parseDouble(Profile.getFileValue());
-            }catch (Exception e){
-                ration=0.05;
+            } catch (Exception e) {
+                ration = 0.05;
             }
-            if(listCustomer!=null&&listCustomer.size()>0){
-                for(Customer listCustome:listCustomer)
-                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(),ration,"推荐人以及所有上级增加5%的授信额度",BusinessType.GIVE_THE_THUMBS_UP,list.get(0).getInsuranceProductPrice().getPrice());
+            if (listCustomer != null && listCustomer.size() > 0) {
+                for (Customer listCustome : listCustomer)
+                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getInsuranceProductPrice().getPrice());
 
             }
 
@@ -745,6 +770,64 @@ public class CustomerService implements ICustomerService {
         return customerDao.findByRecommendCustomer_CustomerIdAndPraise(customerId, true);
     }
 
+    @Override
+    public List<CustomerMatchVo> matchAddressBook(CustomerMatchsVo[] customerMatchsVo) {
+            return new ArrayList<CustomerMatchVo>(){
+                {
+                    if(null!=customerMatchsVo&&customerMatchsVo.length>0){
+
+                        List<CustomerMatchsVo> listVo=Arrays.asList(customerMatchsVo);
+                        Map<String,Object> map=getCustomer();
+                        if(null!=map){
+                            Map<String,Object> mp=(Map<String, Object>) map.get("customers");
+                            for(CustomerMatchsVo customerMatchVos:listVo){
+                                if(null!=mp.get("customer_"+customerMatchVos.getMobile())){
+                                    Customer customer=(Customer)mp.get("customer_"+customerMatchVos.getMobile());
+                                    add(new CustomerMatchVo(){
+                                        {
+                                            setCustomerId(customer.getCustomerId());
+                                            setAvatarUrl(customer.getAvatarUrl());
+                                            setNickName(customer.getNickName());
+                                            setRealName(customerMatchVos.getRealName());
+                                            setMobile(customer.getMobile());
+                                        }
+                                    });
+                                }
+
+                            }
+                        }
+
+
+
+                    }
+                }
+            };
+    }
+    public Map<String,Object> getCustomer(){
+
+                Map<String,Object> map=new HashMap<>();
+                if(null!=CachedUtil.getInstance().getContext("customers")){
+
+                    map= (Map<String,Object>)CachedUtil.getInstance().getContext("customers");
+
+                }else{
+                    List<Customer> list= customerDao.findAll();
+                    if(null!=list&&list.size()>0){
+
+                        map.put("customers",new HashMap<String,Object>(){
+                            {
+                                for (Customer customer:list) {
+                                    put("customer_"+customer.getMobile(),customer);
+                                }
+                            }
+                        });
+
+                    }
+
+                }
+        return map;
+
+    }
     /**
      * 添加黑名单
      *
@@ -754,7 +837,7 @@ public class CustomerService implements ICustomerService {
      */
     @Transactional
     public void addBlacklist(int friendId, int customerId) throws Exception {
-        CustomerFriendId customerFriendId=new CustomerFriendId();
+        CustomerFriendId customerFriendId = new CustomerFriendId();
         customerFriendId.setCustomerId(customerId);
         customerFriendId.setFriendId(friendId);
         CustomerFriend customerFriend = customerFriendDao.getOne(customerFriendId);
@@ -773,7 +856,7 @@ public class CustomerService implements ICustomerService {
      */
     @Transactional
     public void removeBlacklist(int friendId, int customerId) throws Exception {
-        CustomerFriendId customerFriendId=new CustomerFriendId();
+        CustomerFriendId customerFriendId = new CustomerFriendId();
         customerFriendId.setCustomerId(customerId);
         customerFriendId.setFriendId(friendId);
         CustomerFriend customerFriend = customerFriendDao.getOne(customerFriendId);
@@ -784,32 +867,29 @@ public class CustomerService implements ICustomerService {
     }
 
     @Transactional
-    public  List<CustomerFriend> getBlacklist(int customerId)throws Exception
-    {
+    public List<CustomerFriend> getBlacklist(int customerId) throws Exception {
         Customer customer = customerDao.findByCustomerId(customerId);
-        List<CustomerFriend> blacklist= customerFriendDao.findCustomerFriendByCustomerCustomerIdAndState(customerId,CustomerFriendState.BLACKLIST);
+        List<CustomerFriend> blacklist = customerFriendDao.findCustomerFriendByCustomerCustomerIdAndState(customerId, CustomerFriendState.BLACKLIST);
         BlackListResult result = rongCloudService.getBlacklist(customer.getAccountName());
-        List<String> blacklistId=new ArrayList<>();
-        List<String> blacklistIdRongcloud=new ArrayList<>();
-        for(CustomerFriend cf:blacklist)
-        {
+        List<String> blacklistId = new ArrayList<>();
+        List<String> blacklistIdRongcloud = new ArrayList<>();
+        for (CustomerFriend cf : blacklist) {
             blacklistId.add(cf.getFriend().getAccountName());
         }
-        for(UserModel um:result.getUsers())
-        {
+        for (UserModel um : result.getUsers()) {
             blacklistIdRongcloud.add(um.id);
         }
 
         //同步融云blackList
-        List<String> tempList=new ArrayList<>();
+        List<String> tempList = new ArrayList<>();
         tempList.addAll(blacklistId);
         tempList.removeAll(blacklistIdRongcloud);
-        for(String friend:tempList){
-            rongCloudService.addBlacklist(customer.getAccountName(),friend);
+        for (String friend : tempList) {
+            rongCloudService.addBlacklist(customer.getAccountName(), friend);
         }
         blacklistIdRongcloud.removeAll(blacklistId);
-        for(String friend:blacklistIdRongcloud){
-            rongCloudService.removeBlacklist(customer.getAccountName(),friend);
+        for (String friend : blacklistIdRongcloud) {
+            rongCloudService.removeBlacklist(customer.getAccountName(), friend);
         }
         return blacklist;
     }
@@ -817,15 +897,16 @@ public class CustomerService implements ICustomerService {
 
     /**
      * 双向添加好友，并且修改申请添加记录
-     * @author      likang
+     *
      * @param myself
-    * @param customer
-     * @return      void
-     * @exception
-     * @date        2018/7/19 20:16
+     * @param customer
+     * @return void
+     * @throws
+     * @author likang
+     * @date 2018/7/19 20:16
      */
     @Transactional
-    public void addTwoWayFriend(Customer myself,Customer customer) throws Exception{
+    public void addTwoWayFriend(Customer myself, Customer customer) throws Exception {
         //修改添加好友记录为已同意
         customerFriendRequestService.updateCustomerFriendRequestState(customer.getCustomerId(), myself.getCustomerId(), CustomerFriendRequestState.AGREE.getState());
         CustomerFriend customerFriend = new CustomerFriend();
@@ -849,18 +930,19 @@ public class CustomerService implements ICustomerService {
         customerFriend.setCreateTime(new Date());
         customerFriend.setState(CustomerFriendState.NORMAL);
         addFriend(customerFriend);
-        rongCloudService.sendPrivateMessage(customer.getAccountName(), myself.getAccountName(),"AcceptResponse");
+        rongCloudService.sendPrivateMessage(customer.getAccountName(), myself.getAccountName(), "AcceptResponse");
     }
 
     /**
      * 批量更新密码加密
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void batchPwdEncode() {
         List<Customer> customers = customerDao.findAll();
-        if(customers != null) {
+        if (customers != null) {
             customers.forEach(customer -> {
-                if(!customer.getPassword().contains("sha1:")){
+                if (!customer.getPassword().contains("sha1:")) {
                     try {
                         String pwd = PasswordHash.createHash(customer.getPassword());
                         customer.setPassword(pwd);
@@ -870,5 +952,35 @@ public class CustomerService implements ICustomerService {
                 }
             });
         }
+    }
+
+    /**
+     * 查询推荐的下级人信息
+     * @author      likang
+     * @param customer
+     * @return      java.util.List<com.yunxin.cb.mall.vo.CustomerTreeVo>
+     * @exception
+     * @date        2018/8/6 9:55
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Customer> findCustomerByLikeLevelCode(Customer customer) {
+        String like = customer.getLevelCode()+"%";
+        List<Customer> list = customerDao.findCustomerByLikeLevelCode(like);
+        List<Customer> listVo=new ArrayList<>();
+        if(list!=null){
+            for (Customer p:list) {
+                //清除自己
+                if(p.getCustomerId()==customer.getCustomerId()){
+                    continue;
+                }
+                //清除上级
+                if(p.getRecommendCustomer()!=null&&  p.getRecommendCustomer().getCustomerId()==customer.getCustomerId()){
+                    p.setRecommendCustomer(null);
+                }
+                listVo.add(p);
+            }
+        }
+        return listVo;
     }
 }

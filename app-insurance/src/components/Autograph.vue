@@ -73,7 +73,7 @@
       <input id="image" type="file" accept="image/*" capture="camera" @change="onFileChange"
              style="display: none;">
       <div v-if="imgUrl !== undefined && imgUrl !== ''">
-        <img class="headPhoto-img" :src="imgUrl">
+        <img class="headPhoto-img" :src="imgUrl" v-preview="imgUrl" preview-nav-enable="false">
       </div>
 
       <div class="canvas">

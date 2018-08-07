@@ -16,6 +16,7 @@ import com.yunxin.cb.pay.entity.WxPayBean;
 import com.yunxin.cb.pay.service.PayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,16 +35,14 @@ public class WxPayServiceImpl implements PayService {
 
     @Resource
     private PaymentMapper paymentMapper;
-
     @Resource
     private OrderMapper orderMapper;
     @Resource
     private ProductReturnMapper productReturnMapper;
-
     private static String notify_url = "";
     private AjaxResult result = new AjaxResult();
-
-    private WxPayBean wxPayBean = new WxPayBean();
+    @Autowired
+    private WxPayBean wxPayBean;
 
     /**
      * 微信APP支付

@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IFeedbackService;
 import com.yunxin.cb.mall.vo.CustomerInfoVo;
+import com.yunxin.cb.mall.vo.CustomerMatchsVo;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.redis.RedisService;
@@ -387,6 +388,11 @@ public class CustomerResource extends BaseResource {
             logger.error(e.getMessage());
             return new ResponseResult(Result.FAILURE,"服务器异常");
         }
+    }
+    @ApiOperation(value = "匹配通讯录")
+    @PostMapping(value = "matchAddressBook")
+    public ResponseResult matchAddressBook(@RequestBody CustomerMatchsVo[] customerMatchsVo){
+            return new ResponseResult( customerService.matchAddressBook(customerMatchsVo));
     }
 
 }

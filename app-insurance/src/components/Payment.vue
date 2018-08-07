@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="title">
+    <div class="title" style="text-align: left;margin-top: 0; font-weight: bold; font-size: 17px">
       填写银行账号信息
     </div>
-    <div style="position:absolute;top: 0; height: 100%; width: 100%;z-index: 0">
+    <!--<div style="position:absolute;top: 0; height: 100%; width: 100%;z-index: 0">-->
 
-    </div>
+    <!--</div>-->
     <group label-width="7em" label-margin-right="2em" label-align="left" style="font-size: 15px;">
       <x-input title="账户姓名" placeholder="请输入账户姓名" v-model="bank.bankName"
                v-bind:class="{'errorInput': $v.bank.bankName.$error}"
@@ -77,11 +77,33 @@
         <div class="input-vile" @click.prevent="getVerifyCode">{{computedTime === 0? "获取验证码" : computedTime +"s"}}</div>
         <div class="error" v-if="!$v.code.required && $v.code.$dirty">验证码不能为空</div>
       </div>
+      <div class="input-ver">
+        <p style="line-height: 3">上传银行卡正面图片</p>
+      </div>
+
       <toast v-model="showPositionValue" type="text" :time="800" is-show-mask position="middle">{{toastText}}</toast>
     </group>
+    <!--上传银行卡图片-->
+    <div v-show="bankcard === '' || bankcard === undefined">
+      <img style="width: 70px; margin-left: 16px; margin-top: 16px"
+           src="../assets/img/addCard.png" @click.stop="addPic">
+    </div>
+    <input id="image" type="file" accept="image/*" capture="camera" @change="onFileChange"
+           style="display: none;">
+    <div style="height: 70px; width: 70px; position: relative; margin: 16px 0 16px 16px">
+      <div v-show="bankcard !== '' && bankcard !== undefined"
+           style="height: 70px; width: 70px; overflow: hidden; position: relative;">
+        <img style="width: 70px;" :src="bankcard"
+             v-preview="bankcard" preview-nav-enable="false">
+      </div>
+      <img v-if="bankcard !== '' && bankcard !== undefined"
+           style="width: 15px; height: 15px; position: absolute; top: -5px; right: -5px; background: #ffffff"
+           src="../assets/img/false.png"
+           @click='delImage()'>
+    </div>
     <div style="height: 60px;">
       <div class="i-footer">
-        <button @click="submit" style="background-color: #c01212">
+        <button @click="submit">
           <div>确认提交</div>
         </button>
       </div>
@@ -93,9 +115,10 @@
   import {ChinaAddressData, Datetime, Group, PopupPicker, XInput, Toast} from 'vux'
   import storage from "../store/storage";
   import XAddress from "vux/src/components/x-address/index";
-  import {getVaildData, submitOrder} from '../service/getData'
+  import {getVaildData, submitOrder, uploadImage} from '../service/getData'
   import {required, minLength, maxLength, helpers, numeric} from 'vuelidate/lib/validators'
-  import {mobile,emoji} from "../admin/validate";
+  import {mobile, emoji} from "../admin/validate";
+  import '../lib/lrz.all.bundle'
 
   export default {
     name: "Payment",
@@ -120,7 +143,8 @@
         showPositionValue: false,
         validate_token: '',
         computedTime: 0,
-        code: ''
+        code: '',
+        bankcard: storage.fetch('order').insuranceOrderPolicyholderBank.bankCardImg
       }
     },
     validations: {
@@ -142,11 +166,17 @@
         let isPass = true;
         for (let i = 0; i < input.length; i++) {
           if (emoji.test(input[i].value)) {
-            isPass= false;
+            isPass = false;
           }
         }
         if (!isPass) {
-          this.$vux.toast.text("输入信息不得带表情",'middle');
+          this.$vux.toast.text("输入信息不得带表情", 'middle');
+          return;
+        }
+
+        if (!this.bankcard) {
+          this.showPositionValue = true;
+          this.toastText = "请上传银行卡正面图片";
           return;
         }
 
@@ -215,6 +245,50 @@
           this.toastText = "请填写手机号";
           this.showPositionValue = true;
         }
+      },
+      //添加银行卡图片
+      addPic: function () {
+        document.getElementById("image").click();
+        return false;
+      },
+      onFileChange: function (e) {
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length) return;
+        this.createImage(files, e);
+      },
+      async createImage(file, e) {
+        let vm = this;
+        vm.$vux.loading.show({
+          text: 'Loading'
+        });
+        let timeout = setTimeout(function () {
+          vm.$vux.loading.hide();
+          vm.showPositionValue = true;
+          vm.toastText = "上传失败，请稍后重试";
+        }, 15000);
+        await lrz(file[0], {width: 480}).then(function (rst) {
+          rst.base64 = rst.base64.split(',')[1];
+          uploadImage(rst.base64).then(function (result) {
+            vm.bankcard = result.data;
+            let order = storage.fetch("order");
+            order.insuranceOrderPolicyholderBank.bankCardImg = result.data;
+            storage.save("order", order);
+            vm.$vux.loading.hide();
+            clearTimeout(timeout);
+          });
+          return rst;
+        }).always(function () {
+          // 清空文件上传控件的值
+          e.target.value = null;
+        });
+      },
+      //删除图片
+      delImage: function () {
+        let vm = this;
+        let order = storage.fetch("order");
+        vm.bankcard = '';
+        order.insuranceOrderPolicyholderBank.bankCardImg = '';
+        storage.save("order", order);
       },
     },
     watch: {
@@ -295,10 +369,10 @@
     font-size: 10px;
     margin-top: -34px;
     margin-right: 10px;
-    border: #c01212 solid 1px;
+    border: #f5ca1d solid 1px;
     padding: 4px 8px;
     border-radius: 6px;
-    color: #c01212;
+    color: #f5ca1d;
   }
 
   .input-ver {
@@ -311,7 +385,7 @@
   }
 
   .title {
-    color: #c01212;
+    color: #f5ca1d;
     background-color: #ffffff;
     margin-left: 0;
     border-bottom: 1px solid rgb(217, 217, 217);

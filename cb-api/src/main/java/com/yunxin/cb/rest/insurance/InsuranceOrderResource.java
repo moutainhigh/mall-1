@@ -8,6 +8,7 @@ import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.rest.customer.MainResource;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.VerificationCode;
 import com.yunxin.core.persistence.PageSpecification;
@@ -15,6 +16,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +31,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping(value = "/insurance/order")
 public class InsuranceOrderResource extends BaseResource {
-
+    private static Logger logger = LoggerFactory.getLogger(MainResource.class);
     @Resource
     private IInsuranceOrderService insuranceOrderService;
 
@@ -44,6 +47,7 @@ public class InsuranceOrderResource extends BaseResource {
     @PostMapping(value = "saveOrder")
     @JsonFilter(value = "data.insuranceOrderBeneficiarys,data.insuranceOrderInformedMatters")
     public ResponseResult saveOrder(@RequestBody InsuranceOrder insuranceOrder, @RequestParam String code) {
+        logger.info("getCustomerId---------------"+getCustomerId());
         Customer customer = customerService.getCustomerById(getCustomerId());
         if (customer == null) {
             return new ResponseResult(Result.FAILURE, "链接错误或用户不存在");
