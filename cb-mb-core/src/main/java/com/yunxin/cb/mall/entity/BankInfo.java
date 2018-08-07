@@ -9,8 +9,12 @@ package com.yunxin.cb.mall.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class
-BankInfo implements Serializable {
+/**
+ * @title: 银行卡实体类
+ * @auther: eleven
+ * @date: 2018/8/7 21:10
+ */
+public class BankInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /** 银行ID*/
@@ -23,7 +27,7 @@ BankInfo implements Serializable {
     private String bankName;
 
     /** 有效期 */
-    private Date effectiveTime;
+    private String effectiveTime;
 
     /** 持卡人 */
     private String cardholder;
@@ -59,11 +63,11 @@ BankInfo implements Serializable {
         this.bankCardNumber = bankCardNumber == null ? null : bankCardNumber.trim();
     }
 
-    public Date getEffectiveTime() {
+    public String getEffectiveTime() {
         return effectiveTime;
     }
 
-    public void setEffectiveTime(Date effectiveTime) {
+    public void setEffectiveTime(String effectiveTime) {
         this.effectiveTime = effectiveTime;
     }
 

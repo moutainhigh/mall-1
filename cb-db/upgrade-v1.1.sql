@@ -492,4 +492,5 @@ ALTER TABLE commodity ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商�
 
 ##add by tangou 2018-08-07
 ALTER TABLE bank_info ADD COLUMN `BANK_NAME` varchar(60)  COMMENT '银行名称';
+ALTER TABLE `crystal_ball`.`bank_info` MODIFY COLUMN EFFECTIVE_TIME VARCHAR (10) ;
 
