@@ -27,7 +27,7 @@ public class InsuranceOrderLog implements Serializable {
     private int insuranceLogId;
     private Customer customer;
     private InsuranceOrder insuranceOrder;
-    @ApiModelProperty(value="名称",name="prodName",example="你好")
+    @ApiModelProperty(value="状态",name="prodName",example="你好")
     private InsuranceOrderState orderState;
     @ApiModelProperty(value="名称",name="prodName",example="你好")
     private String prodName;
