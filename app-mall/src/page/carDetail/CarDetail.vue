@@ -96,7 +96,7 @@
     </div>
 
     <div v-if="tab == 2">
-      <carConfig :tableDatas="commodityData.specs"></carConfig>
+      <carConfig :settingContent="commodityData.settingContent"></carConfig>
     </div>
 
     <div v-if="tab == 3">
@@ -206,7 +206,6 @@
         mode: '',
         show: false,
         favoriteId: null,
-        specs: [] //配置数据
       }
     },
     methods: {
@@ -232,6 +231,19 @@
                   this.iac[i] = j;
                   this.iac = this.iac.concat([]);
                 }
+              }
+            }
+
+            let name = '';
+            //判断默认货品属性
+            for (let i = 0; i < this.iac.length; i++) {
+              if (this.productGroups[i].attributes[this.iac[i]]) {
+                if (name != '') {
+                  name = name + '&'
+                }
+                name = name + this.productGroups[i].groupName + '：' + this.productGroups[i].attributes[this.iac[i]].attributeName;
+                //页面显示选中信息
+                this.standard.push(this.productGroups[i].attributes[this.iac[i]].attributeName);
               }
             }
           }
