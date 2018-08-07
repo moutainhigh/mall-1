@@ -41,6 +41,32 @@ export const tranPrice = (price,showZore = false) => {
   return result;
 };
 
+/**
+ * 万元转元
+ * @param price
+ * @returns {string}
+ */
+export const tranThouOfPrice = (price) => {
+  let result = '';
+  let splice = price.split(".");
+  console.log(splice);
+  if (splice[1]){
+    let length = splice[1].length;
+    if (length > 4) {
+      splice[1] = splice[1].substring(0,4);
+    } else {
+      for (let i = length;i>=0;i--){
+        splice[1] = splice[1]+'0';
+      }
+    }
+    result = splice[0] + splice[1];
+  }else {
+    result = splice[0] + '0000';
+  }
+  console.log(result);
+  return result;
+};
+
 //订单状态转换
 export const orderState = state => {
   switch (state) {

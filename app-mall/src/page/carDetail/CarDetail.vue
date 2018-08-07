@@ -56,8 +56,7 @@
       <div class="selectItem" @click="checkProducts">
         <p class="selectItem-title">规格选择</p>
         <p v-if="standard[0] == ''" class="selectItem-detail">请选择</p>
-        <p v-if="standard[0] != ''" class="selectItem-detail">2018款 <span>{{standard[0]}} {{standard[1]}} {{standard[2]}}</span>
-          1辆</p>
+        <p v-if="standard[0] != ''" class="selectItem-detail"><span>{{standard[0]}} {{standard[1]}} {{standard[2]}}</span></p>
         <img src="../../assets/img/cardetail/ic_right.png">
       </div>
       <div class="buyMode" @click="checkType = 'mode'">
