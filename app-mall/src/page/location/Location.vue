@@ -60,7 +60,7 @@
 
 <script>
   import BScroll from 'better-scroll'
-  import {cityData} from '../../js/cityList.js'
+  import {cityData} from '../../assets/js/cityList.js'
   import AMap from 'AMap';
   import storage from "../../store/storage";
   import {LOCATION} from "../../config/constant";

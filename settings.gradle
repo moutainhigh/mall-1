@@ -9,4 +9,5 @@ include 'cb-mb-api'
 include 'cb-search'
 include 'cb-rb-api'
 include 'cb-wallet-api'
+include 'cb-generated'
 
