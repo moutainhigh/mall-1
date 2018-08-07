@@ -3,6 +3,12 @@ package com.yunxin.cb.rb.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * @Description:    资金池模型类
+ * @author: lxc
+ * @Return :
+ * @DateTime: 2018/8/7 11:04
+ */
 public class FundsPool  implements Serializable {
     /**  */
     private Integer poolId;
