@@ -2,14 +2,10 @@ package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.FinacialWallet;
 import java.util.List;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.apache.ibatis.type.JdbcType;
 
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.type.JdbcType;
+@Mapper
 public interface FinacialWalletMapper {
     @Delete({
         "delete from finacial_wallet",
