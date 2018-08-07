@@ -48,9 +48,7 @@ public class IndexResource extends BaseResource {
     public ResponseResult index(){
         try{
             //获取首页banner
-            AdvertisementPlace homePlace = AdvertisementPlace.HOME;
-            boolean enabled = true;
-            List<Advertisement> firstList = advertisementService.selectByPlace(homePlace,enabled);
+            List<Advertisement> firstList = advertisementService.selectByPlace(AdvertisementPlace.HOME,true);
             List<AdvertisementVO> homeList = new ArrayList<>();
             for(Advertisement adm : firstList){
                 AdvertisementVO adVO = new AdvertisementVO();
@@ -58,8 +56,7 @@ public class IndexResource extends BaseResource {
                 homeList.add(adVO);
             }
             //获取中部banner
-            AdvertisementPlace middlePlace = AdvertisementPlace.MIDDLE;
-            List<Advertisement> secondList = advertisementService.selectByPlace(middlePlace,enabled);
+            List<Advertisement> secondList = advertisementService.selectByPlace(AdvertisementPlace.MIDDLE,true);
             List<AdvertisementVO> middleList = new ArrayList<>();
             for(Advertisement advment : secondList){
                 AdvertisementVO adVO = new AdvertisementVO();
