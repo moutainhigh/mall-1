@@ -490,3 +490,6 @@ alter table feedback modify column images varchar(9000);
 ##add by tangou 2018-08-06
 ALTER TABLE commodity ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商品配置内容';
 
+##add by tangou 2018-08-06
+ALTER TABLE finacial_wallet ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商品配置内容';
+ALTER TABLE finacial_wallet ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商品配置内容';

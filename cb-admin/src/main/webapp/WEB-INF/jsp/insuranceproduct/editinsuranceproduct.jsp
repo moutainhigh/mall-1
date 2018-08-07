@@ -35,7 +35,6 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
-                        debugger;
                         var defaultPicPath = $('input[name="imgurl"]');
                         var defaultPicPath1 = $('input[name="imgurl1"]');
                         if (defaultPicPath.size()==0) {
@@ -510,8 +509,11 @@
                                 <label><span class="asterisk">*</span>保障年限：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="protectionYear"
-                                            cssClass="form-control validate[required,minSize[1]]" maxlength="15"/>
+                                <select class="form-control  grid-filter" path="protectionYear" name="protectionYear">
+                                    <c:forEach items="${InsuranceYearList}" var="year">
+                                        <option value="${year.key}"  <c:if test="${insuranceProduct.protectionYear eq year.key}">selected</c:if>>${year.name}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -520,7 +522,11 @@
                                 <label><span class="asterisk">*</span>保险期间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="insurePeriod" cssClass="form-control validate[required,minSize[1]]" maxlength="15"/>
+                                <select class="form-control grid-filter" path="insurePeriod" name="insurePeriod">
+                                    <c:forEach items="${InsurancePeriodList}" var="per">
+                                        <option value="${per.key}" <c:if test="${insuranceProduct.insurePeriod eq per.key}">selected</c:if>>${per.name}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                             <div class="col-sm-2">
                                 <label>标签：</label>
@@ -532,16 +538,17 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>投保须知：</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <form:input path="instruction" cssClass="form-control validate[required,minSize[2]]" maxlength="50"/>
-                            </div>
-                            <div class="col-sm-2">
                                 <label>产品描述：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:textarea path="description" cssClass="form-control" maxlength="500"/>
+                            </div>
+
+                            <div class="col-sm-2" style="display: none">
+                                <label><span class="asterisk">*</span>投保须知：</label>
+                            </div>
+                            <div class="col-sm-3" style="display: none">
+                                <form:input path="instruction" value="10" cssClass="form-control" maxlength="50"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -801,6 +808,74 @@
                             </div>
                         </div>
                     </fieldset>
+
+                    <fieldset>
+                        <script type="application/javascript">
+                            var idIndex = ${insuranceProduct.insuranceProductPrices.size()==0}?0:${insuranceProduct.insuranceProductPrices.size()};
+                            function addAttribute() {
+                                var json = {idIndex: idIndex};
+                                $("#attributeTable tr:last").after($('#attributeTr').tmpl(json));
+                                $('#attributeTable tr').find('td:eq(1) td:eq(2)').hide();
+                                idIndex++;
+                            }
+                            function removeprice(indx) {
+                                $("#price" + indx).remove();
+                                idIndex--;
+                            }
+                        </script>
+                        <script id="attributeTr" type="text/x-jquery-tmpl">
+                            <tr id='price{{= idIndex}}'>
+                                <td><input type='text' name='price' class='form-control validate[required,custom[number]]' maxlength='32'/></td>
+                                <td><input type='text' name='unit' class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
+                                <td class="text-center"><a class='btn btn-default' href='javascript:removeprice({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
+                            </tr>
+                        </script>
+                        <legend>产品价格</legend>
+                        <div class="row" style="margin-left: 15px;">
+                            <div class="col-sm-1">
+                                <label><span class="asterisk">*</span> 价格列表：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <button type="button" onclick="addAttribute();" title="添加" class="btn btn-default">
+                                    <i class="fa fa-plus-circle"></i>添加价格
+                                </button>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <label> <span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <table id="attributeTable" class="table table-bordered table-striped">
+                                    <thead id="attribute-table-th">
+                                    <tr>
+                                        <td scope="col" width="110">产品价格</td>
+                                        <td scope="col" width="110">价格单位</td>
+                                        <td scope="col" width="70" class="text-center">操作</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="pri" items="${insuranceProduct.insuranceProductPrices}">
+                                        <tr id="price${pri.priceId}">
+                                            <td><input type="hidden" name="priceId" value="${pri.priceId}}">
+                                                <input type='text' name='price' value="${pri.price}" class='form-control validate[required,custom[number]]' maxlength='32'/>
+                                            </td>
+                                            <td><input type='text' name='unit' value="${pri.unit}" class='form-control validate[required,minSize[1]]' maxlength='2'/></td>
+                                            <td><a type='button' title='删除' class='btn btn-default' href='javascript:removeprice(${pri.priceId})'><i class='fa fa-minus-circle'></i></a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-2">
+
+                            </div>
+                        </div>
+                    </fieldset>
+
+
                     <fieldset>
 
                         <legend>产品告知事项</legend>
