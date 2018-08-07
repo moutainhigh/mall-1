@@ -1,6 +1,7 @@
 package com.yunxin.cb.rest.insurance;
 
 import com.yunxin.cb.insurance.entity.InsuranceInformedMatter;
+import com.yunxin.cb.insurance.entity.InsuranceProduct;
 import com.yunxin.cb.insurance.service.IInsuranceProductService;
 import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
@@ -31,7 +32,7 @@ public class InsuranceProductResource {
 
     @ApiOperation(value = "获取所有保险产品")
     @GetMapping(value = "getInsuranceProducts")
-    public ResponseResult getInsuranceProducts(){
+    public ResponseResult<InsuranceProduct> getInsuranceProducts(){
         return new ResponseResult(insuranceProductService.getInsuranceProducts());
     }
 

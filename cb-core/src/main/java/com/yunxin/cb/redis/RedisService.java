@@ -44,7 +44,9 @@ public class RedisService {
         if(data == null) {
             data = new HashMap<>();
         }
-        data.put(key, obj);
+            data.put(key,obj);
+        redisTemplate.opsForValue().set(VERIFICATION_CODE,data);
+
     }
 
 

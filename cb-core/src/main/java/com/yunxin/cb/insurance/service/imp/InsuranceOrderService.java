@@ -8,6 +8,7 @@ import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
+import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
 import com.yunxin.cb.system.entity.Profile;
 import com.yunxin.cb.system.meta.ProfileName;
@@ -56,6 +57,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private IProfileService iProfileService;
     @Resource
     private InsuranceLogDao insuranceLogDao;
+    @Resource
+    private InsuranceOrderLogDao insuranceOrderLogDao;
     /**
      * 根据用户ID查询保险订单列表
      * @return
@@ -105,6 +108,28 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             insuranceOrderBeneficiary.setInsuranceOrder(insuranceOrder);
         }
         insuranceOrderBeneficiaryDao.save(insuranceOrderBeneficiarys);
+        if(null!=insuranceOrder.getCustomer()){
+            int customerId=insuranceOrder.getCustomer().getCustomerId();
+            //更新购买保单状态
+            Customer customer=customerDao.findRecommendCustomer(customerId);
+            if(customer.getPolicy().equals(PolicyType.NOTPURCHASED))
+                customerDao.updatePolicy(PolicyType.UNPAID,insuranceOrder.getCustomer().getCustomerId());
+
+            //生成日志
+            InsuranceOrderLog insuranceOrderLog=new InsuranceOrderLog();
+            insuranceOrderLog.setCreateTime(new Date());
+            Customer customers=new Customer(){
+                {
+                    setCustomerId(customerId);
+                }
+            };
+            insuranceOrderLog.setCustomer(customers);
+            insuranceOrderLog.setInsuranceOrder(insuranceOrder);
+            insuranceOrderLog.setOrderState(InsuranceOrderState.UN_PAID);
+            insuranceOrderLog.setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
+            insuranceOrderLog.setProdName(insuranceOrder.getInsuranceProduct().getProdName());
+            insuranceOrderLogDao.save(insuranceOrderLog);
+        }
 
         return insuranceOrder;
 
@@ -122,6 +147,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         try {
             InsuranceOrder insuranceOrder=insuranceOrderDao.findOne(orderId);
             insuranceOrderDao.updInsuranceOrderState(orderState,orderId);
+            insuranceOrderLogDao.updInsuranceOrderLogState(orderState,orderId);
             /**
              * 更新推荐人增加50%的预期收益金额
              */
@@ -131,7 +157,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 int customerId=insuranceOrder.getCustomer().getCustomerId();
                 Customer customer= customerDao.findOne(customerId);
 
-                    if(!insuranceOrder.getCustomer().isPolicy()){
+                    if(insuranceOrder.getCustomer().getPolicy().equals(PolicyType.NOTPURCHASED)||insuranceOrder.getCustomer().getPolicy().equals(PolicyType.UNPAID)){
                         if(null!=customer.getRecommendCustomer()){
 
                                 int recommerdCustomerId=customer.getRecommendCustomer().getCustomerId();
@@ -144,7 +170,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     }
                                     iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getInsuranceProductPrice().getPrice());
                         }
-                        customer.setPolicy(true);
+                        customer.setPolicy(PolicyType.PAYMENT);
                     }
 
             }

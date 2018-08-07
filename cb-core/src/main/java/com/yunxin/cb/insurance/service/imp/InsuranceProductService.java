@@ -2,11 +2,15 @@ package com.yunxin.cb.insurance.service.imp;
 
 import com.yunxin.cb.insurance.dao.InsuranceInformedMatterDao;
 import com.yunxin.cb.insurance.dao.InsuranceProductDao;
+import com.yunxin.cb.insurance.dao.InsuranceProductPriceDao;
 import com.yunxin.cb.insurance.entity.InsuranceInformedMatter;
 import com.yunxin.cb.insurance.entity.InsuranceProduct;
+import com.yunxin.cb.insurance.entity.InsuranceProductPrice;
 import com.yunxin.cb.insurance.service.IInsuranceProductService;
+import com.yunxin.cb.mall.entity.CatalogAttribute;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.LogicUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +32,9 @@ public class InsuranceProductService implements IInsuranceProductService {
 
     @Resource
     private InsuranceInformedMatterDao insuranceInformedMatterDao;
+
+    @Resource
+    private InsuranceProductPriceDao insuranceProductPriceDao;
 
     /**
      * 获取所有保险产品列表
@@ -66,8 +73,21 @@ public class InsuranceProductService implements IInsuranceProductService {
                 insuranceInformedMatters.add(matter);
             }
         }
+        insuranceProduct=insuranceProductDao.save(insuranceProduct);
         insuranceProduct.setInsuranceInformedMatters(insuranceInformedMatters);
-        return insuranceProductDao.save(insuranceProduct);
+        if(null!=insuranceProduct.getPrice()){
+            int[] price=insuranceProduct.getPrice();
+            String[] unit=insuranceProduct.getUnit();
+            for (int i = 0; i < price.length; i++) {
+                InsuranceProductPrice pri = new InsuranceProductPrice();
+                pri.setCreateTime(new Date());
+                pri.setInsuranceProduct(insuranceProduct);
+                pri.setPrice(price[i]);
+                pri.setUnit(unit[i]);
+                insuranceProductPriceDao.save(pri);
+            }
+        }
+        return insuranceProduct;
     }
 
     /**
@@ -125,6 +145,19 @@ public class InsuranceProductService implements IInsuranceProductService {
         oldProduct.setProdImg(insuranceProduct.getProdImg());
         oldProduct.setDescriptionImg(insuranceProduct.getDescriptionImg());
         oldProduct.setEnabled(insuranceProduct.getEnabled());
+        insuranceProductPriceDao.deleteByProduct(insuranceProduct);
+        if(null!=insuranceProduct.getPrice()){
+            int[] price=insuranceProduct.getPrice();
+            String[] unit=insuranceProduct.getUnit();
+            for (int i = 0; i < price.length; i++) {
+                InsuranceProductPrice pri = new InsuranceProductPrice();
+                pri.setCreateTime(new Date());
+                pri.setInsuranceProduct(insuranceProduct);
+                pri.setPrice(price[i]);
+                pri.setUnit(unit[i]);
+                insuranceProductPriceDao.save(pri);
+            }
+        }
         return oldProduct;
     }
 

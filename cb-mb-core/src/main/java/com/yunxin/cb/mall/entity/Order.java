@@ -135,6 +135,15 @@ public class Order {
     /** 物流公司id */
     private Integer logisticId;
 
+    /** 审核备注 */
+    private String auditRemark;
+
+    /** 审核状态 */
+    private AuditState auditState;
+
+    /** 审核时间 */
+    private Date auditTime;
+
     /** 卖家id */
     private Integer sellerId;
     /**卖家信息*/

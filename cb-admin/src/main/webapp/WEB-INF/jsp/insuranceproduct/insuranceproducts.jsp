@@ -74,6 +74,21 @@
                 });
             }
         }
+
+        function getEnumYearName(state){
+            switch (state){
+                case "TEN_YEAR":{
+                    return "10年";
+                }
+                case "TWENTY_YEAR":{
+                    return "20年";
+                }
+                case "LIFITIME":{
+                    return "终生 ";
+                }
+            }
+            return state;
+        }
     </script>
 </head>
 <body>
@@ -227,8 +242,8 @@
                             <kendo:grid-column title="产品ID" field="prodId" template="<a href='toEditProduct.do?prodId=#= prodId#' >#= prodId#</a>" width="20px"/>
                             <kendo:grid-column title="产品名称" field="prodName" template="<a href='toEditProduct.do?prodId=#= prodId#' >#= prodName#</a>" width="50px"/>
                             <kendo:grid-column title="产品描述" field="description" width="50px"/>
-                            <kendo:grid-column title="保险期间" field="insurePeriod"  width="50px"/>
-                            <kendo:grid-column title="保障年限" field="protectionYear" width="50px"/>
+                            <kendo:grid-column title="保险期间" template="#=getEnumYearName(insurePeriod)#" field="insurePeriod"  width="50px"/>
+                            <kendo:grid-column title="保障年限" template="#=getEnumYearName(protectionYear)#" field="protectionYear" width="50px"/>
                             <kendo:grid-column title="投保须知" field="instruction"  width="100px"/>
                             <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="25px"/>
                             <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="30px"/>

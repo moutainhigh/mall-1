@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.entity.meta.PaymentType;
+import com.yunxin.cb.util.DateUtils;
 import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -34,8 +35,7 @@ public class OrderDetailVO implements java.io.Serializable{
     private String orderCode;
 
     /** 订单基本状态 */
-    @ApiModelProperty(value="订单基本状态：PENDING_PAYMENT(\"待付款\"), PAID_PAYMENT(\"已付款\"), OUT_STOCK(\"待收货\"), RECEIVED(\"已收货\"), REFUSE(\"拒签收\"),\n" +
-            "    RETURN_GOODS(\"退货\"), CHANGE_GOODS(\"换货\"), CANCELED(\"已取消\"), TIMEOUT(\"超时\"), WAIT_EVALUATE(\"待评价\"), EVALUATED(\"已评价\"), SUCCESS(\"交易成功\")",name="orderState",example="PENDING_PAYMENT")
+    @ApiModelProperty(value="订单基本状态",name="orderState",example="PENDING_PAYMENT")
     private OrderState orderState;
 
     /** 货品数量 */
@@ -53,7 +53,7 @@ public class OrderDetailVO implements java.io.Serializable{
     /**
      * 支付方式
      */
-    @ApiModelProperty(value="支付方式",name="paymentType",example="0")
+    @ApiModelProperty(value="支付方式",name="paymentType",example="FULL_SECTION")
     private PaymentType paymentType;
 
     /** 创建时间 */
@@ -61,7 +61,11 @@ public class OrderDetailVO implements java.io.Serializable{
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
-    /** 创建时间 */
+    /** 支付超时倒计时时间 */
+    @ApiModelProperty(value="支付超时倒计时时间,单位豪秒",name="payOvertimeTime",example="60")
+    private Long payOvertimeTime;
+
+    /** 支付时间 */
     @ApiModelProperty(value="支付时间",name="paymentTime",example="2018-07-24")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date paymentTime;
@@ -159,6 +163,21 @@ public class OrderDetailVO implements java.io.Serializable{
         this.paymentTime = paymentTime;
     }
 
+    public Long getPayOvertimeTime() {
+        payOvertimeTime = DateUtils.differenceDate(new Date(), createTime);
+        long time = 60*60*1000;//60分钟
+        if (payOvertimeTime > time) { //大于60分钟
+            payOvertimeTime = 0l;
+        } else {
+            payOvertimeTime = time - payOvertimeTime;
+        }
+        return payOvertimeTime;
+    }
+
+    public void setPayOvertimeTime(Long payOvertimeTime) {
+        this.payOvertimeTime = payOvertimeTime;
+    }
+
     @Override
     public String toString() {
         return "OrderDetailVO{" +
@@ -239,4 +258,5 @@ public class OrderDetailVO implements java.io.Serializable{
         }
         return orderDetailVO;
     }
+
 }
