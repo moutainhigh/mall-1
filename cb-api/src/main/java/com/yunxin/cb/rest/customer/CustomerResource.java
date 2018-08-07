@@ -394,6 +394,20 @@ public class CustomerResource extends BaseResource {
     public ResponseResult matchAddressBook(@RequestBody CustomerMatchsVo[] customerMatchsVo){
             return new ResponseResult( customerService.matchAddressBook(customerMatchsVo));
     }
+
+    @ApiOperation(value = "获取感恩统计")
+    @GetMapping(value = "getGratitude")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "get", dataType = "int")
+    })
+    public ResponseResult getGratitude() {
+        try {
+            return new ResponseResult(customerService.findCustomerGratitude(getCustomerId()));
+        } catch (Exception e) {
+            logger.error("getGratitude failed", e);
+            return new ResponseResult(Result.FAILURE, e.getMessage());
+        }
+    }
 //    @ApiOperation(value = "创建群组")
 //    @PostMapping(value = "matchAddressBook")
 //    public ResponseResult matchAddressBook(@RequestBody CustomerMatchsVo[] customerMatchsVo){

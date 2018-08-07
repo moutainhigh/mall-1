@@ -244,4 +244,38 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	public static String getFormatDate(Date date) {
 		return FORMAT_DATE.format(date);
 	}
+
+	/**
+	 * 比较两个时间（date1大于date2 返回1,等于返回0，小于返回-1）
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	public static int compareDate(String date1, String date2) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		try {
+			Date dt1 = df.parse(date1);
+			Date dt2 = df.parse(date2);
+			if (dt1.getTime() > dt2.getTime()) {
+				return 1;
+			} else if (dt1.getTime() < dt2.getTime()) {
+				return -1;
+			} else {
+				return 0;
+			}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		return 0;
+	}
+
+	/**
+	 * 返回两个时间差(date1-date2)
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	public static long differenceDate(Date date1, Date date2) {
+		return date1.getTime() - date2.getTime();
+	}
 }

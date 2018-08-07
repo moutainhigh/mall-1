@@ -2,6 +2,7 @@ package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Fridge;
+import com.yunxin.cb.mall.vo.CustomerGratitudeVo;
 import com.yunxin.cb.mall.vo.CustomerMatchVo;
 import com.yunxin.cb.mall.vo.CustomerMatchsVo;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
@@ -195,6 +196,8 @@ public interface ICustomerService {
     void batchPwdEncode();
 
     public List<Customer> findCustomerByLikeLevelCode(Customer customer);
+
+    CustomerGratitudeVo findCustomerGratitude(int customerId);
 
 
 }

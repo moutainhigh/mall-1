@@ -53,6 +53,8 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         nReturn.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
         nReturn.setAuditState(AuditState.WAIT_AUDIT);
         nReturn.setRefundOnly(true);
+        nReturn.setReceivedBuyerProduct(false);
+        nReturn.setReceivedSellerProduct(false);
         //更新库存（是否需要）
         Set<OrderItem> orderItems = order.getOrderItems();
         if (orderItems != null && !orderItems.isEmpty()) {
@@ -114,7 +116,10 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         }
         Order order = orderMapper.selectByOrderIdAndCustomerId(orderId, customerId);
         //判断订单是否是已支付待提货状态
-        if (order == null || (OrderState.PAID_PAYMENT.equals(order.getOrderState()) && OrderState.OUT_STOCK.equals(order.getOrderState()))) {
+        if (order == null) {
+            throw new CommonException("该订单不存在");
+        }
+        if (OrderState.PAID_PAYMENT.equals(order.getOrderState()) && OrderState.OUT_STOCK.equals(order.getOrderState())) {
             throw new CommonException("该订单不可以退货申请");
         }
         return order;

@@ -7,6 +7,8 @@ package com.yunxin.cb.insurance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.yunxin.cb.insurance.meta.InsurancePeriod;
+import com.yunxin.cb.insurance.meta.InsuranceYear;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
@@ -85,17 +87,13 @@ public class InsuranceProduct implements Serializable {
     /**
      * 保险期间
      */
-    @NotBlank
-    @Length(max = 32)
     @ApiModelProperty(value="保险期间",name="insurePeriod",example="在")
-    private String insurePeriod;
+    private InsurancePeriod insurePeriod;
     /**
      * 保障年限(10年，20年，终生)
      */
-    @NotBlank
-    @Length(max = 32)
-    @ApiModelProperty(value="保障年限",name="protectionYear",example="10年")
-    private String protectionYear;
+    @ApiModelProperty(value="保障年限",name="protectionYear",example="TEN_YEAR")
+    private InsuranceYear protectionYear;
     /**
      * 投保须知
      */
@@ -120,12 +118,16 @@ public class InsuranceProduct implements Serializable {
     @ApiModelProperty(value="保险订单",name="insuranceOrders",example="")
     private Set insuranceOrders = new HashSet(0);
     @ApiModelProperty(value="保险产品价格",name="insuranceProductPrices",example="5454")
-    private Set insuranceProductPrices = new HashSet(0);
+    private Set<InsuranceProductPrice> insuranceProductPrices = new HashSet(0);
 
     private Set<InsuranceInformedMatter> insuranceInformedMatters = new HashSet(0);
     //columns END
 
     private int[] matterIds;
+
+    private int[] price;
+
+    private String[] unit;
 
     @Transient
     public int[] getMatterIds() {
@@ -143,6 +145,22 @@ public class InsuranceProduct implements Serializable {
             int prodId
     ) {
         this.prodId = prodId;
+    }
+    @Transient
+    public int[] getPrice() {
+        return price;
+    }
+
+    public void setPrice(int[] price) {
+        this.price = price;
+    }
+    @Transient
+    public String[] getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String[] unit) {
+        this.unit = unit;
     }
 
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 10)
@@ -211,21 +229,23 @@ public class InsuranceProduct implements Serializable {
         this.tags = tags;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
-    public String getInsurePeriod() {
+    @Column(length = 128, nullable = false, unique = true)
+    @Enumerated(value = EnumType.STRING)
+    public InsurancePeriod getInsurePeriod() {
         return this.insurePeriod;
     }
 
-    public void setInsurePeriod(String insurePeriod) {
+    public void setInsurePeriod(InsurancePeriod insurePeriod) {
         this.insurePeriod = insurePeriod;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 32)
-    public String getProtectionYear() {
+    @Column(length = 128, nullable = false, unique = true)
+    @Enumerated(value = EnumType.STRING)
+    public InsuranceYear getProtectionYear() {
         return this.protectionYear;
     }
 
-    public void setProtectionYear(String protectionYear) {
+    public void setProtectionYear(InsuranceYear protectionYear) {
         this.protectionYear = protectionYear;
     }
 

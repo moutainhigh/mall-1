@@ -1,16 +1,10 @@
-/**
- *
- */
 package com.yunxin.cb.mall.entity.meta;
 
-/**
- * @author apple
- */
-public enum ChannelType {
-    UNIONPAY("银联"), ALIPAY("支付宝"), TENPAY("财付通"), WXPAY("微信");
+public enum PolicyType {
+    NOTPURCHASED("未购买"),UNPAID("未付款"),PAYMENT("已支付");
     private String name;
 
-    private ChannelType(String name) {
+    private PolicyType(String name) {
         this.name = name;
     }
 
@@ -24,6 +18,6 @@ public enum ChannelType {
 
     @Override
     public String toString() {
-        return super.toString() + "("+name+")";
+        return name;
     }
 }

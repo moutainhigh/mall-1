@@ -261,7 +261,7 @@
                                 <label>备注：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input id="remarks"    path="remarks" cssClass="form-control"/>
+                                <form:textarea id="remarks"    path="remarks" cssClass="form-control"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

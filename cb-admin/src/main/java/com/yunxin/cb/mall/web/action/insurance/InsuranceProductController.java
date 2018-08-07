@@ -2,6 +2,8 @@ package com.yunxin.cb.mall.web.action.insurance;
 
 import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.insurance.entity.InsuranceProduct;
+import com.yunxin.cb.insurance.meta.InsurancePeriod;
+import com.yunxin.cb.insurance.meta.InsuranceYear;
 import com.yunxin.cb.insurance.service.IInsuranceProductService;
 import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
@@ -14,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -31,6 +32,26 @@ public class InsuranceProductController {
     private IInsuranceProductService insuranceProductService;
     @Resource
     private IAttachmentService attachmentService;
+
+
+    public void setEnum(ModelMap modelMap){
+//        List<Map<String,String>> InsurancePeriodList=new ArrayList<>();
+//        List<Map<String,String>> InsuranceYearList=new ArrayList<>();
+//        for (InsurancePeriod e : InsurancePeriod.values()) {
+//            Map<String,String> map =new HashMap<>();
+//            map.put("key",e.getName());
+//            map.put("name",e.getDefaultValue());
+//            InsurancePeriodList.add(map);
+//        }
+//        for (InsuranceYear e : InsuranceYear.values()) {
+//            Map<String,String> map =new HashMap<>();
+//            map.put("key",e.getName());
+//            map.put("name",e.getDefaultValue());
+//            InsuranceYearList.add(map);
+//        }
+        modelMap.addAttribute("InsurancePeriodList", InsurancePeriod.values());
+        modelMap.addAttribute("InsuranceYearList", InsuranceYear.values());
+    }
 
     /**
      * @Description: 跳转到保险产品页面
@@ -70,6 +91,7 @@ public class InsuranceProductController {
      */
     @RequestMapping(value = "toEditProduct", method = RequestMethod.GET)
     public String toEditProduct(@RequestParam("prodId") int prodId, ModelMap modelMap) throws Exception {
+        setEnum(modelMap);
         InsuranceProduct insuranceProduct = insuranceProductService.getInsuranceProductById(prodId);
         modelMap.addAttribute("insuranceProduct", insuranceProduct);
         List<Attachment> listAttachment = attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.INSURANCEPRODUCT, prodId);
@@ -91,6 +113,7 @@ public class InsuranceProductController {
      */
     @RequestMapping(value = "toAddProduct", method = RequestMethod.GET)
     public String toAddProduct(@ModelAttribute("insuranceProduct") InsuranceProduct insuranceProduct, ModelMap modelMap) {
+        setEnum(modelMap);
         modelMap.addAttribute("insuranceProduct", insuranceProduct);
         return "insuranceproduct/addinsuranceproduct";
     }
