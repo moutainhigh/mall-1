@@ -90,6 +90,11 @@
                 <div class="pull-left">
                     <h2>保险告知事项</h2>
                 </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="insuranceInformedMatters.do">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </div>
             </div>
             <!-- End .inner-padding -->
         </header>

@@ -1,4 +1,4 @@
-package com.yunxin.cb.common.utils;
+package com.yunxin.cb.util;
 
 import java.util.HashMap;
 import java.util.Map;

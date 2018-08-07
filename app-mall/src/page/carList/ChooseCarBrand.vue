@@ -6,7 +6,7 @@
       <div style="background: #ffffff" class="list-group">
         <p class="cityTitle">热门品牌</p>
         <div style="display: inline-block; width: 25vw; text-align: center; height: 5.5rem"
-             v-for="brand in hotBrands">
+             v-for="brand in hotBrands" @click="brandToCarType(brand.brandId, brand.brandName)">
           <img style="width: 3rem;" :src="brand.picPath">
           <p style="padding-bottom: 1rem">{{brand.brandName}}</p>
         </div>
@@ -55,8 +55,19 @@
         this.$router.push({
           path: '/choose-type',
           query: {
-            categoryId: categoryId,
-            categoryName: categoryName
+            id: categoryId,
+            categoryName: categoryName,
+            idType: 'category'
+          }
+        })
+      },
+      brandToCarType(id, brandName) {
+        this.$router.push({
+          path: '/choose-type',
+          query: {
+            id: id,
+            categoryName: brandName,
+            idType: 'brand'
           }
         })
       }

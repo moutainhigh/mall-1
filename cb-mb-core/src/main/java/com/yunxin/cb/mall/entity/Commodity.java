@@ -123,6 +123,9 @@ public class Commodity  implements java.io.Serializable{
     /** 商品说明介绍 */
     private String explainContent;
 
+    /** 商品配置内容*/
+    private String settingContent;
+
     //品牌
     private Brand brand;
 
@@ -491,5 +494,13 @@ public class Commodity  implements java.io.Serializable{
 
     public void setExplainContent(String explainContent) {
         this.explainContent = explainContent;
+    }
+
+    public String getSettingContent() {
+        return settingContent;
+    }
+
+    public void setSettingContent(String settingContent) {
+        this.settingContent = settingContent;
     }
 }

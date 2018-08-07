@@ -71,10 +71,10 @@
               <section style="width: 100%;background-color: #ffffff;">
                 <header class="filter_header_style">自定义</header>
                 <div class="choose_input">
-                  <input @focus="enFocus = true" @blur="enFocus = false" v-model="priceSect.lowPrice"/>
+                  <input @focus="enFocus = true" @blur="enFocus = false" type="number" v-model="priceSect.lowPrice"/>
                   <div style="position: relative;margin-left: -1.2rem;">万</div>
                   <span style="margin: 0 0.2rem 0 0.5rem;">—</span>
-                  <input @focus="enFocus = true" @blur="enFocus = false" v-model="priceSect.highPrice"/>
+                  <input @focus="enFocus = true" @blur="enFocus = false" type="number" v-model="priceSect.highPrice"/>
                   <div style="position: relative;margin-left: -1.2rem;">万</div>
                   <div class="input_button" :class="{input_button_sele:(priceSect.lowPrice && priceSect.highPrice)}" @click="setPriceSect"><p>确定</p></div>
                 </div>
@@ -204,7 +204,7 @@
   import headTop from "../../components/header/head"
   import {categorySearch, getSearch} from "../../service/getData";
   import {delArrayAll, delArrayOne} from "../../config/mUtils";
-  import {tranPrice} from "../../config/dataFormat";
+  import {tranPrice, tranThouOfPrice} from "../../config/dataFormat";
   import storage from "../../store/storage";
   import {CAR_LIST_SESSION} from "../../config/constant";
 
@@ -371,8 +371,9 @@
       },
       setPriceSect() {
         if (this.priceSect.lowPrice && this.priceSect.highPrice) {
-          this.searchVo.lowestPrice = this.priceSect.lowPrice;
-          this.searchVo.highestPrice = this.priceSect.highPrice;
+          this.searchVo.lowestPrice = tranThouOfPrice(this.priceSect.lowPrice) ;
+          console.log(this.searchVo.lowestPrice);
+          this.searchVo.highestPrice = tranThouOfPrice(this.priceSect.highPrice);
           this.searchVo.priceSection = null;
           this.priceSection.chooseIndex = -2;
           this.sortBy = '';
@@ -515,6 +516,7 @@
         this.sortTitle= '默认排序';
         this.selecteds = [];
         this.conditions = [];
+        this.priceSection= {chooseIndex: -1, value: []};
         this.priceSect= {lowPrice: '', highPrice: ''};
         this.isInfinite = false;
         this.createdData();
@@ -821,7 +823,7 @@
         line-height: 2.6;
         color: #333333;
         input {
-          padding: 0.5rem;
+          padding: 0.5rem 1.3rem 0.5rem 0.5rem;
           border-radius: 5px;
           border: 1px solid #DDD;
           width: 100%;

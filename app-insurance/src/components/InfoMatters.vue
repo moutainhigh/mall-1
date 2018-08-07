@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="title">告知事项<span @click="changeFalse">全选否</span></div>
+    <div class="title" style="text-align: left;margin-top: 0; font-weight: bold; font-size: 17px">
+      告知事项
+      <span @click="changeFalse">全选否</span>
+    </div>
     <div class="content" style="height: auto">
       <p>1.您是否正在申请或已经拥有任何保险公司的保险合同？若是，请说明：承保公司、保险品种、保险金额总和、因被保险人死亡给付的保险金总和、住院每日补贴日额及保险合同生效日期。</p>
       <div class="content-state">
@@ -972,14 +975,15 @@
     background-color: #ffffff;
     padding: 15px;
     font-size: 13px;
-    color: #c01212;
+    color: #f5ca1d;
   }
 
   .title span {
     text-decoration: underline;
-    color: #000;
+    color: #666;
     font-size: 13px;
     float: right;
+    margin-top: 5px;
   }
 
   .content {

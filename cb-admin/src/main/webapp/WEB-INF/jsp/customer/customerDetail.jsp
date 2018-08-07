@@ -37,6 +37,15 @@
         }
     });
 
+
+    function formatSex(sex) {
+        switch (sex) {
+            case true:
+                return "男";
+            case false:
+                return "女";
+        }
+    }
   </script>
 </head>
 <body>
@@ -348,6 +357,9 @@
             <li>
               <a href="#content-tab-6-c">收货地址</a>
             </li>
+            <li>
+              <a href="#content-tab-6-d">下级客户</a>
+            </li>
           </ul><!-- End .ext-tabs -->
           <div class="tab-content">
             <div id="content-tab-6-a" class="tab-pane active">
@@ -433,16 +445,95 @@
                         <div class="col-sm-1"></div>
                       </div>
                     </div>
-                    <div class="spacer-30"></div>
-                    <hr>
-                    <div class="spacer-30"></div>
+
+                    <div class="spacer-10"></div>
                     <div class="row">
-                      <div class="col-sm-3"></div>
-                      <div class="col-sm-9">
-                        <a class="btn btn-default pull-right" href="customers.do">返回</a>
+                      <div class="inline-labels">
+                        <div class="col-sm-2">
+                          <label>用户推荐等级：<span class="asterisk"></span></label>
+                        </div>
+                        <div class="col-sm-2 col-label">
+                          ${customer.customerLevel}
+                        </div>
+                        <div class="col-sm-1"></div>
                       </div>
                     </div>
                   </fieldset>
+
+
+                <fieldset>
+                  <legend>推荐用户信息</legend>
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>账户名：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${customer.recommendCustomer.accountName}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>手机号：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${customer.recommendCustomer.mobile}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+                  <div class="spacer-10"></div>
+
+                  <div class="spacer-10"></div>
+
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>邮箱：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${customer.recommendCustomer.email}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>邮编：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${customer.recommendCustomer.postCode}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+
+                  <div class="spacer-10"></div>
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>固定电话：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${customer.recommendCustomer.telephone}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>出生日期：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${fn:substring(customer.recommendCustomer.birthday, 0, 10)}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+
+                  <div class="spacer-30"></div>
+                  <hr>
+                  <div class="spacer-30"></div>
+                  <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9">
+                      <a class="btn btn-default pull-right" href="customers.do">返回</a>
+                    </div>
+                  </div>
+                </fieldset>
               </div>
             </div>
 
@@ -586,6 +677,50 @@
                 </c:forEach>
                 </tbody>
               </table>
+              <div class="spacer-30"></div>
+              <hr>
+              <div class="spacer-30"></div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="btn-group pull-right">
+                    <a class="btn btn-default pull-right" href="customers.do">返回</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div id="content-tab-6-d" class="tab-pane">
+              <div class="spacer-10"></div>
+              <div class="toolbar responsive-helper">
+                <header>
+                  <div class="pull-left">
+                    <h3>下级列表</h3>
+                  </div>
+
+                </header>
+              </div>
+              <div class="table-wrapper">
+                <kendo:treeList name="treelist" height="450" selectable="true">
+                  <kendo:treeList-columns>
+                    <kendo:treeList-column field="accountName" title="账户名"/>
+                    <kendo:treeList-column field="realName" title="真实名称" />
+                    <kendo:treeList-column field="mobile" title="手机号"/>
+                    <kendo:treeList-column field="email" title="Email"/>
+                    <kendo:treeList-column field="sex" title="性别" template="#=formatSex(sex)#"/>
+                  </kendo:treeList-columns>
+                  <kendo:dataSource data="${listVo}">
+                    <kendo:dataSource-schema>
+                      <kendo:dataSource-schema-model id="customerId">
+                        <kendo:dataSource-schema-model-fields>
+                          <kendo:dataSource-schema-model-field name="customerId" type="number" />
+                          <kendo:dataSource-schema-model-field name="parentId" from="parentCustomerId" type="number" nullable="true"/>
+                        </kendo:dataSource-schema-model-fields>
+                      </kendo:dataSource-schema-model>
+                    </kendo:dataSource-schema>
+                  </kendo:dataSource>
+                </kendo:treeList>
+              </div>
               <div class="spacer-30"></div>
               <hr>
               <div class="spacer-30"></div>

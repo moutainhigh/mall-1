@@ -17,6 +17,8 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if(valid){
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        var defaultPicPath1 = $('input[name="imgurl1"]');
                         if($("#sortOrder").val() == 2){
                             if ($('input[name="brandId"]').length==0) {
                                 bootbox.alert("请至少添加一个品牌!");
@@ -32,29 +34,16 @@
                                 bootbox.alert("请至少添加一个分类!");
                                 return false;
                             }
+                        }else if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        }else if (defaultPicPath1.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
                         }else{
                             bootbox.alert("请填写正确的序号!");
                             return false;
                         }
-                        /*if (null == $("#iconPath").val() || "" == $("#iconPath").val()) {
-                            bootbox.alert("请选择图标!");
-                            return false;
-                        }
-                        if (null == $("#imagePath").val() || "" == $("#imagePath").val()) {
-                            bootbox.alert("请选择宣传图片!");
-                            return false;
-                        }*/
-/*                        if ($('input[name="commodityId"]').length==0) {
-                            bootbox.alert("请至少添加一个商品!");
-                            return false;
-                        }
-                        if ($('input[name="categoryOrder"]').length==0) {
-                            bootbox.alert("请至少添加一个分类!");
-                            return false;
-                        }*/
-
-
-                        return true;
                     }
                 }
             });

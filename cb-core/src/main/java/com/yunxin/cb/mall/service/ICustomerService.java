@@ -2,6 +2,8 @@ package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Fridge;
+import com.yunxin.cb.mall.vo.CustomerMatchVo;
+import com.yunxin.cb.mall.vo.CustomerMatchsVo;
 import com.yunxin.cb.mall.vo.CustomerUpdateVo;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.core.exception.EntityExistException;
@@ -181,7 +183,7 @@ public interface ICustomerService {
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     List<Customer> getPraiseCustomers(int customerId);
-
+    List<CustomerMatchVo> matchAddressBook(CustomerMatchsVo[] customerMatchsVo);
     void addBlacklist(int friendId, int customerId) throws Exception;
 
     void removeBlacklist(int friendId, int customerId) throws Exception;
@@ -191,4 +193,8 @@ public interface ICustomerService {
     public void addTwoWayFriend(Customer myself,Customer customer) throws Exception;
 
     void batchPwdEncode();
+
+    public List<Customer> findCustomerByLikeLevelCode(Customer customer);
+
+
 }

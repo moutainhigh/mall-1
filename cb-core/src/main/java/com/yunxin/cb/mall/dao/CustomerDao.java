@@ -78,6 +78,10 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
 
     long countByCreateTimeBetween(Date startDate, Date endDate);
 
+
+    @Query("select c from Customer c left join fetch c.recommendCustomer where c.levelCode like ?1")
+    public List<Customer> findCustomerByLikeLevelCode(String levelCode);
+
     long countByQqOpenId(String qqOpenId);
 
     List<Customer> findByRecommendCustomer_CustomerIdAndPraise(int customerId, boolean paraise);

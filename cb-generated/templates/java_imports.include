@@ -1,0 +1,8 @@
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+
+import ${basepackage}.${namespace}.entity.*;
+import ${basepackage}.${namespace}.dao.*;
+import ${basepackage}.${namespace}.service.*;
