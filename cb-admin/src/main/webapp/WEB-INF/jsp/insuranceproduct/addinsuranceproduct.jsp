@@ -494,7 +494,7 @@
                             <div class="col-sm-3">
                                     <select class="form-control  grid-filter" path="protectionYear" name="protectionYear">
                                         <c:forEach items="${InsuranceYearList}" var="year">
-                                            <option value="${year.key}">${year.name}</option>
+                                            <option value="${year.name}">${year.defaultValue}</option>
                                         </c:forEach>
                                     </select>
                             </div>
@@ -507,7 +507,7 @@
                             <div class="col-sm-3">
                                 <select class="form-control grid-filter" path="insurePeriod" name="insurePeriod">
                                     <c:forEach items="${InsurancePeriodList}" var="per">
-                                        <option value="${per.key}">${per.name}</option>
+                                        <option value="${per.name}">${per.defaultValue}</option>
                                     </c:forEach>
                                 </select>
                             </div>

@@ -511,7 +511,7 @@
                             <div class="col-sm-3">
                                 <select class="form-control  grid-filter" path="protectionYear" name="protectionYear">
                                     <c:forEach items="${InsuranceYearList}" var="year">
-                                        <option value="${year.key}"  <c:if test="${insuranceProduct.protectionYear eq year.key}">selected</c:if>>${year.name}</option>
+                                        <option value="${year.name}"  <c:if test="${insuranceProduct.protectionYear.name eq year.name}">selected</c:if>>${year.defaultValue}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -524,7 +524,7 @@
                             <div class="col-sm-3">
                                 <select class="form-control grid-filter" path="insurePeriod" name="insurePeriod">
                                     <c:forEach items="${InsurancePeriodList}" var="per">
-                                        <option value="${per.key}" <c:if test="${insuranceProduct.insurePeriod eq per.key}">selected</c:if>>${per.name}</option>
+                                        <option value="${per.name}" <c:if test="${insuranceProduct.insurePeriod.name eq per.name}">selected</c:if>>${per.defaultValue}</option>
                                     </c:forEach>
                                 </select>
                             </div>

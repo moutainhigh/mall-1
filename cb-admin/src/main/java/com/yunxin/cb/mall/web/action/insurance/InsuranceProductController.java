@@ -35,22 +35,22 @@ public class InsuranceProductController {
 
 
     public void setEnum(ModelMap modelMap){
-        List<Map<String,String>> InsurancePeriodList=new ArrayList<>();
-        List<Map<String,String>> InsuranceYearList=new ArrayList<>();
-        for (InsurancePeriod e : InsurancePeriod.values()) {
-            Map<String,String> map =new HashMap<>();
-            map.put("key",e.toString());
-            map.put("name",e.getDefaultValue());
-            InsurancePeriodList.add(map);
-        }
-        for (InsuranceYear e : InsuranceYear.values()) {
-            Map<String,String> map =new HashMap<>();
-            map.put("key",e.toString());
-            map.put("name",e.getDefaultValue());
-            InsuranceYearList.add(map);
-        }
-        modelMap.addAttribute("InsurancePeriodList", InsurancePeriodList);
-        modelMap.addAttribute("InsuranceYearList", InsuranceYearList);
+//        List<Map<String,String>> InsurancePeriodList=new ArrayList<>();
+//        List<Map<String,String>> InsuranceYearList=new ArrayList<>();
+//        for (InsurancePeriod e : InsurancePeriod.values()) {
+//            Map<String,String> map =new HashMap<>();
+//            map.put("key",e.getName());
+//            map.put("name",e.getDefaultValue());
+//            InsurancePeriodList.add(map);
+//        }
+//        for (InsuranceYear e : InsuranceYear.values()) {
+//            Map<String,String> map =new HashMap<>();
+//            map.put("key",e.getName());
+//            map.put("name",e.getDefaultValue());
+//            InsuranceYearList.add(map);
+//        }
+        modelMap.addAttribute("InsurancePeriodList", InsurancePeriod.values());
+        modelMap.addAttribute("InsuranceYearList", InsuranceYear.values());
     }
 
     /**

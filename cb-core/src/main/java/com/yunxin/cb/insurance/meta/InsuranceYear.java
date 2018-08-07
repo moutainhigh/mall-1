@@ -15,6 +15,17 @@ public enum InsuranceYear {
 
     private String defaultValue;
 
+    private String name;
+
+    public String getName() {
+        return super.toString();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
     InsuranceYear(String defaultValue) {
         this.defaultValue = defaultValue;
     }

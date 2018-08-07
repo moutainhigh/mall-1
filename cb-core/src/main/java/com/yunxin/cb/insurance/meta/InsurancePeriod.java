@@ -15,6 +15,16 @@ public enum InsurancePeriod {
 
     private String defaultValue;
 
+    private String name;
+
+    public String getName() {
+        return super.toString();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     InsurancePeriod(String defaultValue) {
         this.defaultValue = defaultValue;
     }
