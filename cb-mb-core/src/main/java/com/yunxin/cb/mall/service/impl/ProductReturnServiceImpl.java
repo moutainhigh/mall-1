@@ -53,6 +53,8 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         nReturn.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
         nReturn.setAuditState(AuditState.WAIT_AUDIT);
         nReturn.setRefundOnly(true);
+        nReturn.setReceivedBuyerProduct(false);
+        nReturn.setReceivedSellerProduct(false);
         //更新库存（是否需要）
         Set<OrderItem> orderItems = order.getOrderItems();
         if (orderItems != null && !orderItems.isEmpty()) {
