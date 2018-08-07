@@ -16,7 +16,7 @@ public class ElasticSearchSynchronTask {
     @Resource
     private ICommodityService commodityService;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+//    @Scheduled(cron = "0 0/1 * * * ?")
     public void synchronCommoidy(){
         logger.info("synchronCommoidy start");
         commodityService.syncESCommodity();

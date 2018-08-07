@@ -963,6 +963,7 @@ public class CustomerService implements ICustomerService {
      * @date        2018/8/6 9:55
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Customer> findCustomerByLikeLevelCode(Customer customer) {
         String like = customer.getLevelCode()+"%";
         List<Customer> list = customerDao.findCustomerByLikeLevelCode(like);
