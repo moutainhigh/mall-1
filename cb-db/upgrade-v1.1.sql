@@ -512,3 +512,8 @@ CREATE TABLE `insurance_order_log` (
 ##add by tangou 2018-08-07
 ALTER TABLE bank_info ADD COLUMN `BANK_NAME` varchar(60)  COMMENT '银行名称';
 
+##add by guwenshao 2018-08-07
+ALTER TABLE `order_form` add  `AUDIT_STATE` int(11) DEFAULT 0 NOT NULL COMMENT '审核状态';
+ALTER TABLE `order_form` add  `AUDIT_REMARK` varchar(255) DEFAULT NULL COMMENT '审核原因';
+ALTER TABLE `order_form` add  `AUDIT_TIME` datetime DEFAULT NULL COMMENT '审核时间';
+
