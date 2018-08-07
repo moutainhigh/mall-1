@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.entity.meta.PaymentType;
+import com.yunxin.cb.util.DateUtils;
 import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -60,7 +61,11 @@ public class OrderDetailVO implements java.io.Serializable{
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
-    /** 创建时间 */
+    /** 支付超时倒计时时间 */
+    @ApiModelProperty(value="支付超时倒计时时间,单位豪秒",name="payOvertimeTime",example="60")
+    private Long payOvertimeTime;
+
+    /** 支付时间 */
     @ApiModelProperty(value="支付时间",name="paymentTime",example="2018-07-24")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date paymentTime;
@@ -158,6 +163,21 @@ public class OrderDetailVO implements java.io.Serializable{
         this.paymentTime = paymentTime;
     }
 
+    public Long getPayOvertimeTime() {
+        payOvertimeTime = DateUtils.differenceDate(new Date(), createTime);
+        long time = 60*60*1000;//60分钟
+        if (payOvertimeTime > time) { //大于60分钟
+            payOvertimeTime = 0l;
+        } else {
+            payOvertimeTime = time - payOvertimeTime;
+        }
+        return payOvertimeTime;
+    }
+
+    public void setPayOvertimeTime(Long payOvertimeTime) {
+        this.payOvertimeTime = payOvertimeTime;
+    }
+
     @Override
     public String toString() {
         return "OrderDetailVO{" +
@@ -238,4 +258,5 @@ public class OrderDetailVO implements java.io.Serializable{
         }
         return orderDetailVO;
     }
+
 }
