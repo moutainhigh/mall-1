@@ -155,7 +155,7 @@
 
           <div class="col-lg-12">
             <!-- this needs to be a button/input element -->
-            <button type="submit" class="btn btn-default btn-lg" style="width: 85%; margin: 0 7.5%; height: 50px; color: #fff; background: #e1bb3a; font-size: 20px; border: 0; font-weight: normal">登录</button>
+            <button type="submit" class="btn btn-default btn-lg" style="width: 85%; margin: 0 7.5%; height: 50px; color: #fff; background: #f5ca1d; font-size: 20px; border: 0; font-weight: normal">登录</button>
           </div>
         </div>
       </div>

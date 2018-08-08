@@ -53,6 +53,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.*;
+import java.util.concurrent.Executors;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -150,6 +151,13 @@ public class CustomerService implements ICustomerService {
         Customer dbCustomer = customerDao.save(customer);
         String token = rongCloudService.register(dbCustomer);
         dbCustomer.setRongCloudToken(token);
+        //加入缓存
+        Executors.newCachedThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                redisService.setCustomerList(dbCustomer.getMobile(),dbCustomer);
+            }
+        });
         return dbCustomer;
     }
 
