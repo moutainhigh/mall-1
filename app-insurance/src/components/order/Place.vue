@@ -13,7 +13,7 @@
       </div>
 
       <div class="content" style="height: auto">
-        <p>2、您目前工作所在城市或地区名？单位名称？工作单位所属行业？您的职务？（例：深圳；深圳市前海水晶球文化传播有限公司；商业服务/内勤人员）</p>
+        <p>2、您目前工作所在城市或地区名？单位名称？工作单位所属行业？您的职务？</p>
         <div class="content-val">
           <p>{{insuranceOrderOffsite.workplace}}</p>
         </div>
