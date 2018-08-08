@@ -561,7 +561,7 @@ CREATE TABLE `finacial_withdraw` (
   `AMOUNT` decimal(20,4) NOT NULL COMMENT '提现金额',
   `REAL_AMOUNT` decimal(20,4) NOT NULL COMMENT '实际提现金额',
   `CHARGE_FEE` decimal(20,4) NOT NULL COMMENT '提现手续费',
-  `STATE` int(11) DEFAULT NULL COMMENT '状态：1.审核中 2.审核失败 3.待发放 4.交易完成',
+  `STATE` int(11) DEFAULT NULL COMMENT '状态：1.审核中 2.审核失败 3.待发放 4.转账中 5.交易完成',
   `AUDIT_DATE` datetime DEFAULT NULL COMMENT '审核时间',
   `AUDIT_OPERATOR` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '审核员',
   `AUDIT_MESSAGE` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '审核意见',
@@ -573,3 +573,5 @@ CREATE TABLE `finacial_withdraw` (
   KEY `fk_withdraw_customer_id` (`CUSTOMER_ID`),
   CONSTRAINT `fk_withdraw_customer_id` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+ALTER TABLE `finacial_withdraw` add  `WITHDRAW_TYPE` int(11) DEFAULT 1 NOT NULL COMMENT '提现类型：1.报账转账 2.保险返利转账';

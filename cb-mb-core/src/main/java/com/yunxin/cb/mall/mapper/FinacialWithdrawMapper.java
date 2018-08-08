@@ -1,14 +1,10 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.FinacialWithdraw;
-import java.util.List;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.List;
 
 public interface FinacialWithdrawMapper {
     @Delete({
@@ -21,14 +17,14 @@ public interface FinacialWithdrawMapper {
         "insert into finacial_withdraw (WITHDRAW_ID, CUSTOMER_ID, ",
         "BANK_ID, AMOUNT, ",
         "REAL_AMOUNT, CHARGE_FEE, ",
-        "STATE, AUDIT_DATE, ",
+        "STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
         "AUDIT_OPERATOR, AUDIT_MESSAGE, ",
         "GRANT_DATE, GRANT_OPERATOR, ",
         "APPLY_DATE, UPDATE_DATE)",
         "values (#{withdrawId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, ",
         "#{bankId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, ",
         "#{realAmount,jdbcType=DECIMAL}, #{chargeFee,jdbcType=DECIMAL}, ",
-        "#{state,jdbcType=INTEGER}, #{auditDate,jdbcType=TIMESTAMP}, ",
+        "#{state,jdbcType=INTEGER}, #{withdrawType,jdbcType=INTEGER}, #{auditDate,jdbcType=TIMESTAMP}, ",
         "#{auditOperator,jdbcType=VARCHAR}, #{auditMessage,jdbcType=VARCHAR}, ",
         "#{grantDate,jdbcType=TIMESTAMP}, #{grantOperator,jdbcType=VARCHAR}, ",
         "#{applyDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP})"
@@ -37,7 +33,7 @@ public interface FinacialWithdrawMapper {
 
     @Select({
         "select",
-        "WITHDRAW_ID, CUSTOMER_ID, BANK_ID, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, AUDIT_DATE, ",
+        "WITHDRAW_ID, CUSTOMER_ID, BANK_ID, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
         "AUDIT_OPERATOR, AUDIT_MESSAGE, GRANT_DATE, GRANT_OPERATOR, APPLY_DATE, UPDATE_DATE",
         "from finacial_withdraw",
         "where WITHDRAW_ID = #{withdrawId,jdbcType=INTEGER}"
@@ -50,6 +46,7 @@ public interface FinacialWithdrawMapper {
         @Result(column="REAL_AMOUNT", property="realAmount", jdbcType=JdbcType.DECIMAL),
         @Result(column="CHARGE_FEE", property="chargeFee", jdbcType=JdbcType.DECIMAL),
         @Result(column="STATE", property="state", jdbcType=JdbcType.INTEGER),
+        @Result(column="WITHDRAW_TYPE", property="withdrawType", jdbcType=JdbcType.INTEGER),
         @Result(column="AUDIT_DATE", property="auditDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="AUDIT_OPERATOR", property="auditOperator", jdbcType=JdbcType.VARCHAR),
         @Result(column="AUDIT_MESSAGE", property="auditMessage", jdbcType=JdbcType.VARCHAR),
@@ -62,7 +59,7 @@ public interface FinacialWithdrawMapper {
 
     @Select({
         "select",
-        "WITHDRAW_ID, CUSTOMER_ID, BANK_ID, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, AUDIT_DATE, ",
+        "WITHDRAW_ID, CUSTOMER_ID, BANK_ID, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
         "AUDIT_OPERATOR, AUDIT_MESSAGE, GRANT_DATE, GRANT_OPERATOR, APPLY_DATE, UPDATE_DATE",
         "from finacial_withdraw"
     })
@@ -74,6 +71,7 @@ public interface FinacialWithdrawMapper {
         @Result(column="REAL_AMOUNT", property="realAmount", jdbcType=JdbcType.DECIMAL),
         @Result(column="CHARGE_FEE", property="chargeFee", jdbcType=JdbcType.DECIMAL),
         @Result(column="STATE", property="state", jdbcType=JdbcType.INTEGER),
+        @Result(column="WITHDRAW_TYPE", property="withdrawType", jdbcType=JdbcType.INTEGER),
         @Result(column="AUDIT_DATE", property="auditDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="AUDIT_OPERATOR", property="auditOperator", jdbcType=JdbcType.VARCHAR),
         @Result(column="AUDIT_MESSAGE", property="auditMessage", jdbcType=JdbcType.VARCHAR),
@@ -92,6 +90,7 @@ public interface FinacialWithdrawMapper {
           "REAL_AMOUNT = #{realAmount,jdbcType=DECIMAL},",
           "CHARGE_FEE = #{chargeFee,jdbcType=DECIMAL},",
           "STATE = #{state,jdbcType=INTEGER},",
+          "WITHDRAW_TYPE = #{withdrawType,jdbcType=INTEGER},",
           "AUDIT_DATE = #{auditDate,jdbcType=TIMESTAMP},",
           "AUDIT_OPERATOR = #{auditOperator,jdbcType=VARCHAR},",
           "AUDIT_MESSAGE = #{auditMessage,jdbcType=VARCHAR},",
