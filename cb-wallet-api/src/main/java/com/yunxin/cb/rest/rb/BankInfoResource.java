@@ -1,13 +1,11 @@
 package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
-import com.yunxin.cb.common.utils.CachedUtil;
 import com.yunxin.cb.mall.entity.BankInfo;
 import com.yunxin.cb.mall.service.BankInfoService;
 import com.yunxin.cb.mall.vo.BankInfoVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
-import com.yunxin.cb.util.VerificationCode;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -121,18 +119,9 @@ public class BankInfoResource extends BaseResource {
         BankInfo bankInfo = new BankInfo();
         try {
             //校验验证码
-            VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(bankInfoVO.getMobile());
-            //验证码不存在
-            if (verificationCode == null){
-                return new ResponseResult(Result.FAILURE, "验证码不存在");
-            }
-            //验证码超过5分钟，失效
-            if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
-                return new ResponseResult(Result.FAILURE, "验证码失效");
-            }
-            //验证码错误
-            if (!verificationCode.getCode().equals(bankInfoVO.getCode())) {
-                return new ResponseResult(Result.FAILURE, "验证码错误");
+            String checkStr = verificationCode(bankInfoVO.getMobile(), bankInfoVO.getCode());
+            if (checkStr != null) {
+                return new ResponseResult(Result.FAILURE, checkStr);
             }
             bankInfoVO.setCreateTime(new Date());
             BeanUtils.copyProperties(bankInfo, bankInfoVO);

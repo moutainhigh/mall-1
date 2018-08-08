@@ -783,12 +783,12 @@ public class CustomerService implements ICustomerService {
                     if(null!=customerMatchsVo&&customerMatchsVo.length>0){
 
                         List<CustomerMatchsVo> listVo=Arrays.asList(customerMatchsVo);
-                        Map<String,Object> map=getCustomer();
+                        Map<String,Object> map=(Map<String, Object>) redisService.getCustomerList();
                         if(null!=map){
-                            Map<String,Object> mp=(Map<String, Object>) map.get("customers");
+//                            Map<String,Object> mp=(Map<String, Object>) map.get("customers");
                             for(CustomerMatchsVo customerMatchVos:listVo){
-                                if(null!=mp.get("customer_"+customerMatchVos.getMobile())){
-                                    Customer customer=(Customer)mp.get("customer_"+customerMatchVos.getMobile());
+                                if(null!=map.get(customerMatchVos.getMobile())){
+                                    Customer customer=(Customer)map.get(customerMatchVos.getMobile());
                                     add(new CustomerMatchVo(){
                                         {
                                             setCustomerId(customer.getCustomerId());
@@ -832,6 +832,7 @@ public class CustomerService implements ICustomerService {
         return map;
 
     }
+
     /**
      * 添加黑名单
      *
@@ -1047,9 +1048,16 @@ public class CustomerService implements ICustomerService {
                                 for(InsuranceOrderLog insuranceOrderLog:list){
                                     add(new CustomerGratitudeDataVo(){
                                         {
+
                                             setGratitudeType(gratitudeType);
                                             setHeadPath(insuranceOrderLog.getCustomer().getAvatarUrl());
-                                            setUserName(insuranceOrderLog.getCustomer().getRealName());
+                                            String userName=insuranceOrderLog.getCustomer().getRealName();
+                                            if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getRealName())){
+                                                userName=insuranceOrderLog.getCustomer().getNickName();
+                                                if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getNickName()))
+                                                    userName=insuranceOrderLog.getCustomer().getMobile();
+                                            }
+                                            setUserName(userName);
                                             setProductName(insuranceOrderLog.getProdName()+(insuranceOrderLog.getPrice()>10000?(insuranceOrderLog.getPrice()/10000)+"万":insuranceOrderLog.getPrice()+"元"));
                                         }
                                     });
@@ -1068,7 +1076,13 @@ public class CustomerService implements ICustomerService {
                                         {
                                             setGratitudeType(gratitudeType);
                                             setHeadPath(insuranceOrderLog.getCustomer().getAvatarUrl());
-                                            setUserName(insuranceOrderLog.getCustomer().getRealName());
+                                            String userName=insuranceOrderLog.getCustomer().getRealName();
+                                            if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getRealName())){
+                                                userName=insuranceOrderLog.getCustomer().getNickName();
+                                                if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getNickName()))
+                                                    userName=insuranceOrderLog.getCustomer().getMobile();
+                                            }
+                                            setUserName(userName);
                                             setProductName(insuranceOrderLog.getProdName()+(insuranceOrderLog.getPrice()>10000?(insuranceOrderLog.getPrice()/10000)+"万":insuranceOrderLog.getPrice()+"元"));
                                         }
                                     });
@@ -1087,7 +1101,13 @@ public class CustomerService implements ICustomerService {
                                         {
                                             setGratitudeType(gratitudeType);
                                             setHeadPath(insuranceOrderLog.getCustomer().getAvatarUrl());
-                                            setUserName(insuranceOrderLog.getCustomer().getRealName());
+                                            String userName=insuranceOrderLog.getCustomer().getRealName();
+                                            if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getRealName())){
+                                                userName=insuranceOrderLog.getCustomer().getNickName();
+                                                if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getNickName()))
+                                                    userName=insuranceOrderLog.getCustomer().getMobile();
+                                            }
+                                            setUserName(userName);
                                             setProductName(insuranceOrderLog.getProdName()+(insuranceOrderLog.getPrice()>10000?(insuranceOrderLog.getPrice()/10000)+"万":insuranceOrderLog.getPrice()+"元"));
                                         }
                                     });
@@ -1108,7 +1128,13 @@ public class CustomerService implements ICustomerService {
                                         {
                                             setGratitudeType(gratitudeType);
                                             setHeadPath(customer.getAvatarUrl());
-                                            setUserName(customer.getRealName());
+                                            String userName=customer.getRealName();
+                                            if(StringUtils.isEmpty(customer.getRealName())){
+                                                userName=customer.getNickName();
+                                                if(StringUtils.isEmpty(customer.getNickName()))
+                                                    userName=customer.getMobile();
+                                            }
+                                            setUserName(userName);
                                         }
                                     });
                                 }
