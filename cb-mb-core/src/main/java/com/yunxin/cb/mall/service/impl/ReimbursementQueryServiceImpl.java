@@ -110,7 +110,6 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             //实际到账金额
             BigDecimal accountAmount;
             //合并同一类商品的订单
-            int catalogId = entry.getKey();
             List<OrderItem> orderItemList = entry.getValue();
             for(OrderItem orderItems : orderItemList){
                 accountSalePrice =  accountSalePrice.add(BigDecimal.valueOf(orderItems.getProductNum()*orderItems.getSalePrice()));
@@ -126,6 +125,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             reimbursement.setTax(tax);
             reimbursement.setReimbursementNo(String.valueOf(time));
             reimbursement.setOrderState(ReimbursementState.FINANCE_IN_APPROVAL);
+            reimbursement.setCatalogId(entry.getKey());
             reimbursementMapper.insert(reimbursement);
             //保存报账信息关联表
             for(OrderItem orderItemes : orderItemList){

@@ -46,6 +46,11 @@ public class Reimbursement implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 商品分类
+     */
+    private int catalogId;
+
 
     public Integer getReimbursementId() {
         return reimbursementId;
@@ -124,5 +129,13 @@ public class Reimbursement implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public int getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(int catalogId) {
+        this.catalogId = catalogId;
     }
 }
