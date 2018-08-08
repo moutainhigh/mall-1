@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.insurance.meta.GratitudeType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -16,7 +17,7 @@ public class CustomerGratitudeDataVo implements Serializable {
     @ApiModelProperty(value="用户名",name="userName",example="张三")
     private String userName;
     @ApiModelProperty(value="感恩状态",name="gratitudeType",example="感恩我")
-    private String gratitudeType;
+    private GratitudeType gratitudeType;
     @ApiModelProperty(value="保险产品",name="gratitudeType",example="生命保险10万")
     private String productName;
 
@@ -36,11 +37,11 @@ public class CustomerGratitudeDataVo implements Serializable {
         this.userName = userName;
     }
 
-    public String getGratitudeType() {
+    public GratitudeType getGratitudeType() {
         return gratitudeType;
     }
 
-    public void setGratitudeType(String gratitudeType) {
+    public void setGratitudeType(GratitudeType gratitudeType) {
         this.gratitudeType = gratitudeType;
     }
 
