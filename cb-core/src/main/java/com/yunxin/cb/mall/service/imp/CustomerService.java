@@ -1100,7 +1100,7 @@ public class CustomerService implements ICustomerService {
 
                         //未购买的
                         case NOTPURCHASED:
-                           List<Customer> listCustomer=customerDao.findCustomerByLikeLevelCodeNotPolicy(levelCode,PolicyType.NOTPURCHASED);
+                           List<Customer> listCustomer=customerDao.findCustomerByLikeLevelCodeNotPolicy(customerId,levelCode,PolicyType.NOTPURCHASED);
 
                            if(null!=listCustomer&&listCustomer.size()>0){
                                 for (Customer customer:listCustomer){

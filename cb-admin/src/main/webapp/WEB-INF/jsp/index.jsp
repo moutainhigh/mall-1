@@ -166,7 +166,7 @@
     <%--<div class="login-box-inner clearfix">--%>
       <%--<header id="login-header">--%>
         <%--<a href="#" id="login-logo">--%>
-          <%--<h1>云信商城管理后台</h1>--%>
+          <%--<h1>云信管理后台</h1>--%>
           <%--<h4> ${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>--%>
         <%--</a>--%>
       <%--</header>--%>
