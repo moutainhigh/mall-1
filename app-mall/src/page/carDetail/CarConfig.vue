@@ -1,6 +1,5 @@
 <template>
     <div class='configuration'>
-      <!-- {{TableData}} -->
       <table>
         <thead>
           <tr >
@@ -29,6 +28,7 @@
 
 <style lang='scss' scoped>
 .configuration{
+  margin-top:0.5rem;
   table{
     tr{
        height:3.4rem;
@@ -56,7 +56,7 @@
     } 
     thead{
       .left{
-          font-size:1.25rem;
+          font-size:1.1rem;
           font-family:PingFang-SC-Bold;
           color:rgba(245,202,29,1);
           border-bottom: none;
@@ -76,12 +76,12 @@
     }
     tbody{
       .left{
-        font-size:1rem;              
+        font-size:0.8rem;              
         font-family:PingFang-SC-Medium;
         color:rgba(51,51,51,1);
       }
       .right{
-        font-size:1.3rem;
+        font-size:1rem;
         font-family:Roboto-Bold;
         color:rgba(245,78,78,1);
         line-height: 4rem;
