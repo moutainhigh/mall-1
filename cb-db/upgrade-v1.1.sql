@@ -529,6 +529,9 @@ ALTER TABLE customer modify COLUMN POLICY int(11) DEFAULT 0;
 ###add by lxc 2018-08-08 15:58
 ALTER TABLE `crystal_ball`.`catalog`
 ADD COLUMN `RATIO` decimal(10, 5) NOT NULL DEFAULT 1 COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+ALTER TABLE `crystal_ball`.`commodity`
+ADD COLUMN `RATIO` decimal(10, 5) NULL COMMENT '商品比例配置' AFTER `SETTING_CONTENT`;
+
 
 ##add by tangou 2018-08-08
 DROP TABLE IF EXISTS `finacial_bill`;
