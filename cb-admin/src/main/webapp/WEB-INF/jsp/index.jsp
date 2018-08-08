@@ -108,7 +108,7 @@
 
 
   <div id="demo-overview" align="center" style="margin-top: 40%; margin-bottom: 40px" >
-    <img style="width: 150px" src="images/indexBg/logo.png" alt=""/>
+    <img style="width: 180px" src="images/indexBg/logo.png" alt=""/>
   <!--
     <a href="index.html">Dashboard</a>
     |
