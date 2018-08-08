@@ -525,6 +525,34 @@ ALTER TABLE `order_form` add  `AUDIT_TIME` datetime DEFAULT NULL COMMENT '审核
 
 ###add by wangteng 2018-08-08
 ALTER TABLE customer modify COLUMN POLICY int(11) DEFAULT 0;
+##add by likang 2018-08-08
+DROP TABLE IF EXISTS `finacial_expect_bill`;
+CREATE TABLE `finacial_expect_bill` (
+  `FINACIAL_EXPECT_ID` int(10) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(10) NOT NULL COMMENT '客户ID',
+  `TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资金类型',
+  `TRANSACTION_TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易类型',
+  `TRANSACTION_DESC` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
+  `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易金',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '交易时间',
+  PRIMARY KEY (`FINACIAL_EXPECT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT '预期收益交易记录';
+
+-- ----------------------------
+-- Table structure for finacial_liabilities_bill
+-- ----------------------------
+DROP TABLE IF EXISTS `finacial_liabilities_bill`;
+CREATE TABLE `finacial_liabilities_bill` (
+  `FINACIAL_LIABILITIES_ID` int(10) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(10) NOT NULL COMMENT '客户ID',
+  `TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资金类型',
+  `TRANSACTION_TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易类型',
+  `TRANSACTION_DESC` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
+  `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易金',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '时间',
+  PRIMARY KEY (`FINACIAL_LIABILITIES_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT '负债交易记录';
+
 
 ###add by lxc 2018-08-08 15:58
 ALTER TABLE `crystal_ball`.`catalog`
