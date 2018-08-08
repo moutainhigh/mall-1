@@ -18,7 +18,6 @@
     <div style="height: auto; width: 90vw; background: #ffffff; margin-top: -25px; margin-left: 5vw; padding-bottom: 5px">
         <img src="img/ic_right.png" class="input-img"/>
         <input type="text" class="div-input" placeholder="证件类型" id='picker'>
-
         <input type="text" v-model="customerVo.customerCardNo" class="div-input" placeholder="证件号">
         <input type="text" class="div-input" placeholder="真实姓名" v-model="customerVo.realName">
     </div>
@@ -80,10 +79,10 @@
     </div>
 
 
-    <div class="next">
-        <button @click="submit" v-if="!valid" disabled><p>立即注册</p></button>
-        <button @click="submit" class="next-valid" v-if="valid"><p>立即注册</p></button>
-    </div>
+    <!--<div class="next">-->
+        <!--<button @click="submit" v-if="!valid" disabled><p>立即注册</p></button>-->
+        <!--<button @click="submit" class="next-valid" v-if="valid"><p>立即注册</p></button>-->
+    <!--</div>-->
 </div>
 
 
