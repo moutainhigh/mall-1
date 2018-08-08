@@ -21,11 +21,17 @@ import ChooseAddress from '../page/address/ChooseAddress'
 import CollectList from '../page/collect/CollectList'
 import MyBrowse from '../page/collect/MyBrowse'
 import Login from '../page/Login'
+import Test from '../page/test'
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
+    {
+      path: '/test',
+  
+      component: Test
+    },
     {
       path: '/',
       name: 'home',

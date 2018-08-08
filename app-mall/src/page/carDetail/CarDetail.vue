@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="height: 3rem"></div>
-    <head-top :go-back="true" :headTitle="headTitle" :share="true" v-bind:style="{ opacity: opacity }">
+    <head-top :go-back="true" :headTitle="headTitle" :share="true">
       <img style="width: 20px; position: absolute" src="../../assets/img/common/ic_nav_share.png">
       <div slot="head-tab" class="head-tab" v-if="scroll > 90 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
@@ -19,7 +19,7 @@
     <div :ref="`detail`">
       <div>
         <swiper :aspect-ratio="0.749" auto style="margin:0 auto;" dots-position="center">
-          <swiper-item class="swiper-demo-img" v-for="img in commodityData.imageSet">
+          <swiper-item class="swiper-demo-img" v-for="(img, index) in commodityData.imageSet" :key="index">
             <img width="100%" :src="img" v-preview="img"></swiper-item>
         </swiper>
       </div>
@@ -172,7 +172,7 @@
     delFavoriteByFavoriteId,
     getCommdityDetailById, getProductsByCommodityId
   } from "../../service/getData";
-  import {Swiper, SwiperItem, Alert} from 'vux'
+  import {Swiper, SwiperItem} from 'vux'
   import {tranPrice} from "../../config/dataFormat";
 
   export default {
@@ -183,7 +183,6 @@
       carConfig,
       Swiper,
       SwiperItem,
-      Alert
     },
     data() {
       return {
@@ -204,21 +203,19 @@
         show: false,
         favoriteId: null,
         opacity: 1, //顶部透明度
+        Data:[]
       }
     },
     methods: {
       checkTab(tabNum) {
         this.tab = tabNum;
         switch (tabNum) {
-          case 1:
-            window.scrollTo(0, this.$refs['detail'].offsetTop - 50);
-            break;
-          case 2:
-            window.scrollTo(0, this.$refs['config'].offsetTop - 50);
-            break;
-          case 3:
-            window.scrollTo(0, this.$refs['explain'].offsetTop - 50);
-            break
+          case 1: window.scrollTo(0, this.$refs['detail'].offsetTop - 50);
+                break;
+          case 2: window.scrollTo(0, this.$refs['config'].offsetTop - 50);
+                break;
+          case 3: window.scrollTo(0, this.$refs['explain'].offsetTop - 50);
+                break
         }
       },
       //根据商品id获取货品
@@ -259,29 +256,33 @@
         this.iac[index2] = index;
         this.iac = this.iac.concat([]);
         this.disabledButton = '';
-        let productName = '';
-        for (let k = 0; k < this.commodityData.productVos.length; k++) {
-          if (index2 != 0) {
-            if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) > -1 && this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2 - 1].attributes[this.iac[index2 - 1]].attributeName) > -1) {
-              productName = productName + '：' + this.commodityData.productVos[k].productName;
-            }
-          } else {
-            if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) > -1) {
-              productName = productName + '：' + this.commodityData.productVos[k].productName;
+        if(index2 ==0){
+          //表示第一项，通过颜色去筛选数据
+          for (let k = 0; k < this.commodityData.productVos.length; k++){
+             if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) !=  -1 ) {
+                this.Data.push(this.commodityData.productVos[k].productName)
             }
           }
         }
+        if(index2 == 1){
+          //表示第二项
+          for (let k = 0; k < this.Data.length; k++){
+            //拿到第一项选择颜色后的数据,选择排量
+              if (this.Data[k].indexOf(this.productGroups[index2].attributes[index].attributeName) !=  -1 ) {
+                 this.Data = this.Data[k];
 
-        for (let j = 0; j < this.productGroups.length; j++) {
-          if (j > index2 && index2 != this.productGroups.length) {
-            console.log(index2)
-            console.log(productName)
-            for (let i = 0; i < this.productGroups[j].attributes.length; i++) {
-              if (productName.indexOf(this.productGroups[j].attributes[i].attributeName) == -1) {
-                this.disabledButton = this.disabledButton + this.productGroups[j].attributes[i].attributeName;
               }
-            }
-            console.log(this.disabledButton);
+          }
+           console.log(this.Data)
+
+        }
+        if(index2 == 2){
+          //表示第三项
+          for (let k = 0; k < this.Data.length; k++){
+            //拿到第一项选择颜色后的数据,选择排量
+              if (this.Data[k].indexOf(this.productGroups[index2].attributes[index].attributeName) !=  -1 ) {
+                 this.Data = this.Data[k]
+              }
           }
         }
       },
