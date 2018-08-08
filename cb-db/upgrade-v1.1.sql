@@ -523,3 +523,5 @@ ALTER TABLE `order_form` add  `AUDIT_STATE` int(11) DEFAULT 0 NOT NULL COMMENT '
 ALTER TABLE `order_form` add  `AUDIT_REMARK` varchar(255) DEFAULT NULL COMMENT '审核原因';
 ALTER TABLE `order_form` add  `AUDIT_TIME` datetime DEFAULT NULL COMMENT '审核时间';
 
+###add by wangteng 2018-08-08
+ALTER TABLE customer modify COLUMN POLICY int(11) DEFAULT 0;
