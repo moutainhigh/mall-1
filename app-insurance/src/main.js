@@ -33,6 +33,7 @@ Vue.use(Vuelidate)
 Vue.prototype.Admin = Admin;
 
 router.afterEach((to,from,next) => {
+
   window.scrollTo(0,0);
 });
 router.beforeEach((to, from, next) => {

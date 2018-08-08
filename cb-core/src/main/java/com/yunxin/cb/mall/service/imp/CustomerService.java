@@ -2,7 +2,11 @@ package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.im.RongCloudService;
 import com.yunxin.cb.insurance.dao.InsuranceOrderDao;
+import com.yunxin.cb.insurance.dao.InsuranceOrderLogDao;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
+import com.yunxin.cb.insurance.entity.InsuranceOrderLog;
+import com.yunxin.cb.insurance.meta.GratitudeType;
+import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
@@ -12,10 +16,7 @@ import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
-import com.yunxin.cb.mall.vo.CustomerGratitudeVo;
-import com.yunxin.cb.mall.vo.CustomerMatchVo;
-import com.yunxin.cb.mall.vo.CustomerMatchsVo;
-import com.yunxin.cb.mall.vo.CustomerUpdateVo;
+import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
@@ -86,6 +87,8 @@ public class CustomerService implements ICustomerService {
     private InsuranceOrderDao insuranceOrderDao;
     @Resource
     private RedisService redisService;
+    @Resource
+    private InsuranceOrderLogDao insuranceOrderLogDao;
     @Override
     public Fridge addFridge(Fridge fridge) {
         fridge.setCreateTime(new Date());
@@ -1026,5 +1029,23 @@ public class CustomerService implements ICustomerService {
                 setNotPurchased(notPurchased);
             }
         };
+    }
+
+    @Override
+    public List<CustomerGratitudeDataVo> findCustomerGratitudeData(int customerId,GratitudeType gratitudeType) {
+        Customer customer= customerDao.findRecommendCustomer(customerId);
+        if(null!=customer){
+            String levelCode = customer.getLevelCode()+"%";
+            switch (gratitudeType){
+                case GRATITUDEME:
+                   List<InsuranceOrderLog> list=insuranceOrderLogDao.findInsuranceOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.ON_PAID);
+                    break;
+
+            }
+
+
+        }
+
+        return null;
     }
 }
