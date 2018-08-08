@@ -30,7 +30,7 @@ public interface ReimbursementQueryMapper {
                     "left join product c on b.PRODUCT_ID = c.PRODUCT_ID \n" +
                     "left join commodity_category d on c.COMMODITY_ID = d.COMMODITY_ID \n" +
                     "WHERE a.ORDER_STATE = 7 \n" +
-                    "and b.ORDER_ID not in (SELECT g.ORDER_ITEM_ID FROM rb_reimbursement h left join rb_reimbursement_order g on g.REIMBURSEMENT_ID = h.REIMBURSEMENT_ID WHERE h.ORDER_STATE = 1 or h.ORDER_STATE = 2 )\n"+
+                    "and b.ITEM_ID not in (SELECT g.ORDER_ITEM_ID FROM rb_reimbursement h left join rb_reimbursement_order g on g.REIMBURSEMENT_ID = h.REIMBURSEMENT_ID WHERE h.ORDER_STATE != 3)\n"+
                     "order by a.CREATE_TIME desc",
                     "LIMIT #{rowIndex},#{pageSize}",
                     "</script>"
@@ -62,8 +62,8 @@ public interface ReimbursementQueryMapper {
                     "left join order_form a on a.ORDER_ID = b.ORDER_ID \n" +
                     "left join product c on b.PRODUCT_ID = c.PRODUCT_ID \n" +
                     "left join commodity_category d on c.COMMODITY_ID = d.COMMODITY_ID \n" +
-                    "WHERE a.ORDER_STATE = 7 and a.CUSTOMER_ID = #{data.customerId,jdbcType=INTEGER}\n"+
-            "and b.ORDER_ID not in (SELECT g.ORDER_ITEM_ID FROM rb_reimbursement h left join rb_reimbursement_order g on g.REIMBURSEMENT_ID = h.REIMBURSEMENT_ID WHERE h.ORDER_STATE = 1 or h.ORDER_STATE = 2 )",
+                    "WHERE a.ORDER_STATE = 7 \n"+
+            "and b.ITEM_ID not in (SELECT g.ORDER_ITEM_ID FROM rb_reimbursement h left join rb_reimbursement_order g on g.REIMBURSEMENT_ID = h.REIMBURSEMENT_ID WHERE h.ORDER_STATE != 3)",
             "</script>"
     })
     long count(Query q);
