@@ -56,6 +56,7 @@ public interface IInsuranceInformedMatterService {
      */
     public List<InsuranceInformedMatter> getInsuranceInformedMatterList();
 
+
     /**
      *
      * @param matterId
