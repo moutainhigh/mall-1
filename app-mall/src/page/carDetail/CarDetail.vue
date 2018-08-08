@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="height: 3rem"></div>
-    <head-top :go-back="true" :headTitle="headTitle" :share="true" v-bind:style="{ opacity: opacity }">
+    <head-top :go-back="true" :headTitle="headTitle" :share="true">
       <img style="width: 20px; position: absolute" src="../../assets/img/common/ic_nav_share.png">
       <div slot="head-tab" class="head-tab" v-if="scroll > 90 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
@@ -16,7 +16,7 @@
       </div>
     </head-top>
 
-    <div :ref="`detail`">
+    <div v-if="tab == 1">
       <div>
         <swiper :aspect-ratio="0.749" auto style="margin:0 auto;" dots-position="center">
           <swiper-item class="swiper-demo-img" v-for="(img, index) in commodityData.imageSet" :key="index">
@@ -24,6 +24,9 @@
         </swiper>
       </div>
 
+      <div style="display: none">
+        <img :src="commodityData.defaultPicPath" v-preview="commodityData.defaultPicPath" :key="0">
+      </div>
       <div class="carPrice">
         <div class="price">
           <p class="presentPrice">￥<span>{{setTranPrice(commodityData.sellPrice)}}</span>万</p>
@@ -53,8 +56,7 @@
       <div class="selectItem" @click="checkProducts">
         <p class="selectItem-title">规格选择</p>
         <p v-if="standard[0] == ''" class="selectItem-detail">请选择</p>
-        <p v-if="standard[0] != ''" class="selectItem-detail">
-          <span>{{standard[0]}} {{standard[1]}} {{standard[2]}}</span></p>
+        <p v-if="standard[0] != ''" class="selectItem-detail"><span>{{standard[0]}} {{standard[1]}} {{standard[2]}}</span></p>
         <img src="../../assets/img/cardetail/ic_right.png">
       </div>
       <div class="buyMode" @click="checkType = 'mode'">
@@ -82,14 +84,7 @@
         <div v-html="commodityData.content"></div>
       </div>
 
-      <div :ref="`config`">
-        <carConfig :TableData="commodityData.specs"></carConfig>
-      </div>
-
-      <div :ref="`explain`">
-        <carExplain :explainContent="commodityData.explainContent"></carExplain>
-      </div>
-
+      <div style="height: 40px; background: #fff"></div>
       <div style="height: 70px">
         <div class="i-footer">
           <button @click="toOrderComfirm">
@@ -97,6 +92,15 @@
           </button>
         </div>
       </div>
+
+    </div>
+
+    <div v-if="tab == 2">
+      <carConfig :TableData="commodityData.specs"></carConfig>
+    </div>
+
+    <div v-if="tab == 3">
+      <carExplain :explainContent="commodityData.explainContent"></carExplain>
     </div>
 
     <div v-show="checkType != 'none'" class="carType">
@@ -117,12 +121,20 @@
             <div v-for="(productGroup, index2) in productGroups" :key="index2">
               <p class="carType-title">{{productGroup.groupName}}</p>
               <div style="padding: 0 14px">
-                <button v-for="(attribute, index) in productGroup.attributes" class="carColor"
-                        :class="{'activeColor':index === iac[index2] && disabledButton.indexOf(attribute.attributeName) < 0}"
+                <button v-for="(attribute, index) in productGroup.attributes" class="carColor" :id='attribute.attributeName' :index='index' :name='attribute.attributeName'
+                        :class="{'activeColor':index === iac[index2] && disabledButton.indexOf(attribute.attributeName) != -1  }"
                         @click="checkAttribute(index2, index)"
-                        :disabled="disabledButton.indexOf(attribute.attributeName) > -1">
+                        :disabled="disabledButton.indexOf(attribute.attributeName) == -1 && index2 !== 0">
                   {{attribute.attributeName}}
                 </button>
+
+                    <!-- <button v-for="(attribute, index) in productGroup.attributes" class="carColor"
+                        :class="{'activeColor':index2 == ceilIndex && index == activeIndex}"
+                        @click="checkAttribute(index2, index)"
+                        >
+                        && disabledButton.indexOf(attribute.attributeName) < 0
+                  {{attribute.attributeName}}
+                </button> -->
               </div>
             </div>
           </div>
@@ -172,7 +184,7 @@
     delFavoriteByFavoriteId,
     getCommdityDetailById, getProductsByCommodityId
   } from "../../service/getData";
-  import {Swiper, SwiperItem, Alert} from 'vux'
+  import {Swiper, SwiperItem} from 'vux'
   import {tranPrice} from "../../config/dataFormat";
 
   export default {
@@ -183,7 +195,6 @@
       carConfig,
       Swiper,
       SwiperItem,
-      Alert
     },
     data() {
       return {
@@ -203,22 +214,18 @@
         mode: '',
         show: false,
         favoriteId: null,
-        opacity: 1, //顶部透明度
+        Data:[],
+     
       }
     },
     methods: {
       checkTab(tabNum) {
         this.tab = tabNum;
-        switch (tabNum) {
-          case 1:
-            window.scrollTo(0, this.$refs['detail'].offsetTop - 50);
-            break;
-          case 2:
-            window.scrollTo(0, this.$refs['config'].offsetTop - 50);
-            break;
-          case 3:
-            window.scrollTo(0, this.$refs['explain'].offsetTop - 50);
-            break
+        this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
+        if (this.scroll <= 350 && this.tab == 1) {
+          this.headTitle = '汽车详情';
+        } else {
+          this.headTitle = '';
         }
       },
       //根据商品id获取货品
@@ -226,7 +233,9 @@
         getProductsByCommodityId(this.commodityData.commodityId).then(res => {
           if (res.result == 'SUCCESS') {
             this.productGroups = res.data;
+            this.Data= this.commodityData.productVo.productName;
             this.defaultAttribute = this.commodityData.productVo.productName.split("&");
+            this.disabledButton = this.commodityData.productVo.productName;
             for (let i = 0; i < this.productGroups.length; i++) {
               for (let j = 0; j < this.productGroups[i].attributes.length; j++) {
                 //判断默认货品
@@ -258,32 +267,48 @@
       checkAttribute(index2, index) {
         this.iac[index2] = index;
         this.iac = this.iac.concat([]);
-        this.disabledButton = '';
-        let productName = '';
-        for (let k = 0; k < this.commodityData.productVos.length; k++) {
-          if (index2 != 0) {
-            if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) > -1 && this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2 - 1].attributes[this.iac[index2 - 1]].attributeName) > -1) {
-              productName = productName + '：' + this.commodityData.productVos[k].productName;
-            }
-          } else {
-            if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) > -1) {
-              productName = productName + '：' + this.commodityData.productVos[k].productName;
+        // console.log(this.iac)
+        this.disabledButton ='';
+
+        if(index2 ==0){
+          this.Data = [];
+          //表示第一项，通过颜色去筛选数据
+          for (let k = 0; k < this.commodityData.productVos.length; k++){
+             if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) !=  -1 ) {
+                this.Data.push(this.commodityData.productVos[k].productName);
             }
           }
         }
 
-        for (let j = 0; j < this.productGroups.length; j++) {
-          if (j > index2 && index2 != this.productGroups.length) {
-            console.log(index2)
-            console.log(productName)
-            for (let i = 0; i < this.productGroups[j].attributes.length; i++) {
-              if (productName.indexOf(this.productGroups[j].attributes[i].attributeName) == -1) {
-                this.disabledButton = this.disabledButton + this.productGroups[j].attributes[i].attributeName;
+        if(index2 == 1 || index2 == 2){
+          //表示不是第一项
+          for (let i = 0; i < this.Data.length; i++){
+            //拿到第一项选择颜色后的数据,选择排量
+              if (this.Data[i].indexOf(this.productGroups[index2].attributes[index].attributeName) !=  -1 ) {
+                 this.Data = this.Data[i];
               }
-            }
-            console.log(this.disabledButton);
           }
         }
+        //用于判断是否置灰，禁止点击
+        for(let m = 0;m <this.Data.length;m++){
+            
+            this.disabledButton += this.Data[m];
+        }
+        for (let i = 0; i < this.productGroups.length; i++) {
+              for (let j = 0; j < this.productGroups[i].attributes.length; j++) {
+                //判断选择的货品
+                
+                if (this.Data[0].indexOf(this.productGroups[i].groupName) > -1 && this.Data[0].indexOf(this.productGroups[i].attributes[j].attributeName) > -1) {
+                  this.iac[i] = j;
+                  this.iac = this.iac.concat([]);
+                }
+                
+              }
+        }
+
+        
+     
+        
       },
       checkMode(key) {
         this.activeMode = key;
@@ -292,6 +317,8 @@
       selectStandard() {
         let name = '';
         this.standard = [];
+       
+    
         //判断选中货品属性
         for (let i = 0; i < this.iac.length; i++) {
           if (this.productGroups[i].attributes[this.iac[i]]) {
@@ -302,6 +329,18 @@
             //页面显示选中信息
             this.standard.push(this.productGroups[i].attributes[this.iac[i]].attributeName);
           }
+        }
+        if(this.Data.length > 1 ){
+          if(this.Data.length > 20){
+            this.Data = this.Data;
+          }else{
+               this.Data = this.Data[0];
+          }
+        }
+        if(this.Data != name ){
+              this.$vux.toast.text("请选择排量");
+               return;
+         
         }
 
         for (let j = 0; j < this.commodityData.productVos.length; j++) {
@@ -324,45 +363,9 @@
         } else {
           this.headTitle = '';
         }
-        //透明度
-        switch (this.scroll) {
-          case 50: this.opacity = 0.9;break;
-          case 70: this.opacity = 0.8;break;
-          case 90: this.opacity = 0.7;break;
-          case 110: this.opacity = 0.6;break;
-          case 130: this.opacity = 0.5;break;
-          case 150: this.opacity = 0.4;break;
-          case 170: this.opacity = 0.3;break;
-          case 190: this.opacity = 0.2;break;
-          case 210: this.opacity = 0.3;break;
-          case 230: this.opacity = 0.4;break;
-          case 250: this.opacity = 0.5;break;
-          case 270: this.opacity = 0.6;break;
-          case 290: this.opacity = 0.7;break;
-          case 310: this.opacity = 0.8;break;
-          case 330: this.opacity = 0.9;break;
-          case 350: this.opacity = 1;break;
-        }
-
-        //监听页面滚动切换tab
-        if (this.scroll >= 90 && this.scroll < this.$refs['config'].offsetTop) {
-          this.tab = 1;
-        }
-        if (this.scroll >= this.$refs['config'].offsetTop - 50 && this.scroll < this.$refs['explain'].offsetTop - 50) {
-          this.tab = 2;
-        }
-        if (this.scroll >= this.$refs['explain'].offsetTop - 50) {
-          this.tab = 3;
-        }
       },
       //立即抢购
       toOrderComfirm() {
-        if (this.mode == '') {
-          this.$vux.alert.show({
-            content: '请选择支付方式',
-          });
-          return false;
-        }
         this.$router.push({
           path: "/order-comfirm",
           query: {
@@ -404,7 +407,6 @@
         getCommdityDetailById(productId).then(res => {
           if (res.result == 'SUCCESS') {
             this.commodityData = res.data;
-            this.checkProductId = this.commodityData.productVo.productId;
             if (this.commodityData.favoriteVo) {
               this.isCollect = true;
               this.favoriteId = this.commodityData.favoriteVo.favoriteId;
@@ -418,13 +420,9 @@
     created() {
       let query = this.$route.query;
       this.getCommodityDetail(query.productId);
-
     },
     mounted() {
       window.addEventListener('scroll', this.menu)
-    },
-    destroyed(){
-      window.removeEventListener('scroll', this.menu)
     },
 
     beforeRouteLeave(to, from, next) {
