@@ -6,6 +6,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 
+@Mapper
 public interface ProfileMapper {
     @Delete({
         "delete from profile",

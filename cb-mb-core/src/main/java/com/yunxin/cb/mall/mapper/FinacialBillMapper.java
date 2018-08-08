@@ -6,6 +6,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 
+@Mapper
 public interface FinacialBillMapper {
     @Delete({
         "delete from finacial_bill",
