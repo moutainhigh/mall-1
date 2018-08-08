@@ -252,6 +252,7 @@ public class CustomerResource extends BaseResource {
     }
 
     @ApiOperation(value = "修改手机号")
+
     @PostMapping(value = "updateMobile")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "moblie", value = "手机号", required = true, paramType = "post", dataType = "String"),
