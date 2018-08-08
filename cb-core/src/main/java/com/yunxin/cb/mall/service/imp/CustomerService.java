@@ -1041,7 +1041,7 @@ public class CustomerService implements ICustomerService {
                     switch (gratitudeType){
                         //感恩我的
                         case GRATITUDEME:
-                            List<InsuranceOrderLog> list=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.ON_PAID,1);
+                            List<InsuranceOrderLog> list=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.ON_PAID,true);
                             if(null!=list&&list.size()>0){
 
                                 for(InsuranceOrderLog insuranceOrderLog:list){
@@ -1059,7 +1059,7 @@ public class CustomerService implements ICustomerService {
                             break;
                         //未感恩
                         case NOGRATITUDE:
-                            List<InsuranceOrderLog> lists=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.ON_PAID,0);
+                            List<InsuranceOrderLog> lists=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.ON_PAID,false);
 
                             if(null!=lists&&lists.size()>0){
 
