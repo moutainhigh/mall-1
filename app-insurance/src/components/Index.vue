@@ -14,9 +14,9 @@
         <div class="dt-content">{{product.tags}}</div><!--爱相伴、心相知、福相随-->
         <div class="dt-price">
           <div>
-            <div class="dt-price-pro">
-              2万/5万/10万
-            </div>
+            <span class="dt-price-pro" v-for="price in product.insuranceProductPrices">
+              {{setTranPrice(price.price)}}万
+            </span>
             <button >
              立即投保
             </button>
@@ -52,6 +52,7 @@
   import storage from '../store/storage'
   import Admin from '../admin/Admin'
   import {getCustomerInfo, getProducts} from "../service/getData";
+  import {tranPrice} from "../config/dataFormat";
 
   export default {
     name: "index",
@@ -67,7 +68,10 @@
           path:'/pro-detail',
           query:{
             id:pro.prodId,
-            title:pro.prodName
+            title:pro.prodName,
+            period: pro.insurePeriod,
+            year: pro.protectionYear,
+            prices: pro.insuranceProductPrices,
           }
         });
       },
@@ -75,7 +79,11 @@
         storage.clear();
         storage.save('holder',Admin.holder);
         storage.save('insured',Admin.insured);
-      }
+      },
+      //价格转换格式
+      setTranPrice(price) {
+        return tranPrice(price);
+      },
     },
     created(){
       // let holder = storage.fetch("holder");

@@ -199,6 +199,19 @@ public class Order implements java.io.Serializable {
      */
     private String consigneeMobile;
 
+    /**
+     * 审核状态
+     */
+    private AuditState auditState;
+
+    /***
+     * 审核备注
+     */
+    private String auditRemark;
+
+    /** 审核时间 */
+    private Date auditTime;
+
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private Set<OrderInvoice> orderInvoices = new HashSet<>();
@@ -637,6 +650,35 @@ public class Order implements java.io.Serializable {
 
     public void setCourierNumber(String courierNumber) {
         this.courierNumber = courierNumber;
+    }
+
+    @Column(nullable = false, precision = 1)
+    @Enumerated(EnumType.ORDINAL)
+    public AuditState getAuditState() {
+        return auditState;
+    }
+
+    public void setAuditState(AuditState auditState) {
+        this.auditState = auditState;
+    }
+
+    public String getAuditRemark() {
+        return auditRemark;
+    }
+
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(length = 7, nullable = true)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
     }
 
     public void setDeliveryAddress(DeliveryAddress address) {

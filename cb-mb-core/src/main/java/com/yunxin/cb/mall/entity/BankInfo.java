@@ -26,6 +26,9 @@ public class BankInfo implements Serializable {
     /** 银行名称 */
     private String bankName;
 
+    /** 银行Logo */
+    private String bankLogo;
+
     /** 有效期 */
     private String effectiveTime;
 
@@ -125,5 +128,13 @@ public class BankInfo implements Serializable {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public String getBankLogo() {
+        return bankLogo;
+    }
+
+    public void setBankLogo(String bankLogo) {
+        this.bankLogo = bankLogo;
     }
 }

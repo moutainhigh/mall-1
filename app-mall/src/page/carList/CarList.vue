@@ -290,7 +290,6 @@
       },
       delSelected(selected, index) {
         if (selected.type == 'commoditySpecs') {
-          console.log(this.searchVo.commoditySpecs);
           this.searchVo.commoditySpecs = delArrayOne(this.searchVo.commoditySpecs, selected.key, 'specName');
           for (let condition of this.chooseConditions) {
             if (condition.specName == selected.key) {
@@ -298,7 +297,18 @@
               break;
             }
           }
-        } else {
+        } else if (selected.type == 'priceSection') {
+          if (selected.key == 'priceLowForHigh') {
+            this.searchVo.lowestPrice = '';
+            this.searchVo.highestPrice = '';
+            this.priceSect.lowPrice = '';
+            this.priceSect.highPrice = '';
+            this.selecteds = delArrayOne(this.selecteds, 'priceSection', 'type');
+          }else {
+            this.searchVo.priceSection = null;
+          }
+          this.priceSection.chooseIndex = -1;
+        }else {
           this.searchVo[selected.type] = null;
         }
         this.selecteds.splice(index, 1);
@@ -358,13 +368,21 @@
       choosePrice(index) {
         if (this.priceSection.chooseIndex != index) {
           this.priceSection.chooseIndex = index;
+          this.selecteds = delArrayOne(this.selecteds, 'priceSection', 'type');
           if (index == -1) {
             this.searchVo.priceSection = null;
           } else {
             this.searchVo.priceSection = this.priceSection.value[index];
+            this.selecteds.push({
+              key: this.searchVo.priceSection,
+              val: tranPrice(this.searchVo.priceSection.startPrice)+'-'+tranPrice(this.searchVo.priceSection.endPrice)+'万',
+              type: 'priceSection'
+            });
           }
           this.searchVo.lowestPrice = '';
           this.searchVo.highestPrice = '';
+          this.priceSect.lowPrice = '';
+          this.priceSect.highPrice = '';
           this.getData();
         }
         this.sortBy = '';
@@ -372,8 +390,13 @@
       setPriceSect() {
         if (this.priceSect.lowPrice && this.priceSect.highPrice) {
           this.searchVo.lowestPrice = tranThouOfPrice(this.priceSect.lowPrice) ;
-          console.log(this.searchVo.lowestPrice);
           this.searchVo.highestPrice = tranThouOfPrice(this.priceSect.highPrice);
+          this.selecteds = delArrayOne(this.selecteds, 'priceSection', 'type');
+          this.selecteds.push({
+            key: 'priceLowForHigh',
+            val: this.priceSect.lowPrice+'-'+this.priceSect.highPrice+'万',
+            type: 'priceSection'
+          });
           this.searchVo.priceSection = null;
           this.priceSection.chooseIndex = -2;
           this.sortBy = '';

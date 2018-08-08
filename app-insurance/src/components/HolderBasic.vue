@@ -43,11 +43,11 @@
       </div>
       <div class="i-input">
         <div class="i-input-item">保险期间</div>
-        <div class="i-input-val">保障终身</div>
+        <div class="i-input-val">{{setPeriod(period)}}</div>
       </div>
       <div class="i-input">
         <div class="i-input-item">保障年限</div>
-        <div class="i-input-val">十年</div>
+        <div class="i-input-val">{{setInsureYear(year)}}</div>
       </div>
       <div class="i-input">
         <div class="i-input-item">基本保额</div>
@@ -110,6 +110,8 @@
   import XInput from "vux/src/components/x-input/index";
   import {required} from 'vuelidate/lib/validators'
   import {dateFormat} from "../config/mUtils";
+  import {getProResult} from "../service/getData";
+  import {insurePeriod, protectionYear} from "../config/dataFormat";
 
   export default {
     name: "holder-basic",
@@ -133,6 +135,9 @@
         toastText: '',
         showPositionValue: false,
         startDate: dateFormat(new Date(), "yyyy-MM-dd"),
+        period: '',
+        year: '',
+        prices: []
       }
     },
     validations: {
@@ -178,7 +183,7 @@
           return false;
         }
         if (this.state !== true) {
-          this.$vux.toast.text("请勾选投保须知",'middle');
+          this.$vux.toast.text("请勾选投保须知", 'middle');
           return false;
         } else {
           this.$router.push('/insured');
@@ -192,7 +197,13 @@
             key: 'insuredCareer'
           }
         })
-      }
+      },
+      setPeriod(period) {
+        return insurePeriod(period);
+      },
+      setInsureYear(insureYear) {
+        return protectionYear(insureYear);
+      },
     },
     watch: {
       birthday: {
@@ -235,6 +246,9 @@
       let query = this.$route.query;
       this.title = query.title;
       this.proId = query.id;
+      this.period = query.period;
+      this.year = query.year;
+      this.prices = query.prices;
       let order;
       if (storage.fetch('order').length != 0) {
         order = storage.fetch('order');

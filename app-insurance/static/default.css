@@ -62,6 +62,9 @@ body {
   font-size: 13px;
   color: #f5ca1d;
   margin: 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .i-list-detail .dt-price {
@@ -124,6 +127,9 @@ button a {
 .i-card .i-card-tip {
   font-size: 13px;
   color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .i-card-tip .i-list-right {

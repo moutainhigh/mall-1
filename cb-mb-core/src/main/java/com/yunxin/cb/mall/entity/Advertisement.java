@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.entity;
 
 import com.yunxin.cb.mall.entity.meta.AdvertisementPlace;
+import com.yunxin.cb.mall.entity.meta.AdvertisementType;
 
 import java.util.Date;
 
@@ -37,7 +38,7 @@ public class Advertisement implements java.io.Serializable{
     /**
      * 广告类型
      */
-    private Integer advertisementType;
+    private AdvertisementType advertisementType;
 
     /**
      * 广告URL类型
@@ -212,7 +213,7 @@ public class Advertisement implements java.io.Serializable{
      *
      * @mbg.generated Wed Jul 18 10:38:52 CST 2018
      */
-    public Integer getAdvertisementType() {
+    public AdvertisementType getAdvertisementType() {
         return advertisementType;
     }
 
@@ -224,7 +225,7 @@ public class Advertisement implements java.io.Serializable{
      *
      * @mbg.generated Wed Jul 18 10:38:52 CST 2018
      */
-    public void setAdvertisementType(Integer advertisementType) {
+    public void setAdvertisementType(AdvertisementType advertisementType) {
         this.advertisementType = advertisementType;
     }
 

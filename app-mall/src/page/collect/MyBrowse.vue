@@ -17,7 +17,7 @@
                @click="check = true">
           <img class="imgs" src="../../assets/logo.png">
           <div class="carInfo" v-bind:class="{'isEdit': isEdit}">
-            <p class="title">2018款 240TURBO自动两驱舒适版</p>
+            <p class="title">2018款 240T自动两驱舒适版</p>
             <p class="price">￥<span>8.98</span>万</p>
             <p class="carLocal"><img src="../../assets/img/common/ic_list_location.png">深圳中升汇宝宝马4S店</p>
           </div>
@@ -86,11 +86,10 @@
 
   .user-order-list .myorderList .imgs {
     float: left;
-    width: 7.75rem;
-    height: 5.52rem;
+    width: 35%;
+    height: 5rem;
     margin-right: 0.625rem;
     border-radius: 5px;
-    border: 1px solid #000;
   }
 
   .isEdit {

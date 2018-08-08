@@ -18,7 +18,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>水晶球后台管理</title>
+  <title>云信后台管理</title>
 
   <!-- // IOS webapp icons // -->
 
@@ -166,7 +166,7 @@
     <%--<div class="login-box-inner clearfix">--%>
       <%--<header id="login-header">--%>
         <%--<a href="#" id="login-logo">--%>
-          <%--<h1>水晶球商城管理后台</h1>--%>
+          <%--<h1>云信管理后台</h1>--%>
           <%--<h4> ${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>--%>
         <%--</a>--%>
       <%--</header>--%>
