@@ -302,7 +302,6 @@ export const dateFormat = function (date, fmt) { //author: meizz
   for (let k in o)
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
 
-  console.log(fmt);
   return fmt;
 };
 
@@ -364,7 +363,6 @@ export const ageYear = function (birthday) {
  */
 export const delArrayOne = function (array, compareVal, type = null) {
   let delIndex = null;
-  console.log("test", 'test');
   for (let i = 0; i < array.length; i++) {
     if (type) {
       if (array[i][type] == compareVal) {

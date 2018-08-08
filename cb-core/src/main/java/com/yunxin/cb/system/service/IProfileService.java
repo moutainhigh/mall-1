@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 public interface IProfileService {
     AppCheckUpdate getAppCheckUpdate(MobileOSType mobileOSType);
 
-    ShareInfo getShareInfo();
+    ShareInfo getShareInfo(String invitationCode);
 
     public Page<Profile> pageProfile(PageSpecification<Profile> query);
 

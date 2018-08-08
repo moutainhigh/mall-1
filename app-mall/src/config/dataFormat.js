@@ -49,7 +49,6 @@ export const tranPrice = (price,showZore = false) => {
 export const tranThouOfPrice = (price) => {
   let result = '';
   let splice = price.split(".");
-  console.log(splice);
   if (splice[1]){
     let length = splice[1].length;
     if (length > 4) {
@@ -63,7 +62,6 @@ export const tranThouOfPrice = (price) => {
   }else {
     result = splice[0] + '0000';
   }
-  console.log(result);
   return result;
 };
 

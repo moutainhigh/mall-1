@@ -10,16 +10,16 @@
     </head-top>
     <div class="user-order-list" style="margin-top: 3rem">
       <dl>
-        <dd class="myorderList">
-          <img v-if="isEdit && check" class="checkIcon" src="../../assets/img/common/Checkmark_sele.png"
-               @click="check = false">
-          <img v-if="isEdit && !check" class="checkIcon" src="../../assets/img/common/Checkmark_nor.png"
-               @click="check = true">
-          <img class="imgs" src="../../assets/logo.png">
-          <div class="carInfo" v-bind:class="{'isEdit': isEdit}">
-            <p class="title">2018款 240T自动两驱舒适版</p>
-            <p class="price">￥<span>8.98</span>万</p>
-            <p class="carLocal"><img src="../../assets/img/common/ic_list_location.png">深圳中升汇宝宝马4S店</p>
+        <dd class="myorderList" v-for="record in records">
+          <img v-if="isEdit && checkList.indexOf(record.commodityId) > -1" class="checkIcon" src="../../assets/img/common/Checkmark_sele.png"
+                @click="unCheck(record.commodityId)">
+          <img v-if="isEdit && checkList.indexOf(record.commodityId) == -1" class="checkIcon" src="../../assets/img/common/Checkmark_nor.png"
+               @click="checkCommodity(record.commodityId)">
+          <img class="imgs" :src="record.defaultPicPath">
+          <div class="carInfo" v-bind:class="{'isEdit': isEdit}" @click="openDetail(record.productVo.productId)">
+            <p class="title">{{record.commodityName}}</p>
+            <p class="price">￥<span>{{setTranPrice(record.sellPrice)}}</span>万</p>
+            <p class="carLocal"><img src="../../assets/img/common/ic_list_location.png">{{record.sellerVo.sellerAddress}}</p>
           </div>
         </dd>
       </dl>
@@ -27,12 +27,12 @@
 
     <div style="height: 3.125rem" v-if="isEdit">
       <div class="editFooter">
-        <img v-if="isEdit && check" class="allCheckIcon" src="../../assets/img/common/Checkmark_sele.png"
-             @click="check = false">
-        <img v-if="isEdit && !check" class="allCheckIcon" src="../../assets/img/common/Checkmark_nor.png"
-             @click="check = true">
+        <img v-if="isEdit && checkList.length == records.length" class="allCheckIcon" src="../../assets/img/common/Checkmark_sele.png"
+             @click="allClearCheck">
+        <img v-if="isEdit && checkList.length != records.length" class="allCheckIcon" src="../../assets/img/common/Checkmark_nor.png"
+             @click="allCheck">
         <span style="display: inline-block; padding-top: 0.9rem">全选</span>
-        <button class="deleteButton">删除</button>
+        <button class="deleteButton" @click="deleteRecord">删除</button>
       </div>
     </div>
   </div>
@@ -40,6 +40,8 @@
 
 <script>
   import headTop from '../../components/header/head'
+  import storage from "../../store/storage";
+  import {tranPrice} from "../../config/dataFormat";
 
   export default {
     name: "MyBrowse",
@@ -50,8 +52,67 @@
       return {
         headTitle: '我的浏览',
         isEdit: false,
-        check: false
+        check: 0,
+        records: [],
+        collectList: [],
+        checkList: []
       }
+    },
+    methods: {
+      //价格转换格式
+      setTranPrice(price) {
+        return tranPrice(price);
+      },
+      //跳转商品详情页
+      openDetail(productId) {
+        this.$router.push({
+          path: '/car-detail',
+          query: {productId: productId}
+        })
+      },
+      //勾选商品
+      checkCommodity(commodityId) {
+        this.checkList.push(commodityId);
+      },
+      //取消勾选商品
+      unCheck(commodityId) {
+        let index = this.checkList.indexOf(commodityId);
+        if (index > -1) {
+          this.checkList.splice(index, 1);
+        }
+      },
+      //全选勾选
+      allCheck() {
+        this.checkList = [];
+        for (let i = 0; i < this.records.length; i++) {
+          this.checkList.push(this.records[i].commodityId);
+        }
+      },
+      //取消全选勾选
+      allClearCheck() {
+        this.checkList = [];
+      },
+      //删除勾选数据
+      deleteRecord() {
+        let removeList = [];
+        for(let j = 0; j < this.checkList.length; j++) {
+          for (let i = 0; i < this.records.length; i++) {
+            if (this.checkList[j] == this.records[i].commodityId) {
+              removeList.push(this.records[i]);
+            }
+          }
+        }
+        for (let record in removeList) {
+          this.records.splice(record, 1);
+        }
+        storage.save("records", this.records);
+      }
+    },
+    created() {
+      this.records = storage.fetch("records");
+      //倒序排列
+      this.records.reverse();
+      console.log(this.records)
     }
   }
 </script>
@@ -78,7 +139,7 @@
 
   .user-order-list .myorderList {
     overflow: hidden;
-    padding: 0.625rem 0.875rem 0 0.875rem;
+    padding: 0.625rem 0.875rem;
     position: relative;
     margin-left: 0;
     background: #ffffff;
