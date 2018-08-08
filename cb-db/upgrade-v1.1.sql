@@ -529,3 +529,44 @@ ALTER TABLE customer modify COLUMN POLICY int(11) DEFAULT 0;
 ###add by lxc 2018-08-08 15:58
 ALTER TABLE `crystal_ball`.`catalog`
 ADD COLUMN `RATIO` decimal(10, 5) NOT NULL DEFAULT 1 COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+
+##add by tangou 2018-08-08
+DROP TABLE IF EXISTS `finacial_bill`;
+CREATE TABLE `finacial_bill` (
+  `BILL_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(11) NOT NULL COMMENT '用户id',
+  `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易金额',
+  `TYPE` int(2) NOT NULL COMMENT '交易类型：1.支出，2.收入',
+  `STATE` int(11) NOT NULL COMMENT '交易状态',
+  `TRANSACTION_TYPE` int(2) NOT NULL COMMENT '交易方式：1.商品购买，2.报帐，4.贷款，3.提现，5.还款, 6.保险返利',
+  `CREATE_TIME` datetime NOT NULL COMMENT '交易时间',
+  `TRANSACTION_DESC` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
+  `TRANSACTION_NO` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易订单号',
+  `WITHDRAW_BANK` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '提现银行    （冗余字段，针对提现交易）',
+  `CHARGE_FEE` decimal(20,4) DEFAULT NULL COMMENT '提现手续费  （冗余字段，针对提现交易）',
+  `REAL_AMOUNT` decimal(20,4) DEFAULT NULL COMMENT '实际提现金额（冗余字段，针对提现交易）',
+  PRIMARY KEY (`BILL_ID`) USING BTREE,
+  KEY `fk_bill_customer_id` (`CUSTOMER_ID`),
+  CONSTRAINT `fk_bill_customer_id` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+DROP TABLE IF EXISTS `finacial_withdraw`;
+CREATE TABLE `finacial_withdraw` (
+  `WITHDRAW_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(11) NOT NULL COMMENT '用户id',
+  `BANK_ID` int(11) DEFAULT NULL COMMENT '提现人银行卡',
+  `AMOUNT` decimal(20,4) NOT NULL COMMENT '提现金额',
+  `REAL_AMOUNT` decimal(20,4) NOT NULL COMMENT '实际提现金额',
+  `CHARGE_FEE` decimal(20,4) NOT NULL COMMENT '提现手续费',
+  `STATE` int(11) DEFAULT NULL COMMENT '状态：1.审核中 2.审核失败 3.待发放 4.交易完成',
+  `AUDIT_DATE` datetime DEFAULT NULL COMMENT '审核时间',
+  `AUDIT_OPERATOR` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '审核员',
+  `AUDIT_MESSAGE` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '审核意见',
+  `GRANT_DATE` datetime DEFAULT NULL COMMENT '发放时间',
+  `GRANT_OPERATOR` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发放员',
+  `APPLY_DATE` datetime DEFAULT NULL COMMENT '提现时间',
+  `UPDATE_DATE` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`WITHDRAW_ID`) USING BTREE,
+  KEY `fk_withdraw_customer_id` (`CUSTOMER_ID`),
+  CONSTRAINT `fk_withdraw_customer_id` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
