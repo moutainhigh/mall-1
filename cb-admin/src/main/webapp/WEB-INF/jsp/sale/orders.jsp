@@ -61,7 +61,7 @@
     function formatPayType(ptype){
       switch (ptype){
         case "FULL_SECTION":{
-            return "线下支付";
+            return "全款支付";
         }
         case "LOAN":{
             return "贷款支付";
@@ -81,6 +81,20 @@
          return "未付款";
         }
       }
+    }
+
+    function formatAuditState(state){
+        switch(state){
+            case "WAIT_AUDIT":{
+                return "待审核";
+            }
+            case "AUDITED":{
+                return "审核通过";
+            }
+            case "NOT_AUDIT":{
+                return "审核未通过";
+            }
+        }
     }
   </script>
 </head>
@@ -207,7 +221,8 @@
                   <a href="javascript:viewItem()" class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;详情</a>
                   <a href="javascript:changePriceItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;调价</a>
                   <a href="javascript:initLogistic();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 设置物流</a>
-                  <a href="javascript:underLinePayConfirm();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 确认汇款</a>
+                  <a href="javascript:auditItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 审核</a>
+                  <a href="javascript:cancelItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 取消订单</a>
                 </div>
               </div>
             </header>
@@ -232,6 +247,7 @@
                 <kendo:grid-column title="订单总额" field="feeTotal" width="130"/>
                 <kendo:grid-column title="付款方式" field="paymentType" width="130" template="#=formatPayType(paymentType)#"/>
                 <kendo:grid-column title="订单状态" field="orderState" width="130" template="#=formatState(orderState)#"/>
+                <kendo:grid-column title="审核状态" field="auditState" width="130" template="#=formatAuditState(auditState)#"/>
                 <kendo:grid-column title="买家留言" field="buyerMessage" width="130" filterable="false"/>
                 <kendo:grid-column title="备注" field="remark" width="150" filterable="false"/>
                 <%--<kendo:grid-column title="&nbsp;" width="300px">--%>
@@ -394,6 +410,96 @@
       </div>
     </div>
   </div>
+
+<div class="modal fade" id="auditDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">订单审核</h4>
+      </div>
+      <div class="modal-body">
+        <form id="auditForm">
+          <div class="row">
+            <div class="col-sm-4">
+              <label>订单编码：</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="hidden" id="orderIdAuditHid" name="orderId">
+              <span style="color:#073980" id="orderCodeAuditSpan"></span>
+            </div>
+          </div>
+          <div class="spacer-10"></div>
+          <div class="row">
+            <div class="col-sm-4">
+              <label>审核：</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="radio" name="auditState" value="AUDITED"/>通过
+              <input type="radio" name="auditState" value="NOT_AUDIT" checked/>不通过
+            </div>
+          </div>
+          <div class="spacer-10"></div>
+          <div class="row">
+            <div class="col-sm-4">
+              <label>备注：</label>
+            </div>
+            <div class="col-sm-8">
+              <textarea id="auditRemark" name="auditRemark" rows="8" cols="50" class='form-control validate[maxSize[255]]'></textarea>
+            </div>
+          </div>
+
+        </form>
+        <div class="clear"></div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button class="btn btn-primary pull-right" onclick="submitAudit();" id="btnComfrimAudit">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="cancelDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">订单取消</h4>
+      </div>
+      <div class="modal-body">
+        <form id="cancelForm">
+          <div class="row">
+            <div class="col-sm-4">
+              <label>订单编码：</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="hidden" id="orderIdCancelHid" name="orderId">
+              <span style="color:#073980" id="orderCodeCancelSpan"></span>
+            </div>
+          </div>
+          <div class="spacer-10"></div>
+          <div class="row">
+            <div class="col-sm-4">
+              <label>取消原因：</label>
+            </div>
+            <div class="col-sm-8">
+              <textarea id="cancelReason" name="cancelReason" rows="8" cols="50" class='form-control validate[maxSize[255]]'></textarea>
+            </div>
+          </div>
+
+        </form>
+        <div class="clear"></div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button class="btn btn-primary pull-right" onclick="submitCancel();" id="btnComfrimCancel">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
   <script type="text/javascript">
 
     function changePriceItem() {
@@ -461,28 +567,68 @@
       }
     }
 
-    function underLinePayConfirm() {
+    function auditItem() {
+        var dataItem = getSelectedGridItem("grid");
+        if (dataItem) {
+            if(dataItem.auditState == "AUDITED"){
+                alert("已通过审核，请勿重复提交");
+                return ;
+            }
+            if (dataItem.orderState != "PENDING_PAYMENT") {
+                bootbox.alert("请选择待付款订单操作！");
+                return;
+            }
+            if (dataItem.paymentType != "LOAN") {
+                bootbox.alert("请选择贷款支付订单操作！");
+                return;
+            }
+        }
+        $('#auditDialog').modal();
+        $("#orderIdAuditHid").val(dataItem.orderId);
+        $("#orderCodeAuditSpan").html(dataItem.orderCode);
+    }
+
+    function submitAudit(){
+        if($("input[name='auditState']:checked").val()=="NOT_AUDIT" && $("#auditRemark").val() == ""){
+            bootbox.alert("请填写审核不通过原因!");
+            return false;
+        }
+        $.get("orderAudit.do",$("#auditForm").serialize(),function(result){
+            if(result){
+                $("#auditForm")[0].reset();
+                $('#auditDialog').modal("hide");
+                $("#grid").data("kendoGrid").dataSource.read();
+            }else{
+                alert("审核失败！");
+            }
+        });
+    }
+
+    function cancelItem() {
         var dataItem = getSelectedGridItem("grid");
         if (dataItem) {
             if (dataItem.orderState != "PENDING_PAYMENT") {
                 bootbox.alert("请选择待付款订单操作！");
                 return;
             }
-            if (dataItem.paymentType != "FULL_SECTION") {
-                bootbox.alert("请选择线下支付订单操作！");
-                return;
-            }
         }
-        bootbox.confirm("确认线下已汇款吗？", function (result) {
-            if (result) {
-                  $.get("underLinePayConfirm.do?orderId=" + dataItem.orderId, function (result) {
-                      if (result) {
-                          bootbox.alert("成功");
-                          $("#grid").data("kendoGrid").dataSource.read();
-                      } else {
-                          bootbox.alert("确认支付失败！");
-                      }
-                  });
+        $('#cancelDialog').modal();
+        $("#orderIdCancelHid").val(dataItem.orderId);
+        $("#orderCodeCancelSpan").html(dataItem.orderCode);
+    }
+    function submitCancel() {
+        var dataItem = getSelectedGridItem("grid");
+        if($("#cancelRemark").val() == ""){
+            bootbox.alert("请填写取消原因!");
+            return false;
+        }
+        $.get("orderCancel.do",$("#cancelForm").serialize(),function(result){
+            if(result){
+                $("#cancelForm")[0].reset();
+                $('#cancelDialog').modal("hide");
+                $("#grid").data("kendoGrid").dataSource.read();
+            }else{
+                alert("取消失败！");
             }
         });
     }

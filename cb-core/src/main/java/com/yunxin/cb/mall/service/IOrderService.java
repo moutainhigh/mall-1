@@ -197,11 +197,22 @@ public interface IOrderService {
     public boolean orderLoanApplyAudit(int loanId, AuditState auditState, String auditRemark);
 
     /**
-     * 线下支付确认支付成功
+     * 订单审核
      * @author gws
      * @date 2018/7/25 15:14
      * @param
      * @return boolean
      */
-    public boolean underLinePayConfirm(int orderId);
+    public boolean orderAudit(int orderId, AuditState auditState, String auditRemark);
+
+    /**
+     * 订单取消
+     * @author gws
+     * @date 2018/7/25 15:14
+     * @param
+     * @return boolean
+     */
+    public boolean orderCancel(int orderId,  String cancelReason);
+
+
 }

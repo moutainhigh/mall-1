@@ -117,12 +117,20 @@
             <div v-for="(productGroup, index2) in productGroups" :key="index2">
               <p class="carType-title">{{productGroup.groupName}}</p>
               <div style="padding: 0 14px">
-                <button v-for="(attribute, index) in productGroup.attributes" class="carColor"
-                        :class="{'activeColor':index === iac[index2] && disabledButton.indexOf(attribute.attributeName) < 0}"
+                <button v-for="(attribute, index) in productGroup.attributes" class="carColor" :id='attribute.attributeName' :index='index' :name='attribute.attributeName'
+                        :class="{'activeColor':index === iac[index2] && disabledButton.indexOf(attribute.attributeName) != -1  }"
                         @click="checkAttribute(index2, index)"
-                        :disabled="disabledButton.indexOf(attribute.attributeName) > -1">
+                        :disabled="disabledButton.indexOf(attribute.attributeName) == -1 && index2 !== 0">
                   {{attribute.attributeName}}
                 </button>
+
+                    <!-- <button v-for="(attribute, index) in productGroup.attributes" class="carColor"
+                        :class="{'activeColor':index2 == ceilIndex && index == activeIndex}"
+                        @click="checkAttribute(index2, index)"
+                        >
+                        && disabledButton.indexOf(attribute.attributeName) < 0
+                  {{attribute.attributeName}}
+                </button> -->
               </div>
             </div>
           </div>
@@ -172,7 +180,7 @@
     delFavoriteByFavoriteId,
     getCommdityDetailById, getProductsByCommodityId
   } from "../../service/getData";
-  import {Swiper, SwiperItem, Alert} from 'vux'
+  import {Swiper, SwiperItem} from 'vux'
   import {tranPrice} from "../../config/dataFormat";
   import storage from "../../store/storage";
 
@@ -184,7 +192,6 @@
       carConfig,
       Swiper,
       SwiperItem,
-      Alert
     },
     data() {
       return {
@@ -205,6 +212,7 @@
         show: false,
         favoriteId: null,
         opacity: 1, //顶部透明度
+        Data:[],
       }
     },
     methods: {
@@ -227,7 +235,9 @@
         getProductsByCommodityId(this.commodityData.commodityId).then(res => {
           if (res.result == 'SUCCESS') {
             this.productGroups = res.data;
+            this.Data= this.commodityData.productVo.productName;
             this.defaultAttribute = this.commodityData.productVo.productName.split("&");
+            this.disabledButton = this.commodityData.productVo.productName;
             for (let i = 0; i < this.productGroups.length; i++) {
               for (let j = 0; j < this.productGroups[i].attributes.length; j++) {
                 //判断默认货品
@@ -259,31 +269,43 @@
       checkAttribute(index2, index) {
         this.iac[index2] = index;
         this.iac = this.iac.concat([]);
-        this.disabledButton = '';
-        let productName = '';
-        for (let k = 0; k < this.commodityData.productVos.length; k++) {
-          if (index2 != 0) {
-            if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) > -1 && this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2 - 1].attributes[this.iac[index2 - 1]].attributeName) > -1) {
-              productName = productName + '：' + this.commodityData.productVos[k].productName;
-            }
-          } else {
-            if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) > -1) {
-              productName = productName + '：' + this.commodityData.productVos[k].productName;
+        // console.log(this.iac)
+        this.disabledButton ='';
+
+        if(index2 ==0){
+          this.Data = [];
+          //表示第一项，通过颜色去筛选数据
+          for (let k = 0; k < this.commodityData.productVos.length; k++){
+             if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) !=  -1 ) {
+                this.Data.push(this.commodityData.productVos[k].productName);
             }
           }
         }
 
-        for (let j = 0; j < this.productGroups.length; j++) {
-          if (j > index2 && index2 != this.productGroups.length) {
-            console.log(index2)
-            console.log(productName)
-            for (let i = 0; i < this.productGroups[j].attributes.length; i++) {
-              if (productName.indexOf(this.productGroups[j].attributes[i].attributeName) == -1) {
-                this.disabledButton = this.disabledButton + this.productGroups[j].attributes[i].attributeName;
+        if(index2 == 1 || index2 == 2){
+          //表示不是第一项
+          for (let i = 0; i < this.Data.length; i++){
+            //拿到第一项选择颜色后的数据,选择排量
+              if (this.Data[i].indexOf(this.productGroups[index2].attributes[index].attributeName) !=  -1 ) {
+                 this.Data = this.Data[i];
               }
-            }
-            console.log(this.disabledButton);
           }
+        }
+        //用于判断是否置灰，禁止点击
+        for(let m = 0;m <this.Data.length;m++){
+
+            this.disabledButton += this.Data[m];
+        }
+        for (let i = 0; i < this.productGroups.length; i++) {
+              for (let j = 0; j < this.productGroups[i].attributes.length; j++) {
+                //判断选择的货品
+
+                if (this.Data[0].indexOf(this.productGroups[i].groupName) > -1 && this.Data[0].indexOf(this.productGroups[i].attributes[j].attributeName) > -1) {
+                  this.iac[i] = j;
+                  this.iac = this.iac.concat([]);
+                }
+
+              }
         }
       },
       checkMode(key) {
@@ -293,6 +315,8 @@
       selectStandard() {
         let name = '';
         this.standard = [];
+
+
         //判断选中货品属性
         for (let i = 0; i < this.iac.length; i++) {
           if (this.productGroups[i].attributes[this.iac[i]]) {
@@ -303,6 +327,18 @@
             //页面显示选中信息
             this.standard.push(this.productGroups[i].attributes[this.iac[i]].attributeName);
           }
+        }
+        if(this.Data.length > 1 ){
+          if(this.Data.length > 20){
+            this.Data = this.Data;
+          }else{
+               this.Data = this.Data[0];
+          }
+        }
+        if(this.Data != name ){
+              this.$vux.toast.text("请选择排量");
+               return;
+
         }
 
         for (let j = 0; j < this.commodityData.productVos.length; j++) {

@@ -543,4 +543,27 @@ public class Order {
         this.addressId = addressId;
     }
 
+    public String getAuditRemark() {
+        return auditRemark;
+    }
+
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
+    }
+
+    public AuditState getAuditState() {
+        return auditState;
+    }
+
+    public void setAuditState(AuditState auditState) {
+        this.auditState = auditState;
+    }
+
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
+    }
 }

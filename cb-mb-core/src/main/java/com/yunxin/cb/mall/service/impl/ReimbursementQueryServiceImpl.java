@@ -105,15 +105,15 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             //总金额
             BigDecimal accountSalePrice = new BigDecimal(0);
             //税
-            BigDecimal tax = new BigDecimal(0);
+            BigDecimal tax;
 
             //实际到账金额
-            BigDecimal accountAmount = new BigDecimal(0);
+            BigDecimal accountAmount;
             //合并同一类商品的订单
             int catalogId = entry.getKey();
             List<OrderItem> orderItemList = entry.getValue();
             for(OrderItem orderItems : orderItemList){
-                accountSalePrice =  BigDecimal.valueOf(orderItems.getProductNum()*orderItems.getSalePrice()).add(accountSalePrice);
+                accountSalePrice =  accountSalePrice.add(BigDecimal.valueOf(orderItems.getProductNum()*orderItems.getSalePrice()));
                 allAccountSalePrice = allAccountSalePrice.add(BigDecimal.valueOf(orderItems.getProductNum()*orderItems.getSalePrice()));
             }
             tax = accountSalePrice.multiply(taxPoint);
