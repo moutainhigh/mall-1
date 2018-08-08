@@ -76,7 +76,7 @@ public class MainResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE, "手机号已经注册");
             }
             //校验验证码
-            redisService.getKey(mobile);
+//            redisService.getKey(mobile);
             VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(mobile);
             //验证码不存在
             if (verificationCode == null) {

@@ -783,12 +783,12 @@ public class CustomerService implements ICustomerService {
                     if(null!=customerMatchsVo&&customerMatchsVo.length>0){
 
                         List<CustomerMatchsVo> listVo=Arrays.asList(customerMatchsVo);
-                        Map<String,Object> map=getCustomer();
+                        Map<String,Object> map=(Map<String, Object>) redisService.getCustomerList();
                         if(null!=map){
-                            Map<String,Object> mp=(Map<String, Object>) map.get("customers");
+//                            Map<String,Object> mp=(Map<String, Object>) map.get("customers");
                             for(CustomerMatchsVo customerMatchVos:listVo){
-                                if(null!=mp.get("customer_"+customerMatchVos.getMobile())){
-                                    Customer customer=(Customer)mp.get("customer_"+customerMatchVos.getMobile());
+                                if(null!=map.get(customerMatchVos.getMobile())){
+                                    Customer customer=(Customer)map.get(customerMatchVos.getMobile());
                                     add(new CustomerMatchVo(){
                                         {
                                             setCustomerId(customer.getCustomerId());
@@ -832,6 +832,7 @@ public class CustomerService implements ICustomerService {
         return map;
 
     }
+
     /**
      * 添加黑名单
      *
