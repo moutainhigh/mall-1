@@ -40,7 +40,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     private Date applyTime;
 
     /** 退货退款状态 0:申请退货退款 1:待退货退款 2:已退货待退款 3:已退货退款 4:拒绝退货退款 5:申请退款 6:待退款 7:已退款 8:拒绝退款 */
-    @ApiModelProperty(value="退货款状态 ",name="returnRefundState",example="1")
+    @ApiModelProperty(value="退货款状态 ",name="returnRefundState",example="APPLY_RETURN_REFUND")
     private ReturnRefundState returnRefundState;
 
     /** 退货原因 */
@@ -52,7 +52,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     private String auditRemark;
 
     /** 审核状态 */
-    @ApiModelProperty(value="审核状态",name="auditState",example="1")
+    @ApiModelProperty(value="审核状态",name="auditState",example="1WAIT_AUDIT")
     private AuditState auditState;
     /** 审核时间 */
     @ApiModelProperty(value="审核时间",name="auditTime",example="2018-04-5-23 11:11:11")
@@ -72,6 +72,10 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     /** 退款金额 */
     @ApiModelProperty(value="退款金额",name="refundPrice",example="1")
     private Double refundPrice;
+
+    /** 商家地址 */
+    @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市")
+    private String sellerAddress;
 
     /**货品信息*/
     Set<ProductReturnItemDetailVO> productReturnItemDetails;
@@ -180,6 +184,14 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         this.refundTime = refundTime;
     }
 
+    public String getSellerAddress() {
+        return sellerAddress;
+    }
+
+    public void setSellerAddress(String sellerAddress) {
+        this.sellerAddress = sellerAddress;
+    }
+
     @Override
     public String toString() {
         return "ProductReturnDetailVO{" +
@@ -195,6 +207,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
                 ", refundTime=" + refundTime +
                 ", disposeTime=" + disposeTime +
                 ", refundPrice=" + refundPrice +
+                ", sellerAddress='" + sellerAddress + '\'' +
                 ", productReturnItemDetails=" + productReturnItemDetails +
                 '}';
     }
@@ -237,6 +250,10 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         Order model = productReturn.getOrder();
         if (model != null) {
             BeanUtils.copyProperties(productReturnDetailVO, model);
+            //商家地址信息
+            if (model.getSeller() != null) {
+                productReturnDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+            }
             if (model.getOrderItems() != null && !model.getOrderItems().isEmpty()) {
                 Set<ProductReturnItemDetailVO> productReturnItemDetails = new HashSet<ProductReturnItemDetailVO>();
                 for (OrderItem orderItem : model.getOrderItems()) {
