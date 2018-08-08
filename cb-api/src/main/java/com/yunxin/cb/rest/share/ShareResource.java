@@ -2,6 +2,7 @@ package com.yunxin.cb.rest.share;
 
 import com.yunxin.cb.system.MobileOSType;
 import com.yunxin.cb.system.service.IProfileService;
+import com.yunxin.cb.system.vo.ShareInfo;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,7 +34,7 @@ public class ShareResource {
     @ApiImplicitParams({
     })
     @GetMapping(value = "getShareInfo")
-    public ResponseResult getShareInfo() {
+    public ResponseResult<ShareInfo> getShareInfo() {
         return new ResponseResult(SUCCESS, profileService.getShareInfo());
     }
 }
