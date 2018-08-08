@@ -42,6 +42,8 @@ public class OrderController {
     @RequestMapping(value = "orders")
     public String orderForms(HttpSession session,ModelMap modelMap) {
         Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
+        //订单状态
+        //modelMap.put("orderState", OrderState.values());
         modelMap.put("seller",seller);
         return "sale/orders";
     }
@@ -255,11 +257,35 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "underLinePayConfirm",method = RequestMethod.GET)
+    /**
+     * 订单审核（贷款订单审核V1）
+     * @param orderId
+     * @param auditState
+     * @param auditRemark
+     * @return
+     */
+    @RequestMapping(value = "orderAudit",method = RequestMethod.GET)
     @ResponseBody
-    public boolean underLinePayConfirm(@RequestParam("orderId") int orderId,ModelMap modelMap){
+    public boolean orderAudit(@RequestParam("orderId") int orderId,
+          @RequestParam("auditState") AuditState auditState, @RequestParam("auditRemark") String auditRemark){
         try {
-            return orderService.underLinePayConfirm(orderId);
+            return orderService.orderAudit(orderId, auditState, auditRemark);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * 订单后台取消
+     * @param orderId
+     * @param cancelReason
+     * @return
+     */
+    @RequestMapping(value = "orderCancel",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean orderCancel(@RequestParam("orderId") int orderId, @RequestParam("cancelReason") String cancelReason){
+        try {
+            return orderService.orderCancel(orderId, cancelReason);
         } catch (Exception e) {
             return false;
         }
