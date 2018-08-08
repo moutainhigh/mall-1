@@ -12,7 +12,7 @@
     <div style="background-color: #FFFFFF;padding: 0.1rem 0;font-size: 0;margin-top: 3rem;">
       <div style="background-color: #999999;margin: 1rem;border-radius: 0.5rem;overflow: hidden">
         <swiper :aspect-ratio="350/800" auto style="margin:0 auto;" dots-position="center">
-          <swiper-item class="swiper-demo-img" v-for="(item, index) in homeList" :key="index"><img width="100%" style="border-radius: 0.5rem;" :src="item.picPath"></swiper-item>
+          <swiper-item class="swiper-demo-img" v-for="(item, index) in homeList" :key="index"><img width="100%" style="border-radius: 0.5rem;" :src="item.picPath" @click="openBrand(item)"></swiper-item>
         </swiper>
       </div>
       <div style="margin: 1rem;border-radius: 0.5rem;">
