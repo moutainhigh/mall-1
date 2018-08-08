@@ -61,6 +61,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private InsuranceLogDao insuranceLogDao;
     @Resource
     private InsuranceOrderLogDao insuranceOrderLogDao;
+    @Resource
+    private InsuranceProductDao insuranceProductDao;
     /**
      * 根据用户ID查询保险订单列表
      * @return
@@ -129,8 +131,12 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             insuranceOrderLog.setInsuranceOrder(insuranceOrder);
             insuranceOrderLog.setOrderState(InsuranceOrderState.UN_PAID);
             insuranceOrderLog.setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
-            logger.info("insuranceOrder.getInsuranceProduct()=="+insuranceOrder.getInsuranceProduct().getProdId());
-            insuranceOrderLog.setProdName(insuranceOrder.getInsuranceProduct().getProdName());
+            logger.info("insuranceOrder.getInsuranceProduct()=="+insuranceOrder.getInsuranceProduct().getProdId()+",getProdName---"+insuranceOrder.getInsuranceProduct().getProdName());
+            if(null!=insuranceOrder.getInsuranceProduct()){
+                InsuranceProduct insuranceProduct=insuranceProductDao.getOne(insuranceOrder.getInsuranceProduct().getProdId());
+                insuranceOrderLog.setProdName(insuranceProduct.getProdName());
+            }
+
             insuranceOrderLogDao.save(insuranceOrderLog);
         }
 
