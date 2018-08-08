@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -14,11 +15,11 @@ public class CompleteReimbursementDetailVO implements Serializable {
     @ApiModelProperty(value="报账单号",name="reimbursementNo",example="52525525")
     private String reimbursementNo;
     @ApiModelProperty(value="货品信息",name="list",example="货品信息")
-    private List<ReimbursementProductVO> list;
+    private List<String> list;
     @ApiModelProperty(value="到账金额",name="accountAmount",example="111")
     private BigDecimal accountAmount;
     @ApiModelProperty(value="报账信息状态",name="orderState",example="1")
-    private int orderState;
+    private ReimbursementState orderState;
     @ApiModelProperty(value="操作时间",name="operationTime",example="2018-08-08 15:20:20")
     private Date operationTime;
     @ApiModelProperty(value="支付方式",name="payment",example="钱包")
@@ -36,11 +37,11 @@ public class CompleteReimbursementDetailVO implements Serializable {
         this.reimbursementNo = reimbursementNo;
     }
 
-    public List<ReimbursementProductVO> getList() {
+    public List<String> getList() {
         return list;
     }
 
-    public void setList(List<ReimbursementProductVO> list) {
+    public void setList(List<String> list) {
         this.list = list;
     }
 
@@ -52,11 +53,11 @@ public class CompleteReimbursementDetailVO implements Serializable {
         this.accountAmount = accountAmount;
     }
 
-    public int getOrderState() {
+    public ReimbursementState getOrderState() {
         return orderState;
     }
 
-    public void setOrderState(int orderState) {
+    public void setOrderState(ReimbursementState orderState) {
         this.orderState = orderState;
     }
 

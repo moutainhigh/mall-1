@@ -5,9 +5,7 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.service.ReimbursementQueryService;
-import com.yunxin.cb.mall.vo.AddReimbursementRequestVO;
-import com.yunxin.cb.mall.vo.ReimbursementSuccessVO;
-import com.yunxin.cb.mall.vo.ReimbursementVO;
+import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import org.slf4j.Logger;
@@ -25,6 +23,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
 
     private static final Logger logger = LoggerFactory.getLogger(ReimbursementQueryService.class);
 
+    //税点
+    private static final BigDecimal taxPoint = new BigDecimal("0.23");
+
     @Resource
     private ReimbursementQueryMapper reimbursementQueryMapper;
     @Resource
@@ -35,6 +36,8 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     private ReimbursementMapper reimbursementMapper;
     @Resource
     private ReimbursementOrderMapper reimbursementOrderMapper;
+    @Resource
+    private ReimbursementProcessMapper reimbursementProcessMapper;
 
 
     @Override
@@ -42,17 +45,17 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         //调用dao查询满足条件的分页数据
         List<ReimbursementQuery> list = reimbursementQueryMapper.selectReimbursementQuery(q);
         List<ReimbursementVO> listVO = new ArrayList<>();
-        if(list.size()>0){
-            for(ReimbursementQuery reimbursementQuery :list){
-                ReimbursementVO reimbursementVO = new ReimbursementVO();
-                BeanUtils.copyProperties(reimbursementQuery, reimbursementVO);
-                BigDecimal tax = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()*0.23);
-                BigDecimal accountAmount = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).subtract(tax);
-                reimbursementVO.setTax(tax);
-                reimbursementVO.setAccountAmount(accountAmount);
-                //String s = CalendarUtils.formatDateTime(reimbursementQuery.getCreateTime());
-                listVO.add(reimbursementVO);
-            }
+        for(ReimbursementQuery reimbursementQuery :list){
+            ReimbursementVO reimbursementVO = new ReimbursementVO();
+            BeanUtils.copyProperties(reimbursementQuery, reimbursementVO);
+            //税
+            BigDecimal tax = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).multiply(taxPoint);
+            //报账金额
+            BigDecimal accountAmount = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).subtract(tax);
+            reimbursementVO.setTax(tax);
+            reimbursementVO.setAccountAmount(accountAmount);
+            //String s = CalendarUtils.formatDateTime(reimbursementQuery.getCreateTime());
+            listVO.add(reimbursementVO);
         }
         //调用dao统计满足条件的记录总数
         long rowCount = reimbursementQueryMapper.count(q);
@@ -70,8 +73,6 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         //查询二级商品分类列表
         List<Catalog> catalogList = catalogMapper.selectAll();
         Map<Integer, List<OrderItem>> lotaLogMap = new HashMap<>();
-        //税点
-        BigDecimal taxPoint = new BigDecimal("0.23");
         //所有商品的总价
         BigDecimal allAccountSalePrice = new BigDecimal(0);
         for(AddReimbursementRequestVO addReimbursementRequestVO : list){
@@ -106,7 +107,6 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             BigDecimal accountSalePrice = new BigDecimal(0);
             //税
             BigDecimal tax;
-
             //实际到账金额
             BigDecimal accountAmount;
             //合并同一类商品的订单
@@ -151,6 +151,115 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         reimbursementSuccessVO.setTax(allTax);
         reimbursementSuccessVO.setTaxPoint(String.valueOf(taxPoint));
         return reimbursementSuccessVO;
+    }
+
+    @Override
+    public PageFinder<AlreadyReimbursementVO> selectAlreadyReimbursementQuery(Query q) throws Exception {
+        //调用dao查询满足条件的分页数据
+        List<Reimbursement> list = reimbursementMapper.selectAllByCustomerId(q);
+        List<AlreadyReimbursementVO> listVO = new ArrayList<>();
+        for(Reimbursement reimbursement : list){
+            //商品总数量
+            int num = 0;
+            AlreadyReimbursementVO alreadyReimbursementVO = new AlreadyReimbursementVO();
+            List<ReimbursementProductVO> listProductVO = reimbursementQueryMapper.selectAlreadyReimbursementQuery(reimbursement.getReimbursementId());
+            for(ReimbursementProductVO reimbursementProductVO : listProductVO){
+                num = num + reimbursementProductVO.getProductNum();
+            }
+            BeanUtils.copyProperties(reimbursement, alreadyReimbursementVO);
+            alreadyReimbursementVO.setList(listProductVO);
+            alreadyReimbursementVO.setSum(num);
+            listVO.add(alreadyReimbursementVO);
+        }
+        //调用dao统计满足条件的记录总数
+        long rowCount = reimbursementQueryMapper.alreadyReimbursementCount(q);
+        //如list为null时，则改为返回一个空列表
+        listVO = listVO == null ? new ArrayList<AlreadyReimbursementVO>(0) : listVO;
+        //将分页数据和记录总数设置到分页结果对象中
+        PageFinder<AlreadyReimbursementVO> page = new PageFinder<AlreadyReimbursementVO>(q.getPageNo(), q.getPageSize(), rowCount);
+        page.setData(listVO);
+        return page;
+    }
+
+    @Override
+    public AlreadyReimbursementVO selectAlreadyReimbursementDetail(int reimbursementId,int cuntomerId)throws Exception{
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
+        //商品总数量
+        int num = 0;
+        AlreadyReimbursementVO alreadyReimbursementVO = new AlreadyReimbursementVO();
+        List<ReimbursementProductVO> listProductVO = reimbursementQueryMapper.selectAlreadyReimbursementQuery(reimbursement.getReimbursementId());
+        for(ReimbursementProductVO reimbursementProductVO : listProductVO){
+            num = num + reimbursementProductVO.getProductNum();
+        }
+        List<ReimbursementProcess> list = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
+        if(list.size() == 1){
+            ReimbursementProcess reimbursementProcess = list.get(0);
+            alreadyReimbursementVO.setOperationTime(reimbursementProcess.getCreateTime());
+        }else if(list.size() == 1){
+            ReimbursementProcess reimbursementProcess = list.get(1);
+            alreadyReimbursementVO.setExaminationTime(reimbursementProcess.getCreateTime());
+        }
+        BeanUtils.copyProperties(reimbursement, alreadyReimbursementVO);
+        alreadyReimbursementVO.setList(listProductVO);
+        alreadyReimbursementVO.setSum(num);
+        alreadyReimbursementVO.setTaxPoint(String.valueOf(taxPoint));
+        return alreadyReimbursementVO;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void cancelReimbursement(int reimbursementId,int cuntomerId)throws Exception{
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
+        reimbursement.setOrderState(ReimbursementState.CANCEL_REIMBURSEMENT);
+        reimbursementMapper.updateByPrimaryKey(reimbursement);
+    }
+
+    @Override
+    public PageFinder<CompleteReimbursementVO> selectCompleteReimbursement(Query q)throws Exception{
+        //调用dao查询满足条件的分页数据
+        List<Reimbursement> list = reimbursementMapper.selectAllByCustomerId(q);
+        List<CompleteReimbursementVO> listVO = new ArrayList<>();
+        for(Reimbursement reimbursement : list){
+            //商品总数量
+            int num = 0;
+            CompleteReimbursementVO completeReimbursementVO = new CompleteReimbursementVO();
+            List<ReimbursementProductVO> listProductVO = reimbursementQueryMapper.selectAlreadyReimbursementQuery(reimbursement.getReimbursementId());
+            for(ReimbursementProductVO reimbursementProductVO : listProductVO){
+                completeReimbursementVO.setProductName(reimbursementProductVO.getProductName());
+                num = num + reimbursementProductVO.getProductNum();
+            }
+            List<ReimbursementProcess> listProcess = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
+            completeReimbursementVO.setAccountAmount(reimbursement.getAmount());
+            completeReimbursementVO.setSum(num);
+            completeReimbursementVO.setReimbursementId(reimbursement.getReimbursementId());
+            completeReimbursementVO.setOperationTime(/*listProcess.get(1).getCreateTime()*/new Date());
+            listVO.add(completeReimbursementVO);
+        }
+        //如list为null时，则改为返回一个空列表
+        listVO = listVO == null ? new ArrayList<CompleteReimbursementVO>(0) : listVO;
+        //调用dao统计满足条件的记录总数
+        long rowCount = reimbursementQueryMapper.alreadyReimbursementCount(q);
+        //将分页数据和记录总数设置到分页结果对象中
+        PageFinder<CompleteReimbursementVO> page = new PageFinder<CompleteReimbursementVO>(q.getPageNo(), q.getPageSize(), rowCount);
+        page.setData(listVO);
+        return page;
+    }
+    @Override
+    public CompleteReimbursementDetailVO getCompleteReimbursementDetail(int reimbursementId,int cuntomerId)throws Exception{
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
+        CompleteReimbursementDetailVO completeReimbursementDetailVO = new CompleteReimbursementDetailVO();
+        List<String> list = new ArrayList<>();
+        List<ReimbursementProductVO> listProductVO = reimbursementQueryMapper.selectAlreadyReimbursementQuery(reimbursement.getReimbursementId());
+        for(ReimbursementProductVO reimbursementProductVO : listProductVO){
+            list.add(reimbursementProductVO.getProductName());
+        }
+        List<ReimbursementProcess> listVO = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
+        completeReimbursementDetailVO.setAccountAmount(reimbursement.getAmount());
+        completeReimbursementDetailVO.setOrderState(reimbursement.getOrderState());
+        completeReimbursementDetailVO.setOperationTime(/*listVO.get(1).getCreateTime()*/new Date());
+        completeReimbursementDetailVO.setReimbursementNo(reimbursement.getReimbursementNo());
+        completeReimbursementDetailVO.setList(list);
+        return completeReimbursementDetailVO;
     }
     //递归查找商品分类
     public Integer isTwoFrool(Catalog catalog){

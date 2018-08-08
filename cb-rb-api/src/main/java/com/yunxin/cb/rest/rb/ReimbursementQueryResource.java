@@ -1,7 +1,9 @@
 package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
+import com.yunxin.cb.mall.entity.Reimbursement;
 import com.yunxin.cb.mall.entity.ReimbursementQuery;
+import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.service.ReimbursementQueryService;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.meta.Result;
@@ -34,12 +36,12 @@ public class ReimbursementQueryResource extends BaseResource {
         try {
             ReimbursementQuery reimbursementQuery = new ReimbursementQuery();
             Query q = new Query(pageNo, pageSize);
-            reimbursementQuery.setCustomerId(306);
+            reimbursementQuery.setCustomerId(1);
             q.setData(reimbursementQuery);
             PageFinder<ReimbursementVO> pageFinder = reimbursementQueryService.pageReimbursementQuery(q);
             return new ResponseResult(pageFinder);
         } catch (Exception e) {
-            logger.error("pageListOrder failed", e);
+            logger.error("getReimbursement failed", e);
             return new ResponseResult(Result.FAILURE);
         }
     }
@@ -65,9 +67,18 @@ public class ReimbursementQueryResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")})
-    public ResponseResult<AlreadyReimbursementVO> getAlreadyReimbursement(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
-        AlreadyReimbursementVO alreadyReimbursementVO = new AlreadyReimbursementVO();
-        return new ResponseResult(alreadyReimbursementVO);
+    public ResponseResult<PageFinder<AlreadyReimbursementVO>> getAlreadyReimbursement(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
+        try {
+            Reimbursement reimbursementQuery = new Reimbursement();
+            Query q = new Query(pageNo, pageSize);
+            reimbursementQuery.setCustomerId(1);
+            q.setData(reimbursementQuery);
+            PageFinder<AlreadyReimbursementVO> pageFinder = reimbursementQueryService.selectAlreadyReimbursementQuery(q);
+            return new ResponseResult(pageFinder);
+        } catch (Exception e) {
+            logger.error("getAlreadyReimbursement failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
     }
 
     @ApiOperation(value = "已报账详情 V1")
@@ -77,8 +88,13 @@ public class ReimbursementQueryResource extends BaseResource {
             @ApiImplicitParam(name = "reimbursementId", value = "报账ID", required = true, paramType = "path", dataType = "int")
     })
     public ResponseResult<AlreadyReimbursementVO> getAlreadyReimbursementDetail(@PathVariable(value = "reimbursementId") int reimbursementId){
-        AlreadyReimbursementVO alreadyReimbursementVO = new AlreadyReimbursementVO();
-        return new ResponseResult(alreadyReimbursementVO);
+        try {
+            AlreadyReimbursementVO alreadyReimbursementVO = reimbursementQueryService.selectAlreadyReimbursementDetail(reimbursementId,1);
+            return new ResponseResult(alreadyReimbursementVO);
+        } catch (Exception e) {
+            logger.error("getAlreadyReimbursementDetail failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
     }
 
     @ApiOperation(value = "取消报账 V1")
@@ -88,7 +104,13 @@ public class ReimbursementQueryResource extends BaseResource {
             @ApiImplicitParam(name = "reimbursementId", value = "取消报账", required = true, paramType = "path", dataType = "int")
     })
     public ResponseResult cancelReimbursement(@PathVariable(value = "reimbursementId") int reimbursementId){
-        return new ResponseResult(Result.SUCCESS);
+        try {
+            reimbursementQueryService.cancelReimbursement(reimbursementId,1);
+            return new ResponseResult(Result.SUCCESS);
+        } catch (Exception e) {
+            logger.error("cancelReimbursement failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
     }
 
     @ApiOperation(value = "报账成功列表 V1")
@@ -98,8 +120,18 @@ public class ReimbursementQueryResource extends BaseResource {
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")})
     public ResponseResult<CompleteReimbursementVO> getCompleteReimbursement(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
-        CompleteReimbursementVO completeReimbursementVO = new CompleteReimbursementVO();
-        return new ResponseResult(completeReimbursementVO);
+        try {
+            Reimbursement reimbursementQuery = new Reimbursement();
+            Query q = new Query(pageNo, pageSize);
+            reimbursementQuery.setCustomerId(1);
+            reimbursementQuery.setOrderState(ReimbursementState.ALREADY_TO_ACCOUNT);
+            q.setData(reimbursementQuery);
+            PageFinder<CompleteReimbursementVO> pageFinder = reimbursementQueryService.selectCompleteReimbursement(q);
+            return new ResponseResult(pageFinder);
+        } catch (Exception e) {
+            logger.error("getCompleteReimbursement failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
     }
 
     @ApiOperation(value = "报账成功详情 V1")
@@ -109,8 +141,13 @@ public class ReimbursementQueryResource extends BaseResource {
             @ApiImplicitParam(name = "reimbursementId", value = "报账ID", required = true, paramType = "path", dataType = "int")
     })
     public ResponseResult<CompleteReimbursementDetailVO> getCompleteReimbursementDetail(@PathVariable(value = "reimbursementId") int reimbursementId){
-        CompleteReimbursementDetailVO completeReimbursementDetailVO = new CompleteReimbursementDetailVO();
-        return new ResponseResult(completeReimbursementDetailVO);
+        try {
+            CompleteReimbursementDetailVO completeReimbursementDetailVO = reimbursementQueryService.getCompleteReimbursementDetail(reimbursementId,1);
+            return new ResponseResult(completeReimbursementDetailVO);
+        } catch (Exception e) {
+            logger.error("getCompleteReimbursementDetail failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
     }
 }
 
