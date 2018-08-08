@@ -174,6 +174,7 @@
   } from "../../service/getData";
   import {Swiper, SwiperItem, Alert} from 'vux'
   import {tranPrice} from "../../config/dataFormat";
+  import storage from "../../store/storage";
 
   export default {
     name: "CarDetail",
@@ -325,23 +326,10 @@
           this.headTitle = '';
         }
         //透明度
-        switch (this.scroll) {
-          case 50: this.opacity = 0.9;break;
-          case 70: this.opacity = 0.8;break;
-          case 90: this.opacity = 0.7;break;
-          case 110: this.opacity = 0.6;break;
-          case 130: this.opacity = 0.5;break;
-          case 150: this.opacity = 0.4;break;
-          case 170: this.opacity = 0.3;break;
-          case 190: this.opacity = 0.2;break;
-          case 210: this.opacity = 0.3;break;
-          case 230: this.opacity = 0.4;break;
-          case 250: this.opacity = 0.5;break;
-          case 270: this.opacity = 0.6;break;
-          case 290: this.opacity = 0.7;break;
-          case 310: this.opacity = 0.8;break;
-          case 330: this.opacity = 0.9;break;
-          case 350: this.opacity = 1;break;
+        if (this.scroll <= 200 && this.scroll >60){
+          this.opacity = 0.9 - ((this.scroll - 60) / 20 * 0.1);
+        } else if (this.scroll > 200 && this.scroll < 360) {
+          this.opacity = 1 - ((360 - this.scroll) / 20 * 0.1);
         }
 
         //监听页面滚动切换tab
@@ -411,14 +399,30 @@
             }
             //获取货品属性
             this.getProducts();
+            //添加一条浏览记录
+            this.saveBrowseRecords(this.commodityData);
           }
         });
       },
+      //浏览记录
+      saveBrowseRecords(commodityData) {
+        let records = storage.fetch("records");
+        if (records.length == 0) {
+          let list = [];
+          list.push(commodityData);
+          storage.save("records", list);
+        } else {
+          if (records.length == 20) {
+            records.splice(0, 1);
+            records.push(commodityData);
+            storage.save("records", records);
+          }
+        }
+      }
     },
     created() {
       let query = this.$route.query;
       this.getCommodityDetail(query.productId);
-
     },
     mounted() {
       window.addEventListener('scroll', this.menu)
