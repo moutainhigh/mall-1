@@ -48,9 +48,9 @@ public class ReimbursementController {
     }
 
 
-    @RequestMapping(value = "reimbursementOrders", method = RequestMethod.GET)
+    @RequestMapping(value = "reimbursementOrder", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> reimbursementOrders(@RequestParam("reimbursementId") int reimbursementId) {
+    public Map<String,Object> reimbursementOrder(@RequestParam("reimbursementId") int reimbursementId) {
         return new HashMap<String,Object>(){
             {
                 put("data",iReimbursementService.queryOrderItemByIds(reimbursementId));
