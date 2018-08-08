@@ -131,7 +131,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             insuranceOrderLog.setInsuranceOrder(insuranceOrder);
             insuranceOrderLog.setOrderState(InsuranceOrderState.UN_PAID);
             insuranceOrderLog.setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
-            logger.info("insuranceOrder.getInsuranceProduct()=="+insuranceOrder.getInsuranceProduct().getProdId()+",getProdName---"+insuranceOrder.getInsuranceProduct().getProdName());
             if(null!=insuranceOrder.getInsuranceProduct()){
                 InsuranceProduct insuranceProduct=insuranceProductDao.getOne(insuranceOrder.getInsuranceProduct().getProdId());
                 insuranceOrderLog.setProdName(insuranceProduct.getProdName());
