@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="../js/plugins/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="../js/plugins/fileinput/fileinput.min.js" type="text/javascript"></script>
-    <title>水晶球 - <sitemesh:title/></title>
+    <title>云信 - <sitemesh:title/></title>
 <script>
     $(function(){
         //初始化图片上传组件
