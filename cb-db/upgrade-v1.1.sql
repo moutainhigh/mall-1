@@ -490,6 +490,8 @@ alter table feedback modify column images varchar(9000);
 ##add by tangou 2018-08-06
 ALTER TABLE commodity ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商品配置内容';
 
+####################################生产环境 2018-08-07
+
 ######add by wangteng 2018-08-07
 DROP TABLE IF EXISTS `insurance_order_log`;
 CREATE TABLE `insurance_order_log` (
@@ -506,11 +508,14 @@ CREATE TABLE `insurance_order_log` (
   CONSTRAINT `insurance_order_log_ibfk_2` FOREIGN KEY (`INSURANCE_ORDER_ID`) REFERENCES `insurance_order` (`ORDER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci   COMMENT '保单日志';
 
--- ##add by tangou 2018-08-06
--- ALTER TABLE finacial_wallet ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商品配置内容';
--- ALTER TABLE finacial_wallet ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商品配置内容';
+##add by tangou 2018-08-07
+ALTER TABLE finacial_wallet ADD COLUMN `INSURANCE_AMOUNT` decimal(20,4) NOT NULL DEFAULT 0  COMMENT '保险额度';
+ALTER TABLE finacial_wallet ADD COLUMN `TOTAL_AMOUNT` decimal(20,4) NOT NULL DEFAULT 0   COMMENT '总额度';
+ALTER TABLE finacial_wallet_log ADD COLUMN `INSURANCE_AMOUNT` decimal(20,4) NOT NULL DEFAULT 0 COMMENT '保险额度';
+ALTER TABLE finacial_wallet_log ADD COLUMN `TOTAL_AMOUNT` decimal(20,4) NOT NULL DEFAULT 0   COMMENT '总额度';
 ##add by tangou 2018-08-07
 ALTER TABLE bank_info ADD COLUMN `BANK_NAME` varchar(60)  COMMENT '银行名称';
+ALTER TABLE bank_info ADD COLUMN `BANK_LOGO` varchar(100)  COMMENT '银行LOGO';
 ALTER TABLE `crystal_ball`.`bank_info` MODIFY COLUMN EFFECTIVE_TIME VARCHAR (10) ;
 
 ##add by guwenshao 2018-08-07

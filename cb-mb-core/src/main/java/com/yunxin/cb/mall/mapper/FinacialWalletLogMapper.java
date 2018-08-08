@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-
+@Mapper
 public interface FinacialWalletLogMapper {
     @Delete({
         "delete from finacial_wallet_log",
