@@ -882,22 +882,54 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public boolean underLinePayConfirm(int orderId) {
+    public boolean orderAudit(int orderId, AuditState auditState, String auditRemark) {
         Order order = orderDao.findOne(orderId);
         if (order == null || order.getOrderState() != OrderState.PENDING_PAYMENT
-                || order.getPaymentType() != PaymentType.FULL_SECTION){
+                || order.getPaymentType() != PaymentType.LOAN){
             return false;
         }
-        order.setOrderState(OrderState.OUT_STOCK);//直接跳过已支付到已发货
         Date now = new Date();
-        order.setPaymentTime(now);
+        //添加订单日志
+        OrderLog orderLog = new OrderLog();
+
+        if (auditState == AuditState.AUDITED) {
+            order.setOrderState(OrderState.OUT_STOCK);//直接跳过已支付到已发货
+            order.setPaymentTime(now);
+            order.setUpdateTime(now);
+            orderLog.setRemark("订单审核通过");
+        } else if (auditState == AuditState.NOT_AUDIT) {
+            order.setOrderState(OrderState.CANCELED);
+            order.setCancelReason(auditRemark);
+            order.setCancelTime(now);
+            orderLog.setRemark("订单审核不通过");
+        }
+        order.setAuditState(auditState);
+        order.setAuditRemark(auditRemark);
+
+        orderLog.setTime(now);
+        orderLog.setOrderCode(order.getOrderCode());
+        orderLog.setHandler("后台操作人员");
+        orderLogDao.save(orderLog);
+        return true;
+    }
+
+    @Override
+    public boolean orderCancel(int orderId, String cancelReason) {
+        Order order = orderDao.findOne(orderId);
+        if (order == null || order.getOrderState() != OrderState.PENDING_PAYMENT){
+            return false;
+        }
+        Date now = new Date();
+        order.setOrderState(OrderState.CANCELED);
+        order.setCancelReason(cancelReason);
+        order.setCancelTime(now);
         order.setUpdateTime(now);
         //添加订单日志
         OrderLog orderLog = new OrderLog();
         orderLog.setTime(now);
         orderLog.setOrderCode(order.getOrderCode());
         orderLog.setHandler("后台操作人员");
-        orderLog.setRemark("订单线下支付确认");
+        orderLog.setRemark("订单取消");
         orderLogDao.save(orderLog);
         return true;
     }

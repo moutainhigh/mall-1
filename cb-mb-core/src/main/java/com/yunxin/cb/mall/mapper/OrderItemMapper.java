@@ -137,4 +137,30 @@ public interface OrderItemMapper {
     })
     @ResultMap(value="orderItemRelationMap")
     Set<OrderItem> selectByOrderId(Integer orderId);
+
+    /**
+     * 根据orderId和productId查询
+     * @param orderId
+     * @param productId
+     * @return
+     */
+    @Select({
+            "select", columns,
+            "from order_item",
+            "where ORDER_ID = #{orderId,jdbcType=INTEGER} and PRODUCT_ID = #{productId,jdbcType=INTEGER}"
+    })
+    @Results({
+            @Result(column="ITEM_ID", property="itemId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="BUYER_MESSAGE", property="buyerMessage", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="EVALUATE", property="evaluate", jdbcType=JdbcType.BIT),
+            @Result(column="ORDER_ITEM_PRICE", property="orderItemPrice", jdbcType=JdbcType.REAL),
+            @Result(column="PRODUCT_IMG", property="productImg", jdbcType=JdbcType.VARCHAR),
+            @Result(column="PRODUCT_NUM", property="productNum", jdbcType=JdbcType.INTEGER),
+            @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
+            @Result(column="ACTIVITY_ID", property="activityId", jdbcType=JdbcType.INTEGER),
+            @Result(column="ORDER_ID", property="orderId", jdbcType=JdbcType.INTEGER),
+            @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER)
+    })
+    OrderItem selectByOrderIdAndProductId(@Param("orderId") int orderId, @Param("productId")int productId);
 }

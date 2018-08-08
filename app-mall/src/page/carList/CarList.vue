@@ -121,7 +121,7 @@
           </transition>
         </div>
       </section>
-      <div style="position:absolute;height: 100%;width: 100%;z-index: -1;background-color: #fff;overflow: hidden;" :style="{height: scrollerHeight + 'px'}">
+      <div style="position:absolute;height: 100%;width: 100%;z-index: -1;background-color: #fff;overflow: hidden;margin-top: 0.19rem;" :style="{height: scrollerHeight + 'px'}">
         <div class="car_type_list" id="typeDivId">
           <div class="type_item" v-for="(item,index) in selecteds">
             <p>
@@ -290,7 +290,6 @@
       },
       delSelected(selected, index) {
         if (selected.type == 'commoditySpecs') {
-          console.log(this.searchVo.commoditySpecs);
           this.searchVo.commoditySpecs = delArrayOne(this.searchVo.commoditySpecs, selected.key, 'specName');
           for (let condition of this.chooseConditions) {
             if (condition.specName == selected.key) {
@@ -298,7 +297,18 @@
               break;
             }
           }
-        } else {
+        } else if (selected.type == 'priceSection') {
+          if (selected.key == 'priceLowForHigh') {
+            this.searchVo.lowestPrice = '';
+            this.searchVo.highestPrice = '';
+            this.priceSect.lowPrice = '';
+            this.priceSect.highPrice = '';
+            this.selecteds = delArrayOne(this.selecteds, 'priceSection', 'type');
+          }else {
+            this.searchVo.priceSection = null;
+          }
+          this.priceSection.chooseIndex = -1;
+        }else {
           this.searchVo[selected.type] = null;
         }
         this.selecteds.splice(index, 1);
@@ -358,13 +368,21 @@
       choosePrice(index) {
         if (this.priceSection.chooseIndex != index) {
           this.priceSection.chooseIndex = index;
+          this.selecteds = delArrayOne(this.selecteds, 'priceSection', 'type');
           if (index == -1) {
             this.searchVo.priceSection = null;
           } else {
             this.searchVo.priceSection = this.priceSection.value[index];
+            this.selecteds.push({
+              key: this.searchVo.priceSection,
+              val: tranPrice(this.searchVo.priceSection.startPrice)+'-'+tranPrice(this.searchVo.priceSection.endPrice)+'万',
+              type: 'priceSection'
+            });
           }
           this.searchVo.lowestPrice = '';
           this.searchVo.highestPrice = '';
+          this.priceSect.lowPrice = '';
+          this.priceSect.highPrice = '';
           this.getData();
         }
         this.sortBy = '';
@@ -372,8 +390,13 @@
       setPriceSect() {
         if (this.priceSect.lowPrice && this.priceSect.highPrice) {
           this.searchVo.lowestPrice = tranThouOfPrice(this.priceSect.lowPrice) ;
-          console.log(this.searchVo.lowestPrice);
           this.searchVo.highestPrice = tranThouOfPrice(this.priceSect.highPrice);
+          this.selecteds = delArrayOne(this.selecteds, 'priceSection', 'type');
+          this.selecteds.push({
+            key: 'priceLowForHigh',
+            val: this.priceSect.lowPrice+'-'+this.priceSect.highPrice+'万',
+            type: 'priceSection'
+          });
           this.searchVo.priceSection = null;
           this.priceSection.chooseIndex = -2;
           this.sortBy = '';
@@ -547,8 +570,8 @@
     z-index: 10;
     box-sizing: border-box;
     .sort_item {
-      @include sc(0.8rem, #444);
-      @include wh(33.3%, 2rem);
+      @include sc(1rem, #444);
+      @include wh(33.3%, 2.5rem);
       text-align: center;
       line-height: 1.6rem;
       margin: 0 0 0 -0.1rem;
@@ -602,7 +625,7 @@
                 color: #333333;
                 border-radius: 4px;
                 padding: 0.3rem;
-                font-size: 0.9rem;
+                font-size:1rem;
                 margin: 0 0.4rem;
               }
             }
@@ -655,7 +678,7 @@
       transform: translateY(-100%);
     }
     .sort_detail_type {
-      margin-top: 0.39rem;
+      margin-top: 0.9rem;
       z-index: 3;
       width: 100%;
       position: absolute;
@@ -764,7 +787,7 @@
       }
     }
     .filter_container {
-      margin-top: 0.41rem;
+      margin-top: 0.91rem;
       flex-direction: column;
       align-items: flex-start;
       background-color: #f1f1f1;
@@ -926,11 +949,12 @@
     .type_item {
       border: #DDDDDD 1px solid;
       display: inline-block;
-      margin: 0.2rem 0.1rem;
+      margin: 0.5rem 0.1rem 0.2rem;
       font-size: 0.8rem;
+      color: #666666;
       background-color: #fff;
       p {
-        padding: 0.2rem 0 0.2rem 0.3rem;
+        padding: 0.1rem 0 0.2rem 0.3rem;
         display: inline-block;
         vertical-align: middle;
       }
@@ -947,7 +971,7 @@
     background-color: #fff;
     .list_item {
       display: flex;
-      padding: 0.5rem;
+      padding: 1rem 1rem 0;
       line-height: 1.5;
       overflow: hidden;
       .cont_img {
@@ -1009,5 +1033,6 @@
     position: fixed !important;
     z-index: 99 !important;
     top: 0 !important;
+    margin: 0 !important;
   }
 </style>

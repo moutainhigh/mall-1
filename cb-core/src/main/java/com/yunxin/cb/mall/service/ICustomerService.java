@@ -1,10 +1,9 @@
 package com.yunxin.cb.mall.service;
 
+import com.yunxin.cb.insurance.meta.GratitudeType;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Fridge;
-import com.yunxin.cb.mall.vo.CustomerMatchVo;
-import com.yunxin.cb.mall.vo.CustomerMatchsVo;
-import com.yunxin.cb.mall.vo.CustomerUpdateVo;
+import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.sns.entity.CustomerFriend;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
@@ -196,5 +195,8 @@ public interface ICustomerService {
 
     public List<Customer> findCustomerByLikeLevelCode(Customer customer);
 
+    CustomerGratitudeVo findCustomerGratitude(int customerId);
+
+    List<CustomerGratitudeDataVo> findCustomerGratitudeData(int customerId,GratitudeType gratitudeType);
 
 }

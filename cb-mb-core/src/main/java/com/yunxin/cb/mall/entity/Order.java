@@ -135,6 +135,15 @@ public class Order {
     /** 物流公司id */
     private Integer logisticId;
 
+    /** 审核备注 */
+    private String auditRemark;
+
+    /** 审核状态 */
+    private AuditState auditState;
+
+    /** 审核时间 */
+    private Date auditTime;
+
     /** 卖家id */
     private Integer sellerId;
     /**卖家信息*/
@@ -534,4 +543,27 @@ public class Order {
         this.addressId = addressId;
     }
 
+    public String getAuditRemark() {
+        return auditRemark;
+    }
+
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
+    }
+
+    public AuditState getAuditState() {
+        return auditState;
+    }
+
+    public void setAuditState(AuditState auditState) {
+        this.auditState = auditState;
+    }
+
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
+    }
 }

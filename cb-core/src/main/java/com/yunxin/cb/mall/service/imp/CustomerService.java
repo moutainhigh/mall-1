@@ -2,18 +2,21 @@ package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.im.RongCloudService;
 import com.yunxin.cb.insurance.dao.InsuranceOrderDao;
+import com.yunxin.cb.insurance.dao.InsuranceOrderLogDao;
 import com.yunxin.cb.insurance.entity.InsuranceOrder;
+import com.yunxin.cb.insurance.entity.InsuranceOrderLog;
+import com.yunxin.cb.insurance.meta.GratitudeType;
+import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
+import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
-import com.yunxin.cb.mall.vo.CustomerMatchVo;
-import com.yunxin.cb.mall.vo.CustomerMatchsVo;
-import com.yunxin.cb.mall.vo.CustomerUpdateVo;
+import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import com.yunxin.cb.sns.dao.CustomerFriendDao;
@@ -84,6 +87,8 @@ public class CustomerService implements ICustomerService {
     private InsuranceOrderDao insuranceOrderDao;
     @Resource
     private RedisService redisService;
+    @Resource
+    private InsuranceOrderLogDao insuranceOrderLogDao;
     @Override
     public Fridge addFridge(Fridge fridge) {
         fridge.setCreateTime(new Date());
@@ -805,7 +810,7 @@ public class CustomerService implements ICustomerService {
             };
     }
     public Map<String,Object> getCustomer(){
-
+        redisService.deleteKey("customers");
                 Map<String,Object> map=new HashMap<>();
                 if(null!=redisService.getKey("customers"))
                     map= (Map<String,Object>)redisService.getKey("customers");
@@ -820,7 +825,7 @@ public class CustomerService implements ICustomerService {
                             }
                         };
                         map.put("customers",mp);
-                        redisService.setKey("customers",mp);
+//                        redisService.setKey("customers",mp);
                     }
 
                 }
@@ -981,5 +986,141 @@ public class CustomerService implements ICustomerService {
             }
         }
         return listVo;
+    }
+
+    @Override
+    public CustomerGratitudeVo findCustomerGratitude(int customerId) {
+        Customer customer= customerDao.findRecommendCustomer(customerId);
+
+        return new CustomerGratitudeVo(){
+            {
+                int allGratitude=0;
+                int noGratitude=0;
+                int gratitudeMe=0;
+                int unpaid=0;
+                int notPurchased=0;
+                if(null!=customer){
+                    List<Customer> list= findCustomerByLikeLevelCode(customer);
+                    if(null!=list&&list.size()>0){
+                        //所有感恩人
+                        allGratitude=list.size();
+                        for (Customer customer:list
+                             ) {
+                            //已经感恩的
+                            if(customer.isPraise())
+                                gratitudeMe++;
+                            //未感恩的
+                            if(customer.getPolicy().equals(PolicyType.PAYMENT)&&!customer.isPraise())
+                                noGratitude++;
+                            //未付款
+                            if(customer.getPolicy().equals(PolicyType.UNPAID))
+                                unpaid++;
+                            //未购买
+                            if(customer.getPolicy().equals(PolicyType.NOTPURCHASED))
+                                notPurchased++;
+                        }
+
+                    }
+                }
+                setAllGratitude(allGratitude);
+                setNoGratitude(noGratitude);
+                setGratitudeMe(gratitudeMe);
+                setUnpaid(unpaid);
+                setNotPurchased(notPurchased);
+            }
+        };
+    }
+
+    @Override
+    public List<CustomerGratitudeDataVo> findCustomerGratitudeData(int customerId,GratitudeType gratitudeType) {
+        Customer customer= customerDao.findRecommendCustomer(customerId);
+        return new ArrayList<CustomerGratitudeDataVo>(){
+            {
+                if(null!=customer){
+                    String levelCode = customer.getLevelCode()+"%";
+                    switch (gratitudeType){
+                        //感恩我的
+                        case GRATITUDEME:
+                            List<InsuranceOrderLog> list=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.ON_PAID,true);
+                            if(null!=list&&list.size()>0){
+
+                                for(InsuranceOrderLog insuranceOrderLog:list){
+                                    add(new CustomerGratitudeDataVo(){
+                                        {
+                                            setGratitudeType(gratitudeType);
+                                            setHeadPath(insuranceOrderLog.getCustomer().getAvatarUrl());
+                                            setUserName(insuranceOrderLog.getCustomer().getRealName());
+                                            setProductName(insuranceOrderLog.getProdName()+(insuranceOrderLog.getPrice()>10000?(insuranceOrderLog.getPrice()/10000)+"万":insuranceOrderLog.getPrice()+"元"));
+                                        }
+                                    });
+                                }
+
+                            }
+                            break;
+                        //未感恩
+                        case NOGRATITUDE:
+                            List<InsuranceOrderLog> lists=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.ON_PAID,false);
+
+                            if(null!=lists&&lists.size()>0){
+
+                                for(InsuranceOrderLog insuranceOrderLog:lists){
+                                    add(new CustomerGratitudeDataVo(){
+                                        {
+                                            setGratitudeType(gratitudeType);
+                                            setHeadPath(insuranceOrderLog.getCustomer().getAvatarUrl());
+                                            setUserName(insuranceOrderLog.getCustomer().getRealName());
+                                            setProductName(insuranceOrderLog.getProdName()+(insuranceOrderLog.getPrice()>10000?(insuranceOrderLog.getPrice()/10000)+"万":insuranceOrderLog.getPrice()+"元"));
+                                        }
+                                    });
+                                }
+
+                            }
+                            break;
+                            //未付款
+                        case UNPAID:
+                            List<InsuranceOrderLog> listT=insuranceOrderLogDao.findInsuranceOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.UN_PAID,PolicyType.UNPAID);
+
+                            if(null!=listT&&listT.size()>0){
+
+                                for(InsuranceOrderLog insuranceOrderLog:listT){
+                                    add(new CustomerGratitudeDataVo(){
+                                        {
+                                            setGratitudeType(gratitudeType);
+                                            setHeadPath(insuranceOrderLog.getCustomer().getAvatarUrl());
+                                            setUserName(insuranceOrderLog.getCustomer().getRealName());
+                                            setProductName(insuranceOrderLog.getProdName()+(insuranceOrderLog.getPrice()>10000?(insuranceOrderLog.getPrice()/10000)+"万":insuranceOrderLog.getPrice()+"元"));
+                                        }
+                                    });
+                                }
+
+                            }
+
+
+                            break;
+
+                        //未购买的
+                        case NOTPURCHASED:
+                           List<Customer> listCustomer=customerDao.findCustomerByLikeLevelCodeNotPolicy(levelCode,PolicyType.NOTPURCHASED);
+
+                           if(null!=listCustomer&&listCustomer.size()>0){
+                                for (Customer customer:listCustomer){
+                                    add(new CustomerGratitudeDataVo(){
+                                        {
+                                            setGratitudeType(gratitudeType);
+                                            setHeadPath(customer.getAvatarUrl());
+                                            setUserName(customer.getRealName());
+                                        }
+                                    });
+                                }
+                           }
+                            break;
+
+                    }
+
+
+                }
+            }
+        };
+
     }
 }

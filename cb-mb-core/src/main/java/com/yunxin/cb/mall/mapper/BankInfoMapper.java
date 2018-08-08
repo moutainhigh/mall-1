@@ -14,13 +14,13 @@ public interface BankInfoMapper {
        int deleteByPrimaryKey(@Param("bankId")Integer bankId,@Param("customerId")Integer customerId);
 
        @Insert({
-               "insert into bank_info (BANK_ID, BANK_CARD_NUMBER, BANK_NAME,",
+               "insert into bank_info (BANK_ID, BANK_CARD_NUMBER, BANK_NAME, BANK_LOGO,",
                "EFFECTIVE_TIME, CARDHOLDER, ",
                "CARD_TYPE, CUSTOMER_CARD_NO, ",
                "MOBILE, CUSTOMER_ID, ",
                "CREATE_TIME)",
                "values (#{bankId,jdbcType=INTEGER}, #{bankCardNumber,jdbcType=VARCHAR},#{bankName,jdbcType=VARCHAR}, ",
-               "#{effectiveTime,jdbcType=TIMESTAMP}, #{cardholder,jdbcType=VARCHAR}, ",
+               "#{bankLogo,jdbcType=VARCHAR},#{effectiveTime,jdbcType=VARCHAR}, #{cardholder,jdbcType=VARCHAR}, ",
                "#{cardType,jdbcType=VARCHAR}, #{customerCardNo,jdbcType=VARCHAR}, ",
                "#{mobile,jdbcType=VARCHAR}, #{customerId,jdbcType=INTEGER}, ",
                "#{createTime,jdbcType=TIMESTAMP})"
@@ -29,7 +29,7 @@ public interface BankInfoMapper {
 
        @Select({
                "select",
-               "BANK_ID, BANK_CARD_NUMBER, BANK_NAME, EFFECTIVE_TIME, CARDHOLDER, CARD_TYPE, CUSTOMER_CARD_NO, ",
+               "BANK_ID, BANK_CARD_NUMBER, BANK_NAME, BANK_LOGO, EFFECTIVE_TIME, CARDHOLDER, CARD_TYPE, CUSTOMER_CARD_NO, ",
                "MOBILE, CUSTOMER_ID, CREATE_TIME",
                "from bank_info",
                "where BANK_ID = #{bankId,jdbcType=INTEGER} AND CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
@@ -38,7 +38,8 @@ public interface BankInfoMapper {
                @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER, id=true),
                @Result(column="BANK_CARD_NUMBER", property="bankCardNumber", jdbcType=JdbcType.VARCHAR),
                @Result(column="BANK_NAME", property="bankName", jdbcType=JdbcType.VARCHAR),
-               @Result(column="EFFECTIVE_TIME", property="effectiveTime", jdbcType=JdbcType.TIMESTAMP),
+               @Result(column="BANK_LOGO", property="bankLogo", jdbcType=JdbcType.VARCHAR),
+               @Result(column="EFFECTIVE_TIME", property="effectiveTime", jdbcType=JdbcType.VARCHAR),
                @Result(column="CARDHOLDER", property="cardholder", jdbcType=JdbcType.VARCHAR),
                @Result(column="CARD_TYPE", property="cardType", jdbcType=JdbcType.VARCHAR),
                @Result(column="CUSTOMER_CARD_NO", property="customerCardNo", jdbcType=JdbcType.VARCHAR),
@@ -50,7 +51,7 @@ public interface BankInfoMapper {
 
        @Select({
                "select",
-               "BANK_ID, BANK_CARD_NUMBER, BANK_NAME, EFFECTIVE_TIME, CARDHOLDER, CARD_TYPE, CUSTOMER_CARD_NO, ",
+               "BANK_ID, BANK_CARD_NUMBER, BANK_NAME, BANK_LOGO, EFFECTIVE_TIME, CARDHOLDER, CARD_TYPE, CUSTOMER_CARD_NO, ",
                "MOBILE, CUSTOMER_ID, CREATE_TIME",
                "from bank_info where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
        })
@@ -58,7 +59,8 @@ public interface BankInfoMapper {
                @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER, id=true),
                @Result(column="BANK_CARD_NUMBER", property="bankCardNumber", jdbcType=JdbcType.VARCHAR),
                @Result(column="BANK_NAME", property="bankName", jdbcType=JdbcType.VARCHAR),
-               @Result(column="EFFECTIVE_TIME", property="effectiveTime", jdbcType=JdbcType.TIMESTAMP),
+               @Result(column="BANK_LOGO", property="bankLogo", jdbcType=JdbcType.VARCHAR),
+               @Result(column="EFFECTIVE_TIME", property="effectiveTime", jdbcType=JdbcType.VARCHAR),
                @Result(column="CARDHOLDER", property="cardholder", jdbcType=JdbcType.VARCHAR),
                @Result(column="CARD_TYPE", property="cardType", jdbcType=JdbcType.VARCHAR),
                @Result(column="CUSTOMER_CARD_NO", property="customerCardNo", jdbcType=JdbcType.VARCHAR),
@@ -72,7 +74,8 @@ public interface BankInfoMapper {
                "update bank_info",
                "set BANK_CARD_NUMBER = #{bankCardNumber,jdbcType=VARCHAR},",
                "BANK_NAME = #{bankName,jdbcType=VARCHAR},",
-               "EFFECTIVE_TIME = #{effectiveTime,jdbcType=TIMESTAMP},",
+               "BANK_LOGO = #{bankLogo,jdbcType=VARCHAR},",
+               "EFFECTIVE_TIME = #{effectiveTime,jdbcType=VARCHAR},",
                "CARDHOLDER = #{cardholder,jdbcType=VARCHAR},",
                "CARD_TYPE = #{cardType,jdbcType=VARCHAR},",
                "CUSTOMER_CARD_NO = #{customerCardNo,jdbcType=VARCHAR},",

@@ -424,6 +424,9 @@
     mounted() {
       window.addEventListener('scroll', this.menu)
     },
+    destroyed(){
+      window.removeEventListener('scroll', this.menu)
+    },
 
     beforeRouteLeave(to, from, next) {
       // 设置下一个路由的 meta

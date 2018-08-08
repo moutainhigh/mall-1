@@ -11,7 +11,7 @@ public class AppCheckUpdate {
     @ApiModelProperty(value="版本名称",name="versionName",example="2.0")
     private String versionName;
 
-    @ApiModelProperty(value="APP名称",name="name",example="水晶球")
+    @ApiModelProperty(value="APP名称",name="name",example="云信")
     private String name;
 
     @ApiModelProperty(value="APP下载url",name="url",example="www.baidu.com")

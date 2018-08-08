@@ -28,9 +28,9 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("API文档")
-                .description("水晶球业务RESTFUL API接口文档")
+                .description("云信业务RESTFUL API接口文档")
                 .termsOfServiceUrl("http://www.shuijingqiu.com")
-                .contact(new Contact("水晶球", "http://www.shuijingqiu.com", "service@shuijingqiu.com"))
+                .contact(new Contact("云信", "http://www.shuijingqiu.com", "service@shuijingqiu.com"))
                 .version("1.0")
                 .build();
     }

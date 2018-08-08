@@ -1,6 +1,7 @@
 package com.yunxin.cb.rest.customer;
 
 import com.yunxin.cb.im.RongCloudService;
+import com.yunxin.cb.insurance.meta.GratitudeType;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.service.ICustomerService;
@@ -393,6 +394,33 @@ public class CustomerResource extends BaseResource {
     @PostMapping(value = "matchAddressBook")
     public ResponseResult matchAddressBook(@RequestBody CustomerMatchsVo[] customerMatchsVo){
             return new ResponseResult( customerService.matchAddressBook(customerMatchsVo));
+    }
+
+    @ApiOperation(value = "获取感恩统计")
+    @GetMapping(value = "getGratitude")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "get", dataType = "int")
+    })
+    public ResponseResult getGratitude() {
+        try {
+            return new ResponseResult(customerService.findCustomerGratitude(getCustomerId()));
+        } catch (Exception e) {
+            logger.error("getGratitude failed", e);
+            return new ResponseResult(Result.FAILURE, e.getMessage());
+        }
+    }
+    @ApiOperation(value = "获取感恩列表")
+    @GetMapping(value = "getGratitudeData/{gratitudeType}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "get", dataType = "int")
+    })
+    public ResponseResult getGratitudeData(@PathVariable GratitudeType gratitudeType) {
+        try {
+            return new ResponseResult(customerService.findCustomerGratitudeData(getCustomerId(),gratitudeType));
+        } catch (Exception e) {
+            logger.error("getGratitudeData failed", e);
+            return new ResponseResult(Result.FAILURE, e.getMessage());
+        }
     }
 //    @ApiOperation(value = "创建群组")
 //    @PostMapping(value = "matchAddressBook")

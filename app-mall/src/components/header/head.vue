@@ -82,7 +82,6 @@
     z-index: 13;
     left: 0;
     top: 0;
-    box-shadow: 0 0 3px #d1d1d1;
     @include wh(100%, 3rem);
   }
 
