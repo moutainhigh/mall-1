@@ -10,7 +10,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangteng
@@ -43,5 +45,16 @@ public class ReimbursementController {
             modelMap.put("orderItems",orderItem);
             modelMap.put("reimbursement",iReimbursementService.getReimbursement(reimbursementId));
         return "reimbursement/reimbursementOrders";
+    }
+
+
+    @RequestMapping(value = "reimbursementOrders", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> reimbursementOrders(@RequestParam("reimbursementId") int reimbursementId) {
+        return new HashMap<String,Object>(){
+            {
+                put("data",iReimbursementService.queryOrderItemByIds(reimbursementId));
+            }
+        };
     }
 }
