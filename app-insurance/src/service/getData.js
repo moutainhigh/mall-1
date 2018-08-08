@@ -53,4 +53,8 @@ export const getCustomerInfo = function () {
 
 export const getProDetail = function (id) {
   return fetch("/insurance/product/getImagesByProdId/" + id);
-}
+};
+
+export const getProResult = function (id) {
+  return fetch("/insurance/product/getResponseResultByProdId/" + id);
+};

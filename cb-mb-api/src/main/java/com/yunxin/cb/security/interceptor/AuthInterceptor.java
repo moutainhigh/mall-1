@@ -1,6 +1,8 @@
 package com.yunxin.cb.security.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yunxin.cb.jwt.JwtUtil;
+import com.yunxin.cb.jwt.Token;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.orm.CustomerContextHolder;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.Date;
+
+import static com.yunxin.cb.jwt.JwtUtil.HEADER_STRING;
+import static com.yunxin.cb.jwt.JwtUtil.TOKEN_PREFIX;
 
 
 /**
@@ -44,23 +49,23 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                 return true;
 
 
-//            response.setContentType("application/json;charset=utf-8");
-//            response.setCharacterEncoding("UTF-8");
-//            String authHeader = request.getHeader(HEADER_STRING);
-//            if ((authHeader == null) ||
-//                    !authHeader.startsWith(TOKEN_PREFIX)) {
-//                ObjectMapper mapper = new ObjectMapper();
-//                String mapJakcson = mapper.writeValueAsString(new ResponseResult(Result.NOT_LOGIN, "缺少token信息"));
-//                PrintWriter writer = response.getWriter();
-//                writer.print(mapJakcson);
-//                return false;
-//            }
+            response.setContentType("application/json;charset=utf-8");
+            response.setCharacterEncoding("UTF-8");
+            String authHeader = request.getHeader(HEADER_STRING);
+            if ((authHeader == null) ||
+                    !authHeader.startsWith(TOKEN_PREFIX)) {
+                ObjectMapper mapper = new ObjectMapper();
+                String mapJakcson = mapper.writeValueAsString(new ResponseResult(Result.NOT_LOGIN, "缺少token信息"));
+                PrintWriter writer = response.getWriter();
+                writer.print(mapJakcson);
+                return false;
+            }
 
             try {
-//                authHeader = authHeader.replace(TOKEN_PREFIX, "");
-//                Token token = JwtUtil.getToken(authHeader);
+                authHeader = authHeader.replace(TOKEN_PREFIX, "");
+                Token token = JwtUtil.getToken(authHeader);
 
-                int customerId = 1;//token.getAccountId();
+                int customerId = token.getAccountId();
 //                Customer customer =customerService.getCustomerById(customerId);
 //                if (customer == null){
 //                    PrintWriter writer = response.getWriter();

@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>水晶球 - <sitemesh:write property='title'/></title>
+    <title>云信 - <sitemesh:write property='title'/></title>
 
     <!-- // IOS webapp icons // -->
 

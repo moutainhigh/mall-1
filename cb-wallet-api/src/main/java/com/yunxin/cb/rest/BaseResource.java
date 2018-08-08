@@ -1,9 +1,12 @@
 package com.yunxin.cb.rest;
 
+import com.yunxin.cb.common.utils.CachedUtil;
+import com.yunxin.cb.orm.CustomerContextHolder;
+import com.yunxin.cb.util.VerificationCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.yunxin.cb.orm.CustomerContextHolder;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
@@ -37,5 +40,27 @@ public class BaseResource {
             ip = request.getRemoteAddr();
         }
         return ip;
+    }
+
+    /**
+     * 校验验证码
+     *
+     */
+    protected String verificationCode(String mobile, String code) {
+        //校验验证码
+        VerificationCode verificationCode = (VerificationCode) CachedUtil.getInstance().getContext(mobile);
+        //验证码不存在
+        if (verificationCode == null){
+            return "验证码不存在";
+        }
+        //验证码超过5分钟，失效
+        if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
+            return "验证码失效";
+        }
+        //验证码错误
+        if (!verificationCode.getCode().equals(code)) {
+            return "验证码错误";
+        }
+        return null;
     }
 }

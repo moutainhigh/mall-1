@@ -24,7 +24,7 @@
     <div class="history" v-if="searchContent == ''">
       <p class="history-title">搜索历史<span class="history-clear"
                                          @click="clearHistory">清除历史</span></p>
-      <div class="listItem" v-for="history in histories"><p>{{history}}</p></div>
+      <div class="listItem" v-for="history in histories" @click="toHistoryDetail(history)"><p>{{history.title}}</p></div>
     </div>
     <div class="history" v-if="searchContent != ''">
       <div class="listItem" v-for="result in resultList" @click="toDetail(result)"><p>{{result.title}}</p></div>
@@ -35,9 +35,13 @@
 <script>
   import {keywordSearch} from "../../service/getData";
   import storage from "../../store/storage";
+  import {Alert} from 'vux'
 
   export default {
     name: "Search",
+    components: {
+      Alert
+    },
     data() {
       return {
         hotSearchs: ['昂克赛拉', '卡罗拉', '福克斯', '思域', '凯美瑞', '迈腾', '雷克萨斯CT'],
@@ -58,6 +62,16 @@
       clearHistory() {
         this.histories = [];
         storage.save("keywordSearch", []);
+        // this.$vux.confirm.show({
+        //   title:'提示',
+        //   content:'确定清除全部搜索历史？',
+        //   onCancel () {
+        //   },
+        //   onConfirm () {
+        //     this.histories = [];
+        //
+        //   }
+        // });
       },
       toDetail(result) {
         this.saveSearch(result);
@@ -68,17 +82,33 @@
           }
         })
       },
+      toHistoryDetail(history) {
+        this.$router.push({
+          path: '/car-detail',
+          query: {
+            productId: history.id,
+          }
+        })
+      },
       saveSearch(result) {
         let keywordSearch = storage.fetch("keywordSearch");
         if (keywordSearch.length == 0) {
           let list = [];
-          list.push(result.title);
+          let history = {
+            title: result.title,
+            id: result.id
+          };
+          list.push(history);
           storage.save("keywordSearch", list);
         } else {
           if (keywordSearch.length == 10) {
             keywordSearch.splice(0, 1);
           }
-          keywordSearch.push(result.title);
+          let history = {
+            title: result.title,
+            id: result.id
+          };
+          keywordSearch.push(history);
           storage.save("keywordSearch", keywordSearch);
         }
       },

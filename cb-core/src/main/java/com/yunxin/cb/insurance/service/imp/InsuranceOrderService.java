@@ -20,6 +20,8 @@ import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.CalendarUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ import java.util.*;
 
 @Service
 public class InsuranceOrderService implements IInsuranceOrderService {
-
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     @Resource
     private InsuranceOrderDao insuranceOrderDao;
     @Resource
@@ -59,6 +61,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private InsuranceLogDao insuranceLogDao;
     @Resource
     private InsuranceOrderLogDao insuranceOrderLogDao;
+    @Resource
+    private InsuranceProductDao insuranceProductDao;
     /**
      * 根据用户ID查询保险订单列表
      * @return
@@ -127,7 +131,11 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             insuranceOrderLog.setInsuranceOrder(insuranceOrder);
             insuranceOrderLog.setOrderState(InsuranceOrderState.UN_PAID);
             insuranceOrderLog.setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
-            insuranceOrderLog.setProdName(insuranceOrder.getInsuranceProduct().getProdName());
+            if(null!=insuranceOrder.getInsuranceProduct()){
+                InsuranceProduct insuranceProduct=insuranceProductDao.getOne(insuranceOrder.getInsuranceProduct().getProdId());
+                insuranceOrderLog.setProdName(insuranceProduct.getProdName());
+            }
+
             insuranceOrderLogDao.save(insuranceOrderLog);
         }
 

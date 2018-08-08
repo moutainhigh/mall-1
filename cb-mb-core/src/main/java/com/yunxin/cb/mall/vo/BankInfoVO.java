@@ -19,8 +19,6 @@ public class BankInfoVO implements java.io.Serializable{
     @ApiModelProperty(value="银行ID",name="bankId",example="3")
     private Integer bankId;
 
-    @ApiModelProperty(value="银行名称类型和卡号",name="bankCardNumber",example="招商银行 信用卡 2316")
-    private String showBank;
 
     @ApiModelProperty(value="银行卡号",name="bankCardNumber",example="6222600260001072444")
     private String bankCardNumber;
@@ -52,6 +50,15 @@ public class BankInfoVO implements java.io.Serializable{
     @ApiModelProperty(value="验证码",name="code",example="666666")
     private String code;
 
+    @ApiModelProperty(value="银行名称类型和卡号脱敏",name="showNameTypeNumber",example="招商银行 信用卡 2316")
+    private String showNameTypeNumber;
+
+    @ApiModelProperty(value="银行卡号脱敏",name="showBankCardNumber",example="**** **** **** 2444")
+    private String showBankCardNumber;
+
+    @ApiModelProperty(value="银行名称和卡号脱敏",name="showNameNumber",example="招商银行(2316)")
+    private String showNameNumber;
+
     public Integer getBankId() {
         return bankId;
     }
@@ -66,7 +73,11 @@ public class BankInfoVO implements java.io.Serializable{
 
     public void setBankCardNumber(String bankCardNumber) {
         this.bankCardNumber = bankCardNumber;
-        setShowBank();
+        if(LogicUtils.isNotNull(bankCardNumber)){
+            this.showBankCardNumber="**** **** **** "+bankCardNumber.substring(bankCardNumber.length()-4,bankCardNumber.length());
+        }
+        setNameTypeNumber();
+        setNameNumber();
     }
 
     public String getBankName() {
@@ -75,7 +86,8 @@ public class BankInfoVO implements java.io.Serializable{
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
-        setShowBank();
+        setNameTypeNumber();
+        setNameNumber();
     }
 
     public String getBankLogo() {
@@ -108,7 +120,7 @@ public class BankInfoVO implements java.io.Serializable{
 
     public void setCardType(String cardType) {
         this.cardType = cardType;
-        setShowBank();
+        setNameTypeNumber();
     }
 
     public String getCustomerCardNo() {
@@ -143,28 +155,54 @@ public class BankInfoVO implements java.io.Serializable{
         this.code = code;
     }
 
-    public String getShowBank() {
-        return showBank;
+    public String getShowNameTypeNumber() {
+        return showNameTypeNumber;
     }
 
-    public void setShowBank(String showBank) {
-        this.showBank = showBank;
+    public void setShowNameTypeNumber(String showNameTypeNumber) {
+        this.showNameTypeNumber = showNameTypeNumber;
+    }
+
+    public String getShowBankCardNumber() {
+        return showBankCardNumber;
+    }
+
+    public void setShowBankCardNumber(String showBankCardNumber) {
+        this.showBankCardNumber = showBankCardNumber;
+    }
+
+    public String getShowNameNumber() {
+        return showNameNumber;
+    }
+
+    public void setShowNameNumber(String showNameNumber) {
+        this.showNameNumber = showNameNumber;
     }
 
     //格式化前台展示：招商银行 信用卡 2316
-    private void setShowBank() {
+    private void setNameTypeNumber() {
         if (LogicUtils.isNotNull(this.bankName) && LogicUtils.isNotNull(this.cardType) && LogicUtils.isNotNull(this.bankCardNumber)) {
-            this.showBank=this.bankName+" "+this.cardType+" "+this.bankCardNumber.substring(bankCardNumber.length()-4,bankCardNumber.length());
+            this.showNameTypeNumber=this.bankName+" "+this.cardType+" "+this.bankCardNumber.substring(bankCardNumber.length()-4,bankCardNumber.length());
+        }
+    }
+
+    //格式化前台展示：招商银行(2316)
+    private void setNameNumber() {
+        if (LogicUtils.isNotNull(this.bankName) && LogicUtils.isNotNull(this.bankCardNumber)) {
+            this.showNameNumber=this.bankName+"("+this.bankCardNumber.substring(bankCardNumber.length()-4,bankCardNumber.length())+")";
         }
     }
 
     @Override
     public String toString() {
         return "BankInfoVO{" +
-                "showBank='" + showBank + '\'' +
+                "bankId=" + bankId +
+                ", showNameTypeNumber='" + showNameTypeNumber + '\'' +
                 ", bankCardNumber='" + bankCardNumber + '\'' +
+                ", showBankCardNumber='" + showBankCardNumber + '\'' +
                 ", bankName='" + bankName + '\'' +
-                ", effectiveTime=" + effectiveTime +
+                ", bankLogo='" + bankLogo + '\'' +
+                ", effectiveTime='" + effectiveTime + '\'' +
                 ", cardholder='" + cardholder + '\'' +
                 ", cardType='" + cardType + '\'' +
                 ", customerCardNo='" + customerCardNo + '\'' +

@@ -11,7 +11,7 @@ public enum ProfileName {
 
     ANDROID_VERSION_CODE("1"),//安卓版本编码
     ANDROID_VERSION_NAME("v1.0.0"),//安卓版本名称
-    ANDROID_APP_NAME("水晶球"),//安卓APP名称
+    ANDROID_APP_NAME("云信"),//安卓APP名称
     ANDROID_URL(""),//安卓APP下载地址
     ANDROID_DESCRIPTION(""),//安卓APP更新描述
     ANDROID_FORCE_UPGRADE("false"),//安卓APP是否强制更新
@@ -22,6 +22,7 @@ public enum ProfileName {
     SHARE_ICON(""),//分享图标
     SHARE_DESCRIPTION(""),//分享描述
     SHARE_SHORTMESSAGE_CONTENT(""),//分享短信内容
+    FINACIAL_FREE_RATE("0.1"),//提现手续费
     ;
 
     private String i18nName;

@@ -48,8 +48,8 @@ public class ProfileService implements IProfileService {
         return null;
     }
 
-    public ShareInfo getShareInfo(){
-        String sharePath = profileDao.getProfileByProfileName(ProfileName.SHARE_PATH).getFileValue();
+    public ShareInfo getShareInfo(String invitationCode){
+        String sharePath = profileDao.getProfileByProfileName(ProfileName.SHARE_PATH).getFileValue()+invitationCode;
         String shareTitle = profileDao.getProfileByProfileName(ProfileName.SHARE_TITLE).getFileValue();
         String shareIcon = profileDao.getProfileByProfileName(ProfileName.SHARE_ICON).getFileValue();
         String shareDescription = profileDao.getProfileByProfileName(ProfileName.SHARE_DESCRIPTION).getFileValue();

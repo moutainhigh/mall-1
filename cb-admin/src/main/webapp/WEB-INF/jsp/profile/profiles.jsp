@@ -66,6 +66,9 @@
                 case "SHARE_SHORTMESSAGE_CONTENT":{
                     return "分享短信内容";
                 }
+                case "FINACIAL_FREE_RATE":{
+                    return "提现手续费";
+                }
             }
             return state;
         }
