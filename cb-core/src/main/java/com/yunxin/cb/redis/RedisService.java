@@ -53,6 +53,11 @@ public class RedisService {
         redisTemplate.opsForValue().set(VERIFICATION_CODE,data);
 
     }
+
+    /**
+     * 获取账户
+     * @return
+     */
     public Object getCustomerList(){
         Map<String, Object> data = (Map<String, Object>) redisTemplate.opsForValue().get(CUSTOMER_LIST);
         if(data == null) {
@@ -63,6 +68,20 @@ public class RedisService {
             redisTemplate.opsForValue().set(CUSTOMER_LIST,data);
         }
         return data;
+    }
+
+    /**
+     * 设置账户
+     * @param key
+     * @param obj
+     */
+    public void setCustomerList(String key, Object obj){
+        Map<String, Object> data = (Map<String, Object>) redisTemplate.opsForValue().get(CUSTOMER_LIST);
+        if(data == null) {
+            data = new HashMap<>();
+        }
+        data.put(key,obj);
+        redisTemplate.opsForValue().set(CUSTOMER_LIST,data);
     }
 
     /**

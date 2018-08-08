@@ -29,8 +29,11 @@ public class FinacialWithdraw implements Serializable {
     /** 提现手续费 */
     private BigDecimal chargeFee;
 
-    /** 状态：1.审核中 2.审核失败 3.待发放 4.交易完成 */
+    /** 状态：1.审核中 2.审核失败 3.待发放 4.转账中 5.交易完成 */
     private Integer state;
+
+    /** 提现类型：1.报账转账 2.保险返利转账 */
+    private Integer withdrawType;
 
     /** 审核时间 */
     private Date auditDate;
@@ -107,6 +110,14 @@ public class FinacialWithdraw implements Serializable {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public Integer getWithdrawType() {
+        return withdrawType;
+    }
+
+    public void setWithdrawType(Integer withdrawType) {
+        this.withdrawType = withdrawType;
     }
 
     public Date getAuditDate() {

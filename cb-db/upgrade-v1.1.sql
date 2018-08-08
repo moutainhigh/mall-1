@@ -525,6 +525,34 @@ ALTER TABLE `order_form` add  `AUDIT_TIME` datetime DEFAULT NULL COMMENT '审核
 
 ###add by wangteng 2018-08-08
 ALTER TABLE customer modify COLUMN POLICY int(11) DEFAULT 0;
+##add by likang 2018-08-08
+DROP TABLE IF EXISTS `finacial_expect_bill`;
+CREATE TABLE `finacial_expect_bill` (
+  `FINACIAL_EXPECT_ID` int(10) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(10) NOT NULL COMMENT '客户ID',
+  `TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资金类型',
+  `TRANSACTION_TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易类型',
+  `TRANSACTION_DESC` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
+  `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易金',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '交易时间',
+  PRIMARY KEY (`FINACIAL_EXPECT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT '预期收益交易记录';
+
+-- ----------------------------
+-- Table structure for finacial_liabilities_bill
+-- ----------------------------
+DROP TABLE IF EXISTS `finacial_liabilities_bill`;
+CREATE TABLE `finacial_liabilities_bill` (
+  `FINACIAL_LIABILITIES_ID` int(10) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(10) NOT NULL COMMENT '客户ID',
+  `TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资金类型',
+  `TRANSACTION_TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易类型',
+  `TRANSACTION_DESC` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
+  `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易金',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '时间',
+  PRIMARY KEY (`FINACIAL_LIABILITIES_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT '负债交易记录';
+
 
 ###add by lxc 2018-08-08 15:58
 ALTER TABLE `crystal_ball`.`catalog`
@@ -561,7 +589,7 @@ CREATE TABLE `finacial_withdraw` (
   `AMOUNT` decimal(20,4) NOT NULL COMMENT '提现金额',
   `REAL_AMOUNT` decimal(20,4) NOT NULL COMMENT '实际提现金额',
   `CHARGE_FEE` decimal(20,4) NOT NULL COMMENT '提现手续费',
-  `STATE` int(11) DEFAULT NULL COMMENT '状态：1.审核中 2.审核失败 3.待发放 4.交易完成',
+  `STATE` int(11) DEFAULT NULL COMMENT '状态：1.审核中 2.审核失败 3.待发放 4.转账中 5.交易完成',
   `AUDIT_DATE` datetime DEFAULT NULL COMMENT '审核时间',
   `AUDIT_OPERATOR` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '审核员',
   `AUDIT_MESSAGE` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '审核意见',
@@ -573,3 +601,8 @@ CREATE TABLE `finacial_withdraw` (
   KEY `fk_withdraw_customer_id` (`CUSTOMER_ID`),
   CONSTRAINT `fk_withdraw_customer_id` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+##add by guwenshao 2018-08-08
+ALTER TABLE `customer` add  `PAYMENT_PASSWORD` varchar(64) DEFAULT NULL COMMENT '支付密码';
+
+ALTER TABLE `finacial_withdraw` add  `WITHDRAW_TYPE` int(11) DEFAULT 1 NOT NULL COMMENT '提现类型：1.报账转账 2.保险返利转账';

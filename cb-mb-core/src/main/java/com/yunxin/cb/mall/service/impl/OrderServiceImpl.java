@@ -169,6 +169,8 @@ public class OrderServiceImpl implements OrderService {
 //            } else {
 //                throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
 //            }
+        } else {
+            order.setAuditState(AuditState.AUDITED);
         }
         //收货地址
         DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());

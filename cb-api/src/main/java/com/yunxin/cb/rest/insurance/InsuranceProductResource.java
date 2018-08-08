@@ -2,6 +2,7 @@ package com.yunxin.cb.rest.insurance;
 
 import com.yunxin.cb.insurance.entity.InsuranceInformedMatter;
 import com.yunxin.cb.insurance.entity.InsuranceProduct;
+import com.yunxin.cb.insurance.service.IInsuranceInformedMatterService;
 import com.yunxin.cb.insurance.service.IInsuranceProductService;
 import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
@@ -27,6 +28,8 @@ public class InsuranceProductResource {
 
     @Resource
     private IInsuranceProductService insuranceProductService;
+    @Resource
+    private IInsuranceInformedMatterService insuranceInformedMatterService;
     @Resource
     private IAttachmentService attachmentService;
 

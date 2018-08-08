@@ -53,6 +53,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.*;
+import java.util.concurrent.Executors;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -150,6 +151,13 @@ public class CustomerService implements ICustomerService {
         Customer dbCustomer = customerDao.save(customer);
         String token = rongCloudService.register(dbCustomer);
         dbCustomer.setRongCloudToken(token);
+        //加入缓存
+        Executors.newCachedThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                redisService.setCustomerList(dbCustomer.getMobile(),dbCustomer);
+            }
+        });
         return dbCustomer;
     }
 
@@ -1048,9 +1056,16 @@ public class CustomerService implements ICustomerService {
                                 for(InsuranceOrderLog insuranceOrderLog:list){
                                     add(new CustomerGratitudeDataVo(){
                                         {
+
                                             setGratitudeType(gratitudeType);
                                             setHeadPath(insuranceOrderLog.getCustomer().getAvatarUrl());
-                                            setUserName(insuranceOrderLog.getCustomer().getRealName());
+                                            String userName=insuranceOrderLog.getCustomer().getRealName();
+                                            if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getRealName())){
+                                                userName=insuranceOrderLog.getCustomer().getNickName();
+                                                if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getNickName()))
+                                                    userName=insuranceOrderLog.getCustomer().getMobile();
+                                            }
+                                            setUserName(userName);
                                             setProductName(insuranceOrderLog.getProdName()+(insuranceOrderLog.getPrice()>10000?(insuranceOrderLog.getPrice()/10000)+"万":insuranceOrderLog.getPrice()+"元"));
                                         }
                                     });
@@ -1069,7 +1084,13 @@ public class CustomerService implements ICustomerService {
                                         {
                                             setGratitudeType(gratitudeType);
                                             setHeadPath(insuranceOrderLog.getCustomer().getAvatarUrl());
-                                            setUserName(insuranceOrderLog.getCustomer().getRealName());
+                                            String userName=insuranceOrderLog.getCustomer().getRealName();
+                                            if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getRealName())){
+                                                userName=insuranceOrderLog.getCustomer().getNickName();
+                                                if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getNickName()))
+                                                    userName=insuranceOrderLog.getCustomer().getMobile();
+                                            }
+                                            setUserName(userName);
                                             setProductName(insuranceOrderLog.getProdName()+(insuranceOrderLog.getPrice()>10000?(insuranceOrderLog.getPrice()/10000)+"万":insuranceOrderLog.getPrice()+"元"));
                                         }
                                     });
@@ -1088,7 +1109,13 @@ public class CustomerService implements ICustomerService {
                                         {
                                             setGratitudeType(gratitudeType);
                                             setHeadPath(insuranceOrderLog.getCustomer().getAvatarUrl());
-                                            setUserName(insuranceOrderLog.getCustomer().getRealName());
+                                            String userName=insuranceOrderLog.getCustomer().getRealName();
+                                            if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getRealName())){
+                                                userName=insuranceOrderLog.getCustomer().getNickName();
+                                                if(StringUtils.isEmpty(insuranceOrderLog.getCustomer().getNickName()))
+                                                    userName=insuranceOrderLog.getCustomer().getMobile();
+                                            }
+                                            setUserName(userName);
                                             setProductName(insuranceOrderLog.getProdName()+(insuranceOrderLog.getPrice()>10000?(insuranceOrderLog.getPrice()/10000)+"万":insuranceOrderLog.getPrice()+"元"));
                                         }
                                     });
@@ -1109,7 +1136,13 @@ public class CustomerService implements ICustomerService {
                                         {
                                             setGratitudeType(gratitudeType);
                                             setHeadPath(customer.getAvatarUrl());
-                                            setUserName(customer.getRealName());
+                                            String userName=customer.getRealName();
+                                            if(StringUtils.isEmpty(customer.getRealName())){
+                                                userName=customer.getNickName();
+                                                if(StringUtils.isEmpty(customer.getNickName()))
+                                                    userName=customer.getMobile();
+                                            }
+                                            setUserName(userName);
                                         }
                                     });
                                 }

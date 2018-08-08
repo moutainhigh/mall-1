@@ -30,6 +30,11 @@ public class FinacialWallet {
     /** 信用额度 */
     private BigDecimal creditAmount;
 
+    /** 保险额度 */
+    private BigDecimal insuranceAmount;
+
+    /** 总额度 */
+    private BigDecimal totalAmount;
     /** 冻结金额，例如提现未到账，资金划拨未审核等 */
     private BigDecimal freezingAmount;
 
@@ -114,6 +119,22 @@ public class FinacialWallet {
 
     public void setFreezingAmount(BigDecimal freezingAmount) {
         this.freezingAmount = freezingAmount;
+    }
+
+    public BigDecimal getInsuranceAmount() {
+        return insuranceAmount;
+    }
+
+    public void setInsuranceAmount(BigDecimal insuranceAmount) {
+        this.insuranceAmount = insuranceAmount;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public Integer getVersion() {
