@@ -36,7 +36,7 @@ public interface CustomerMapper {
             "CUSTOMER_LEVEL, LEVEL_CODE, ",
             "INVITATION_CODE, POLICY, ",
             "CUSTOMER_COUNTRY, CUSTOMER_CARD_PEROID, ",
-            "OCCUPATIONAL_CATEGORY)",
+            "OCCUPATIONAL_CATEGORY, PAYMENT_PASSWORD)",
             "values (#{customerId,jdbcType=INTEGER}, #{accountName,jdbcType=VARCHAR}, ",
             "#{address,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, ",
             "#{cardNo,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
@@ -59,7 +59,7 @@ public interface CustomerMapper {
             "#{customerLevel,jdbcType=INTEGER}, #{levelCode,jdbcType=VARCHAR}, ",
             "#{invitationCode,jdbcType=VARCHAR}, #{policy,jdbcType=INTEGER}, ",
             "#{customerCountry,jdbcType=VARCHAR}, #{customerCardPeroid,jdbcType=DATE}, ",
-            "#{occupationalCategory,jdbcType=VARCHAR})"
+            "#{occupationalCategory,jdbcType=VARCHAR}, #{paymentPassword,jdbcType=VARCHAR})"
     })
     int insert(Customer record);
 
@@ -72,7 +72,7 @@ public interface CustomerMapper {
             "RANK, EMAIL_CHECKED, RONG_CLOUD_TOKEN, AVATAR_URL, RECOMMEND_CUSTOMER_ID, NICK_NAME, ",
             "PRAISE, PRAISE_NUM, CARD_TYPE, CUSTOMER_CARD_NO, CARD_POSITIVE_IMG, CARD_NEGATIVE_IMG, ",
             "BANK_CARD_IMG, CUSTOMER_LEVEL, LEVEL_CODE, INVITATION_CODE, POLICY, CUSTOMER_COUNTRY, ",
-            "CUSTOMER_CARD_PEROID, OCCUPATIONAL_CATEGORY",
+            "CUSTOMER_CARD_PEROID, OCCUPATIONAL_CATEGORY, PAYMENT_PASSWORD",
             "from customer",
             "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
@@ -124,7 +124,8 @@ public interface CustomerMapper {
             @Result(column="POLICY", property="policy", jdbcType=JdbcType.INTEGER),
             @Result(column="CUSTOMER_COUNTRY", property="customerCountry", jdbcType=JdbcType.VARCHAR),
             @Result(column="CUSTOMER_CARD_PEROID", property="customerCardPeroid", jdbcType=JdbcType.DATE),
-            @Result(column="OCCUPATIONAL_CATEGORY", property="occupationalCategory", jdbcType=JdbcType.VARCHAR)
+            @Result(column="OCCUPATIONAL_CATEGORY", property="occupationalCategory", jdbcType=JdbcType.VARCHAR),
+            @Result(column="PAYMENT_PASSWORD", property="paymentPassword", jdbcType=JdbcType.VARCHAR)
     })
     Customer selectByPrimaryKey(Integer customerId);
 
@@ -137,7 +138,7 @@ public interface CustomerMapper {
             "RANK, EMAIL_CHECKED, RONG_CLOUD_TOKEN, AVATAR_URL, RECOMMEND_CUSTOMER_ID, NICK_NAME, ",
             "PRAISE, PRAISE_NUM, CARD_TYPE, CUSTOMER_CARD_NO, CARD_POSITIVE_IMG, CARD_NEGATIVE_IMG, ",
             "BANK_CARD_IMG, CUSTOMER_LEVEL, LEVEL_CODE, INVITATION_CODE, POLICY, CUSTOMER_COUNTRY, ",
-            "CUSTOMER_CARD_PEROID, OCCUPATIONAL_CATEGORY",
+            "CUSTOMER_CARD_PEROID, OCCUPATIONAL_CATEGORY, PAYMENT_PASSWORD",
             "from customer"
     })
     @Results({
@@ -188,7 +189,8 @@ public interface CustomerMapper {
             @Result(column="POLICY", property="policy", jdbcType=JdbcType.INTEGER),
             @Result(column="CUSTOMER_COUNTRY", property="customerCountry", jdbcType=JdbcType.VARCHAR),
             @Result(column="CUSTOMER_CARD_PEROID", property="customerCardPeroid", jdbcType=JdbcType.DATE),
-            @Result(column="OCCUPATIONAL_CATEGORY", property="occupationalCategory", jdbcType=JdbcType.VARCHAR)
+            @Result(column="OCCUPATIONAL_CATEGORY", property="occupationalCategory", jdbcType=JdbcType.VARCHAR),
+            @Result(column="PAYMENT_PASSWORD", property="paymentPassword", jdbcType=JdbcType.VARCHAR)
     })
     List<Customer> selectAll();
 
@@ -240,7 +242,8 @@ public interface CustomerMapper {
             "POLICY = #{policy,jdbcType=INTEGER},",
             "CUSTOMER_COUNTRY = #{customerCountry,jdbcType=VARCHAR},",
             "CUSTOMER_CARD_PEROID = #{customerCardPeroid,jdbcType=DATE},",
-            "OCCUPATIONAL_CATEGORY = #{occupationalCategory,jdbcType=VARCHAR}",
+            "OCCUPATIONAL_CATEGORY = #{occupationalCategory,jdbcType=VARCHAR},",
+            "PAYMENT_PASSWORD = #{paymentPassword,jdbcType=VARCHAR}",
             "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Customer record);

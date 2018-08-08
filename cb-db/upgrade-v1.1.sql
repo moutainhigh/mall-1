@@ -573,3 +573,6 @@ CREATE TABLE `finacial_withdraw` (
   KEY `fk_withdraw_customer_id` (`CUSTOMER_ID`),
   CONSTRAINT `fk_withdraw_customer_id` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+##add by guwenshao 2018-08-08
+ALTER TABLE `customer` add  `PAYMENT_PASSWORD` varchar(64) DEFAULT NULL COMMENT '支付密码';

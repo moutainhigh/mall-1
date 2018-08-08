@@ -147,6 +147,9 @@ public class Customer {
     /** 职业类别 */
     private String occupationalCategory;
 
+    /** 支付密码 */
+    private String paymentPassword;
+
     public Integer getCustomerId() {
         return customerId;
     }
@@ -529,5 +532,13 @@ public class Customer {
 
     public void setOccupationalCategory(String occupationalCategory) {
         this.occupationalCategory = occupationalCategory == null ? null : occupationalCategory.trim();
+    }
+
+    public String getPaymentPassword() {
+        return paymentPassword;
+    }
+
+    public void setPaymentPassword(String paymentPassword) {
+        this.paymentPassword = paymentPassword == null ? null : paymentPassword.trim();
     }
 }
