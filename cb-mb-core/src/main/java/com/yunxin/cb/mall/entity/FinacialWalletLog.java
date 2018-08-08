@@ -42,6 +42,12 @@ public class FinacialWalletLog {
     /** 变动金额 */
     private BigDecimal amount;
 
+    /** 保险额度 */
+    private BigDecimal insuranceAmount;
+
+    /** 总额度 */
+    private BigDecimal totalAmount;
+
     /** 版本号 */
     private Integer version;
 
@@ -147,6 +153,22 @@ public class FinacialWalletLog {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getInsuranceAmount() {
+        return insuranceAmount;
+    }
+
+    public void setInsuranceAmount(BigDecimal insuranceAmount) {
+        this.insuranceAmount = insuranceAmount;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public Integer getVersion() {
