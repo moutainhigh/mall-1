@@ -513,6 +513,7 @@ ALTER TABLE finacial_wallet_log ADD COLUMN `INSURANCE_AMOUNT` decimal(20,4) NOT 
 ALTER TABLE finacial_wallet_log ADD COLUMN `TOTAL_AMOUNT` decimal(20,4) NOT NULL DEFAULT 0   COMMENT '总额度';
 ##add by tangou 2018-08-07
 ALTER TABLE bank_info ADD COLUMN `BANK_NAME` varchar(60)  COMMENT '银行名称';
+ALTER TABLE bank_info ADD COLUMN `BANK_LOGO` varchar(100)  COMMENT '银行LOGO';
 ALTER TABLE `crystal_ball`.`bank_info` MODIFY COLUMN EFFECTIVE_TIME VARCHAR (10) ;
 
 ##add by guwenshao 2018-08-07

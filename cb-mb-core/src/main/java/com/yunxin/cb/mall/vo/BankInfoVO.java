@@ -28,6 +28,9 @@ public class BankInfoVO implements java.io.Serializable{
     @ApiModelProperty(value="银行名称",name="bankName",example="招商银行")
     private String bankName;
 
+    @ApiModelProperty(value="银行Logo",name="bankLogo",example="show.jpg")
+    private String bankLogo;
+
     @ApiModelProperty(value="有效期",name="effectiveTime",example="2018-06-15")
     private String effectiveTime;
 
@@ -73,6 +76,14 @@ public class BankInfoVO implements java.io.Serializable{
     public void setBankName(String bankName) {
         this.bankName = bankName;
         setShowBank();
+    }
+
+    public String getBankLogo() {
+        return bankLogo;
+    }
+
+    public void setBankLogo(String bankLogo) {
+        this.bankLogo = bankLogo;
     }
 
     public String getEffectiveTime() {
