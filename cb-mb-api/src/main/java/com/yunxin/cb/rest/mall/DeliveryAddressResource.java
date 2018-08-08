@@ -59,8 +59,7 @@ public class DeliveryAddressResource extends BaseResource {
     @ApiVersion(1)
     public ResponseResult<DeliveryAddressVO> getDeliveryAddressDetail(@PathVariable(value = "addressId") int addressId) {
         try {
-            int customerId = getCustomerId();
-            DeliveryAddress deliveryAddress = deliveryAddressService.selectByPrimaryKey(addressId, customerId);
+            DeliveryAddress deliveryAddress = deliveryAddressService.selectByPrimaryKey(addressId, getCustomerId());
             DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
             BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
             return new ResponseResult(deliveryAddressVO);
