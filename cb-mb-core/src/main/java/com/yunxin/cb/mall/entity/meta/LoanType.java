@@ -28,5 +28,9 @@ public enum LoanType {
     public String toString() {
         return super.toString() + "("+name+")";
     }
+
+    public String getEnum(){
+        return super.toString();
+    }
 }
 

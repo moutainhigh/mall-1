@@ -9,7 +9,7 @@ import java.util.Locale;
  */
 public enum InsurancePeriod {
 
-    TEN_YEAR("10年"),TWENTY_YEAR("20年"),LIFITIME("终生");
+    TEN_YEAR("10年"),TWENTY_YEAR("20年"),LIFITIME("终身");
 
     private String i18nName;
 
