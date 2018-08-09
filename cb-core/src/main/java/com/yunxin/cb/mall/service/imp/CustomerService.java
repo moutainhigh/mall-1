@@ -1011,9 +1011,7 @@ public class CustomerService implements ICustomerService {
                 String recommendName="";
                 if(null!=customer){
                     String levelCode = customer.getLevelCode()+"%";
-                   int total= customerDao.findAllCustomerByLikeLevelCode(levelCode,PolicyType.PAYMENT);
-//                    List<Customer> list= findCustomerByLikeLevelCode(customer);
-//                    if(null!=list&&list.size()>0)
+                   int total= customerDao.findAllCustomerByLikeLevelCode(customerId,levelCode,PolicyType.PAYMENT);
                     //所有感恩人
                     allGratitude=total;
                     //已经感恩

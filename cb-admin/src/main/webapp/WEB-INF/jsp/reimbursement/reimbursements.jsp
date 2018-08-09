@@ -40,6 +40,8 @@
         function auditItem(reimbursementId){
 
             $('#auditDialog').modal();
+
+
             $("#trs").html("");
             $.get("reimbursementOrder.do?reimbursementId="+reimbursementId,$("#tables").serialize(),function(result){
                 debugger;

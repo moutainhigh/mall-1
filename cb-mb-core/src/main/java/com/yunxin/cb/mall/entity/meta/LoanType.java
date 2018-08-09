@@ -1,14 +1,18 @@
+/**
+ *
+ */
 package com.yunxin.cb.mall.entity.meta;
 
 /**
- * Created by Administrator on 2018/7/21.
+ * @author Aidy
  */
-public enum LoanState {
-    WAIT_LOAN("申请中"), APPLY_SUCCESS("申请通过"), APPLY_FAILURE("申请失败"), CANCELED("已取消"), SETTLE("已结清");
+public enum LoanType {
+
+    INSURANCE_LOAN("保险贷"), CREDIT_LOAN("信用贷");
 
     private String name;
 
-    private LoanState(String name) {
+    private LoanType(String name) {
         this.name = name;
     }
 
@@ -25,3 +29,4 @@ public enum LoanState {
         return super.toString() + "("+name+")";
     }
 }
+
