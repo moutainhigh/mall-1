@@ -1,18 +1,10 @@
-/**
- *
- */
 package com.yunxin.cb.mall.entity.meta;
 
-/**
- * @author Aidy
- */
-public enum LoanType {
-
-    INSURANCE_LOAN("保险贷"), CREDIT_LOAN("信用贷");
-
+public enum RepaymentType {
+    BANK_CARD("银行卡"),WALLET("钱包");
     private String name;
 
-    private LoanType(String name) {
+    private RepaymentType(String name) {
         this.name = name;
     }
 
@@ -28,9 +20,4 @@ public enum LoanType {
     public String toString() {
         return super.toString() + "("+name+")";
     }
-
-    public String getEnum(){
-        return super.toString();
-    }
 }
-

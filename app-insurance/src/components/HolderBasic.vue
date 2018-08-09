@@ -125,7 +125,7 @@
       return {
         birthday: '',
         gender: true,
-        priceId: storage.fetch('order').insuranceProductPrice.priceId,
+        priceId: 1,
         profession: [],
         list: [['居民身份证', '驾驶证', '护照']],
         title: '',
@@ -251,13 +251,11 @@
       }
       if (order.insuranceProduct.prodId != this.proId) {
         order.insuranceProduct.prodId = this.proId;
-        if (this.proId == 1) {
-          order.insuranceProductPrice.priceId = 1;
-          this.priceId = 1;
-        }
-        if (this.proId == 2) {
-          order.insuranceProductPrice.priceId = 4;
-          this.priceId = 4;
+        let prices = storage.fetch('prices');
+        if (prices.length > 0) {
+          order.insuranceProductPrice.priceId = prices[0].priceId;
+          order.insuranceProductPrice.price = prices[0].price;
+          this.priceId = prices[0].priceId;
         }
       } else {
         this.priceId = order.insuranceProductPrice.priceId;

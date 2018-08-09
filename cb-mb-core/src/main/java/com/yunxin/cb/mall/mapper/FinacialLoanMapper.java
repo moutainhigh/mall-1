@@ -96,7 +96,7 @@ public interface FinacialLoanMapper {
             @Result(column="OVERDUE_NUMER", property="overdueNumer", jdbcType=JdbcType.INTEGER),
             @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER)
     })
-    List<FinacialLoan> selectByCustomerId(int customerId);
+    List<FinacialLoan> selectByCustomerIdAndType(@Param("customerId") Integer customerId);
 
     @Update({
             "update finacial_loan",

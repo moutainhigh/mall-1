@@ -155,7 +155,7 @@
     },
     created() {
       if (this.$route.query.token) {
-        storage.save("token", this.$route.query.token);
+        storage.saveSession("token", this.$route.query.token);
       }
     }
   }

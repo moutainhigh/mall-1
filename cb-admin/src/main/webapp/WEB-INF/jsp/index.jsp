@@ -134,7 +134,7 @@
   <div style="position: relative">
     <img style="width: 100%; position: absolute" src="images/indexBg/loginBg.png" alt=""/>
 
-    <form id="form-login" style="width: 100%; margin-top: 40px" action="login" method="post">
+    <form id="form-login" style="width: 100%;margin-top: 50px;position: absolute;" action="login" method="post">
       <%--<div class="login-avatar">--%>
         <%--<img src="images/users/logo.png" alt="" id="login-avatar"/>--%>
       <%--</div>--%>

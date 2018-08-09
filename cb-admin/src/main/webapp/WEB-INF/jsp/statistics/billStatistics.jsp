@@ -230,7 +230,7 @@
           <ul class="breadcrumb">
             <li><a href="#">首页</a></li>
             <li><a href="#">统计分析</a></li>
-            <li class="active"><a href="moneyStatistics.do">金额统计</a></li>
+            <li class="active"><a href="moneyStatistics.do">账单统计</a></li>
           </ul>
           <!-- End .breadcrumb -->
         </div>
@@ -248,7 +248,7 @@
       <header id="header-sec">
         <div class="inner-padding">
           <div class="pull-left">
-            <h2>金额统计</h2>
+            <h2>账单统计</h2>
           </div>
         </div>
         <!-- End .inner-padding -->

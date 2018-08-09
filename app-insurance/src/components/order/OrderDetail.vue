@@ -24,11 +24,11 @@
         </div>
         <div class="d-cell">
           <div class="d-cell-item">保险期间</div>
-          <div class="d-cell-val">{{order.insuranceProduct.insurePeriod}}</div>
+          <div class="d-cell-val">{{setPeriod(order.insuranceProduct.insurePeriod)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">缴费期限</div>
-          <div class="d-cell-val">{{order.insuranceProduct.protectionYear}}</div>
+          <div class="d-cell-val">{{setInsureYear(order.insuranceProduct.protectionYear)}}</div>
         </div>
         <div class="d-cell">
           <div class="d-cell-item">基本保额</div>
@@ -270,6 +270,7 @@
   import {arrayContain, ageYear} from "../../config/mUtils";
   import {careerCode} from "../../admin/career";
   import Place from "./Place";
+  import {insurePeriod, protectionYear} from "../../config/dataFormat";
 
   export default {
     name: "orderDetail",
@@ -305,6 +306,12 @@
           case "ON_SURRENDER":
             return "已退保";
         }
+      },
+      setPeriod(period) {
+        return insurePeriod(period);
+      },
+      setInsureYear(insureYear) {
+        return protectionYear(insureYear);
       },
       district(province, city, district) {
         let result = '';

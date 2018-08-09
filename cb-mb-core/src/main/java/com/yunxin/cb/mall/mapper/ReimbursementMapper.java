@@ -21,11 +21,11 @@ public interface ReimbursementMapper {
             "insert into rb_reimbursement (REIMBURSEMENT_ID, REIMBURSEMENT_NO, ",
             "CUSTOMER_ID, AMOUNT, ",
             "TAX, ORDER_AMOUNT, ",
-            "ORDER_STATE, CREATE_TIME,CATALOG_ID)",
+            "ORDER_STATE, CREATE_TIME,REPAYMENT_AMOUNT,REPAYMENT_TYPE,CATALOG_ID)",
             "values (#{reimbursementId,jdbcType=INTEGER}, #{reimbursementNo,jdbcType=VARCHAR}, ",
             "#{customerId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, ",
             "#{tax,jdbcType=DECIMAL}, #{orderAmount,jdbcType=DECIMAL}, ",
-            "#{orderState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{catalogId,jdbcType=INTEGER})"
+            "#{orderState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{repaymentAmount,jdbcType=DECIMAL},#{repaymentType,jdbcType=INTEGER},#{catalogId,jdbcType=INTEGER})"
     })
     @Options(useGeneratedKeys=true, keyProperty="reimbursementId", keyColumn="REIMBURSEMENT_ID")
     int insert(Reimbursement record);
@@ -34,7 +34,7 @@ public interface ReimbursementMapper {
     @Select({
             "select",
             "REIMBURSEMENT_ID, REIMBURSEMENT_NO, CUSTOMER_ID, AMOUNT, TAX, ORDER_AMOUNT, ",
-            "ORDER_STATE, CREATE_TIME,CATALOG_ID",
+            "ORDER_STATE, CREATE_TIME,REPAYMENT_AMOUNT,REPAYMENT_TYPE,CATALOG_ID",
             "from rb_reimbursement",
             "where REIMBURSEMENT_ID = #{reimbursementId,jdbcType=INTEGER}"
     })
@@ -47,6 +47,8 @@ public interface ReimbursementMapper {
             @Result(column="ORDER_AMOUNT", property="orderAmount", jdbcType=JdbcType.DECIMAL),
             @Result(column="ORDER_STATE", property="orderState", jdbcType=JdbcType.INTEGER),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="REPAYMENT_AMOUNT", property="repaymentAmount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="REPAYMENT_TYPE", property="repaymentType", jdbcType=JdbcType.INTEGER),
             @Result(column="CATALOG_ID", property="catalogId", jdbcType=JdbcType.INTEGER)
     })
     Reimbursement selectByPrimaryKey(Integer reimbursementId);
@@ -55,7 +57,7 @@ public interface ReimbursementMapper {
     @Select({
             "select",
             "REIMBURSEMENT_ID, REIMBURSEMENT_NO, CUSTOMER_ID, AMOUNT, TAX, ORDER_AMOUNT, ",
-            "ORDER_STATE, CREATE_TIME,CATALOG_ID",
+            "ORDER_STATE, CREATE_TIME,REPAYMENT_AMOUNT,REPAYMENT_TYPE,CATALOG_ID",
             "from rb_reimbursement"
     })
     @Results({
@@ -67,6 +69,8 @@ public interface ReimbursementMapper {
             @Result(column="ORDER_AMOUNT", property="orderAmount", jdbcType=JdbcType.DECIMAL),
             @Result(column="ORDER_STATE", property="orderState", jdbcType=JdbcType.INTEGER),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="REPAYMENT_AMOUNT", property="repaymentAmount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="REPAYMENT_TYPE", property="repaymentType", jdbcType=JdbcType.INTEGER),
             @Result(column="CATALOG_ID", property="catalogId", jdbcType=JdbcType.INTEGER)
     })
     List<Reimbursement> selectAll();
@@ -81,6 +85,8 @@ public interface ReimbursementMapper {
             "ORDER_AMOUNT = #{orderAmount,jdbcType=DECIMAL},",
             "ORDER_STATE = #{orderState,jdbcType=INTEGER},",
             "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},",
+            "REPAYMENT_AMOUNT = #{repaymentAmount,jdbcType=DECIMAL},",
+            "REPAYMENT_TYPE = #{repaymentType,jdbcType=INTEGER},",
             "CATALOG_ID = #{catalogId,jdbcType=INTEGER}",
             "where REIMBURSEMENT_ID = #{reimbursementId,jdbcType=INTEGER}"
     })
@@ -90,7 +96,7 @@ public interface ReimbursementMapper {
             "<script>",
             "select",
             "REIMBURSEMENT_ID, REIMBURSEMENT_NO, CUSTOMER_ID, AMOUNT, TAX, ORDER_AMOUNT, ",
-            "ORDER_STATE, CREATE_TIME,CATALOG_ID",
+            "ORDER_STATE, CREATE_TIME,REPAYMENT_AMOUNT,REPAYMENT_TYPE,CATALOG_ID",
             "from rb_reimbursement",
             "where 1=1",
             "<if test='data.customerId!=null'>",
@@ -112,6 +118,8 @@ public interface ReimbursementMapper {
             @Result(column="ORDER_AMOUNT", property="orderAmount", jdbcType=JdbcType.DECIMAL),
             @Result(column="ORDER_STATE", property="orderState", jdbcType=JdbcType.INTEGER),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="REPAYMENT_AMOUNT", property="repaymentAmount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="REPAYMENT_TYPE", property="repaymentType", jdbcType=JdbcType.INTEGER),
             @Result(column="CATALOG_ID", property="catalogId", jdbcType=JdbcType.INTEGER)
     })
     List<Reimbursement> selectAllByCustomerId(Query q);
@@ -119,7 +127,7 @@ public interface ReimbursementMapper {
     @Select({
             "select",
             "REIMBURSEMENT_ID, REIMBURSEMENT_NO, CUSTOMER_ID, AMOUNT, TAX, ORDER_AMOUNT, ",
-            "ORDER_STATE, CREATE_TIME,CATALOG_ID",
+            "ORDER_STATE, CREATE_TIME,REPAYMENT_AMOUNT,REPAYMENT_TYPE,CATALOG_ID",
             "from rb_reimbursement",
             "where REIMBURSEMENT_ID = #{reimbursementId,jdbcType=INTEGER}",
             "and CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
@@ -133,6 +141,8 @@ public interface ReimbursementMapper {
             @Result(column="ORDER_AMOUNT", property="orderAmount", jdbcType=JdbcType.DECIMAL),
             @Result(column="ORDER_STATE", property="orderState", jdbcType=JdbcType.INTEGER),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="REPAYMENT_AMOUNT", property="repaymentAmount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="REPAYMENT_TYPE", property="repaymentType", jdbcType=JdbcType.INTEGER),
             @Result(column="CATALOG_ID", property="catalogId", jdbcType=JdbcType.INTEGER)
     })
     Reimbursement selectByPrimaryKeyAndCustomerId(@Param("reimbursementId") Integer reimbursementId, @Param("customerId") Integer customerId);

@@ -669,6 +669,36 @@ FROM crystal_ball.finacial_bill fb
 GROUP BY
 date_format(`fb`.`CREATE_TIME`,'%Y-%m-%d'), fb.TYPE
 
+##add by pengcong 2018-8-9
+ALTER TABLE `rb_reimbursement` ADD COLUMN `REPAYMENT_AMOUNT` decimal(20, 4) COMMENT '还款金额' AFTER `CATALOG_ID`,
+ALTER TABLE `rb_reimbursement` ADD COLUMN `REPAYMENT_TYPE` int(11) COMMENT '还款类型' AFTER `REPAYMENT_AMOUNT`;
+
+##add by guwenshao 2018-8-9
+CREATE TABLE `finacial_credit_line_bill` (
+  `FINACIAL_CREDIT_LINE_ID` int(10) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(10) NOT NULL COMMENT '客户ID',
+  `TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资金类型',
+  `TRANSACTION_TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易类型',
+  `TRANSACTION_DESC` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
+  `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易额度',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '时间',
+  PRIMARY KEY (`FINACIAL_CREDIT_LINE_ID`),
+  KEY `fk_liabilities_customer` (`CUSTOMER_ID`),
+  CONSTRAINT `fk_credit_line_customer` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='信用额度交易记录';
+
+-- --------------------------
+-- finacial_loan_config 贷款期限利率配置表  add by chenpeng 2018年8月9日
+-- -------------------------
+CREATE TABLE `finacial_loan_config` (
+  `LOAN_CONFIG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TERM` int(11) NOT NULL COMMENT '贷款期限',
+  `INTEREST_RATE` decimal(20,4) NOT NULL COMMENT '贷款率',
+  `TITLE` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '贷款产品标题',
+  `REMARK` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '产品描述',
+  PRIMARY KEY (`LOAN_CONFIG_ID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='贷款期限利率配置表';
+
 ##add by tangou 2018-8-9 加入账单表
 DROP TABLE IF EXISTS `finacial_log`;
 CREATE TABLE `finacial_log` (

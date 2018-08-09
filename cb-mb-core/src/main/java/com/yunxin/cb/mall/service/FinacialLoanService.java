@@ -10,7 +10,7 @@ public interface FinacialLoanService {
 
     public FinacialLoanVO add(FinacialLoanVO vo);
 
-    public List<FinacialLoanVO> getByCustomerId(int customerId);
+    public List<FinacialLoanVO> getByCustomerIdAndType(int customerId);
 
     public FinacialLoanVO getById(int repaymentId);
 
