@@ -29,7 +29,7 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 			credentials: 'include',
 			method: type,
 			headers: {
-        'Authorization': 'Bearer ' + storage.fetch('token'),
+        'Authorization': 'Bearer ' + storage.fetchSession('token'),
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
       },

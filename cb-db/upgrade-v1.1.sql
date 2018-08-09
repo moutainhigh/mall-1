@@ -495,18 +495,19 @@ ALTER TABLE commodity ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商�
 ######add by wangteng 2018-08-07
 DROP TABLE IF EXISTS `insurance_order_log`;
 CREATE TABLE `insurance_order_log` (
-  `INSURANCE_LOG_ID` int(11) NOT NULL COMMENT '主键',
+  `insurance_log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `CUSTOMER_ID` int(11) DEFAULT NULL COMMENT '用户',
   `INSURANCE_ORDER_ID` int(11) DEFAULT NULL COMMENT '保单',
   `ORDER_STATE` int(11) DEFAULT NULL COMMENT '状态',
   `PROD_NAME` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品名称',
   `PRICE` int(10) DEFAULT NULL COMMENT '价格',
   `CREATE_TIME` datetime DEFAULT NULL COMMENT '时间',
-  KEY `customer_id` (`customer_id`),
-  KEY `insurance_order_id` (`insurance_order_id`),
+  PRIMARY KEY (`insurance_log_id`),
+  KEY `customer_id` (`CUSTOMER_ID`),
+  KEY `insurance_order_id` (`INSURANCE_ORDER_ID`),
   CONSTRAINT `insurance_order_log_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`),
   CONSTRAINT `insurance_order_log_ibfk_2` FOREIGN KEY (`INSURANCE_ORDER_ID`) REFERENCES `insurance_order` (`ORDER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci   COMMENT '保单日志';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='保单日志';
 
 ##add by tangou 2018-08-07
 ALTER TABLE finacial_wallet ADD COLUMN `INSURANCE_AMOUNT` decimal(20,4) NOT NULL DEFAULT 0  COMMENT '保险额度';
@@ -608,9 +609,9 @@ CREATE TABLE `finacial_withdraw` (
 
 ##add by guwenshao 2018-08-08
 ALTER TABLE `customer` add  `PAYMENT_PASSWORD` varchar(64) DEFAULT NULL COMMENT '支付密码';
-
 ALTER TABLE `finacial_withdraw` add  `WITHDRAW_TYPE` int(11) DEFAULT 1 NOT NULL COMMENT '提现类型：1.报账转账 2.保险返利转账';
 
+##add by likang 2018-08-09
 ALTER TABLE `finacial_loan` add  `REPAYMENT_TERM` int(11) DEFAULT 1 NOT NULL COMMENT '还款期限';
 ALTER TABLE `finacial_loan` add  `FINAL_REPAYMENT_TIME` datetime DEFAULT  NULL COMMENT '最后还款时间';
 ALTER TABLE `finacial_repayment` add  `REPAY_AMOUNT` datetime DEFAULT  NULL COMMENT '应还总额';

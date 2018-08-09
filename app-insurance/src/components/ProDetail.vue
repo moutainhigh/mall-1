@@ -59,6 +59,7 @@
     methods: {
       next: function () {
         let query = this.$route.query;
+        console.log(query,"query");
         this.$router.push({
           path: '/holder-basic',
           query: query

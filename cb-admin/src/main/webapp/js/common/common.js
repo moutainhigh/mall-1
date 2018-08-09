@@ -106,3 +106,37 @@ function reloadGridFilters(gridName) {
         filters: currentFilters
     });
 }
+
+/**
+ * 加法
+ * 解决js中小数运算精度丢失
+ * @param num1
+ * @param num2
+ * @returns {string}
+ * @author lxc
+ * @date 2018-08-09 11:36
+ */
+function add(num1,num2){
+    var r1,r2,m,n;
+    try{r1=num1.toString().split(".")[1].length}catch(e){r1=0}
+    try{r2=num2.toString().split(".")[1].length}catch(e){r2=0}
+    m = Math.pow(10,Math.max(r1,r2));
+    n = (r1>=r2)?r1:r2;
+    return ((num1*m + num2*m)/m).toFixed(n);
+}
+
+/**
+ * 乘法
+ * 解决js中小数运算精度丢失
+ * @param num1
+ * @param num2
+ * @returns {number}
+ * @author lxc
+ * @date 2018-08-09 11:36
+ */
+function mul(num1,num2){
+    var m = 0;
+    try{m+=num1.toString().split(".")[1].length}catch(e){}
+    try{m+=num2.toString().split(".")[1].length}catch(e){}
+    return (Number(num1.toString().replace(".",""))*Number(num2.toString().replace(".","")))/Math.pow(10,m)
+}

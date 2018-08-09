@@ -1,5 +1,8 @@
 package com.yunxin.cb.util.page;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import java.util.List;
  * @author 龚磊
  */
 @SuppressWarnings("serial")
+@ApiModel(value="分页对象",description="分页对象")
 public class PageFinder<T> implements Serializable {
 
     private static int DEFAULT_PAGE_SIZE = 10;
@@ -16,36 +20,43 @@ public class PageFinder<T> implements Serializable {
     /**
      * 每页的记录数
      */
+    @ApiModelProperty(value="每页的记录数",name="pageSize",example="10")
     private long pageSize = DEFAULT_PAGE_SIZE;
 
     /**
      * 当前页中存放的数据
      */
+    @ApiModelProperty(value="当前页中存放的数据",name="data",example="list对象")
     private List<T> data;
 
     /**
      * 总记录数
      */
+    @ApiModelProperty(value="总记录数",name="rowCount",example="100")
     private long rowCount;
 
     /**
      * 总页数
      */
+    @ApiModelProperty(value="总页数",name="pageCount",example="10")
     private long pageCount;
 
     /**
      * 当前第几页
      */
+    @ApiModelProperty(value="当前第几页",name="pageNo",example="1")
     private long pageNo;
 
     /**
      * 是否有上一页
      */
+    @ApiModelProperty(value="是否有上一页",name="hasPrevious",example="false")
     private boolean hasPrevious = false;
 
     /**
      * 是否有下一页
      */
+    @ApiModelProperty(value="是否有下一页",name="hasNext",example="true")
     private boolean hasNext = false;
 
     public PageFinder() {

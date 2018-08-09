@@ -10,6 +10,9 @@ import java.io.Serializable;
  */
 @ApiModel(value="感恩统计",description="感恩统计 CustomerGratitudeVo")
 public class CustomerGratitudeVo implements Serializable {
+
+    @ApiModelProperty(value="感恩人",name="recommendName",example="张三")
+    private String recommendName;
     @ApiModelProperty(value="感恩我的",name="gratitudeMe",example="101")
     private int gratitudeMe;
     @ApiModelProperty(value="未感恩的",name="noGratitude",example="101")
@@ -59,5 +62,13 @@ public class CustomerGratitudeVo implements Serializable {
 
     public void setAllGratitude(int allGratitude) {
         this.allGratitude = allGratitude;
+    }
+
+    public String getRecommendName() {
+        return recommendName;
+    }
+
+    public void setRecommendName(String recommendName) {
+        this.recommendName = recommendName;
     }
 }

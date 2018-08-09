@@ -166,6 +166,10 @@
                     "regex": /^[a-zA-Z]{3}\d{12}$/,
                     "alertText": "请输入正确的证件号码"
                 },
+                "gtOne": {//请输入大于1的比例
+                    "regex": /^([2-9]+(\.\d+)?)|(1\d+(\.\d+)?)|(1\.\d*[1-9]+)$/,
+                    "alertText": "请输入大于1的比例"
+                },
                 // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {
                     "url": "ajaxValidateFieldUser",
