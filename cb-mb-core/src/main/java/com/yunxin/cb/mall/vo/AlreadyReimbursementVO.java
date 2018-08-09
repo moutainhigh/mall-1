@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
@@ -12,23 +13,25 @@ public class AlreadyReimbursementVO implements Serializable {
     @ApiModelProperty(value="报账信息ID",name="reimbursementId",example="1")
     private int reimbursementId;
     @ApiModelProperty(value="报账信息状态",name="orderState",example="1")
-    private int orderState;
+    private ReimbursementState orderState;
     @ApiModelProperty(value="报账商品总数量",name="sum",example="1")
     private int sum;
     @ApiModelProperty(value="合计",name="accountSalePrice",example="111")
-    private float accountSalePrice;
+    private BigDecimal orderAmount;
     @ApiModelProperty(value="到账金额",name="accountAmount",example="111")
-    private BigDecimal accountAmount;
+    private BigDecimal amount;
     @ApiModelProperty(value="税",name="tax",example="111")
     private BigDecimal tax;
-    @ApiModelProperty(value="创建时间",name="createTime",example="2018-08-08 15:20:20")
+    @ApiModelProperty(value="创建时间",name="createTime",example="1533691732000")
     private Date createTime;
     @ApiModelProperty(value="货品信息",name="list",example="货品信息")
     private List<ReimbursementProductVO> list;
     @ApiModelProperty(value="纳税点",name="taxPoint",example="23%")
     private String taxPoint;
-    @ApiModelProperty(value="操作时间",name="operationTime",example="2018-08-08 15:20:20")
+    @ApiModelProperty(value="操作时间",name="operationTime",example="1533691732000")
     private Date operationTime;
+    @ApiModelProperty(value="审批时间",name="examinationTime",example="1533691732000")
+    private Date examinationTime;
     @ApiModelProperty(value="报账单号",name="reimbursementNo",example="52525525")
     private String reimbursementNo;
 
@@ -41,11 +44,11 @@ public class AlreadyReimbursementVO implements Serializable {
         this.reimbursementId = reimbursementId;
     }
 
-    public int getOrderState() {
+    public ReimbursementState getOrderState() {
         return orderState;
     }
 
-    public void setOrderState(int orderState) {
+    public void setOrderState(ReimbursementState orderState) {
         this.orderState = orderState;
     }
 
@@ -57,20 +60,20 @@ public class AlreadyReimbursementVO implements Serializable {
         this.sum = sum;
     }
 
-    public float getAccountSalePrice() {
-        return accountSalePrice;
+    public BigDecimal getOrderAmount() {
+        return orderAmount;
     }
 
-    public void setAccountSalePrice(float accountSalePrice) {
-        this.accountSalePrice = accountSalePrice;
+    public void setOrderAmount(BigDecimal orderAmount) {
+        this.orderAmount = orderAmount;
     }
 
-    public BigDecimal getAccountAmount() {
-        return accountAmount;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setAccountAmount(BigDecimal accountAmount) {
-        this.accountAmount = accountAmount;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public BigDecimal getTax() {
@@ -119,5 +122,13 @@ public class AlreadyReimbursementVO implements Serializable {
 
     public void setReimbursementNo(String reimbursementNo) {
         this.reimbursementNo = reimbursementNo;
+    }
+
+    public Date getExaminationTime() {
+        return examinationTime;
+    }
+
+    public void setExaminationTime(Date examinationTime) {
+        this.examinationTime = examinationTime;
     }
 }

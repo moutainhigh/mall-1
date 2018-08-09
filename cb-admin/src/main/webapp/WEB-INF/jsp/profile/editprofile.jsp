@@ -15,6 +15,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>参数配置</title>
+    <script charset="utf-8" src="../editor/kindeditor-all-min.js"></script>
+    <script charset="utf-8" src="../editor/lang/zh_CN.js"></script>
 
     <script type="text/javascript">
         function getprofileName(state){
@@ -234,14 +236,30 @@
                                     });
                                 });
                             });
+
+                            $(document).ready(function () {
+                                KindEditor.ready(function (K) {
+                                    window.editor = K.create('#editorContent', {
+                                        uploadJson: '../upload/fileUpload.do',
+                                        fileManagerJson: '../upload/fileManager.do',
+                                        allowFileManager: true,
+                                        afterCreate : function() {
+                                            this.sync();
+                                        },
+                                        afterBlur:function(){
+                                            this.sync();
+                                        }
+                                    });
+                                });
+                            });
                         </script>
                         <div class="spacer-10"></div>
                         <div id="fileValeDiv" class="row">
                             <div class="col-sm-2">
                                 <label>参数值：<span class="asterisk">*</span></label>
                             </div>
-                            <div class="col-sm-3">
-                                <form:input id="fileValue"    path="fileValue" cssClass="form-control validate[required,minSize[1]]"/>
+                            <div class="col-sm-9">
+                                <form:textarea cssClass="form-control" id="editorContent" path="fileValue" cssStyle="height:500px;"></form:textarea>
                             </div>
                         </div>
                         <div id="fileValeImg" class="row" style="display: none">
