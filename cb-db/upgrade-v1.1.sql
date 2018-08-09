@@ -668,3 +668,22 @@ fb.TYPE as TYPE, SUM(fb.AMOUNT) as amount
 FROM crystal_ball.finacial_bill fb
 GROUP BY
 date_format(`fb`.`CREATE_TIME`,'%Y-%m-%d'), fb.TYPE
+
+##add by tangou 2018-8-9 加入账单表
+DROP TABLE IF EXISTS `finacial_log`;
+CREATE TABLE `finacial_log` (
+  `LOG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(11) NOT NULL COMMENT '用户id',
+  `CUSTOMER_NAME` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易人',
+  `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易金额',
+  `TYPE` int(2) NOT NULL COMMENT '交易类型：0.收入，1.支出',
+  `TRANSACTION_TYPE` int(2) NOT NULL COMMENT '交易类型：0.保险购买1.保险返利2.商品购买3.商品退货4.借款5.手动还款6.保险返利自动还款7.商品报帐自动还款',
+  `PAY_TYPE` int(2) NOT NULL COMMENT '支付方式：0.微信，1.支付宝，2.报账，3.还款',
+  `CREATE_TIME` datetime NOT NULL COMMENT '交易时间',
+  `STATE` int(11) NOT NULL COMMENT '交易状态',
+  `TRANSACTION_NO` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易订单号',
+  `TRANSACTION_DESC` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
+  PRIMARY KEY (`LOG_ID`) USING BTREE,
+  KEY `fk_log_customer_id` (`CUSTOMER_ID`),
+  CONSTRAINT `fk_log_customer_id` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
