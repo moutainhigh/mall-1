@@ -12,7 +12,7 @@
       <p>请保持电话畅通，以便商家及时与您联系</p>
     </div>
     <div style="text-align: center">
-      <button class="checkOrder">查看订单</button>
+      <button class="checkOrder" @click='viewOrder'>查看订单</button>
       <p style="font-size: 1.16rem; padding-top: 1.5rem" @click="returnHome">返回首页</p>
     </div>
   </div>
@@ -24,8 +24,12 @@
     methods: {
       returnHome() {
         this.$router.push("/");
+      },
+      viewOrder(){
+        location.href ='yunxi://yunxi.com?url_action={"from":"webview","url":"","action":1,"data":'+this.$route.query.productId+'}'
       }
-    }
+    },
+
   }
 </script>
 

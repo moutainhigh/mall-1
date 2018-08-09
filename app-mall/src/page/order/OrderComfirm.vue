@@ -117,14 +117,17 @@
       ,
       chooseAddr() {
         this.$router.push({
-          path: '/choose-address'
+          path: '/choose-address',
         })
       },
       submit() {
         addOrder(this.orderConfirm).then(res=>{
           if (res.result == 'SUCCESS') {
             this.$router.push({
-              path:'/order-success'
+              path:'/order-success',
+              query:{
+                productId:this.$route.query.productId
+              }
             })
           }else {
             this.$vux.toast.text("提交失败,请稍后重试！",'middle');
