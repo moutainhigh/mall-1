@@ -19,13 +19,13 @@ public interface FinacialLogMapper {
 
     @Insert({
         "insert into finacial_log (LOG_ID, CUSTOMER_ID, ",
-        "CUSTOMER_NAME, TITLE, AMOUNT, ",
+        "CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, ",
         "TYPE, TRANSACTION_TYPE, ",
         "PAY_TYPE, CREATE_TIME, ",
         "STATE, TRANSACTION_NO, ",
         "TRANSACTION_DESC)",
         "values (#{logId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, ",
-        "#{customerName,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, ",
+        "#{customerName,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, ",
         "#{type,jdbcType=INTEGER}, #{transactionType,jdbcType=INTEGER}, ",
         "#{payType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, ",
         "#{state,jdbcType=INTEGER}, #{transactionNo,jdbcType=VARCHAR}, ",
@@ -35,7 +35,7 @@ public interface FinacialLogMapper {
 
     @Select({
         "select",
-        "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
+        "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
         "CREATE_TIME, STATE, TRANSACTION_NO, TRANSACTION_DESC",
         "from finacial_log",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
@@ -45,6 +45,7 @@ public interface FinacialLogMapper {
         @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
         @Result(column="CUSTOMER_NAME", property="customerName", jdbcType=JdbcType.VARCHAR),
         @Result(column="TITLE", property="title", jdbcType=JdbcType.VARCHAR),
+        @Result(column="IMAGE", property="image", jdbcType=JdbcType.VARCHAR),
         @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
@@ -58,7 +59,7 @@ public interface FinacialLogMapper {
 
     @Select({
         "select",
-        "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
+        "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
         "CREATE_TIME, STATE, TRANSACTION_NO, TRANSACTION_DESC",
         "from finacial_log"
     })
@@ -67,6 +68,7 @@ public interface FinacialLogMapper {
         @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
         @Result(column="CUSTOMER_NAME", property="customerName", jdbcType=JdbcType.VARCHAR),
         @Result(column="TITLE", property="title", jdbcType=JdbcType.VARCHAR),
+        @Result(column="IMAGE", property="image", jdbcType=JdbcType.VARCHAR),
         @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
@@ -83,6 +85,7 @@ public interface FinacialLogMapper {
         "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
           "CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},",
           "TITLE = #{title,jdbcType=VARCHAR},",
+          "IMAGE = #{image,jdbcType=VARCHAR},",
           "AMOUNT = #{amount,jdbcType=DECIMAL},",
           "TYPE = #{type,jdbcType=INTEGER},",
           "TRANSACTION_TYPE = #{transactionType,jdbcType=INTEGER},",
@@ -98,7 +101,7 @@ public interface FinacialLogMapper {
     @Select({
             "<script>",
             "select",
-            "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
+            "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
             "CREATE_TIME, STATE, TRANSACTION_NO, TRANSACTION_DESC",
             "from finacial_log",
             "where 1=1",

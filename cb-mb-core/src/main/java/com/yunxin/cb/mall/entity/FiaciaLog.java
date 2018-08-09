@@ -28,6 +28,9 @@ public class FiaciaLog implements Serializable {
     /** 标题 */
     private String title;
 
+    /** 图片 */
+    private String image;
+
     /** 交易金额 */
     private BigDecimal amount;
 
@@ -146,5 +149,13 @@ public class FiaciaLog implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

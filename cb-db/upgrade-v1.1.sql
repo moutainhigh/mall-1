@@ -719,3 +719,4 @@ CREATE TABLE `finacial_log` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 ALTER TABLE `finacial_log` ADD  COLUMN `TITLE` varchar(100) NOT NULL COMMENT '标题';
+ALTER TABLE `finacial_log` ADD  COLUMN `IMAGE` varchar(100) COMMENT '图片';

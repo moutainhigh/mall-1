@@ -31,6 +31,10 @@ public class FiaciaLogVO implements java.io.Serializable{
     @ApiModelProperty(value="标题",name="title",example="某某商品购买")
     private String title;
 
+    /** 图片 */
+    @ApiModelProperty(value="图片 ",name="image",example="goods.jpg")
+    private String image;
+
     /** 交易人 */
     @ApiModelProperty(value="交易人",name="customerName",example="张三")
     private String customerName;
@@ -173,5 +177,13 @@ public class FiaciaLogVO implements java.io.Serializable{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
