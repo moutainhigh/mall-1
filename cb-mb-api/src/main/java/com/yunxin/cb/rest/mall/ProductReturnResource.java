@@ -93,17 +93,15 @@ public class ProductReturnResource extends BaseResource {
     @ApiOperation(value = "退货分页列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "form", dataType = "Integer")})
+            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "form", dataType = "int")})
     @ApiVersion(1)
     @PostMapping(value = "productReturn/pageList")
     public ResponseResult<PageFinder<ProductReturnDetailVO>> pageProductReturn(@RequestParam(value = "pageNo") int pageNo,
-            @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "orderId", required = false) Integer orderId){
+            @RequestParam(value = "pageSize") int pageSize){
         try {
             Query q = new Query(pageNo, pageSize);
             ProductReturn productReturn = new ProductReturn();
             productReturn.setCustomerId(getCustomerId());
-            productReturn.setOrderId(orderId);
             q.setData(productReturn);
             PageFinder<ProductReturn> pageFinder =  productReturnService.pageProductReturn(q);
             PageFinder<ProductReturnDetailVO> page = ProductReturnDetailVO.dOconvertVOPage(pageFinder);
@@ -113,27 +111,6 @@ public class ProductReturnResource extends BaseResource {
             return new ResponseResult(Result.FAILURE);
         }
     }
-
-//    @ApiOperation(value = "退货列表")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "orderId", value = "订单id", paramType = "form", dataType = "Integer")})
-//    @ApiVersion(1)
-//    @PostMapping(value = "productReturn/list")
-//    public ResponseResult<List<ProductReturnDetailVO>> listProductReturn(@RequestParam(value = "orderId", required = false) Integer orderId){
-//        try {
-//            Query q = new Query();
-//            ProductReturn productReturn = new ProductReturn();
-//            productReturn.setCustomerId(getCustomerId());
-//            productReturn.setOrderId(orderId);
-//            q.setData(productReturn);
-//            List<ProductReturn> listProductReturn =  productReturnService.listProductReturn(q);
-//            List<ProductReturnDetailVO> list = ProductReturnDetailVO.dOconvertVOList(listProductReturn);
-//            return new ResponseResult(list);
-//        } catch (Exception e) {
-//            logger.error("listProductReturn failed", e);
-//            return new ResponseResult(Result.FAILURE);
-//        }
-//    }
 
     @ApiOperation(value = "退货详情")
     @ApiImplicitParams({

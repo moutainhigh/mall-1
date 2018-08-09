@@ -17,4 +17,9 @@ public class CustomerServiceImpl implements CustomerService {
         return customerMapper.selectByPrimaryKey(customerId);
     }
 
+    @Override
+    public int updatePaymentPasswordByCustomerId(int customerId, String paymentPassword) {
+        return customerMapper.updatePaymentPasswordByCustomerId(customerId, paymentPassword);
+    }
+
 }
