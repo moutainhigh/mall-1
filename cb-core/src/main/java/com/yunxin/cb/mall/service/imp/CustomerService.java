@@ -763,7 +763,7 @@ public class CustomerService implements ICustomerService {
             }
             if (listCustomer != null && listCustomer.size() > 0) {
                 for (Customer listCustome : listCustomer)
-                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getInsuranceProductPrice().getPrice());
+                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getPrice());
 
             }
 
