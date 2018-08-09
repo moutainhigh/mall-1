@@ -619,3 +619,7 @@ ALTER TABLE `finacial_repayment` add  `SURPLUS_AMOUNT` datetime DEFAULT  NULL CO
 ALTER TABLE `finacial_repayment` add  `LOAN_AMOUNT` datetime DEFAULT  NULL COMMENT '还款本金(借款金)';
 ALTER TABLE `finacial_repayment` add  `OVERDUE_NUMER` datetime DEFAULT  NULL COMMENT '逾期次数';
 
+
+
+##add by pengcong 2018-8-8
+ALTER TABLE `rb_reimbursement` ADD COLUMN `CATALOG_ID` int(11) NOT NULL COMMENT '商品分类' AFTER `CREATE_TIME`;
