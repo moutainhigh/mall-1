@@ -14,7 +14,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>金额统计</title>
+  <title>账单统计</title>
   <script type="application/javascript">
     $(document).ready(function(){
       initDate();
@@ -23,186 +23,175 @@
     });
 
     function reloadCharts1() {
-      var options = {
-
-        chart: {
-          type: 'column',
-          zoomType: 'x'
-        },
-        title: {
-          text: "月度金额统计"
-        },
-        subtitle: {
-          text: $("#yearSelect").val() + " 年" + $("#monthSelect").val() + " 月"
-        },
-        xAxis: {
-          categories:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
-          title: {
-            text: "时间:日"
-          }
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: "单位: 元 RMB"
-          },
-          alternateGridColor: '#FDFFD5'
-        },
-        plotOptions: {
-          series: {
-            borderWidth: 0,
-            dataLabels: {
-              enabled: true,
-              format: '{point.y:.2f}'
+        var options = {
+            chart: {
+                type: 'column',
+                zoomType: 'x'
             },
-            enableMouseTracking: false
-          }
-        },
-        legend: {
-          enabled: true
-        },
-        tooltip: {
-          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-          '<td style="padding:0"><b>{point.y} 元 RMB</b></td></tr>',
-          footerFormat: '</table>',
-          shared: true,
-          useHTML: true
-        },
-        series: [
-          {
-            name: "成交金额",
-            color: '#029402'
-          },
-          {
-            name: "已付款金额",
-            color: '#ff0000'
-          }
-        ]
+            title: {
+                text: "月度账单统计"
+            },
+            subtitle: {
+                text: $("#yearSelect").val() + " 年" + $("#monthSelect").val() + " 月"
+            },
+            xAxis: {
+                categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+                title: {
+                    text: "时间:日"
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: "单位: 元 RMB"
+                },
+                alternateGridColor: '#FDFFD5'
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y:.2f}'
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            legend: {
+                enabled: true
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} 元 RMB</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            series: [
+                {
+                    name: "收入",
+                    color: '#029402'
+                },
+                {
+                    name: "支出",
+                    color: '#ff0000'
+                }
+            ]
 
-      };
+        };
 
-      $.getJSON('getDayMoney.do', {
-        year: $("#yearSelect").val(),
-        month: $("#monthSelect").val()
-      }, function (json) {
-        var datasA = [];
-        var categories = [];
-        $.each(json, function (date, value) {
-          datasA.push([value.day, value.orderPrice]);
-          categories.push(value.day);
+        $.getJSON('getDayBill.do', {
+            year: $("#yearSelect").val(),
+            month: $("#monthSelect").val(),
+        }, function (json) {
+            var datasA = [];
+            var datasB = [];
+            var categories = [];
+            $.each(json, function (date, value) {
+                if (value.type == 1) {
+                    datasA.push([value.day, value.amount]);
+                } else if (value.type == 2) {
+                    datasB.push([value.day, value.amount]);
+                }
+                if ($.inArray(value.day, categories) <= 0) {
+                  categories.push(value.day);
+                }
+            });
+            options.series[0].data = datasA;
+            options.series[1].data = datasB;
+            options.xAxis.categories = categories;
+            $('#chartContainer').highcharts(options);
         });
-        options.series[0].data = datasA;
-        options.xAxis.categories = categories;
-        $('#chartContainer').highcharts(options);
-      });
 
-      $.getJSON('getDayMoneyPaid.do', {
-        year: $("#yearSelect").val(),
-        month: $("#monthSelect").val()
-      }, function (json) {
-        var datasB = [];
-        var categories = [];
-        $.each(json, function (date, value) {
-          datasB.push([value.day, value.orderPrice]);
-          categories.push(value.day);
-        });
-        options.series[1].data = datasB;
-//        options.xAxis.categories = categories;
-        $('#chartContainer').highcharts(options);
-      });
     }
-    function reloadCharts2() {
-      var options = {
 
-        chart: {
-          type: 'column',
-          zoomType: 'x'
-        },
-        title: {
-          text: "年度金额统计"
-        },
-        subtitle: {
-          text: $("#yearSelect2").val() + " 年"
-        },
-        xAxis: {
+    function reloadCharts2() {
+        var options = {
+
+            chart: {
+                type: 'column',
+                zoomType: 'x'
+            },
+            title: {
+                text: "年度账单统计"
+            },
+            subtitle: {
+                text: $("#yearSelect2").val() + " 年"
+            },
+            xAxis: {
 //          type: 'datetime',
 //          dateTimeLabelFormats: { // don't display the dummy year
 //            day: '%m' + "月" + '%e' + '日'
 //          }
-          categories:[1,2,3,4,5,6,7,8,9,10,11,12],
-          title: {
-            text: "时间:月"
-          }
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: "单位: 元 RMB"
-          },
-          alternateGridColor: '#FDFFD5'
-        },
-        plotOptions: {
-          series: {
-            borderWidth: 0,
-            dataLabels: {
-              enabled: true,
-              format: '{point.y:.2f}'
+                categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                title: {
+                    text: "时间:月"
+                }
             },
-            enableMouseTracking: false
-          }
-        },
-        legend: {
-          enabled: true
-        },
-        tooltip: {
-          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-          '<td style="padding:0"><b>{point.y} 元 RMB</b></td></tr>',
-          footerFormat: '</table>',
-          shared: true,
-          useHTML: true
-        },
-        series: [
-          {
-            name: "成交金额",
-            color: '#029402'
-          },
-          {
-            name: "已付款金额",
-            color: '#ff0000'
-          }
-        ]
+            yAxis: {
+                min: 0,
+                title: {
+                    text: "单位: 元 RMB"
+                },
+                alternateGridColor: '#FDFFD5'
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y:.2f}'
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            legend: {
+                enabled: true
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} 元 RMB</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            series: [
+                {
+                    name: "收入",
+                    color: '#029402'
+                },
+                {
+                    name: "支出",
+                    color: '#ff0000'
+                }
+            ]
 
-      };
+        };
 
-      $.getJSON('getMonthMoney.do', {
-        year: $("#yearSelect2").val()
-      }, function (json) {
-        var datasA = [];
-        var categories = [];
-        $.each(json, function (date, value) {
-          datasA.push([value.month, value.orderPrice]);
-          categories.push(value.month);
+        $.getJSON('getMonthBill.do', {
+            year: $("#yearSelect2").val()
+        }, function (json) {
+            var datasA = [];
+            var datasB = [];
+            var categories = [];
+            $.each(json, function (date, value) {
+                if (value.type == 1) {
+                    datasA.push([value.month, value.amount]);
+                } else if (value.type == 2) {
+                    datasB.push([value.month, value.amount]);
+                }
+                if ($.inArray(value.month, categories) <= 0) {
+                    categories.push(value.month);
+                }
+            });
+            options.series[0].data = datasA;
+            options.series[1].data = datasB;
+            options.xAxis.categories = categories;
+            $('#chartContainer2').highcharts(options);
         });
-        options.series[0].data = datasA;
-        options.xAxis.categories = categories;
-        $('#chartContainer2').highcharts(options);
-      });
 
-      $.getJSON('getMonthMoneyPaid.do', {
-        year: $("#yearSelect2").val()
-      }, function (json) {
-        var datasB = [];
-        var categories = [];
-        $.each(json, function (date, value) {
-          datasB.push([value.month, value.orderPrice]);
-          categories.push(value.month);
-        });
-        options.series[1].data = datasB;
-//        options.xAxis.categories = categories;
-        $('#chartContainer2').highcharts(options);
-      });
     }
 
     function initDate(){
