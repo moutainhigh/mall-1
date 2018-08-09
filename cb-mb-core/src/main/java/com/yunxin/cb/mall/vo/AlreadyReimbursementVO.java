@@ -34,6 +34,8 @@ public class AlreadyReimbursementVO implements Serializable {
     private Date examinationTime;
     @ApiModelProperty(value="报账单号",name="reimbursementNo",example="52525525")
     private String reimbursementNo;
+    @ApiModelProperty(value="备注",name="remarks",example="该订单不符合报账")
+    private String remarks;
 
 
     public int getReimbursementId() {
@@ -130,5 +132,13 @@ public class AlreadyReimbursementVO implements Serializable {
 
     public void setExaminationTime(Date examinationTime) {
         this.examinationTime = examinationTime;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }
