@@ -656,3 +656,33 @@ ALTER TABLE `rb_reimbursement` ADD COLUMN `CATALOG_ID` int(11) NOT NULL COMMENT 
 
 ##add by tangou 2018-8-9
 ALTER TABLE `customer` ADD  COLUMN `AUTH_FLAG` INT(1) DEFAULT 0 COMMENT '是否实名认证 0:未认证 1:已认证';
+
+-- --------------------------
+-- statistics_day_bill_view 账单统计视图  add by chenpeng 2018年8月9日
+-- -------------------------
+CREATE VIEW `statistics_day_bill_view` AS SELECT fb.BILL_ID, fb.CREATE_TIME as create_time,
+extract(year from `fb`.`CREATE_TIME`) AS `year`,
+extract(month from `fb`.`CREATE_TIME`) AS `month`,
+extract(day from `fb`.`CREATE_TIME`) AS `day`,
+fb.TYPE as TYPE, SUM(fb.AMOUNT) as amount
+FROM crystal_ball.finacial_bill fb
+GROUP BY
+date_format(`fb`.`CREATE_TIME`,'%Y-%m-%d'), fb.TYPE
+
+##add by pengcong 2018-8-9
+ALTER TABLE `rb_reimbursement` ADD COLUMN `REPAYMENT_AMOUNT` decimal(20, 4) COMMENT '还款金额' AFTER `CATALOG_ID`,
+ALTER TABLE `rb_reimbursement` ADD COLUMN `REPAYMENT_TYPE` int(11) COMMENT '还款类型' AFTER `REPAYMENT_AMOUNT`;
+
+##add by guwenshao 2018-8-9
+CREATE TABLE `finacial_credit_line_bill` (
+  `FINACIAL_CREDIT_LINE_ID` int(10) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(10) NOT NULL COMMENT '客户ID',
+  `TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资金类型',
+  `TRANSACTION_TYPE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易类型',
+  `TRANSACTION_DESC` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
+  `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易额度',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '时间',
+  PRIMARY KEY (`FINACIAL_CREDIT_LINE_ID`),
+  KEY `fk_liabilities_customer` (`CUSTOMER_ID`),
+  CONSTRAINT `fk_credit_line_customer` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='信用额度交易记录';

@@ -94,8 +94,8 @@
         var datasA = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasA.push([value.day+"", value.orderNum]);
-          categories.push(value.day+"");
+          datasA.push([value.day, value.orderNum]);
+          categories.push(value.day);
         });
         options.series[0].data = datasA;
         options.xAxis.categories = categories;
@@ -109,8 +109,8 @@
         var datasB = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasB.push([value.day+"", value.orderNum]);
-          categories.push(value.day+"");
+          datasB.push([value.day, value.orderNum]);
+          categories.push(value.day);
         });
         options.series[1].data = datasB;
 //        options.xAxis.categories = categories;
@@ -184,8 +184,8 @@
         var datasA = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasA.push([value.month+"", value.orderNum]);
-          categories.push(value.month+"");
+          datasA.push([value.month, value.orderNum]);
+          categories.push(value.month);
         });
         options.series[0].data = datasA;
         options.xAxis.categories = categories;
@@ -198,8 +198,8 @@
         var datasB = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasB.push([value.month+"", value.orderNum]);
-          categories.push(value.month+"");
+          datasB.push([value.month, value.orderNum]);
+          categories.push(value.month);
         });
         options.series[1].data = datasB;
 //        options.xAxis.categories = categories;

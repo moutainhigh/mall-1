@@ -1,10 +1,10 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.FinacialWallet;
-import java.util.List;
-
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.List;
 @Mapper
 public interface FinacialWalletMapper {
     @Delete({
@@ -19,20 +19,20 @@ public interface FinacialWalletMapper {
         "EXPECTED_AMOUNT, DEBT_TOTAL, ",
         "DEBT_EXPECTED, DEBT_CREDIT, ",
         "CREDIT_AMOUNT, FREEZING_AMOUNT, ",
-        "VERSION)",
+        "VERSION,INSURANCE_AMOUNT,TOTAL_AMOUNT)",
         "values (#{walletId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, ",
         "#{assets,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, ",
         "#{expectedAmount,jdbcType=DECIMAL}, #{debtTotal,jdbcType=DECIMAL}, ",
         "#{debtExpected,jdbcType=DECIMAL}, #{debtCredit,jdbcType=DECIMAL}, ",
         "#{creditAmount,jdbcType=DECIMAL}, #{freezingAmount,jdbcType=DECIMAL}, ",
-        "#{version,jdbcType=INTEGER})"
+        "#{version,jdbcType=INTEGER}, #{totalAmount,jdbcType=DECIMAL}, #{freezingAmount,jdbcType=DECIMAL})"
     })
     int insert(FinacialWallet record);
 
     @Select({
         "select",
         "WALLET_ID, CUSTOMER_ID, ASSETS, BALANCE, EXPECTED_AMOUNT, DEBT_TOTAL, DEBT_EXPECTED, ",
-        "DEBT_CREDIT, CREDIT_AMOUNT, FREEZING_AMOUNT, VERSION",
+        "DEBT_CREDIT, CREDIT_AMOUNT, FREEZING_AMOUNT, VERSION,INSURANCE_AMOUNT,TOTAL_AMOUNT",
         "from finacial_wallet",
         "where WALLET_ID = #{walletId,jdbcType=INTEGER}"
     })
@@ -47,14 +47,16 @@ public interface FinacialWalletMapper {
         @Result(column="DEBT_CREDIT", property="debtCredit", jdbcType=JdbcType.DECIMAL),
         @Result(column="CREDIT_AMOUNT", property="creditAmount", jdbcType=JdbcType.DECIMAL),
         @Result(column="FREEZING_AMOUNT", property="freezingAmount", jdbcType=JdbcType.DECIMAL),
-        @Result(column="VERSION", property="version", jdbcType=JdbcType.INTEGER)
+        @Result(column="VERSION", property="version", jdbcType=JdbcType.INTEGER),
+        @Result(column="INSURANCE_AMOUNT", property="insuranceAmount", jdbcType=JdbcType.DECIMAL),
+        @Result(column="TOTAL_AMOUNT", property="totalAmount", jdbcType=JdbcType.DECIMAL)
     })
     FinacialWallet selectByPrimaryKey(Integer walletId);
 
     @Select({
             "select",
             "WALLET_ID, CUSTOMER_ID, ASSETS, BALANCE, EXPECTED_AMOUNT, DEBT_TOTAL, DEBT_EXPECTED, ",
-            "DEBT_CREDIT, CREDIT_AMOUNT, FREEZING_AMOUNT, VERSION",
+            "DEBT_CREDIT, CREDIT_AMOUNT, FREEZING_AMOUNT, VERSION,INSURANCE_AMOUNT,TOTAL_AMOUNT",
             "from finacial_wallet",
             "where WALLET_ID = #{customerId,jdbcType=INTEGER}"
     })
@@ -69,14 +71,16 @@ public interface FinacialWalletMapper {
             @Result(column="DEBT_CREDIT", property="debtCredit", jdbcType=JdbcType.DECIMAL),
             @Result(column="CREDIT_AMOUNT", property="creditAmount", jdbcType=JdbcType.DECIMAL),
             @Result(column="FREEZING_AMOUNT", property="freezingAmount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="VERSION", property="version", jdbcType=JdbcType.INTEGER)
+            @Result(column="VERSION", property="version", jdbcType=JdbcType.INTEGER),
+            @Result(column="INSURANCE_AMOUNT", property="insuranceAmount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="TOTAL_AMOUNT", property="totalAmount", jdbcType=JdbcType.DECIMAL)
     })
     FinacialWallet selectByCustomerId(Integer customerId);
 
     @Select({
         "select",
         "WALLET_ID, CUSTOMER_ID, ASSETS, BALANCE, EXPECTED_AMOUNT, DEBT_TOTAL, DEBT_EXPECTED, ",
-        "DEBT_CREDIT, CREDIT_AMOUNT, FREEZING_AMOUNT, VERSION",
+        "DEBT_CREDIT, CREDIT_AMOUNT, FREEZING_AMOUNT, VERSION,INSURANCE_AMOUNT,TOTAL_AMOUNT",
         "from finacial_wallet"
     })
     @Results({
@@ -90,7 +94,9 @@ public interface FinacialWalletMapper {
         @Result(column="DEBT_CREDIT", property="debtCredit", jdbcType=JdbcType.DECIMAL),
         @Result(column="CREDIT_AMOUNT", property="creditAmount", jdbcType=JdbcType.DECIMAL),
         @Result(column="FREEZING_AMOUNT", property="freezingAmount", jdbcType=JdbcType.DECIMAL),
-        @Result(column="VERSION", property="version", jdbcType=JdbcType.INTEGER)
+        @Result(column="VERSION", property="version", jdbcType=JdbcType.INTEGER),
+        @Result(column="INSURANCE_AMOUNT", property="insuranceAmount", jdbcType=JdbcType.DECIMAL),
+        @Result(column="TOTAL_AMOUNT", property="totalAmount", jdbcType=JdbcType.DECIMAL)
     })
     List<FinacialWallet> selectAll();
 
@@ -105,7 +111,9 @@ public interface FinacialWalletMapper {
           "DEBT_CREDIT = #{debtCredit,jdbcType=DECIMAL},",
           "CREDIT_AMOUNT = #{creditAmount,jdbcType=DECIMAL},",
           "FREEZING_AMOUNT = #{freezingAmount,jdbcType=DECIMAL},",
-          "VERSION = #{version,jdbcType=INTEGER}",
+          "VERSION = #{version,jdbcType=INTEGER},",
+          "INSURANCE_AMOUNT = #{freezingAmount,jdbcType=INTEGER},",
+          "TOTAL_AMOUNT = #{totalAmount,jdbcType=INTEGER}",
         "where WALLET_ID = #{walletId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(FinacialWallet record);
