@@ -108,7 +108,7 @@
 
 
   <div id="demo-overview" align="center" style="margin-top: 40%; margin-bottom: 40px" >
-    <img style="width: 150px" src="images/indexBg/logo.png" alt=""/>
+    <img style="width: 180px" src="images/indexBg/logo.png" alt=""/>
   <!--
     <a href="index.html">Dashboard</a>
     |
@@ -155,7 +155,7 @@
 
           <div class="col-lg-12">
             <!-- this needs to be a button/input element -->
-            <button type="submit" class="btn btn-default btn-lg" style="width: 85%; margin: 0 7.5%; height: 50px; color: #fff; background: #e1bb3a; font-size: 20px; border: 0; font-weight: normal">登录</button>
+            <button type="submit" class="btn btn-default btn-lg" style="width: 85%; margin: 0 7.5%; height: 50px; color: #fff; background: #f5ca1d; font-size: 20px; border: 0; font-weight: normal">登录</button>
           </div>
         </div>
       </div>
@@ -166,7 +166,7 @@
     <%--<div class="login-box-inner clearfix">--%>
       <%--<header id="login-header">--%>
         <%--<a href="#" id="login-logo">--%>
-          <%--<h1>云信商城管理后台</h1>--%>
+          <%--<h1>云信管理后台</h1>--%>
           <%--<h4> ${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>--%>
         <%--</a>--%>
       <%--</header>--%>

@@ -13,9 +13,16 @@
 </template>
 
 <script>
+  import storage from "./store/storage";
+  import {TOKEN} from "./config/constant";
+
   export default {
     name: 'App',
     created() {
+      let query = this.$route.query;
+      if (query.token) {
+        storage.saveSession(TOKEN,query.token);
+      }
       if (!window.navigator.onLine) {
         alert("网络未连接");
       }

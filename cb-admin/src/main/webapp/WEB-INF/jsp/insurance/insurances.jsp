@@ -36,7 +36,26 @@
                     return "已退保";
             }
         }
-
+        function insurePeriod(insurePeriod){
+            switch (insurePeriod){
+                case "TEN_YEAR":
+                    return "十年";
+                case "TWENTY_YEAR":
+                    return "20年";
+                case "LIFITIME":
+                    return "终身";
+            }
+        }
+        function protectionYear(protectionYear){
+            switch (protectionYear) {
+                case "TEN_YEAR":
+                    return "十年";
+                case "TWENTY_YEAR":
+                    return "20年";
+                case "LIFITIME":
+                    return "终身";
+            }
+        }
         function excelInsuranceOrder() {
             window.location.href = "excelInsuranceOrder.do";
         };
@@ -271,8 +290,8 @@
                                         class="fa fa-info-circle"></i>&nbsp;打印保单</a>
                                 <a href="javascript:void(0);" onclick="orderPrintSurvey()" class="btn btn-default"><i
                                         class="fa fa-info-circle"></i>&nbsp;打印问卷</a>
-                                <a href="javascript:void(0);" onclick="orderPDF()" class="btn btn-default"><i
-                                        class="fa fa-info-circle"></i>&nbsp;PDF</a>
+                                <%--<a href="javascript:void(0);" onclick="orderPDF()" class="btn btn-default"><i--%>
+                                        <%--class="fa fa-info-circle"></i>&nbsp;PDF</a>--%>
 
                             </div>
                         </div>
@@ -304,9 +323,9 @@
                             <kendo:grid-column title="保险险种" filterable="false" field="insuranceProduct"
                                                template="#=insuranceProduct.prodName#" width="100"/>
                             <kendo:grid-column title="保险期间" filterable="false" field="insuranceProduct"
-                                               template="#=insuranceProduct.insurePeriod#" width="100"/>
+                                               template="#=insurePeriod(insuranceProduct.insurePeriod)#" width="100"/>
                             <kendo:grid-column title="缴费年限" filterable="false" field="insuranceProduct"
-                                               template="#=insuranceProduct.protectionYear#" width="100"/>
+                                               template="#=protectionYear(insuranceProduct.protectionYear)#" width="100"/>
                             <kendo:grid-column title="基本保额" filterable="false" field="insuranceProductPrice"
                                                template="#=insuranceProductPrice.price#" width="100"/>
                             <kendo:grid-column title="保单状态" filterable="false" field="orderState"

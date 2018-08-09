@@ -252,6 +252,7 @@ public class CustomerResource extends BaseResource {
     }
 
     @ApiOperation(value = "修改手机号")
+
     @PostMapping(value = "updateMobile")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "moblie", value = "手机号", required = true, paramType = "post", dataType = "String"),
@@ -406,7 +407,7 @@ public class CustomerResource extends BaseResource {
             return new ResponseResult(customerService.findCustomerGratitude(getCustomerId()));
         } catch (Exception e) {
             logger.error("getGratitude failed", e);
-            return new ResponseResult(Result.FAILURE, e.getMessage());
+            return new ResponseResult(Result.FAILURE, "服务器开小差，请稍后重试");
         }
     }
     @ApiOperation(value = "获取感恩列表")
@@ -419,7 +420,7 @@ public class CustomerResource extends BaseResource {
             return new ResponseResult(customerService.findCustomerGratitudeData(getCustomerId(),gratitudeType));
         } catch (Exception e) {
             logger.error("getGratitudeData failed", e);
-            return new ResponseResult(Result.FAILURE, e.getMessage());
+            return new ResponseResult(Result.FAILURE, "服务器开小差，请稍后重试");
         }
     }
 //    @ApiOperation(value = "创建群组")

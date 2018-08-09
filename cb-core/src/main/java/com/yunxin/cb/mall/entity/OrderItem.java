@@ -102,7 +102,6 @@ public class OrderItem implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID", nullable = false)
-    @JsonIgnore
     public Order getOrder() {
         return order;
     }

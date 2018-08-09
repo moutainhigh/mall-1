@@ -285,9 +285,9 @@ public interface OrderMapper {
           "WEIGHT_TOTAL = #{weightTotal,jdbcType=DOUBLE},",
           "CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
           "LOGISTIC_ID = #{logisticId,jdbcType=INTEGER},",
-          "SELLER_ID = #{sellerId,jdbcType=INTEGER}",
-          "AUDIT_STATE = #{auditState,jdbcType=INTEGER}",
-          "AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR}",
+          "SELLER_ID = #{sellerId,jdbcType=INTEGER},",
+          "AUDIT_STATE = #{auditState,jdbcType=INTEGER},",
+          "AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR},",
           "AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP}",
         "where ORDER_ID = #{orderId,jdbcType=INTEGER}"
     })

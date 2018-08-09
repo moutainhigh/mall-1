@@ -102,7 +102,7 @@
     <div v-show="checkType != 'none'" class="carType">
       <div style="height: 30vh; width: 100vw" @click="checkType = 'none'"></div>
       <transition name="toggle-cart">
-        <div v-if="checkType == 'standard'" class="type-standard">
+        <div v-if="checkType == 'standard'" class="type-standard">.
           <div class="car-sale">
             <div style="width: 27.7vw; float: left">
               <img class="car-thumbnail" :src="commodityData.defaultPicPath">
@@ -466,7 +466,16 @@
         } else {
           if (records.length == 20) {
             records.splice(0, 1);
-            records.push(commodityData);
+            let isExistence = false;
+            //判断此条商品浏览记录里是否已存在
+            for (let record in records) {
+              if (commodityData.commodityId == record.commodityId) {
+                isExistence = true;
+              }
+            }
+            if (!isExistence) {
+              records.push(commodityData);
+            }
             storage.save("records", records);
           }
         }

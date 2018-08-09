@@ -1,10 +1,14 @@
 package com.yunxin.cb.redis;
 
+import com.yunxin.cb.mall.dao.CustomerDao;
+import com.yunxin.cb.mall.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,11 +19,12 @@ import java.util.Map;
 public class RedisService {
 
     public static final String VERIFICATION_CODE = "VerificationCode";
-
+    public static final String CUSTOMER_LIST="customer";
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
-
+    @Resource
+    private CustomerDao customerDao;
     /**
      * 获取验证码
      * @param key
@@ -49,6 +54,35 @@ public class RedisService {
 
     }
 
+    /**
+     * 获取账户
+     * @return
+     */
+    public Object getCustomerList(){
+        Map<String, Object> data = (Map<String, Object>) redisTemplate.opsForValue().get(CUSTOMER_LIST);
+        if(data == null) {
+            data = new HashMap<>();
+            List<Customer>  list=customerDao.findAll();
+            for (Customer customer:list)
+                data.put(customer.getMobile(),customer);
+            redisTemplate.opsForValue().set(CUSTOMER_LIST,data);
+        }
+        return data;
+    }
+
+    /**
+     * 设置账户
+     * @param key
+     * @param obj
+     */
+    public void setCustomerList(String key, Object obj){
+        Map<String, Object> data = (Map<String, Object>) redisTemplate.opsForValue().get(CUSTOMER_LIST);
+        if(data == null) {
+            data = new HashMap<>();
+        }
+        data.put(key,obj);
+        redisTemplate.opsForValue().set(CUSTOMER_LIST,data);
+    }
 
     /**
      * 根据key获取值

@@ -22,6 +22,7 @@ public enum ProfileName {
     SHARE_ICON(""),//分享图标
     SHARE_DESCRIPTION(""),//分享描述
     SHARE_SHORTMESSAGE_CONTENT(""),//分享短信内容
+    FINACIAL_FREE_RATE("0.1"),//提现手续费
     ;
 
     private String i18nName;
