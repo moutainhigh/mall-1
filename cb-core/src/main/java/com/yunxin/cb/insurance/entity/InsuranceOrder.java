@@ -271,11 +271,7 @@ public class InsuranceOrder implements Serializable {
     public void setInsuranceProductPrice(InsuranceProductPrice insuranceProductPrice) {
         this.insuranceProductPrice = insuranceProductPrice;
     }
-
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "PRICE_ID", nullable = false, insertable = true, updatable = true)
-    })
+    @Transient
     public InsuranceProductPrice getInsuranceProductPrice() {
         return insuranceProductPrice;
     }

@@ -20,8 +20,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -89,7 +87,6 @@ public class InsuranceProductPrice implements Serializable {
     @ApiModelProperty(value="备注",name="remark",example="备注")
     private String remark;
 
-    private Set insuranceOrders = new HashSet(0);
     //columns END
 
 
@@ -162,16 +159,6 @@ public class InsuranceProductPrice implements Serializable {
     }
 
 
-
-    @JsonIgnore
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "insuranceProductPrice")
-    public Set<InsuranceOrder> getInsuranceOrders() {
-        return insuranceOrders;
-    }
-
-    public void setInsuranceOrders(Set<InsuranceOrder> insuranceOrder) {
-        this.insuranceOrders = insuranceOrder;
-    }
 
 
     public void setInsuranceProduct(InsuranceProduct insuranceProduct) {
