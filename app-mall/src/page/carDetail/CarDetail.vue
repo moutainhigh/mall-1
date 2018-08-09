@@ -2,7 +2,7 @@
   <div>
     <div style="height: 3rem"></div>
     <head-top :go-back="true" :headTitle="headTitle" :share="true" v-bind:style="{ opacity: opacity }">
-      <img style="width: 20px; position: absolute" src="../../assets/img/common/ic_nav_share.png">
+      <img style="width: 20px; position: absolute" src="../../assets/img/common/ic_nav_share.png" @click='share'>
       <div slot="head-tab" class="head-tab" v-if="scroll > 90 || tab != 1">
         <div v-bind:class="{'activeTab': tab == 1}" @click="checkTab(1)">
           详情
@@ -17,7 +17,7 @@
     </head-top>
 
     <div :ref="`detail`">
-      <div>
+      <div >
         <swiper :aspect-ratio="0.749" auto style="margin:0 auto;" dots-position="center">
           <swiper-item class="swiper-demo-img" v-for="(img, index) in commodityData.imageSet" :key="index">
             <img width="100%" :src="img" v-preview="img"></swiper-item>
@@ -168,6 +168,12 @@
       </transition>
     </div>
 
+    <div v-show='false'>
+        <div id='data-title'>{{commodityData&&commodityData.commodityTitle}}</div>
+        <div id='data-description'>{{commodityData&&commodityData.description}}</div>
+        <div id='data-imgUrl '>{{commodityData.imageSet &&commodityData.imageSet[0]}}</div>
+        <div id='data-shareUrl'>{{currentUrl}}</div>
+    </div>
   </div>
 </template>
 
@@ -200,7 +206,7 @@
         tab: 1,
         checkType: 'none',
         isCollect: false,
-        commodityData: {},
+        commodityData: null,
         productGroups: [],
         defaultAttribute: [],
         iac: [],
@@ -213,9 +219,19 @@
         favoriteId: null,
         opacity: 1, //顶部透明度
         Data:[],
+        currentUrl:''
       }
     },
     methods: {
+      //调起分享
+      share(){
+        if(!this.commodityData.commodityId){
+          return;
+        }else{
+           location.href ='yunxi://yunxi.com?url_action={"from":"webview","url":"","action":2,"data":}'
+        }
+       
+      },
       checkTab(tabNum) {
         this.tab = tabNum;
         switch (tabNum) {
@@ -470,7 +486,8 @@
       this.getCommodityDetail(query.productId);
     },
     mounted() {
-      window.addEventListener('scroll', this.menu)
+      window.addEventListener('scroll', this.menu);
+      this.currentUrl = window.location.href;
     },
     destroyed(){
       window.removeEventListener('scroll', this.menu)
