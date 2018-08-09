@@ -717,3 +717,5 @@ CREATE TABLE `finacial_log` (
   KEY `fk_log_customer_id` (`CUSTOMER_ID`),
   CONSTRAINT `fk_log_customer_id` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+ALTER TABLE `finacial_log` ADD  COLUMN `TITLE` varchar(100) NOT NULL COMMENT '标题';

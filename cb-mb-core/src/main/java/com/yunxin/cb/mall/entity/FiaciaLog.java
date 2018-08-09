@@ -25,6 +25,9 @@ public class FiaciaLog implements Serializable {
     /** 交易人 */
     private String customerName;
 
+    /** 标题 */
+    private String title;
+
     /** 交易金额 */
     private BigDecimal amount;
 
@@ -135,5 +138,13 @@ public class FiaciaLog implements Serializable {
 
     public void setTransactionDesc(String transactionDesc) {
         this.transactionDesc = transactionDesc;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
