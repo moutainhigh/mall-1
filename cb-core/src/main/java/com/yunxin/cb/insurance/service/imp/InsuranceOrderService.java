@@ -81,6 +81,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
         insuranceOrder.setOrderCode(CodeGenerator.getInsuranceCode());
         insuranceOrder.setCreateTime(new Date());
+        insuranceOrder.setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
         //生成条形码
         String barCode = ZxingUtils.encodeBarCodeToBase64(insuranceOrder.getOrderCode(), 150, 50);
         insuranceOrder.setBarCode(barCode);
@@ -130,6 +131,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             insuranceOrderLog.setCustomer(customers);
             insuranceOrderLog.setInsuranceOrder(insuranceOrder);
             insuranceOrderLog.setOrderState(InsuranceOrderState.UN_PAID);
+
             insuranceOrderLog.setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
             if(null!=insuranceOrder.getInsuranceProduct()){
                 InsuranceProduct insuranceProduct=insuranceProductDao.getOne(insuranceOrder.getInsuranceProduct().getProdId());
@@ -176,7 +178,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     }catch (Exception e){
                                         ration=0.5;
                                     }
-                                    iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getInsuranceProductPrice().getPrice());
+                                    iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getPrice());
                         }
                         customer.setPolicy(PolicyType.PAYMENT);
                     }
@@ -187,7 +189,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
              */
             User user = (User) request.getSession().getAttribute("loginSession");
             InsuranceLog insuranceLog= new InsuranceLog(orderId,insuranceOrder.getOrderCode(),insuranceOrder.getInsuranceOrderInsured().getInsuredName(),insuranceOrder.getInsuranceOrderInsured().getInsuredMobile(),
-                    insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderName(),insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderMobile(),insuranceOrder.getInsuranceProductPrice().getPrice()
+                    insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderName(),insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderMobile(),insuranceOrder.getPrice()
             ,orderState,user.getRealName(),user.getUserName(),getIpAddr(request),new Date());
 
             insuranceLogDao.save(insuranceLog);

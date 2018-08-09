@@ -60,6 +60,9 @@ public class FinacialLoanVO {
     @ApiModelProperty(value = "银行卡ID", name = "bankId", example = "1")
     private Integer bankId;
 
+    @ApiModelProperty(value = "还款期限id", name = "loanConfigId", example = "6")
+    private Integer loanConfigId;
+
     public Integer getLoanId() {
         return loanId;
     }
@@ -188,6 +191,14 @@ public class FinacialLoanVO {
         this.bankId = bankId;
     }
 
+    public Integer getLoanConfigId() {
+        return loanConfigId;
+    }
+
+    public void setLoanConfigId(Integer loanConfigId) {
+        this.loanConfigId = loanConfigId;
+    }
+
     @Override
     public String toString() {
         return "FinacialLoanVO{" +
@@ -207,6 +218,7 @@ public class FinacialLoanVO {
                 ", interest=" + interest +
                 ", overdueNumer=" + overdueNumer +
                 ", bankId=" + bankId +
+                ", loanConfigId=" + loanConfigId +
                 '}';
     }
 }

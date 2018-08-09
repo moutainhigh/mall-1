@@ -76,6 +76,7 @@ public class InsuranceOrder implements Serializable {
      */
     @ApiModelProperty(value="保额",name="insuranceProductPrice",example="保额")
     private InsuranceProductPrice insuranceProductPrice;
+    private int price;
     /**
      * 客户
      */
@@ -324,5 +325,11 @@ public class InsuranceOrder implements Serializable {
         this.orderState = orderState;
     }
 
+    public int getPrice() {
+        return price;
+    }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

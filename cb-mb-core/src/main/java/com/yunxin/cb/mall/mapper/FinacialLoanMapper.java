@@ -1,11 +1,11 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FinacialLiabilitiesBill;
 import com.yunxin.cb.mall.entity.FinacialLoan;
-import java.util.List;
-
+import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.List;
 
 @Mapper
 public interface FinacialLoanMapper {
@@ -121,4 +121,24 @@ public interface FinacialLoanMapper {
             "where LOAN_ID = #{loanId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(FinacialLoan record);
+
+    @Select({
+            "<script>",
+            "select",
+            "count(LOAN_ID)",
+            "from finacial_loan",
+            "where 1=1",
+            "<if test='data.customerId!=null'>",
+            "and CUSTOMER_ID = #{data.customerId}",
+            "</if>",
+            "<if test='data.stateList!=null'>",
+                "and STATE in ",
+                    "<foreach collection='data.stateList' index='index' item='item' open='(' separator=',' close=')'>",
+                        " #{item} ",
+                    "</foreach> ",
+            "</if>",
+            "</script>"
+    })
+    int count(Query q);
+
 }

@@ -8,4 +8,6 @@ public interface FinacialLoanConfigService {
 
     List<FinacialLoanConfig> getFinacilaLoanConfigs();
 
+    public FinacialLoanConfig getFinacilaLoanConfigById(int loanConfigId);
+
 }

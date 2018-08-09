@@ -23,4 +23,7 @@ public class FinacialLoanConfigServiceImpl implements FinacialLoanConfigService 
     public List<FinacialLoanConfig> getFinacilaLoanConfigs() {
         return finacialLoanConfigMapper.selectAll();
     }
+    public FinacialLoanConfig getFinacilaLoanConfigById(int loanConfigId) {
+        return finacialLoanConfigMapper.selectByPrimaryKey(loanConfigId);
+    }
 }
