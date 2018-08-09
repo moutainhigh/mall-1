@@ -61,6 +61,9 @@ public class FinacialLoan {
     /** 逾期次数 */
     private Integer overdueNumer;
 
+    /** 银行卡ID */
+    private Integer bankId;
+
     public Integer getLoanId() {
         return loanId;
     }
@@ -203,5 +206,13 @@ public class FinacialLoan {
 
     public void setOverdueNumer(Integer overdueNumer) {
         this.overdueNumer = overdueNumer;
+    }
+
+    public Integer getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
     }
 }
