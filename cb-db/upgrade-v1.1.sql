@@ -624,3 +624,6 @@ ALTER TABLE `finacial_repayment` add  `OVERDUE_NUMER` datetime DEFAULT  NULL COM
 
 ##add by pengcong 2018-8-8
 ALTER TABLE `rb_reimbursement` ADD COLUMN `CATALOG_ID` int(11) NOT NULL COMMENT '商品分类' AFTER `CREATE_TIME`;
+
+##add by tangou 2018-8-9
+ALTER TABLE `customer` ADD  COLUMN `AUTH_FLAG` INT(1) DEFAULT 0 COMMENT '是否实名认证 0:未认证 1:已认证';

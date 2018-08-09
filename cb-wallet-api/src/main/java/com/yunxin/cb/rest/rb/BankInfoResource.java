@@ -60,6 +60,7 @@ public class BankInfoResource extends BaseResource {
                 String respCode=String.valueOf(jsonObject.get("respCode"));
                 responseResult.setData(String.valueOf(jsonObject.get("respMessage")));
                 if(respCode.equals("0000")){
+                    //验证通过，修改用户为已认证
                     responseResult.setResult(Result.SUCCESS);
                 }
             }
