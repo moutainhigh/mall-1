@@ -608,9 +608,9 @@ CREATE TABLE `finacial_withdraw` (
 
 ##add by guwenshao 2018-08-08
 ALTER TABLE `customer` add  `PAYMENT_PASSWORD` varchar(64) DEFAULT NULL COMMENT '支付密码';
-
 ALTER TABLE `finacial_withdraw` add  `WITHDRAW_TYPE` int(11) DEFAULT 1 NOT NULL COMMENT '提现类型：1.报账转账 2.保险返利转账';
 
+##add by likang 2018-08-09
 ALTER TABLE `finacial_loan` add  `REPAYMENT_TERM` int(11) DEFAULT 1 NOT NULL COMMENT '还款期限';
 ALTER TABLE `finacial_loan` add  `FINAL_REPAYMENT_TIME` datetime DEFAULT  NULL COMMENT '最后还款时间';
 ALTER TABLE `finacial_repayment` add  `REPAY_AMOUNT` datetime DEFAULT  NULL COMMENT '应还总额';
