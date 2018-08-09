@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.meta.WithdrawType;
+import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.vo.FinacialWalletVO;
 
 import java.math.BigDecimal;
@@ -46,5 +47,5 @@ public interface FinacialWalletService {
      * @auther: eleven
      * @date: 2018/8/8 19:39
      */
-    public boolean processCustomerMoney(Integer customerId, BigDecimal money, WithdrawType type);
+    public ResponseResult processCustomerMoney(Integer customerId, BigDecimal money, WithdrawType type);
 }
