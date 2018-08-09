@@ -49,6 +49,12 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Query("select c from Customer c left join fetch c.rank where c.customerId=?1")
     public Customer findByCustomerId(int customerId);
 
+    @Query("select count(c.customerId) from Customer c where c.recommendCustomer.customerId=?1 and c.policy=?2 and c.praise=?3")
+    public int getCustomerByRecommendCustomer(int customerId,PolicyType policy,boolean praise);
+
+    @Query("select c from Customer c where c.recommendCustomer.customerId=?1 and c.policy=?2 and c.praise=?3")
+    public List<Customer> getCustomerByRecommendCustomers(int customerId,PolicyType policy,boolean praise);
+
     public Customer findByEmail(String email);
 
     @Query("update Customer c set c.password=?2 where c.email=?1")
@@ -85,8 +91,9 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
 
     @Query("select c from Customer c left join fetch c.recommendCustomer where c.levelCode like ?1")
     public List<Customer> findCustomerByLikeLevelCode(String levelCode);
-    @Query("select c from Customer c left join fetch c.recommendCustomer where  c.customerId <> ?1 and c.levelCode like ?2 and c.policy=?3")
-    public List<Customer> findCustomerByLikeLevelCodeNotPolicy(int customerId,String levelCode,PolicyType policy);
+
+    @Query("select count(c.customerId) from Customer c where c.levelCode like ?1 and c.policy=?2")
+    public int findAllCustomerByLikeLevelCode(String levelCode,PolicyType policy);
     long countByQqOpenId(String qqOpenId);
 
     List<Customer> findByRecommendCustomer_CustomerIdAndPraise(int customerId, boolean paraise);
