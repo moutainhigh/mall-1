@@ -656,3 +656,15 @@ ALTER TABLE `rb_reimbursement` ADD COLUMN `CATALOG_ID` int(11) NOT NULL COMMENT 
 
 ##add by tangou 2018-8-9
 ALTER TABLE `customer` ADD  COLUMN `AUTH_FLAG` INT(1) DEFAULT 0 COMMENT '是否实名认证 0:未认证 1:已认证';
+
+-- --------------------------
+-- statistics_day_bill_view 账单统计视图  add by chenpeng 2018年8月9日
+-- -------------------------
+CREATE VIEW `statistics_day_bill_view` AS SELECT fb.BILL_ID, fb.CREATE_TIME as create_time,
+extract(year from `fb`.`CREATE_TIME`) AS `year`,
+extract(month from `fb`.`CREATE_TIME`) AS `month`,
+extract(day from `fb`.`CREATE_TIME`) AS `day`,
+fb.TYPE as TYPE, SUM(fb.AMOUNT) as amount
+FROM crystal_ball.finacial_bill fb
+GROUP BY
+date_format(`fb`.`CREATE_TIME`,'%Y-%m-%d'), fb.TYPE
