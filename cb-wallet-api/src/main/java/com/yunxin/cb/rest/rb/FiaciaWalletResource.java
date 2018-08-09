@@ -1,6 +1,7 @@
 package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
+import com.yunxin.cb.mall.entity.meta.WithdrawType;
 import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.vo.FinacialWalletVO;
 import com.yunxin.cb.meta.Result;
@@ -14,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 
 @Api(description = "钱包接口")
 @RestController
@@ -70,5 +72,32 @@ public class FiaciaWalletResource {
             log.info("get failed", e);
         }
         return new ResponseResult(Result.FAILURE);
+    }
+
+    /**
+     * @title: 处理用户返现接口（用于报账转账和保险返利转账）
+     * @param: [customerId]
+     * @return: com.yunxin.cb.vo.ResponseResult<com.yunxin.cb.mall.vo.FinacialWalletVO>
+     * @auther: eleven
+     * @date: 2018/8/8 19:34
+     */
+    @ApiOperation(value = "返现接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "path", dataType = "string"),
+            @ApiImplicitParam(name = "money", value = "金额", required = true, paramType = "path", dataType = "bigdecimal")
+    })
+    @ApiVersion(1)
+    @PostMapping(value = "processCustomerMoney/{customerId}/{money}/{type}")
+    public ResponseResult processCustomerMoney(@PathVariable Integer customerId, @PathVariable BigDecimal money, @PathVariable WithdrawType type){
+        ResponseResult result=new ResponseResult(Result.FAILURE);
+        try {
+            boolean flag=finacialWalletService.processCustomerMoney(customerId,money,type);
+            if(flag){
+                result.setResult(Result.SUCCESS);
+            }
+        } catch (Exception e) {
+            log.info("get failed", e);
+        }
+        return result;
     }
 }

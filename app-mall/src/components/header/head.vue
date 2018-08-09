@@ -4,7 +4,7 @@
       <img src="../../assets/img/common/back.png" height="23" style="vertical-align: middle;margin-left: 5px;">
     </section>
     <section class="head_goback" style="margin-left: 0;" v-if="goClose">
-      <img src="../../assets/img/common/ic_nav_close.png" height="23" style="vertical-align: middle;margin-left: 5px;">
+      <img src="../../assets/img/common/ic_nav_close.png" height="23" style="vertical-align: middle;margin-left: 5px;" id='22' @click='closeCurrntPage'>
     </section>
     <slot name='search' class="head_search"></slot>
     <slot name="local" style="flex: 0 0 2rem;" v-if="local">
@@ -48,6 +48,9 @@
         this.$router.push({
           path:"/location"
         })
+      },
+      closeCurrntPage(){
+        window.location.href = 'yunxi://yunxi.com?url_action={"from":"webview","url":"","action":-1,"data":}';
       }
     },
     created(){

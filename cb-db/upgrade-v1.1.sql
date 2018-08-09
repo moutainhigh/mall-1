@@ -535,8 +535,10 @@ CREATE TABLE `finacial_expect_bill` (
   `TRANSACTION_DESC` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
   `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易金',
   `CREATE_TIME` datetime DEFAULT NULL COMMENT '交易时间',
-  PRIMARY KEY (`FINACIAL_EXPECT_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT '预期收益交易记录';
+  PRIMARY KEY (`FINACIAL_EXPECT_ID`),
+  KEY `fk_expect_customer` (`CUSTOMER_ID`),
+  CONSTRAINT `fk_expect_customer` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT ='预期收益交易记录';
 
 -- ----------------------------
 -- Table structure for finacial_liabilities_bill
@@ -550,8 +552,10 @@ CREATE TABLE `finacial_liabilities_bill` (
   `TRANSACTION_DESC` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '交易描述',
   `AMOUNT` decimal(20,4) NOT NULL COMMENT '交易金',
   `CREATE_TIME` datetime DEFAULT NULL COMMENT '时间',
-  PRIMARY KEY (`FINACIAL_LIABILITIES_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT '负债交易记录';
+  PRIMARY KEY (`FINACIAL_LIABILITIES_ID`),
+  KEY `fk_liabilities_customer` (`CUSTOMER_ID`),
+  CONSTRAINT `fk_liabilities_customer` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT ='负债交易记录';
 
 
 ###add by lxc 2018-08-08 15:58
@@ -604,8 +608,18 @@ CREATE TABLE `finacial_withdraw` (
 
 ##add by guwenshao 2018-08-08
 ALTER TABLE `customer` add  `PAYMENT_PASSWORD` varchar(64) DEFAULT NULL COMMENT '支付密码';
-
 ALTER TABLE `finacial_withdraw` add  `WITHDRAW_TYPE` int(11) DEFAULT 1 NOT NULL COMMENT '提现类型：1.报账转账 2.保险返利转账';
+
+##add by likang 2018-08-09
+ALTER TABLE `finacial_loan` add  `REPAYMENT_TERM` int(11) DEFAULT 1 NOT NULL COMMENT '还款期限';
+ALTER TABLE `finacial_loan` add  `FINAL_REPAYMENT_TIME` datetime DEFAULT  NULL COMMENT '最后还款时间';
+ALTER TABLE `finacial_repayment` add  `REPAY_AMOUNT` datetime DEFAULT  NULL COMMENT '应还总额';
+ALTER TABLE `finacial_repayment` add  `READY_AMOUNT` datetime DEFAULT  NULL COMMENT '实际已还';
+ALTER TABLE `finacial_repayment` add  `SURPLUS_AMOUNT` datetime DEFAULT  NULL COMMENT '剩余需还';
+ALTER TABLE `finacial_repayment` add  `LOAN_AMOUNT` datetime DEFAULT  NULL COMMENT '还款本金(借款金)';
+ALTER TABLE `finacial_repayment` add  `OVERDUE_NUMER` datetime DEFAULT  NULL COMMENT '逾期次数';
+
+
 
 ##add by pengcong 2018-8-8
 ALTER TABLE `rb_reimbursement` ADD COLUMN `CATALOG_ID` int(11) NOT NULL COMMENT '商品分类' AFTER `CREATE_TIME`;

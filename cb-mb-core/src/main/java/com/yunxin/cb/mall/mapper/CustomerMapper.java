@@ -247,4 +247,17 @@ public interface CustomerMapper {
             "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Customer record);
+
+    /**
+     * 根据用户id修改交易密码
+     * @param customerId
+     * @param paymentPassword
+     * @return
+     */
+    @Update({
+            "update customer",
+            "set PAYMENT_PASSWORD = #{paymentPassword,jdbcType=VARCHAR}",
+            "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
+    })
+    int updatePaymentPasswordByCustomerId(@Param("customerId")int customerId, @Param("paymentPassword")String paymentPassword);
 }

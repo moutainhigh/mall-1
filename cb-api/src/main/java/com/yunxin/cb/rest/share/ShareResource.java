@@ -3,12 +3,15 @@ package com.yunxin.cb.rest.share;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.rest.customer.MainResource;
 import com.yunxin.cb.system.service.IProfileService;
 import com.yunxin.cb.system.vo.ShareInfo;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +29,7 @@ import static com.yunxin.cb.meta.Result.SUCCESS;
 @RestController
 @RequestMapping(value = "/share")
 public class ShareResource extends BaseResource {
-
+    private static Logger logger = LoggerFactory.getLogger(ShareResource.class);
     @Resource
     private IProfileService profileService;
     @Resource
@@ -37,11 +40,13 @@ public class ShareResource extends BaseResource {
     })
     @GetMapping(value = "getShareInfo")
     public ResponseResult<ShareInfo> getShareInfo() {
+        logger.info("loginId:"+getCustomerId());
         Customer customer = customerService.getCustomerById(getCustomerId());
         String invitationCode = "";
         if(null!=customer){
             invitationCode=customer.getInvitationCode();
         }
+        logger.info("invitationCode:"+invitationCode);
         return new ResponseResult(SUCCESS, profileService.getShareInfo(invitationCode));
     }
 }

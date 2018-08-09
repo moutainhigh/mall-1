@@ -28,21 +28,24 @@
                     return "财务员审批中";
                 case "DIRECTOR_IN_APPROVAL":
                     return "财务主管审批中";
-                case "CASHIER_IN_APPROVAL":
-                    return "出纳审批中";
                 case "ALREADY_TO_ACCOUNT":
                     return "已到账";
                 case "NOT_PASS_THROUGH":
                     return "审批不通过";
+                case "CANCEL_REIMBURSEMENT":
+                    return "取消报账";
+
             }
         }
         function auditItem(reimbursementId){
+
             $('#auditDialog').modal();
             $("#trs").html("");
-            $.get("reimbursementOrders.do?reimbursementId="+reimbursementId,$("#tables").serialize(),function(result){
+            $.get("reimbursementOrder.do?reimbursementId="+reimbursementId,$("#tables").serialize(),function(result){
+                debugger;
                 var rem=result.data;
                     for(var i=0;i<rem.length;i++){
-                        $("#trs").append("<tr name='trtd'><td>"+rem[i].orderItem.orderCode+"</td><td>"+rem[i].order.feeTotal+"</td><td>"+rem[i].order.createTime+"</td></tr>");
+                        $("#trs").append("<tr name='trtd'><td>"+rem[i].order.orderCode+"</td><td>"+rem[i].order.totalPrice+"</td><td>"+rem[i].order.createTime+"</td></tr>");
                     }
             });
 

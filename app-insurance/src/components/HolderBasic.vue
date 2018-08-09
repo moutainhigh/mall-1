@@ -51,36 +51,36 @@
       </div>
       <div class="i-input">
         <div class="i-input-item">基本保额</div>
-        <div class="i-input-radio" v-if="proId == 1">
-          <div class="radio-div" @click="priceId = 1">
-            <button v-if="priceId ===1" class="check-on">2万</button>
-            <button v-if="priceId !==1" class="check-off">2万</button>
+        <div class="i-input-radio">
+          <div class="radio-div" @click="priceId = price.priceId" v-for="price in prices">
+            <button v-if="priceId ===price.priceId" class="check-on">{{setTranPrice(price.price)}}万</button>
+            <button v-if="priceId !==price.priceId" class="check-off">{{setTranPrice(price.price)}}万</button>
           </div>
-          <div class="radio-div" @click="priceId = 2">
-            <button v-if="priceId ===2" class="check-on">5万</button>
-            <button v-if="priceId !==2" class="check-off">5万</button>
-          </div>
-          <div class="radio-div" @click="priceId = 3">
-            <button v-if="priceId ===3" class="check-on">10万</button>
-            <button v-if="priceId !==3" class="check-off">10万</button>
-          </div>
+          <!--<div class="radio-div" @click="priceId = 2">-->
+            <!--<button v-if="priceId ===2" class="check-on">5万</button>-->
+            <!--<button v-if="priceId !==2" class="check-off">5万</button>-->
+          <!--</div>-->
+          <!--<div class="radio-div" @click="priceId = 3">-->
+            <!--<button v-if="priceId ===3" class="check-on">10万</button>-->
+            <!--<button v-if="priceId !==3" class="check-off">10万</button>-->
+          <!--</div>-->
         </div>
-        <div class="i-input-radio" v-if="proId == 2">
-          <div style="display: inline-block;color: #c01212;">
-            <div class="radio-div" @click="priceId = 4">
-              <button v-if="priceId ===4" class="check-on">2万</button>
-              <button v-if="priceId !==4" class="check-off">2万</button>
-            </div>
-            <div class="radio-div" @click="priceId = 5">
-              <button v-if="priceId ===5" class="check-on">5万</button>
-              <button v-if="priceId !==5" class="check-off">5万</button>
-            </div>
-            <div class="radio-div" @click="priceId = 6">
-              <button v-if="priceId ===6" class="check-on">10万</button>
-              <button v-if="priceId !==6" class="check-off">10万</button>
-            </div>
-          </div>
-        </div>
+        <!--<div class="i-input-radio" v-if="proId == 2">-->
+          <!--<div style="display: inline-block;color: #c01212;">-->
+            <!--<div class="radio-div" @click="priceId = 4">-->
+              <!--<button v-if="priceId ===4" class="check-on">2万</button>-->
+              <!--<button v-if="priceId !==4" class="check-off">2万</button>-->
+            <!--</div>-->
+            <!--<div class="radio-div" @click="priceId = 5">-->
+              <!--<button v-if="priceId ===5" class="check-on">5万</button>-->
+              <!--<button v-if="priceId !==5" class="check-off">5万</button>-->
+            <!--</div>-->
+            <!--<div class="radio-div" @click="priceId = 6">-->
+              <!--<button v-if="priceId ===6" class="check-on">10万</button>-->
+              <!--<button v-if="priceId !==6" class="check-off">10万</button>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
     <div style="height: 1px; margin: 0 15px; background: #ececec"></div>
@@ -111,7 +111,7 @@
   import {required} from 'vuelidate/lib/validators'
   import {dateFormat} from "../config/mUtils";
   import {getProResult} from "../service/getData";
-  import {insurePeriod, protectionYear} from "../config/dataFormat";
+  import {insurePeriod, protectionYear, tranPrice} from "../config/dataFormat";
 
   export default {
     name: "holder-basic",
@@ -125,7 +125,7 @@
       return {
         birthday: '',
         gender: true,
-        priceId: 1,
+        priceId: storage.fetch('order').insuranceProductPrice.priceId,
         profession: [],
         list: [['居民身份证', '驾驶证', '护照']],
         title: '',
@@ -137,7 +137,7 @@
         startDate: dateFormat(new Date(), "yyyy-MM-dd"),
         period: '',
         year: '',
-        prices: []
+        prices: storage.fetch('prices')
       }
     },
     validations: {
@@ -204,6 +204,10 @@
       setInsureYear(insureYear) {
         return protectionYear(insureYear);
       },
+      //价格转换格式
+      setTranPrice(price) {
+        return tranPrice(price);
+      },
     },
     watch: {
       birthday: {
@@ -225,19 +229,10 @@
       priceId: function (newVal, oldVal) {
         let order = storage.fetch('order');
         order.insuranceProductPrice.priceId = newVal;
-        switch (newVal) {
-          case 1 :
-          case 4 :
-            order.insuranceProductPrice.price = 20000.00;
-            break;
-          case 2:
-          case 5 :
-            order.insuranceProductPrice.price = 50000.00;
-            break;
-          case 3:
-          case 6 :
-            order.insuranceProductPrice.price = 100000.00;
-            break;
+        for (let i = 0; i < this.prices.length; i++) {
+          if (newVal == this.prices[i].priceId) {
+            order.insuranceProductPrice.price = this.prices[i].price;
+          }
         }
         storage.save('order', order);
       }
@@ -248,7 +243,6 @@
       this.proId = query.id;
       this.period = query.period;
       this.year = query.year;
-      this.prices = query.prices;
       let order;
       if (storage.fetch('order').length != 0) {
         order = storage.fetch('order');
