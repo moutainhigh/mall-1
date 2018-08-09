@@ -1,4 +1,4 @@
-package com.yunxin.cb.mall.entity;
+package com.yunxin.cb.rb.entity;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

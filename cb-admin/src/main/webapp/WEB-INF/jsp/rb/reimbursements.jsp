@@ -185,7 +185,6 @@
                                     <option value="">全部</option>
                                     <option value="FINANCE_IN_APPROVAL">财务员审批中</option>
                                     <option value="DIRECTOR_IN_APPROVAL">财务主管审批中</option>
-                                    <option value="CASHIER_IN_APPROVAL">出纳审批中</option>
                                     <option value="ALREADY_TO_ACCOUNT">已到账</option>
                                     <option value="NOT_PASS_THROUGH">审批不通过</option>
                                 </select>

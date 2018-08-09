@@ -1,7 +1,8 @@
-package com.yunxin.cb.mall.entity;
+package com.yunxin.cb.rb.entity;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.DynamicInsert;
