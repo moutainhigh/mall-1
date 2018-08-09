@@ -73,7 +73,7 @@ public interface FinacialLoanMapper {
             "LOAN_ID, CUSTOMER_ID, AMOUNT, TERM, INTEREST_RATE, TYPE, REPAY_DAY, STATE, CREATE_TIME, ",
             "UPDATE_TIME, REPAYMENT_TERM, FINAL_REPAYMENT_TIME, REPAY_AMOUNT, READY_AMOUNT, ",
             "SURPLUS_AMOUNT, LATE_FEE, INTEREST, OVERDUE_NUMER, BANK_ID",
-            "from finacial_loan where CUSTOMER_ID = #{customerId,jdbcType=INTEGER} and type=#{type,jdbcType=VARCHAR} "
+            "from finacial_loan where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     @Results({
             @Result(column="LOAN_ID", property="loanId", jdbcType=JdbcType.INTEGER, id=true),
@@ -96,7 +96,7 @@ public interface FinacialLoanMapper {
             @Result(column="OVERDUE_NUMER", property="overdueNumer", jdbcType=JdbcType.INTEGER),
             @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER)
     })
-    List<FinacialLoan> selectByCustomerIdAndType(@Param("customerId") Integer customerId   );
+    List<FinacialLoan> selectByCustomerIdAndType(@Param("customerId") Integer customerId);
 
     @Update({
             "update finacial_loan",

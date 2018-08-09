@@ -79,7 +79,7 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
         finacialLiabilitiesBillService.addFinacialLiabilitiesBill(billvo);
         /**还款，添加交易记录END*/
         log.info("开始还款cutomerId:"+finacialRepayment.getCustomerId()+";还款金repayAmount:"+repayAmount);
-        List<FinacialLoanVO> insuranlist = finacialLoanService.getByCustomerIdAndType(finacialRepayment.getCustomerId(),LoanType.INSURANCE_LOAN.getEnum());
+        List<FinacialLoanVO> insuranlist = finacialLoanService.getByCustomerIdAndType(finacialRepayment.getCustomerId());
         for (FinacialLoanVO p : insuranlist) {
             BigDecimal surplusAmount = p.getSurplusAmount();
             //表示还款金大于贷款金
@@ -104,7 +104,7 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
                         ";repayAmount:"+repayAmount+";surplusAmount:"+surplusAmount);
             }
         }
-        List<FinacialLoanVO> creditlist = finacialLoanService.getByCustomerIdAndType(finacialRepayment.getCustomerId(),LoanType.CREDIT_LOAN.getEnum());
+        List<FinacialLoanVO> creditlist = finacialLoanService.getByCustomerIdAndType(finacialRepayment.getCustomerId());
         for (FinacialLoanVO p : creditlist) {
             BigDecimal surplusAmount = p.getSurplusAmount();
             //表示还款金大于贷款金

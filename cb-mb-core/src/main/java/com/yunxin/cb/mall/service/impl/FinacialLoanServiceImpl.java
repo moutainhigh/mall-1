@@ -46,8 +46,8 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
      * @date        2018/8/9 14:38
      */
     @Override
-    public List<FinacialLoanVO> getByCustomerIdAndType(int customerId,String type){
-        List<FinacialLoan> list = finacialLoanMapper.selectByCustomerIdAndType(customerId,type);
+    public List<FinacialLoanVO> getByCustomerIdAndType(int customerId){
+        List<FinacialLoan> list = finacialLoanMapper.selectByCustomerIdAndType(customerId);
         List<FinacialLoanVO> listVo = new ArrayList<>();
         list.stream().forEach(p ->{
             FinacialLoanVO vo = new FinacialLoanVO();
