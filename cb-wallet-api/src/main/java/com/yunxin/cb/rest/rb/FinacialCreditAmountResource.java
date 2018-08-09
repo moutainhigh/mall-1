@@ -2,8 +2,10 @@ package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Customer;
+import com.yunxin.cb.mall.entity.FinacialLoanConfig;
 import com.yunxin.cb.mall.service.BankInfoService;
 import com.yunxin.cb.mall.service.CustomerService;
+import com.yunxin.cb.mall.service.FinacialLoanConfigService;
 import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.meta.Result;
@@ -38,6 +40,9 @@ public class FinacialCreditAmountResource extends BaseResource {
 
     @Resource
     private FinacialWalletService finacialWalletService;
+
+    @Resource
+    private FinacialLoanConfigService finacialLoanConfigService;
 
     
     @ApiOperation(value = "信用额度信息")
@@ -81,6 +86,20 @@ public class FinacialCreditAmountResource extends BaseResource {
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.info("getLoanInitDataInfo failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
+    }
+
+    @ApiOperation(value = "借款页面获取贷款期限利率配置")
+    @ApiImplicitParams({
+    })
+    @GetMapping("loanConfigs")
+    @ApiVersion(1)
+    public ResponseResult<List<FinacialLoanConfig>> getLoanConfigs() {
+        try {
+            return new ResponseResult(finacialLoanConfigService.getFinacilaLoanConfigs());
+        } catch (Exception e) {
+            logger.info("getLoanConfig failed", e);
             return new ResponseResult(Result.FAILURE);
         }
     }
