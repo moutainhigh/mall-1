@@ -26,4 +26,19 @@ public interface FinacialLoanConfigMapper {
             @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR)
     })
     List<FinacialLoanConfig> selectAll();
+
+    @Select({
+            "SELECT",
+            "LOAN_CONFIG_ID, TERM, INTEREST_RATE, TITLE, REMARK",
+            "FROM finacial_loan_config",
+            "where LOAN_CONFIG_ID = #{loanConfigId,jdbcType=INTEGER}"
+    })
+    @Results({
+            @Result(column="LOAN_CONFIG_ID", property="loanConfigId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="TERM", property="term", jdbcType=JdbcType.INTEGER),
+            @Result(column="INTEREST_RATE", property="interestRate", jdbcType=JdbcType.DECIMAL),
+            @Result(column="TITLE", property="title", jdbcType=JdbcType.VARCHAR),
+            @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR)
+    })
+    FinacialLoanConfig selectByPrimaryKey(int loanConfigId);
 }

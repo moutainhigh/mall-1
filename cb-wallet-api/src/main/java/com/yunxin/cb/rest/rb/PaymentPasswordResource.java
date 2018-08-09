@@ -12,14 +12,16 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 
 /**
- * @title:  支付密码设置接口
+ * @title:  支付密码设置接口（暂不用，砍掉了）
  * @auther: gws
  * @date: 2018/8/8 14:28
  */
+@ApiIgnore
 @Api(description = "支付密码设置接口")
 @RestController
 @RequestMapping(value = "/{version}/rb/paymentPassword")
