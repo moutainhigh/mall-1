@@ -339,6 +339,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 query.orderBy(builder.desc(root.get(InsuranceOrder_.createTime)));
             }
         });
+
         Page<InsuranceOrder> orderPage = insuranceOrderDao.findAll(query, query.getPageRequest());
         if(orderPage.getContent()!= null){
             orderPage.getContent().forEach(insuranceOrder -> {
@@ -365,8 +366,11 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     }
 
     public InsuranceOrder getInsuranceOrderDetailByOrderCode(String orderCode) {
-        InsuranceOrder InsuranceOrder = insuranceOrderDao.getInsuranceOrderDetailByOrderCode(orderCode);
-        return InsuranceOrder;
+        InsuranceOrder insuranceOrder = insuranceOrderDao.getInsuranceOrderDetailByOrderCode(orderCode);
+        InsuranceProductPrice insuranceProductPrice=new InsuranceProductPrice();
+        insuranceProductPrice.setPrice(insuranceOrder.getPrice());
+        insuranceOrder.setInsuranceProductPrice(insuranceProductPrice);
+        return insuranceOrder;
     }
 
     @Override
