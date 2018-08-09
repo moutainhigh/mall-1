@@ -1,18 +1,13 @@
-/**
- *
- */
 package com.yunxin.cb.mall.entity.meta;
 
-/**
- * @author Aidy
- */
-public enum LoanType {
+public enum FiaciaLogPayType {
 
-    INSURANCE_LOAN("保险贷"), CREDIT_LOAN("信用贷");
+    VX("微信"),ALIPAY("支付宝"),
+    RB("报账"),LOAN("还款");
 
     private String name;
 
-    private LoanType(String name) {
+    private FiaciaLogPayType(String name) {
         this.name = name;
     }
 
@@ -28,9 +23,4 @@ public enum LoanType {
     public String toString() {
         return super.toString() + "("+name+")";
     }
-
-    public String getEnum(){
-        return super.toString();
-    }
 }
-

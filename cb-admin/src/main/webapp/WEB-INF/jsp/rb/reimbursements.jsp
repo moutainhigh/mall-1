@@ -44,7 +44,7 @@
 
             $("#trs").html("");
             $.get("reimbursementOrder.do?reimbursementId="+reimbursementId,$("#tables").serialize(),function(result){
-                debugger;
+
                 var rem=result.data;
                     for(var i=0;i<rem.length;i++){
                         $("#trs").append("<tr name='trtd'><td>"+rem[i].order.orderCode+"</td><td>"+rem[i].order.totalPrice+"</td><td>"+rem[i].order.createTime+"</td></tr>");
@@ -63,7 +63,38 @@
 
         function approval(){
             var dataItem = getSelectedGridItem("grid");
-            $('#auditDialogSp').modal();
+            if(dataItem){
+                $('#auditDialogSp').modal();
+
+
+                $.get("reimbursementDetil.do?reimbursementId="+dataItem.reimbursementId,$("#tables").serialize(),function(result){
+                    debugger;
+                    var data=result.data;
+                    var reimbursement=result.reimbursement;
+                    $("#reimbursement").html(" <div class='ceilTitle' >报账总金额：</div>\n" +
+                        "               <div class='reimbursementDetail'>\n" +
+                        "                    <div>订单金额${reimbursement.amount}</div>\n" +
+                        "                    <div>缴纳税点：${reimbursement.tax}，税${reimbursement.tax}</div>\n" +
+                        "                    <div>实际到账总金额：28.22万</div>\n" +
+                        "               </div>\n" +
+                        "\n" +
+                        "               <div class='ceilTitle' >基本信息</div>\n" +
+                        "               <div class='reimbursementDetail'>\n" +
+                        "                    <div>报账订单号：123456789</div>\n" +
+                        "                    <div>申报时间：2018-07-04 15：00：00</div>\n" +
+                        "                    <div>申报人：张三&nbsp;&nbsp;账号：18680319434</div>\n" +
+                        "                    <div>状态：财务主管审批中</div>\n" +
+                        "                    <div class='approvalOpinions clearfix'>\n" +
+                        "                        <div class='left'>财务审批意见:</div>\n" +
+                        "                        <div class='right'>审批意见 通过 意见（资料核实审核通过）<br>审核时间：2018-07-24 15：00：00<span class='approver'>审批人：张某某</span></div>\n" +
+                        "                    </div>\n" +
+                        "               </div>\n" +
+                        "               <div class='ceilTitle' >审批意见：</div>\n" +
+                        "               <textarea name=\"\" id=\"\"  style='margin-top:10px;width:100%;height: 60px;border-color:#e7e5e5;' placeholder=\"请输入审批意见（必填）\"></textarea>")
+                });
+
+            }
+
             // if (dataItem) {
             //     window.location.href = "reimbursementOrders.do?reimbursementId=" + dataItem.reimbursementId;
             // }
@@ -335,23 +366,54 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">订单详情</h4>
             </div>
-            <div class="modal-body" >
-                <table class="table table-bordered table-striped" >
-                    <thead>
-                    <tr>
-                        <th scope="col" data-rt-column="code"></th>
-                        <th scope="col" data-rt-column="operate"></th>
-                        <th scope="col" data-rt-column="name"></th>
+            <div class="modal-body clearfix" >
+                <div class='ceilTitle'>报账订单：</div>
+               <div id='orderBox ' class='clearfix'>
+                   <div class='orderItem '>
+                       <div class="orderNo">订单号：123456</div>
+                       <div class='orderImg'>
+                            <img src="../images/users/user-1.jpg" alt="">
+                            <div class='orderDtail'><span class='orderDes'>2018款C200L运动版</span><span class='orderMoney'>+&nbsp;28.22万</span></div>
+                       </div>
+                       <div class='orderMoney'>订单金额：28.22万，应缴纳税：7.07万</div>
+                   </div>
+                   <div class='orderItem'>
+                        <div class="orderNo">订单号：123456</div>
+                        <div class='orderImg'>
+                             <img src="../images/users/user-1.jpg" alt="">
+                             <div class='orderDtail'><span class='orderDes'>2018款C200L运动版</span><span class='orderMoney'>+&nbsp;28.22万</span></div>
+                        </div>
+                        <div class='orderMoney'>订单金额：28.22万，应缴纳税：7.07万</div>
+                    </div>
+                    <div class='orderItem'>
+                            <div class="orderNo">订单号：123456</div>
+                            <div class='orderImg'>
+                                 <img src="../images/users/user-1.jpg" alt="">
+                                 <div class='orderDtail'><span class='orderDes'>2018款C200L运动版</span><span class='orderMoney'>+&nbsp;28.22万</span></div>
+                            </div>
+                            <div class='orderMoney'>订单金额：28.22万，应缴纳税：7.07万</div>
+                    </div>
+                    <div class='orderItem'>
+                            <div class="orderNo">订单号：123456</div>
+                            <div class='orderImg'>
+                                 <img src="../images/users/user-1.jpg" alt="">
+                                 <div class='orderDtail'><span class='orderDes'>2018款C200L运动版</span><span class='orderMoney'>+&nbsp;28.22万</span></div>
+                            </div>
+                            <div class='orderMoney'>订单金额：28.22万，应缴纳税：7.07万</div>
+                    </div>
+                        
 
-                    </tr>
-                    </thead>
-                    <tbody>
+               </div>
+                <div id="reimbursement">
 
-                    </tbody>
-                </table>
+                </div>
+               
+
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+            <div class="modal-footer" style='padding-left:200px'>
+                <button class="btn btn-success" data-dismiss="modal">通过</button>
+                <button class="btn btn-danger" data-dismiss="modal">不通过</button>
+                <button class="btn btn-default" data-dismiss="modal">取消</button>
                 <%--<button class="btn btn-primary pull-right" onclick="submitAudit();" id="btnComfrim">确认</button>--%>
             </div>
         </div>

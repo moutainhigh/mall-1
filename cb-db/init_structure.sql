@@ -1018,7 +1018,7 @@ CREATE TABLE `insurance_order`  (
   CONSTRAINT `fk_insura_order_offsite` FOREIGN KEY (`OFFSITE_ID`) REFERENCES `insurance_order_offsite` (`OFFSITE_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_insura_order_policyholder` FOREIGN KEY (`POLICYHOLDER_ID`) REFERENCES `insurance_order_policyholder` (`POLICYHOLDER_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_insura_order_policyholder_bank` FOREIGN KEY (`BANK_ID`) REFERENCES `insurance_order_policyholder_bank` (`BANK_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_insura_order_price` FOREIGN KEY (`PRICE_ID`) REFERENCES `insurance_product_price` (`PRICE_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+--   CONSTRAINT `fk_insura_order_price` FOREIGN KEY (`PRICE_ID`) REFERENCES `insurance_product_price` (`PRICE_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_insura_prod` FOREIGN KEY (`PROD_ID`) REFERENCES `insurance_product` (`PROD_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 195 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '保险订单' ROW_FORMAT = Compact;
 

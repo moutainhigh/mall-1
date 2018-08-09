@@ -184,14 +184,6 @@
                                     $('#fileValue').attr("readonly",false);
                                 }
                             }
-                            $(function () {
-                                 var isPicture=${profile.isPicture};
-                                 if(isPicture==1){
-                                     $('#fileValue').attr("readonly",true);
-                                     $('#fileValeDiv').hide();
-                                     $('#fileValeImg').show();
-                                 }
-                            });
 
                             //建立一個可存取到該file的url
                             function getObjectURL(file) {
@@ -219,7 +211,7 @@
                                     processData: false,
                                     contentType: false,
                                     success: function (result) {
-                                        $('#'+imgId).val(result.url);
+                                        window.editor.html(result.url)
                                     },
                                     error: function (err) {
                                     }
@@ -236,7 +228,6 @@
                                     });
                                 });
                             });
-
                             $(document).ready(function () {
                                 KindEditor.ready(function (K) {
                                     window.editor = K.create('#editorContent', {
@@ -251,6 +242,13 @@
                                         }
                                     });
                                 });
+
+                                var isPicture=${profile.isPicture};
+                                if(isPicture==1){
+                                    // $('#fileValeDiv').hide();
+                                    // $('#fileValeImg').show();
+                                    $('#fileValue').attr("readonly",true);
+                                }
                             });
                         </script>
                         <div class="spacer-10"></div>
@@ -259,17 +257,17 @@
                                 <label>参数值：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent" path="fileValue" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea  cssClass="form-control" id="editorContent" path="fileValue" cssStyle="height:500px;"></form:textarea>
                             </div>
                         </div>
-                        <div id="fileValeImg" class="row" style="display: none">
+                        <div id="fileValeImg" class="row" style="display: none;">
                             <div class="col-sm-2">
                                 <label>参数值：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <img id="headPic" src="${profile.fileValue}" width="350px" height="350px"
                                      style="padding: 5px">
-                                <input id="upload" onchange="onchangeImg('fileValue')" name="file" multiple="multiple" accept="image/*" type="file"
+                                <input id="upload" onchange="onchangeImg('editorContent')" name="file" multiple="multiple" accept="image/*" type="file"
                                        style="display: none"/>
                             </div>
                         </div>

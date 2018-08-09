@@ -76,6 +76,7 @@ public class InsuranceOrder implements Serializable {
      */
     @ApiModelProperty(value="保额",name="insuranceProductPrice",example="保额")
     private InsuranceProductPrice insuranceProductPrice;
+    private int price;
     /**
      * 客户
      */
@@ -270,11 +271,7 @@ public class InsuranceOrder implements Serializable {
     public void setInsuranceProductPrice(InsuranceProductPrice insuranceProductPrice) {
         this.insuranceProductPrice = insuranceProductPrice;
     }
-
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "PRICE_ID", nullable = false, insertable = true, updatable = true)
-    })
+    @Transient
     public InsuranceProductPrice getInsuranceProductPrice() {
         return insuranceProductPrice;
     }
@@ -324,5 +321,11 @@ public class InsuranceOrder implements Serializable {
         this.orderState = orderState;
     }
 
+    public int getPrice() {
+        return price;
+    }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

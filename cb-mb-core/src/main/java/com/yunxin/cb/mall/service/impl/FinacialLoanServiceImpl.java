@@ -1,9 +1,11 @@
 package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.FinacialLoan;
+import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.mapper.FinacialLoanMapper;
 import com.yunxin.cb.mall.service.FinacialLoanService;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
+import com.yunxin.cb.util.page.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
@@ -46,8 +48,8 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
      * @date        2018/8/9 14:38
      */
     @Override
-    public List<FinacialLoanVO> getByCustomerId(int customerId){
-        List<FinacialLoan> list = finacialLoanMapper.selectByCustomerId(customerId);
+    public List<FinacialLoanVO> getByCustomerIdAndType(int customerId){
+        List<FinacialLoan> list = finacialLoanMapper.selectByCustomerIdAndType(customerId);
         List<FinacialLoanVO> listVo = new ArrayList<>();
         list.stream().forEach(p ->{
             FinacialLoanVO vo = new FinacialLoanVO();
@@ -88,5 +90,23 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
         BeanUtils.copyProperties(finacialLoan, vo);
         finacialLoanMapper.updateByPrimaryKey(finacialLoan);
         return vo;
+    }
+
+    /**
+     * 获取用户借款条数
+     * @param customerId
+     * @return
+     */
+    @Override
+    public int countByCustomerId(int customerId) {
+        Query q = new Query();
+        FinacialLoan finacialLoan = new FinacialLoan();
+        finacialLoan.setCustomerId(customerId);
+        List<LoanState> list = new ArrayList<LoanState>();
+        list.add(LoanState.APPLY_SUCCESS);
+        list.add(LoanState.SETTLE);
+        finacialLoan.setStateList(list);
+        q.setData(finacialLoan);
+        return finacialLoanMapper.count(q);
     }
 }

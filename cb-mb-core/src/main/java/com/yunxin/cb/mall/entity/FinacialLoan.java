@@ -5,6 +5,7 @@ import com.yunxin.cb.mall.entity.meta.LoanType;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class FinacialLoan {
     /**  */
@@ -63,6 +64,9 @@ public class FinacialLoan {
 
     /** 银行卡ID */
     private Integer bankId;
+
+    /**查询使用*/
+    private List<LoanState> stateList;
 
     public Integer getLoanId() {
         return loanId;
@@ -214,5 +218,13 @@ public class FinacialLoan {
 
     public void setBankId(Integer bankId) {
         this.bankId = bankId;
+    }
+
+    public List<LoanState> getStateList() {
+        return stateList;
+    }
+
+    public void setStateList(List<LoanState> stateList) {
+        this.stateList = stateList;
     }
 }

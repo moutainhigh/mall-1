@@ -182,6 +182,7 @@
                         <kendo:grid-columns>
                             <kendo:grid-column title="ID" field="fileId" width="30px"/>
                             <kendo:grid-column title="名称" field="profileName" template="#=getprofileName(profileName)#" width="200px"/>
+                            <kendo:grid-column title="值" field="fileValue" template="#=getprofileValue(fileValue,isPicture)#" width="200px"/>
                             <kendo:grid-column title="备注" field="remarks"  width="200px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">

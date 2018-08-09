@@ -81,6 +81,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     public InsuranceOrder addInsuranceOrder(InsuranceOrder insuranceOrder) {
         insuranceOrder.setOrderCode(CodeGenerator.getInsuranceCode());
         insuranceOrder.setCreateTime(new Date());
+        insuranceOrder.setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
         //生成条形码
         String barCode = ZxingUtils.encodeBarCodeToBase64(insuranceOrder.getOrderCode(), 150, 50);
         insuranceOrder.setBarCode(barCode);
@@ -130,6 +131,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             insuranceOrderLog.setCustomer(customers);
             insuranceOrderLog.setInsuranceOrder(insuranceOrder);
             insuranceOrderLog.setOrderState(InsuranceOrderState.UN_PAID);
+
             insuranceOrderLog.setPrice(insuranceOrder.getInsuranceProductPrice().getPrice());
             if(null!=insuranceOrder.getInsuranceProduct()){
                 InsuranceProduct insuranceProduct=insuranceProductDao.getOne(insuranceOrder.getInsuranceProduct().getProdId());
@@ -176,7 +178,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                                     }catch (Exception e){
                                         ration=0.5;
                                     }
-                                    iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getInsuranceProductPrice().getPrice());
+                                    iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getPrice());
                         }
                         customer.setPolicy(PolicyType.PAYMENT);
                     }
@@ -187,7 +189,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
              */
             User user = (User) request.getSession().getAttribute("loginSession");
             InsuranceLog insuranceLog= new InsuranceLog(orderId,insuranceOrder.getOrderCode(),insuranceOrder.getInsuranceOrderInsured().getInsuredName(),insuranceOrder.getInsuranceOrderInsured().getInsuredMobile(),
-                    insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderName(),insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderMobile(),insuranceOrder.getInsuranceProductPrice().getPrice()
+                    insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderName(),insuranceOrder.getInsuranceOrderPolicyholder().getPolicyholderMobile(),insuranceOrder.getPrice()
             ,orderState,user.getRealName(),user.getUserName(),getIpAddr(request),new Date());
 
             insuranceLogDao.save(insuranceLog);
@@ -326,7 +328,6 @@ public class InsuranceOrderService implements IInsuranceOrderService {
             public void buildFetch(Root<InsuranceOrder> root) {
                 root.fetch(InsuranceOrder_.insuranceOrderPolicyholder, JoinType.LEFT);
                 root.fetch(InsuranceOrder_.insuranceProduct,JoinType.LEFT);
-                root.fetch(InsuranceOrder_.insuranceProductPrice,JoinType.LEFT);
                 root.fetch(InsuranceOrder_.insuranceOrderInsured,JoinType.LEFT);
 
             }
@@ -338,7 +339,16 @@ public class InsuranceOrderService implements IInsuranceOrderService {
                 query.orderBy(builder.desc(root.get(InsuranceOrder_.createTime)));
             }
         });
-        return insuranceOrderDao.findAll(query,query.getPageRequest());
+
+        Page<InsuranceOrder> orderPage = insuranceOrderDao.findAll(query, query.getPageRequest());
+        if(orderPage.getContent()!= null){
+            orderPage.getContent().forEach(insuranceOrder -> {
+                InsuranceProductPrice insuranceProductPrice = new InsuranceProductPrice();
+                insuranceProductPrice.setPrice(insuranceOrder.getPrice());
+                insuranceOrder.setInsuranceProductPrice(insuranceProductPrice);
+            });
+        }
+        return orderPage;
     }
 
     /**
@@ -348,13 +358,19 @@ public class InsuranceOrderService implements IInsuranceOrderService {
      */
     @Override
     public InsuranceOrder getInsuranceOrderDetailById(int orderId) {
-        InsuranceOrder InsuranceOrder = insuranceOrderDao.getInsuranceOrderDetailById(orderId);
-        return InsuranceOrder;
+        InsuranceOrder insuranceOrder = insuranceOrderDao.getInsuranceOrderDetailById(orderId);
+        InsuranceProductPrice insuranceProductPrice=new InsuranceProductPrice();
+        insuranceProductPrice.setPrice(insuranceOrder.getPrice());
+        insuranceOrder.setInsuranceProductPrice(insuranceProductPrice);
+        return insuranceOrder;
     }
 
     public InsuranceOrder getInsuranceOrderDetailByOrderCode(String orderCode) {
-        InsuranceOrder InsuranceOrder = insuranceOrderDao.getInsuranceOrderDetailByOrderCode(orderCode);
-        return InsuranceOrder;
+        InsuranceOrder insuranceOrder = insuranceOrderDao.getInsuranceOrderDetailByOrderCode(orderCode);
+        InsuranceProductPrice insuranceProductPrice=new InsuranceProductPrice();
+        insuranceProductPrice.setPrice(insuranceOrder.getPrice());
+        insuranceOrder.setInsuranceProductPrice(insuranceProductPrice);
+        return insuranceOrder;
     }
 
     @Override
