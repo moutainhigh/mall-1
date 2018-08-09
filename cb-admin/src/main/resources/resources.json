@@ -133,6 +133,9 @@
       },
       {
         "name": "金额统计", "code": "102", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/moneyStatistics.do"
+      },
+      {
+        "name": "账单统计", "code": "103", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/billStatistics.do"
       }
     ]
   },

@@ -14,4 +14,13 @@ public interface CustomerService {
      */
     int updatePaymentPasswordByCustomerId(int customerId, String paymentPassword);
 
+    /**
+     * @title: 根据用户id修改认证状态
+     * @param: [customerId, authFlag]
+     * @return: int
+     * @auther: eleven
+     * @date: 2018/8/9 14:34
+     */
+    int updateAuthFlagByCustomerId(Integer customerId,Integer authFlag);
+
 }

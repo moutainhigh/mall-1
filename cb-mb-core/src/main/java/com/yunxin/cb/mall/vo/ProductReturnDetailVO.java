@@ -82,6 +82,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     private String reason;
 
     /**货品信息*/
+    @ApiModelProperty(value="货品信息",name="orderItemDetails",example="货品信息对象")
     Set<ProductReturnItemDetailVO> productReturnItemDetails;
 
     public Integer getReturnId() {

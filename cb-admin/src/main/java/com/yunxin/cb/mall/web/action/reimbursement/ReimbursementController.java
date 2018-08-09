@@ -1,8 +1,8 @@
 package com.yunxin.cb.mall.web.action.reimbursement;
 
 import com.yunxin.cb.mall.entity.OrderItem;
-import com.yunxin.cb.mall.entity.Reimbursement;
-import com.yunxin.cb.mall.service.IReimbursementService;
+import com.yunxin.cb.rb.entity.Reimbursement;
+import com.yunxin.cb.rb.service.IReimbursementService;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class ReimbursementController {
     private IReimbursementService iReimbursementService;
     @RequestMapping(value = "reimbursements", method = RequestMethod.GET)
     public String reimbursements() {
-        return "reimbursement/reimbursements";
+        return "rb/reimbursements";
     }
     /**
      * 分页列表
@@ -44,7 +44,7 @@ public class ReimbursementController {
             List<OrderItem> orderItem =iReimbursementService.queryOrderItemByIds(reimbursementId);
             modelMap.put("orderItems",orderItem);
             modelMap.put("reimbursement",iReimbursementService.getReimbursement(reimbursementId));
-        return "reimbursement/reimbursementOrders";
+        return "rb/reimbursementOrders";
     }
 
 

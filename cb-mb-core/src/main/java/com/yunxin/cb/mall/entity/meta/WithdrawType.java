@@ -7,7 +7,7 @@ package com.yunxin.cb.mall.entity.meta;
  */
 public enum WithdrawType {
 
-    BZ("报账转账",1), BS("保险返利转账",2);
+    BZ("报账转账",1), BX("保险返利转账",2);
     private String name;
     private Integer value;
 
