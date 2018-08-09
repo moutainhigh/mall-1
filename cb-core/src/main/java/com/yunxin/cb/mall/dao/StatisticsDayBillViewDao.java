@@ -33,7 +33,7 @@ public interface StatisticsDayBillViewDao extends JpaRepository<StatisticsDayBil
      * @return
      */
     @Query(nativeQuery = true,
-            value = "select bill_id,create_time,`year`,`month`,`day`,`type`,sum(amount) as amount from statistics_day_bill_view where `year`=?1 group by `year`,`type` order by `month` asc"
+            value = "select bill_id,create_time,`year`,`month`,`day`,`type`,sum(amount) as amount from statistics_day_bill_view where `year`=?1 group by `month`,`type` order by `month` asc"
             )
 
     List<StatisticsDayBillView> findMonthBill(int year);
