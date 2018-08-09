@@ -80,8 +80,8 @@ public interface ReimbursementMapper {
             "TAX = #{tax,jdbcType=DECIMAL},",
             "ORDER_AMOUNT = #{orderAmount,jdbcType=DECIMAL},",
             "ORDER_STATE = #{orderState,jdbcType=INTEGER},",
-            "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}",
-            "CATALOG_ID = #{catalogId,jdbcType=INTEGER},",
+            "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},",
+            "CATALOG_ID = #{catalogId,jdbcType=INTEGER}",
             "where REIMBURSEMENT_ID = #{reimbursementId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Reimbursement record);
@@ -98,9 +98,6 @@ public interface ReimbursementMapper {
             "</if>",
             "<if test='data.orderState!=null'>",
             "and ORDER_STATE = #{data.orderState}",
-            "</if>",
-            "<if test='data.orderState==null'>",
-            "and ORDER_STATE = 0 or ORDER_STATE = 4",
             "</if>",
             "ORDER BY CREATE_TIME DESC",
             "LIMIT #{rowIndex},#{pageSize}",
