@@ -1,7 +1,7 @@
 # 测试环境配置
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/crystal_ball?useUnicode=true&autoReconnect=true
+    url: jdbc:mysql://172.18.59.156:3306/crystal_ball?useUnicode=true&autoReconnect=true
     username: root
     password: Yunxin@2018!#%
   session:
