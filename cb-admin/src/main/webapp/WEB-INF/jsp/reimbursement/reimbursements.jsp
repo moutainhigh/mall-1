@@ -45,7 +45,7 @@
                 debugger;
                 var rem=result.data;
                     for(var i=0;i<rem.length;i++){
-                        $("#trs").append("<tr name='trtd'><td>"+rem[i].orderItem.order.orderCode+"</td><td>"+rem[i].orderItem.order.totalPrice+"</td><td>"+rem[i].orderItem.order.createTime+"</td></tr>");
+                        $("#trs").append("<tr name='trtd'><td>"+rem[i].order.orderCode+"</td><td>"+rem[i].order.totalPrice+"</td><td>"+rem[i].order.createTime+"</td></tr>");
                     }
             });
 

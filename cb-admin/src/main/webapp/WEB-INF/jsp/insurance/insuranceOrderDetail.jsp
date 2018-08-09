@@ -220,7 +220,15 @@
                                 <label><span class="asterisk"></span> 保险期间：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceProduct.insurePeriod}
+                                <c:if test="${insuranceOrder.insuranceProduct.insurePeriod=='TEN_YEAR'}">
+                                        十年
+                                </c:if>
+                                <c:if test="${insuranceOrder.insuranceProduct.insurePeriod=='TWENTY_YEAR'}">
+                                    20年
+                                </c:if>
+                                <c:if test="${insuranceOrder.insuranceProduct.insurePeriod=='LIFITIME'}">
+                                    终身
+                                </c:if>
                             </div>
                         </div>
 
@@ -231,7 +239,15 @@
                                 <label><span class="asterisk"></span> 缴费期限：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceProduct.protectionYear}
+                                    <c:if test="${insuranceOrder.insuranceProduct.protectionYear=='TEN_YEAR'}">
+                                        十年
+                                    </c:if>
+                                    <c:if test="${insuranceOrder.insuranceProduct.protectionYear=='TWENTY_YEAR'}">
+                                        20年
+                                    </c:if>
+                                    <c:if test="${insuranceOrder.insuranceProduct.protectionYear=='LIFITIME'}">
+                                        终身
+                                    </c:if>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 基本保额：</label>
