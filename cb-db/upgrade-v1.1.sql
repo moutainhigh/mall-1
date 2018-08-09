@@ -668,3 +668,7 @@ fb.TYPE as TYPE, SUM(fb.AMOUNT) as amount
 FROM crystal_ball.finacial_bill fb
 GROUP BY
 date_format(`fb`.`CREATE_TIME`,'%Y-%m-%d'), fb.TYPE
+
+##add by pengcong 2018-8-9
+ALTER TABLE `rb_reimbursement` ADD COLUMN `REPAYMENT_AMOUNT` decimal(20, 4) COMMENT '还款金额' AFTER `CATALOG_ID`,
+ALTER TABLE `rb_reimbursement` ADD COLUMN `REPAYMENT_TYPE` int(11) COMMENT '还款类型' AFTER `REPAYMENT_AMOUNT`;

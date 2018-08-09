@@ -39,6 +39,8 @@ public class ReimbursementQueryResource extends BaseResource {
             Query q = new Query(pageNo, pageSize);
             reimbursementQuery.setCustomerId(1);
             reimbursementQuery.setOrderState(OrderState.SUCCESS);
+            reimbursementQuery.setReimbursementState(ReimbursementState.NOT_PASS_THROUGH);
+            reimbursementQuery.setReimbursement_state(ReimbursementState.CANCEL_REIMBURSEMENT);
             q.setData(reimbursementQuery);
             PageFinder<ReimbursementVO> pageFinder = reimbursementQueryService.pageReimbursementQuery(q);
             return new ResponseResult(pageFinder);
