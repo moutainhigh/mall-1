@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.meta.ReimbursementState;
+import com.yunxin.cb.rb.entity.meta.ReimbursementType;
+import com.yunxin.cb.rb.entity.meta.RepaymentType;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -54,8 +55,11 @@ public class Reimbursement  implements java.io.Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
 
-    private ReimbursementState orderState;
-
+    private ReimbursementType orderState;
+    @ApiModelProperty(value="还款金额",name="repaymentAmount",example="100")
+    private Double repaymentAmount;
+    @ApiModelProperty(value="还款方式",name="repaymentType",example="")
+    private RepaymentType repaymentType;
     private List<ReimbursementProcess> reimbursementProcess=new ArrayList<>();
 
     @ApiModelProperty(value="报账订单",name="reimbursementOrder",example="")
@@ -139,11 +143,11 @@ public class Reimbursement  implements java.io.Serializable {
 
     @Column(nullable = false, length = 32)
     @Enumerated(EnumType.ORDINAL)
-    public ReimbursementState getOrderState() {
+    public ReimbursementType getOrderState() {
         return orderState;
     }
 
-    public void setOrderState(ReimbursementState orderState) {
+    public void setOrderState(ReimbursementType orderState) {
         this.orderState = orderState;
     }
 
@@ -155,5 +159,22 @@ public class Reimbursement  implements java.io.Serializable {
 
     public void setReimbursementProcess(List<ReimbursementProcess> reimbursementProcess) {
         this.reimbursementProcess = reimbursementProcess;
+    }
+    @Column(nullable = false, length = 32)
+    public Double getRepaymentAmount() {
+        return repaymentAmount;
+    }
+
+    public void setRepaymentAmount(Double repaymentAmount) {
+        this.repaymentAmount = repaymentAmount;
+    }
+    @Column(nullable = false, length = 50)
+    @Enumerated(EnumType.ORDINAL)
+    public RepaymentType getRepaymentType() {
+        return repaymentType;
+    }
+
+    public void setRepaymentType(RepaymentType repaymentType) {
+        this.repaymentType = repaymentType;
     }
 }

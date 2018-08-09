@@ -3,7 +3,7 @@ package com.yunxin.cb.rb.entity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.console.entity.User;
-import com.yunxin.cb.mall.entity.meta.ReimbursementState;
+import com.yunxin.cb.rb.entity.meta.ReimbursementProcessType;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,7 +32,7 @@ public class ReimbursementProcess  implements java.io.Serializable {
     private User user;
     @ApiModelProperty(value="备注",name="remarks",example="通过")
     private String remarks;
-    private ReimbursementState orderState;
+    private ReimbursementProcessType orderState;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
 
@@ -79,11 +79,11 @@ public class ReimbursementProcess  implements java.io.Serializable {
     }
     @Column(nullable = false, length = 32)
     @Enumerated(EnumType.ORDINAL)
-    public ReimbursementState getOrderState() {
+    public ReimbursementProcessType getOrderState() {
         return orderState;
     }
 
-    public void setOrderState(ReimbursementState orderState) {
+    public void setOrderState(ReimbursementProcessType orderState) {
         this.orderState = orderState;
     }
     @Temporal(TemporalType.TIMESTAMP)
