@@ -611,15 +611,18 @@ ALTER TABLE `customer` add  `PAYMENT_PASSWORD` varchar(64) DEFAULT NULL COMMENT 
 ALTER TABLE `finacial_withdraw` add  `WITHDRAW_TYPE` int(11) DEFAULT 1 NOT NULL COMMENT '提现类型：1.报账转账 2.保险返利转账';
 
 ##add by likang 2018-08-09
-ALTER TABLE `finacial_loan` add  `REPAYMENT_TERM` int(11) DEFAULT 1 NOT NULL COMMENT '还款期限';
+ALTER TABLE `finacial_loan` add  `REPAYMENT_TERM` int(11)  COMMENT '还款期限';
 ALTER TABLE `finacial_loan` add  `FINAL_REPAYMENT_TIME` datetime DEFAULT  NULL COMMENT '最后还款时间';
-ALTER TABLE `finacial_repayment` add  `REPAY_AMOUNT` datetime DEFAULT  NULL COMMENT '应还总额';
-ALTER TABLE `finacial_repayment` add  `READY_AMOUNT` datetime DEFAULT  NULL COMMENT '实际已还';
-ALTER TABLE `finacial_repayment` add  `SURPLUS_AMOUNT` datetime DEFAULT  NULL COMMENT '剩余需还';
-ALTER TABLE `finacial_repayment` add  `LOAN_AMOUNT` datetime DEFAULT  NULL COMMENT '还款本金(借款金)';
-ALTER TABLE `finacial_repayment` add  `OVERDUE_NUMER` datetime DEFAULT  NULL COMMENT '逾期次数';
+ALTER TABLE `finacial_loan` add  `REPAY_AMOUNT` decimal(20,4) DEFAULT  NULL COMMENT '应还总额';
+ALTER TABLE `finacial_loan` add  `READY_AMOUNT` decimal(20,4) DEFAULT  NULL COMMENT '实际已还';
+ALTER TABLE `finacial_loan` add  `SURPLUS_AMOUNT` decimal(20,4) DEFAULT  NULL COMMENT '剩余需还';
+ALTER TABLE `finacial_loan` add  `LATE_FEE` decimal(20,4) DEFAULT  NULL COMMENT '还款滞纳金';
+ALTER TABLE `finacial_loan` add  `INTEREST` decimal(20,4) DEFAULT  NULL COMMENT '还款利息';
+ALTER TABLE `finacial_loan` add  `OVERDUE_NUMER` int(11) DEFAULT 0   NULL COMMENT '逾期次数';
 
-
+ALTER TABLE `finacial_repayment` add  `REPAY_AMOUNT` decimal(20,4) DEFAULT  NULL COMMENT '还款金';
+ALTER TABLE `finacial_repayment` add  `READY_REPAYMENT_TIME` datetime DEFAULT  NULL COMMENT '实际还款时间';
+ALTER TABLE `finacial_repayment` add  `REPAY_TIME` datetime DEFAULT  NULL COMMENT '规定还款时间';
 
 ##add by pengcong 2018-8-8
 ALTER TABLE `rb_reimbursement` ADD COLUMN `CATALOG_ID` int(11) NOT NULL COMMENT '商品分类' AFTER `CREATE_TIME`;
