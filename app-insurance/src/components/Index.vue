@@ -64,14 +64,14 @@
     methods: {
       goToPro(pro){
         storage.save('packetId', pro.prodId);
+        storage.save('prices', pro.insuranceProductPrices);
         this.$router.push({
           path:'/pro-detail',
           query:{
             id:pro.prodId,
             title:pro.prodName,
             period: pro.insurePeriod,
-            year: pro.protectionYear,
-            prices: pro.insuranceProductPrices,
+            year: pro.protectionYear
           }
         });
       },
