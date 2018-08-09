@@ -51,6 +51,7 @@ public class PaymentPasswordResource extends BaseResource {
     @PostMapping(value = "checkCustomerInfo")
     @ApiVersion(1)
     public ResponseResult checkCustomerInfo(@RequestBody PaymentPasswordVO paymentPasswordVO) {
+        logger.info("paymentPasswordVO:" + paymentPasswordVO.toString());
         Customer customer = customerService.getCustomerById(getCustomerId());
         //校验证件号码后6位数
         if (customer != null && customer.getCustomerCardNo() != null && customer.getCustomerCardNo().length() > 6) {
