@@ -165,7 +165,9 @@ public class FinacialWalletServiceImpl implements FinacialWalletService {
             //总负债金额
             finacialWallet.setDebtTotal(finacialWallet.getDebtTotal().subtract(repayAmount));
             //更新负债金额
-            finacialWalletMapper.updateByPrimaryKey(finacialWallet);
+            FinacialWalletVO finacialWalletVO = new FinacialWalletVO();
+            BeanUtils.copyProperties(finacialWalletVO,finacialWallet);
+            this.updateFinacialWallet(finacialWalletVO);
             //操作成功
             result.setResult(Result.SUCCESS);
         }
