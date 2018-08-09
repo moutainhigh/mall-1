@@ -612,15 +612,44 @@ ALTER TABLE `customer` add  `PAYMENT_PASSWORD` varchar(64) DEFAULT NULL COMMENT 
 ALTER TABLE `finacial_withdraw` add  `WITHDRAW_TYPE` int(11) DEFAULT 1 NOT NULL COMMENT '提现类型：1.报账转账 2.保险返利转账';
 
 ##add by likang 2018-08-09
-ALTER TABLE `finacial_loan` add  `REPAYMENT_TERM` int(11) DEFAULT 1 NOT NULL COMMENT '还款期限';
+ALTER TABLE `finacial_loan` add  `REPAYMENT_TERM` int(11)  COMMENT '还款期限';
 ALTER TABLE `finacial_loan` add  `FINAL_REPAYMENT_TIME` datetime DEFAULT  NULL COMMENT '最后还款时间';
-ALTER TABLE `finacial_repayment` add  `REPAY_AMOUNT` datetime DEFAULT  NULL COMMENT '应还总额';
-ALTER TABLE `finacial_repayment` add  `READY_AMOUNT` datetime DEFAULT  NULL COMMENT '实际已还';
-ALTER TABLE `finacial_repayment` add  `SURPLUS_AMOUNT` datetime DEFAULT  NULL COMMENT '剩余需还';
-ALTER TABLE `finacial_repayment` add  `LOAN_AMOUNT` datetime DEFAULT  NULL COMMENT '还款本金(借款金)';
-ALTER TABLE `finacial_repayment` add  `OVERDUE_NUMER` datetime DEFAULT  NULL COMMENT '逾期次数';
-
-
+ALTER TABLE `finacial_loan` add  `REPAY_AMOUNT` decimal(20,4) DEFAULT  NULL COMMENT '应还总额';
+ALTER TABLE `finacial_loan` add  `READY_AMOUNT` decimal(20,4) DEFAULT  NULL COMMENT '实际已还';
+ALTER TABLE `finacial_loan` add  `SURPLUS_AMOUNT` decimal(20,4) DEFAULT  NULL COMMENT '剩余需还';
+ALTER TABLE `finacial_loan` add  `LATE_FEE` decimal(20,4) DEFAULT  NULL COMMENT '还款滞纳金';
+ALTER TABLE `finacial_loan` add  `INTEREST` decimal(20,4) DEFAULT  NULL COMMENT '还款利息';
+ALTER TABLE `finacial_loan` add  `OVERDUE_NUMER` int(11) DEFAULT 0   NULL COMMENT '逾期次数';
+ALTER TABLE `finacial_repayment` add  `REPAY_AMOUNT` decimal(20,4) DEFAULT  NULL COMMENT '还款金';
+ALTER TABLE `finacial_repayment` add  `READY_REPAYMENT_TIME` datetime DEFAULT  NULL COMMENT '实际还款时间';
+ALTER TABLE `finacial_repayment` add  `REPAY_TIME` datetime DEFAULT  NULL COMMENT '规定还款时间';
+DROP TABLE IF EXISTS `finacial_loan`;
+CREATE TABLE `finacial_loan` (
+  `LOAN_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int(11) DEFAULT NULL,
+  `AMOUNT` decimal(20,4) DEFAULT NULL COMMENT '贷款金额',
+  `TERM` int(11) DEFAULT NULL COMMENT '还款期数',
+  `INTEREST_RATE` decimal(20,4) DEFAULT NULL COMMENT '贷款利率',
+  `TYPE` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '贷款类型：1.信用贷款，2.预期收益贷',
+  `REPAY_DAY` int(11) DEFAULT NULL COMMENT '每月几日还款',
+  `STATE` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '贷款状态：1.申请，2.审核，3.发放',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '贷款日期',
+  `UPDATE_TIME` datetime DEFAULT NULL COMMENT '更新日期，审核为审核日期，发放为发放日期',
+  `REPAYMENT_TERM` int(11) DEFAULT NULL COMMENT '还款期限',
+  `FINAL_REPAYMENT_TIME` datetime DEFAULT NULL COMMENT '最后还款时间',
+  `REPAY_AMOUNT` decimal(20,4) DEFAULT NULL COMMENT '应还总额',
+  `READY_AMOUNT` decimal(20,4) DEFAULT NULL COMMENT '实际已还',
+  `SURPLUS_AMOUNT` decimal(20,4) DEFAULT NULL COMMENT '剩余需还',
+  `LATE_FEE` decimal(20,4) DEFAULT NULL COMMENT '还款滞纳金',
+  `INTEREST` decimal(20,4) DEFAULT NULL COMMENT '还款利息',
+  `OVERDUE_NUMER` int(11) DEFAULT 0 COMMENT '逾期次数',
+  `BANK_ID` int(11) NOT NULL COMMENT '银行卡ID',
+  PRIMARY KEY (`LOAN_ID`) USING BTREE,
+  KEY `fk_loan_customer_id` (`CUSTOMER_ID`),
+  KEY `fk_loan_bankId` (`BANK_ID`),
+  CONSTRAINT `fk_loan_bankId` FOREIGN KEY (`BANK_ID`) REFERENCES `bank_info` (`BANK_ID`),
+  CONSTRAINT `fk_loan_customer_id` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 ##add by pengcong 2018-8-8
 ALTER TABLE `rb_reimbursement` ADD COLUMN `CATALOG_ID` int(11) NOT NULL COMMENT '商品分类' AFTER `CREATE_TIME`;

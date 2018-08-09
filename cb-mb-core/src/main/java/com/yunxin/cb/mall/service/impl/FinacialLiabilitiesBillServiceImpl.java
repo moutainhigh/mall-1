@@ -1,16 +1,17 @@
 package com.yunxin.cb.mall.service.impl;
 
-import com.yunxin.cb.mall.entity.FinacialExpectBill;
 import com.yunxin.cb.mall.entity.FinacialLiabilitiesBill;
 import com.yunxin.cb.mall.mapper.FinacialLiabilitiesBillMapper;
 import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
-import com.yunxin.cb.mall.vo.FinacialExpectBillVO;
 import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +19,8 @@ public class FinacialLiabilitiesBillServiceImpl implements FinacialLiabilitiesBi
 
     @Resource
     private FinacialLiabilitiesBillMapper finacialLiabilitiesBillMapper;
+
+    private static final Log log = LogFactory.getLog(FinacialLiabilitiesBillServiceImpl.class);
     /**
      * 添加
      * @author      likang
@@ -28,8 +31,10 @@ public class FinacialLiabilitiesBillServiceImpl implements FinacialLiabilitiesBi
      */
     @Override
     public FinacialLiabilitiesBillVO addFinacialLiabilitiesBill(FinacialLiabilitiesBillVO vo){
+        log.info("addFinacialLiabilitiesBill:"+vo);
         FinacialLiabilitiesBill finacialLiabilitiesBill = new FinacialLiabilitiesBill();
         BeanUtils.copyProperties(finacialLiabilitiesBill, vo);
+        finacialLiabilitiesBill.setCreateTime(new Date());
         finacialLiabilitiesBillMapper.insert(finacialLiabilitiesBill);
         return vo;
     }
