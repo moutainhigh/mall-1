@@ -686,3 +686,15 @@ CREATE TABLE `finacial_credit_line_bill` (
   KEY `fk_liabilities_customer` (`CUSTOMER_ID`),
   CONSTRAINT `fk_credit_line_customer` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='信用额度交易记录';
+
+-- --------------------------
+-- finacial_loan_config 贷款期限利率配置表  add by chenpeng 2018年8月9日
+-- -------------------------
+CREATE TABLE `finacial_loan_config` (
+  `LOAN_CONFIG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TERM` int(11) NOT NULL COMMENT '贷款期限',
+  `INTEREST_RATE` decimal(20,4) NOT NULL COMMENT '贷款率',
+  `TITLE` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '贷款产品标题',
+  `REMARK` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '产品描述',
+  PRIMARY KEY (`LOAN_CONFIG_ID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='贷款期限利率配置表';
