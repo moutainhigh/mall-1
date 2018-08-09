@@ -17,6 +17,17 @@ export default {
     this.save("version",process.env.VERSION);
     this.save('holder',Admin.holder);
     this.save('insured',Admin.insured);
-  }
+  },
 
+  fetchSession: function (key) {
+    return window.JSON.parse(window.sessionStorage.getItem(key) || '[]')
+  },
+
+  saveSession: function (key, items) {
+    window.sessionStorage.setItem(key,window.JSON.stringify(items));
+  },
+
+  removeSession: function (key) {
+    window.sessionStorage.removeItem(key);
+  }
 }

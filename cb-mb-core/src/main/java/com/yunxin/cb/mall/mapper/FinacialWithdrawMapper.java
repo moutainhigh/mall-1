@@ -6,6 +6,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 
+@Mapper
 public interface FinacialWithdrawMapper {
     @Delete({
         "delete from finacial_withdraw",
@@ -29,6 +30,7 @@ public interface FinacialWithdrawMapper {
         "#{grantDate,jdbcType=TIMESTAMP}, #{grantOperator,jdbcType=VARCHAR}, ",
         "#{applyDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP})"
     })
+    @Options(useGeneratedKeys=true, keyProperty="withdrawId", keyColumn="WITHDRAW_ID")
     int insert(FinacialWithdraw record);
 
     @Select({
