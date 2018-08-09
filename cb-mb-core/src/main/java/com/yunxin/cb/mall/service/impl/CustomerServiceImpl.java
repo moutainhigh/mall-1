@@ -22,4 +22,8 @@ public class CustomerServiceImpl implements CustomerService {
         return customerMapper.updatePaymentPasswordByCustomerId(customerId, paymentPassword);
     }
 
+    @Override
+    public int updateAuthFlagByCustomerId(Integer customerId, Integer authFlag) {
+        return customerMapper.updateAuthFlagByCustomerId(customerId,authFlag);
+    }
 }
