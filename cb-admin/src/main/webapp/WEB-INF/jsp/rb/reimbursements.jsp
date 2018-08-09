@@ -63,7 +63,10 @@
 
         function approval(){
             var dataItem = getSelectedGridItem("grid");
-            $('#auditDialogSp').modal();
+            if(dataItem){
+                $('#auditDialogSp').modal();
+            }
+
             // if (dataItem) {
             //     window.location.href = "reimbursementOrders.do?reimbursementId=" + dataItem.reimbursementId;
             // }
