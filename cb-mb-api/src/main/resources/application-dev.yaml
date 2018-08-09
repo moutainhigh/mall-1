@@ -33,7 +33,7 @@ rongcloud:
 application:
   default:
     avatarUrl: http://pb9sg55i7.bkt.clouddn.com/avatar.png
-  searchBaseUrl: http://localhost:8168/search/
+  searchBaseUrl: http://192.168.0.43:8168/search/
 
 #支付宝支付配置
 alipay:
