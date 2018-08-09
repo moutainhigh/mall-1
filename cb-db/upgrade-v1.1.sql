@@ -495,18 +495,19 @@ ALTER TABLE commodity ADD COLUMN `SETTING_CONTENT` varchar(4098)  COMMENT '商�
 ######add by wangteng 2018-08-07
 DROP TABLE IF EXISTS `insurance_order_log`;
 CREATE TABLE `insurance_order_log` (
-  `INSURANCE_LOG_ID` int(11) NOT NULL COMMENT '主键',
+  `insurance_log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `CUSTOMER_ID` int(11) DEFAULT NULL COMMENT '用户',
   `INSURANCE_ORDER_ID` int(11) DEFAULT NULL COMMENT '保单',
   `ORDER_STATE` int(11) DEFAULT NULL COMMENT '状态',
   `PROD_NAME` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '产品名称',
   `PRICE` int(10) DEFAULT NULL COMMENT '价格',
   `CREATE_TIME` datetime DEFAULT NULL COMMENT '时间',
-  KEY `customer_id` (`customer_id`),
-  KEY `insurance_order_id` (`insurance_order_id`),
+  PRIMARY KEY (`insurance_log_id`),
+  KEY `customer_id` (`CUSTOMER_ID`),
+  KEY `insurance_order_id` (`INSURANCE_ORDER_ID`),
   CONSTRAINT `insurance_order_log_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `customer` (`CUSTOMER_ID`),
   CONSTRAINT `insurance_order_log_ibfk_2` FOREIGN KEY (`INSURANCE_ORDER_ID`) REFERENCES `insurance_order` (`ORDER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci   COMMENT '保单日志';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='保单日志';
 
 ##add by tangou 2018-08-07
 ALTER TABLE finacial_wallet ADD COLUMN `INSURANCE_AMOUNT` decimal(20,4) NOT NULL DEFAULT 0  COMMENT '保险额度';
@@ -623,3 +624,6 @@ ALTER TABLE `finacial_repayment` add  `OVERDUE_NUMER` datetime DEFAULT  NULL COM
 
 ##add by pengcong 2018-8-8
 ALTER TABLE `rb_reimbursement` ADD COLUMN `CATALOG_ID` int(11) NOT NULL COMMENT '商品分类' AFTER `CREATE_TIME`;
+
+##add by tangou 2018-8-9
+ALTER TABLE `customer` ADD  COLUMN `AUTH_FLAG` INT(1) DEFAULT 0 COMMENT '是否实名认证 0:未认证 1:已认证';

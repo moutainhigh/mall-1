@@ -1,11 +1,17 @@
 package com.yunxin.cb.rest.rb;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.BankInfo;
 import com.yunxin.cb.mall.service.BankInfoService;
+import com.yunxin.cb.mall.service.CustomerService;
 import com.yunxin.cb.mall.vo.BankInfoVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.util.Constant;
+import com.yunxin.cb.util.LogicUtils;
+import com.yunxin.cb.util.ValidateBankUtils;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,14 +37,17 @@ public class BankInfoResource extends BaseResource {
     @Resource
     private BankInfoService bankInfoService;
 
+    @Resource
+    private CustomerService customerService;
+
     /**
-     * @title: 验证银行卡四要素
+     * @title: 实名认证验证银行卡四要素
      * @param: [bankInfoVO]
      * @return: com.yunxin.cb.vo.ResponseResult<com.yunxin.cb.mall.vo.BankInfoVO>
      * @auther: eleven
      * @date: 2018/8/7 19:34
      */
-    @ApiOperation(value = "验证银行卡四要素")
+    @ApiOperation(value = "实名认证验证银行卡四要素")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "cardholder", value = "持卡人", required = true, paramType = "path", dataType = "string"),
             @ApiImplicitParam(name = "bankCardNumber", value = "银行卡号码", required = true, paramType = "path", dataType = "string"),
@@ -46,15 +55,27 @@ public class BankInfoResource extends BaseResource {
             @ApiImplicitParam(name = "mobile", value = "银行预留手机号码", required = true, paramType = "path", dataType = "string")
     })
     @ApiVersion(1)
-    @GetMapping(value = "checkBankInfo")
-    public ResponseResult<BankInfoVO> checkBankInfo(@RequestBody BankInfoVO bankInfoVO){
+    @PostMapping(value = "checkBankInfo")
+    public ResponseResult checkBankInfo(@RequestBody BankInfoVO bankInfoVO){
+        ResponseResult responseResult=new ResponseResult(Result.FAILURE);
         try {
-            //此处调用第三方接口验证银行卡四要素
-            return new ResponseResult(bankInfoVO);
+            String result=ValidateBankUtils.validateBank(bankInfoVO);
+            if(LogicUtils.isNotNull(result)){
+                JSONObject jsonObject= JSON.parseObject(result);
+                String respCode=String.valueOf(jsonObject.get("respCode"));
+                responseResult.setData(String.valueOf(jsonObject.get("respMessage")));
+                if(respCode.equals("0000")){
+                    //验证通过，修改用户为已认证
+                    int count=customerService.updateAuthFlagByCustomerId(getCustomerId(), Constant.AUTH_FLAG_OK);
+                    if(count>0){
+                        responseResult.setResult(Result.SUCCESS);
+                    }
+                }
+            }
         } catch (Exception e) {
             logger.info("addProductReturn failed", e);
         }
-        return new ResponseResult(Result.FAILURE);
+        return responseResult;
     }
 
     /**
