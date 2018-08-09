@@ -1,14 +1,10 @@
 package com.yunxin.cb.mall.entity.meta;
 
-/**
- * Created by Administrator on 2018/7/21.
- */
-public enum LoanState {
-    WAIT_LOAN("申请中"), APPLY_SUCCESS("申请通过"), APPLY_FAILURE("申请失败"), CANCELED("已取消"), SETTLE("已结清");
-
+public enum RepaymentType {
+    BANK_CARD("银行卡"),WALLET("钱包");
     private String name;
 
-    private LoanState(String name) {
+    private RepaymentType(String name) {
         this.name = name;
     }
 

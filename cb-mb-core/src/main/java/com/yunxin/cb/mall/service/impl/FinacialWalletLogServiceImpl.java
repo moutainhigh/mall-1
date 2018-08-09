@@ -3,6 +3,8 @@ package com.yunxin.cb.mall.service.impl;
 import com.yunxin.cb.mall.entity.FinacialWalletLog;
 import com.yunxin.cb.mall.mapper.FinacialWalletLogMapper;
 import com.yunxin.cb.mall.service.FinacialWalletLogService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,6 +14,7 @@ public class FinacialWalletLogServiceImpl implements FinacialWalletLogService {
 
     @Resource
     private FinacialWalletLogMapper finacialWalletLogMapper;
+    private static final Log log = LogFactory.getLog(FinacialWalletLogServiceImpl.class);
     /**
      * 添加钱包日志信息
      * @author      likang
@@ -22,6 +25,7 @@ public class FinacialWalletLogServiceImpl implements FinacialWalletLogService {
      */
     @Override
     public FinacialWalletLog addFinacialWalletLog(FinacialWalletLog finacialWalletLog){
+        log.info("add:"+finacialWalletLog);
         if(finacialWalletLogMapper.selectByCustomerIdAndVersion(finacialWalletLog.getCustomerId(),finacialWalletLog.getVersion())==null){
             finacialWalletLogMapper.insert(finacialWalletLog);
         }

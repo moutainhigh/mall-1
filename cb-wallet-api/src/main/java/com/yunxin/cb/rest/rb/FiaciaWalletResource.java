@@ -88,13 +88,10 @@ public class FiaciaWalletResource {
     })
     @ApiVersion(1)
     @PostMapping(value = "processCustomerMoney/{customerId}/{money}/{type}")
-    public ResponseResult processCustomerMoney(@PathVariable Integer customerId, @PathVariable BigDecimal money, @PathVariable WithdrawType type){
-        ResponseResult result=new ResponseResult(Result.FAILURE);
+    public com.yunxin.cb.mall.restful.ResponseResult processCustomerMoney(@PathVariable Integer customerId, @PathVariable BigDecimal money, @PathVariable WithdrawType type){
+        com.yunxin.cb.mall.restful.ResponseResult result=new com.yunxin.cb.mall.restful.ResponseResult(Result.FAILURE);
         try {
-            boolean flag=finacialWalletService.processCustomerMoney(customerId,money,type);
-            if(flag){
-                result.setResult(Result.SUCCESS);
-            }
+            result=finacialWalletService.processCustomerMoney(customerId,money,type);
         } catch (Exception e) {
             log.info("get failed", e);
         }

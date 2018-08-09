@@ -1,6 +1,6 @@
-package com.yunxin.cb.mall.dao;
+package com.yunxin.cb.rb.dao;
 
-import com.yunxin.cb.mall.entity.Reimbursement;
+import com.yunxin.cb.rb.entity.Reimbursement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

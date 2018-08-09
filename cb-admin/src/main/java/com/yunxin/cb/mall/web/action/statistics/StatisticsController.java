@@ -2,17 +2,14 @@ package com.yunxin.cb.mall.web.action.statistics;
 
 import com.yunxin.cb.mall.query.HotSalesQuery;
 import com.yunxin.cb.mall.query.SalesChartsQuery;
+import com.yunxin.cb.mall.service.IStatisticsBillService;
 import com.yunxin.cb.mall.service.IStatisticsMoneyService;
 import com.yunxin.cb.mall.service.IStatisticsOrderService;
 import com.yunxin.cb.mall.service.IStatisticsService;
 import com.yunxin.cb.mall.view.*;
-import com.yunxin.cb.mall.query.HotSalesQuery;
-import com.yunxin.cb.mall.query.SalesChartsQuery;
-import com.yunxin.cb.mall.service.IStatisticsMoneyService;
-import com.yunxin.cb.mall.service.IStatisticsOrderService;
-import com.yunxin.cb.mall.service.IStatisticsService;
 import com.yunxin.cb.mall.vo.HotSalesVo;
 import com.yunxin.cb.mall.vo.SalesYearVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -38,6 +35,9 @@ public class StatisticsController {
 
     @Resource
     private IStatisticsMoneyService statisticsMoneyService;
+
+    @Autowired
+    private IStatisticsBillService statisticsBillService;
 
 
     @RequestMapping(value = "orderStatistics",method = RequestMethod.GET)
@@ -166,5 +166,24 @@ public class StatisticsController {
 //		systemLogsService.log(request, "查看了热门销售统计列表！");
 //		return salesChartsService.hotSales(hotSalesQuery);
         return null;
+    }
+
+    @GetMapping(value = "billStatistics")
+    public String billStatistics() {
+        return "statistics/billStatistics";
+    }
+
+    @GetMapping(value = "getDayBill")
+    @ResponseBody
+    public List<StatisticsDayBillView> getDayBill(@RequestParam("year") int year, @RequestParam("month") int month) {
+
+        return statisticsBillService.getDayBill(year, month);
+    }
+
+    @GetMapping(value = "getMonthBill")
+    @ResponseBody
+    public List<StatisticsDayBillView> getMonthBill(@RequestParam("year") int year) {
+
+        return statisticsBillService.getMonthBill(year);
     }
 }

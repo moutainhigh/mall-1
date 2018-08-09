@@ -5,9 +5,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.BankInfo;
 import com.yunxin.cb.mall.service.BankInfoService;
+import com.yunxin.cb.mall.service.CustomerService;
 import com.yunxin.cb.mall.vo.BankInfoVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.util.Constant;
 import com.yunxin.cb.util.LogicUtils;
 import com.yunxin.cb.util.ValidateBankUtils;
 import com.yunxin.cb.vo.ResponseResult;
@@ -35,6 +37,9 @@ public class BankInfoResource extends BaseResource {
     @Resource
     private BankInfoService bankInfoService;
 
+    @Resource
+    private CustomerService customerService;
+
     /**
      * @title: 实名认证验证银行卡四要素
      * @param: [bankInfoVO]
@@ -61,11 +66,45 @@ public class BankInfoResource extends BaseResource {
                 responseResult.setData(String.valueOf(jsonObject.get("respMessage")));
                 if(respCode.equals("0000")){
                     //验证通过，修改用户为已认证
-                    responseResult.setResult(Result.SUCCESS);
+                    int count=customerService.updateAuthFlagByCustomerId(getCustomerId(), Constant.AUTH_FLAG_OK);
+                    if(count>0){
+                        responseResult.setResult(Result.SUCCESS);
+                    }
                 }
             }
         } catch (Exception e) {
-            logger.info("addProductReturn failed", e);
+            logger.info("checkBankInfo failed", e);
+        }
+        return responseResult;
+    }
+
+    /**
+     * @title: 提交实名认证
+     * @param: [bankInfoVO]
+     * @return: com.yunxin.cb.vo.ResponseResult
+     * @auther: eleven
+     * @date: 2018/8/9 14:50
+     */
+    @ApiOperation(value = "提交实名认证")
+    @ApiImplicitParams({
+    })
+    @ApiVersion(1)
+    @PostMapping(value = "submitAuth")
+    public ResponseResult submitAuth(@RequestBody BankInfoVO bankInfoVO){
+        ResponseResult responseResult=new ResponseResult(Result.FAILURE);
+        try {
+            //校验验证码
+            String checkStr = verificationCode(bankInfoVO.getMobile(), bankInfoVO.getCode());
+            if (checkStr != null) {
+                return new ResponseResult(Result.FAILURE, checkStr);
+            }
+            //验证通过，修改用户为已认证
+            int count=customerService.updateAuthFlagByCustomerId(getCustomerId(), Constant.AUTH_FLAG_OK);
+            if(count>0){
+                responseResult.setResult(Result.SUCCESS);
+            }
+        } catch (Exception e) {
+            logger.info("submitAuth failed", e);
         }
         return responseResult;
     }

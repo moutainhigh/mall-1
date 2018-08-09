@@ -225,10 +225,12 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         if(list.size() == 1){
             ReimbursementProcess reimbursementProcess = list.get(0);
             alreadyReimbursementVO.setOperationTime(reimbursementProcess.getCreateTime());
+            alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
         }else if(list.size() > 1){
             //到账时间
             ReimbursementProcess reimbursementProcess = list.get(list.size()-1);
             alreadyReimbursementVO.setExaminationTime(reimbursementProcess.getCreateTime());
+            alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
         }
         //组合参数
         BeanUtils.copyProperties(reimbursement, alreadyReimbursementVO);
@@ -308,6 +310,13 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         completeReimbursementDetailVO.setOrderState(reimbursement.getOrderState());
         completeReimbursementDetailVO.setOperationTime(/*listVO.get(1).getCreateTime()*/new Date());
         completeReimbursementDetailVO.setReimbursementNo(reimbursement.getReimbursementNo());
+        completeReimbursementDetailVO.setPayment(reimbursement.getRepaymentType());
+        if(reimbursement.getRepaymentAmount() != null){
+            completeReimbursementDetailVO.setRepayment(reimbursement.getRepaymentAmount());
+        }
+        if(reimbursement.getRepaymentAmount() != null){
+            completeReimbursementDetailVO.setActualAccount(reimbursement.getAmount().subtract(reimbursement.getRepaymentAmount()));
+        }
         completeReimbursementDetailVO.setList(list);
         return completeReimbursementDetailVO;
     }

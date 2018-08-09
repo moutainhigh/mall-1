@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.entity;
 
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
+import com.yunxin.cb.mall.entity.meta.RepaymentType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -51,6 +52,14 @@ public class Reimbursement implements Serializable {
      */
     private int catalogId;
 
+    /**
+     * 还款金额
+     */
+    private BigDecimal repaymentAmount;
+    /**
+     * 还款类型
+     */
+    private RepaymentType repaymentType;
 
     public Integer getReimbursementId() {
         return reimbursementId;
@@ -137,5 +146,21 @@ public class Reimbursement implements Serializable {
 
     public void setCatalogId(int catalogId) {
         this.catalogId = catalogId;
+    }
+
+    public BigDecimal getRepaymentAmount() {
+        return repaymentAmount;
+    }
+
+    public void setRepaymentAmount(BigDecimal repaymentAmount) {
+        this.repaymentAmount = repaymentAmount;
+    }
+
+    public RepaymentType getRepaymentType() {
+        return repaymentType;
+    }
+
+    public void setRepaymentType(RepaymentType repaymentType) {
+        this.repaymentType = repaymentType;
     }
 }

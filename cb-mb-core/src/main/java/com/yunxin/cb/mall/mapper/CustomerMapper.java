@@ -277,5 +277,5 @@ public interface CustomerMapper {
             "set AUTH_FLAG = #{authFlag,jdbcType=INTEGER}",
             "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
-    int updateAuthFlagByCustomerId(@Param("customerId")int customerId, @Param("authFlag")Integer authFlag);
+    int updateAuthFlagByCustomerId(@Param("customerId")Integer customerId, @Param("authFlag")Integer authFlag);
 }

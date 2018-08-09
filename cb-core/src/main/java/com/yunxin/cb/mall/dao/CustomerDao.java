@@ -92,8 +92,8 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Query("select c from Customer c left join fetch c.recommendCustomer where c.levelCode like ?1")
     public List<Customer> findCustomerByLikeLevelCode(String levelCode);
 
-    @Query("select count(c.customerId) from Customer c where c.levelCode like ?1 and c.policy=?2")
-    public int findAllCustomerByLikeLevelCode(String levelCode,PolicyType policy);
+    @Query("select count(c.customerId) from Customer c where c.customerId <> ?1 and c.levelCode like ?2 and c.policy=?3")
+    public int findAllCustomerByLikeLevelCode(int customerId,String levelCode,PolicyType policy);
     long countByQqOpenId(String qqOpenId);
 
     List<Customer> findByRecommendCustomer_CustomerIdAndPraise(int customerId, boolean paraise);

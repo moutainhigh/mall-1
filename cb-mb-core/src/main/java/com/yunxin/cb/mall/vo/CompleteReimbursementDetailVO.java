@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.vo;
 
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
+import com.yunxin.cb.mall.entity.meta.RepaymentType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -23,7 +24,7 @@ public class CompleteReimbursementDetailVO implements Serializable {
     @ApiModelProperty(value="操作时间",name="operationTime",example="2018-08-08 15:20:20")
     private Date operationTime;
     @ApiModelProperty(value="支付方式",name="payment",example="钱包")
-    private int payment;
+    private RepaymentType payment;
     @ApiModelProperty(value="自动还款金额",name="repayment",example="100")
     private BigDecimal repayment;
     @ApiModelProperty(value="实际到账金额",name="accountAmount",example="111")
@@ -69,11 +70,11 @@ public class CompleteReimbursementDetailVO implements Serializable {
         this.operationTime = operationTime;
     }
 
-    public int getPayment() {
+    public RepaymentType getPayment() {
         return payment;
     }
 
-    public void setPayment(int payment) {
+    public void setPayment(RepaymentType payment) {
         this.payment = payment;
     }
 
