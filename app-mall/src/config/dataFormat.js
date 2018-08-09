@@ -51,10 +51,10 @@ export const tranThouOfPrice = (price) => {
   let splice = price.split(".");
   if (splice[1]){
     let length = splice[1].length;
-    if (length > 4) {
+    if (length >= 4) {
       splice[1] = splice[1].substring(0,4);
     } else {
-      for (let i = length;i>=0;i--){
+      for (let i = length;i<4;i++){
         splice[1] = splice[1]+'0';
       }
     }

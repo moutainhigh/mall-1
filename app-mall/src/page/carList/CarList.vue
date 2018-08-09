@@ -389,6 +389,10 @@
       },
       setPriceSect() {
         if (this.priceSect.lowPrice && this.priceSect.highPrice) {
+          if (parseFloat(this.priceSect.lowPrice) > parseFloat(this.priceSect.highPrice)) {
+              this.$vux.toast.text("最高价格必须大于最小价格","middle");
+              return ;
+          }
           this.searchVo.lowestPrice = tranThouOfPrice(this.priceSect.lowPrice) ;
           this.searchVo.highestPrice = tranThouOfPrice(this.priceSect.highPrice);
           this.selecteds = delArrayOne(this.selecteds, 'priceSection', 'type');

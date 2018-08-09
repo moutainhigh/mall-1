@@ -606,3 +606,6 @@ CREATE TABLE `finacial_withdraw` (
 ALTER TABLE `customer` add  `PAYMENT_PASSWORD` varchar(64) DEFAULT NULL COMMENT '支付密码';
 
 ALTER TABLE `finacial_withdraw` add  `WITHDRAW_TYPE` int(11) DEFAULT 1 NOT NULL COMMENT '提现类型：1.报账转账 2.保险返利转账';
+
+##add by pengcong 2018-8-8
+ALTER TABLE `rb_reimbursement` ADD COLUMN `CATALOG_ID` int(11) NOT NULL COMMENT '商品分类' AFTER `CREATE_TIME`;
