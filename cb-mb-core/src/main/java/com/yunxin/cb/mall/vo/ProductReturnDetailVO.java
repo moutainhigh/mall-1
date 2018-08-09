@@ -76,6 +76,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     /** 商家地址 */
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市")
     private String sellerAddress;
+
     /** 原因 */
     @ApiModelProperty(value="问题描述",name="reason",example="我不想买了")
     private String reason;
@@ -271,6 +272,10 @@ public class ProductReturnDetailVO implements java.io.Serializable{
                 for (OrderItem orderItem : model.getOrderItems()) {
                     ProductReturnItemDetailVO productReturnItemDetailVO = new ProductReturnItemDetailVO();
                     BeanUtils.copyProperties(productReturnItemDetailVO, orderItem);
+                    //商家地址信息
+                    if (model.getSeller() != null) {
+                        productReturnItemDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+                    }
                     //货品信息
                     if (orderItem.getProduct() != null) {
                         productReturnItemDetailVO.setProductName(orderItem.getProduct().getProductName());

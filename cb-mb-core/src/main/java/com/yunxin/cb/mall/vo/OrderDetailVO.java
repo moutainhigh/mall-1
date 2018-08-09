@@ -240,6 +240,10 @@ public class OrderDetailVO implements java.io.Serializable{
             for (OrderItem orderItem : model.getOrderItems()) {
                 OrderItemDetailVO oderItemDetailVO = new OrderItemDetailVO();
                 BeanUtils.copyProperties(oderItemDetailVO, orderItem);
+                //商家地址信息
+                if (model.getSeller() != null) {
+                    oderItemDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+                }
                 //货品信息
                 if (orderItem.getProduct() != null) {
                     oderItemDetailVO.setProductName(orderItem.getProduct().getProductName());
