@@ -39,3 +39,10 @@ wxpay:
   partnerKey: xxx
   certPath: xxx
   domain: xxx
+
+#第三方接口验证银行卡四要素配置
+validateBank:
+  host: https://yunyidata.market.alicloudapi.com
+  path: /bankAuthenticate4
+  method: POST
+  appcode: f3e3965bfb4f4410a96132480281b8d8

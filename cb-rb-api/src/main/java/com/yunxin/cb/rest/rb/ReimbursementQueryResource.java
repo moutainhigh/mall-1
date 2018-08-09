@@ -3,6 +3,7 @@ package com.yunxin.cb.rest.rb;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Reimbursement;
 import com.yunxin.cb.mall.entity.ReimbursementQuery;
+import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.service.ReimbursementQueryService;
 import com.yunxin.cb.mall.vo.*;
@@ -37,6 +38,7 @@ public class ReimbursementQueryResource extends BaseResource {
             ReimbursementQuery reimbursementQuery = new ReimbursementQuery();
             Query q = new Query(pageNo, pageSize);
             reimbursementQuery.setCustomerId(1);
+            reimbursementQuery.setOrderState(OrderState.SUCCESS);
             q.setData(reimbursementQuery);
             PageFinder<ReimbursementVO> pageFinder = reimbursementQueryService.pageReimbursementQuery(q);
             return new ResponseResult(pageFinder);
@@ -105,8 +107,14 @@ public class ReimbursementQueryResource extends BaseResource {
     })
     public ResponseResult cancelReimbursement(@PathVariable(value = "reimbursementId") int reimbursementId){
         try {
-            reimbursementQueryService.cancelReimbursement(reimbursementId,1);
-            return new ResponseResult(Result.SUCCESS);
+            Reimbursement reimbursement = reimbursementQueryService.selectByReimbursmentIdAndCustomer(reimbursementId,1);
+            if(reimbursement.getOrderState().ordinal()== ReimbursementState.FINANCE_IN_APPROVAL.ordinal()){
+                reimbursement.setOrderState(ReimbursementState.CANCEL_REIMBURSEMENT);
+                reimbursementQueryService.cancelReimbursement(reimbursement);
+                return new ResponseResult(Result.SUCCESS);
+            }else{
+                return new ResponseResult(Result.FAILURE,"该报账订单不能取消");
+            }
         } catch (Exception e) {
             logger.error("cancelReimbursement failed", e);
             return new ResponseResult(Result.FAILURE);

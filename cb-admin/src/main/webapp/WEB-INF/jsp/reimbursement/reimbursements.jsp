@@ -40,6 +40,8 @@
         function auditItem(reimbursementId){
 
             $('#auditDialog').modal();
+
+
             $("#trs").html("");
             $.get("reimbursementOrder.do?reimbursementId="+reimbursementId,$("#tables").serialize(),function(result){
                 debugger;
@@ -61,9 +63,10 @@
 
         function approval(){
             var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                window.location.href = "reimbursementOrders.do?reimbursementId=" + dataItem.reimbursementId;
-            }
+            $('#auditDialogSp').modal();
+            // if (dataItem) {
+            //     window.location.href = "reimbursementOrders.do?reimbursementId=" + dataItem.reimbursementId;
+            // }
 
         }
     </script>
@@ -311,6 +314,39 @@
                     </tr>
                     </thead>
                     <tbody id="trs">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <%--<button class="btn btn-primary pull-right" onclick="submitAudit();" id="btnComfrim">确认</button>--%>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="auditDialogSp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">订单详情</h4>
+            </div>
+            <div class="modal-body" >
+                <table class="table table-bordered table-striped" >
+                    <thead>
+                    <tr>
+                        <th scope="col" data-rt-column="code"></th>
+                        <th scope="col" data-rt-column="operate"></th>
+                        <th scope="col" data-rt-column="name"></th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
 
                     </tbody>
                 </table>

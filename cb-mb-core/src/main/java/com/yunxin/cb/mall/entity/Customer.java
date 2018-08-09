@@ -150,6 +150,9 @@ public class Customer {
     /** 支付密码 */
     private String paymentPassword;
 
+    /** 是否实名认证 0:未认证 1:已认证 */
+    private Integer authFlag;
+
     public Integer getCustomerId() {
         return customerId;
     }
@@ -540,5 +543,13 @@ public class Customer {
 
     public void setPaymentPassword(String paymentPassword) {
         this.paymentPassword = paymentPassword == null ? null : paymentPassword.trim();
+    }
+
+    public Integer getAuthFlag() {
+        return authFlag;
+    }
+
+    public void setAuthFlag(Integer authFlag) {
+        this.authFlag = authFlag;
     }
 }
