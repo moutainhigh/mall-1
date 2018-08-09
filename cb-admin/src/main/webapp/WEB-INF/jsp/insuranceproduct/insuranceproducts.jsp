@@ -84,7 +84,7 @@
                     return "20年";
                 }
                 case "LIFITIME":{
-                    return "终生 ";
+                    return "终身 ";
                 }
             }
             return state;

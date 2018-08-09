@@ -14,8 +14,8 @@
         <div class="dt-content">{{product.tags}}</div><!--爱相伴、心相知、福相随-->
         <div class="dt-price">
           <div>
-            <span class="dt-price-pro" v-for="price in product.insuranceProductPrices">
-              {{setTranPrice(price.price)}}万
+            <span class="dt-price-pro" v-for="(price, index) in product.insuranceProductPrices">
+              {{setTranPrice(price.price)}}万<span v-if="index != product.insuranceProductPrices.length -1">/</span>
             </span>
             <button >
              立即投保
@@ -94,7 +94,7 @@
       // holder.policyholderCardType.push(type);
       let query = this.$route.query;
       if (query.token) {
-        storage.save('token',query.token);
+        storage.saveSession('token',query.token);
       }
       if (storage.fetch('holder').length ==0){
         storage.save('holder',Admin.holder);

@@ -1,12 +1,20 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.mall.entity.Favorite;
+import com.yunxin.cb.mall.entity.FinacialExpectBill;
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
+import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.BeansException;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(value = "用户预期收益交易VO", description = "用户预期收益交易VO FinacialExpectBillVO")
 public class FinacialExpectBillVO implements java.io.Serializable{
@@ -86,5 +94,42 @@ public class FinacialExpectBillVO implements java.io.Serializable{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "FinacialExpectBillVO{" +
+                "finacialExpectId=" + finacialExpectId +
+                ", customerId=" + customerId +
+                ", type=" + type +
+                ", transactionType=" + transactionType +
+                ", transactionDesc='" + transactionDesc + '\'' +
+                ", amount=" + amount +
+                ", createTime=" + createTime +
+                '}';
+    }
+
+    /**
+     * 分页DO转换VO
+     */
+    public static PageFinder<FinacialExpectBillVO> dOconvertVOPage (PageFinder<FinacialExpectBill> pageFinder){
+        PageFinder<FinacialExpectBillVO> page = new PageFinder<FinacialExpectBillVO> (pageFinder.getPageNo(), pageFinder.getPageSize());
+        if (pageFinder != null) {
+            try {
+                List<FinacialExpectBill> list = pageFinder.getData();
+                List<FinacialExpectBillVO> volist = new ArrayList<>();
+                for (FinacialExpectBill fa : list) {
+                    FinacialExpectBillVO fbVo = new FinacialExpectBillVO();
+                    org.springframework.beans.BeanUtils.copyProperties(fa, fbVo);
+                    volist.add(fbVo);
+                }
+                page.setData(volist);
+            } catch (BeansException e) {
+                e.printStackTrace();
+            }
+        }
+        page.setRowCount(pageFinder.getRowCount());//记录总数
+        page.setPageCount(pageFinder.getPageCount());//总页数
+        return page;
     }
 }

@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.entity;
 
 import com.yunxin.cb.mall.entity.meta.OrderState;
+import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -63,6 +64,15 @@ public class ReimbursementQuery implements Serializable {
      * 订单状态
      */
     private OrderState orderState;
+
+    /**
+     * 审核不通过
+     */
+    private ReimbursementState reimbursementState;
+    /**
+     * 取消报账
+     */
+    private ReimbursementState reimbursement_state;
 
     public int getOrderId() {
         return orderId;
@@ -174,5 +184,21 @@ public class ReimbursementQuery implements Serializable {
 
     public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
+    }
+
+    public ReimbursementState getReimbursementState() {
+        return reimbursementState;
+    }
+
+    public void setReimbursementState(ReimbursementState reimbursementState) {
+        this.reimbursementState = reimbursementState;
+    }
+
+    public ReimbursementState getReimbursement_state() {
+        return reimbursement_state;
+    }
+
+    public void setReimbursement_state(ReimbursementState reimbursement_state) {
+        this.reimbursement_state = reimbursement_state;
     }
 }

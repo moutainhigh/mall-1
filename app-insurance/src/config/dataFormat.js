@@ -34,7 +34,7 @@ export const insurePeriod = period => {
     case "TWENTY_YEAR":
       return "20年";
     case "LIFITIME":
-      return "终生";
+      return "终身";
   }
 };
 
@@ -46,6 +46,6 @@ export const protectionYear = year => {
     case "TWENTY_YEAR":
       return "20年";
     case "LIFITIME":
-      return "终生";
+      return "终身";
   }
 };
