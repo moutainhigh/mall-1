@@ -364,7 +364,7 @@ public class CustomerResource extends BaseResource {
             else
                 return new ResponseResult(Result.FAILURE,"请先购买保险才能感恩推荐人");
         }catch (Exception e){
-            logger.error(e.getMessage());
+            logger.error(e.getMessage(),e);
             return new ResponseResult(Result.FAILURE,"服务器异常,请稍后重试");
         }
 
