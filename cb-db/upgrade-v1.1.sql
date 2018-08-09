@@ -699,6 +699,9 @@ CREATE TABLE `finacial_loan_config` (
   PRIMARY KEY (`LOAN_CONFIG_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='贷款期限利率配置表';
 
+##add by wangteng 2018-08-09
+ALTER table insurance_order add PRICE int(11)
+
 ##add by tangou 2018-8-9 加入账单表
 DROP TABLE IF EXISTS `finacial_log`;
 CREATE TABLE `finacial_log` (

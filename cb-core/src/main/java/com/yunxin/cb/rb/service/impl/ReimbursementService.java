@@ -61,9 +61,11 @@ public class ReimbursementService implements IReimbursementService {
         return orderItemDao.getOrderItemByReimbursement(reimbursementId);
     }
 
+
+
     @Override
     public Reimbursement getReimbursement(int reimbursementId) {
-        return  reimbursementDao.getOne(reimbursementId);
+        return  reimbursementDao.findOne(reimbursementId);
     }
 
     @Override

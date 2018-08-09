@@ -326,8 +326,8 @@
                                                template="#=insurePeriod(insuranceProduct.insurePeriod)#" width="100"/>
                             <kendo:grid-column title="缴费年限" filterable="false" field="insuranceProduct"
                                                template="#=protectionYear(insuranceProduct.protectionYear)#" width="100"/>
-                            <kendo:grid-column title="基本保额" filterable="false" field="insuranceProductPrice"
-                                               template="#=insuranceProductPrice.price#" width="100"/>
+                            <kendo:grid-column title="基本保额" filterable="false" field="price"
+                                               width="100"/>
                             <kendo:grid-column title="保单状态" filterable="false" field="orderState"
                                                template="#=formatOrderState(orderState)#" width="100"/>
                             <kendo:grid-column title="投保时间" filterable="false" field="createTime"

@@ -60,6 +60,17 @@ public class ReimbursementController {
         };
     }
 
+    @RequestMapping(value = "reimbursementDetil", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> reimbursementDetil(@RequestParam("reimbursementId") int reimbursementId) {
+        return new HashMap<String,Object>(){
+            {
+                put("data",iReimbursementService.queryOrderItemByIds(reimbursementId));
+                put("reimbursement",iReimbursementService.getReimbursement(reimbursementId));
+            }
+        };
+    }
+
     /**
      * 审批
      * @param reimbursementId
