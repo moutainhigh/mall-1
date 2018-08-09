@@ -73,7 +73,9 @@ public class OrderDetailVO implements java.io.Serializable{
     /** 商家地址 */
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市")
     private String sellerAddress;
+
     /**货品信息*/
+    @ApiModelProperty(value="货品信息",name="orderItemDetails",example="货品信息对象")
     Set<OrderItemDetailVO> orderItemDetails;
 
     public Integer getOrderId() {
