@@ -78,7 +78,7 @@ public interface IFundsPoolService {
     /**
      * @Description:            更新资金池funds金额时,同时需要向FundsPoolLog表插一条数据
      * @author: lxc
-     * @param amount            操作金额
+     * @param amount            操作金额    (如果无商品金额，则转null)
      * @param version           版本号
      * @param poolId            资金池id
      * @param productId         货品id

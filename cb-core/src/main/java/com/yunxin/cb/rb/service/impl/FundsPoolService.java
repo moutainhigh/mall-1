@@ -1,5 +1,6 @@
 package com.yunxin.cb.rb.service.impl;
 
+import com.yunxin.cb.mall.dao.ProductDao;
 import com.yunxin.cb.mall.entity.Product;
 import com.yunxin.cb.rb.dao.FundsPoolDao;
 import com.yunxin.cb.rb.dao.FundsPoolLogDao;
@@ -35,6 +36,8 @@ public class FundsPoolService implements IFundsPoolService {
     private FundsPoolDao fundsPoolDao;
     @Resource
     private FundsPoolLogDao fundsPoolLogDao;
+    @Resource
+    private ProductDao productDao;
 
     @Override
     public List<FundsPool> getFundsPoolList() {
@@ -88,8 +91,14 @@ public class FundsPoolService implements IFundsPoolService {
 
     @Override
     public boolean updateFundsAndSaveFundsPoolLog(BigDecimal amount, int version, int poolId,int productId,int transactionId,int type) {
+        if (amount == null || amount.compareTo(new BigDecimal(0)) == 0){
+            Product p = productDao.finByProductId(productId);
+            float v = p.getSalePrice() - p.getCostPrice();
+            amount = new BigDecimal(Float.toString(v));
+        }
         int i = fundsPoolDao.updateFundsByIdAndAndVersion(amount,version,poolId);
         if(i == 1){
+
             FundsPool fundsPool = fundsPoolDao.findOne(poolId);
             FundsPoolLog f = new FundsPoolLog();
             f.setAmount(amount);//操作金额
