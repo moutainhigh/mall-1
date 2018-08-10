@@ -81,30 +81,42 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
         billvo.setTransactionDesc("手动还款");
         finacialLiabilitiesBillService.addFinacialLiabilitiesBill(billvo);
         /**还款，添加交易记录END*/
-        log.info("开始还款cutomerId:"+finacialRepayment.getCustomerId()+";还款金repayAmount:"+repayAmount);
+        log.info("start repay cutomerId:"+finacialRepayment.getCustomerId()+";repayAmount:"+repayAmount);
         List<FinacialLoanVO> insuranlist = finacialLoanService.getByCustomerIdAndType(finacialRepayment.getCustomerId());
         for (FinacialLoanVO p : insuranlist) {
             BigDecimal surplusAmount = p.getSurplusAmount();
+            BigDecimal insuranceAmount=p.getInsuranceAmount();
+            BigDecimal creditAmount=p.getCreditAmount();
             //表示还款金大于贷款金
             if (repayAmount.doubleValue() > surplusAmount.doubleValue()) {
                 p.setSurplusAmount(new BigDecimal(0));
                 p.setState(LoanState.SETTLE);
+                p.setInsuranceAmount(new BigDecimal(0));
+                p.setCreditAmount(new BigDecimal(0));
                 FinacialLoanVO fvo = new FinacialLoanVO();
                 BeanUtils.copyProperties(p, fvo);
                 finacialLoanService.update(fvo);
                 repayAmount = repayAmount.subtract(surplusAmount);
-                log.info("还款loanId"+p.getLoanId()+"cutomerId:"+finacialRepayment.getCustomerId()+
+                log.info("repay loanId"+p.getLoanId()+"cutomerId:"+finacialRepayment.getCustomerId()+
                         ";repayAmount:"+repayAmount+";surplusAmount:"+surplusAmount);
-                break;
             }else{
                 surplusAmount = surplusAmount.subtract(repayAmount);
                 p.setSurplusAmount(surplusAmount);
+                if(repayAmount.doubleValue()>insuranceAmount.doubleValue()){
+                    p.setInsuranceAmount(new BigDecimal(0));
+                    creditAmount = creditAmount.subtract(repayAmount);
+                    p.setCreditAmount(creditAmount);
+                }else{
+                    insuranceAmount = insuranceAmount.subtract(repayAmount);
+                    p.setInsuranceAmount(insuranceAmount);
+                }
                 FinacialLoanVO fvo = new FinacialLoanVO();
                 BeanUtils.copyProperties(p, fvo);
                 finacialLoanService.update(fvo);
                 repayAmount = new BigDecimal(0);
-                log.info("还款loanId"+p.getLoanId()+"cutomerId:"+finacialRepayment.getCustomerId()+
+                log.info("repay loanId"+p.getLoanId()+"cutomerId:"+finacialRepayment.getCustomerId()+
                         ";repayAmount:"+repayAmount+";surplusAmount:"+surplusAmount);
+                break;
             }
         }
         //总负债金额
