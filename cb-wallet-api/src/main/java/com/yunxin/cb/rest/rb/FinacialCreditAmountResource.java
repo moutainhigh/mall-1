@@ -136,6 +136,8 @@ public class FinacialCreditAmountResource extends BaseResource {
             BigDecimal lixi = finacialLoanVO.getAmount().multiply(finacialLoanConfig.getInterestRate()).setScale(2, RoundingMode.HALF_UP);
             finacialLoanVO.setInterest(lixi);
             finacialLoanVO.setInterestRate(finacialLoanConfig.getInterestRate());
+            finacialLoanVO.setRepaymentTerm(finacialLoanConfig.getTerm());
+            finacialLoanVO.setCustomerId(getCustomerId());
             //添加借款记录
             finacialLoanService.add(finacialLoanVO, walletVO);
             return new ResponseResult(Result.SUCCESS);

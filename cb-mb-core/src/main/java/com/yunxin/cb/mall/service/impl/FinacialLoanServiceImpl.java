@@ -4,12 +4,15 @@ import com.yunxin.cb.mall.entity.FinacialCreditLineBill;
 import com.yunxin.cb.mall.entity.FinacialLoan;
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.LoanState;
+import com.yunxin.cb.mall.entity.meta.LoanType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
+import com.yunxin.cb.mall.mapper.FinacialCreditLineBillMapper;
 import com.yunxin.cb.mall.mapper.FinacialLoanMapper;
 import com.yunxin.cb.mall.service.FinacialLoanService;
 import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
 import com.yunxin.cb.mall.vo.FinacialWalletVO;
+import com.yunxin.cb.util.CalendarUtils;
 import com.yunxin.cb.util.page.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,6 +33,8 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
     private FinacialLoanMapper finacialLoanMapper;
     @Resource
     private FinacialWalletService finacialWalletService;
+    @Resource
+    private FinacialCreditLineBillMapper finacialCreditLineBillMapper;
 
     private static final Log log = LogFactory.getLog(FinacialLoanServiceImpl.class);
     /**
@@ -64,7 +69,18 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
         BeanUtils.copyProperties(finacialLoan, finacialLoanVO);
         //更新钱包额度
         finacialWalletService.updateFinacialWallet(finacialWalletVO);
+        Date now = new Date();
         //添加借款记录
+        finacialLoan.setCreateTime(now);
+        finacialLoan.setState(LoanState.WAIT_LOAN);
+        finacialLoan.setType(LoanType.LOAN);
+        //还款时间
+        finacialLoan.setFinalRepaymentTime(CalendarUtils.addMonth(now, finacialLoan.getRepaymentTerm()));
+        finacialLoan.setLateFee(BigDecimal.ZERO);
+        finacialLoan.setOverdueNumer(0);
+        finacialLoan.setReadyAmount(BigDecimal.ZERO);
+        finacialLoan.setRepayAmount(finacialLoan.getAmount().add(finacialLoan.getInterest()));
+        finacialLoan.setTerm(1);//默认为1期
         finacialLoanMapper.insert(finacialLoan);
         //添加额度明细
         FinacialCreditLineBill finacialCreditLineBill = new FinacialCreditLineBill();
@@ -72,9 +88,10 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
         finacialCreditLineBill.setType(CapitalType.SUBTRACT);
         finacialCreditLineBill.setTransactionType(TransactionType.APPLY_LOAN);
         finacialCreditLineBill.setAmount(finacialLoan.getInsuranceAmount());//只记录保单额度变更
-        finacialCreditLineBill.setCreateTime(new Date());
+        finacialCreditLineBill.setCreateTime(now);
         finacialCreditLineBill.setFinacialCreditLineId(finacialLoan.getLoanId());
         finacialCreditLineBill.setTransactionDesc("贷款申请");
+        finacialCreditLineBillMapper.insert(finacialCreditLineBill);
         return finacialLoanVO;
     }
 
