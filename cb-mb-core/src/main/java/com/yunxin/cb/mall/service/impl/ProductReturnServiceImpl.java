@@ -50,7 +50,6 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         nReturn.setApplyTime(new Date());
         nReturn.setPurchasingTime(order.getCreateTime());
         nReturn.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
-        nReturn.setAuditState(AuditState.WAIT_AUDIT);
         nReturn.setRefundOnly(true);
         nReturn.setReceivedBuyerProduct(false);
         nReturn.setReceivedSellerProduct(false);
@@ -64,6 +63,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         }
         //更新订单状态
         order.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
+        nReturn.setAuditState(AuditState.WAIT_AUDIT);
         orderMapper.updateByPrimaryKey(order);
         //添加退货申请
         productReturnMapper.insert(nReturn);

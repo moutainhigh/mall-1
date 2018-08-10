@@ -65,6 +65,10 @@ public class OrderItemDetailVO implements java.io.Serializable{
     @ApiModelProperty(value="货品编码 ",name="productNo",example="11111")
     private String productNo;
 
+    /** 商家名 */
+    @ApiModelProperty(value="商家名",name="sellerName",example="4s店")
+    private String sellerName;
+
     /** 商家地址 */
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市")
     private String sellerAddress;
@@ -181,6 +185,14 @@ public class OrderItemDetailVO implements java.io.Serializable{
         this.sellerAddress = sellerAddress;
     }
 
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
     @Override
     public String toString() {
         return "OrderItemDetailVO{" +
@@ -197,6 +209,7 @@ public class OrderItemDetailVO implements java.io.Serializable{
                 ", commodityId=" + commodityId +
                 ", productName='" + productName + '\'' +
                 ", productNo='" + productNo + '\'' +
+                ", sellerName='" + sellerName + '\'' +
                 ", sellerAddress='" + sellerAddress + '\'' +
                 '}';
     }
