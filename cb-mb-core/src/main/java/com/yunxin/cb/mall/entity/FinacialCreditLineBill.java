@@ -1,5 +1,8 @@
 package com.yunxin.cb.mall.entity;
 
+import com.yunxin.cb.mall.entity.meta.CapitalType;
+import com.yunxin.cb.mall.entity.meta.TransactionType;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -11,10 +14,10 @@ public class FinacialCreditLineBill {
     private Integer customerId;
 
     /** 资金类型 */
-    private String type;
+    private CapitalType type;
 
     /** 交易类型 */
-    private String transactionType;
+    private TransactionType transactionType;
 
     /** 交易描述 */
     private String transactionDesc;
@@ -41,20 +44,20 @@ public class FinacialCreditLineBill {
         this.customerId = customerId;
     }
 
-    public String getType() {
+    public CapitalType getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+    public void setType(CapitalType type) {
+        this.type = type == null ? null : type;
     }
 
-    public String getTransactionType() {
+    public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType == null ? null : transactionType.trim();
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType == null ? null : transactionType;
     }
 
     public String getTransactionDesc() {
