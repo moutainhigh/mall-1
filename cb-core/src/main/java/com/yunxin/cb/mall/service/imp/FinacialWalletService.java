@@ -39,7 +39,8 @@ public class FinacialWalletService implements IFinaciaWalletService {
      * 方法实现说明
      * @author      likang
      * @param fw   钱包信息
-    * @param type  0：保险 1：点赞
+     * @param type  0：保险 1：点赞
+     * @param  amount 操作金额
      * @return      com.yunxin.cb.mall.entity.FinacialWallet
      * @exception
      * @date        2018/8/10 11:58
