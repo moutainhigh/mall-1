@@ -1,12 +1,13 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
+import com.yunxin.cb.mall.vo.FinacialWalletVO;
 
 import java.util.List;
 
 public interface FinacialLoanService {
 
-    public FinacialLoanVO add(FinacialLoanVO vo);
+    public FinacialLoanVO add(FinacialLoanVO vo, FinacialWalletVO finacialWalletVO);
 
     public List<FinacialLoanVO> getByCustomerIdAndType(int customerId);
 

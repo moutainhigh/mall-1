@@ -65,6 +65,12 @@ public class FinacialLoan {
     /** 银行卡ID */
     private Integer bankId;
 
+    /** 贷款信用额度金额 */
+    private BigDecimal creditAmount;
+
+    /** 贷款保险额度金额 */
+    private BigDecimal insuranceAmount;
+
     /**查询使用*/
     private List<LoanState> stateList;
 
@@ -218,6 +224,22 @@ public class FinacialLoan {
 
     public void setBankId(Integer bankId) {
         this.bankId = bankId;
+    }
+
+    public BigDecimal getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(BigDecimal creditAmount) {
+        this.creditAmount = creditAmount;
+    }
+
+    public BigDecimal getInsuranceAmount() {
+        return insuranceAmount;
+    }
+
+    public void setInsuranceAmount(BigDecimal insuranceAmount) {
+        this.insuranceAmount = insuranceAmount;
     }
 
     public List<LoanState> getStateList() {

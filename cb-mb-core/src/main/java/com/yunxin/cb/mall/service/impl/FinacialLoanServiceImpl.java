@@ -4,14 +4,18 @@ import com.yunxin.cb.mall.entity.FinacialLoan;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.mapper.FinacialLoanMapper;
 import com.yunxin.cb.mall.service.FinacialLoanService;
+import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
+import com.yunxin.cb.mall.vo.FinacialWalletVO;
 import com.yunxin.cb.util.page.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,23 +24,37 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
 
     @Resource
     private FinacialLoanMapper finacialLoanMapper;
+    @Resource
+    private FinacialWalletService finacialWalletService;
 
     private static final Log log = LogFactory.getLog(FinacialLoanServiceImpl.class);
     /**
      * 添加
      * @author      likang
-     * @param vo
+     * @param finacialLoanVO
+     * @param finacialWalletVO
      * @return      com.yunxin.cb.mall.vo.FinacialLoanVO
      * @exception
      * @date        2018/8/9 14:32
      */
     @Override
-    public FinacialLoanVO add(FinacialLoanVO vo){
-        log.info("add:"+vo);
+    @Transactional
+    public FinacialLoanVO add(FinacialLoanVO finacialLoanVO, FinacialWalletVO finacialWalletVO){
+        log.info("add:"+finacialLoanVO);
         FinacialLoan finacialLoan = new FinacialLoan();
-        BeanUtils.copyProperties(finacialLoan, vo);
+        BeanUtils.copyProperties(finacialLoan, finacialLoanVO);
+        //借款金额小于保单额度（优先减少保单额度，再减少感恩额度）
+        if (finacialLoanVO.getAmount().compareTo(finacialWalletVO.getInsuranceAmount()) < 1) {
+            finacialWalletVO.setInsuranceAmount(finacialWalletVO.getInsuranceAmount().subtract(finacialLoanVO.getAmount()));
+        } else { //借款金额大于保单额度但小于总额度
+            finacialWalletVO.setInsuranceAmount(BigDecimal.ZERO);
+            finacialWalletVO.setCreditAmount(finacialLoanVO.getAmount().subtract(finacialWalletVO.getInsuranceAmount()));
+        }
+        //更新钱包额度
+        finacialWalletService.updateFinacialWallet(finacialWalletVO);
+        //添加额度明细
         finacialLoanMapper.insert(finacialLoan);
-        return vo;
+        return finacialLoanVO;
     }
 
     /**
