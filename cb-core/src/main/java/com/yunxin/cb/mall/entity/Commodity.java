@@ -19,6 +19,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -237,6 +238,10 @@ public class Commodity implements java.io.Serializable {
 
     //默认货品id
     private Product defaultProduct;
+
+    /** 商品比例配置 */
+    private BigDecimal ratio;
+
 
     @Column(nullable = true, length = 4098)
     public String getExplainContent() {
@@ -696,6 +701,15 @@ public class Commodity implements java.io.Serializable {
 
     public void setCommodityCategories(Set<CommodityCategory> commodityCategories) {
         this.commodityCategories = commodityCategories;
+    }
+
+    @Column(nullable = false, length = 20)
+    public BigDecimal getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(BigDecimal ratio) {
+        this.ratio = ratio;
     }
 
     @Transient
