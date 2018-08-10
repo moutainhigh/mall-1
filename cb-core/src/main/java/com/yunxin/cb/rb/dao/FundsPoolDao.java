@@ -31,7 +31,7 @@ public interface FundsPoolDao extends JpaRepository<FundsPool, Integer>, JpaSpec
 
 
     /**
-     * @Description:        方法不能单独使用,更新资金池时,同时需要插入一条资金池数据. 可调用方法名:com.yunxin.cb.rb.service.IFundsPoolService.updateFundsAndSaveFundsPoolLog
+     * @Description:        方法不能单独使用,更新资金池时,同时需要插入一条资金池数据.  可调用方法名:com.yunxin.cb.rb.service.IFundsPoolService.updateFundsAndSaveFundsPoolLog
      * @author: lxc
      * @param amount            操作金额
      * @param version           版本号
