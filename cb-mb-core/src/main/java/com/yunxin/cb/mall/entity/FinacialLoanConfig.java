@@ -1,7 +1,5 @@
 package com.yunxin.cb.mall.entity;
 
-import com.yunxin.cb.mall.entity.meta.LoanType;
-
 import java.math.BigDecimal;
 
 public class FinacialLoanConfig {
@@ -15,7 +13,7 @@ public class FinacialLoanConfig {
     private BigDecimal interestRate;
 
     /** 贷款类型：1.信用贷款，2.预期收益贷 */
-    private LoanType type;
+//    private LoanType type;
 
     /** 贷款产品标题 */
     private String title;
@@ -47,13 +45,13 @@ public class FinacialLoanConfig {
         this.interestRate = interestRate;
     }
 
-    public LoanType getType() {
-        return type;
-    }
-
-    public void setType(LoanType type) {
-        this.type = type;
-    }
+//    public LoanType getType() {
+//        return type;
+//    }
+//
+//    public void setType(LoanType type) {
+//        this.type = type;
+//    }
 
     public String getTitle() {
         return title;
