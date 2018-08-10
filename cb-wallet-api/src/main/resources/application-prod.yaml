@@ -1,7 +1,7 @@
 # 生产环境配置
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/crystal_ball?useUnicode=true&autoReconnect=true
+    url: jdbc:mysql://172.18.59.156:3306/crystal_ball?useUnicode=true&autoReconnect=true
     username: root
     password: Yunxin@2018!#%
     type: com.alibaba.druid.pool.DruidDataSource
@@ -39,3 +39,10 @@ wxpay:
   partnerKey: xxx
   certPath: xxx
   domain: xxx
+
+#第三方接口验证银行卡四要素配置
+validateBank:
+  host: https://yunyidata.market.alicloudapi.com
+  path: /bankAuthenticate4
+  method: POST
+  appcode: f3e3965bfb4f4410a96132480281b8d8

@@ -19,13 +19,16 @@ public interface InsuranceOrderLogDao  extends JpaRepository<InsuranceOrderLog, 
     /**
      * 感恩列表
      * @param customerId
-     * @param levelCode
+     * @param
      * @param orderState
      * @return
      */
-    @Query("select c from InsuranceOrderLog c left join c.customer d where d.customerId <> ?1 and d.levelCode like ?2 and c.orderState=?3 and d.praise=?4")
-    List<InsuranceOrderLog> findOrderLogByLevelCode(int customerId,String levelCode,InsuranceOrderState orderState,boolean praise);
+    @Query("select c from InsuranceOrderLog c left join c.customer d where d.recommendCustomer.customerId=?1 and c.orderState=?2 and d.praise=?3  GROUP BY c.customer.customerId  order by c.createTime")
+    List<InsuranceOrderLog> findOrderLogByLevelCode(int customerId,InsuranceOrderState orderState,boolean praise);
 
-    @Query("select c from InsuranceOrderLog c left join c.customer d where d.customerId <> ?1 and d.levelCode like ?2 and c.orderState=?3 and d.policy=?4")
-    List<InsuranceOrderLog> findInsuranceOrderLogByLevelCode(int customerId, String levelCode, InsuranceOrderState orderState, PolicyType policy);
+    @Query("select c from InsuranceOrderLog c left join c.customer d where d.recommendCustomer.customerId = ?1 and c.orderState=?2 and d.policy=?3  GROUP BY c.customer.customerId  order by c.createTime")
+    List<InsuranceOrderLog> findInsuranceOrderLogByLevelCode(int customerId,InsuranceOrderState orderState, PolicyType policy);
+
+
+
 }

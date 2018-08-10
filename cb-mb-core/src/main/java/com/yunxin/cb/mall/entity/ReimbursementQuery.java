@@ -1,24 +1,78 @@
 package com.yunxin.cb.mall.entity;
 
+import com.yunxin.cb.mall.entity.meta.OrderState;
+import com.yunxin.cb.mall.entity.meta.ReimbursementState;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class ReimbursementQuery implements Serializable {
     private static final long serialVersionUID = 6952797607210915461L;
-
+    /**
+     * 订单ID
+     */
     private int orderId;
+    /**
+     * 货品ID
+     */
     private int productId;
+    /**
+     * 货品图片
+     */
     private String productImg;
+    /**
+     * 货品售价
+     */
     private float salePrice;
+    /**
+     * 货品数量
+     */
     private int productNum;
+    /**
+     * 订单创建时间
+     */
     private Date createTime;
+    /**
+     * 商家地址
+     */
     private String sellerAddress;
+    /**
+     * 货品默认图片
+     */
     private String defaultPicPath;
+    /**
+     * 商品ID
+     */
     private int commodityId;
+    /**
+     * 商品属性
+     */
     private String productName;
+    /**
+     * 商品大类
+     */
     private int categoryId;
+    /**
+     * 用户ID
+     */
     private int customerId;
+    /**
+     * 总售价
+     */
     private float accountSalePrice;
+    /**
+     * 订单状态
+     */
+    private OrderState orderState;
+
+    /**
+     * 审核不通过
+     */
+    private ReimbursementState reimbursementState;
+    /**
+     * 取消报账
+     */
+    private ReimbursementState reimbursement_state;
 
     public int getOrderId() {
         return orderId;
@@ -122,5 +176,29 @@ public class ReimbursementQuery implements Serializable {
 
     public void setAccountSalePrice(float accountSalePrice) {
         this.accountSalePrice = accountSalePrice;
+    }
+
+    public OrderState getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
+    }
+
+    public ReimbursementState getReimbursementState() {
+        return reimbursementState;
+    }
+
+    public void setReimbursementState(ReimbursementState reimbursementState) {
+        this.reimbursementState = reimbursementState;
+    }
+
+    public ReimbursementState getReimbursement_state() {
+        return reimbursement_state;
+    }
+
+    public void setReimbursement_state(ReimbursementState reimbursement_state) {
+        this.reimbursement_state = reimbursement_state;
     }
 }

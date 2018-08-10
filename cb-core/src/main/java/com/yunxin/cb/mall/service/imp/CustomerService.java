@@ -409,27 +409,15 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Customer> findCustomerByLevelCode(String levelCode) {
         final int indexSize = 4;
-        return new ArrayList<Customer>() {
-            {
-                if (StringUtils.isNotBlank(levelCode)) {
-                    Customer customer = getByLevelCode(levelCode);
-                    if (customer != null) {
-                        int level = customer.getCustomerLevel();
-                        for (int i = 1; i < level; i++) {
-                            if (levelCode.length() - (i * indexSize) > 0) {
-                                Customer customers = getByLevelCode(levelCode.substring(0, levelCode.length() - (i * indexSize)));
-                                add(customers);
-                            }
-
-                        }
-                    }
-
-                }
-            }
-        };
-
+        List<String> levelCodes = new ArrayList<>();
+        int level = levelCode.length()/indexSize;
+        for(int i=0;i<level-1;i++){
+            levelCodes.add(levelCode.substring(0, (i+1)*indexSize));
+        }
+        return customerDao.findByLevelCodeIn(levelCodes);
     }
 
     /**
@@ -739,7 +727,6 @@ public class CustomerService implements ICustomerService {
      * @return
      */
     @Override
-    @Transactional
     public boolean customerPraise(int customerId) {
         Customer customer = customerDao.findOne(customerId);
         /**
@@ -763,7 +750,7 @@ public class CustomerService implements ICustomerService {
             }
             if (listCustomer != null && listCustomer.size() > 0) {
                 for (Customer listCustome : listCustomer)
-                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getInsuranceProductPrice().getPrice());
+                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getPrice());
 
             }
 
@@ -1008,33 +995,29 @@ public class CustomerService implements ICustomerService {
                 int gratitudeMe=0;
                 int unpaid=0;
                 int notPurchased=0;
+                String recommendName="";
                 if(null!=customer){
-                    List<Customer> list= findCustomerByLikeLevelCode(customer);
-                    if(null!=list&&list.size()>0){
-                        //所有感恩人
-                        allGratitude=list.size();
-                        for (Customer customer:list
-                             ) {
-                            //已经感恩的
-                            if(customer.isPraise())
-                                gratitudeMe++;
-                            //未感恩的
-                            if(customer.getPolicy().equals(PolicyType.PAYMENT)&&!customer.isPraise())
-                                noGratitude++;
-                            //未付款
-                            if(customer.getPolicy().equals(PolicyType.UNPAID))
-                                unpaid++;
-                            //未购买
-                            if(customer.getPolicy().equals(PolicyType.NOTPURCHASED))
-                                notPurchased++;
-                        }
-
-                    }
+                    String levelCode = customer.getLevelCode()+"%";
+                   int total= customerDao.findAllCustomerByLikeLevelCode(customerId,levelCode,PolicyType.PAYMENT);
+                    //所有感恩人
+                    allGratitude=total;
+                    //已经感恩
+                    gratitudeMe= customerDao.getCustomerByRecommendCustomer(customerId,PolicyType.PAYMENT,true);
+                    //未感恩
+                    noGratitude= customerDao.getCustomerByRecommendCustomer(customerId,PolicyType.PAYMENT,false);
+                    //未付款
+                    unpaid=customerDao.getCustomerByRecommendCustomer(customerId,PolicyType.UNPAID,false);
+                    //未购买
+                    notPurchased=customerDao.getCustomerByRecommendCustomer(customerId,PolicyType.NOTPURCHASED,false);
+                        recommendName=customer.getRecommendCustomer().getNickName();
+                        if(StringUtils.isEmpty(customer.getRecommendCustomer().getNickName()))
+                            recommendName=customer.getRecommendCustomer().getMobile();
                 }
                 setAllGratitude(allGratitude);
                 setNoGratitude(noGratitude);
                 setGratitudeMe(gratitudeMe);
                 setUnpaid(unpaid);
+                setRecommendName(recommendName);
                 setNotPurchased(notPurchased);
             }
         };
@@ -1046,11 +1029,10 @@ public class CustomerService implements ICustomerService {
         return new ArrayList<CustomerGratitudeDataVo>(){
             {
                 if(null!=customer){
-                    String levelCode = customer.getLevelCode()+"%";
                     switch (gratitudeType){
                         //感恩我的
                         case GRATITUDEME:
-                            List<InsuranceOrderLog> list=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.ON_PAID,true);
+                            List<InsuranceOrderLog> list=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,InsuranceOrderState.ON_PAID,true);
                             if(null!=list&&list.size()>0){
 
                                 for(InsuranceOrderLog insuranceOrderLog:list){
@@ -1075,7 +1057,7 @@ public class CustomerService implements ICustomerService {
                             break;
                         //未感恩
                         case NOGRATITUDE:
-                            List<InsuranceOrderLog> lists=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.ON_PAID,false);
+                            List<InsuranceOrderLog> lists=insuranceOrderLogDao.findOrderLogByLevelCode(customerId,InsuranceOrderState.ON_PAID,false);
 
                             if(null!=lists&&lists.size()>0){
 
@@ -1100,7 +1082,7 @@ public class CustomerService implements ICustomerService {
                             break;
                             //未付款
                         case UNPAID:
-                            List<InsuranceOrderLog> listT=insuranceOrderLogDao.findInsuranceOrderLogByLevelCode(customerId,levelCode,InsuranceOrderState.UN_PAID,PolicyType.UNPAID);
+                            List<InsuranceOrderLog> listT=insuranceOrderLogDao.findInsuranceOrderLogByLevelCode(customerId,InsuranceOrderState.UN_PAID,PolicyType.UNPAID);
 
                             if(null!=listT&&listT.size()>0){
 
@@ -1128,7 +1110,7 @@ public class CustomerService implements ICustomerService {
 
                         //未购买的
                         case NOTPURCHASED:
-                           List<Customer> listCustomer=customerDao.findCustomerByLikeLevelCodeNotPolicy(customerId,levelCode,PolicyType.NOTPURCHASED);
+                           List<Customer> listCustomer=customerDao.getCustomerByRecommendCustomers(customerId,PolicyType.NOTPURCHASED,false);
 
                            if(null!=listCustomer&&listCustomer.size()>0){
                                 for (Customer customer:listCustomer){

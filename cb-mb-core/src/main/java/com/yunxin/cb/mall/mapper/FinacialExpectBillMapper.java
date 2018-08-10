@@ -1,8 +1,10 @@
 package com.yunxin.cb.mall.mapper;
 
+import com.yunxin.cb.mall.entity.Favorite;
 import com.yunxin.cb.mall.entity.FinacialExpectBill;
 import java.util.List;
 
+import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
@@ -72,4 +74,32 @@ public interface FinacialExpectBillMapper {
         "where FINACIAL_EXPECT_ID = #{finacialExpectId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(FinacialExpectBill record);
+
+    @Select("<script>"
+            +"select FINACIAL_EXPECT_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT,CREATE_TIME"
+            +" from finacial_expect_bill where 1=1"
+            + "<if test='data.customerId!=null'>"
+            + "AND CUSTOMER_ID = #{data.customerId} "
+            + "</if>"
+            + "ORDER BY CREATE_TIME DESC "
+            + "LIMIT #{rowIndex},#{pageSize}"
+            + "</script>")
+    @Results({
+            @Result(column="FINACIAL_EXPECT_ID", property="finacialExpectId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
+            @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
+            @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
+            @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR),
+            @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
+    })
+    List<FinacialExpectBill> pageList(Query q);
+
+    @Select("<script>"
+            +"select count(FINACIAL_EXPECT_ID) from finacial_expect_bill where 1=1"
+            + "<if test='data.customerId!=null'>"
+            + "AND CUSTOMER_ID = #{data.customerId} "
+            + "</if>"
+            + "</script>")
+    long count(Query q);
 }

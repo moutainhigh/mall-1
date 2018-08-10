@@ -39,11 +39,17 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     @Resource
     private ReimbursementProcessMapper reimbursementProcessMapper;
 
-
+    /**
+     * 查询可报账分页列表
+     * @param q
+     * @return
+     * @throws Exception
+     */
     @Override
     public PageFinder<ReimbursementVO> pageReimbursementQuery(Query q)throws Exception {
         //调用dao查询满足条件的分页数据
         List<ReimbursementQuery> list = reimbursementQueryMapper.selectReimbursementQuery(q);
+        //组装返回数据
         List<ReimbursementVO> listVO = new ArrayList<>();
         for(ReimbursementQuery reimbursementQuery :list){
             ReimbursementVO reimbursementVO = new ReimbursementVO();
@@ -66,12 +72,17 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         page.setData(listVO);
         return page;
     }
-
+    /**
+     * 报账
+     * @param list
+     * @return
+     * @throws Exception
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ReimbursementSuccessVO addReimbursement(List<AddReimbursementRequestVO> list) throws Exception {
         //查询二级商品分类列表
-        List<Catalog> catalogList = catalogMapper.selectAll();
+//        List<Catalog> catalogList = catalogMapper.selectAll();
         Map<Integer, List<OrderItem>> lotaLogMap = new HashMap<>();
         //所有商品的总价
         BigDecimal allAccountSalePrice = new BigDecimal(0);
@@ -79,8 +90,10 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             //根据orderId和productId查询 货品
             OrderItem orderItem = orderItemMapper.selectByOrderIdAndProductId(addReimbursementRequestVO.getOrderId(),addReimbursementRequestVO.getProductId());
             //拆分订单
-            int commodityId = addReimbursementRequestVO.getCommodityId();
-            Catalog catalog = catalogMapper.selectByCommodityId(commodityId);
+//            int commodityId = addReimbursementRequestVO.getCommodityId();
+            //获取商品分类
+            Catalog catalog = catalogMapper.selectByCommodityId(addReimbursementRequestVO.getCommodityId());
+            //判断该订单属于哪一商品分类
             if(catalog.getParentCatalogId() == 1){
 //                    Integer catalogId=isTwoFrool(catalog);
                 List<OrderItem> items=lotaLogMap.get(catalog.getCatalogId());
@@ -115,7 +128,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
                 accountSalePrice =  accountSalePrice.add(BigDecimal.valueOf(orderItems.getProductNum()*orderItems.getSalePrice()));
                 allAccountSalePrice = allAccountSalePrice.add(BigDecimal.valueOf(orderItems.getProductNum()*orderItems.getSalePrice()));
             }
+            //税
             tax = accountSalePrice.multiply(taxPoint);
+            //到账金额
             accountAmount = accountSalePrice.subtract(tax);
             long time = System.currentTimeMillis();
             reimbursement.setAmount(accountSalePrice);
@@ -152,7 +167,12 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         reimbursementSuccessVO.setTaxPoint(String.valueOf(taxPoint));
         return reimbursementSuccessVO;
     }
-
+    /**
+     * 已报账列表查询
+     * @param q
+     * @return
+     * @throws Exception
+     */
     @Override
     public PageFinder<AlreadyReimbursementVO> selectAlreadyReimbursementQuery(Query q) throws Exception {
         //调用dao查询满足条件的分页数据
@@ -162,6 +182,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             //商品总数量
             int num = 0;
             AlreadyReimbursementVO alreadyReimbursementVO = new AlreadyReimbursementVO();
+            //查询商品相关信息
             List<ReimbursementProductVO> listProductVO = reimbursementQueryMapper.selectAlreadyReimbursementQuery(reimbursement.getReimbursementId());
             for(ReimbursementProductVO reimbursementProductVO : listProductVO){
                 num = num + reimbursementProductVO.getProductNum();
@@ -180,40 +201,60 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         page.setData(listVO);
         return page;
     }
-
+    /**
+     * 已报账详情
+     * @param reimbursementId
+     * @param cuntomerId
+     * @return
+     * @throws Exception
+     */
     @Override
     public AlreadyReimbursementVO selectAlreadyReimbursementDetail(int reimbursementId,int cuntomerId)throws Exception{
         Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
         //商品总数量
         int num = 0;
         AlreadyReimbursementVO alreadyReimbursementVO = new AlreadyReimbursementVO();
+        //查询商品相关信息
         List<ReimbursementProductVO> listProductVO = reimbursementQueryMapper.selectAlreadyReimbursementQuery(reimbursement.getReimbursementId());
         for(ReimbursementProductVO reimbursementProductVO : listProductVO){
             num = num + reimbursementProductVO.getProductNum();
         }
+        //查询该报账订单审批时间
         List<ReimbursementProcess> list = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
+        //第一次审批时间
         if(list.size() == 1){
             ReimbursementProcess reimbursementProcess = list.get(0);
             alreadyReimbursementVO.setOperationTime(reimbursementProcess.getCreateTime());
-        }else if(list.size() == 1){
-            ReimbursementProcess reimbursementProcess = list.get(1);
+            alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
+        }else if(list.size() > 1){
+            //到账时间
+            ReimbursementProcess reimbursementProcess = list.get(list.size()-1);
             alreadyReimbursementVO.setExaminationTime(reimbursementProcess.getCreateTime());
+            alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
         }
+        //组合参数
         BeanUtils.copyProperties(reimbursement, alreadyReimbursementVO);
         alreadyReimbursementVO.setList(listProductVO);
         alreadyReimbursementVO.setSum(num);
         alreadyReimbursementVO.setTaxPoint(String.valueOf(taxPoint));
         return alreadyReimbursementVO;
     }
-
+    /**
+     * 用户取消报账
+     * @param reimbursement
+     * @throws Exception
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void cancelReimbursement(int reimbursementId,int cuntomerId)throws Exception{
-        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
-        reimbursement.setOrderState(ReimbursementState.CANCEL_REIMBURSEMENT);
+    public void cancelReimbursement(Reimbursement reimbursement)throws Exception{
         reimbursementMapper.updateByPrimaryKey(reimbursement);
     }
-
+    /**
+     * 报账已完成列表
+     * @param q
+     * @return
+     * @throws Exception
+     */
     @Override
     public PageFinder<CompleteReimbursementVO> selectCompleteReimbursement(Query q)throws Exception{
         //调用dao查询满足条件的分页数据
@@ -223,11 +264,13 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             //商品总数量
             int num = 0;
             CompleteReimbursementVO completeReimbursementVO = new CompleteReimbursementVO();
+            //查询商品相关信息
             List<ReimbursementProductVO> listProductVO = reimbursementQueryMapper.selectAlreadyReimbursementQuery(reimbursement.getReimbursementId());
             for(ReimbursementProductVO reimbursementProductVO : listProductVO){
                 completeReimbursementVO.setProductName(reimbursementProductVO.getProductName());
                 num = num + reimbursementProductVO.getProductNum();
             }
+            //查询该报账订单审批时间
             List<ReimbursementProcess> listProcess = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
             completeReimbursementVO.setAccountAmount(reimbursement.getAmount());
             completeReimbursementVO.setSum(num);
@@ -244,20 +287,36 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         page.setData(listVO);
         return page;
     }
+    /**
+     * 报账已完成详情
+     * @param reimbursementId
+     * @param cuntomerId
+     * @return
+     * @throws Exception
+     */
     @Override
     public CompleteReimbursementDetailVO getCompleteReimbursementDetail(int reimbursementId,int cuntomerId)throws Exception{
         Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
         CompleteReimbursementDetailVO completeReimbursementDetailVO = new CompleteReimbursementDetailVO();
         List<String> list = new ArrayList<>();
+        //查询商品相关信息
         List<ReimbursementProductVO> listProductVO = reimbursementQueryMapper.selectAlreadyReimbursementQuery(reimbursement.getReimbursementId());
         for(ReimbursementProductVO reimbursementProductVO : listProductVO){
             list.add(reimbursementProductVO.getProductName());
         }
+        //查询该报账订单审批时间
         List<ReimbursementProcess> listVO = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
         completeReimbursementDetailVO.setAccountAmount(reimbursement.getAmount());
         completeReimbursementDetailVO.setOrderState(reimbursement.getOrderState());
         completeReimbursementDetailVO.setOperationTime(/*listVO.get(1).getCreateTime()*/new Date());
         completeReimbursementDetailVO.setReimbursementNo(reimbursement.getReimbursementNo());
+        completeReimbursementDetailVO.setPayment(reimbursement.getRepaymentType());
+        if(reimbursement.getRepaymentAmount() != null){
+            completeReimbursementDetailVO.setRepayment(reimbursement.getRepaymentAmount());
+        }
+        if(reimbursement.getRepaymentAmount() != null){
+            completeReimbursementDetailVO.setActualAccount(reimbursement.getAmount().subtract(reimbursement.getRepaymentAmount()));
+        }
         completeReimbursementDetailVO.setList(list);
         return completeReimbursementDetailVO;
     }
@@ -270,5 +329,13 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             isTwoFrool(queryLog);
         }
         return queryLog.getParentCatalogId();
+    }
+
+    /**
+     * 根据用户ID和报账订单ID查询订单
+     */
+    public Reimbursement selectByReimbursmentIdAndCustomer(int reimbursementId,int cuntomerId){
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
+        return reimbursement;
     }
 }

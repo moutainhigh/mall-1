@@ -36,7 +36,7 @@ public interface CustomerMapper {
             "CUSTOMER_LEVEL, LEVEL_CODE, ",
             "INVITATION_CODE, POLICY, ",
             "CUSTOMER_COUNTRY, CUSTOMER_CARD_PEROID, ",
-            "OCCUPATIONAL_CATEGORY, PAYMENT_PASSWORD)",
+            "OCCUPATIONAL_CATEGORY, PAYMENT_PASSWORD, AUTH_FLAG)",
             "values (#{customerId,jdbcType=INTEGER}, #{accountName,jdbcType=VARCHAR}, ",
             "#{address,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, ",
             "#{cardNo,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
@@ -59,7 +59,8 @@ public interface CustomerMapper {
             "#{customerLevel,jdbcType=INTEGER}, #{levelCode,jdbcType=VARCHAR}, ",
             "#{invitationCode,jdbcType=VARCHAR}, #{policy,jdbcType=INTEGER}, ",
             "#{customerCountry,jdbcType=VARCHAR}, #{customerCardPeroid,jdbcType=DATE}, ",
-            "#{occupationalCategory,jdbcType=VARCHAR}, #{paymentPassword,jdbcType=VARCHAR})"
+            "#{occupationalCategory,jdbcType=VARCHAR}, #{paymentPassword,jdbcType=VARCHAR}",
+            "#{authFlag,jdbcType=INTEGER})"
     })
     int insert(Customer record);
 
@@ -72,7 +73,7 @@ public interface CustomerMapper {
             "RANK, EMAIL_CHECKED, RONG_CLOUD_TOKEN, AVATAR_URL, RECOMMEND_CUSTOMER_ID, NICK_NAME, ",
             "PRAISE, PRAISE_NUM, CARD_TYPE, CUSTOMER_CARD_NO, CARD_POSITIVE_IMG, CARD_NEGATIVE_IMG, ",
             "BANK_CARD_IMG, CUSTOMER_LEVEL, LEVEL_CODE, INVITATION_CODE, POLICY, CUSTOMER_COUNTRY, ",
-            "CUSTOMER_CARD_PEROID, OCCUPATIONAL_CATEGORY, PAYMENT_PASSWORD",
+            "CUSTOMER_CARD_PEROID, OCCUPATIONAL_CATEGORY, PAYMENT_PASSWORD, AUTH_FLAG",
             "from customer",
             "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
@@ -125,7 +126,8 @@ public interface CustomerMapper {
             @Result(column="CUSTOMER_COUNTRY", property="customerCountry", jdbcType=JdbcType.VARCHAR),
             @Result(column="CUSTOMER_CARD_PEROID", property="customerCardPeroid", jdbcType=JdbcType.DATE),
             @Result(column="OCCUPATIONAL_CATEGORY", property="occupationalCategory", jdbcType=JdbcType.VARCHAR),
-            @Result(column="PAYMENT_PASSWORD", property="paymentPassword", jdbcType=JdbcType.VARCHAR)
+            @Result(column="PAYMENT_PASSWORD", property="paymentPassword", jdbcType=JdbcType.VARCHAR),
+            @Result(column="AUTH_FLAG", property="authFlag", jdbcType=JdbcType.INTEGER)
     })
     Customer selectByPrimaryKey(Integer customerId);
 
@@ -138,7 +140,7 @@ public interface CustomerMapper {
             "RANK, EMAIL_CHECKED, RONG_CLOUD_TOKEN, AVATAR_URL, RECOMMEND_CUSTOMER_ID, NICK_NAME, ",
             "PRAISE, PRAISE_NUM, CARD_TYPE, CUSTOMER_CARD_NO, CARD_POSITIVE_IMG, CARD_NEGATIVE_IMG, ",
             "BANK_CARD_IMG, CUSTOMER_LEVEL, LEVEL_CODE, INVITATION_CODE, POLICY, CUSTOMER_COUNTRY, ",
-            "CUSTOMER_CARD_PEROID, OCCUPATIONAL_CATEGORY, PAYMENT_PASSWORD",
+            "CUSTOMER_CARD_PEROID, OCCUPATIONAL_CATEGORY, PAYMENT_PASSWORD, AUTH_FLAG",
             "from customer"
     })
     @Results({
@@ -190,7 +192,8 @@ public interface CustomerMapper {
             @Result(column="CUSTOMER_COUNTRY", property="customerCountry", jdbcType=JdbcType.VARCHAR),
             @Result(column="CUSTOMER_CARD_PEROID", property="customerCardPeroid", jdbcType=JdbcType.DATE),
             @Result(column="OCCUPATIONAL_CATEGORY", property="occupationalCategory", jdbcType=JdbcType.VARCHAR),
-            @Result(column="PAYMENT_PASSWORD", property="paymentPassword", jdbcType=JdbcType.VARCHAR)
+            @Result(column="PAYMENT_PASSWORD", property="paymentPassword", jdbcType=JdbcType.VARCHAR),
+            @Result(column="AUTH_FLAG", property="authFlag", jdbcType=JdbcType.INTEGER)
     })
     List<Customer> selectAll();
 
@@ -244,7 +247,35 @@ public interface CustomerMapper {
             "CUSTOMER_CARD_PEROID = #{customerCardPeroid,jdbcType=DATE},",
             "OCCUPATIONAL_CATEGORY = #{occupationalCategory,jdbcType=VARCHAR},",
             "PAYMENT_PASSWORD = #{paymentPassword,jdbcType=VARCHAR}",
+            "AUTH_FLAG = #{authFlag,jdbcType=INTEGER}",
             "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Customer record);
+
+    /**
+     * 根据用户id修改交易密码
+     * @param customerId
+     * @param paymentPassword
+     * @return
+     */
+    @Update({
+            "update customer",
+            "set PAYMENT_PASSWORD = #{paymentPassword,jdbcType=VARCHAR}",
+            "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
+    })
+    int updatePaymentPasswordByCustomerId(@Param("customerId")int customerId, @Param("paymentPassword")String paymentPassword);
+
+    /**
+     * @title: 根据用户id修改认证状态
+     * @param: [customerId, authFlag]
+     * @return: int
+     * @auther: eleven
+     * @date: 2018/8/9 14:26
+     */
+    @Update({
+            "update customer",
+            "set AUTH_FLAG = #{authFlag,jdbcType=INTEGER}",
+            "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
+    })
+    int updateAuthFlagByCustomerId(@Param("customerId")Integer customerId, @Param("authFlag")Integer authFlag);
 }

@@ -36,6 +36,8 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Query("select c from Customer c where c.levelCode=?1")
     public Customer findByLevelCode(String levelCode);
 
+    public List<Customer> findByLevelCodeIn(List<String> levelCodes);
+
     @Query("select c from Customer c where c.email=?1 and c.enabled=?2")
     public Customer findByEmailAndEnabled(String email, boolean enabled);
 
@@ -48,6 +50,12 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
 
     @Query("select c from Customer c left join fetch c.rank where c.customerId=?1")
     public Customer findByCustomerId(int customerId);
+
+    @Query("select count(c.customerId) from Customer c where c.recommendCustomer.customerId=?1 and c.policy=?2 and c.praise=?3")
+    public int getCustomerByRecommendCustomer(int customerId,PolicyType policy,boolean praise);
+
+    @Query("select c from Customer c where c.recommendCustomer.customerId=?1 and c.policy=?2 and c.praise=?3")
+    public List<Customer> getCustomerByRecommendCustomers(int customerId,PolicyType policy,boolean praise);
 
     public Customer findByEmail(String email);
 
@@ -85,8 +93,9 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
 
     @Query("select c from Customer c left join fetch c.recommendCustomer where c.levelCode like ?1")
     public List<Customer> findCustomerByLikeLevelCode(String levelCode);
-    @Query("select c from Customer c left join fetch c.recommendCustomer where  c.customerId <> ?1 and c.levelCode like ?2 and c.policy=?3")
-    public List<Customer> findCustomerByLikeLevelCodeNotPolicy(int customerId,String levelCode,PolicyType policy);
+
+    @Query("select count(c.customerId) from Customer c where c.customerId <> ?1 and c.levelCode like ?2 and c.policy=?3")
+    public int findAllCustomerByLikeLevelCode(int customerId,String levelCode,PolicyType policy);
     long countByQqOpenId(String qqOpenId);
 
     List<Customer> findByRecommendCustomer_CustomerIdAndPraise(int customerId, boolean paraise);
