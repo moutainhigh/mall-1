@@ -17,7 +17,7 @@
     </head-top>
 
     <div :ref="`detail`">
-      <div >
+      <div>
         <swiper :aspect-ratio="0.749" auto style="margin:0 auto;" dots-position="center">
           <swiper-item class="swiper-demo-img" v-for="(img, index) in commodityData.imageSet" :key="index">
             <img width="100%" :src="img" v-preview="img"></swiper-item>
@@ -206,7 +206,7 @@
         tab: 1,
         checkType: 'none',
         isCollect: false,
-        commodityData: null,
+        commodityData: {},
         productGroups: [],
         defaultAttribute: [],
         iac: [],
@@ -228,9 +228,8 @@
         if(!this.commodityData.commodityId){
           return;
         }else{
-           location.href ='yunxi://yunxi.com?url_action={"from":"webview","url":"","action":2,"data":}'
+          window.location.href ='yunxi://yunxi.com?url_action={"from":"webview","url":"","action":2,"data":""}'
         }
-       
       },
       checkTab(tabNum) {
         this.tab = tabNum;
