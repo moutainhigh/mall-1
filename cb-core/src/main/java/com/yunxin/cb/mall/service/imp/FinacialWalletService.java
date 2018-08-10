@@ -77,6 +77,7 @@ public class FinacialWalletService implements IFinaciaWalletService {
             finacialExpectBill.setType(CapitalType.ADD);
             FinacialCreditLineBill finacialCreditLineBill = new FinacialCreditLineBill();
             BeanUtils.copyProperties(finacialExpectBill,finacialCreditLineBill);
+            finacialCreditLineBill.setTransactionDesc(customer.getAccountName()+"点赞增加5%");
             //保险购买
             if(type==0){
                 finacialExpectBillDao.save(finacialExpectBill);
