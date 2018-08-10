@@ -36,6 +36,8 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Query("select c from Customer c where c.levelCode=?1")
     public Customer findByLevelCode(String levelCode);
 
+    public List<Customer> findByLevelCodeIn(List<String> levelCodes);
+
     @Query("select c from Customer c where c.email=?1 and c.enabled=?2")
     public Customer findByEmailAndEnabled(String email, boolean enabled);
 
