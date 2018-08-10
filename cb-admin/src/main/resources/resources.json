@@ -239,6 +239,14 @@
         "name": "资金池明细", "code": "182", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../fundsPool/fundsPoolLogs.do"
       }
     ]
+  },
+  {
+    "name": "财务管理", "code": "19", "type": "MENU", "cssClass": "fa fa-cogs", "value": "finance", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "提现管理", "code": "183", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../withdraw/withdrawList.do"
+      }
+    ]
   }
 
 ]

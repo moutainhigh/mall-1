@@ -40,7 +40,7 @@ public interface ReimbursementQueryService {
      * @return
      * @throws Exception
      */
-    public AlreadyReimbursementVO selectAlreadyReimbursementDetail(int reimbursementId,int cuntomerId)throws Exception;
+    public AlreadyReimbursementVO selectAlreadyReimbursementDetail(int reimbursementId,int customerId)throws Exception;
 
     /**
      * 用户取消报账
@@ -60,19 +60,19 @@ public interface ReimbursementQueryService {
     /**
      * 报账已完成详情
      * @param reimbursementId
-     * @param cuntomerId
+     * @param customerId
      * @return
      * @throws Exception
      */
-    public CompleteReimbursementDetailVO getCompleteReimbursementDetail(int reimbursementId,int cuntomerId)throws Exception;
+    public CompleteReimbursementDetailVO getCompleteReimbursementDetail(int reimbursementId,int customerId)throws Exception;
 
     /**
      * 根据用户ID和报账订单ID查询订单
      * @param reimbursementId
-     * @param cuntomerId
+     * @param customerId
      * @return
      */
-    public Reimbursement selectByReimbursmentIdAndCustomer(int reimbursementId,int cuntomerId);
+    public Reimbursement selectByReimbursmentIdAndCustomer(int reimbursementId,int customerId);
 
 
 }

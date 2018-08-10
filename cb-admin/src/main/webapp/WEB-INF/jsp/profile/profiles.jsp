@@ -69,6 +69,9 @@
                 case "FINACIAL_FREE_RATE":{
                     return "提现手续费";
                 }
+                case "TAX_RATE":{
+                    return "税率";
+                }
             }
             return state;
         }

@@ -27,7 +27,7 @@ import java.util.List;
 public class ReimbursementQueryResource extends BaseResource {
     @Resource
     private ReimbursementQueryService reimbursementQueryService;
-    @ApiOperation(value = "查询可报账列表 V1")
+    @ApiOperation(value = "可报账列表 V1")
     @PostMapping(value = "getReimbursement")
     @ApiVersion(1)
     @ApiImplicitParams({
@@ -37,7 +37,7 @@ public class ReimbursementQueryResource extends BaseResource {
         try {
             ReimbursementQuery reimbursementQuery = new ReimbursementQuery();
             Query q = new Query(pageNo, pageSize);
-            reimbursementQuery.setCustomerId(1);
+            reimbursementQuery.setCustomerId(getCustomerId());
             reimbursementQuery.setOrderState(OrderState.SUCCESS);
             reimbursementQuery.setReimbursementState(ReimbursementState.NOT_PASS_THROUGH);
             reimbursementQuery.setReimbursement_state(ReimbursementState.CANCEL_REIMBURSEMENT);
@@ -55,7 +55,7 @@ public class ReimbursementQueryResource extends BaseResource {
     @ApiImplicitParams({
     })
     public ResponseResult<ReimbursementSuccessVO> addReimbursement(@RequestBody List<AddReimbursementRequestVO> list){
-        ReimbursementSuccessVO reimbursementSuccessVO = new ReimbursementSuccessVO();
+        ReimbursementSuccessVO reimbursementSuccessVO;
         try {
             reimbursementSuccessVO = reimbursementQueryService.addReimbursement(list);
         } catch (Exception e) {
@@ -75,7 +75,7 @@ public class ReimbursementQueryResource extends BaseResource {
         try {
             Reimbursement reimbursementQuery = new Reimbursement();
             Query q = new Query(pageNo, pageSize);
-            reimbursementQuery.setCustomerId(1);
+            reimbursementQuery.setCustomerId(getCustomerId());
             q.setData(reimbursementQuery);
             PageFinder<AlreadyReimbursementVO> pageFinder = reimbursementQueryService.selectAlreadyReimbursementQuery(q);
             return new ResponseResult(pageFinder);
@@ -93,7 +93,7 @@ public class ReimbursementQueryResource extends BaseResource {
     })
     public ResponseResult<AlreadyReimbursementVO> getAlreadyReimbursementDetail(@PathVariable(value = "reimbursementId") int reimbursementId){
         try {
-            AlreadyReimbursementVO alreadyReimbursementVO = reimbursementQueryService.selectAlreadyReimbursementDetail(reimbursementId,1);
+            AlreadyReimbursementVO alreadyReimbursementVO = reimbursementQueryService.selectAlreadyReimbursementDetail(reimbursementId,getCustomerId());
             return new ResponseResult(alreadyReimbursementVO);
         } catch (Exception e) {
             logger.error("getAlreadyReimbursementDetail failed", e);
@@ -109,7 +109,7 @@ public class ReimbursementQueryResource extends BaseResource {
     })
     public ResponseResult cancelReimbursement(@PathVariable(value = "reimbursementId") int reimbursementId){
         try {
-            Reimbursement reimbursement = reimbursementQueryService.selectByReimbursmentIdAndCustomer(reimbursementId,1);
+            Reimbursement reimbursement = reimbursementQueryService.selectByReimbursmentIdAndCustomer(reimbursementId,getCustomerId());
             if(reimbursement.getOrderState().ordinal()== ReimbursementState.FINANCE_IN_APPROVAL.ordinal()){
                 reimbursement.setOrderState(ReimbursementState.CANCEL_REIMBURSEMENT);
                 reimbursementQueryService.cancelReimbursement(reimbursement);
@@ -133,7 +133,7 @@ public class ReimbursementQueryResource extends BaseResource {
         try {
             Reimbursement reimbursementQuery = new Reimbursement();
             Query q = new Query(pageNo, pageSize);
-            reimbursementQuery.setCustomerId(1);
+            reimbursementQuery.setCustomerId(getCustomerId());
             reimbursementQuery.setOrderState(ReimbursementState.ALREADY_TO_ACCOUNT);
             q.setData(reimbursementQuery);
             PageFinder<CompleteReimbursementVO> pageFinder = reimbursementQueryService.selectCompleteReimbursement(q);
@@ -152,7 +152,7 @@ public class ReimbursementQueryResource extends BaseResource {
     })
     public ResponseResult<CompleteReimbursementDetailVO> getCompleteReimbursementDetail(@PathVariable(value = "reimbursementId") int reimbursementId){
         try {
-            CompleteReimbursementDetailVO completeReimbursementDetailVO = reimbursementQueryService.getCompleteReimbursementDetail(reimbursementId,1);
+            CompleteReimbursementDetailVO completeReimbursementDetailVO = reimbursementQueryService.getCompleteReimbursementDetail(reimbursementId,getCustomerId());
             return new ResponseResult(completeReimbursementDetailVO);
         } catch (Exception e) {
             logger.error("getCompleteReimbursementDetail failed", e);
