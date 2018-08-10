@@ -36,6 +36,9 @@ public class OrderItem {
     /** 货品id */
     private Integer productId;
 
+    /** 成本价 */
+    private Float costPrice;
+
     /** 货品 */
     private Product product;
 
@@ -133,5 +136,13 @@ public class OrderItem {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Float getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(Float costPrice) {
+        this.costPrice = costPrice;
     }
 }

@@ -744,3 +744,9 @@ update insurance_product set INSURE_PERIOD='LIFITIME' where INSURE_PERIOD='终�
 update insurance_product set PROTECTION_YEAR='TEN_YEAR' where PROTECTION_YEAR='10年';
 update insurance_product set PROTECTION_YEAR='TWENTY_YEAR' where PROTECTION_YEAR='20年';
 update insurance_product set PROTECTION_YEAR='LIFITIME' where PROTECTION_YEAR='终身';
+###add by lxc 2018-08-10 17:58
+ALTER TABLE `crystal_ball`.`rb_funds_pool_log`
+ADD COLUMN `ITEM_ID` int(11) NULL COMMENT '订单详情ID/报账详情ID' AFTER `TRANSACTION_ID`;
+
+#add  by guwenshao 2018-8-10
+ALTER TABLE `order_item` add `COST_PRICE` float NOT NULL COMMENT '成本价';

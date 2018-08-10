@@ -171,7 +171,7 @@ public class ProductReturn {
     }
 
     public void setAuditState(AuditState auditState) {
-        auditState = auditState;
+        this.auditState = auditState;
     }
 
     public String getCourierNumber() {

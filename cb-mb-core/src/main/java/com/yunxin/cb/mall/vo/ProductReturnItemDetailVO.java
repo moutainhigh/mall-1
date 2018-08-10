@@ -55,6 +55,10 @@ public class ProductReturnItemDetailVO implements java.io.Serializable{
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市")
     private String sellerAddress;
 
+    /** 商家名 */
+    @ApiModelProperty(value="商家名",name="sellerName",example="4s店")
+    private String sellerName;
+
     public Integer getItemId() {
         return itemId;
     }
@@ -143,6 +147,14 @@ public class ProductReturnItemDetailVO implements java.io.Serializable{
         this.sellerAddress = sellerAddress;
     }
 
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
     @Override
     public String toString() {
         return "ProductReturnItemDetailVO{" +
@@ -157,6 +169,7 @@ public class ProductReturnItemDetailVO implements java.io.Serializable{
                 ", productName='" + productName + '\'' +
                 ", productNo='" + productNo + '\'' +
                 ", sellerAddress='" + sellerAddress + '\'' +
+                ", sellerName='" + sellerName + '\'' +
                 '}';
     }
 }
