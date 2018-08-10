@@ -132,6 +132,14 @@
           }else {
             this.$vux.toast.text("提交失败,请稍后重试！",'middle');
           }
+        }).catch(e=>{
+          let _this = this;
+          this.$vux.alert.show({
+            content: '未能获取到订单信息',
+            onHide () {
+              _this.$router.go(-1);
+            }
+          })
         });
       },
       async getCustomerAddr(productId,payType) {
@@ -157,7 +165,7 @@
                 },
                 onConfirm () {
                   _this.$router.push({
-                    path:"/my-address"
+                    path:"/choose-address"
                   });
                 }
               })

@@ -229,6 +229,16 @@
         "name": "参数配置", "code": "171", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"
       }
     ]
+  },
+  {
+    "name": "资金池管理", "code": "18", "type": "MENU", "cssClass": "fa fa-cogs", "value": "fundspool", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "资金池列表", "code": "181", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../fundsPool/fundsPools.do"
+      },{
+        "name": "资金池明细", "code": "182", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../fundsPool/fundsPoolLogs.do"
+      }
+    ]
   }
 
 ]

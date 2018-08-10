@@ -4,13 +4,21 @@
 package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.mall.dao.CatalogDao;
+import com.yunxin.cb.mall.dao.CommodityDao;
+import com.yunxin.cb.mall.dao.ProductDao;
 import com.yunxin.cb.mall.entity.Catalog;
 import com.yunxin.cb.mall.entity.Catalog_;
+import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.exception.CommonException;
 import com.yunxin.cb.mall.service.ICatalogService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
+import com.yunxin.cb.rb.dao.FundsPoolDao;
+import com.yunxin.cb.rb.entity.FundsPool;
+import com.yunxin.common.ConstantsCB;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
+import com.yunxin.core.util.CommonUtils;
+import com.yunxin.core.util.DmSequenceFourUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
@@ -18,11 +26,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -39,6 +49,14 @@ public class CatalogService implements ICatalogService {
 
     @Resource
     private CatalogDao catalogDao;
+
+    @Resource
+    private FundsPoolDao fundsPoolDao;
+
+    @Resource
+    private CommodityDao commodityDao;
+    @Resource
+    private ProductDao productDao;
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -64,6 +82,15 @@ public class CatalogService implements ICatalogService {
         if (!catalogDao.isOrUnique(catalog, Catalog_.catalogName)) {
             throw new EntityExistException("商品分类名称已存在");
         }
+        //S     add by lxc  2018-08-07      如果是一级分类,需要增加资金池
+        FundsPool fundsPool = null;
+        if (catalog != null && catalog.getParentCatalog() != null && catalog.getParentCatalog().getCatalogId() == 1 || catalog.getParentCatalog().getCatalogId() == 0){
+            fundsPool = new FundsPool();
+            fundsPool.setFunds(new BigDecimal(0));
+            fundsPool.setPoolName(catalog.getCatalogName() + ConstantsCB.FUNDS_POOL);
+            fundsPool.setVersion(0);
+        }
+        //E
         Catalog pCatalog = catalogDao.findOne(catalog.getParentCatalog()
                 .getCatalogId());
         // 兼容旧数据,旧数据中有商品分类编码为空
@@ -76,6 +103,12 @@ public class CatalogService implements ICatalogService {
         catalog.setCatalogCode(pCatalog.getCatalogCode()
                 + decimalFormat.format(tcode));
         Catalog catalog2 = catalogDao.save(catalog);
+        //S     add by lxc  2018-08-07
+        if (catalog2 != null && fundsPool != null){
+            fundsPool.setCatalog(catalog2);
+            fundsPoolDao.save(fundsPool);
+        }
+        //E
         return catalog2;
     }
 
@@ -84,9 +117,41 @@ public class CatalogService implements ICatalogService {
         if (!catalogDao.isOrUnique(catalog, Catalog_.catalogName)) {
             throw new EntityExistException("商品分类名称已存在");
         }
-        Catalog dbCatalog = catalogDao.findOne(catalog.getCatalogId());
 
-        AttributeReplication.copying(catalog, dbCatalog, Catalog_.catalogName, Catalog_.enabled, Catalog_.supportAddedTax, Catalog_.leaf, Catalog_.sortOrder, Catalog_.remark, Catalog_.parentCatalog);
+        Catalog dbCatalog = catalogDao.findOne(catalog.getCatalogId());
+        BigDecimal db_ratio = dbCatalog.getRatio();//数据库的比例配置
+        AttributeReplication.copying(catalog, dbCatalog, Catalog_.catalogName, Catalog_.enabled, Catalog_.supportAddedTax, Catalog_.leaf, Catalog_.sortOrder, Catalog_.remark, Catalog_.parentCatalog, Catalog_.ratio);
+        //S     add by lxc  2018-08-07
+        if (dbCatalog != null ){
+            //当分类比例设置有改变,则需要修改货品销售价
+            if(catalog.getRatio().compareTo(db_ratio) !=0){
+                List<Commodity> commoditiesByCatalog = commodityDao.findCommoditiesByCatalog(catalog);
+                commoditiesByCatalog.stream().forEach(o ->{
+                    if(null == o.getRatio()){//商品比例配置为null,货品的销售价=货品成本价*分类比例配置
+                        float ratio = catalog.getRatio().floatValue();
+                        int j = productDao.updateSalePriceByCommodityId(ratio, o.getCommodityId());
+                        if(j > 0){
+                            logger.info("更新货品的销售价成功....");
+                        }
+                    }
+                });
+            }
+            FundsPool fundsPool = fundsPoolDao.findByCatalog_CatalogId(catalog.getCatalogId());
+            if (fundsPool != null){
+                fundsPool.setPoolName(catalog.getCatalogName() + ConstantsCB.FUNDS_POOL);
+            }else{
+                // 如果是一级分类,需要增加资金池     // 兼容旧数据,旧数据中有商品分类的资金池为空
+                if (catalog != null && catalog.getParentCatalog() != null && catalog.getParentCatalog().getCatalogId() == 1 || catalog.getParentCatalog().getCatalogId() == 0){
+                    fundsPool = new FundsPool();
+                    fundsPool.setFunds(new BigDecimal(0));
+                    fundsPool.setPoolName(catalog.getCatalogName() + ConstantsCB.FUNDS_POOL);
+                    fundsPool.setVersion(0);
+                    fundsPool.setCatalog(catalog);
+                    fundsPoolDao.save(fundsPool);
+                }
+            }
+        }
+        //E
         return dbCatalog;
     }
 

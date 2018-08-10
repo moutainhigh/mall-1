@@ -144,6 +144,11 @@
         this.$router.push({
           path:"/choose-brand"
         })
+      },
+      openBrand(brand){
+        if (brand.advertUrl) {
+          window.location.href = brand.advertUrl;
+        }
       }
     },
     created() {
@@ -211,7 +216,7 @@
   }
 
   .card-list {
-    margin: 0.8rem 0.8rem 0;
+    margin: 0.8rem 1rem 0;
   }
 
   .card-list .cont {

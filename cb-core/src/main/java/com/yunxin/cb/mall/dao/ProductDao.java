@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -110,6 +111,18 @@ public interface ProductDao extends ProductPlusDao, JpaRepository<Product, Integ
     @Query("update Product c set c.publishState=?1 where c.productId in (?2)")
     void updateUpOrDownShelvesInProductId(PublishState publishState, Integer[] prodIds);
 
+    /***
+     * 根据商品ID和比例配置修改货品销售价
+     * @Description:
+     * @author: lxc
+     * @param ratio             比例配置
+   * @param commodityId       商品ID
+     * @Return int:
+     * @DateTime: 2018/8/9 16:20
+     */
+    @Modifying
+    @Query("update Product p set p.salePrice = p.costPrice * ?1 WHERE p.commodity.commodityId = ?2 ")
+    int updateSalePriceByCommodityId(float ratio, int commodityId);
 }
 
 interface ProductPlusDao {
