@@ -1,5 +1,7 @@
 package com.yunxin.cb.rb.entity;
 
+import com.yunxin.cb.mall.entity.Catalog;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.search.annotations.DocumentId;
@@ -25,7 +27,8 @@ public class FundsPool  implements Serializable {
     private Integer poolId;
 
     /** 一级商品分类ID */
-    private Integer catalogId;
+    @ApiModelProperty(value="一级商品分类ID",name="catalog",example="")
+    private Catalog catalog;
 
     /** 分类名+“资金池” */
     private String poolName;
@@ -48,13 +51,23 @@ public class FundsPool  implements Serializable {
         this.poolId = poolId;
     }
 
-    @Column(nullable = false, length = 11)
-    public Integer getCatalogId() {
-        return catalogId;
+//    @Column(nullable = false, length = 11)
+//    public Integer getCatalogId() {
+//        return catalogId;
+//    }
+//
+//    public void setCatalogId(Integer catalogId) {
+//        this.catalogId = catalogId;
+//    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATALOG_ID", nullable = false)
+    public Catalog getCatalog() {
+        return catalog;
     }
 
-    public void setCatalogId(Integer catalogId) {
-        this.catalogId = catalogId;
+    public void setCatalog(Catalog catalog) {
+        this.catalog = catalog;
     }
 
     @Column(nullable = false, length = 128)
