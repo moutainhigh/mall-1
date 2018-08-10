@@ -7,6 +7,8 @@ import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.service.ReimbursementQueryService;
 import com.yunxin.cb.mall.vo.*;
+import com.yunxin.cb.util.CalendarUtils;
+import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import org.slf4j.Logger;
@@ -18,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
+
+import static com.yunxin.cb.orm.CustomerContextHolder.getCustomerId;
 
 @Service
 public class ReimbursementQueryServiceImpl implements ReimbursementQueryService {
@@ -64,7 +68,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             BigDecimal accountAmount = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).subtract(tax);
             reimbursementVO.setTax(tax);
             reimbursementVO.setAccountAmount(accountAmount);
-            //String s = CalendarUtils.formatDateTime(reimbursementQuery.getCreateTime());
+            String s = CalendarUtils.formatDateTime(reimbursementQuery.getCreateTime());
             listVO.add(reimbursementVO);
         }
         //调用dao统计满足条件的记录总数
@@ -93,27 +97,25 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         Map<Integer, List<OrderItem>> lotaLogMap = new HashMap<>();
         //所有商品的总价
         BigDecimal allAccountSalePrice = new BigDecimal(0);
+        //拆分订单
         for(AddReimbursementRequestVO addReimbursementRequestVO : list){
             //根据orderId和productId查询 货品
             OrderItem orderItem = orderItemMapper.selectByOrderIdAndProductId(addReimbursementRequestVO.getOrderId(),addReimbursementRequestVO.getProductId());
-            //拆分订单
-//            int commodityId = addReimbursementRequestVO.getCommodityId();
             //获取商品分类
             Catalog catalog = catalogMapper.selectByCommodityId(addReimbursementRequestVO.getCommodityId());
             //判断该订单属于哪一商品分类
             if(catalog.getParentCatalogId() == 1){
-//                    Integer catalogId=isTwoFrool(catalog);
-                List<OrderItem> items=lotaLogMap.get(catalog.getCatalogId());
-                if(items==null){
-                    items=new ArrayList<>();
+                List<OrderItem> items = lotaLogMap.get(catalog.getCatalogId());
+                if(items == null){
+                    items = new ArrayList<>();
                 }
                 items.add(orderItem);
                 lotaLogMap.put(catalog.getCatalogId(),items);
             }else{
-                Integer catalogId=isTwoFrool(catalog);
-                List<OrderItem> items=lotaLogMap.get(catalogId);
-                if(items==null){
-                    items=new ArrayList<>();
+                Integer catalogId = isTwoFrool(catalog);
+                List<OrderItem> items = lotaLogMap.get(catalogId);
+                if(items == null){
+                    items = new ArrayList<>();
                 }
                 items.add(orderItem);
                 lotaLogMap.put(catalogId,items);
@@ -139,27 +141,26 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             tax = accountSalePrice.multiply(taxPoint);
             //到账金额
             accountAmount = accountSalePrice.subtract(tax);
-            long time = System.currentTimeMillis();
             reimbursement.setAmount(accountSalePrice);
             reimbursement.setCreateTime(new Date());
-            reimbursement.setCustomerId(1);
+            reimbursement.setCustomerId(getCustomerId());
             reimbursement.setOrderAmount(accountAmount);
             reimbursement.setTax(tax);
-            reimbursement.setReimbursementNo(String.valueOf(time));
+            reimbursement.setReimbursementNo("RB"+UUIDGeneratorUtil.getUUCode());
             reimbursement.setOrderState(ReimbursementState.FINANCE_IN_APPROVAL);
             reimbursement.setCatalogId(entry.getKey());
             reimbursementMapper.insert(reimbursement);
             //保存报账信息关联表
             for(OrderItem orderItemes : orderItemList){
                 ReimbursementOrder reimbursementOrder = new ReimbursementOrder();
-                BigDecimal oneAmount = BigDecimal.valueOf(orderItemes.getSalePrice()).subtract(taxPoint);
+                BigDecimal oneAmount = BigDecimal.valueOf(orderItemes.getProductNum()*orderItemes.getSalePrice()).subtract(taxPoint);
                 reimbursementOrder.setAmount(oneAmount);
                 reimbursementOrder.setCreateTime(new Date());
                 reimbursementOrder.setOrderItemId(orderItemes.getItemId());
                 reimbursementOrder.setProductId(orderItemes.getProductId());
                 reimbursementOrder.setProductPrice(BigDecimal.valueOf(orderItemes.getSalePrice()));
                 reimbursementOrder.setReimbursementId(reimbursement.getReimbursementId());
-                reimbursementOrder.setTax(BigDecimal.valueOf(orderItemes.getSalePrice()).subtract(oneAmount));
+                reimbursementOrder.setTax(BigDecimal.valueOf(orderItemes.getProductNum()*orderItemes.getSalePrice()).subtract(oneAmount));
                 reimbursementOrderMapper.insert(reimbursementOrder);
             }
         }
@@ -171,7 +172,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         reimbursementSuccessVO.setAccountAmount(allAmount);
         reimbursementSuccessVO.setAccountSalePrice(allAccountSalePrice);
         reimbursementSuccessVO.setTax(allTax);
-        reimbursementSuccessVO.setTaxPoint(String.valueOf(taxPoint));
+        reimbursementSuccessVO.setTaxPoint(profile.getFileValue());
         return reimbursementSuccessVO;
     }
     /**
@@ -211,13 +212,13 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     /**
      * 已报账详情
      * @param reimbursementId
-     * @param cuntomerId
+     * @param customerId
      * @return
      * @throws Exception
      */
     @Override
-    public AlreadyReimbursementVO selectAlreadyReimbursementDetail(int reimbursementId,int cuntomerId)throws Exception{
-        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
+    public AlreadyReimbursementVO selectAlreadyReimbursementDetail(int reimbursementId,int customerId)throws Exception{
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,customerId);
         //税点
         Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
         BigDecimal taxPoint = new BigDecimal(profile.getFileValue());
@@ -285,7 +286,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             completeReimbursementVO.setAccountAmount(reimbursement.getAmount());
             completeReimbursementVO.setSum(num);
             completeReimbursementVO.setReimbursementId(reimbursement.getReimbursementId());
-            completeReimbursementVO.setOperationTime(/*listProcess.get(1).getCreateTime()*/new Date());
+            completeReimbursementVO.setOperationTime(listProcess.get(listProcess.size()-1).getCreateTime());
             listVO.add(completeReimbursementVO);
         }
         //如list为null时，则改为返回一个空列表
@@ -300,13 +301,13 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     /**
      * 报账已完成详情
      * @param reimbursementId
-     * @param cuntomerId
+     * @param customerId
      * @return
      * @throws Exception
      */
     @Override
-    public CompleteReimbursementDetailVO getCompleteReimbursementDetail(int reimbursementId,int cuntomerId)throws Exception{
-        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
+    public CompleteReimbursementDetailVO getCompleteReimbursementDetail(int reimbursementId,int customerId)throws Exception{
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,customerId);
         CompleteReimbursementDetailVO completeReimbursementDetailVO = new CompleteReimbursementDetailVO();
         List<String> list = new ArrayList<>();
         //查询商品相关信息
@@ -318,7 +319,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         List<ReimbursementProcess> listVO = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
         completeReimbursementDetailVO.setAccountAmount(reimbursement.getAmount());
         completeReimbursementDetailVO.setOrderState(reimbursement.getOrderState());
-        completeReimbursementDetailVO.setOperationTime(/*listVO.get(1).getCreateTime()*/new Date());
+        completeReimbursementDetailVO.setOperationTime(listVO.get(listVO.size()-1).getCreateTime());
         completeReimbursementDetailVO.setReimbursementNo(reimbursement.getReimbursementNo());
         completeReimbursementDetailVO.setPayment(reimbursement.getRepaymentType());
         if(reimbursement.getRepaymentAmount() != null){
@@ -331,21 +332,23 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         return completeReimbursementDetailVO;
     }
     //递归查找商品分类
+    //TODO 考虑异常情况，可能会出现死循环
     public Integer isTwoFrool(Catalog catalog){
         Catalog queryLog = catalogMapper.selectByParentCatalogId(catalog.getParentCatalogId());
-        if(queryLog.getParentCatalogId()==1){
+        if(queryLog.getCatalogId() <= queryLog.getParentCatalogId()){
+            return null;
+        }else if(queryLog.getParentCatalogId()==1){
             return queryLog.getCatalogId();
         }else{
-            isTwoFrool(queryLog);
+            return isTwoFrool(queryLog);
         }
-        return queryLog.getParentCatalogId();
     }
 
     /**
      * 根据用户ID和报账订单ID查询订单
      */
-    public Reimbursement selectByReimbursmentIdAndCustomer(int reimbursementId,int cuntomerId){
-        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
+    public Reimbursement selectByReimbursmentIdAndCustomer(int reimbursementId,int customerId){
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,customerId);
         return reimbursement;
     }
 }

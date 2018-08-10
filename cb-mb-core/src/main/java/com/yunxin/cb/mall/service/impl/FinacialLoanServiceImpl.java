@@ -1,12 +1,18 @@
 package com.yunxin.cb.mall.service.impl;
 
+import com.yunxin.cb.mall.entity.FinacialCreditLineBill;
 import com.yunxin.cb.mall.entity.FinacialLoan;
+import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.LoanState;
+import com.yunxin.cb.mall.entity.meta.LoanType;
+import com.yunxin.cb.mall.entity.meta.TransactionType;
+import com.yunxin.cb.mall.mapper.FinacialCreditLineBillMapper;
 import com.yunxin.cb.mall.mapper.FinacialLoanMapper;
 import com.yunxin.cb.mall.service.FinacialLoanService;
 import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
 import com.yunxin.cb.mall.vo.FinacialWalletVO;
+import com.yunxin.cb.util.CalendarUtils;
 import com.yunxin.cb.util.page.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,6 +33,8 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
     private FinacialLoanMapper finacialLoanMapper;
     @Resource
     private FinacialWalletService finacialWalletService;
+    @Resource
+    private FinacialCreditLineBillMapper finacialCreditLineBillMapper;
 
     private static final Log log = LogFactory.getLog(FinacialLoanServiceImpl.class);
     /**
@@ -41,19 +50,48 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
     @Transactional
     public FinacialLoanVO add(FinacialLoanVO finacialLoanVO, FinacialWalletVO finacialWalletVO){
         log.info("add:"+finacialLoanVO);
-        FinacialLoan finacialLoan = new FinacialLoan();
-        BeanUtils.copyProperties(finacialLoan, finacialLoanVO);
         //借款金额小于保单额度（优先减少保单额度，再减少感恩额度）
         if (finacialLoanVO.getAmount().compareTo(finacialWalletVO.getInsuranceAmount()) < 1) {
+            //钱包减少金额
             finacialWalletVO.setInsuranceAmount(finacialWalletVO.getInsuranceAmount().subtract(finacialLoanVO.getAmount()));
+            //借款金额区分
+            finacialLoanVO.setInsuranceAmount(finacialLoanVO.getAmount());
+            finacialLoanVO.setCreditAmount(BigDecimal.ZERO);
         } else { //借款金额大于保单额度但小于总额度
+            //借款金额区分
+            finacialLoanVO.setInsuranceAmount(finacialWalletVO.getInsuranceAmount());
+            finacialLoanVO.setCreditAmount(finacialLoanVO.getAmount().subtract(finacialWalletVO.getInsuranceAmount()));
+            //钱包减少金额
             finacialWalletVO.setInsuranceAmount(BigDecimal.ZERO);
             finacialWalletVO.setCreditAmount(finacialLoanVO.getAmount().subtract(finacialWalletVO.getInsuranceAmount()));
         }
+        FinacialLoan finacialLoan = new FinacialLoan();
+        BeanUtils.copyProperties(finacialLoan, finacialLoanVO);
         //更新钱包额度
         finacialWalletService.updateFinacialWallet(finacialWalletVO);
-        //添加额度明细
+        Date now = new Date();
+        //添加借款记录
+        finacialLoan.setCreateTime(now);
+        finacialLoan.setState(LoanState.WAIT_LOAN);
+        finacialLoan.setType(LoanType.LOAN);
+        //还款时间
+        finacialLoan.setFinalRepaymentTime(CalendarUtils.addMonth(now, finacialLoan.getRepaymentTerm()));
+        finacialLoan.setLateFee(BigDecimal.ZERO);
+        finacialLoan.setOverdueNumer(0);
+        finacialLoan.setReadyAmount(BigDecimal.ZERO);
+        finacialLoan.setRepayAmount(finacialLoan.getAmount().add(finacialLoan.getInterest()));
+        finacialLoan.setTerm(1);//默认为1期
         finacialLoanMapper.insert(finacialLoan);
+        //添加额度明细
+        FinacialCreditLineBill finacialCreditLineBill = new FinacialCreditLineBill();
+        finacialCreditLineBill.setCustomerId(finacialLoan.getCustomerId());
+        finacialCreditLineBill.setType(CapitalType.SUBTRACT);
+        finacialCreditLineBill.setTransactionType(TransactionType.APPLY_LOAN);
+        finacialCreditLineBill.setAmount(finacialLoan.getInsuranceAmount());//只记录保单额度变更
+        finacialCreditLineBill.setCreateTime(now);
+        finacialCreditLineBill.setFinacialCreditLineId(finacialLoan.getLoanId());
+        finacialCreditLineBill.setTransactionDesc("贷款申请");
+        finacialCreditLineBillMapper.insert(finacialCreditLineBill);
         return finacialLoanVO;
     }
 
