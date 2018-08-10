@@ -736,3 +736,7 @@ INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `R
 INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('13', 'SHARE_ICON', 'http://test.resource.999shuijingqiu.com/Firq1iyRsRVaVD4nxDfLlBexjoA5', '1', '');
 INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('14', 'SHARE_DESCRIPTION', '邀请您注册云信，成为尊贵的云信会员，体验休闲经济带来美好生活！', '0', '');
 INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('15', 'SHARE_SHORTMESSAGE_CONTENT', '邀请您注册云信，成为尊贵的云信会员，体验休闲经济带来美好生活！', '0', '');
+
+###add by lxc 2018-08-10 17:58
+ALTER TABLE `crystal_ball`.`rb_funds_pool_log`
+ADD COLUMN `ITEM_ID` int(11) NULL COMMENT '订单详情ID/报账详情ID' AFTER `TRANSACTION_ID`;
