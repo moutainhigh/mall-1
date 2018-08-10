@@ -484,6 +484,26 @@ public class OrderService implements IOrderService {
         orderDao.cancelTimeOutOrders(OrderState.PENDING_PAYMENT, c.getTime());
     }
 
+    /**
+     * 查询已发货订单 如果超过1周则将其订单状态设为 已收货
+     */
+    @Override
+    public void confirmReceivedOrders() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_WEEK ,-1);
+        orderDao.taskOrders(OrderState.RECEIVED, OrderState.OUT_STOCK, c.getTime());
+    }
+
+    /**
+     * 查询已收货订单 如果超过1周则将其订单状态设为 已完成
+     */
+    @Override
+    public void completedOrders() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_WEEK ,-1);
+        orderDao.taskOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
+    }
+
     @Override
     public boolean cancelOrder(int orderId, String cancelReason) {
         Order order = orderDao.findOne(orderId);

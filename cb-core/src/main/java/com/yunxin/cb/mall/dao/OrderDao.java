@@ -67,5 +67,13 @@ public interface OrderDao extends JpaRepository<Order, Integer>, JpaSpecificatio
     @Query("update Order od set od.orderState=7 where od.orderState=?1 and od.createTime<=?2")
     public void cancelTimeOutOrders(OrderState ofs, Date date);
 
+    /**
+     * 查询超时未确认收货订单，并将其订单状态设为已收货
+     */
+    @Modifying
+    @Query("update Order od set od.orderState=?1 where od.orderState=?2 and od.createTime<=?3")
+    public void taskOrders(OrderState setState,OrderState whereState, Date date);
+
+
 }
 
