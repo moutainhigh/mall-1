@@ -25,7 +25,7 @@ public interface FinacialWalletMapper {
         "#{expectedAmount,jdbcType=DECIMAL}, #{debtTotal,jdbcType=DECIMAL}, ",
         "#{debtExpected,jdbcType=DECIMAL}, #{debtCredit,jdbcType=DECIMAL}, ",
         "#{creditAmount,jdbcType=DECIMAL}, #{freezingAmount,jdbcType=DECIMAL}, ",
-        "#{version,jdbcType=INTEGER}, #{totalAmount,jdbcType=DECIMAL}, #{freezingAmount,jdbcType=DECIMAL})"
+        "#{version,jdbcType=INTEGER}, #{insuranceAmount,jdbcType=DECIMAL}, #{totalAmount,jdbcType=DECIMAL})"
     })
     int insert(FinacialWallet record);
 

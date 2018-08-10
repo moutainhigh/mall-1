@@ -63,6 +63,14 @@ public class FinacialLoanVO {
     @ApiModelProperty(value = "还款期限id", name = "loanConfigId", example = "6")
     private Integer loanConfigId;
 
+    /** 贷款信用额度金额 */
+    @ApiModelProperty(value = "贷款信用额度金额", name = "creditAmount", example = "500")
+    private BigDecimal creditAmount;
+
+    /** 贷款保险额度金额 */
+    @ApiModelProperty(value = "贷款保险额度金额", name = "insuranceAmount", example = "500")
+    private BigDecimal insuranceAmount;
+
     public Integer getLoanId() {
         return loanId;
     }
@@ -199,6 +207,22 @@ public class FinacialLoanVO {
         this.loanConfigId = loanConfigId;
     }
 
+    public BigDecimal getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(BigDecimal creditAmount) {
+        this.creditAmount = creditAmount;
+    }
+
+    public BigDecimal getInsuranceAmount() {
+        return insuranceAmount;
+    }
+
+    public void setInsuranceAmount(BigDecimal insuranceAmount) {
+        this.insuranceAmount = insuranceAmount;
+    }
+
     @Override
     public String toString() {
         return "FinacialLoanVO{" +
@@ -219,6 +243,8 @@ public class FinacialLoanVO {
                 ", overdueNumer=" + overdueNumer +
                 ", bankId=" + bankId +
                 ", loanConfigId=" + loanConfigId +
+                ", creditAmount=" + creditAmount +
+                ", insuranceAmount=" + insuranceAmount +
                 '}';
     }
 }

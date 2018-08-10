@@ -47,5 +47,5 @@ public interface FinacialWalletService {
      * @auther: eleven
      * @date: 2018/8/8 19:39
      */
-    public ResponseResult processCustomerMoney(Integer customerId, BigDecimal money, WithdrawType type);
+    public ResponseResult processCustomerMoney(Integer customerId, BigDecimal money, WithdrawType type,String remark);
 }

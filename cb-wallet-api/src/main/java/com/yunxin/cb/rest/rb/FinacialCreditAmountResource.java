@@ -50,7 +50,7 @@ public class FinacialCreditAmountResource extends BaseResource {
     @ApiOperation(value = "信用额度信息")
     @ApiImplicitParams({
     })
-    @GetMapping()
+    @GetMapping(value = "getCreditAmountInfo")
     @ApiVersion(1)
     public ResponseResult<FinacialCreditLineVO> getCreditAmountInfo() {
         try {
@@ -103,20 +103,6 @@ public class FinacialCreditAmountResource extends BaseResource {
         }
     }
 
-//    @ApiOperation(value = "借款页面获取贷款期限利率配置")
-//    @ApiImplicitParams({
-//    })
-//    @GetMapping("loanConfigs")
-//    @ApiVersion(1)
-//    public ResponseResult<List<FinacialLoanConfig>> getLoanConfigs() {
-//        try {
-//            return new ResponseResult(finacialLoanConfigService.getFinacilaLoanConfigs());
-//        } catch (Exception e) {
-//            logger.info("getLoanConfig failed", e);
-//            return new ResponseResult(Result.FAILURE);
-//        }
-//    }
-
     @ApiOperation(value = "提交借款")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "amount", value = "贷款金额", required = true, paramType = "form", dataType = "String"),
@@ -129,8 +115,8 @@ public class FinacialCreditAmountResource extends BaseResource {
         try {
             //判断额度是否满足贷款(先判断预期收益再判断总额度)
             //最高可贷金额
-            FinacialWalletVO finacialWalletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
-            BigDecimal totalAmount = finacialWalletVO.getExpectedAmount().add(finacialWalletVO.getTotalAmount());
+            FinacialWalletVO walletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
+            BigDecimal totalAmount = walletVO.getTotalAmount();
             if (finacialLoanVO.getAmount().compareTo(totalAmount) > 0) {
                 return new ResponseResult(Result.FAILURE, "您的可贷金额不足");
             }
@@ -150,18 +136,8 @@ public class FinacialCreditAmountResource extends BaseResource {
             BigDecimal lixi = finacialLoanVO.getAmount().multiply(finacialLoanConfig.getInterestRate()).setScale(2, RoundingMode.HALF_UP);
             finacialLoanVO.setInterest(lixi);
             finacialLoanVO.setInterestRate(finacialLoanConfig.getInterestRate());
-            finacialLoanService.add(finacialLoanVO);
-            //减少额度（优先减少保单额度，再减少感恩额度）
-            //借款金额小于预期收益
-            if (finacialLoanVO.getAmount().compareTo(finacialWalletVO.getExpectedAmount()) < 1) {
-                finacialWalletVO.setExpectedAmount(finacialWalletVO.getExpectedAmount().subtract(finacialLoanVO.getAmount()));
-            } else if (finacialLoanVO.getAmount().compareTo(
-                    finacialWalletVO.getExpectedAmount().add(finacialWalletVO.getInsuranceAmount())) < 1){ //借款金额小于预期收益和保单额度
-                finacialWalletVO.setExpectedAmount(BigDecimal.ZERO);
-//                finacialWalletVO.setInsuranceAmount();
-            }
-            finacialWalletService.updateFinacialWallet(finacialWalletVO);
-            //添加额度明细
+            //添加借款记录
+            finacialLoanService.add(finacialLoanVO, walletVO);
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.info("getLoanInitDataInfo failed", e);

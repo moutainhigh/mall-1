@@ -23,6 +23,7 @@ public enum ProfileName {
     SHARE_DESCRIPTION("邀请您注册云信，成为尊贵的云信会员，体验休闲经济带来美好生活！"),//分享描述
     SHARE_SHORTMESSAGE_CONTENT("邀请您注册云信，成为尊贵的云信会员，体验休闲经济带来美好生活！z"),//分享短信内容
     FINACIAL_FREE_RATE("0.1"),//提现手续费
+    TAX_RATE("0.23"),//税率
     ;
 
     private String i18nName;
