@@ -84,7 +84,7 @@ public class FinacialCreditAmountResource extends BaseResource {
             FinacialLoanInitDateVO vo = new FinacialLoanInitDateVO();
             //最高可贷金额
             FinacialWalletVO finacialWalletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
-            vo.setAmount(finacialWalletVO.getExpectedAmount().add(finacialWalletVO.getTotalAmount()));
+            vo.setTotalAmount(finacialWalletVO.getTotalAmount());
             //期限
             List<FinacialLoanConfig> list = finacialLoanConfigService.getFinacilaLoanConfigs();
             List<FinacialLoanConfigVO> listFinacialLoanConfigVO = new ArrayList<FinacialLoanConfigVO>();
@@ -121,8 +121,8 @@ public class FinacialCreditAmountResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE, "您的可贷金额不足");
             }
             //判断是否超过最多次数
-            // 查询审核通过的我的借款次数
             int maxCount = 5;
+            // 查询审核通过的我的借款次数
             int count = finacialLoanService.countByCustomerId(getCustomerId());
             if (count >= 5) {
                 return new ResponseResult(Result.FAILURE, "您已经贷了"+maxCount+"次款了，不能再贷了");
