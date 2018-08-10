@@ -168,7 +168,9 @@ public interface DeliveryAddressMapper {
             "CUSTOMER_ID",
             "from delivery_address",
             "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}",
-            "and DEFAULT_ADDRESS = 1"
+            "and DEFAULT_ADDRESS = 1",
+            "limit 1"
+
     })
     @Results({
             @Result(column="ADDRESS_ID", property="addressId", jdbcType=JdbcType.INTEGER, id=true),
