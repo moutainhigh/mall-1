@@ -13,7 +13,7 @@ public class TreeViewItem {
     private boolean checked = true;
     private List<TreeViewItem> items;
 
-    /** 分类比例配置 add by lxc   2018-08-09*/
+    /** 分类比例配置 add by lxc   2018-08-09 */
     private BigDecimal ratio;
 
     public TreeViewItem() {
