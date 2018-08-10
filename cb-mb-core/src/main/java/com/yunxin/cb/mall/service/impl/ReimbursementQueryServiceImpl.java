@@ -24,8 +24,6 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
 
     private static final Logger logger = LoggerFactory.getLogger(ReimbursementQueryService.class);
 
-    //税点
-//    private static final BigDecimal taxPoint = new BigDecimal("0.23");
 
     @Resource
     private ReimbursementQueryMapper reimbursementQueryMapper;
