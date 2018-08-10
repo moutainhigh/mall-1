@@ -130,6 +130,15 @@ public interface CommodityDao extends CommodityPlusDao, JpaRepository<Commodity,
 
     @Query("select c from Commodity c left join fetch c.seller where c.commodityCode in ?1")
     public List<Commodity> getCommoditySellerByCommodityCode(List<String> commodityCodes);
+
+    /**
+     * @Description:        根据分类id查找商品集合
+     * @author: lxc
+     * @param catalog       分类id
+     * @Return java.util.List<com.yunxin.cb.mall.entity.Commodity>:
+     * @DateTime: 2018/8/9 18:17
+     */
+    List<Commodity> findCommoditiesByCatalog(Catalog catalog);
 }
 
 interface CommodityPlusDao {

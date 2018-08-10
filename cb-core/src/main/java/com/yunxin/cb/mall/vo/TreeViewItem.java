@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,9 @@ public class TreeViewItem {
     private boolean hasChildren;
     private boolean checked = true;
     private List<TreeViewItem> items;
+
+    /** 分类比例配置 add by lxc   2018-08-09 */
+    private BigDecimal ratio;
 
     public TreeViewItem() {
     }
@@ -91,4 +95,11 @@ public class TreeViewItem {
         this.checked = selected;
     }
 
+    public BigDecimal getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(BigDecimal ratio) {
+        this.ratio = ratio;
+    }
 }

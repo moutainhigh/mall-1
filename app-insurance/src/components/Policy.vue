@@ -12,7 +12,7 @@
       <img src="../assets/img/risk-frame.png" width="322">
       <div>
         <div class="r-tip">
-          温馨提示：感谢使用云信生命投保功能，本单已自核通过。
+          温馨提示：感谢使用富德生命投保功能，本单已自核通过。
         </div>
       </div>
       <button class="returnButton" @click="comeBack">

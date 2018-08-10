@@ -2,6 +2,7 @@ package com.yunxin.cb.mall.service.impl;
 
 
 import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.service.ReimbursementQueryService;
@@ -23,8 +24,6 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
 
     private static final Logger logger = LoggerFactory.getLogger(ReimbursementQueryService.class);
 
-    //税点
-    private static final BigDecimal taxPoint = new BigDecimal("0.23");
 
     @Resource
     private ReimbursementQueryMapper reimbursementQueryMapper;
@@ -38,6 +37,8 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     private ReimbursementOrderMapper reimbursementOrderMapper;
     @Resource
     private ReimbursementProcessMapper reimbursementProcessMapper;
+    @Resource
+    private ProfileMapper profileMapper;
 
     /**
      * 查询可报账分页列表
@@ -49,6 +50,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     public PageFinder<ReimbursementVO> pageReimbursementQuery(Query q)throws Exception {
         //调用dao查询满足条件的分页数据
         List<ReimbursementQuery> list = reimbursementQueryMapper.selectReimbursementQuery(q);
+        //税点
+        Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
+        BigDecimal taxPoint = new BigDecimal(profile.getFileValue());
         //组装返回数据
         List<ReimbursementVO> listVO = new ArrayList<>();
         for(ReimbursementQuery reimbursementQuery :list){
@@ -83,6 +87,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     public ReimbursementSuccessVO addReimbursement(List<AddReimbursementRequestVO> list) throws Exception {
         //查询二级商品分类列表
 //        List<Catalog> catalogList = catalogMapper.selectAll();
+        //税点
+        Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
+        BigDecimal taxPoint = new BigDecimal(profile.getFileValue());
         Map<Integer, List<OrderItem>> lotaLogMap = new HashMap<>();
         //所有商品的总价
         BigDecimal allAccountSalePrice = new BigDecimal(0);
@@ -211,6 +218,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     @Override
     public AlreadyReimbursementVO selectAlreadyReimbursementDetail(int reimbursementId,int cuntomerId)throws Exception{
         Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,cuntomerId);
+        //税点
+        Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
+        BigDecimal taxPoint = new BigDecimal(profile.getFileValue());
         //商品总数量
         int num = 0;
         AlreadyReimbursementVO alreadyReimbursementVO = new AlreadyReimbursementVO();
