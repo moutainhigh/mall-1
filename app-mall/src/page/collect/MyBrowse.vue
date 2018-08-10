@@ -19,7 +19,7 @@
           <div class="carInfo" v-bind:class="{'isEdit': isEdit}" @click="openDetail(record.productVo.productId)">
             <p class="title">{{record.commodityName}}</p>
             <p class="price">￥<span>{{setTranPrice(record.sellPrice)}}</span>万</p>
-            <p class="carLocal"><img src="../../assets/img/common/ic_list_location.png">{{record.sellerVo.sellerAddress}}</p>
+            <p class="carLocal"><img src="../../assets/img/common/ic_list_location.png">{{record.sellerAddress}}</p>
           </div>
         </dd>
       </dl>
