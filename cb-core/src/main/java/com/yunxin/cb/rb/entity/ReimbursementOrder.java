@@ -24,6 +24,9 @@ public class ReimbursementOrder implements java.io.Serializable {
     private int reimbursementOrderId;
     private OrderItem orderItem;
     private Reimbursement reimbursement;
+    private Double amount;
+    private Double tax;
+    private Double productPrice;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
     @Id
@@ -72,5 +75,30 @@ public class ReimbursementOrder implements java.io.Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 11)
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 11)
+    public Double getTax() {
+        return tax;
+    }
+
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 11)
+    public Double getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(Double productPrice) {
+        this.productPrice = productPrice;
     }
 }

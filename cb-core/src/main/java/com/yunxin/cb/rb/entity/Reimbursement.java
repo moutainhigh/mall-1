@@ -54,7 +54,7 @@ public class Reimbursement  implements java.io.Serializable {
     @ApiModelProperty(value="创建时间",name="createTime",example="2018-07-28")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
-
+    @ApiModelProperty(value="状态",name="orderState",example="")
     private ReimbursementType orderState;
     @ApiModelProperty(value="还款金额",name="repaymentAmount",example="100")
     private Double repaymentAmount;
@@ -151,7 +151,6 @@ public class Reimbursement  implements java.io.Serializable {
         this.orderState = orderState;
     }
 
-    @JsonIgnore
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "reimbursement")
     public List<ReimbursementProcess> getReimbursementProcess() {
         return reimbursementProcess;

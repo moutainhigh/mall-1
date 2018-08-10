@@ -2,7 +2,9 @@ package com.yunxin.cb.rb.service.impl;
 
 import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.dao.OrderItemDao;
+import com.yunxin.cb.mall.dao.ProductDao;
 import com.yunxin.cb.mall.entity.OrderItem;
+import com.yunxin.cb.mall.entity.Product;
 import com.yunxin.cb.rb.dao.ReimbursementDao;
 import com.yunxin.cb.rb.dao.ReimbursementProcessDao;
 import com.yunxin.cb.rb.entity.Reimbursement;
@@ -13,8 +15,6 @@ import com.yunxin.cb.rb.entity.meta.ReimbursementType;
 import com.yunxin.cb.rb.service.IReimbursementService;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,13 +31,14 @@ import java.util.List;
 @Service
 @Transactional
 public class ReimbursementService implements IReimbursementService {
-    private static final Logger logger = LoggerFactory.getLogger(ReimbursementService.class);
     @Resource
     private ReimbursementDao reimbursementDao;
     @Resource
     private OrderItemDao orderItemDao;
     @Resource
     private ReimbursementProcessDao reimbursementProcessDao;
+    @Resource
+    private ProductDao productDao;
     @Override
     public Page<Reimbursement> pageReimbursement(PageSpecification<Reimbursement> query) {
         query.setCustomSpecification(new CustomSpecification<Reimbursement>(){
@@ -58,20 +59,27 @@ public class ReimbursementService implements IReimbursementService {
 
     @Override
     public List<OrderItem> queryOrderItemByIds(int reimbursementId) {
-        return orderItemDao.getOrderItemByReimbursement(reimbursementId);
+
+        List<OrderItem> list= orderItemDao.getOrderItemByReimbursement(reimbursementId);
+        list.forEach(orderItem -> {
+            Product product= productDao.finByProductId(orderItem.getProduct().getProductId());
+            product.setProductName(product.getCommodity().getCommodityName());
+            orderItem.setProduct(product);
+        });
+        return list;
     }
 
 
 
     @Override
     public Reimbursement getReimbursement(int reimbursementId) {
-        return  reimbursementDao.findOne(reimbursementId);
+        return  reimbursementDao.getReimbursement(reimbursementId);
     }
 
     @Override
     public boolean reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType,String remarks,int operType, HttpServletRequest request) {
 
-       Reimbursement reimbursement=reimbursementDao.getOne(reimbursementId);
+       Reimbursement reimbursement=getReimbursement(reimbursementId);
         User user = (User) request.getSession().getAttribute("loginSession");
         ReimbursementProcess reimbursementProcess=new ReimbursementProcess();
         switch (reimbursementType){

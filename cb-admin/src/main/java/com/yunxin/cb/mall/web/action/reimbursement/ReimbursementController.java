@@ -82,10 +82,15 @@ public class ReimbursementController {
      */
     @RequestMapping(value = "reimbursementAuditing", method = RequestMethod.GET)
     @ResponseBody
-    public boolean reimbursementAuditing(@RequestParam("reimbursementId") int reimbursementId,@RequestParam("reimbursementState") ReimbursementType reimbursementType,
-                                                    @RequestParam("remarks") String remarks,int operType,HttpServletRequest request) {
+    public boolean reimbursementAuditing(@RequestParam("reimbursementId") int reimbursementId,@RequestParam("reimbursementType") ReimbursementType reimbursementType,
+                                                    @RequestParam("remarks") String remarks,@RequestParam("operType") int operType,HttpServletRequest request) {
             return iReimbursementService.reimbursementAuditing(reimbursementId,reimbursementType,remarks,operType,request);
     }
-
+    @RequestMapping(value = "reimbursementAuditings", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean reimbursementAuditings(@RequestParam("reimbursementId") int reimbursementId,
+                                         @RequestParam("remarks") String remarks,HttpServletRequest request) {
+        return true;
+    }
 
 }
