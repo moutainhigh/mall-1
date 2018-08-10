@@ -124,13 +124,13 @@
                   {{attribute.attributeName}}
                 </button>
 
-                    <!-- <button v-for="(attribute, index) in productGroup.attributes" class="carColor"
-                        :class="{'activeColor':index2 == ceilIndex && index == activeIndex}"
-                        @click="checkAttribute(index2, index)"
-                        >
-                        && disabledButton.indexOf(attribute.attributeName) < 0
-                  {{attribute.attributeName}}
-                </button> -->
+                <!-- <button v-for="(attribute, index) in productGroup.attributes" class="carColor"
+                    :class="{'activeColor':index2 == ceilIndex && index == activeIndex}"
+                    @click="checkAttribute(index2, index)"
+                    >
+                    && disabledButton.indexOf(attribute.attributeName) < 0
+              {{attribute.attributeName}}
+            </button> -->
               </div>
             </div>
           </div>
@@ -167,13 +167,10 @@
         </div>
       </transition>
     </div>
-
-    <div v-show='false'>
-        <div id='data-title'>{{commodityData&&commodityData.commodityTitle}}</div>
-        <div id='data-description'>{{commodityData&&commodityData.description}}</div>
-        <div id='data-imgUrl '>{{commodityData.imageSet &&commodityData.imageSet[0]}}</div>
-        <div id='data-shareUrl'>{{currentUrl}}</div>
-    </div>
+    <input type="hidden" id='data-title' v-text="commodityData&&commodityData.commodityTitle"/>
+    <input type="hidden" id='data-description' v-text="commodityData&&commodityData.description"/>
+    <input type="hidden" id='data-imgUrl' v-text="commodityData.imageSet &&commodityData.imageSet[0]"/>
+    <input type="hidden" id='data-shareUrl' v-text="currentUrl"/>
   </div>
 </template>
 
@@ -218,17 +215,17 @@
         show: false,
         favoriteId: null,
         opacity: 1, //顶部透明度
-        Data:[],
-        currentUrl:''
+        Data: [],
+        currentUrl: ''
       }
     },
     methods: {
       //调起分享
-      share(){
-        if(!this.commodityData.commodityId){
+      share() {
+        if (!this.commodityData.commodityId) {
           return;
-        }else{
-          window.location.href ='yunxi://yunxi.com?url_action={"from":"webview","url":"","action":2,"data":""}'
+        } else {
+          window.location.href = 'yunxi://yunxi.com?url_action={"from":"webview","url":"","action":2,"data":""}'
         }
       },
       checkTab(tabNum) {
@@ -250,7 +247,7 @@
         getProductsByCommodityId(this.commodityData.commodityId).then(res => {
           if (res.result == 'SUCCESS') {
             this.productGroups = res.data;
-            this.Data= this.commodityData.productVo.productName;
+            this.Data = this.commodityData.productVo.productName;
             this.defaultAttribute = this.commodityData.productVo.productName.split("&");
             this.disabledButton = this.commodityData.productVo.productName;
             for (let i = 0; i < this.productGroups.length; i++) {
@@ -285,42 +282,42 @@
         this.iac[index2] = index;
         this.iac = this.iac.concat([]);
         // console.log(this.iac)
-        this.disabledButton ='';
+        this.disabledButton = '';
 
-        if(index2 ==0){
+        if (index2 == 0) {
           this.Data = [];
           //表示第一项，通过颜色去筛选数据
-          for (let k = 0; k < this.commodityData.productVos.length; k++){
-             if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) !=  -1 ) {
-                this.Data.push(this.commodityData.productVos[k].productName);
+          for (let k = 0; k < this.commodityData.productVos.length; k++) {
+            if (this.commodityData.productVos[k].productName.indexOf(this.productGroups[index2].attributes[index].attributeName) != -1) {
+              this.Data.push(this.commodityData.productVos[k].productName);
             }
           }
         }
 
-        if(index2 == 1 || index2 == 2){
+        if (index2 == 1 || index2 == 2) {
           //表示不是第一项
-          for (let i = 0; i < this.Data.length; i++){
+          for (let i = 0; i < this.Data.length; i++) {
             //拿到第一项选择颜色后的数据,选择排量
-              if (this.Data[i].indexOf(this.productGroups[index2].attributes[index].attributeName) !=  -1 ) {
-                 this.Data = this.Data[i];
-              }
+            if (this.Data[i].indexOf(this.productGroups[index2].attributes[index].attributeName) != -1) {
+              this.Data = this.Data[i];
+            }
           }
         }
         //用于判断是否置灰，禁止点击
-        for(let m = 0;m <this.Data.length;m++){
+        for (let m = 0; m < this.Data.length; m++) {
 
-            this.disabledButton += this.Data[m];
+          this.disabledButton += this.Data[m];
         }
         for (let i = 0; i < this.productGroups.length; i++) {
-              for (let j = 0; j < this.productGroups[i].attributes.length; j++) {
-                //判断选择的货品
+          for (let j = 0; j < this.productGroups[i].attributes.length; j++) {
+            //判断选择的货品
 
-                if (this.Data[0].indexOf(this.productGroups[i].groupName) > -1 && this.Data[0].indexOf(this.productGroups[i].attributes[j].attributeName) > -1) {
-                  this.iac[i] = j;
-                  this.iac = this.iac.concat([]);
-                }
+            if (this.Data[0].indexOf(this.productGroups[i].groupName) > -1 && this.Data[0].indexOf(this.productGroups[i].attributes[j].attributeName) > -1) {
+              this.iac[i] = j;
+              this.iac = this.iac.concat([]);
+            }
 
-              }
+          }
         }
       },
       checkMode(key) {
@@ -343,16 +340,16 @@
             this.standard.push(this.productGroups[i].attributes[this.iac[i]].attributeName);
           }
         }
-        if(this.Data.length > 1 ){
-          if(this.Data.length > 20){
+        if (this.Data.length > 1) {
+          if (this.Data.length > 20) {
             this.Data = this.Data;
-          }else{
-               this.Data = this.Data[0];
+          } else {
+            this.Data = this.Data[0];
           }
         }
-        if(this.Data != name ){
-              this.$vux.toast.text("请选择排量");
-               return;
+        if (this.Data != name) {
+          this.$vux.toast.text("请选择排量");
+          return;
 
         }
 
@@ -377,7 +374,7 @@
           this.headTitle = '';
         }
         //透明度
-        if (this.scroll <= 200 && this.scroll >60){
+        if (this.scroll <= 200 && this.scroll > 60) {
           this.opacity = 0.9 - ((this.scroll - 60) / 20 * 0.1);
         } else if (this.scroll > 200 && this.scroll < 360) {
           this.opacity = 1 - ((360 - this.scroll) / 20 * 0.1);
@@ -488,7 +485,7 @@
       window.addEventListener('scroll', this.menu);
       this.currentUrl = window.location.href;
     },
-    destroyed(){
+    destroyed() {
       window.removeEventListener('scroll', this.menu)
     },
 
