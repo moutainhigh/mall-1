@@ -736,3 +736,11 @@ INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `R
 INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('13', 'SHARE_ICON', 'http://test.resource.999shuijingqiu.com/Firq1iyRsRVaVD4nxDfLlBexjoA5', '1', '');
 INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('14', 'SHARE_DESCRIPTION', '邀请您注册云信，成为尊贵的云信会员，体验休闲经济带来美好生活！', '0', '');
 INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('15', 'SHARE_SHORTMESSAGE_CONTENT', '邀请您注册云信，成为尊贵的云信会员，体验休闲经济带来美好生活！', '0', '');
+
+
+update insurance_product set INSURE_PERIOD='TEN_YEAR' where INSURE_PERIOD='10年';
+update insurance_product set INSURE_PERIOD='TWENTY_YEAR' where INSURE_PERIOD='20年';
+update insurance_product set INSURE_PERIOD='LIFITIME' where INSURE_PERIOD='终身';
+update insurance_product set PROTECTION_YEAR='TEN_YEAR' where PROTECTION_YEAR='10年';
+update insurance_product set PROTECTION_YEAR='TWENTY_YEAR' where PROTECTION_YEAR='20年';
+update insurance_product set PROTECTION_YEAR='LIFITIME' where PROTECTION_YEAR='终身';
