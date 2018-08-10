@@ -228,7 +228,7 @@
                                     });
                                 });
                             });
-                            $(document).ready(function () {
+                            function Editor(){
                                 KindEditor.ready(function (K) {
                                     window.editor = K.create('#editorContent', {
                                         uploadJson: '../upload/fileUpload.do',
@@ -242,25 +242,24 @@
                                         }
                                     });
                                 });
+                            }
 
+                            function show(){
                                 var isPicture=${profile.isPicture};
                                 if(isPicture==1){
-                                    // $('#fileValeDiv').hide();
-                                    // $('#fileValeImg').show();
+                                    $('#fileValeDiv').hide();
+                                    $('#fileValeImg').show();
                                     $('#fileValue').attr("readonly",true);
                                 }
+                            }
+
+                            $(document).ready(function () {
+                                Editor();
+                                setTimeout("show()","10");
                             });
                         </script>
                         <div class="spacer-10"></div>
-                        <div id="fileValeDiv" class="row">
-                            <div class="col-sm-2">
-                                <label>参数值：<span class="asterisk">*</span></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <form:textarea  cssClass="form-control" id="editorContent" path="fileValue" cssStyle="height:500px;"></form:textarea>
-                            </div>
-                        </div>
-                        <div id="fileValeImg" class="row" style="display: none;">
+                        <div id="fileValeImg" class="row">
                             <div class="col-sm-2">
                                 <label>参数值：<span class="asterisk">*</span></label>
                             </div>
@@ -271,6 +270,15 @@
                                        style="display: none"/>
                             </div>
                         </div>
+                        <div id="fileValeDiv" class="row">
+                            <div class="col-sm-2">
+                                <label>参数值：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <form:textarea  cssClass="form-control" id="editorContent" path="fileValue" cssStyle="height:500px;"></form:textarea>
+                            </div>
+                        </div>
+
                         <div class="spacer-10"></div>
                         <div  class="row">
                             <div class="col-sm-2">
