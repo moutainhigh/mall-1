@@ -409,27 +409,15 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Customer> findCustomerByLevelCode(String levelCode) {
         final int indexSize = 4;
-        return new ArrayList<Customer>() {
-            {
-                if (StringUtils.isNotBlank(levelCode)) {
-                    Customer customer = getByLevelCode(levelCode);
-                    if (customer != null) {
-                        int level = customer.getCustomerLevel();
-                        for (int i = 1; i < level; i++) {
-                            if (levelCode.length() - (i * indexSize) > 0) {
-                                Customer customers = getByLevelCode(levelCode.substring(0, levelCode.length() - (i * indexSize)));
-                                add(customers);
-                            }
-
-                        }
-                    }
-
-                }
-            }
-        };
-
+        List<String> levelCodes = new ArrayList<>();
+        int level = levelCode.length()/indexSize;
+        for(int i=0;i<level-1;i++){
+            levelCodes.add(levelCode.substring(0, (i+1)*indexSize));
+        }
+        return customerDao.findByLevelCodeIn(levelCodes);
     }
 
     /**
@@ -739,7 +727,6 @@ public class CustomerService implements ICustomerService {
      * @return
      */
     @Override
-    @Transactional
     public boolean customerPraise(int customerId) {
         Customer customer = customerDao.findOne(customerId);
         /**
@@ -763,7 +750,7 @@ public class CustomerService implements ICustomerService {
             }
             if (listCustomer != null && listCustomer.size() > 0) {
                 for (Customer listCustome : listCustomer)
-                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getInsuranceProductPrice().getPrice());
+                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getPrice());
 
             }
 
