@@ -723,3 +723,5 @@ CREATE TABLE `finacial_log` (
 
 ALTER TABLE `finacial_log` ADD  COLUMN `TITLE` varchar(100) NOT NULL COMMENT '标题';
 ALTER TABLE `finacial_log` ADD  COLUMN `IMAGE` varchar(100) COMMENT '图片';
+##加入账单表的创建日期索引
+ALTER TABLE `finacial_log` ADD INDEX index_time ( `CREATE_TIME` );
