@@ -10,7 +10,7 @@ spring:
      database: 0
      host: 172.18.59.156
      port: 6321
-     password:redis_p@ssw0rd
+     password: redis_p@ssw0rd
      timeout: 0
      pool:
          max-active: 8
