@@ -47,7 +47,6 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         ProductReturn nReturn = new ProductReturn();
         BeanUtils.copyProperties(productReturn, nReturn);
         nReturn.setReturnCode(UUIDGeneratorUtil.getUUCode());
-        nReturn.setItemId(productReturn.getItemId());
         nReturn.setApplyTime(new Date());
         nReturn.setPurchasingTime(order.getCreateTime());
         nReturn.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
@@ -55,18 +54,12 @@ public class ProductReturnServiceImpl implements ProductReturnService {
         nReturn.setRefundOnly(true);
         nReturn.setReceivedBuyerProduct(false);
         nReturn.setReceivedSellerProduct(false);
-        //更新库存（是否需要）
+
         Set<OrderItem> orderItems = order.getOrderItems();
         if (orderItems != null && !orderItems.isEmpty()) {
             for (OrderItem orderItem : orderItems) {
-                if (orderItem.getItemId() == productReturn.getItemId()) {
-//                    //更新库存
-//                    Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
-//                    //增加库存
-//                    product.setStoreNum(product.getStoreNum() + orderItem.getProductNum());
-//                    productMapper.updateByPrimaryKey(product);
-                    nReturn.setRefundPrice(Double.valueOf(orderItem.getOrderItemPrice()));
-                }
+                nReturn.setItemId(orderItem.getItemId());
+                nReturn.setRefundPrice(Double.valueOf(orderItem.getOrderItemPrice()));
             }
         }
         //更新订单状态
