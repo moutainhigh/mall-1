@@ -726,7 +726,7 @@ ALTER TABLE `finacial_log` ADD  COLUMN `IMAGE` varchar(100) COMMENT '图片';
 ##加入账单表的创建日期索引
 ALTER TABLE `finacial_log` ADD INDEX index_time ( `CREATE_TIME` );
 
-#add  by tangou 2018-8-10 加入借款表
+#add  by guwenshao 2018-8-10 加入借款表
 ALTER TABLE `finacial_loan` add  `INSURANCE_AMOUNT` decimal(20,4) NOT NULL COMMENT '贷款保险额度金额';
 ALTER TABLE `finacial_loan` add  `CREDIT_AMOUNT` decimal(20,4) NOT NULL COMMENT '贷款信用额度金额';
 
