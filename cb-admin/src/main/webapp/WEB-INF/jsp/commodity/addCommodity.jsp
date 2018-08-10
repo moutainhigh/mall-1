@@ -10,6 +10,8 @@
     <title>新增商品</title>
     <script charset="utf-8" src="../editor/kindeditor-all-min.js"></script>
     <script charset="utf-8" src="../editor/lang/zh_CN.js"></script>
+    <%--后台页面共用的js--%>
+    <script src="../js/common/fixed_common.js"></script>
     <script type="application/javascript">
 
         var curStep = 0;
@@ -195,16 +197,31 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
+                                <label><span class="asterisk"></span> 分类比例配置：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input type="text" cssClass="form-control"  path="catalog.ratio" id="catalogRatio" readonly="true" maxlength="12"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><span class="asterisk"></span> 商品比例配置：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input type="text" cssClass="form-control validate[custom[gtOne]]" path="ratio" onkeyup="salePrice_f();" placeholder="商品比例配置不填,则取分类比例配置" maxlength="12" />
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 成本价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="costPrice" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 销售价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="sellPrice" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="sellPrice" readonly="true" placeholder="销售价等于成本价乘以比例配置"  maxlength="12"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -541,6 +558,7 @@
         <script type="application/javascript">
             var catalogId = 0;
             var catalogName = "";
+            var RATIO = 1;//分类比例配置
             $('#catalogNameBtn').click(function (e) {
                 $('#catalogDialog').modal();
                 e.preventDefault();
@@ -550,12 +568,15 @@
                 var data = $('#treeview').data('kendoTreeView').dataItem(e.node);
                 catalogId = data.id;
                 catalogName = data.text;
+                RATIO = data.ratio;
             }
 
             function chooseCatalog() {
                 $('#catalogDialog').modal("hide");
                 $("#catalogId").val(catalogId);
                 $("#catalogName").val(catalogName);
+                $("#catalogRatio").val(RATIO);
+                salePrice_f();//设置销售价
                 loadSpecs(catalogId);
             }
         </script>
