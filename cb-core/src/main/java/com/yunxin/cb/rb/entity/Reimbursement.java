@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,23 +44,34 @@ public class Reimbursement  implements java.io.Serializable {
     private Customer customer;
 
     @ApiModelProperty(value="报账总金额",name="amount",example="88888")
-    private Double amount;
+    private BigDecimal amount;
 
     @ApiModelProperty(value="税",name="tax",example="2000")
-    private Double tax;
-
+    private BigDecimal tax;
+    @ApiModelProperty(value="税率",name="taxRate",example="0.23")
+    private BigDecimal taxRate;
     @ApiModelProperty(value="报账订单总金额",name="orderAmount",example="188888")
-    private Double orderAmount;
+    private BigDecimal orderAmount;
+
+    @ApiModelProperty(value="分类",name="catalogId",example="1")
+    private int catalogId;
 
     @ApiModelProperty(value="创建时间",name="createTime",example="2018-07-28")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
+
     @ApiModelProperty(value="状态",name="orderState",example="")
     private ReimbursementType orderState;
+
     @ApiModelProperty(value="还款金额",name="repaymentAmount",example="100")
     private Double repaymentAmount;
+
     @ApiModelProperty(value="还款方式",name="repaymentType",example="")
     private RepaymentType repaymentType;
+    @ApiModelProperty(value="系统分析",name="repaymentType",example="资金池不足，不可报账")
+    private String fundsPoolRemark;
+    @ApiModelProperty(value="报账订单",name="orderCodes",example="15465465")
+    private String orderCodes;
     private List<ReimbursementProcess> reimbursementProcess=new ArrayList<>();
 
     @ApiModelProperty(value="报账订单",name="reimbursementOrder",example="")
@@ -96,27 +108,27 @@ public class Reimbursement  implements java.io.Serializable {
         this.customer = customer;
     }
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 22)
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 22)
-    public Double getTax() {
+    public BigDecimal getTax() {
         return tax;
     }
 
-    public void setTax(Double tax) {
+    public void setTax(BigDecimal tax) {
         this.tax = tax;
     }
     @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 22)
-    public Double getOrderAmount() {
+    public BigDecimal getOrderAmount() {
         return orderAmount;
     }
 
-    public void setOrderAmount(Double orderAmount) {
+    public void setOrderAmount(BigDecimal orderAmount) {
         this.orderAmount = orderAmount;
     }
 
@@ -151,6 +163,7 @@ public class Reimbursement  implements java.io.Serializable {
         this.orderState = orderState;
     }
 
+    @JsonIgnore
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "reimbursement")
     public List<ReimbursementProcess> getReimbursementProcess() {
         return reimbursementProcess;
@@ -175,5 +188,38 @@ public class Reimbursement  implements java.io.Serializable {
 
     public void setRepaymentType(RepaymentType repaymentType) {
         this.repaymentType = repaymentType;
+    }
+    @Column(nullable = false, length = 32)
+    public int getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(int catalogId) {
+        this.catalogId = catalogId;
+    }
+
+    @Column(nullable = false, length = 32)
+    public BigDecimal getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
+    }
+    @Transient
+    public String getFundsPoolRemark() {
+        return fundsPoolRemark;
+    }
+
+    public void setFundsPoolRemark(String fundsPoolRemark) {
+        this.fundsPoolRemark = fundsPoolRemark;
+    }
+    @Transient
+    public String getOrderCodes() {
+        return orderCodes;
+    }
+
+    public void setOrderCodes(String orderCodes) {
+        this.orderCodes = orderCodes;
     }
 }

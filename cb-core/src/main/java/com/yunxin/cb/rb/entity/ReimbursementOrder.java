@@ -28,6 +28,9 @@ public class ReimbursementOrder implements java.io.Serializable {
     private BigDecimal amount;
     private BigDecimal tax;
     private BigDecimal productPrice;
+    private String imgPath;
+    private String productName;
+    private String orderCode;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
     @Id
@@ -101,5 +104,29 @@ public class ReimbursementOrder implements java.io.Serializable {
 
     public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
+    }
+    @Transient
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+    @Transient
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+    @Transient
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
     }
 }

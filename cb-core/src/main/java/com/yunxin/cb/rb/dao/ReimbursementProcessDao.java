@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReimbursementProcessDao  extends JpaRepository<ReimbursementProcess, Integer>, JpaSpecificationExecutor<ReimbursementProcess> {
 
-    @Query("select c from ReimbursementProcess c left join fetch c.reimbursement d where d.reimbursementId=?1 order by c.createTime desc ")
+    @Query("select c from ReimbursementProcess c left join fetch c.user d where c.reimbursement.reimbursementId=?1 order by c.createTime asc ")
     public List<ReimbursementProcess> getReimbursementProcessByRe(int reimbursementId);
 
 }

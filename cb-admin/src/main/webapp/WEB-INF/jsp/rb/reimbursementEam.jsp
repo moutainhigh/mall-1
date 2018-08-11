@@ -169,19 +169,6 @@
                                        class="form-control grid-filter" placeholder="请输入手机号码"/>
                             </div>
 
-                            <div class="toolbar-field">
-                                <strong>状态:</strong>
-                            </div>
-                            <div class="toolbar-field">
-                                <select data-filter="orderState" id="payState" data-operator="eq"
-                                        class="form-control  grid-filter">
-                                    <option value="">全部</option>
-                                    <option value="FINANCE_IN_APPROVAL">财务员审批中</option>
-                                    <option value="DIRECTOR_IN_APPROVAL">财务主管审批中</option>
-                                    <option value="ALREADY_TO_ACCOUNT">已到账</option>
-                                    <option value="NOT_PASS_THROUGH">审批不通过</option>
-                                </select>
-                            </div>
 
                         </div>
                         <!-- End .pull-left -->
@@ -210,7 +197,7 @@
 
                             <div class="btn-group">
                                 <a href="javascript:void(0);" onclick="approval()" class="btn btn-default"><i
-                                        class="fa fa-info-circle"></i>&nbsp;查看</a>
+                                        class="fa fa-info-circle"></i>&nbsp;审批</a>
                             </div>
                         </div>
 
@@ -261,7 +248,7 @@
                                 </kendo:dataSource-schema-model>
                             </kendo:dataSource-schema>
                             <kendo:dataSource-transport>
-                                <kendo:dataSource-transport-read url="pageReimbursement.do?orderState=0" type="POST"
+                                <kendo:dataSource-transport-read url="pageReimbursement.do?orderState=2" type="POST"
                                                                  contentType="application/json"/>
                                 <kendo:dataSource-transport-parameterMap>
                                     <script>
@@ -444,6 +431,16 @@
                 }
 
                 $("#reimbursement").append("</div>");
+                $("#submitAudits").html("");
+                if(orderState=="FINANCE_IN_APPROVAL"||orderState=="DIRECTOR_IN_APPROVAL"){
+                    $("#reimbursement").append(  "<div class='ceilTitle' >审批意见：</div>\n" +
+                        "               <textarea name=\"remarks\" id=\"remarks\"  style='margin-top:10px;width:100%;height: 60px;border-color:#e7e5e5;' placeholder=\"请输入审批意见（必填）\"></textarea>");
+
+                    $("#submitAudits").append(" <button class=\"btn btn-success\" data-dismiss=\"modal\"  onclick=\"submitAudit(1);\">通过</button>\n" +
+                        "                <button class=\"btn btn-danger\" data-dismiss=\"modal\" onclick='submitAudit(2);'>不通过</button>\n" +
+                        "                <button class=\"btn btn-default\" data-dismiss=\"modal\">取消</button>");
+                }
+
 
             });
 
@@ -463,7 +460,7 @@
                 $('#auditDialog').modal("hide");
                 $("#grid").data("kendoGrid").dataSource.read();
             }else{
-                alert("审核失败！");
+                bootbox.alert("审核失败！");
             }
         });
     }

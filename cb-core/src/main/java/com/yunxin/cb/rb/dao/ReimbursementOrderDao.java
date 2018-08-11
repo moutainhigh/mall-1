@@ -23,4 +23,6 @@ public interface ReimbursementOrderDao  extends JpaRepository<ReimbursementOrder
     @Query("select sum(rro.amount) from ReimbursementOrder rro LEFT JOIN  rro.reimbursement rr  where rr.reimbursementId = ?1 ")
     BigDecimal getReimburseAmountByReimburseId(int reimbursementId);
 
+    @Query("select c from ReimbursementOrder c left join fetch c.orderItem f left join fetch c.reimbursement d where d.reimbursementId=?1 and f.itemId=?2")
+    public ReimbursementOrder getReimbursementOrderItem(int reimbursementId,int itemId);
 }
