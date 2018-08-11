@@ -502,9 +502,10 @@ public class OrderService implements IOrderService {
      */
     @Override
     public void completedOrders() {
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_WEEK ,-1);
-        orderDao.taskOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
+//        Calendar c = Calendar.getInstance();
+//        c.add(Calendar.DAY_OF_WEEK ,-1);
+//        orderDao.taskOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
+//        fundsPoolService.updateAndCountOrderAmout(order.getOrderId());
     }
 
     @Override
@@ -920,7 +921,6 @@ public class OrderService implements IOrderService {
             order.setPaymentTime(now);
             order.setUpdateTime(now);
             orderLog.setRemark("订单审核通过");
-            fundsPoolService.updateAndCountOrderAmout(order.getOrderId());
         } else if (auditState == AuditState.NOT_AUDIT) {
             order.setOrderState(OrderState.CANCELED);
             order.setCancelReason(auditRemark);
