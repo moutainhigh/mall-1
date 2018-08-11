@@ -103,7 +103,7 @@ public interface IOrderService {
     public OrderItem getOrderItemById(int itemId);
 
     /**
-     * 待付款订单超过24H未支付 则将其状态设为已取消
+     * 待付款订单超过6H未支付 则将其状态设为已取消
      */
     public void cancelTimeOutOrders();
 

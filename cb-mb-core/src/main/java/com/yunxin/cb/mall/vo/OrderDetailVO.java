@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yunxin.cb.config.OrderConfig;
 import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
@@ -179,7 +180,7 @@ public class OrderDetailVO implements java.io.Serializable{
 
     public Long getPayOvertimeTime() {
         payOvertimeTime = DateUtils.differenceDate(new Date(), createTime);
-        long time = 60*60*1000;//60分钟
+        long time = OrderConfig.ORDER_OVER_TIME.getTime() * 60 * 60 * 1000;//60分钟
         if (payOvertimeTime > time) { //大于60分钟
             payOvertimeTime = 0l;
         } else {

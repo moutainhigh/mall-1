@@ -289,7 +289,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int updateOrderStatusTimeOut(Integer orderId, String orderCode, Integer customerId) throws Exception {
-        int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.TIMEOUT, null);
+        int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.CANCELED, null);
         //添加订单日志
         if (count > 0) {
             orderLogMapper.insert(new OrderLog(String.valueOf(customerId),orderCode,"订单超时"));
