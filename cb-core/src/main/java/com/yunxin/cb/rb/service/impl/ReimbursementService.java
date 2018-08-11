@@ -71,7 +71,6 @@ public class ReimbursementService implements IReimbursementService {
 
                 query.orderBy(builder.asc(root.get(Reimbursement_.createTime)));
 
-//                query.where(builder.equal(root.get(Reimbursement_.orderState),"FINANCE_IN_APPROVAL"));
             }
         });
         Page<Reimbursement> page=reimbursementDao.findAll(query,query.getPageRequest());
