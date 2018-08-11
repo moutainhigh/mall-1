@@ -3,6 +3,7 @@
  */
 package com.yunxin.cb.mall.service.imp;
 
+import com.yunxin.cb.config.OrderConfig;
 import com.yunxin.cb.mall.dao.*;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.Order;
@@ -480,7 +481,7 @@ public class OrderService implements IOrderService {
     @Override
     public void cancelTimeOutOrders() {
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.HOUR_OF_DAY, -24);
+        c.add(Calendar.HOUR_OF_DAY, -OrderConfig.ORDER_COMPLETE_TIME.getTime());
         orderDao.cancelTimeOutOrders(OrderState.PENDING_PAYMENT, c.getTime());
     }
 
@@ -490,7 +491,7 @@ public class OrderService implements IOrderService {
     @Override
     public void confirmReceivedOrders() {
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_WEEK ,-1);
+        c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_RECEIVED_TIME.getTime());
         orderDao.taskOrders(OrderState.RECEIVED, OrderState.OUT_STOCK, c.getTime());
     }
 
@@ -500,7 +501,7 @@ public class OrderService implements IOrderService {
     @Override
     public void completedOrders() {
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_WEEK ,-1);
+        c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
         orderDao.taskOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
     }
 
