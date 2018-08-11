@@ -12,6 +12,7 @@ import com.yunxin.cb.mall.exception.ProductBarterException;
 import com.yunxin.cb.mall.exception.ProductReturnException;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.ConfirmOrder;
+import com.yunxin.cb.rb.service.IFundsPoolService;
 import com.yunxin.cb.util.CalculateHelper;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.core.exception.EntityExistException;
@@ -108,6 +109,8 @@ public class OrderService implements IOrderService {
     private CustomerWalletDao customerWalletDao;
     @Resource
     private OrdersLogDao orderLogDao;
+    @Resource
+    private IFundsPoolService fundsPoolService;
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -917,6 +920,7 @@ public class OrderService implements IOrderService {
             order.setPaymentTime(now);
             order.setUpdateTime(now);
             orderLog.setRemark("订单审核通过");
+            fundsPoolService.updateAndCountOrderAmout(order.getOrderId());
         } else if (auditState == AuditState.NOT_AUDIT) {
             order.setOrderState(OrderState.CANCELED);
             order.setCancelReason(auditRemark);
