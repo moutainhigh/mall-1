@@ -13,11 +13,13 @@ import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
 import com.yunxin.cb.mall.vo.FinacialWalletVO;
 import com.yunxin.cb.util.CalendarUtils;
+import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -164,5 +166,25 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
         finacialLoan.setStateList(list);
         q.setData(finacialLoan);
         return finacialLoanMapper.count(q);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public PageFinder<FinacialLoan> page(Query q) {
+        try {
+            //调用dao查询满足条件的分页数据
+            List<FinacialLoan> list = finacialLoanMapper.pageList(q);
+            //调用dao统计满足条件的记录总数
+            long rowCount = finacialLoanMapper.count(q);
+            //如list为null时，则改为返回一个空列表
+            list = list == null ? new ArrayList<FinacialLoan>(0) : list;
+            //将分页数据和记录总数设置到分页结果对象中
+            PageFinder<FinacialLoan> page = new PageFinder<FinacialLoan>(q.getPageNo(), q.getPageSize(), rowCount);
+            page.setData(list);
+            return page;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
     }
 }
