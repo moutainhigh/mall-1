@@ -38,6 +38,13 @@ public interface OrderItemDao extends JpaRepository<OrderItem, Integer>, JpaSpec
     @Query("select od from OrderItem od left join fetch od.order o left join fetch od.activity ac where o.orderCode=?2 and od.product.productId=?1")
     OrderItem getOdByProIdAndOrderCode(int productId, String orderCode);
 
-
+    /**
+     * @Description:       根据主订单号Id查询所有相关明细
+     * @author: lxc
+     * @param orderId      主订单号Id
+     * @Return java.util.List<com.yunxin.cb.mall.entity.OrderItem>:
+     * @DateTime: 2018/8/10 19:24
+     */
+    List<OrderItem> findOrderItemsByOrder_OrderId(int orderId);
 }
 
