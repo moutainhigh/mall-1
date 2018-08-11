@@ -12,6 +12,7 @@ import com.yunxin.cb.mall.exception.ProductBarterException;
 import com.yunxin.cb.mall.exception.ProductReturnException;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.ConfirmOrder;
+import com.yunxin.cb.rb.service.IFundsPoolService;
 import com.yunxin.cb.util.CalculateHelper;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.core.exception.EntityExistException;
@@ -108,6 +109,8 @@ public class OrderService implements IOrderService {
     private CustomerWalletDao customerWalletDao;
     @Resource
     private OrdersLogDao orderLogDao;
+    @Resource
+    private IFundsPoolService fundsPoolService;
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -499,9 +502,10 @@ public class OrderService implements IOrderService {
      */
     @Override
     public void completedOrders() {
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_WEEK ,-1);
-        orderDao.taskOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
+//        Calendar c = Calendar.getInstance();
+//        c.add(Calendar.DAY_OF_WEEK ,-1);
+//        orderDao.taskOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
+//        fundsPoolService.updateAndCountOrderAmout(order.getOrderId());
     }
 
     @Override
