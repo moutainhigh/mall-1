@@ -3,6 +3,8 @@ package com.yunxin.cb.rest.rb;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.FinacialLoanConfig;
+import com.yunxin.cb.mall.entity.Profile;
+import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.meta.Result;
@@ -45,6 +47,9 @@ public class FinacialCreditAmountResource extends BaseResource {
 
     @Resource
     private FinacialLoanConfigService finacialLoanConfigService;
+
+    @Resource
+    private ProfileService profileService;
 
 
     @ApiOperation(value = "信用额度信息")
@@ -121,12 +126,17 @@ public class FinacialCreditAmountResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE, "您的可贷金额不足");
             }
             //判断是否超过最多次数
-            int maxCount = 5;
-            // 查询审核通过的我的借款次数
-            int count = finacialLoanService.countByCustomerId(getCustomerId());
-            if (count >= 5) {
-                return new ResponseResult(Result.FAILURE, "您已经贷了"+maxCount+"次款了，不能再贷了");
+            Profile profile = profileService.getProfileByName(ProfileState.MAX_LOAN_NUM.name());
+
+            if (profile != null) {
+                int maxCount = Integer.valueOf(profile.getFileValue());
+                // 查询审核通过的我的借款次数
+                int count = finacialLoanService.countByCustomerId(getCustomerId());
+                if (count >= maxCount) {
+                    return new ResponseResult(Result.FAILURE, "您已经贷了"+maxCount+"次款了，不能再贷了");
+                }
             }
+
 
             //计算贷款金额数据
             FinacialLoanConfig finacialLoanConfig = finacialLoanConfigService.getFinacilaLoanConfigById(finacialLoanVO.getLoanConfigId());
