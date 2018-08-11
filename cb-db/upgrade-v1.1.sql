@@ -726,7 +726,7 @@ ALTER TABLE `finacial_log` ADD  COLUMN `IMAGE` varchar(100) COMMENT '图片';
 ##加入账单表的创建日期索引
 ALTER TABLE `finacial_log` ADD INDEX index_time ( `CREATE_TIME` );
 
-#add  by guwenshao 2018-8-10 加入借款表
+##add  by guwenshao 2018-8-10 加入借款表
 ALTER TABLE `finacial_loan` add  `INSURANCE_AMOUNT` decimal(20,4) NOT NULL COMMENT '贷款保险额度金额';
 ALTER TABLE `finacial_loan` add  `CREDIT_AMOUNT` decimal(20,4) NOT NULL COMMENT '贷款信用额度金额';
 
@@ -748,5 +748,8 @@ update insurance_product set PROTECTION_YEAR='LIFITIME' where PROTECTION_YEAR='�
 ALTER TABLE `crystal_ball`.`rb_funds_pool_log`
 ADD COLUMN `ITEM_ID` int(11) NULL COMMENT '订单详情ID/报账详情ID' AFTER `TRANSACTION_ID`;
 
-#add  by guwenshao 2018-8-10
+##add  by guwenshao 2018-8-10
 ALTER TABLE `order_item` add `COST_PRICE` float NOT NULL COMMENT '成本价';
+
+##add  by guwenshao 2018-8-11
+INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('MAX_LOAN_NUM', '5', '0', '最多借款次数');

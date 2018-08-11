@@ -72,6 +72,9 @@
                 case "TAX_RATE":{
                     return "税率";
                 }
+                case "MAX_LOAN_NUM":{
+                    return "最多借款次数";
+                }
             }
             return state;
         }
