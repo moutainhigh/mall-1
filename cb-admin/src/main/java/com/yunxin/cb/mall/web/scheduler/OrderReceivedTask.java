@@ -3,7 +3,6 @@ package com.yunxin.cb.mall.web.scheduler;
 import com.yunxin.cb.mall.service.IOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -19,7 +18,7 @@ public class OrderReceivedTask {
     @Resource
     private IOrderService orderService;
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    //@Scheduled(cron = "0 0 0 * * ?")
     public void orderReceived(){
         logger.info("orderReceived start");
         orderService.confirmReceivedOrders();
