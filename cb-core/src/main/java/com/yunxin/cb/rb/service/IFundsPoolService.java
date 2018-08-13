@@ -78,15 +78,14 @@ public interface IFundsPoolService {
     /**
      * @Description:            更新资金池funds金额时,同时需要向FundsPoolLog表插一条数据
      * @author: lxc
-     * @param amount            操作金额    (如果无商品金额，则转null)
-     * @param productId         货品id
-     * @param transactionId     交易ID,累计为订单号，报帐为报帐ID
-     * @param itemId            类型为1为订单详情ID/类型为2为报账详情ID
+     * @param fundsPool         资金池对象
+     * @param amount            操作金额
      * @param type              类型：1.累计，2.报账
+     * @param fundsPoolLogs
      * @Return boolean:
      * @DateTime: 2018/8/8 19:54
      */
-    boolean updateFundsAndSaveFundsPoolLog(BigDecimal amount,int productId,int transactionId,int itemId,int type);
+    boolean updateFundsAndSaveFundsPoolLog(FundsPool fundsPool,BigDecimal amount,int type,List<FundsPoolLog> fundsPoolLogs);
 
     /**
      * @Description:                根据报账id号查询报账明细并且更新资金池(后台审核报账通过使用，对资金池作减操作)
