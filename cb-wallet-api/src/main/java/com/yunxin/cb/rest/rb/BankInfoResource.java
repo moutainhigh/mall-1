@@ -62,6 +62,11 @@ public class BankInfoResource extends BaseResource {
             if(LogicUtils.isNotNullAndEmpty(result)){
                 JSONObject jsonObject= JSON.parseObject(result);
                 String respCode=String.valueOf(jsonObject.get("respCode"));
+                String bankType=String.valueOf(jsonObject.get("bankType"));
+                if(bankType.equals("信用卡")){
+                    responseResult.setData("暂不支持信用卡，请更换储蓄卡!");
+                    return responseResult;
+                }
                 responseResult.setData(String.valueOf(jsonObject.get("respMessage")));
                 if(respCode.equals("0000")){
                     //验证通过，返回银行名称
