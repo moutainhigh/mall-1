@@ -68,22 +68,7 @@ public class FinacialWalletService implements IFinaciaWalletService {
             finacialWalletDao.save(fw);
             logger.info("addFinaciaWallet sucess");
         }else{
-            FinacialWallet oldfw = finacialWalletDao.findOne(fw.getWalletId());
-            fw.setVersion(fw.getVersion()+1);
-            /**钱包:更新钱包信息*/
-            AttributeReplication.copying(fw, oldfw, FinacialWallet_.assets, FinacialWallet_.balance,FinacialWallet_.creditAmount,
-                    FinacialWallet_.debtCredit,FinacialWallet_.debtExpected,FinacialWallet_.debtTotal,FinacialWallet_.expectedAmount,
-                    FinacialWallet_.freezingAmount,FinacialWallet_.insuranceAmount,FinacialWallet_.totalAmount,
-                    FinacialWallet_.version);
-            FinacialWalletLog flog = new FinacialWalletLog();
-            BeanUtils.copyProperties(fw,flog);
-            flog.setFinacialWallet(fw);
-            flog.setWalletLogId(null);
-            flog.setType(0);
-            flog.setAmount(amount);
-            /**钱包:保存钱包日志记录*/
-            finacialWalletLogDao.save(flog);
-            logger.info("updateFinaciaWallet sucess");
+            updateFinacialWallet(fw);
             FinacialExpectBill finacialExpectBill = new FinacialExpectBill();
             finacialExpectBill.setAmount(amount);
             finacialExpectBill.setCreateTime(new Date());
@@ -112,9 +97,33 @@ public class FinacialWalletService implements IFinaciaWalletService {
     }
 
 
+    /**
+     * 修改钱包信息
+     * @author      likang
+     * @param fw
+     * @return      com.yunxin.cb.mall.entity.FinacialWallet
+     * @exception
+     * @date        2018/8/13 11:34
+     */
     @Override
     public FinacialWallet updateFinacialWallet(FinacialWallet fw){
-        return null;
+        FinacialWallet oldfw = finacialWalletDao.findOne(fw.getWalletId());
+        fw.setVersion(fw.getVersion()+1);
+        /**钱包:更新钱包信息*/
+        AttributeReplication.copying(fw, oldfw, FinacialWallet_.assets, FinacialWallet_.balance,FinacialWallet_.creditAmount,
+                FinacialWallet_.debtCredit,FinacialWallet_.debtExpected,FinacialWallet_.debtTotal,FinacialWallet_.expectedAmount,
+                FinacialWallet_.freezingAmount,FinacialWallet_.insuranceAmount,FinacialWallet_.totalAmount,
+                FinacialWallet_.version);
+        FinacialWalletLog flog = new FinacialWalletLog();
+        BeanUtils.copyProperties(fw,flog);
+        flog.setFinacialWallet(fw);
+        flog.setWalletLogId(null);
+        flog.setType(0);
+        flog.setAmount(new BigDecimal(0));
+        /**钱包:保存钱包日志记录*/
+        finacialWalletLogDao.save(flog);
+        logger.info("updateFinaciaWallet sucess");
+        return fw;
     }
 
     @Override
