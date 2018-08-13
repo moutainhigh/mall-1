@@ -49,9 +49,10 @@ public class OrderServiceImpl implements OrderService {
     private DeliveryAddressMapper deliveryAddressMapper;
     @Resource
     private CommodityService commodityService;
-
     @Resource
     private ProductMapper productMapper;
+    @Resource
+    private CustomerMapper customerMapper;
 
     /***
      * 获取预下单数据（订单确认页数据）
@@ -67,7 +68,10 @@ public class OrderServiceImpl implements OrderService {
         //根据货品id查询货品（审核通过且上架货品）
         Product product = productMapper.selectProductById(productId, ProductState.AUDITED.ordinal(), PublishState.UP_SHELVES.ordinal());
         //判断货品是否存在，且库存足够
-        if (product == null || product.getStoreNum() <= 0) {
+        if (product == null) {
+            throw new CommonException("货品未上架或者不存在");
+        }
+        if (product.getStoreNum() <= 0) {
             //库存不足
             throw new CommonException("库存不足");
         }
@@ -75,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
         TempOrderVO tempOrderVO = new TempOrderVO();
         CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
         if (commodityVo == null) {
-            return null;
+            throw new CommonException("商品不存在");
         }
         //商品信息
         BeanUtils.copyProperties(tempOrderVO, commodityVo);
@@ -146,6 +150,7 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setProductImg(product.getDefaultPicPath());
                 orderItem.setEvaluate(false);
                 orderItem.setCreateTime(createTime);
+                orderItem.setCostPrice(product.getCostPrice());
                 //减少库存
                 product.setStoreNum(product.getStoreNum() - productNum);
                 int reservedStoreNum = product.getReservedStoreNum() == null ? 0  : product.getReservedStoreNum();
@@ -157,18 +162,11 @@ public class OrderServiceImpl implements OrderService {
         //支付方式
         if (order.getPaymentType()== PaymentType.LOAN) {
             order.setAuditState(AuditState.WAIT_AUDIT);
-//            CustomerWallet customerWallet = customerWalletMapper.selectByCustomerId(order.getCustomerId());
-//            if (customerWallet != null) {
-//                double expectedReturnAmount = customerWallet.getExpectedReturnAmount() == null ? 0 : customerWallet.getExpectedReturnAmount();
-//                double loanQuota = customerWallet.getLoanQuota() == null ? 0 : customerWallet.getLoanQuota();
-//                //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
-//                if (expectedReturnAmount + loanQuota < totalPrice){
-//                    throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
-//                }
-//                //在后台审核贷款申请通过是减少，优先减收益在减额度
-//            } else {
-//                throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
-//            }
+            //是否需要判断买过保单用户才能购买商品
+            Customer customer = customerMapper.selectByPrimaryKey(order.getCustomerId());
+            if (customer.getPolicy() != 2) { //policy==2才算买过保单
+                throw new CommonException("请先买保单后再购买商品");
+            }
         } else {
             order.setAuditState(AuditState.AUDITED);
         }
@@ -201,12 +199,7 @@ public class OrderServiceImpl implements OrderService {
             orderInvoiceMapper.insert(order.getOrderInvoice());
         }
         //添加订单日志
-        OrderLog orderLog = new OrderLog();
-        orderLog.setTime(createTime);
-        orderLog.setOrderCode(order.getOrderCode());
-        orderLog.setHandler(String.valueOf(order.getCustomerId()));
-        orderLog.setRemark("订单确认");
-        orderLogMapper.insert(orderLog);
+        orderLogMapper.insert(new OrderLog(String.valueOf(order.getCustomerId()),order.getOrderCode(),"订单确认"));
         return order;
     }
 
@@ -265,12 +258,7 @@ public class OrderServiceImpl implements OrderService {
             orderDb.setOrderState(OrderState.CANCELED);
             orderMapper.updateByPrimaryKey(orderDb);
             //添加订单日志
-            OrderLog orderLog = new OrderLog();
-            orderLog.setTime(now);
-            orderLog.setOrderCode(orderDb.getOrderCode());
-            orderLog.setHandler(String.valueOf(orderDb.getCustomerId()));
-            orderLog.setRemark("订单取消");
-            orderLogMapper.insert(orderLog);
+            orderLogMapper.insert(new OrderLog(String.valueOf(orderDb.getCustomerId()),orderDb.getOrderCode(),"订单取消"));
         } else {
             throw new CommonException("该订单不可取消");
         }
@@ -287,17 +275,23 @@ public class OrderServiceImpl implements OrderService {
             int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED, DeliveryState.RECEIVED);
             //添加订单日志
             if (count > 0) {
-                OrderLog orderLog = new OrderLog();
-                orderLog.setTime(new Date());
-                orderLog.setOrderCode(orderDb.getOrderCode());
-                orderLog.setHandler(String.valueOf(customerId));
-                orderLog.setRemark("买家确认收货");
+                OrderLog orderLog = new OrderLog(String.valueOf(customerId),orderDb.getOrderCode(),"买家确认收货");
                 orderLogMapper.insert(orderLog);
             }
             return count;
         } else {
             throw new CommonException("该订单暂不可确认收货");
         }
+    }
+
+    @Override
+    public int updateOrderStatusTimeOut(Integer orderId, String orderCode, Integer customerId) throws Exception {
+        int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.CANCELED, null);
+        //添加订单日志
+        if (count > 0) {
+            orderLogMapper.insert(new OrderLog(String.valueOf(customerId),orderCode,"订单超时"));
+        }
+        return count;
     }
 
     private void defaultValue(Order order) {

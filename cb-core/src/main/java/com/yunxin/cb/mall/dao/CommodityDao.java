@@ -34,6 +34,9 @@ public interface CommodityDao extends CommodityPlusDao, JpaRepository<Commodity,
     @Query("update Commodity c set c.commodityState = ?2,c.auditRemark=?3 where c.commodityId=?1")
     public void commodityAudit(int commodityId, CommodityState commodityState, String auditRemark);
 
+    @Query("select c from Commodity c left join fetch c.defaultProduct  where c.commodityId=?1")
+    public Commodity findDefaultProductById(int commodityId);
+
     //    @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
     @Query("select c from Commodity c left join fetch c.brand left join fetch c.catalog left join fetch c.priceSection left join fetch c.seller left join fetch c.logisticPrices left join fetch c.defaultProduct where c.commodityId=?1")
     public Commodity getCommodityDetailById(int commodityId);
@@ -130,6 +133,15 @@ public interface CommodityDao extends CommodityPlusDao, JpaRepository<Commodity,
 
     @Query("select c from Commodity c left join fetch c.seller where c.commodityCode in ?1")
     public List<Commodity> getCommoditySellerByCommodityCode(List<String> commodityCodes);
+
+    /**
+     * @Description:        根据分类id查找商品集合
+     * @author: lxc
+     * @param catalog       分类id
+     * @Return java.util.List<com.yunxin.cb.mall.entity.Commodity>:
+     * @DateTime: 2018/8/9 18:17
+     */
+    List<Commodity> findCommoditiesByCatalog(Catalog catalog);
 }
 
 interface CommodityPlusDao {

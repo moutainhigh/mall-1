@@ -12,6 +12,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -83,6 +84,9 @@ public class Catalog implements java.io.Serializable {
     private List<CatalogAttributeGroup> catalogAttributeGroups = new ArrayList<CatalogAttributeGroup>();
 
     private Set<Spec> specs = new HashSet<>();
+
+    /** 分类比例配置 */
+    private BigDecimal ratio;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -208,6 +212,15 @@ public class Catalog implements java.io.Serializable {
         this.specs = specs;
     }
 
+    @Column(nullable = false, length = 20)
+    public BigDecimal getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(BigDecimal ratio) {
+        this.ratio = ratio;
+    }
+
     @Transient
     public Integer getParentCatalogId() {
         if (parentCatalog == null) {
@@ -221,6 +234,7 @@ public class Catalog implements java.io.Serializable {
         TreeViewItem catalog = new TreeViewItem();
         catalog.setId(String.valueOf(catalogId));
         catalog.setText(catalogName);
+        catalog.setRatio(ratio);
         return catalog;
     }
 }

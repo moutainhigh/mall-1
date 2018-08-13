@@ -63,7 +63,7 @@ public class WithdrawResource extends BaseResource {
             List<BankInfoVO> bankInfoVOs=bankInfoService.selectAll(getCustomerId());
             //查询后台配置提现手续费率
             BigDecimal freeRate=BigDecimal.ONE;
-            Profile profile=profileService.getProfileByName(ProfileState.FINACIAL_FREE_RATE.getName());
+            Profile profile=profileService.getProfileByName(ProfileState.FINACIAL_FREE_RATE.name());
             if(LogicUtils.isNotNull(profile)&&LogicUtils.isNotNullAndEmpty(profile.getFileValue())){
                 freeRate=BigDecimal.valueOf(Double.parseDouble(profile.getFileValue()));
             }

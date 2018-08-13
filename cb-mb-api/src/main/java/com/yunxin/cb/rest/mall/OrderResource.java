@@ -82,9 +82,6 @@ public class OrderResource extends BaseResource {
                 order.setOrderItems(orderItems);
             }
             Order result = orderService.createOrder(order);
-            if (result == null) {
-                return new ResponseResult(Result.FAILURE);
-            }
             return new ResponseResult(result.getOrderId());
         } catch (CommonException e) {
             logger.info("addOrder failed", e);
@@ -128,6 +125,12 @@ public class OrderResource extends BaseResource {
             Order model = orderService.getByOrderIdAndCustomerId(orderId, getCustomerId());
             if (model != null) {
                 orderDetailVO = OrderDetailVO.dOconvertVO(model);
+                if (orderDetailVO.getPayOvertimeTime() == 0 && OrderState.PENDING_PAYMENT.equals(orderDetailVO.getOrderState())) { //超时订单
+                    orderService.updateOrderStatusTimeOut(orderId, model.getOrderCode(), getCustomerId());
+                    orderDetailVO.setOrderState(OrderState.CANCELED);
+                }
+            }else {
+                return new ResponseResult(Result.FAILURE, "订单不存在");
             }
             return new ResponseResult(orderDetailVO);
         } catch (Exception e) {

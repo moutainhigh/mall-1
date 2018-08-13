@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>货品信息</title>
+
     <script type="application/javascript">
         $(document).ready(function () {
             $("#storeId").select2();
@@ -99,6 +100,7 @@
     </script>
 </head>
 <body>
+
 <jsp:include page="../layouts/left.jsp"/>
 <jsp:include page="../layouts/sidebarRight.jsp"/>
 <div id="main" class="clearfix">
@@ -292,6 +294,21 @@
                         <legend>新增货品</legend>
                         <div class="row">
                             <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>分类比例配置：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input cssClass="form-control"  path="commodity.catalog.ratio" id="catalogRatio" readonly="true"  maxlength="32"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>商品比例配置：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input cssClass="form-control " path="commodity.ratio" id="ratio" readonly="true" maxlength="11"/>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>货品编号：</label>
                             </div>
                             <div class="col-sm-3">
@@ -303,7 +320,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="11"/>
                                 </div>
 
                             </div>
@@ -316,7 +333,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="salePrice" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="salePrice" readonly="true" placeholder="销售价等于成本价乘以比例配置" maxlength="11"/>
                                 </div>
                             </div>
                             <div class="col-sm-2">
@@ -490,6 +507,7 @@
         </div>
     </div>
 </form>
-
+<%--后台页面共用的js--%>
+<script src="../js/common/fixed_common.js"></script>
 </body>
 </html>

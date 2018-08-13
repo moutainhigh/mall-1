@@ -1,6 +1,9 @@
 package com.yunxin.cb.mall.mapper;
 
+import com.yunxin.cb.mall.entity.Reimbursement;
 import com.yunxin.cb.mall.entity.ReimbursementOrder;
+import com.yunxin.cb.mall.entity.ReimbursementQuery;
+import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
@@ -79,4 +82,16 @@ public interface ReimbursementOrderMapper {
             "where REIMBURSEMENT_ORDER_ID = #{reimbursementOrderId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(ReimbursementOrder record);
+
+    @Select({
+            "select",
+            "g.ORDER_ITEM_ID",
+            "from rb_reimbursement h left join rb_reimbursement_order g on g.REIMBURSEMENT_ID = h.REIMBURSEMENT_ID " +
+            "WHERE h.ORDER_STATE != #{reimbursement_state,jdbcType=INTEGER} and h.ORDER_STATE !=#{reimbursementState,jdbcType=INTEGER} and h.CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
+    })
+    @Results({
+            @Result(column="REIMBURSEMENT_ID", property="reimbursementId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="ORDER_ITEM_ID", property="orderItemId", jdbcType=JdbcType.INTEGER)
+    })
+    List<ReimbursementOrder> selectByOrderState(@Param("reimbursement_state")ReimbursementState reimbursement_state, @Param("reimbursementState")ReimbursementState reimbursementState,@Param("customerId") int customerId);
 }

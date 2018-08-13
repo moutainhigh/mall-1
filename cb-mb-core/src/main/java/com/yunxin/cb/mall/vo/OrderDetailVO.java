@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yunxin.cb.config.OrderConfig;
 import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
@@ -69,6 +70,10 @@ public class OrderDetailVO implements java.io.Serializable{
     @ApiModelProperty(value="支付时间",name="paymentTime",example="2018-07-24")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date paymentTime;
+
+    /** 商家名 */
+    @ApiModelProperty(value="商家名",name="sellerName",example="4s店")
+    private String sellerName;
 
     /** 商家地址 */
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市")
@@ -150,6 +155,14 @@ public class OrderDetailVO implements java.io.Serializable{
         this.sellerAddress = sellerAddress;
     }
 
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
     public Set<OrderItemDetailVO> getOrderItemDetails() {
         return orderItemDetails;
     }
@@ -167,7 +180,7 @@ public class OrderDetailVO implements java.io.Serializable{
 
     public Long getPayOvertimeTime() {
         payOvertimeTime = DateUtils.differenceDate(new Date(), createTime);
-        long time = 60*60*1000;//60分钟
+        long time = OrderConfig.ORDER_OVER_TIME.getTime() * 60 * 60 * 1000;//60分钟
         if (payOvertimeTime > time) { //大于60分钟
             payOvertimeTime = 0l;
         } else {
@@ -236,6 +249,7 @@ public class OrderDetailVO implements java.io.Serializable{
         //商家地址信息
         if (model.getSeller() != null) {
             orderDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+            orderDetailVO.setSellerName(model.getSeller().getSellerName());
         }
         if (model.getOrderItems() != null && !model.getOrderItems().isEmpty()) {
             Set<OrderItemDetailVO> orderItemDetails = new HashSet<OrderItemDetailVO>();
@@ -245,6 +259,7 @@ public class OrderDetailVO implements java.io.Serializable{
                 //商家地址信息
                 if (model.getSeller() != null) {
                     oderItemDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+                    oderItemDetailVO.setSellerName(model.getSeller().getSellerName());
                 }
                 //货品信息
                 if (orderItem.getProduct() != null) {

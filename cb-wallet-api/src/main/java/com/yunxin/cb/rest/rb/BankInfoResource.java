@@ -9,7 +9,6 @@ import com.yunxin.cb.mall.service.CustomerService;
 import com.yunxin.cb.mall.vo.BankInfoVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
-import com.yunxin.cb.util.Constant;
 import com.yunxin.cb.util.LogicUtils;
 import com.yunxin.cb.util.ValidateBankUtils;
 import com.yunxin.cb.vo.ResponseResult;
@@ -60,17 +59,22 @@ public class BankInfoResource extends BaseResource {
         ResponseResult responseResult=new ResponseResult(Result.FAILURE);
         try {
             String result=ValidateBankUtils.validateBank(bankInfoVO);
-            if(LogicUtils.isNotNull(result)){
+            if(LogicUtils.isNotNullAndEmpty(result)){
                 JSONObject jsonObject= JSON.parseObject(result);
                 String respCode=String.valueOf(jsonObject.get("respCode"));
+                String bankType=String.valueOf(jsonObject.get("bankType"));
+                if(bankType.equals("信用卡")){
+                    responseResult.setData("暂不支持信用卡，请更换储蓄卡!");
+                    return responseResult;
+                }
                 responseResult.setData(String.valueOf(jsonObject.get("respMessage")));
                 if(respCode.equals("0000")){
-                    //验证通过，修改用户为已认证
-                    int count=customerService.updateAuthFlagByCustomerId(getCustomerId(), Constant.AUTH_FLAG_OK);
-                    if(count>0){
-                        responseResult.setResult(Result.SUCCESS);
-                    }
+                    //验证通过，返回银行名称
+                    responseResult.setData(String.valueOf(jsonObject.get("bankName")));
+                    responseResult.setResult(Result.SUCCESS);
                 }
+            }else{
+                responseResult.setData("访问错误或者验证帐号可能已欠费");
             }
         } catch (Exception e) {
             logger.info("checkBankInfo failed", e);
@@ -87,6 +91,12 @@ public class BankInfoResource extends BaseResource {
      */
     @ApiOperation(value = "提交实名认证")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "cardholder", value = "持卡人", required = true, paramType = "path", dataType = "string"),
+            @ApiImplicitParam(name = "bankCardNumber", value = "银行卡号码", required = true, paramType = "path", dataType = "string"),
+            @ApiImplicitParam(name = "customerCardNo", value = "证件号码", required = true, paramType = "path", dataType = "string"),
+            @ApiImplicitParam(name = "mobile", value = "银行预留手机号码", required = true, paramType = "path", dataType = "string"),
+            @ApiImplicitParam(name = "bankName", value = "银行名称", required = true, paramType = "path", dataType = "string"),
+            @ApiImplicitParam(name = "code", value = "验证码", required = true, paramType = "path", dataType = "string")
     })
     @ApiVersion(1)
     @PostMapping(value = "submitAuth")
@@ -99,7 +109,7 @@ public class BankInfoResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE, checkStr);
             }
             //验证通过，修改用户为已认证
-            int count=customerService.updateAuthFlagByCustomerId(getCustomerId(), Constant.AUTH_FLAG_OK);
+            int count=bankInfoService.submitAuth(bankInfoVO,getCustomerId());
             if(count>0){
                 responseResult.setResult(Result.SUCCESS);
             }

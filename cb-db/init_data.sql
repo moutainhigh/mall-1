@@ -61,3 +61,4 @@ INSERT INTO `profile` VALUES (4, 'ANDROID_VERSION_NAME', 'v1.0.0.1');
 INSERT INTO `profile` VALUES (5, 'ANDROID_APP_NAME', '云信');
 INSERT INTO `profile` VALUES (6, 'ANDROID_URL', 'http://resource.999shuijingqiu.com/CrystalBall.apk');
 INSERT INTO `profile` VALUES (7, 'ANDROID_DESCRIPTION', 'APP更新');
+

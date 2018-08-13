@@ -133,10 +133,10 @@
                                 <form:input cssClass="form-control validate[required],custom[number]" path="sortOrder" maxlength="3"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>是否启用：</label>
+                                <label><span class="asterisk">*</span>分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:checkbox path="enabled"/>
+                                <form:input cssClass="form-control validate[required],custom[gtOne]" path="ratio" maxlength="10" />
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -146,6 +146,12 @@
                             </div>
                             <div class="col-sm-3">
                                 <form:checkbox path="supportAddedTax"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>是否启用：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:checkbox path="enabled"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>

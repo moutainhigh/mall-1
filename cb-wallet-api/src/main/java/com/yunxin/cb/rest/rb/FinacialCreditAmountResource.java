@@ -1,12 +1,14 @@
 package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
-import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.FinacialLoanConfig;
+import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.util.page.PageFinder;
+import com.yunxin.cb.util.page.Query;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -46,11 +48,14 @@ public class FinacialCreditAmountResource extends BaseResource {
     @Resource
     private FinacialLoanConfigService finacialLoanConfigService;
 
+    @Resource
+    private ProfileService profileService;
+
 
     @ApiOperation(value = "信用额度信息")
     @ApiImplicitParams({
     })
-    @GetMapping()
+    @GetMapping(value = "getCreditAmountInfo")
     @ApiVersion(1)
     public ResponseResult<FinacialCreditLineVO> getCreditAmountInfo() {
         try {
@@ -84,7 +89,7 @@ public class FinacialCreditAmountResource extends BaseResource {
             FinacialLoanInitDateVO vo = new FinacialLoanInitDateVO();
             //最高可贷金额
             FinacialWalletVO finacialWalletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
-            vo.setAmount(finacialWalletVO.getExpectedAmount().add(finacialWalletVO.getTotalAmount()));
+            vo.setTotalAmount(finacialWalletVO.getTotalAmount());
             //期限
             List<FinacialLoanConfig> list = finacialLoanConfigService.getFinacilaLoanConfigs();
             List<FinacialLoanConfigVO> listFinacialLoanConfigVO = new ArrayList<FinacialLoanConfigVO>();
@@ -103,20 +108,6 @@ public class FinacialCreditAmountResource extends BaseResource {
         }
     }
 
-//    @ApiOperation(value = "借款页面获取贷款期限利率配置")
-//    @ApiImplicitParams({
-//    })
-//    @GetMapping("loanConfigs")
-//    @ApiVersion(1)
-//    public ResponseResult<List<FinacialLoanConfig>> getLoanConfigs() {
-//        try {
-//            return new ResponseResult(finacialLoanConfigService.getFinacilaLoanConfigs());
-//        } catch (Exception e) {
-//            logger.info("getLoanConfig failed", e);
-//            return new ResponseResult(Result.FAILURE);
-//        }
-//    }
-
     @ApiOperation(value = "提交借款")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "amount", value = "贷款金额", required = true, paramType = "form", dataType = "String"),
@@ -127,19 +118,22 @@ public class FinacialCreditAmountResource extends BaseResource {
     @ApiVersion(1)
     public ResponseResult submitLoan(@RequestBody FinacialLoanVO finacialLoanVO) {
         try {
-            //判断额度是否满足贷款(先判断预期收益再判断总额度)
-            //最高可贷金额
-            FinacialWalletVO finacialWalletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
-            BigDecimal totalAmount = finacialWalletVO.getExpectedAmount().add(finacialWalletVO.getTotalAmount());
+            //最高可贷金额,判断额度是否满足贷款
+            FinacialWalletVO walletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
+            BigDecimal totalAmount = walletVO.getTotalAmount();
             if (finacialLoanVO.getAmount().compareTo(totalAmount) > 0) {
                 return new ResponseResult(Result.FAILURE, "您的可贷金额不足");
             }
             //判断是否超过最多次数
-            // 查询审核通过的我的借款次数
-            int maxCount = 5;
-            int count = finacialLoanService.countByCustomerId(getCustomerId());
-            if (count >= 5) {
-                return new ResponseResult(Result.FAILURE, "您已经贷了"+maxCount+"次款了，不能再贷了");
+            Profile profile = profileService.getProfileByName(ProfileState.MAX_LOAN_NUM.name());
+
+            if (profile != null) {
+                int maxCount = Integer.valueOf(profile.getFileValue());
+                // 查询审核通过的我的借款次数
+                int count = finacialLoanService.countByCustomerId(getCustomerId());
+                if (count >= maxCount) {
+                    return new ResponseResult(Result.FAILURE, "您已经贷了"+maxCount+"次款了，不能再贷了");
+                }
             }
 
             //计算贷款金额数据
@@ -150,18 +144,10 @@ public class FinacialCreditAmountResource extends BaseResource {
             BigDecimal lixi = finacialLoanVO.getAmount().multiply(finacialLoanConfig.getInterestRate()).setScale(2, RoundingMode.HALF_UP);
             finacialLoanVO.setInterest(lixi);
             finacialLoanVO.setInterestRate(finacialLoanConfig.getInterestRate());
-            finacialLoanService.add(finacialLoanVO);
-            //减少额度（优先减少保单额度，再减少感恩额度）
-            //借款金额小于预期收益
-            if (finacialLoanVO.getAmount().compareTo(finacialWalletVO.getExpectedAmount()) < 1) {
-                finacialWalletVO.setExpectedAmount(finacialWalletVO.getExpectedAmount().subtract(finacialLoanVO.getAmount()));
-            } else if (finacialLoanVO.getAmount().compareTo(
-                    finacialWalletVO.getExpectedAmount().add(finacialWalletVO.getInsuranceAmount())) < 1){ //借款金额小于预期收益和保单额度
-                finacialWalletVO.setExpectedAmount(BigDecimal.ZERO);
-//                finacialWalletVO.setInsuranceAmount();
-            }
-            finacialWalletService.updateFinacialWallet(finacialWalletVO);
-            //添加额度明细
+            finacialLoanVO.setRepaymentTerm(finacialLoanConfig.getTerm());
+            finacialLoanVO.setCustomerId(getCustomerId());
+            //添加借款记录
+            finacialLoanService.add(finacialLoanVO, walletVO);
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.info("getLoanInitDataInfo failed", e);
@@ -171,13 +157,20 @@ public class FinacialCreditAmountResource extends BaseResource {
 
     @ApiOperation(value = "借款明细")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")
     })
-    @GetMapping(value = "getLoanDetails")
+    @PostMapping(value = "getLoanDetails")
     @ApiVersion(1)
-    public ResponseResult<List<FinacialLoanVO>> getLoanDetails() {
+    public ResponseResult<PageFinder<FinacialLoanVO>> getLoanDetails(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize) {
         try {
-            List<FinacialLoanVO> list = finacialLoanService.getByCustomerIdAndType(getCustomerId());
-            return new ResponseResult(list);
+            FinacialLoan model = new FinacialLoan();
+            Query q = new Query(pageNo, pageSize);
+            model.setCustomerId(getCustomerId());
+            q.setData(model);
+            PageFinder<FinacialLoan> pageFinder = finacialLoanService.page(q);
+            PageFinder<FinacialLoanVO> page = FinacialLoanVO.dOconvertVOPage(pageFinder);
+            return new ResponseResult(page);
         } catch (Exception e) {
             logger.info("getLoanDetails failed", e);
             return new ResponseResult(Result.FAILURE);

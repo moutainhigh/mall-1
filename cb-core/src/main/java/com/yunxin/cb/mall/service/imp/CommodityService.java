@@ -113,12 +113,33 @@ public class CommodityService implements ICommodityService {
             throw new EntityExistException("商品编码或商品名已存在");
         }
         Commodity dbCommodity = commodityDao.findOne(commodity.getCommodityId());
+        //S add by lxc    2018-08-09 15:51      根据比例配置更新货品销售价
+        float ratio = 1.0f;
+        boolean updateProductSalePrice = true;
+        if( commodity.getRatio() != null) {
+            ratio = commodity.getRatio().floatValue();
+            if(dbCommodity.getRatio() != null ){
+                if(commodity.getRatio().compareTo(dbCommodity.getRatio()) == 0) {
+                    updateProductSalePrice = false;
+                }
+            }
+        }else{
+            ratio = commodity.getCatalog().getRatio().floatValue();
+        }
+        if(updateProductSalePrice) {
+            int j = productDao.updateSalePriceByCommodityId(ratio, dbCommodity.getCommodityId());
+            if(j > 0){
+                logger.info("更新货品的销售价成功....");
+            }
+        }
+        //E
+
         AttributeReplication.copying(commodity, dbCommodity, Commodity_.catalog, Commodity_.priceSection, Commodity_.brand,
                 Commodity_.commodityCode, Commodity_.commodityName, Commodity_.commodityPYName, Commodity_.shortName, Commodity_.commodityTitle,
                 Commodity_.costPrice, Commodity_.sellPrice, Commodity_.marketPrice, Commodity_.unit, Commodity_.province, Commodity_.city, Commodity_.seoKey,
                 Commodity_.seoTitle, Commodity_.seoDescription, Commodity_.popular, Commodity_.special, Commodity_.recommend, Commodity_.giveaway,
                 Commodity_.barter, Commodity_.preSell, Commodity_.content, Commodity_.deliveryType, Commodity_.weight, Commodity_.volume, Commodity_.defaultPicPath, Commodity_.explainContent,
-                Commodity_.settingContent);
+                Commodity_.settingContent, Commodity_.ratio);
         List<CommoditySpec> commoditySpecs = commoditySpecDao.getCommoditySpecsByCommodityId(commodity.getCommodityId());
         for (CommoditySpec cSpec : commoditySpecs) {
             commoditySpecDao.delete(cSpec);
@@ -138,6 +159,9 @@ public class CommodityService implements ICommodityService {
             }
         }
         // 删除未选中的图
+
+
+
         return dbCommodity;
     }
 
@@ -615,7 +639,7 @@ public class CommodityService implements ICommodityService {
      */
     @Override
     public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception {
-        Commodity commodity = commodityDao.findOne(commodityId);
+        Commodity commodity = commodityDao.findDefaultProductById(commodityId);
         if (commodity.getCommodityState() != CommodityState.AUDITED) {
             return false;
         }
@@ -624,10 +648,13 @@ public class CommodityService implements ICommodityService {
             List<Product> products = productDao.findByCommodity_commodityId(commodityId);
             if (LogicUtils.isNotNullAndEmpty(products)) {
                 List<Integer> prodIds=new ArrayList<Integer>();
-                Product defaultProduct=null;
+                Product defaultProduct=commodity.getDefaultProduct();
                 for (int i = 0; i < products.size(); i++) {
                     if(products.get(i).getPublishState()==PublishState.UP_SHELVES){
                         prodIds.add(products.get(i).getProductId());
+                        if (i==0&&defaultProduct.getPublishState()!=PublishState.UP_SHELVES) {
+                            defaultProduct=products.get(i);
+                        }
                     }
                 }
                 if(prodIds.size()<=0){//没有已上架的货品，商品不能上架

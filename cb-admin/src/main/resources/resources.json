@@ -16,11 +16,7 @@
       },
       {
         "name": "广告管理", "code": "25", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../cms/advertisements.do"
-      },
-      {
-        "name": "模板管理", "code": "26", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../cms/templates.do"
       }
-
     ]
   }
 ,
@@ -51,19 +47,10 @@
         "name": "运营分类", "code": "41", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/categories.do"
       },
       {
-        "name": "分类查询过滤器", "code": "42", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/propertyFilters.do"
-      },
-      {
-        "name": "活动管理", "code": "43", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/activities.do"
-      },
-      {
         "name": "站内信", "code": "44", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/systemLetters.do"
       },
       {
-        "name": "评价管理", "code": "45", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/productEvaluates.do"
-      },
-      {
-        "name": "投诉处理", "code": "46", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/complaints.do"
+        "name": "用户反馈管理", "code": "47", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../feedback/feedbacks.do"
       }
     ]
   },
@@ -78,117 +65,6 @@
       },
       {
         "name": "换货管理", "code": "53", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/barterOrders.do"
-      },
-      {
-        "name": "贷款管理", "code": "54", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/loanOrders.do"
-      }
-    ]
-  },
-  {
-    "name": "客户管理", "code": "6", "type": "MENU", "cssClass": "fa fa-group", "value": "customer", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "客户查询", "code": "61", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../customer/customers.do"
-      },
-      {
-        "name": "积分查询", "code": "62", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../customer/integrals.do"
-      },
-      {
-        "name": "客户等级管理", "code": "63", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../customer/ranks.do"
-      },
-      {
-        "name": "报账管理", "code": "64", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursements.do"
-      }
-    ]
-  },
-  {
-    "name": "商家管理", "code": "7", "type": "MENU", "cssClass": "fa fa-tasks", "value": "seller", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "商家查询", "code": "71", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../seller/sellers.do"
-      }
-    ]
-  },
-  {
-    "name": "库存管理", "code": "8", "type": "MENU", "cssClass": "fa fa-th", "value": "store", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "仓库查询", "code": "81", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../store/stores.do"
-      }
-    ]
-  },
-  {
-    "name": "配送管理", "code": "9", "type": "MENU", "cssClass": "fa fa-truck", "value": "logistic", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "物流查询", "code": "91", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../logistic/logistics.do"
-      }
-    ]
-  },
-  {
-    "name": "统计分析", "code": "10", "type": "MENU", "cssClass": "fa fa-bar-chart-o", "value": "statistics", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "订单统计", "code": "101", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/orderStatistics.do"
-      },
-      {
-        "name": "金额统计", "code": "102", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/moneyStatistics.do"
-      },
-      {
-        "name": "账单统计", "code": "103", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/billStatistics.do"
-      }
-    ]
-  },
-  {
-    "name": "参数设置", "code": "11", "type": "MENU", "cssClass": "fa fa-wrench", "value": "system", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "规则管理", "code": "111", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../system/ruleConditions.do"
-      },
-      {
-        "name": "敏感词管理", "code": "112", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../system/keyWords.do"
-      },
-      {
-        "name": "搜索引擎", "code": "113", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../system/searchEngine.do"
-      },
-      {
-        "name": "菜谱步骤管理", "code": "114", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../system/recipeSteps.do"
-      }
-    ]
-  },
-  {
-    "name": "资源管理", "code": "12", "type": "MENU", "cssClass": "fa fa-picture-o", "value": "media", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "图片管理", "code": "121", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../media/medias.do"
-      },
-      {
-        "name": "视频管理", "code": "122", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../media/videos.do"
-      }
-    ]
-  },
-  {
-    "name": "系统管理", "code": "13", "type": "MENU", "cssClass": "fa fa-cogs", "value": "security", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "用户管理", "code": "131", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../security/users.do"
-      },
-      {
-        "name": "角色管理", "code": "132", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../security/roles.do"
-      },
-      {
-        "name": "七牛图片管理", "code": "133", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../securityattachment/attachments.do"
-      }
-    ]
-  },
-  {
-    "name": "设备管理", "code": "14", "type": "MENU", "cssClass": "fa fa-phone", "value": "concent", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "PAD设备", "code": "141", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../concent/concents.do"
-      },
-      {
-        "name": "厨电设备", "code": "142", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../concent/devices.do"
       }
     ]
   },
@@ -215,20 +91,67 @@
     ]
   },
   {
-    "name": "反馈信息", "code": "16", "type": "MENU", "cssClass": "fa fa-phone", "value": "feedback", "childrenCssClass": "children",
+    "name": "客户管理", "code": "6", "type": "MENU", "cssClass": "fa fa-group", "value": "customer", "childrenCssClass": "children",
     "children": [
       {
-        "name": "用户反馈管理", "code": "161", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../feedback/feedbacks.do"
+        "name": "客户查询", "code": "61", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../customer/customers.do"
       }
     ]
   },
   {
-    "name": "系统配置", "code": "17", "type": "MENU", "cssClass": "fa fa-cogs", "value": "profile", "childrenCssClass": "children",
+    "name": "商家管理", "code": "7", "type": "MENU", "cssClass": "fa fa-tasks", "value": "seller", "childrenCssClass": "children",
     "children": [
       {
-        "name": "参数配置", "code": "171", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"
+        "name": "商家查询", "code": "71", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../seller/sellers.do"
+      }
+    ]
+  },
+  {
+    "name": "财务管理", "code": "8", "type": "MENU", "cssClass": "fa fa-tasks", "value": "financial", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "报账管理", "code": "81", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursements.do"
+      },
+      {
+        "name": "贷款管理", "code": "82", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/loanOrders.do"
+      }
+    ]
+  },
+  {
+    "name": "统计分析", "code": "10", "type": "MENU", "cssClass": "fa fa-bar-chart-o", "value": "statistics", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "订单统计", "code": "101", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/orderStatistics.do"
+      },
+      {
+        "name": "金额统计", "code": "102", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/moneyStatistics.do"
+      },
+      {
+        "name": "账单统计", "code": "103", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/billStatistics.do"
+      }
+    ]
+  },
+  {
+    "name": "系统配置", "code": "11", "type": "MENU", "cssClass": "fa fa-wrench", "value": "system", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "参数配置", "code": "113", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"
+      }
+
+    ]
+  },
+  {
+    "name": "系统管理", "code": "13", "type": "MENU", "cssClass": "fa fa-cogs", "value": "security", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "用户管理", "code": "131", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../security/users.do"
+      },
+      {
+        "name": "角色管理", "code": "132", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../security/roles.do"
+      },
+      {
+        "name": "七牛图片管理", "code": "133", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../securityattachment/attachments.do"
       }
     ]
   }
-
 ]

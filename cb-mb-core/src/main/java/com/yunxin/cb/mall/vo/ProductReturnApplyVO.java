@@ -22,7 +22,7 @@ public class ProductReturnApplyVO implements java.io.Serializable{
      * 订单商品id
      */
     @ApiModelProperty(value="订单商品id",name="itemId",example="1")
-    private Integer itemId;
+    private Integer[] itemIds;
     /**
      * 退货原因
      */
@@ -41,12 +41,12 @@ public class ProductReturnApplyVO implements java.io.Serializable{
         this.orderId = orderId;
     }
 
-    public Integer getItemId() {
-        return itemId;
+    public Integer[] getItemId() {
+        return itemIds;
     }
 
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
+    public void setItemId(Integer[] itemId) {
+        this.itemIds = itemId;
     }
 
     public ReturnReason getReturnReason() {
@@ -69,7 +69,7 @@ public class ProductReturnApplyVO implements java.io.Serializable{
     public String toString() {
         return "ProductReturnApplyVO{" +
                 "orderId=" + orderId +
-                ", itemId=" + itemId +
+                ", itemId=" + itemIds +
                 ", returnReason='" + returnReason + '\'' +
                 ", reason='" + reason + '\'' +
                 '}';

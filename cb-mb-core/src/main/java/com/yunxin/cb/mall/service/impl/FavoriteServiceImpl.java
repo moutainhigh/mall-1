@@ -26,7 +26,7 @@ import java.util.List;
 public class FavoriteServiceImpl implements FavoriteService {
 
 	private static final Log log = LogFactory.getLog(FavoriteServiceImpl.class);
-	
+
 	@Resource
 	private FavoriteMapper favoriteMapper;
 
@@ -62,7 +62,6 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PageFinder<Favorite> pageCustomerFavorites(Query q) {
-		PageFinder<Favorite> page = new PageFinder<Favorite>(q.getPageNo(), q.getPageSize());
 		List<Favorite> list = null;
 		long rowCount = 0L;
 		try {
@@ -76,9 +75,8 @@ public class FavoriteServiceImpl implements FavoriteService {
 		//如list为null时，则改为返回一个空列表
 		list = list == null ? new ArrayList<Favorite>(0) : list;
 		//将分页数据和记录总数设置到分页结果对象中
+		PageFinder<Favorite> page = new PageFinder<>(q.getPageNo(), q.getPageSize(), rowCount);
 		page.setData(list);
-		page.setRowCount(rowCount);//记录总数
-		page.setPageCount((int)rowCount);//总页数
 		return page;
 	}
 

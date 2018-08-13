@@ -45,14 +45,14 @@ public class ProductReturnResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "path", dataType = "int")})
     @ApiVersion(1)
-    @PostMapping(value = "productReturn/apply/{orderId}")
+    @GetMapping(value = "productReturn/apply/{orderId}")
     public ResponseResult<ProductReturnApplyDataVO> getProductReturnData(@PathVariable(value = "orderId")int orderId) {
         try {
             ProductReturnApplyDataVO productReturnApplyDataVO = new ProductReturnApplyDataVO();
             Order order = productReturnService.checkProductReturnApply(orderId, getCustomerId());
             Map returnReason = new HashMap();//退货原因
             for (ReturnReason reason : ReturnReason.values()){
-                returnReason.put(reason, reason.toString());
+                returnReason.put(reason, reason.getName());
             }
             productReturnApplyDataVO.setReturnReason(returnReason);
             productReturnApplyDataVO.setOrderId(order.getOrderId());
