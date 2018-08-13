@@ -1,6 +1,8 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.FinacialWallet;
+import com.yunxin.cb.mall.entity.meta.WithdrawType;
+import com.yunxin.cb.search.vo.ResponseResult;
 
 import java.math.BigDecimal;
 
