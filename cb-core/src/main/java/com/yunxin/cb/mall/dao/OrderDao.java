@@ -68,11 +68,36 @@ public interface OrderDao extends JpaRepository<Order, Integer>, JpaSpecificatio
     public void cancelTimeOutOrders(OrderState ofs, Date date);
 
     /**
+     * 查询定时取消订单的订单列表
+     */
+    @Query("select od from Order od where od.orderState=?1 and od.createTime<=?2")
+    public List<Order> findOrderByOrderStateAndCreateTime(OrderState ofs, Date date);
+
+    /**
      * 查询超时未确认收货订单，并将其订单状态设为已收货
      */
     @Modifying
-    @Query("update Order od set od.orderState=?1 where od.orderState=?2 and od.createTime<=?3")
-    public void taskOrders(OrderState setState,OrderState whereState, Date date);
+    @Query("update Order od set od.orderState=?1 where od.orderState=?2 and od.deliverTime<=?3")
+    public void taskDeliverTimeOrders(OrderState setState,OrderState whereState, Date date);
+
+    /**
+     * 查询超时未确认收货订单，并将其订单状态设为已收货
+     */
+    @Query("select od from Order od where od.orderState=?1 and od.deliverTime<=?2")
+    public List<Order> findOrderByOrderStateAndDeliverTime(OrderState ofs, Date date);
+
+    /**
+     * 查询已收货订单，并将其订单状态设为已完成
+     */
+    @Modifying
+    @Query("update Order od set od.orderState=?1 where od.orderState=?2 and od.collectTime<=?3")
+    public void taskCollectTimeOrders(OrderState setState,OrderState whereState, Date date);
+
+    /**
+     * 查询已收货订单，并将其订单状态设为已完成
+     */
+    @Query("select od from Order od where od.orderState=?1 and od.collectTime<=?2")
+    public List<Order> findOrderByOrderStateAndCollectTime(OrderState ofs, Date date);
 
 
 }

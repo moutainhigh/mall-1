@@ -15,8 +15,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>参数配置</title>
-    <script charset="utf-8" src="../editor/kindeditor-all-min.js"></script>
-    <script charset="utf-8" src="../editor/lang/zh_CN.js"></script>
 
     <script type="text/javascript">
         function getprofileName(state){
@@ -48,7 +46,6 @@
                 case "ANDROID_FORCE_UPGRADE":{
                     return "安卓APP是否强制更新";
                 }
-
                 case "SHARE_PATH":{
                     return "分享地址";
                 }
@@ -63,6 +60,33 @@
                 }
                 case "SHARE_SHORTMESSAGE_CONTENT":{
                     return "分享短信内容";
+                }
+                case "FINACIAL_FREE_RATE":{
+                    return "提现手续费";
+                }
+                case "TAX_RATE":{
+                    return "税率";
+                }
+                case "MAX_LOAN_NUM":{
+                    return "最多借款次数";
+                }
+                case "IOS_VERSION_CODE":{
+                    return "苹果版本编码";
+                }
+                case "IOS_VERSION_NAME":{
+                    return "苹果版本名称";
+                }
+                case "IOS_APP_NAME":{
+                    return "苹果APP名称";
+                }
+                case "IOS_URL":{
+                    return "苹果APP下载地址";
+                }
+                case "IOS_DESCRIPTION":{
+                    return "苹果APP更新描述";
+                }
+                case "IOS_FORCE_UPGRADE":{
+                    return "苹果APP是否强制更新";
                 }
             }
             return state;
@@ -161,7 +185,7 @@
                             </div>
                         </div>
                         <div class="spacer-10"></div>
-                        <div class="row">
+                        <div class="row" style="display: none;">
                             <div class="col-sm-2">
                                 <label>是否图片：<span class="asterisk">*</span></label>
                             </div>
@@ -184,6 +208,14 @@
                                     $('#fileValue').attr("readonly",false);
                                 }
                             }
+                            $(function () {
+                                var isPicture=${profile.isPicture};
+                                if(isPicture==1){
+                                    $('#fileValue').attr("readonly",true);
+                                    $('#fileValeDiv').hide();
+                                    $('#fileValeImg').show();
+                                }
+                            });
 
                             //建立一個可存取到該file的url
                             function getObjectURL(file) {
@@ -211,7 +243,7 @@
                                     processData: false,
                                     contentType: false,
                                     success: function (result) {
-                                        window.editor.html(result.url)
+                                        $('#'+imgId).val(result.url);
                                     },
                                     error: function (err) {
                                     }
@@ -228,57 +260,27 @@
                                     });
                                 });
                             });
-                            function Editor(){
-                                KindEditor.ready(function (K) {
-                                    window.editor = K.create('#editorContent', {
-                                        uploadJson: '../upload/fileUpload.do',
-                                        fileManagerJson: '../upload/fileManager.do',
-                                        allowFileManager: true,
-                                        afterCreate : function() {
-                                            this.sync();
-                                        },
-                                        afterBlur:function(){
-                                            this.sync();
-                                        }
-                                    });
-                                });
-                            }
-
-                            function show(){
-                                var isPicture=${profile.isPicture};
-                                if(isPicture==1){
-                                    $('#fileValeDiv').hide();
-                                    $('#fileValeImg').show();
-                                    $('#fileValue').attr("readonly",true);
-                                }
-                            }
-
-                            $(document).ready(function () {
-                                Editor();
-                                setTimeout("show()","10");
-                            });
                         </script>
                         <div class="spacer-10"></div>
-                        <div id="fileValeImg" class="row">
+                        <div id="fileValeDiv" class="row">
+                            <div class="col-sm-2">
+                                <label>参数值：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:textarea id="fileValue"    path="fileValue" cssClass="form-control validate[required,minSize[1]]"/>
+                            </div>
+                        </div>
+                        <div id="fileValeImg" class="row" style="display: none">
                             <div class="col-sm-2">
                                 <label>参数值：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <img id="headPic" src="${profile.fileValue}" width="350px" height="350px"
                                      style="padding: 5px">
-                                <input id="upload" onchange="onchangeImg('editorContent')" name="file" multiple="multiple" accept="image/*" type="file"
+                                <input id="upload" onchange="onchangeImg('fileValue')" name="file" multiple="multiple" accept="image/*" type="file"
                                        style="display: none"/>
                             </div>
                         </div>
-                        <div id="fileValeDiv" class="row">
-                            <div class="col-sm-2">
-                                <label>参数值：<span class="asterisk">*</span></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <form:textarea  cssClass="form-control" id="editorContent" path="fileValue" cssStyle="height:500px;"></form:textarea>
-                            </div>
-                        </div>
-
                         <div class="spacer-10"></div>
                         <div  class="row">
                             <div class="col-sm-2">

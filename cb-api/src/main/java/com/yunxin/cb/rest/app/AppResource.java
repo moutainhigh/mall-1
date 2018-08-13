@@ -34,6 +34,8 @@ public class AppResource {
     })
     @GetMapping(value = "checkUpdate/{os}")
     public ResponseResult checkUpdate(@PathVariable(value = "os") MobileOSType os) {
+
+
         return new ResponseResult(SUCCESS, profileService.getAppCheckUpdate(os));
     }
 }
