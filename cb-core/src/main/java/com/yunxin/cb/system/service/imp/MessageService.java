@@ -37,7 +37,6 @@ public class MessageService implements IMessageService {
         query.setCustomSpecification(new CustomSpecification<Message>() {
             @Override
             public void buildFetch(Root<Message> root) {
-
             }
 
             @Override
