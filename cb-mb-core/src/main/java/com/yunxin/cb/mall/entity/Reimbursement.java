@@ -61,6 +61,10 @@ public class Reimbursement implements Serializable {
      */
     private RepaymentType repaymentType;
 
+    /**
+     * 税率
+     */
+    private BigDecimal taxRate;
     public Integer getReimbursementId() {
         return reimbursementId;
     }
@@ -162,5 +166,13 @@ public class Reimbursement implements Serializable {
 
     public void setRepaymentType(RepaymentType repaymentType) {
         this.repaymentType = repaymentType;
+    }
+
+    public BigDecimal getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
     }
 }
