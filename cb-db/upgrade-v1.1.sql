@@ -752,7 +752,7 @@ ADD COLUMN `ITEM_ID` int(11) NULL COMMENT '订单详情ID/报账详情ID' AFTER 
 ALTER TABLE `order_item` add `COST_PRICE` float NOT NULL COMMENT '成本价';
 
 #add by wangteng 2018-08-11
-alter table rb_reimbursement add TAX_RATE DECIMAL(10,2) DEFAULT 0;
+alter table rb_reimbursement add TAX_RATE DECIMAL(10,4) DEFAULT 0;
 
 
 ##add  by guwenshao 2018-8-11

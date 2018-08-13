@@ -30,10 +30,13 @@ public class FinacialWalletService implements IFinaciaWalletService {
 
     @Resource
     private FinacialWalletDao finacialWalletDao;
+
     @Resource
     private FinacialWalletLogDao finacialWalletLogDao;
+
     @Resource
     private FinacialExpectBillDao finacialExpectBillDao;
+
     @Resource
     private FinacialCreditLineBillDao FinacialCreditLineBillDao;
     @Resource
@@ -112,6 +115,11 @@ public class FinacialWalletService implements IFinaciaWalletService {
     @Override
     public FinacialWallet updateFinacialWallet(FinacialWallet fw){
         return null;
+    }
+
+    @Override
+    public FinacialWallet getFinacialWalletByCustomerId(int customerId) {
+        return finacialWalletDao.findFinacialWalletByCustomerId(customerId);
     }
 
     @Override
