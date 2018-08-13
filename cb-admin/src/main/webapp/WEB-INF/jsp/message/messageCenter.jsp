@@ -7,76 +7,61 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>参数配置</title>
+    <title>消息中心配置</title>
 
     <script type="text/javascript">
+
+        /**
+         * 点击-修改
+         */
         function detailItem(){
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                window.location.href = "toEditProfiles.do?fileId=" + dataItem.fileId;
+            var data = getKendoSelectedRowData();
+            if (data) {
+                if(!data.pushTime){
+                    window.location.href = "toEditMessage.do?messageId=" + data.messageId;
+                }else{
+                    commonNotify("已推送，无法进行修改!", "error");
+                }
             }
         }
-        function getprofileValue(value,isPicture){
-            if(isPicture==1){
-                return "<img src='"+value+"'  width='120px' height='120px'/>"
+
+        /**
+         * 点击-推送
+         */
+        function pushMessage() {
+            var data = getKendoSelectedRowData();
+            if (data) {
+                if(!data.pushTime){
+                    window.location.href = "pushMessage.do?messageId=" + data.messageId;
+                }else{
+                    commonNotify("已推送，无法再次推送!", "error");
+                }
             }
-            return value;
         }
-        function getprofileName(state){
-            switch (state){
-                case "ANDROID_VERSION_CODE":{
-                    return "安卓版本编码";
+
+        /**
+         * 获取kendo选中的行对象
+         * @returns {*}
+         */
+        function getKendoSelectedRowData(){
+            var grid = $("#grid").data("kendoGrid");
+            var dataRows = grid.items();
+            // 获取行号
+            var rowIndex = dataRows.index(grid.select());
+            // 获取行对象
+            return grid.dataItem(grid.select());
+        }
+
+        function getPushStatus(pushStatus){
+            switch (pushStatus){
+                case "HAVE_NOT_PUSHED":{
+                    return "未推送";
                 }
-                case "ANDROID_VERSION_NAME":{
-                    return "安卓版本名称";
-                }
-                case "ANDROID_APP_NAME":{
-                    return "安卓APP名称";
-                }
-                case "ANDROID_URL":{
-                    return "安卓APP下载地址";
-                }
-                case "ANDROID_DESCRIPTION":{
-                return "安卓APP更新描述";
-            }
-                case "GIVE_THE_THUMBS_UP":{
-                    return "点赞推荐人及所有上级加5%的授信额度";
-                }
-                case "GIVE_THE_THUMBS_UP":{
-                    return "点赞推荐人及所有上级加5%的授信额度";
-                }
-                case "LOAN_EXPECTED_RETURN_FIFTY":{
-                    return "下单推荐人增加50%的贷款预期收益";
-                }
-                case "ANDROID_FORCE_UPGRADE":{
-                    return "安卓APP是否强制更新";
-                }
-                case "SHARE_PATH":{
-                    return "分享地址";
-                }
-                case "SHARE_TITLE":{
-                    return "分享标题";
-                }
-                case "SHARE_ICON":{
-                    return "分享图标";
-                }
-                case "SHARE_DESCRIPTION":{
-                    return "分享描述";
-                }
-                case "SHARE_SHORTMESSAGE_CONTENT":{
-                    return "分享短信内容";
-                }
-                case "FINACIAL_FREE_RATE":{
-                    return "提现手续费";
-                }
-                case "TAX_RATE":{
-                    return "税率";
-                }
-                case "MAX_LOAN_NUM":{
-                    return "最多借款次数";
+                case "HAVE_PUSHED":{
+                    return "已推送";
                 }
             }
-            return state;
+            return pushStatus;
         }
 
     </script>
@@ -107,7 +92,7 @@
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
                     <li><a href="#">系统配置 </a></li>
-                    <li><a href="#">参数配置 </a></li>
+                    <li><a href="#">消息中心配置 </a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -121,7 +106,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>参数配置 </h2>
+                    <h2>消息中心配置 </h2>
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
@@ -162,14 +147,17 @@
                 <div class="toolbar responsive-helper">
                     <header>
                         <div class="pull-left">
-                            <h3>参数配置 </h3>
+                            <h3>消息中心配置 </h3>
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
                                 <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                             </div>
                             <div class="btn-group">
-                                <a href="toAddProfile.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;安卓版本更新</a>
+                                <a href="toEditMessage.do?messageId=0" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;消息新增</a>
+                            </div>
+                            <div class="btn-group">
+                                <a href="javascript:void(0);" onclick="pushMessage()" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;推送</a>
                             </div>
                         </div>
                     </header>
@@ -186,21 +174,23 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="ID" field="fileId" width="30px"/>
-                            <kendo:grid-column title="名称" field="profileName" template="#=getprofileName(profileName)#" width="200px"/>
-                            <kendo:grid-column title="值" field="fileValue" template="#=getprofileValue(fileValue,isPicture)#" width="200px"/>
-                            <kendo:grid-column title="备注" field="remarks"  width="200px"/>
+                            <kendo:grid-column title="ID" field="messageId" width="30px"/>
+                            <kendo:grid-column title="推送标题" sortable="false" field="pushTitle"  width="200px"/>
+                            <kendo:grid-column title="消息内容" sortable="false" field="messageContent" width="200px"/>
+                            <kendo:grid-column title="推送状态" sortable="false" field="pushSatus" template="#=getPushStatus(pushStatus)#" width="200px"/>
+                            <kendo:grid-column title="推送时间" field="pushTime" format="{0:yyyy-MM-dd HH:mm}" width="200px"/>
+                            <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}"  width="200px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
                                 <kendo:dataSource-schema-model>
                                     <kendo:dataSource-schema-model-fields>
-                                        <kendo:dataSource-schema-model-field name="pushTime" type="date"/>
+                                        <kendo:dataSource-schema-model-field name="createTime" type="date"/>
                                     </kendo:dataSource-schema-model-fields>
                                 </kendo:dataSource-schema-model>
                             </kendo:dataSource-schema>
                             <kendo:dataSource-transport>
-                                <kendo:dataSource-transport-read url="pageProfile.do" type="POST"
+                                <kendo:dataSource-transport-read url="pageMessage.do" type="POST"
                                                                  contentType="application/json"/>
                                 <kendo:dataSource-transport-parameterMap>
                                     <script>

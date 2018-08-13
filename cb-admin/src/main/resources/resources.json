@@ -224,6 +224,9 @@
     "children": [
       {
         "name": "参数配置", "code": "171", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"
+      },
+      {
+        "name": "消息中心配置", "code": "172", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../message/message.do"
       }
     ]
   },
