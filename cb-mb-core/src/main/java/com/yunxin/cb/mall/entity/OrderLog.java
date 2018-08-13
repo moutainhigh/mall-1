@@ -18,6 +18,13 @@ public class OrderLog {
     /** 操作时间 */
     private Date time;
 
+    public OrderLog( String handler, String orderCode, String remark) {
+        this.handler = handler;
+        this.orderCode = orderCode;
+        this.remark = remark;
+        this.time = new Date();
+    }
+
     public Integer getOrdersLogId() {
         return ordersLogId;
     }

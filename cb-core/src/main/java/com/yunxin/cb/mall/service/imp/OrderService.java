@@ -981,7 +981,11 @@ public class OrderService implements IOrderService {
         OrderLog orderLog = new OrderLog();
 
         if (auditState == AuditState.AUDITED) {
-            order.setOrderState(OrderState.OUT_STOCK);//直接跳过已支付到已发货
+            if (order.getDeliveryType() == DeliveryType.ZT) {
+                order.setOrderState(OrderState.OUT_STOCK);//直接跳过已支付到已发货
+            } else {
+                order.setOrderState(OrderState.PAID_PAYMENT);
+            }
             order.setPaymentTime(now);
             order.setDeliverTime(now);
             order.setUpdateTime(now);

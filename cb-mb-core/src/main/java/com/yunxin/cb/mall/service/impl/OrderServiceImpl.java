@@ -202,12 +202,7 @@ public class OrderServiceImpl implements OrderService {
             orderInvoiceMapper.insert(order.getOrderInvoice());
         }
         //添加订单日志
-        OrderLog orderLog = new OrderLog();
-        orderLog.setTime(createTime);
-        orderLog.setOrderCode(order.getOrderCode());
-        orderLog.setHandler(String.valueOf(order.getCustomerId()));
-        orderLog.setRemark("订单确认");
-        orderLogMapper.insert(orderLog);
+        orderLogMapper.insert(new OrderLog(String.valueOf(order.getCustomerId()),order.getOrderCode(),"订单确认"));
         return order;
     }
 
@@ -266,12 +261,7 @@ public class OrderServiceImpl implements OrderService {
             orderDb.setOrderState(OrderState.CANCELED);
             orderMapper.updateByPrimaryKey(orderDb);
             //添加订单日志
-            OrderLog orderLog = new OrderLog();
-            orderLog.setTime(now);
-            orderLog.setOrderCode(orderDb.getOrderCode());
-            orderLog.setHandler(String.valueOf(orderDb.getCustomerId()));
-            orderLog.setRemark("订单取消");
-            orderLogMapper.insert(orderLog);
+            orderLogMapper.insert(new OrderLog(String.valueOf(orderDb.getCustomerId()),orderDb.getOrderCode(),"订单取消"));
         } else {
             throw new CommonException("该订单不可取消");
         }
@@ -288,17 +278,23 @@ public class OrderServiceImpl implements OrderService {
             int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.RECEIVED, DeliveryState.RECEIVED);
             //添加订单日志
             if (count > 0) {
-                OrderLog orderLog = new OrderLog();
-                orderLog.setTime(new Date());
-                orderLog.setOrderCode(orderDb.getOrderCode());
-                orderLog.setHandler(String.valueOf(customerId));
-                orderLog.setRemark("买家确认收货");
+                OrderLog orderLog = new OrderLog(String.valueOf(customerId),orderDb.getOrderCode(),"买家确认收货");
                 orderLogMapper.insert(orderLog);
             }
             return count;
         } else {
             throw new CommonException("该订单暂不可确认收货");
         }
+    }
+
+    @Override
+    public int updateOrderStatusTimeOut(Integer orderId, String orderCode, Integer customerId) throws Exception {
+        int count = orderMapper.updateStateByOrderIdAndCustomerId(orderId, customerId, OrderState.CANCELED, null);
+        //添加订单日志
+        if (count > 0) {
+            orderLogMapper.insert(new OrderLog(String.valueOf(customerId),orderCode,"订单超时"));
+        }
+        return count;
     }
 
     private void defaultValue(Order order) {
