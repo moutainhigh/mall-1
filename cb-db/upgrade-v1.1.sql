@@ -760,3 +760,7 @@ INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VA
 
 ##add  by tangou 2018-8-13
 ALTER TABLE bank_info MODIFY COLUMN CARD_TYPE VARCHAR(60) DEFAULT NULL COMMENT '证件类型';
+
+##add by guwenshao 2018-08-13
+ALTER TABLE `order_form` add  `DELIVER_TIME` datetime DEFAULT NULL COMMENT '发货时间';
+ALTER TABLE `order_form` add  `COLLECT_TIME` datetime DEFAULT NULL COMMENT '收货时间';
