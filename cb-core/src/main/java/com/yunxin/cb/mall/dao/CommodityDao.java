@@ -34,6 +34,9 @@ public interface CommodityDao extends CommodityPlusDao, JpaRepository<Commodity,
     @Query("update Commodity c set c.commodityState = ?2,c.auditRemark=?3 where c.commodityId=?1")
     public void commodityAudit(int commodityId, CommodityState commodityState, String auditRemark);
 
+    @Query("select c from Commodity c left join fetch c.defaultProduct  where c.commodityId=?1")
+    public Commodity findDefaultProductById(int commodityId);
+
     //    @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
     @Query("select c from Commodity c left join fetch c.brand left join fetch c.catalog left join fetch c.priceSection left join fetch c.seller left join fetch c.logisticPrices left join fetch c.defaultProduct where c.commodityId=?1")
     public Commodity getCommodityDetailById(int commodityId);

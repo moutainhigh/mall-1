@@ -317,14 +317,15 @@ public class ProductService implements IProductService {
         if (product.getProductState() != ProductState.AUDITED) {
             return false;
         }
-        Commodity commodity = product.getCommodity();
+        //Commodity commodity = product.getCommodity();
+        Commodity commodity = commodityDao.findDefaultProductById(product.getCommodity().getCommodityId());
         if ((product.getPublishState() == PublishState.WAIT_UP_SHELVES || product.getPublishState() == PublishState.DOWN_SHELVES)
                 && publishState == PublishState.UP_SHELVES) {
             productDao.updateUpOrDownShelvesInProductId(PublishState.UP_SHELVES, new Integer[]{productId});
             //给商品设置默认货品
-            if (commodity.getDefaultProduct().getPublishState()!=PublishState.UP_SHELVES) {
-                commodity.setDefaultProduct(product);
-                commodityDao.updateDefaultProductById(product, product.getCommodity().getCommodityId());
+            if (commodity.getDefaultProduct()==null||commodity.getDefaultProduct().getPublishState()!=PublishState.UP_SHELVES) {
+                    commodity.setDefaultProduct(product);
+                    commodityDao.updateDefaultProductById(product, product.getCommodity().getCommodityId());
             }
             return true;
         } else if ((product.getPublishState() == PublishState.WAIT_UP_SHELVES || product.getPublishState() == PublishState.UP_SHELVES)

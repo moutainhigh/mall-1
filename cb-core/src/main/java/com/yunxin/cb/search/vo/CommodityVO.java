@@ -1,13 +1,10 @@
 package com.yunxin.cb.search.vo;
 
 import com.yunxin.cb.mall.entity.Commodity;
-import com.yunxin.cb.mall.entity.CommodityCategory;
-import com.yunxin.cb.mall.entity.Product;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.beanutils.BeanUtils;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +25,9 @@ public class CommodityVO implements java.io.Serializable {
             this.commodityPYName = commodity.getCommodityPYName();
             this.description = commodity.getDescription();
             this.brand = new Brand(commodity.getBrand());
-            this.defaultProduct = commodity.getDefaultProduct().getProductId();
+            if(commodity.getDefaultProduct()!=null){
+                this.defaultProduct = commodity.getDefaultProduct().getProductId();
+            }
             this.province = commodity.getProvince();
             this.city = commodity.getCity();
             this.marketPrice = commodity.getMarketPrice();

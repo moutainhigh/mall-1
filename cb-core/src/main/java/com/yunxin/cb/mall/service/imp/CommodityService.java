@@ -34,7 +34,6 @@ import retrofit2.Call;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -640,7 +639,7 @@ public class CommodityService implements ICommodityService {
      */
     @Override
     public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception {
-        Commodity commodity = commodityDao.findOne(commodityId);
+        Commodity commodity = commodityDao.findDefaultProductById(commodityId);
         if (commodity.getCommodityState() != CommodityState.AUDITED) {
             return false;
         }
@@ -649,10 +648,13 @@ public class CommodityService implements ICommodityService {
             List<Product> products = productDao.findByCommodity_commodityId(commodityId);
             if (LogicUtils.isNotNullAndEmpty(products)) {
                 List<Integer> prodIds=new ArrayList<Integer>();
-                Product defaultProduct=null;
+                Product defaultProduct=commodity.getDefaultProduct();
                 for (int i = 0; i < products.size(); i++) {
                     if(products.get(i).getPublishState()==PublishState.UP_SHELVES){
                         prodIds.add(products.get(i).getProductId());
+                        if (i==0&&defaultProduct.getPublishState()!=PublishState.UP_SHELVES) {
+                            defaultProduct=products.get(i);
+                        }
                     }
                 }
                 if(prodIds.size()<=0){//没有已上架的货品，商品不能上架
