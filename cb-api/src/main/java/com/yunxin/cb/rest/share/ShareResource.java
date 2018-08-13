@@ -2,6 +2,7 @@ package com.yunxin.cb.rest.share;
 
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
+import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.rest.customer.MainResource;
 import com.yunxin.cb.system.service.IProfileService;
@@ -34,6 +35,8 @@ public class ShareResource extends BaseResource {
     private IProfileService profileService;
     @Resource
     private ICustomerService customerService;
+    @Resource
+    private RedisService redisService;
 
     @ApiOperation(value = "获取分享配置信息")
     @ApiImplicitParams({
@@ -47,6 +50,12 @@ public class ShareResource extends BaseResource {
             invitationCode=customer.getInvitationCode();
         }
         logger.info("invitationCode:"+invitationCode);
+        ShareInfo shareInfo = null;
+        if(redisService.getKey("shareInfo")==null){
+            shareInfo = profileService.getShareInfo(invitationCode);
+        }else{
+            shareInfo = (ShareInfo)redisService.getKey("shareInfo");
+        }
         return new ResponseResult(SUCCESS, profileService.getShareInfo(invitationCode));
     }
 }

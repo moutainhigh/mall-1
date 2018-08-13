@@ -39,7 +39,7 @@ public interface FundsPoolDao extends JpaRepository<FundsPool, Integer>, JpaSpec
      * @Return int:
      * @DateTime: 2018/8/8 20:11
      */
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("update FundsPool o set o.funds = o.funds + (?1),o.version = o.version + 1 where o.version = ?2 and o.poolId = ?3")
     int updateFundsByIdAndAndVersion(BigDecimal amount,int version,int poolId);
 }

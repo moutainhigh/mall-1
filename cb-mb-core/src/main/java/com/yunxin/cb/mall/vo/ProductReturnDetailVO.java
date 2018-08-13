@@ -77,6 +77,10 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市")
     private String sellerAddress;
 
+    /** 商家名 */
+    @ApiModelProperty(value="商家名",name="sellerName",example="4s店")
+    private String sellerName;
+
     /** 原因 */
     @ApiModelProperty(value="问题描述",name="reason",example="我不想买了")
     private String reason;
@@ -205,6 +209,14 @@ public class ProductReturnDetailVO implements java.io.Serializable{
         this.reason = reason;
     }
 
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
     @Override
     public String toString() {
         return "ProductReturnDetailVO{" +
@@ -221,6 +233,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
                 ", disposeTime=" + disposeTime +
                 ", refundPrice=" + refundPrice +
                 ", sellerAddress='" + sellerAddress + '\'' +
+                ", sellerName='" + sellerName + '\'' +
                 ", reason='" + reason + '\'' +
                 ", productReturnItemDetails=" + productReturnItemDetails +
                 '}';
@@ -267,6 +280,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
             //商家地址信息
             if (model.getSeller() != null) {
                 productReturnDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+                productReturnDetailVO.setSellerName(model.getSeller().getSellerName());
             }
             if (model.getOrderItems() != null && !model.getOrderItems().isEmpty()) {
                 Set<ProductReturnItemDetailVO> productReturnItemDetails = new HashSet<ProductReturnItemDetailVO>();
@@ -276,6 +290,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
                     //商家地址信息
                     if (model.getSeller() != null) {
                         productReturnItemDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+                        productReturnItemDetailVO.setSellerName(model.getSeller().getSellerName());
                     }
                     //货品信息
                     if (orderItem.getProduct() != null) {

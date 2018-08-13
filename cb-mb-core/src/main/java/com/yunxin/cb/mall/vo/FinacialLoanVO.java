@@ -1,12 +1,17 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.mall.entity.FinacialLoan;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.entity.meta.LoanType;
+import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.beans.BeansException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(value = "用户借款VO", description = "用户借款VO FinacialLoanVO")
 public class FinacialLoanVO {
@@ -246,5 +251,36 @@ public class FinacialLoanVO {
                 ", creditAmount=" + creditAmount +
                 ", insuranceAmount=" + insuranceAmount +
                 '}';
+    }
+
+    /**
+     * 分页DO转换VO
+     */
+    public static List<FinacialLoanVO> dOconvertVOList (List<FinacialLoan> list) throws Exception{
+        try {
+            List<FinacialLoanVO> volist = new ArrayList<>();
+            for (FinacialLoan model : list) {
+                FinacialLoanVO vo = new FinacialLoanVO();
+                org.springframework.beans.BeanUtils.copyProperties(model, vo);
+                volist.add(vo);
+            }
+            return volist;
+        } catch (BeansException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 分页DO转换VO
+     */
+    public static PageFinder<FinacialLoanVO> dOconvertVOPage (PageFinder<FinacialLoan> pageFinder) throws Exception{
+        PageFinder<FinacialLoanVO> page = new PageFinder<FinacialLoanVO> (pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
+        if (pageFinder != null) {
+            List<FinacialLoanVO> list = FinacialLoanVO.dOconvertVOList(pageFinder.getData());
+            page.setData(list);
+        }
+        page.setRowCount(pageFinder.getRowCount());//记录总数
+        return page;
     }
 }

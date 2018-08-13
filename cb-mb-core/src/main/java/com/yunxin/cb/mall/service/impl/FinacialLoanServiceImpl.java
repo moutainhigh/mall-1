@@ -4,17 +4,22 @@ import com.yunxin.cb.mall.entity.FinacialCreditLineBill;
 import com.yunxin.cb.mall.entity.FinacialLoan;
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.LoanState;
+import com.yunxin.cb.mall.entity.meta.LoanType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
+import com.yunxin.cb.mall.mapper.FinacialCreditLineBillMapper;
 import com.yunxin.cb.mall.mapper.FinacialLoanMapper;
 import com.yunxin.cb.mall.service.FinacialLoanService;
 import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
 import com.yunxin.cb.mall.vo.FinacialWalletVO;
+import com.yunxin.cb.util.CalendarUtils;
+import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -30,6 +35,8 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
     private FinacialLoanMapper finacialLoanMapper;
     @Resource
     private FinacialWalletService finacialWalletService;
+    @Resource
+    private FinacialCreditLineBillMapper finacialCreditLineBillMapper;
 
     private static final Log log = LogFactory.getLog(FinacialLoanServiceImpl.class);
     /**
@@ -64,7 +71,18 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
         BeanUtils.copyProperties(finacialLoan, finacialLoanVO);
         //更新钱包额度
         finacialWalletService.updateFinacialWallet(finacialWalletVO);
+        Date now = new Date();
         //添加借款记录
+        finacialLoan.setCreateTime(now);
+        finacialLoan.setState(LoanState.WAIT_LOAN);
+        finacialLoan.setType(LoanType.LOAN);
+        //还款时间
+        finacialLoan.setFinalRepaymentTime(CalendarUtils.addMonth(now, finacialLoan.getRepaymentTerm()));
+        finacialLoan.setLateFee(BigDecimal.ZERO);
+        finacialLoan.setOverdueNumer(0);
+        finacialLoan.setReadyAmount(BigDecimal.ZERO);
+        finacialLoan.setRepayAmount(finacialLoan.getAmount().add(finacialLoan.getInterest()));
+        finacialLoan.setTerm(1);//默认为1期
         finacialLoanMapper.insert(finacialLoan);
         //添加额度明细
         FinacialCreditLineBill finacialCreditLineBill = new FinacialCreditLineBill();
@@ -72,9 +90,10 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
         finacialCreditLineBill.setType(CapitalType.SUBTRACT);
         finacialCreditLineBill.setTransactionType(TransactionType.APPLY_LOAN);
         finacialCreditLineBill.setAmount(finacialLoan.getInsuranceAmount());//只记录保单额度变更
-        finacialCreditLineBill.setCreateTime(new Date());
+        finacialCreditLineBill.setCreateTime(now);
         finacialCreditLineBill.setFinacialCreditLineId(finacialLoan.getLoanId());
         finacialCreditLineBill.setTransactionDesc("贷款申请");
+        finacialCreditLineBillMapper.insert(finacialCreditLineBill);
         return finacialLoanVO;
     }
 
@@ -147,5 +166,25 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
         finacialLoan.setStateList(list);
         q.setData(finacialLoan);
         return finacialLoanMapper.count(q);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public PageFinder<FinacialLoan> page(Query q) {
+        try {
+            //调用dao查询满足条件的分页数据
+            List<FinacialLoan> list = finacialLoanMapper.pageList(q);
+            //调用dao统计满足条件的记录总数
+            long rowCount = finacialLoanMapper.count(q);
+            //如list为null时，则改为返回一个空列表
+            list = list == null ? new ArrayList<FinacialLoan>(0) : list;
+            //将分页数据和记录总数设置到分页结果对象中
+            PageFinder<FinacialLoan> page = new PageFinder<FinacialLoan>(q.getPageNo(), q.getPageSize(), rowCount);
+            page.setData(list);
+            return page;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
     }
 }

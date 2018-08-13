@@ -3,6 +3,7 @@
  */
 package com.yunxin.cb.mall.service.imp;
 
+import com.yunxin.cb.config.OrderConfig;
 import com.yunxin.cb.mall.dao.*;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.Order;
@@ -12,6 +13,7 @@ import com.yunxin.cb.mall.exception.ProductBarterException;
 import com.yunxin.cb.mall.exception.ProductReturnException;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.ConfirmOrder;
+import com.yunxin.cb.rb.service.IFundsPoolService;
 import com.yunxin.cb.util.CalculateHelper;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.core.exception.EntityExistException;
@@ -31,10 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author gonglei
@@ -108,6 +107,8 @@ public class OrderService implements IOrderService {
     private CustomerWalletDao customerWalletDao;
     @Resource
     private OrdersLogDao orderLogDao;
+    @Resource
+    private IFundsPoolService fundsPoolService;
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -480,8 +481,95 @@ public class OrderService implements IOrderService {
     @Override
     public void cancelTimeOutOrders() {
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.HOUR_OF_DAY, -24);
-        orderDao.cancelTimeOutOrders(OrderState.PENDING_PAYMENT, c.getTime());
+        c.add(Calendar.HOUR_OF_DAY, -OrderConfig.ORDER_OVER_TIME.getTime());
+        //orderDao.cancelTimeOutOrders(OrderState.PENDING_PAYMENT, c.getTime());
+        List<Order> orders = orderDao.findOrderByOrderStateAndCreateTime(OrderState.PAID_PAYMENT, c.getTime());
+        if (orders != null && !orders.isEmpty()) {
+            Date now = new Date();
+            for (Order order : orders) {
+                order.setOrderState(OrderState.CANCELED);
+                order.setCancelReason("订单超时未支付");
+                order.setCancelTime(now);
+                order.setUpdateTime(now);
+                //库存操作
+                List<OrderItem> orderItems = order.getOrderItems();
+                if (orderItems != null && !orderItems.isEmpty()) {
+                    for (OrderItem orderItem : orderItems) {
+                        //更新库存
+                        Product product = orderItem.getProduct();
+                        //增加库存
+                        product.setStoreNum(product.getStoreNum() + orderItem.getProductNum());
+                        int reservedStoreNum = product.getReservedStoreNum();
+                        product.setReservedStoreNum(reservedStoreNum - orderItem.getProductNum());
+                        if (reservedStoreNum - orderItem.getProductNum() < 0) {
+                            product.setReservedStoreNum(0);
+                        }
+                    }
+                }
+                //日志操作
+                OrderLog orderLog = new OrderLog();
+                orderLog.setTime(now);
+                orderLog.setOrderCode(order.getOrderCode());
+                orderLog.setHandler("后台定时任务");
+                orderLog.setRemark("订单定时取消");
+                orderLogDao.save(orderLog);
+            }
+        }
+    }
+
+    /**
+     * 查询已发货订单 如果超过1周则将其订单状态设为 已收货
+     */
+    @Override
+    public void confirmReceivedOrders() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_RECEIVED_TIME.getTime());
+        //orderDao.taskDeliverTimeOrders(OrderState.RECEIVED, OrderState.OUT_STOCK, c.getTime());
+        List<Order> orders = orderDao.findOrderByOrderStateAndDeliverTime(OrderState.OUT_STOCK, c.getTime());
+        if (orders != null && !orders.isEmpty()) {
+            Date now = new Date();
+            for (Order order : orders) {
+                order.setOrderState(OrderState.RECEIVED);
+                order.setCollectTime(now);
+                order.setUpdateTime(now);
+                //日志操作
+                OrderLog orderLog = new OrderLog();
+                orderLog.setTime(now);
+                orderLog.setOrderCode(order.getOrderCode());
+                orderLog.setHandler("后台定时任务");
+                orderLog.setRemark("订单定时收货");
+                orderLogDao.save(orderLog);
+            }
+        }
+    }
+
+    /**
+     * 查询已收货订单 如果超过1周则将其订单状态设为 已完成
+     */
+    @Override
+    public void completedOrders() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
+        //orderDao.taskCollectTimeOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
+        List<Order> orders = orderDao.findOrderByOrderStateAndCollectTime(OrderState.RECEIVED, c.getTime());
+        if (orders != null && !orders.isEmpty()) {
+            Date now = new Date();
+            for (Order order : orders) {
+                order.setOrderState(OrderState.SUCCESS);
+                order.setFinishTime(now);
+                order.setUpdateTime(now);
+                //日志操作
+                OrderLog orderLog = new OrderLog();
+                orderLog.setTime(now);
+                orderLog.setOrderCode(order.getOrderCode());
+                orderLog.setHandler("后台定时任务");
+                orderLog.setRemark("订单定时完成");
+                orderLogDao.save(orderLog);
+                //资金如资金池
+                fundsPoolService.updateAndCountOrderAmout(order.getOrderId());
+            }
+        }
+
     }
 
     @Override
@@ -895,6 +983,7 @@ public class OrderService implements IOrderService {
         if (auditState == AuditState.AUDITED) {
             order.setOrderState(OrderState.OUT_STOCK);//直接跳过已支付到已发货
             order.setPaymentTime(now);
+            order.setDeliverTime(now);
             order.setUpdateTime(now);
             orderLog.setRemark("订单审核通过");
         } else if (auditState == AuditState.NOT_AUDIT) {
@@ -924,6 +1013,21 @@ public class OrderService implements IOrderService {
         order.setCancelReason(cancelReason);
         order.setCancelTime(now);
         order.setUpdateTime(now);
+        //库存操作
+        List<OrderItem> orderItems = order.getOrderItems();
+        if (orderItems != null && !orderItems.isEmpty()) {
+            for (OrderItem orderItem : orderItems) {
+                //更新库存
+                Product product = orderItem.getProduct();
+                //增加库存
+                product.setStoreNum(product.getStoreNum() + orderItem.getProductNum());
+                int reservedStoreNum = product.getReservedStoreNum();
+                product.setReservedStoreNum(reservedStoreNum - orderItem.getProductNum());
+                if (reservedStoreNum - orderItem.getProductNum() < 0) {
+                    product.setReservedStoreNum(0);
+                }
+            }
+        }
         //添加订单日志
         OrderLog orderLog = new OrderLog();
         orderLog.setTime(now);

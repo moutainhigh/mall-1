@@ -107,6 +107,10 @@ public interface IOrderService {
      */
     public void cancelTimeOutOrders();
 
+    public void confirmReceivedOrders();
+
+    public void completedOrders();
+
     boolean cancelOrder(int orderId, String cancelReason);
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

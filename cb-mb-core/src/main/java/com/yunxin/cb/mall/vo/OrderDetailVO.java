@@ -258,6 +258,7 @@ public class OrderDetailVO implements java.io.Serializable{
                 //商家地址信息
                 if (model.getSeller() != null) {
                     oderItemDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+                    oderItemDetailVO.setSellerName(model.getSeller().getSellerName());
                 }
                 //货品信息
                 if (orderItem.getProduct() != null) {
