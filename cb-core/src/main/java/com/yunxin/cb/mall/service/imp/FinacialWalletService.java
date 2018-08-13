@@ -104,4 +104,9 @@ public class FinacialWalletService implements IFinaciaWalletService {
         return null;
     }
 
+    @Override
+    public FinacialWallet getFinacialWalletByCustomerId(int customerId) {
+        return finacialWalletDao.findFinacialWalletByCustomerId(customerId);
+    }
+
 }

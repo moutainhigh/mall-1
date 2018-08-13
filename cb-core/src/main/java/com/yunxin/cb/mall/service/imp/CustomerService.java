@@ -11,11 +11,11 @@ import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.dao.FridgeDao;
 import com.yunxin.cb.mall.dao.RankDao;
 import com.yunxin.cb.mall.entity.*;
-import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
+import com.yunxin.cb.mall.service.IFinaciaWalletService;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.security.PBKDF2PasswordEncoder;
@@ -52,6 +52,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.Executors;
 
@@ -90,6 +91,10 @@ public class CustomerService implements ICustomerService {
     private RedisService redisService;
     @Resource
     private InsuranceOrderLogDao insuranceOrderLogDao;
+
+    @Resource
+    private IFinaciaWalletService iFinaciaWalletService;
+
     @Override
     public Fridge addFridge(Fridge fridge) {
         fridge.setCreateTime(new Date());
@@ -742,15 +747,29 @@ public class CustomerService implements ICustomerService {
         if (!customer.isPraise()) {
             List<Customer> listCustomer = findCustomerByLevelCode(customer.getLevelCode());
             Profile Profile = iProfileService.getProfileByProfileName(ProfileName.GIVE_THE_THUMBS_UP);
-            Double ration = 0.05;
+            BigDecimal ration;
             try {
-                ration = Double.parseDouble(Profile.getFileValue());
+                ration = new BigDecimal(Profile.getFileValue());
             } catch (Exception e) {
-                ration = 0.05;
+                ration = new BigDecimal(0.05);
             }
+            BigDecimal price=new BigDecimal(list.get(0).getPrice());
+            BigDecimal rationPrice=price.multiply(ration).setScale(4,BigDecimal.ROUND_DOWN);
             if (listCustomer != null && listCustomer.size() > 0) {
-                for (Customer listCustome : listCustomer)
-                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getPrice());
+                for (Customer listCustome : listCustomer){
+//                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getPrice());
+                    FinacialWallet finacialWallet=iFinaciaWalletService.getFinacialWalletByCustomerId(listCustome.getCustomerId());
+                    if(finacialWallet==null)
+                        finacialWallet.setCustomer(listCustome);
+                    else{
+                        BigDecimal creditAmount=rationPrice.add(finacialWallet.getCreditAmount());
+                        finacialWallet.setCreditAmount(creditAmount);
+                    }
+
+                    iFinaciaWalletService.addFinaciaWallet(finacialWallet,1,rationPrice);
+
+                }
+
 
             }
 
