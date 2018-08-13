@@ -76,6 +76,23 @@
       }
     }
 
+    function enabledItem(enabled) {
+        var dataItem = getSelectedGridItem("grid");
+        if (dataItem) {
+            $.get("enableCustomerById.do", {
+                customerId: dataItem.customerId,
+                enabled: enabled,
+                rad: Math.random()
+            }, function (data) {
+                if (true == data) {
+                    commonNotify("操作成功！", "success");
+                    $("#grid").data("kendoGrid").dataSource.read();
+                } else {
+                    commonNotify("操作失败!", "error");
+                }
+            });
+        }
+    }
   </script>
 </head>
 <body>
@@ -199,6 +216,10 @@
                   <%--<a href="javascript:editItem();"  class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>--%>
                   <%--<a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>--%>
                 </div>
+                <div class="btn-group">
+                  <a href="javascript:void(0);" onclick="enabledItem(true)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
+                  <a href="javascript:void(0);" onclick="enabledItem(false)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
+                </div>
                 <!--
                 <div class="btn-group">
                   <a href="javascript:resetPwd();" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;重置密码</a>
@@ -223,6 +244,7 @@
                 <kendo:grid-column title="手机号" field="mobile" width="100px"/>
                 <kendo:grid-column title="Email" field="email" width="100px"/>
                 <kendo:grid-column filterable="false" title="性别" field="sex" width="100px" template="#=formatSex(sex)#"/>
+                <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
                 <kendo:grid-column title="创建时间" field="createTime" width="150px" format="{0:yyyy-MM-dd HH:mm}" filterable="false"/>
               </kendo:grid-columns>
               <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
