@@ -52,7 +52,7 @@ public class ProductReturnResource extends BaseResource {
             Order order = productReturnService.checkProductReturnApply(orderId, getCustomerId());
             Map returnReason = new HashMap();//退货原因
             for (ReturnReason reason : ReturnReason.values()){
-                returnReason.put(reason, reason.toString());
+                returnReason.put(reason, reason.getName());
             }
             productReturnApplyDataVO.setReturnReason(returnReason);
             productReturnApplyDataVO.setOrderId(order.getOrderId());

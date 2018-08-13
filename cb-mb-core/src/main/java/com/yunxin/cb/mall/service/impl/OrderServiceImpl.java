@@ -49,9 +49,10 @@ public class OrderServiceImpl implements OrderService {
     private DeliveryAddressMapper deliveryAddressMapper;
     @Resource
     private CommodityService commodityService;
-
     @Resource
     private ProductMapper productMapper;
+    @Resource
+    private CustomerMapper customerMapper;
 
     /***
      * 获取预下单数据（订单确认页数据）
@@ -75,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
         TempOrderVO tempOrderVO = new TempOrderVO();
         CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
         if (commodityVo == null) {
-            return null;
+            throw new CommonException("商品不存在");
         }
         //商品信息
         BeanUtils.copyProperties(tempOrderVO, commodityVo);
@@ -158,18 +159,11 @@ public class OrderServiceImpl implements OrderService {
         //支付方式
         if (order.getPaymentType()== PaymentType.LOAN) {
             order.setAuditState(AuditState.WAIT_AUDIT);
-//            CustomerWallet customerWallet = customerWalletMapper.selectByCustomerId(order.getCustomerId());
-//            if (customerWallet != null) {
-//                double expectedReturnAmount = customerWallet.getExpectedReturnAmount() == null ? 0 : customerWallet.getExpectedReturnAmount();
-//                double loanQuota = customerWallet.getLoanQuota() == null ? 0 : customerWallet.getLoanQuota();
-//                //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
-//                if (expectedReturnAmount + loanQuota < totalPrice){
-//                    throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
-//                }
-//                //在后台审核贷款申请通过是减少，优先减收益在减额度
-//            } else {
-//                throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
-//            }
+            //是否需要判断买过保单用户才能购买商品
+            Customer customer = customerMapper.selectByPrimaryKey(order.getCustomerId());
+            if (customer.getPolicy() != 2) { //policy==2才算买过保单
+                throw new CommonException("请先买保单后再购买商品");
+            }
         } else {
             order.setAuditState(AuditState.AUDITED);
         }
