@@ -67,6 +67,7 @@ public class ProductService implements IProductService {
         product.setProductName("");
         product.setProductState(ProductState.AUDITED);
         product.setPublishState(PublishState.WAIT_UP_SHELVES);
+        product.setReservedStoreNum(0);//初始化给0
         product = productDao.save(product);
         int[] attributeIds = product.getAttributeIds();
         StringBuilder sb = new StringBuilder();
