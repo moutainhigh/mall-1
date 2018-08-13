@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -102,70 +103,97 @@ public class FundsPoolService implements IFundsPoolService {
     }
 
     @Override
-    public boolean updateFundsAndSaveFundsPoolLog(BigDecimal amount,int productId,int transactionId,int itemId,int type ) {
-        Product p = productDao.finByProductId(productId);
-        if(p != null){
-            Integer catalogId  = getOneLevelCatalog(p.getCommodity().getCatalog().getCatalogId());
-            FundsPool fundsPool = fundsPoolDao.findByCatalog_CatalogId(catalogId);
-            if(fundsPool != null){//理论上资金池不会存在null的情况，兼容旧数据
-                int version = fundsPool.getVersion();
-                int poolId = fundsPool.getPoolId();
-                if(type == FundsPoolLogType.REIMBURSE.getStatus()){
-                    amount = amount.multiply(new BigDecimal(-1));
-                }
-                int i = fundsPoolDao.updateFundsByIdAndAndVersion(amount,version,poolId);
-                if(i == 1){
-                    FundsPoolLog f = new FundsPoolLog();
-                    f.setAmount(amount);//操作金额
-                    f.setCatalog(fundsPool.getCatalog());
-                    f.setCreateTime(new Date());
-                    f.setFunds(fundsPool.getFunds().add(amount));
-                    f.setFundsPool(fundsPool);
-                    f.setPoolName(fundsPool.getPoolName());
-                    f.setProduct(new Product(productId));//
-                    f.setTransactionId(transactionId);//交易ID,累计为订单号，报帐为报帐ID
-                    f.setItemId(itemId);
-                    f.setType(type);//类型：1.累计，2.报账
-                    f.setVersion(fundsPool.getVersion()+1);
-                    fundsPoolLogDao.save(f);
-                    return true;
-                }
-            }
+    public boolean updateFundsAndSaveFundsPoolLog(FundsPool fundsPool,BigDecimal amount,int type,List<FundsPoolLog> fundsPoolLogs) {
+        int version = fundsPool.getVersion();
+        int poolId = fundsPool.getPoolId();
+        if(type == FundsPoolLogType.REIMBURSE.getStatus()){
+            amount = amount.multiply(new BigDecimal(-1));
+        }
+        int i = fundsPoolDao.updateFundsByIdAndAndVersion(amount,version,poolId);
+        if(i == 1){
+            fundsPoolLogDao.save(fundsPoolLogs);
+            return true;
         }
         return false;
     }
 
     @Override
     public boolean updateAndCountReimbursementAmout(int transactionId) {
-        BigDecimal reimburseAmount = reimbursementOrderDao.getReimburseAmountByReimburseId(transactionId);//报账总金额
         List<ReimbursementOrder> reimbursementOrders = reimbursementOrderDao.getReimbursementOrderItemById(transactionId);
         Product p = productDao.finByProductId(reimbursementOrders.get(0).getOrderItem().getProduct().getProductId());
         Integer catalogId  = getOneLevelCatalog(p.getCommodity().getCatalog().getCatalogId());
         FundsPool fundsPool = fundsPoolDao.findByCatalog_CatalogId(catalogId);
         if (fundsPool != null) {//理论上资金池不会存在null的情况，兼容旧数据
+            List<FundsPoolLog> fundsPoolLogs = new ArrayList<>();
+            BigDecimal totalAmount = new BigDecimal(0);             //操作总金额
+            BigDecimal reimburseAmount = new BigDecimal(0);         //报账总金额
+            BigDecimal funds = fundsPool.getFunds();                     //资金池金额
+            for (int i = 0 ; i < reimbursementOrders.size() ; i++){
+                ReimbursementOrder o = reimbursementOrders.get(i);
+                BigDecimal amount = o.getAmount();
+                reimburseAmount = reimburseAmount.add(amount);
+                amount = amount.multiply(new BigDecimal(-1));
+                funds = funds.add(amount);
+                totalAmount = totalAmount.add(amount);
+                FundsPoolLog f = new FundsPoolLog();
+                f.setAmount(amount);//操作金额
+                f.setCatalog(fundsPool.getCatalog());
+                f.setCreateTime(new Date());
+                f.setFunds(funds);
+                f.setFundsPool(fundsPool);
+                f.setPoolName(fundsPool.getPoolName());
+                f.setProduct(new Product(p.getProductId()));//
+                f.setTransactionId(transactionId);//交易ID,累计为订单号，报帐为报帐ID
+                f.setItemId(o.getReimbursementOrderId());
+                f.setType(FundsPoolLogType.REIMBURSE.getStatus());//类型：1.累计，2.报账
+                f.setVersion(fundsPool.getVersion()+1);
+                fundsPoolLogs.add(f);
+            }
             if (fundsPool.getFunds().compareTo(reimburseAmount) >= 0) {
-                reimbursementOrders.stream().forEach(o -> {
-                    BigDecimal amount = o.getAmount();
-                    updateFundsAndSaveFundsPoolLog(amount, o.getOrderItem().getProduct().getProductId(), transactionId, o.getReimbursementOrderId(), FundsPoolLogType.REIMBURSE.getStatus());
-                });
-                return true;
+                return updateFundsAndSaveFundsPoolLog(fundsPool,totalAmount,FundsPoolLogType.REIMBURSE.getStatus(),fundsPoolLogs);
             } else {
                 logger.info("目前资金池金额：{},报账的金额：{}，资金池金额不足！！！",fundsPool.getFunds(),reimburseAmount);
                 return false;
             }
         }
+        logger.error("一级分类id：{}的资金池为null,有异常",catalogId);
         return false;
     }
 
     @Override
     public boolean updateAndCountOrderAmout(int transactionId) {
         List<OrderItem> orderItems = orderItemDao.findOrderItemsByOrder_OrderId(transactionId);
-        orderItems.stream().forEach(o->{
+        List<FundsPoolLog> fundsPoolLogs = new ArrayList<>();
+        Product p = productDao.finByProductId(orderItems.get(0).getProduct().getProductId());
+        Integer catalogId  = getOneLevelCatalog(p.getCommodity().getCatalog().getCatalogId());
+        FundsPool fundsPool = fundsPoolDao.findByCatalog_CatalogId(catalogId);
+        BigDecimal totalAmount = new BigDecimal(0);         //操作总金额
+        BigDecimal funds = fundsPool.getFunds();                 //资金池金额
+        for (int i = 0 ; i < orderItems.size() ; i++){
+            OrderItem o = orderItems.get(i);
             float v = (o.getSalePrice() - o.getCostPrice()) * o.getProductNum();
             BigDecimal amount = new BigDecimal(Float.toString(v));
-            updateFundsAndSaveFundsPoolLog(amount,o.getProduct().getProductId(),transactionId,o.getItemId(),FundsPoolLogType.GRAND.getStatus());
-        });
-        return true;
+            funds = funds.add(amount);
+            totalAmount = totalAmount.add(amount);
+            FundsPoolLog f = new FundsPoolLog();
+            f.setAmount(amount);//操作金额
+            f.setCatalog(fundsPool.getCatalog());
+            f.setCreateTime(new Date());
+            f.setFunds(funds);
+            f.setFundsPool(fundsPool);
+            f.setPoolName(fundsPool.getPoolName());
+            f.setProduct(new Product(p.getProductId()));//
+            f.setTransactionId(transactionId);//交易ID,累计为订单号，报帐为报帐ID
+            f.setItemId(o.getItemId());
+            f.setType(FundsPoolLogType.GRAND.getStatus());//类型：1.累计，2.报账
+            f.setVersion(fundsPool.getVersion()+1);
+            fundsPoolLogs.add(f);
+        }
+        if(totalAmount.compareTo(new BigDecimal(0))>=0) {
+            return updateFundsAndSaveFundsPoolLog(fundsPool, totalAmount, FundsPoolLogType.GRAND.getStatus(), fundsPoolLogs);
+        }
+        logger.error("订单号:{}的操作总金额:{},存在异常",transactionId,totalAmount);
+        return false;
     }
 
     /**
