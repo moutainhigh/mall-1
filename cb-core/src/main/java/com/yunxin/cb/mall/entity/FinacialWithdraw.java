@@ -29,77 +29,49 @@ public class FinacialWithdraw implements Serializable {
     /**  */
     private Integer withdrawId;
 
-    /**
-     * 用户id
-     */
+    /** 用户id */
     private Customer customer;
 
-    /**
-     * 提现人银行卡
-     */
+    /** 提现人银行卡 */
     private BankInfo bank;
 
-    /**
-     * 提现金额
-     */
+    /** 提现金额 */
     private BigDecimal amount;
 
-//    private BigDecimal amountBegin;
-//    private BigDecimal amountEnd;
+    private BigDecimal amountBegin;
+    private BigDecimal amountEnd;
 
-    /**
-     * 实际提现金额
-     */
+    /** 实际提现金额 */
     private BigDecimal realAmount;
 
-    /**
-     * 提现手续费
-     */
+    /** 提现手续费 */
     private BigDecimal chargeFee;
 
-    /**
-     * 状态：0.审核中 1.审核失败 2.待发放 3.转账中 4.交易完成
-     */
+    /** 状态：0.审核中 1.审核失败 2.待发放 3.转账中 4.交易完成 */
     private WithdrawState state;
 
-    /**
-     * 提现类型：0.报账转账 1.保险返利转账
-     */
+    /** 提现类型：0.报账转账 1.保险返利转账 */
     private WithdrawType withdrawType;
 
-    /**
-     * 审核时间
-     */
+    /** 审核时间 */
     private Date auditDate;
 
-    /**
-     * 审核员
-     */
+    /** 审核员 */
     private String auditOperator;
 
-    /**
-     * 审核意见
-     */
+    /** 审核意见 */
     private String auditMessage;
 
-    /**
-     * 发放时间
-     */
+    /** 发放时间 */
     private Date grantDate;
 
-    /**
-     * 发放员
-     */
+    /** 发放员 */
     private String grantOperator;
 
-    /**
-     * 提现时间
-     */
+    /** 提现时间 */
     private Date applyDate;
 
-    /**
-     * 修改时间
-     */
+    /** 修改时间 */
     private Date updateDate;
 
     @Id
@@ -251,19 +223,19 @@ public class FinacialWithdraw implements Serializable {
         this.updateDate = updateDate;
     }
 
-//    public BigDecimal getAmountBegin() {
-//        return amountBegin;
-//    }
-//
-//    public void setAmountBegin(BigDecimal amountBegin) {
-//        this.amountBegin = amountBegin;
-//    }
-//
-//    public BigDecimal getAmountEnd() {
-//        return amountEnd;
-//    }
-//
-//    public void setAmountEnd(BigDecimal amountEnd) {
-//        this.amountEnd = amountEnd;
-//    }
+    public BigDecimal getAmountBegin() {
+        return amountBegin;
+    }
+
+    public void setAmountBegin(BigDecimal amountBegin) {
+        this.amountBegin = amountBegin;
+    }
+
+    public BigDecimal getAmountEnd() {
+        return amountEnd;
+    }
+
+    public void setAmountEnd(BigDecimal amountEnd) {
+        this.amountEnd = amountEnd;
+    }
 }

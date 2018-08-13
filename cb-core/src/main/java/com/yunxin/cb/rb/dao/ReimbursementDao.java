@@ -12,4 +12,7 @@ public interface ReimbursementDao extends JpaRepository<Reimbursement, Integer>,
     @Modifying
     @Query("update Reimbursement c set c.orderState=?1 where c.reimbursementId = ?2")
     void updateReimbursementState(ReimbursementType orderState,int reimbursementId);
+
+    @Query("select c from Reimbursement c left join fetch c.customer left join fetch c.reimbursementProcess where c.reimbursementId = ?1")
+    Reimbursement getReimbursement(int reimbursementId);
 }

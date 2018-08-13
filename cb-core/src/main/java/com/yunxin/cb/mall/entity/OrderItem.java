@@ -70,6 +70,9 @@ public class OrderItem implements java.io.Serializable {
      */
     private List<ReimbursementOrder> reimbursementOrders=new ArrayList<>();
 
+    /** 成本价 */
+    private Float costPrice;
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)
@@ -102,6 +105,7 @@ public class OrderItem implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "ORDER_ID", nullable = false)
     public Order getOrder() {
         return order;
@@ -185,5 +189,14 @@ public class OrderItem implements java.io.Serializable {
 
     public void setReimbursementOrders(List<ReimbursementOrder> reimbursementOrders) {
         this.reimbursementOrders = reimbursementOrders;
+    }
+
+    @Column(nullable = false, precision = 12, scale = 2)
+    public Float getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(Float costPrice) {
+        this.costPrice = costPrice;
     }
 }

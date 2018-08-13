@@ -94,7 +94,8 @@ public class FundsPoolController {
     @RequestMapping(value = "pageFundsPoolLog")
     @ResponseBody
     public Page<FundsPoolLog> pageFundsPoolLog(@RequestBody PageSpecification<FundsPoolLog> fundsPoolLogQuery, ModelMap modelMap) {
-//        fundsPoolService.updateFundsAndSaveFundsPoolLog(new BigDecimal(1),1,1,472,58,1);
+//        fundsPoolService.updateAndCountOrderAmout(94);//测试
+//        fundsPoolService.updateAndCountReimbursementAmout(18);//测试
         return fundsPoolService.pageFundsPoolLog(fundsPoolLogQuery);
     }
 

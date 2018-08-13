@@ -28,6 +28,16 @@ public class ReimbursementController {
     public String reimbursements() {
         return "rb/reimbursements";
     }
+
+    @RequestMapping(value = "reimbursementEa", method = RequestMethod.GET)
+    public String reimbursementEa() {
+        return "rb/reimbursementEa";
+    }
+    @RequestMapping(value = "reimbursementEam", method = RequestMethod.GET)
+    public String reimbursementEam() {
+        return "rb/reimbursementEam";
+    }
+
     /**
      * 分页列表
      *
@@ -36,8 +46,8 @@ public class ReimbursementController {
      */
     @RequestMapping(value = "pageReimbursement", method = RequestMethod.POST)
     @ResponseBody
-    public Page<Reimbursement> pageReimbursement(@RequestBody PageSpecification<Reimbursement> query) {
-        Page<Reimbursement> page = iReimbursementService.pageReimbursement(query);
+    public Page<Reimbursement> pageReimbursement(@RequestBody PageSpecification<Reimbursement> query,@RequestParam("orderState") int orderState) {
+        Page<Reimbursement> page = iReimbursementService.pageReimbursement(query,orderState);
         return page;
     }
 
@@ -65,8 +75,9 @@ public class ReimbursementController {
     public Map<String,Object> reimbursementDetil(@RequestParam("reimbursementId") int reimbursementId) {
         return new HashMap<String,Object>(){
             {
-                put("data",iReimbursementService.queryOrderItemByIds(reimbursementId));
+                put("data",iReimbursementService.findOrder(reimbursementId));
                 put("reimbursement",iReimbursementService.getReimbursement(reimbursementId));
+                put("reimbursementProcess",iReimbursementService.getReimbursementProcessByRe(reimbursementId));
             }
         };
     }
@@ -82,10 +93,15 @@ public class ReimbursementController {
      */
     @RequestMapping(value = "reimbursementAuditing", method = RequestMethod.GET)
     @ResponseBody
-    public boolean reimbursementAuditing(@RequestParam("reimbursementId") int reimbursementId,@RequestParam("reimbursementState") ReimbursementType reimbursementType,
-                                                    @RequestParam("remarks") String remarks,int operType,HttpServletRequest request) {
+    public boolean reimbursementAuditing(@RequestParam("reimbursementId") int reimbursementId,@RequestParam("reimbursementType") ReimbursementType reimbursementType,
+                                                    @RequestParam("remarks") String remarks,@RequestParam("operType") int operType,HttpServletRequest request) {
             return iReimbursementService.reimbursementAuditing(reimbursementId,reimbursementType,remarks,operType,request);
     }
-
+    @RequestMapping(value = "reimbursementAuditings", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean reimbursementAuditings(@RequestParam("reimbursementId") int reimbursementId,
+                                         @RequestParam("remarks") String remarks,HttpServletRequest request) {
+        return true;
+    }
 
 }

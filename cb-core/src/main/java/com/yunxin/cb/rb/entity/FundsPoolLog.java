@@ -50,6 +50,9 @@ public class FundsPoolLog {
     /** 交易ID,累计为订单号，报帐为报帐ID */
     private Integer transactionId;
 
+    /** 类型为1为订单详情ID/类型为2为报账详情ID */
+    private Integer itemId;
+
     /** 商品ID */
 //    private Integer productId;
     private Product product;
@@ -178,5 +181,14 @@ public class FundsPoolLog {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    @Column(nullable = false, length = 25)
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
     }
 }

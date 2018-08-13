@@ -244,7 +244,16 @@
     "name": "财务管理", "code": "19", "type": "MENU", "cssClass": "fa fa-cogs", "value": "finance", "childrenCssClass": "children",
     "children": [
       {
-        "name": "提现管理", "code": "183", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../withdraw/withdrawList.do"
+        "name": "提现管理", "code": "191", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../withdraw/withdrawList.do"
+      },
+      {
+        "name": "报账管理", "code": "192", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursements.do"
+      },
+      {
+        "name": "报账财务审批", "code": "193", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursementEa.do"
+      },
+      {
+        "name": "报账财务主管审批", "code": "194", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursementEam.do"
       }
     ]
   }
