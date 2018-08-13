@@ -45,14 +45,19 @@ public class Reimbursement  implements java.io.Serializable {
 
     @ApiModelProperty(value="报账总金额",name="amount",example="88888")
     private BigDecimal amount;
-
+    @ApiModelProperty(value="报账总金额",name="amountStr",example="77万")
+    private String amountStr;
     @ApiModelProperty(value="税",name="tax",example="2000")
     private BigDecimal tax;
+    @ApiModelProperty(value="税",name="taxStr",example="12.5万")
+    private String taxStr;
     @ApiModelProperty(value="税率",name="taxRate",example="0.23")
     private BigDecimal taxRate;
+
     @ApiModelProperty(value="报账订单总金额",name="orderAmount",example="188888")
     private BigDecimal orderAmount;
-
+    @ApiModelProperty(value="报账订单总金额",name="orderAmountStr",example="12万")
+    private String orderAmountStr;
     @ApiModelProperty(value="分类",name="catalogId",example="1")
     private int catalogId;
 
@@ -64,14 +69,16 @@ public class Reimbursement  implements java.io.Serializable {
     private ReimbursementType orderState;
 
     @ApiModelProperty(value="还款金额",name="repaymentAmount",example="100")
-    private Double repaymentAmount;
-
+    private BigDecimal repaymentAmount;
+    @ApiModelProperty(value="实际到账金额",name="actualAccount",example="100")
+    private BigDecimal actualAccount;
     @ApiModelProperty(value="还款方式",name="repaymentType",example="")
     private RepaymentType repaymentType;
     @ApiModelProperty(value="系统分析",name="repaymentType",example="资金池不足，不可报账")
     private String fundsPoolRemark;
     @ApiModelProperty(value="报账订单",name="orderCodes",example="15465465")
     private String orderCodes;
+
     private List<ReimbursementProcess> reimbursementProcess=new ArrayList<>();
 
     @ApiModelProperty(value="报账订单",name="reimbursementOrder",example="")
@@ -173,11 +180,11 @@ public class Reimbursement  implements java.io.Serializable {
         this.reimbursementProcess = reimbursementProcess;
     }
     @Column(nullable = false, length = 32)
-    public Double getRepaymentAmount() {
+    public BigDecimal getRepaymentAmount() {
         return repaymentAmount;
     }
 
-    public void setRepaymentAmount(Double repaymentAmount) {
+    public void setRepaymentAmount(BigDecimal repaymentAmount) {
         this.repaymentAmount = repaymentAmount;
     }
     @Column(nullable = false, length = 50)
@@ -221,5 +228,38 @@ public class Reimbursement  implements java.io.Serializable {
 
     public void setOrderCodes(String orderCodes) {
         this.orderCodes = orderCodes;
+    }
+
+    @Column(nullable = false, length = 32)
+    public BigDecimal getActualAccount() {
+        return actualAccount;
+    }
+
+    public void setActualAccount(BigDecimal actualAccount) {
+        this.actualAccount = actualAccount;
+    }
+    @Transient
+    public String getAmountStr() {
+        return amountStr;
+    }
+
+    public void setAmountStr(String amountStr) {
+        this.amountStr = amountStr;
+    }
+    @Transient
+    public String getTaxStr() {
+        return taxStr;
+    }
+
+    public void setTaxStr(String taxStr) {
+        this.taxStr = taxStr;
+    }
+    @Transient
+    public String getOrderAmountStr() {
+        return orderAmountStr;
+    }
+
+    public void setOrderAmountStr(String orderAmountStr) {
+        this.orderAmountStr = orderAmountStr;
     }
 }

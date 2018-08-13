@@ -50,5 +50,5 @@ public interface IReimbursementService {
      * @param request
      * @return
      */
-    boolean reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType, String remarks, int operType, HttpServletRequest request);
+    String reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType, String remarks, int operType, HttpServletRequest request);
 }

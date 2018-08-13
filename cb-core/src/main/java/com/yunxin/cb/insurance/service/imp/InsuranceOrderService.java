@@ -7,9 +7,10 @@ import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.meta.BusinessType;
+import com.yunxin.cb.mall.entity.FinacialWallet;
 import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
+import com.yunxin.cb.mall.service.IFinaciaWalletService;
 import com.yunxin.cb.system.entity.Profile;
 import com.yunxin.cb.system.meta.ProfileName;
 import com.yunxin.cb.system.service.IProfileService;
@@ -29,6 +30,7 @@ import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -63,6 +65,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private InsuranceOrderLogDao insuranceOrderLogDao;
     @Resource
     private InsuranceProductDao insuranceProductDao;
+    @Resource
+    private IFinaciaWalletService iFinaciaWalletService;
     /**
      * 根据用户ID查询保险订单列表
      * @return
@@ -172,13 +176,23 @@ public class InsuranceOrderService implements IInsuranceOrderService {
 
                                 int recommerdCustomerId=customer.getRecommendCustomer().getCustomerId();
                                     Profile  Profile=iProfileService.getProfileByProfileName(ProfileName.LOAN_EXPECTED_RETURN_FIFTY);
-                                    Double ration=0.5;
+                                    BigDecimal ration;
                                     try {
-                                        ration = Double.parseDouble(Profile.getFileValue());
+                                        ration = new BigDecimal(Profile.getFileValue());
                                     }catch (Exception e){
-                                        ration=0.5;
+                                        ration=new BigDecimal(0.5);
                                     }
-                                    iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getPrice());
+                            BigDecimal rationPrice=new BigDecimal(insuranceOrder.getPrice()).multiply(ration);
+//                                    iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getPrice());
+                            FinacialWallet finacialWallet=iFinaciaWalletService.getFinacialWalletByCustomerId(recommerdCustomerId);
+                            if(finacialWallet==null)
+                                finacialWallet.setCustomer(customer.getRecommendCustomer());
+                            else{
+                                BigDecimal debtExpected=rationPrice.add(finacialWallet.getDebtExpected());
+                                finacialWallet.setDebtExpected(debtExpected);
+                            }
+
+                            iFinaciaWalletService.addFinaciaWallet(finacialWallet,0,rationPrice);
                         }
                         customer.setPolicy(PolicyType.PAYMENT);
                     }
