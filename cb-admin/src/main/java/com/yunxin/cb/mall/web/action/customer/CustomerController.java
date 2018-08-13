@@ -159,4 +159,22 @@ public class CustomerController {
         }
     }
 
+    /**
+     * 修改状态
+     * @param customerId
+     * @param enabled
+     * @return
+     */
+    @RequestMapping(value = "enableCustomerById",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean enableCustomerById(@RequestParam("customerId") int customerId,@RequestParam("enabled") boolean enabled) {
+        try{
+            customerService.enableCustomerById(customerId,enabled);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
 }

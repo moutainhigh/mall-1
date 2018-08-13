@@ -156,6 +156,8 @@ public class InsuranceInformedMatterService implements IInsuranceInformedMatterS
         oldMatter.setSerNo(insuranceInformedMatter.getSerNo());
         oldMatter.setMatterGroup(insuranceInformedMatter.getMatterGroup());
         oldMatter.setEnabled(insuranceInformedMatter.getEnabled());
+        oldMatter.setInsuredPeople(insuranceInformedMatter.getInsuredPeople());
+        oldMatter.setInsurePeople(insuranceInformedMatter.getInsurePeople());
         return oldMatter;
     }
 
