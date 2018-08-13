@@ -7,57 +7,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>报账列表</title>
+    <title>返现列表</title>
     <script type="application/javascript">
-        $(document).ready(function () {
-            $("#createTime").kendoDatePicker({
-                format: "yyyy-MM-dd",
-                culture: "zh-CN",
-                parseFormats: ["yyyy-MM-dd"]
-            });
-            $("#createTimes").kendoDatePicker({
-                format: "yyyy-MM-dd",
-                culture: "zh-CN",
-                parseFormats: ["yyyy-MM-dd"]
-            });
-        });
+        function checkTime() {
+            if ($('#amount').val() > $('#amounts').val() && '' != $('#amounts').val()) {
+                alert("开始金额不能大于结束金额")
+                $('#amounts').val('')
+            }
+        }
 
         function formatOrderState(orderState) {
             switch (orderState) {
-                case "WAIT":
-                    return "财务员审批中";
-                case "DIRECTOR_IN_APPROVAL":
-                    return "财务主管审批中";
-                case "ALREADY_TO_ACCOUNT":
-                    return "已到账";
-                case "NOT_PASS_THROUGH":
-                    return "审批不通过";
-                case "CANCEL_REIMBURSEMENT":
-                    return "取消报账";
-
-            }
-        }
-        function auditItem(reimbursementId){
-
-            $('#auditDialog').modal();
-
-
-            $("#trs").html("");
-            $.get("reimbursementOrder.do?reimbursementId="+reimbursementId,$("#tables").serialize(),function(result){
-
-                var rem=result.data;
-                    for(var i=0;i<rem.length;i++){
-                        $("#trs").append("<tr name='trtd'><td>"+rem[i].order.orderCode+"</td><td>"+rem[i].order.totalPrice+"</td><td>"+rem[i].order.createTime+"</td></tr>");
-                    }
-            });
-
-
-        }
-
-        function checkTime() {
-            if ($('#createTime').val() > $('#createTimes').val() && '' != $('#createTimes').val()) {
-                alert("开始时间不能大于结束时间")
-                $('#createTimes').val('')
+                case "FINANCE_IN_APPROVAL":
+                    return "待返现";
+                case "FINISHED":
+                    return "已返现";
+                case "FAILED":
+                    return "返现失败";
             }
         }
 
@@ -98,7 +64,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>报账</h2>
+                    <h2>返现列表</h2>
                 </div>
                 <div class="pull-right">
 
@@ -140,19 +106,19 @@
                     <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
-                                <strong>报账编号:</strong>
+                                <strong>返现人:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="reimbursementNo" data-operator="contains"
-                                       class="form-control grid-filter" placeholder="请输入保单编号"/>
+                                <input type="text" data-filter="customerName" data-operator="contains"
+                                       class="form-control grid-filter" placeholder="返现人"/>
                             </div>
 
                             <div class="toolbar-field">
-                                <strong>报账人:</strong>
+                                <strong>返现人手机:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="customer.realName" data-operator="contains"
-                                       class="form-control grid-filter" placeholder="请输入报账人"/>
+                                <input type="text" data-filter="customer.mobile" data-operator="contains"
+                                       class="form-control grid-filter" placeholder="返现人手机"/>
                             </div>
 
 
@@ -162,25 +128,20 @@
                         <div class="pull-left">
 
                             <div class="toolbar-field">
-                                <strong>手机号码:</strong>
+                                <strong>返现金额:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="customer.mobile" data-operator="contains"
-                                       class="form-control grid-filter" placeholder="请输入手机号码"/>
-                            </div>
-
-                            <div class="toolbar-field">
-                                <strong>状态:</strong>
+                                <input type="text" data-filter="amount" data-operator="gte" id="amount"
+                                       class="form-control grid-filter" placeholder="返现金额"/>
                             </div>
                             <div class="toolbar-field">
-                                <select data-filter="orderState" id="payState" data-operator="eq"
-                                        class="form-control  grid-filter">
-                                    <option value="">全部</option>
-                                    <option value="FINANCE_IN_APPROVAL">财务员审批中</option>
-                                    <option value="DIRECTOR_IN_APPROVAL">财务主管审批中</option>
-                                    <option value="ALREADY_TO_ACCOUNT">已到账</option>
-                                    <option value="NOT_PASS_THROUGH">审批不通过</option>
-                                </select>
+                                <strong>-</strong>
+                            </div>
+                            <div class="toolbar-field">
+                                <input name="createTime" onchange="checkTime()"
+                                       onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="amounts"
+                                       placeholder="返现金额" data-filter="amount" data-operator="lte"
+                                       class="form-control grid-filter"/>
                             </div>
 
                         </div>
@@ -203,7 +164,7 @@
                 <div class="toolbar responsive-helper">
                     <header>
                         <div class="pull-left">
-                            <h3>报账列表</h3>
+                            <h3>返现列表</h3>
                         </div>
 
                         <div class="pull-right">
@@ -229,28 +190,18 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="报账单号" filterable="false" field="reimbursementNo" width="100"
+                            <kendo:grid-column title="返现人" filterable="false" field="customerName" width="100"
                                               />
-                            <kendo:grid-column title="报账人" filterable="false" field="customer" width="100"
-                                               template="#=customer.realName#" />
-                            <kendo:grid-column title="报账人手机" filterable="false" field="customer"
-                                               template="#=customer.mobile#" width="100"/>
-                            <kendo:grid-column title="报账总金额" filterable="false" field="amountStr"
-                                               width="100"/>
-                            <kendo:grid-column title="税" filterable="false" field="taxStr"
-                                                width="100"/>
-                            <kendo:grid-column title="报账订单总金额" filterable="false" field="orderAmountStr"
-                                                width="100"/>
-                            <%--<kendo:grid-column title="报账订单" filterable="false"--%>
-                                               <%--width="100" template="<a href='reimbursementOrders.do?reimbursementId=#= reimbursementId#' style='color:blue'>查看</a>" />--%>
-                            <kendo:grid-column title="报账订单" filterable="false" field="orderCodes"
-                                               width="100" />
-                            <kendo:grid-column title="申报时间" filterable="false" field="createTime"
+                            <kendo:grid-column title="返现人手机" filterable="false" field="customer" width="100"
+                                               template="#=customer.mobile#" />
+                            <kendo:grid-column title="返现金额" filterable="false" field="amount"
+                                              width="100"/>
+                            <kendo:grid-column title="状态" filterable="false" field="state"
+                                               template="#=formatOrderState(state)#"  width="100"/>
+                            <kendo:grid-column title="返现时间" filterable="false" field="createTime"
                                                format="{0:yyyy-MM-dd HH:mm}" width="100"/>
-                            <kendo:grid-column title="状态" filterable="false" field="orderState"
-                                               template="#=formatOrderState(orderState)#" width="100"/>
-                            <kendo:grid-column title="系统分析" filterable="false" field="fundsPoolRemark"
-                                               width="100"/>
+                            <kendo:grid-column title="返利保单" filterable="false" field="orderNo"
+                                                width="100"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
@@ -261,7 +212,7 @@
                                 </kendo:dataSource-schema-model>
                             </kendo:dataSource-schema>
                             <kendo:dataSource-transport>
-                                <kendo:dataSource-transport-read url="pageReimbursement.do?orderState=0" type="POST"
+                                <kendo:dataSource-transport-read url="pageFinacialInsuCashbackLog.do" type="POST"
                                                                  contentType="application/json"/>
                                 <kendo:dataSource-transport-parameterMap>
                                     <script>

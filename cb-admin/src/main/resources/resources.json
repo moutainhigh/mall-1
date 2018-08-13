@@ -254,6 +254,9 @@
       },
       {
         "name": "报账财务主管审批", "code": "194", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursementEam.do"
+      },
+      {
+        "name": "返现管理", "code": "195", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../finacialInsuCashbackLog/finacialInsuCashbackLogs.do"
       }
     ]
   }
