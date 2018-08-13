@@ -11,14 +11,16 @@ import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Api(description = "品牌接口")
 @RestController
@@ -39,7 +41,7 @@ public class BrandResource extends BaseResource {
             List<BrandVO> listVO = new ArrayList<>();
             for(Brand brand : list){
                 BrandVO brandVO = new BrandVO();
-                BeanUtils.copyProperties(brandVO, brand);
+                BeanUtils.copyProperties(brand,brandVO);
                 listVO.add(brandVO);
             }
             return new ResponseResult(listVO);
@@ -57,14 +59,22 @@ public class BrandResource extends BaseResource {
     public ResponseResult<List<BrandVO>> getHotBrand() {
         try {
             List<Brand> list = brandService.selectHotBrand();
-            List<BrandVO> listVO = new ArrayList<>();
-            for(Brand brand : list){
-                BrandVO brandVO = new BrandVO();
-                BeanUtils.copyProperties(brandVO, brand);
-                listVO.add(brandVO);
-            }
+            List<BrandVO> listVO = list.stream()
+                    .map(brand -> {
+                        BrandVO brandVO = new BrandVO();
+                        BeanUtils.copyProperties(brandVO, brand);
+                        return brandVO;
+                    }).collect(Collectors.toList());
+
+//                    new ArrayList<>();
+//            for(Brand brand : list){
+//                BrandVO brandVO = new BrandVO();
+//                BeanUtils.copyProperties(brandVO, brand);
+//                listVO.add(brandVO);
+//            }
             return new ResponseResult(listVO);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.info("brand failed", e);
             return new ResponseResult(Result.FAILURE);
         }

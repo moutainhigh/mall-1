@@ -53,7 +53,7 @@ public class OrderResource extends BaseResource {
             TempOrderVO tempOrderVO = orderService.getTempOrder(getCustomerId(), productId, buyNum, paymentType);
             return new ResponseResult(tempOrderVO);
         } catch (CommonException e) {
-            logger.info("getTempOrder failed", e.getMessage());
+            logger.info("getTempOrder failed", e);
             return new ResponseResult(Result.FAILURE, e.getMessage());
         } catch (Exception e) {
             logger.error("getTempOrder failed ", e);
@@ -87,7 +87,7 @@ public class OrderResource extends BaseResource {
             }
             return new ResponseResult(result.getOrderId());
         } catch (CommonException e) {
-            logger.info("addOrder failed", e.getMessage());
+            logger.info("addOrder failed", e);
             return new ResponseResult(Result.FAILURE, e.getMessage());
         } catch (Exception e) {
             logger.error("addOrder failed", e);
@@ -154,7 +154,7 @@ public class OrderResource extends BaseResource {
             }
             return new ResponseResult(Result.SUCCESS);
         } catch (CommonException e) {
-            logger.info("cancelOrder failed", e.getMessage());
+            logger.info("cancelOrder failed", e);
             return new ResponseResult(Result.FAILURE, e.getMessage());
         } catch (Exception e) {
             logger.error("cancelOrder failed", e);
@@ -175,7 +175,7 @@ public class OrderResource extends BaseResource {
             }
             return new ResponseResult(Result.SUCCESS);
         } catch (CommonException e) {
-            logger.info("confirmOrder failed", e.getMessage());
+            logger.info("confirmOrder failed", e);
             return new ResponseResult(Result.FAILURE, e.getMessage());
         } catch (Exception e) {
             logger.error("confirmOrder failed", e);

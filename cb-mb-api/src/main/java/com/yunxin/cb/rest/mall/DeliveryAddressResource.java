@@ -142,7 +142,7 @@ public class DeliveryAddressResource extends BaseResource {
             deliveryAddressVO.setCustomerId(getCustomerId());
             DeliveryAddress  addr = deliveryAddressService.selectByPrimaryKey(addressId,getCustomerId());
             //判断当前地址是否是默认地址
-            if(addr.getDefaultAddress() == true){
+            if(addr.getDefaultAddress()){
                 DeliveryAddress deliveryAddress = new DeliveryAddress();
                 BeanUtils.copyProperties(deliveryAddress, deliveryAddressVO);
                 deliveryAddress.setAddressId(addressId);
@@ -150,7 +150,7 @@ public class DeliveryAddressResource extends BaseResource {
                 deliveryAddressService.updateByPrimaryKey(deliveryAddress);
             }else {
                 //判断修改的地址是否为默认地址
-                if(deliveryAddressVO.getDefaultAddress() == true){
+                if(deliveryAddressVO.getDefaultAddress()){
                     DeliveryAddress  deliveryAddr = deliveryAddressService.selectDefaultByCustomerId(getCustomerId());
                     DeliveryAddress deliveryAddress = new DeliveryAddress();
                     BeanUtils.copyProperties(deliveryAddress, deliveryAddressVO);
