@@ -38,7 +38,7 @@
                 }
                 case "ANDROID_DESCRIPTION":{
                 return "安卓APP更新描述";
-            }
+                }
                 case "GIVE_THE_THUMBS_UP":{
                     return "点赞推荐人及所有上级加5%的授信额度";
                 }
@@ -74,6 +74,24 @@
                 }
                 case "MAX_LOAN_NUM":{
                     return "最多借款次数";
+                }
+                case "IOS_VERSION_CODE":{
+                    return "苹果版本编码";
+                }
+                case "IOS_VERSION_NAME":{
+                    return "苹果版本名称";
+                }
+                case "IOS_APP_NAME":{
+                    return "苹果APP名称";
+                }
+                case "IOS_URL":{
+                    return "苹果APP下载地址";
+                }
+                case "IOS_DESCRIPTION":{
+                    return "苹果APP更新描述";
+                }
+                case "IOS_FORCE_UPGRADE":{
+                    return "苹果APP是否强制更新";
                 }
             }
             return state;
@@ -169,7 +187,10 @@
                                 <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                             </div>
                             <div class="btn-group">
-                                <a href="toAddProfile.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;安卓版本更新</a>
+                                <a href="toAddProfileAndroid.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;安卓版本更新</a>
+                            </div>
+                            <div class="btn-group">
+                                <a href="toAddProfileIos.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;苹果版本更新</a>
                             </div>
                         </div>
                     </header>

@@ -50,12 +50,14 @@ public class FinacialWalletService implements IFinaciaWalletService {
         logger.info("addFinaciaWallet:"+fw);
         Customer customer = fw.getCustomer();
         if(finacialWalletDao.findFinacialWalletByCustomerId(customer.getCustomerId())==null){
-            FinacialWallet addfw=new FinacialWallet(customer);
-            finacialWalletDao.save(addfw);
+//            FinacialWallet addfw=new FinacialWallet(customer);
+            /**钱包:初始化钱包信息*/
+            finacialWalletDao.save(fw);
             logger.info("addFinaciaWallet sucess");
         }else{
             FinacialWallet oldfw = finacialWalletDao.findOne(fw.getWalletId());
             fw.setVersion(fw.getVersion()+1);
+            /**钱包:更新钱包信息*/
             AttributeReplication.copying(fw, oldfw, FinacialWallet_.assets, FinacialWallet_.balance,FinacialWallet_.creditAmount,
                     FinacialWallet_.debtCredit,FinacialWallet_.debtExpected,FinacialWallet_.debtTotal,FinacialWallet_.expectedAmount,
                     FinacialWallet_.freezingAmount,FinacialWallet_.insuranceAmount,FinacialWallet_.totalAmount,
@@ -66,6 +68,7 @@ public class FinacialWalletService implements IFinaciaWalletService {
             flog.setWalletLogId(null);
             flog.setType(0);
             flog.setAmount(amount);
+            /**钱包:保存钱包日志记录*/
             finacialWalletLogDao.save(flog);
             logger.info("updateFinaciaWallet sucess");
             FinacialExpectBill finacialExpectBill = new FinacialExpectBill();
@@ -80,12 +83,14 @@ public class FinacialWalletService implements IFinaciaWalletService {
             finacialCreditLineBill.setTransactionDesc(customer.getAccountName()+"点赞增加5%");
             //保险购买
             if(type==0){
+                /**保险:保存预期收益记录*/
                 finacialExpectBillDao.save(finacialExpectBill);
                 logger.info("add FinacialExpectBill sucess:"+finacialExpectBill);
+                /**点赞:保存额度记录*/
                 FinacialCreditLineBillDao.save(finacialCreditLineBill);
                 logger.info("add finacialCreditLineBill sucess:"+finacialCreditLineBill);
             }else{
-                //点赞
+                /**点赞:保存额度记录*/
                 FinacialCreditLineBillDao.save(finacialCreditLineBill);
                 logger.info("add finacialCreditLineBill sucess:"+finacialCreditLineBill);
             }

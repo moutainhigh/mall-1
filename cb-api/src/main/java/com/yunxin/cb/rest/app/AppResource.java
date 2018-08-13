@@ -36,7 +36,6 @@ public class AppResource {
     public ResponseResult checkUpdate(@PathVariable(value = "os") MobileOSType os) {
 
 
-
         return new ResponseResult(SUCCESS, profileService.getAppCheckUpdate(os));
     }
 }
