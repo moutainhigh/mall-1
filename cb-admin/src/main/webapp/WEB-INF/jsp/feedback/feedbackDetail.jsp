@@ -377,6 +377,7 @@
                           },
                           maxFileCount: 10  //上传的个数
                       });
+                      $('.file-drop-zone-title').html("");
                       //加载图片
                       var a='${list}';
                       var json=eval('(' + a + ')')
