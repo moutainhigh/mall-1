@@ -65,7 +65,7 @@ dependencies {
             'com.squareup.okhttp3:logging-interceptor:3.8.1'
     )
 
-    //IJPay支付
+    //IJPay 支付
     compile('com.github.javen205:IJPay:1.1.4')
     //支付宝
     compile(
