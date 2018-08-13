@@ -68,8 +68,8 @@
             <div class="pull-left">
                 <ul class="breadcrumb">
                     <li><a href="#">首页</a></li>
-                    <li><a href="#">资金池管理</a></li>
-                    <li class="active"><a href="#">资金池列表</a></li>
+                    <li><a href="#">财务管理</a></li>
+                    <li class="active"><a href="#">提现管理</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -83,7 +83,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>资金池列表</h2>
+                    <h2>提现管理</h2>
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
@@ -171,7 +171,7 @@
                 <div class="toolbar responsive-helper">
                     <header>
                         <div class="pull-left">
-                            <h3>资金池列表</h3>
+                            <h3>提现列表</h3>
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">

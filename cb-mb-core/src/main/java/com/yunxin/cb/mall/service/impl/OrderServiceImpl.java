@@ -146,6 +146,7 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setProductImg(product.getDefaultPicPath());
                 orderItem.setEvaluate(false);
                 orderItem.setCreateTime(createTime);
+                orderItem.setCostPrice(product.getCostPrice());
                 //减少库存
                 product.setStoreNum(product.getStoreNum() - productNum);
                 int reservedStoreNum = product.getReservedStoreNum() == null ? 0  : product.getReservedStoreNum();

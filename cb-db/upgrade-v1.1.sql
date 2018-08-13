@@ -725,3 +725,35 @@ ALTER TABLE `finacial_log` ADD  COLUMN `TITLE` varchar(100) NOT NULL COMMENT '�
 ALTER TABLE `finacial_log` ADD  COLUMN `IMAGE` varchar(100) COMMENT '图片';
 ##加入账单表的创建日期索引
 ALTER TABLE `finacial_log` ADD INDEX index_time ( `CREATE_TIME` );
+
+##add  by guwenshao 2018-8-10 加入借款表
+ALTER TABLE `finacial_loan` add  `INSURANCE_AMOUNT` decimal(20,4) NOT NULL COMMENT '贷款保险额度金额';
+ALTER TABLE `finacial_loan` add  `CREDIT_AMOUNT` decimal(20,4) NOT NULL COMMENT '贷款信用额度金额';
+
+
+INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('11', 'SHARE_PATH', 'http://test.app.999shuijingqiu.com/register.html?invitationCode=', '0', '');
+INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('12', 'SHARE_TITLE', '云信 - 让生活更美好', '0', '');
+INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('13', 'SHARE_ICON', 'http://test.resource.999shuijingqiu.com/Firq1iyRsRVaVD4nxDfLlBexjoA5', '1', '');
+INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('14', 'SHARE_DESCRIPTION', '邀请您注册云信，成为尊贵的云信会员，体验休闲经济带来美好生活！', '0', '');
+INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('15', 'SHARE_SHORTMESSAGE_CONTENT', '邀请您注册云信，成为尊贵的云信会员，体验休闲经济带来美好生活！', '0', '');
+
+
+update insurance_product set INSURE_PERIOD='TEN_YEAR' where INSURE_PERIOD='10年';
+update insurance_product set INSURE_PERIOD='TWENTY_YEAR' where INSURE_PERIOD='20年';
+update insurance_product set INSURE_PERIOD='LIFITIME' where INSURE_PERIOD='终身';
+update insurance_product set PROTECTION_YEAR='TEN_YEAR' where PROTECTION_YEAR='10年';
+update insurance_product set PROTECTION_YEAR='TWENTY_YEAR' where PROTECTION_YEAR='20年';
+update insurance_product set PROTECTION_YEAR='LIFITIME' where PROTECTION_YEAR='终身';
+###add by lxc 2018-08-10 17:58
+ALTER TABLE `crystal_ball`.`rb_funds_pool_log`
+ADD COLUMN `ITEM_ID` int(11) NULL COMMENT '订单详情ID/报账详情ID' AFTER `TRANSACTION_ID`;
+
+##add  by guwenshao 2018-8-10
+ALTER TABLE `order_item` add `COST_PRICE` float NOT NULL COMMENT '成本价';
+
+#add by wangteng 2018-08-11
+alter table rb_reimbursement add TAX_RATE DECIMAL(10,2) DEFAULT 0;
+
+
+##add  by guwenshao 2018-8-11
+INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('MAX_LOAN_NUM', '5', '0', '最多借款次数');

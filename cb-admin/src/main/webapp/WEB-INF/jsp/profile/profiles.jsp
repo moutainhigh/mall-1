@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>系统配置</title>
+    <title>参数配置</title>
 
     <script type="text/javascript">
         function detailItem(){
@@ -69,6 +69,12 @@
                 case "FINACIAL_FREE_RATE":{
                     return "提现手续费";
                 }
+                case "TAX_RATE":{
+                    return "税率";
+                }
+                case "MAX_LOAN_NUM":{
+                    return "最多借款次数";
+                }
             }
             return state;
         }
@@ -101,7 +107,7 @@
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
                     <li><a href="#">系统配置 </a></li>
-                    <li><a href="#">系统配置 </a></li>
+                    <li><a href="#">参数配置 </a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -115,7 +121,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>系统配置 </h2>
+                    <h2>参数配置 </h2>
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
@@ -156,7 +162,7 @@
                 <div class="toolbar responsive-helper">
                     <header>
                         <div class="pull-left">
-                            <h3>系统配置 </h3>
+                            <h3>参数配置 </h3>
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
@@ -189,7 +195,7 @@
                             <kendo:dataSource-schema data="content" total="totalElements">
                                 <kendo:dataSource-schema-model>
                                     <kendo:dataSource-schema-model-fields>
-                                        <kendo:dataSource-schema-model-field name="createTime" type="date"/>
+                                        <kendo:dataSource-schema-model-field name="pushTime" type="date"/>
                                     </kendo:dataSource-schema-model-fields>
                                 </kendo:dataSource-schema-model>
                             </kendo:dataSource-schema>

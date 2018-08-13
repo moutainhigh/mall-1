@@ -1,12 +1,17 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.mall.entity.FinacialLoan;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.entity.meta.LoanType;
+import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.beans.BeansException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(value = "用户借款VO", description = "用户借款VO FinacialLoanVO")
 public class FinacialLoanVO {
@@ -62,6 +67,14 @@ public class FinacialLoanVO {
 
     @ApiModelProperty(value = "还款期限id", name = "loanConfigId", example = "6")
     private Integer loanConfigId;
+
+    /** 贷款信用额度金额 */
+    @ApiModelProperty(value = "贷款信用额度金额", name = "creditAmount", example = "500")
+    private BigDecimal creditAmount;
+
+    /** 贷款保险额度金额 */
+    @ApiModelProperty(value = "贷款保险额度金额", name = "insuranceAmount", example = "500")
+    private BigDecimal insuranceAmount;
 
     public Integer getLoanId() {
         return loanId;
@@ -199,6 +212,22 @@ public class FinacialLoanVO {
         this.loanConfigId = loanConfigId;
     }
 
+    public BigDecimal getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(BigDecimal creditAmount) {
+        this.creditAmount = creditAmount;
+    }
+
+    public BigDecimal getInsuranceAmount() {
+        return insuranceAmount;
+    }
+
+    public void setInsuranceAmount(BigDecimal insuranceAmount) {
+        this.insuranceAmount = insuranceAmount;
+    }
+
     @Override
     public String toString() {
         return "FinacialLoanVO{" +
@@ -219,6 +248,39 @@ public class FinacialLoanVO {
                 ", overdueNumer=" + overdueNumer +
                 ", bankId=" + bankId +
                 ", loanConfigId=" + loanConfigId +
+                ", creditAmount=" + creditAmount +
+                ", insuranceAmount=" + insuranceAmount +
                 '}';
+    }
+
+    /**
+     * 分页DO转换VO
+     */
+    public static List<FinacialLoanVO> dOconvertVOList (List<FinacialLoan> list) throws Exception{
+        try {
+            List<FinacialLoanVO> volist = new ArrayList<>();
+            for (FinacialLoan model : list) {
+                FinacialLoanVO vo = new FinacialLoanVO();
+                org.springframework.beans.BeanUtils.copyProperties(model, vo);
+                volist.add(vo);
+            }
+            return volist;
+        } catch (BeansException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 分页DO转换VO
+     */
+    public static PageFinder<FinacialLoanVO> dOconvertVOPage (PageFinder<FinacialLoan> pageFinder) throws Exception{
+        PageFinder<FinacialLoanVO> page = new PageFinder<FinacialLoanVO> (pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
+        if (pageFinder != null) {
+            List<FinacialLoanVO> list = FinacialLoanVO.dOconvertVOList(pageFinder.getData());
+            page.setData(list);
+        }
+        page.setRowCount(pageFinder.getRowCount());//记录总数
+        return page;
     }
 }
