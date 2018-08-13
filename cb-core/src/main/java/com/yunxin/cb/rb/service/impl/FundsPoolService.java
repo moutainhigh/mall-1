@@ -106,9 +106,6 @@ public class FundsPoolService implements IFundsPoolService {
     public boolean updateFundsAndSaveFundsPoolLog(FundsPool fundsPool,BigDecimal amount,int type,List<FundsPoolLog> fundsPoolLogs) {
         int version = fundsPool.getVersion();
         int poolId = fundsPool.getPoolId();
-        if(type == FundsPoolLogType.REIMBURSE.getStatus()){
-            amount = amount.multiply(new BigDecimal(-1));
-        }
         int i = fundsPoolDao.updateFundsByIdAndAndVersion(amount,version,poolId);
         if(i == 1){
             fundsPoolLogDao.save(fundsPoolLogs);
