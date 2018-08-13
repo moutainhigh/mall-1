@@ -32,6 +32,7 @@ public class FinacialWithdrawService implements IFinacialWithdrawService {
                 root.fetch(FinacialWithdraw_.customer, JoinType.LEFT);
                 root.fetch(FinacialWithdraw_.bank, JoinType.LEFT);
             }
+
             @Override
             public void addConditions(Root<FinacialWithdraw> root,
                                       CriteriaQuery<?> query, CriteriaBuilder builder,

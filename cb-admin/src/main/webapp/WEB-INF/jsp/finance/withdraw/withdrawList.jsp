@@ -46,6 +46,34 @@
             }
             return state;
         }
+
+        function confirm(){
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                bootbox.confirm("确认转账吗？", function (result) {
+                    if (result) {
+                        var ids="";
+                        for(var i=0;i<dataItem.length;i++){
+                            ids+=dataItem[i].withdrawId;
+                            if(i>0){
+                                ids+=","+dataItem[i].withdrawId;
+                            }
+                        }
+                        $.get("tansfer.do", {
+                            ids: ids
+                        }, function (data) {
+                            if (data) {
+                                bootbox.alert("确认转账成功");
+                                $("#grid").data("kendoGrid").dataSource.read();
+                            } else {
+                                bootbox.alert("确认转账失败");
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
     </script>
 </head>
 <body>
@@ -123,6 +151,7 @@
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>提现人:</strong>
+                                <input type="hidden" id="withdrawIdHid" name="withdrawId">
                             </div>
                             <div class="toolbar-field">
                                 <input type="text"  data-filter="customer.realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入提现人"/>
@@ -137,20 +166,36 @@
                                 <strong>提现金额 :</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text"  data-filter="amountBegin" data-operator="contains" class="form-control grid-filter" placeholder="请输入提现金额"/>
-                                <input type="text"  data-filter="amountEnd" data-operator="contains" class="form-control grid-filter" placeholder="请输入提现金额"/>
+                                <table>
+                                    <tr>
+                                        <td><input type="number" data-filter="amount" data-operator="gte" class="form-control grid-filter" style="width: 60px" placeholder="最小"/></td>
+                                        <td>-</td>
+                                        <td><input type="number" data-filter="amount" data-operator="lte" class="form-control grid-filter" style="width: 60px" placeholder="最大"/></td>
+                                    </tr>
+                                </table>
                             </div>
                             <div class="toolbar-field">
                                 <strong>状态 :</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text"  data-filter="state" data-operator="contains" class="form-control grid-filter" placeholder="请选择状态"/>
+                                <select data-filter="state" data-operator="eq" class="form-control  grid-filter">
+                                    <option value="">全部</option>
+                                    <option value="AUDIT">审核中</option>
+                                    <option value="AUDIT_NOT">审核失败</option>
+                                    <option value="WAIT_GRANT">待发放</option>
+                                    <option value="TRANSFER">转账中</option>
+                                    <option value="FANISHED">交易完成</option>
+                                </select>
                             </div>
                             <div class="toolbar-field">
                                 <strong>提现类型 :</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text"  data-filter="withdrawType" data-operator="contains" class="form-control grid-filter" placeholder="请选择提现类型"/>
+                                <select data-filter="withdrawType" data-operator="eq" class="form-control  grid-filter">
+                                    <option value="">全部</option>
+                                    <option value="BZ">报账转账</option>
+                                    <option value="BX">保险返利转账</option>
+                                </select>
                             </div>
                         </div>
                         <!-- End .pull-left -->
@@ -175,8 +220,8 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="javascript:void(0);" onclick="detailItem()" class="btn btn-default"><i class="fa fa-check"></i>&nbsp;转账确认</a>
-                            </div>
+                                <a href="javascript:void(0);" onclick="confirm()" class="btn btn-default"><i class="fa fa-check"></i>&nbsp;转账确认</a>
+                               </div>
                         </div>
                     </header>
                 </div>
