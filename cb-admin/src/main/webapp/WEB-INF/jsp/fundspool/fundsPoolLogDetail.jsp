@@ -17,7 +17,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>客户详情</title>
+  <title>资金池明细详情</title>
   <script type="text/javascript">
     $(document).ready(function() {
       <%--var p = $.citySelector.getProvince("${customer.province}");--%>
@@ -36,16 +36,6 @@
             });
         }
     });
-
-
-    function formatSex(sex) {
-        switch (sex) {
-            case true:
-                return "男";
-            case false:
-                return "女";
-        }
-    }
   </script>
 </head>
 <body>
@@ -185,7 +175,7 @@
                     <div class="row">
                       <div class="inline-labels">
                         <div class="col-sm-2">
-                          <label>交易ID：<span class="asterisk"></span></label>
+                          <label>交易ID(累计:订单号,报帐:报帐ID)：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-2 col-label">
                           ${fundsPoolLog.transactionId}
@@ -225,6 +215,13 @@
                     <div class="row">
                       <div class="inline-labels">
                         <div class="col-sm-2">
+                          <label>明细id(订单详情ID/报账详情ID)：<span class="asterisk"></span></label>
+                        </div>
+                        <div class="col-sm-2 col-label">
+                          ${fundsPoolLog.itemId}
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2">
                           <label>版本号：<span class="asterisk"></span></label>
                         </div>
                         <div class="col-sm-2 col-label">
@@ -234,7 +231,162 @@
                       </div>
                     </div>
                   </fieldset>
+            <c:if test="${fundsPoolLog.type == 2}">
+                <fieldset>
+                  <legend>明细详情</legend>
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>用户姓名：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${reimbursement.customer.realName}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>报账单号：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${reimbursement.reimbursementNo}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+                  <div class="spacer-10"></div>
 
+                  <div class="row">
+                    <div class="inline-labels">
+
+                      <div class="col-sm-2">
+                        <label>总金额：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${reimbursement.amount}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>税：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${reimbursement.tax}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+                  <div class="spacer-10"></div>
+
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>报账总金额：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${reimbursement.orderAmount}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>状态：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${reimbursement.orderState.toString()}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+
+                  <div class="spacer-10"></div>
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>操作时间：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${fn:substring(reimbursement.createTime, 0, 19)}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+
+                </fieldset>
+            </c:if>
+            <c:if test="${fundsPoolLog.type == 1}">
+                <fieldset>
+                  <legend>明细详情</legend>
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>用户姓名：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${order.customer.realName}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>订单号：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${order.orderCode}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+                  <div class="spacer-10"></div>
+
+                  <div class="row">
+                    <div class="inline-labels">
+
+                      <div class="col-sm-2">
+                        <label>订单总金额：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${order.totalPrice}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>订单付费总计：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${order.feeTotal}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+                  <div class="spacer-10"></div>
+
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>付款方式：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${order.paymentType.toString()}
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-2">
+                        <label>状态：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${order.orderState.toString()}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+
+                  <div class="spacer-10"></div>
+                  <div class="row">
+                    <div class="inline-labels">
+                      <div class="col-sm-2">
+                        <label>支付时间：<span class="asterisk"></span></label>
+                      </div>
+                      <div class="col-sm-2 col-label">
+                        ${fn:substring(order.paymentTime, 0, 19)}
+                      </div>
+                      <div class="col-sm-1"></div>
+                    </div>
+                  </div>
+
+                </fieldset>
+            </c:if>
               </div>
             </div>
 

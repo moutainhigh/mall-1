@@ -40,9 +40,20 @@ public class ProfileController {
      * @exception
      * @date        2018/7/19 10:05
      */
-    @RequestMapping(value = "toAddProfile")
-    public String toAddProfile(ModelMap modelMap){
+    @RequestMapping(value = "toAddProfileAndroid")
+    public String toAddProfileAndroid(ModelMap modelMap){
         return "profile/addprofile";
+    }
+
+
+    /**
+     * 进入导入IOS版本页面
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "toAddProfileIos")
+    public String toAddProfileIos(ModelMap modelMap){
+        return "profile/addprofileios";
     }
 
     /**
@@ -74,7 +85,7 @@ public class ProfileController {
     }
 
     /**
-     * 添加系统配置
+     * 添加ANDROID
      * @author      likang
      * @param
      * @return      java.lang.String
@@ -96,6 +107,30 @@ public class ProfileController {
         return "redirect:../common/success.do?reurl=profile/profiles.do";
     }
 
+
+    /**
+     * 添加IOS
+     * @param IOS_VERSION_CODE
+     * @param IOS_VERSION_NAME
+     * @param IOS_APP_NAME
+     * @param IOS_URL
+     * @param IOS_DESCRIPTION
+     * @return
+     */
+    @RequestMapping(value = "addProfileIos", method = RequestMethod.POST)
+    public String addProfileIos(@ModelAttribute("IOS_VERSION_CODE") String IOS_VERSION_CODE,
+                             @ModelAttribute("IOS_VERSION_NAME") String IOS_VERSION_NAME,
+                             @ModelAttribute("IOS_APP_NAME") String IOS_APP_NAME,
+                             @ModelAttribute("IOS_URL") String IOS_URL,
+                             @ModelAttribute("IOS_DESCRIPTION") String IOS_DESCRIPTION){
+        ProfileName.IOS_VERSION_CODE.setDefaultValue(IOS_VERSION_CODE);
+        ProfileName.IOS_VERSION_NAME.setDefaultValue(IOS_VERSION_NAME);
+        ProfileName.IOS_APP_NAME.setDefaultValue(IOS_APP_NAME);
+        ProfileName.IOS_URL.setDefaultValue(IOS_URL);
+        ProfileName.IOS_DESCRIPTION.setDefaultValue(IOS_DESCRIPTION);
+        profileService.addProfileIos();
+        return "redirect:../common/success.do?reurl=profile/profiles.do";
+    }
 
     /**
      * 系统配置分页信息

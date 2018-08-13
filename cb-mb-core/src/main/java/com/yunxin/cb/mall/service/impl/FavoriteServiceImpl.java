@@ -26,7 +26,7 @@ import java.util.List;
 public class FavoriteServiceImpl implements FavoriteService {
 
 	private static final Log log = LogFactory.getLog(FavoriteServiceImpl.class);
-	
+
 	@Resource
 	private FavoriteMapper favoriteMapper;
 

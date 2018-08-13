@@ -162,6 +162,27 @@ public class RongCloudService {
             return true;
         else
             return false;
+    }
 
+    /**
+     * 推送消息（向应用内所有用户推送消息）
+     * @param content
+     */
+    public static void pushMessageToAll(String content){
+        if(StringUtils.isEmpty(content)){
+            return;
+        }
+        String url = "https://api.cn.ronghub.com/push.json";
+        //{"platform":["ios","android"],"audience":{"is_to_all":true},"notification":{"alert":"this is a push"}}
+        String jsonParam = "{\"platform\":[\"ios\",\"android\"],\"audience\":{\"is_to_all\":true},\"notification\":{\"alert\":\"" + content + "\"}}";
+        try {
+            RongCloudUtils.post("z3v5yqkbz1jp0","AUUwTO6vXg7y7P",url, jsonParam, "UTF-8", 20000);
+        } catch (Exception e) {
+            System.out.println("广播发送异常");
+        }
+    }
+
+    public static void main(String[] agrs){
+        pushMessageToAll("yunxintest");
     }
 }

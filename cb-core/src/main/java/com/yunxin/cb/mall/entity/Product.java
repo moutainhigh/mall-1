@@ -76,6 +76,8 @@ public class Product implements java.io.Serializable {
      * 库存数量
      */
     private int storeNum;
+    /** 预占库存数量 */
+    private Integer reservedStoreNum;
     /**
      * 仓库
      */
@@ -227,6 +229,16 @@ public class Product implements java.io.Serializable {
     public void setStoreNum(int storeNum) {
         this.storeNum = storeNum;
     }
+
+    @Column(nullable = true, precision = 12)
+    public int getReservedStoreNum() {
+        return reservedStoreNum;
+    }
+
+    public void setReservedStoreNum(int reservedStoreNum) {
+        this.reservedStoreNum = reservedStoreNum;
+    }
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "STORE_ID", nullable = false)

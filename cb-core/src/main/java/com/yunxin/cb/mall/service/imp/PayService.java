@@ -215,7 +215,7 @@ public class PayService implements IPayService {
 
                         order.setOrderState(OrderState.PAID_PAYMENT);
                         order.setUpdateTime(curDate);
-                        order.setPaymentType(PaymentType.ALIPAY);
+                        //order.setPaymentType(PaymentType.ALIPAY);
                         order.setPaymentSequence(trade_no);
                         order.setPaymentTime(curDate);
                         //找到当前用户，更新用户积分，根据当前积分，更新用户等级 并在积分记录表插入数据

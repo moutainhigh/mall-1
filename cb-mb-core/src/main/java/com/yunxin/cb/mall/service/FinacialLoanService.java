@@ -1,7 +1,10 @@
 package com.yunxin.cb.mall.service;
 
+import com.yunxin.cb.mall.entity.FinacialLoan;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
 import com.yunxin.cb.mall.vo.FinacialWalletVO;
+import com.yunxin.cb.util.page.PageFinder;
+import com.yunxin.cb.util.page.Query;
 
 import java.util.List;
 
@@ -21,5 +24,7 @@ public interface FinacialLoanService {
      * @return
      */
     public int countByCustomerId(int customerId);
+
+    public PageFinder<FinacialLoan> page(Query q);
 
 }

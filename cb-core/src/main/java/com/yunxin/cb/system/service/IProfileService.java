@@ -17,6 +17,8 @@ public interface IProfileService {
 
     public Profile addProfile();
 
+    public Profile addProfileIos();
+
     public Profile getProfile(int fileId);
 
     public Profile updateProfile(Profile profile);

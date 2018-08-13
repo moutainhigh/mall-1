@@ -164,6 +164,15 @@ public class Order implements java.io.Serializable {
      */
     private String courierNumber;
 
+    /**
+     * 发货时间
+     */
+    private Date deliverTime;
+
+    /**
+     * 收货时间
+     */
+    private Date collectTime;
 
     /*********************收货人信息*****************************/
     /**
@@ -679,6 +688,27 @@ public class Order implements java.io.Serializable {
 
     public void setAuditTime(Date auditTime) {
         this.auditTime = auditTime;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(length = 7, nullable = true)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    public Date getDeliverTime() {
+        return deliverTime;
+    }
+
+    public void setDeliverTime(Date deliverTime) {
+        this.deliverTime = deliverTime;
+    }
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(length = 7, nullable = true)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    public Date getCollectTime() {
+        return collectTime;
+    }
+
+    public void setCollectTime(Date collectTime) {
+        this.collectTime = collectTime;
     }
 
     public void setDeliveryAddress(DeliveryAddress address) {
