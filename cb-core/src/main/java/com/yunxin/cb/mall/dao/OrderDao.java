@@ -68,6 +68,12 @@ public interface OrderDao extends JpaRepository<Order, Integer>, JpaSpecificatio
     public void cancelTimeOutOrders(OrderState ofs, Date date);
 
     /**
+     * 查询定时取消订单的订单列表
+     */
+    @Query("select od from Order od where od.orderState=?1 and od.createTime<=?2")
+    public List<Order> findOrderByOrderStateAndCreateTime(OrderState ofs, Date date);
+
+    /**
      * 查询超时未确认收货订单，并将其订单状态设为已收货
      */
     @Modifying

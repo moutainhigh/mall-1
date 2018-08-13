@@ -1,9 +1,14 @@
 package com.yunxin.cb.mall.web.action.fundspool;
 
+import com.yunxin.cb.mall.entity.Order;
+import com.yunxin.cb.mall.service.IOrderService;
 import com.yunxin.cb.rb.entity.FundsPool;
 import com.yunxin.cb.rb.entity.FundsPoolLog;
+import com.yunxin.cb.rb.entity.Reimbursement;
 import com.yunxin.cb.rb.service.IFundsPoolService;
+import com.yunxin.cb.rb.service.IReimbursementService;
 import com.yunxin.cb.security.SecurityConstants;
+import com.yunxin.common.ConstantsCB;
 import com.yunxin.common.ConstantsCBEnumMap;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
@@ -27,8 +32,10 @@ public class FundsPoolController {
 
     @Resource
     private IFundsPoolService fundsPoolService;
-
-
+    @Resource
+    private IReimbursementService reimbursementService;
+    @Resource
+    private IOrderService orderService;
     /**
      * @Description:        页面跳转
      * @author: lxc
@@ -110,6 +117,13 @@ public class FundsPoolController {
     @RequestMapping(value = "fundsPoolLogDetail",method = RequestMethod.GET)
     public String fundsPoolLogDetail(@RequestParam("id") int id,ModelMap modelMap) {
         FundsPoolLog fundsPoolLog = fundsPoolService.getFullFundsPoolLogByid(id);
+        if(fundsPoolLog.getType() == ConstantsCB.FundsPoolLogType.REIMBURSE.getStatus()) {
+            Reimbursement reimbursement = reimbursementService.getReimbursement(fundsPoolLog.getTransactionId());
+            modelMap.addAttribute("reimbursement", reimbursement);
+        }else if (fundsPoolLog.getType() == ConstantsCB.FundsPoolLogType.GRAND.getStatus()){
+            Order order = orderService.getOrderDetailById(fundsPoolLog.getTransactionId());
+            modelMap.addAttribute("order", order);
+        }
         modelMap.addAttribute("fundsPoolLog", fundsPoolLog);
         modelMap.addAttribute("fundsPoolLogTypeMap", ConstantsCBEnumMap.getFundsPoolLogType());
         return "fundspool/fundsPoolLogDetail";
