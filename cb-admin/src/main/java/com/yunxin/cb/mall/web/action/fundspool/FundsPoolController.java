@@ -101,7 +101,7 @@ public class FundsPoolController {
     @RequestMapping(value = "pageFundsPoolLog")
     @ResponseBody
     public Page<FundsPoolLog> pageFundsPoolLog(@RequestBody PageSpecification<FundsPoolLog> fundsPoolLogQuery, ModelMap modelMap) {
-//        fundsPoolService.updateAndCountOrderAmout(94);//测试
+//        fundsPoolService.updateAndCountOrderAmout(106);//测试
 //        fundsPoolService.updateAndCountReimbursementAmout(18);//测试
         return fundsPoolService.pageFundsPoolLog(fundsPoolLogQuery);
     }

@@ -199,4 +199,6 @@ public interface ICustomerService {
 
     List<CustomerGratitudeDataVo> findCustomerGratitudeData(int customerId,GratitudeType gratitudeType);
 
+    void enableCustomerById(int customerId,boolean enabled);
+
 }

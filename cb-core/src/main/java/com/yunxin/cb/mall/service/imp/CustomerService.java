@@ -792,57 +792,57 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public List<CustomerMatchVo> matchAddressBook(CustomerMatchsVo[] customerMatchsVo) {
-            return new ArrayList<CustomerMatchVo>(){
-                {
-                    if(null!=customerMatchsVo&&customerMatchsVo.length>0){
+        return new ArrayList<CustomerMatchVo>(){
+            {
+                if(null!=customerMatchsVo&&customerMatchsVo.length>0){
 
-                        List<CustomerMatchsVo> listVo=Arrays.asList(customerMatchsVo);
-                        Map<String,Object> map=(Map<String, Object>) redisService.getCustomerList();
-                        if(null!=map){
+                    List<CustomerMatchsVo> listVo=Arrays.asList(customerMatchsVo);
+                    Map<String,Object> map=(Map<String, Object>) redisService.getCustomerList();
+                    if(null!=map){
 //                            Map<String,Object> mp=(Map<String, Object>) map.get("customers");
-                            for(CustomerMatchsVo customerMatchVos:listVo){
-                                if(null!=map.get(customerMatchVos.getMobile())){
-                                    Customer customer=(Customer)map.get(customerMatchVos.getMobile());
-                                    add(new CustomerMatchVo(){
-                                        {
-                                            setCustomerId(customer.getCustomerId());
-                                            setAvatarUrl(customer.getAvatarUrl());
-                                            setNickName(customer.getNickName());
-                                            setRealName(customerMatchVos.getRealName());
-                                            setMobile(customer.getMobile());
-                                        }
-                                    });
-                                }
-
+                        for(CustomerMatchsVo customerMatchVos:listVo){
+                            if(null!=map.get(customerMatchVos.getMobile())){
+                                Customer customer=(Customer)map.get(customerMatchVos.getMobile());
+                                add(new CustomerMatchVo(){
+                                    {
+                                        setCustomerId(customer.getCustomerId());
+                                        setAvatarUrl(customer.getAvatarUrl());
+                                        setNickName(customer.getNickName());
+                                        setRealName(customerMatchVos.getRealName());
+                                        setMobile(customer.getMobile());
+                                    }
+                                });
                             }
+
                         }
-
-
-
                     }
+
+
+
                 }
-            };
+            }
+        };
     }
     public Map<String,Object> getCustomer(){
         redisService.deleteKey("customers");
-                Map<String,Object> map=new HashMap<>();
-                if(null!=redisService.getKey("customers"))
-                    map= (Map<String,Object>)redisService.getKey("customers");
-                else{
-                    List<Customer> list= customerDao.findAll();
-                    if(null!=list&&list.size()>0){
-                        Map<String,Object> mp=new HashMap<String,Object>(){
-                            {
-                                for (Customer customer:list) {
-                                    put("customer_"+customer.getMobile(),customer);
-                                }
-                            }
-                        };
-                        map.put("customers",mp);
-//                        redisService.setKey("customers",mp);
+        Map<String,Object> map=new HashMap<>();
+        if(null!=redisService.getKey("customers"))
+            map= (Map<String,Object>)redisService.getKey("customers");
+        else{
+            List<Customer> list= customerDao.findAll();
+            if(null!=list&&list.size()>0){
+                Map<String,Object> mp=new HashMap<String,Object>(){
+                    {
+                        for (Customer customer:list) {
+                            put("customer_"+customer.getMobile(),customer);
+                        }
                     }
+                };
+                map.put("customers",mp);
+//                        redisService.setKey("customers",mp);
+            }
 
-                }
+        }
         return map;
 
     }
@@ -1017,7 +1017,7 @@ public class CustomerService implements ICustomerService {
                 String recommendName="";
                 if(null!=customer){
                     String levelCode = customer.getLevelCode()+"%";
-                   int total= customerDao.findAllCustomerByLikeLevelCode(customerId,levelCode,PolicyType.PAYMENT);
+                    int total= customerDao.findAllCustomerByLikeLevelCode(customerId,levelCode,PolicyType.PAYMENT);
                     //所有感恩人
                     allGratitude=total;
                     //已经感恩
@@ -1028,9 +1028,9 @@ public class CustomerService implements ICustomerService {
                     unpaid=customerDao.getCustomerByRecommendCustomer(customerId,PolicyType.UNPAID,false);
                     //未购买
                     notPurchased=customerDao.getCustomerByRecommendCustomer(customerId,PolicyType.NOTPURCHASED,false);
-                        recommendName=customer.getRecommendCustomer().getNickName();
-                        if(StringUtils.isEmpty(customer.getRecommendCustomer().getNickName()))
-                            recommendName=customer.getRecommendCustomer().getMobile();
+                    recommendName=customer.getRecommendCustomer().getNickName();
+                    if(StringUtils.isEmpty(customer.getRecommendCustomer().getNickName()))
+                        recommendName=customer.getRecommendCustomer().getMobile();
                 }
                 setAllGratitude(allGratitude);
                 setNoGratitude(noGratitude);
@@ -1099,7 +1099,7 @@ public class CustomerService implements ICustomerService {
 
                             }
                             break;
-                            //未付款
+                        //未付款
                         case UNPAID:
                             List<InsuranceOrderLog> listT=insuranceOrderLogDao.findInsuranceOrderLogByLevelCode(customerId,InsuranceOrderState.UN_PAID,PolicyType.UNPAID);
 
@@ -1129,9 +1129,9 @@ public class CustomerService implements ICustomerService {
 
                         //未购买的
                         case NOTPURCHASED:
-                           List<Customer> listCustomer=customerDao.getCustomerByRecommendCustomers(customerId,PolicyType.NOTPURCHASED,false);
+                            List<Customer> listCustomer=customerDao.getCustomerByRecommendCustomers(customerId,PolicyType.NOTPURCHASED,false);
 
-                           if(null!=listCustomer&&listCustomer.size()>0){
+                            if(null!=listCustomer&&listCustomer.size()>0){
                                 for (Customer customer:listCustomer){
                                     add(new CustomerGratitudeDataVo(){
                                         {
@@ -1147,7 +1147,7 @@ public class CustomerService implements ICustomerService {
                                         }
                                     });
                                 }
-                           }
+                            }
                             break;
 
                     }
@@ -1157,5 +1157,10 @@ public class CustomerService implements ICustomerService {
             }
         };
 
+    }
+
+    @Override
+    public  void enableCustomerById(int customerId,boolean enabled){
+        customerDao.enableCustomerById(customerId,enabled);
     }
 }

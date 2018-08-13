@@ -54,4 +54,11 @@ public interface OrderService {
      * @return
      */
     public int confirmOrder(Integer orderId, Integer customerId) throws Exception;
+
+    /***
+     * 根据订单id,用户id更新用户订单超时
+     * @param orderId
+     * @return
+     */
+    public int updateOrderStatusTimeOut(Integer orderId, String orderCode, Integer customerId) throws Exception;
 }

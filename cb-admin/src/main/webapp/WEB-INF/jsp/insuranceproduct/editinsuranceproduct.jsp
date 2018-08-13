@@ -138,7 +138,6 @@
                                 "<td><a type='button' title='删除' class='btn btn-default' href='javascript:removeCommodity(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
                             $("#commodityTable tr:last").after(newRow);
                             idcIndex++;
-                            return ;
                         }
                     });
                 });
@@ -146,7 +145,7 @@
                 alert("请选择事项");
                 return ;
             }
-            clearCheck();
+            // clearCheck();
             $('#commodityDialog').modal("hide");
         }
     </script>
