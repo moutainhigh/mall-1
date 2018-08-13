@@ -15,6 +15,8 @@ import com.yunxin.cb.rb.entity.meta.ReimbursementType;
 import com.yunxin.cb.rb.service.IReimbursementService;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,8 @@ import java.util.List;
 @Service
 @Transactional
 public class ReimbursementService implements IReimbursementService {
+
+    private final Logger logger=LoggerFactory.getLogger(getClass());
     @Resource
     private ReimbursementDao reimbursementDao;
     @Resource
@@ -135,6 +139,8 @@ public class ReimbursementService implements IReimbursementService {
     @Override
     public boolean reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType,String remarks,int operType, HttpServletRequest request) {
 
+    try {
+
        Reimbursement reimbursement=getReimbursement(reimbursementId);
         User user = (User) request.getSession().getAttribute("loginSession");
         ReimbursementProcess reimbursementProcess=new ReimbursementProcess();
@@ -177,6 +183,11 @@ public class ReimbursementService implements IReimbursementService {
         reimbursementProcess.setUser(user);
         reimbursementProcess.setReimbursement(reimbursement);
         reimbursementProcessDao.save(reimbursementProcess);
+
+    }catch (Exception e){
+        logger.error("reimbursementAuditing failed", e);
+        return false;
+    }
         return true;
 
     }

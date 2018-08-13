@@ -1,17 +1,17 @@
 package com.yunxin.cb.mall.entity.meta;
 
 /**
- * @title: 提现状态枚举类
+ * @title: 保险返现状态
  * @auther: eleven
- * @date: 2018/8/9 10:15
+ * @date: 2018/8/10 12:06
  */
-public enum WithdrawState {
+public enum CashbackLogState {
 
-    AUDIT("审核中",0), AUDIT_NOT("审核失败",1), WAIT_GRANT("待发放",2), TRANSFER("转账中",3), FANISHED("交易完成",4);
+    WAIT("待返现",0), FINISHED("已返现",1),FAILED("返现失败",2);
     private String name;
     private Integer value;
 
-    private WithdrawState(String name,Integer value) {
+    private CashbackLogState(String name, Integer value) {
         this.name = name;
         this.value=value;
     }
@@ -34,6 +34,6 @@ public enum WithdrawState {
 
     @Override
     public String toString() {
-        return name;
+        return super.toString() + "("+name+")";
     }
 }

@@ -95,6 +95,9 @@
       },
       {
         "name": "客户等级管理", "code": "63", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../customer/ranks.do"
+      },
+      {
+        "name": "报账管理", "code": "64", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursements.do"
       }
     ]
   },
@@ -224,9 +227,6 @@
     "children": [
       {
         "name": "参数配置", "code": "171", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"
-      },
-      {
-        "name": "消息中心配置", "code": "172", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../message/message.do"
       }
     ]
   },

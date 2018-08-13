@@ -113,4 +113,15 @@ public class RedisService {
         redisTemplate.delete(key);
     }
 
+
+    /**
+     * 更新key
+     * @param key
+     * @param object
+     */
+    public void updateRedisByKey(String key,Object object){
+        deleteKey(key);
+        setKey(key,object);
+    }
+
 }
