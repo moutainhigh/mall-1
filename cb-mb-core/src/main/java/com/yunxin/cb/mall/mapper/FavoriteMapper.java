@@ -17,13 +17,13 @@ public interface FavoriteMapper {
 
     @Delete({"<script>",
             "delete from favorite",
-            "WHERE FAVORITE_ID IN",
-            "<foreach item='item' index='index' collection='array'",
+            "WHERE CUSTOMER_ID = #{customerId} and FAVORITE_ID IN",
+            "<foreach item='item' index='index' collection='favoriteIds'",
             "open='(' separator=',' close=')'>",
             "#{item}",
             "</foreach>",
             "</script>"})
-    int removeFavoriteBatch(String[] favoriteIds);
+    int removeFavoriteBatch(@Param("favoriteIds") List<Integer> favoriteIds,@Param("customerId")Integer customerId);
 
     @Insert({
         "insert into favorite (FAVORITE_ID, CREATE_TIME, ",
