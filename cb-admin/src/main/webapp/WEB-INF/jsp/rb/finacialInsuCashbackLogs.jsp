@@ -18,7 +18,7 @@
 
         function formatOrderState(orderState) {
             switch (orderState) {
-                case "FINANCE_IN_APPROVAL":
+                case "WAIT":
                     return "待返现";
                 case "FINISHED":
                     return "已返现";

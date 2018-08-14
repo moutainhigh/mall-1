@@ -24,7 +24,7 @@
 
         function formatOrderState(orderState) {
             switch (orderState) {
-                case "WAIT":
+                case "FINANCE_IN_APPROVAL":
                     return "财务员审批中";
                 case "DIRECTOR_IN_APPROVAL":
                     return "财务主管审批中";
