@@ -3,6 +3,7 @@ package com.yunxin.cb.console.entity;
 // Generated 2010-8-3 16:46:33 by Hibernate Tools 3.2.4.GA
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
@@ -273,6 +274,7 @@ public class User implements java.io.Serializable, UserDetails {
 
     @Override
     @Transient
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         // 获取用户的权限
