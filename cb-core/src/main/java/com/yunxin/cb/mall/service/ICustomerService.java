@@ -199,4 +199,11 @@ public interface ICustomerService {
 
     List<CustomerGratitudeDataVo> findCustomerGratitudeData(int customerId,GratitudeType gratitudeType);
 
+    /**
+     * 个人中心数据统计
+     * @param customerId
+     * @return
+     */
+    MyTotalVo getInterpersonal(int customerId);
+
 }

@@ -423,6 +423,19 @@ public class CustomerResource extends BaseResource {
             return new ResponseResult(Result.FAILURE, "服务器开小差，请稍后重试");
         }
     }
+    @ApiOperation(value = "我的个人统计")
+    @GetMapping(value = "getInterpersonal")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "get", dataType = "int")
+    })
+    public ResponseResult getInterpersonal() {
+        try {
+            return new ResponseResult(customerService.getInterpersonal(getCustomerId()));
+        } catch (Exception e) {
+            logger.error("getGratitudeData failed", e);
+            return new ResponseResult(Result.FAILURE, "服务器开小差，请稍后重试");
+        }
+    }
 //    @ApiOperation(value = "创建群组")
 //    @PostMapping(value = "matchAddressBook")
 //    public ResponseResult matchAddressBook(@RequestBody CustomerMatchsVo[] customerMatchsVo){
