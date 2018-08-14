@@ -26,7 +26,7 @@ public class WebExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseResult handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         logger.error("参数解析失败", e);
-        return new ResponseResult(Result.FAILURE, e.getMessage());
+        return new ResponseResult(Result.FAILURE, "系统繁忙，请稍后重试");
     }
 
     /**
@@ -36,7 +36,7 @@ public class WebExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseResult handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         logger.error("不支持当前请求方法", e);
-        return new ResponseResult(Result.FAILURE, e.getMessage());
+        return new ResponseResult(Result.FAILURE, "系统繁忙，请稍后重试");
     }
 
     /**
@@ -46,7 +46,7 @@ public class WebExceptionHandler {
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseResult handleHttpMediaTypeNotSupportedException(Exception e) {
         logger.error("不支持当前媒体类型", e);
-        return new ResponseResult(Result.FAILURE, e.getMessage());
+        return new ResponseResult(Result.FAILURE, "系统繁忙，请稍后重试");
     }
 
 //    /**
@@ -69,6 +69,6 @@ public class WebExceptionHandler {
 //            return new ResponseResult(Result.FAILURE, e.getMessage());
 //        }
         logger.error("服务运行异常", e);
-        return new ResponseResult(Result.FAILURE, e.getMessage());
+        return new ResponseResult(Result.FAILURE, "系统繁忙，请稍后重试");
     }
 }

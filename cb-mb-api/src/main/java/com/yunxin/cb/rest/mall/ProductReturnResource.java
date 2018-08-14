@@ -52,7 +52,7 @@ public class ProductReturnResource extends BaseResource {
             Order order = productReturnService.checkProductReturnApply(orderId, getCustomerId());
             Map returnReason = new HashMap();//退货原因
             for (ReturnReason reason : ReturnReason.values()){
-                returnReason.put(reason, reason.toString());
+                returnReason.put(reason, reason.getName());
             }
             productReturnApplyDataVO.setReturnReason(returnReason);
             productReturnApplyDataVO.setOrderId(order.getOrderId());
@@ -60,7 +60,7 @@ public class ProductReturnResource extends BaseResource {
             productReturnApplyDataVO.setReturnName(order.getConsigneeName());
             return new ResponseResult(productReturnApplyDataVO);
         } catch (CommonException e) {
-            logger.info("productReturnApplyPageData failed", e.getMessage());
+            logger.info("productReturnApplyPageData failed", e);
             return new ResponseResult(Result.FAILURE, e.getMessage());
         } catch (Exception e) {
             logger.error("productReturnApplyPageData failed", e);
@@ -82,7 +82,7 @@ public class ProductReturnResource extends BaseResource {
             productReturnService.applyOrderProductReturn(productReturn);
             return new ResponseResult(Result.SUCCESS);
         } catch (CommonException e) {
-            logger.info("addProductReturn failed", e.getMessage());
+            logger.info("addProductReturn failed", e);
             return new ResponseResult(Result.FAILURE, e.getMessage());
         } catch (Exception e) {
             logger.error("addProductReturn failed", e);

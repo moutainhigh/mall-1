@@ -110,11 +110,10 @@ public class FavoriteVo implements java.io.Serializable{
      * 分页DO转换VO
      */
     public static PageFinder<FavoriteVo> dOconvertVOPage (PageFinder<Favorite> pageFinder){
-        PageFinder<FavoriteVo> page = new PageFinder<FavoriteVo> (pageFinder.getPageNo(), pageFinder.getPageSize());
+        List<FavoriteVo> volist = new ArrayList<>();
         if (pageFinder != null) {
             try {
                 List<Favorite> list = pageFinder.getData();
-                List<FavoriteVo> volist = new ArrayList<>();
                 for (Favorite fa:list){
                     SellerVo sellerVo=new SellerVo();
                     BeanUtils.copyProperties(sellerVo,fa.getCommodity().getSeller());
@@ -126,15 +125,14 @@ public class FavoriteVo implements java.io.Serializable{
                     favoriteVo.setCommodityVo(commodityVo);
                     volist.add(favoriteVo);
                 }
-                page.setData(volist);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
             }
         }
-        page.setRowCount(pageFinder.getRowCount());//记录总数
-        page.setPageCount(pageFinder.getPageCount());//总页数
+        PageFinder<FavoriteVo> page = new PageFinder<>(pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
+        page.setData(volist);
         return page;
     }
 }
