@@ -61,7 +61,7 @@ public class MessageResource extends BaseResource {
      * @date: 2018/8/10 18:27
      */
     @ApiOperation(value = "查询消息详情")
-    @RequestMapping(value = "getMessageInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "getMessageInfo",method = RequestMethod.GET)
     @ResponseBody
     public ResponseResult getMessageInfo(@RequestParam("messageId") int messageId) {
         Message message = messageService.getMessage(messageId);

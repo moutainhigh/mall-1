@@ -38,9 +38,14 @@ public class Message implements java.io.Serializable {
     private String pushTitle;
 
     /**
-     * 消息摘要
+     * 消息摘要（文字）
      */
     private String messageDigest;
+
+    /**
+     * 摘要图片（路径）
+     */
+    private String digestPic;
 
     /**
      * 消息内容
@@ -134,5 +139,14 @@ public class Message implements java.io.Serializable {
 
     public void setMessageDigest(String messageDigest) {
         this.messageDigest = messageDigest;
+    }
+
+    @Column(length = 200)
+    public String getDigestPic() {
+        return digestPic;
+    }
+
+    public void setDigestPic(String digestPic) {
+        this.digestPic = digestPic;
     }
 }
