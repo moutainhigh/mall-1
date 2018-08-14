@@ -13,7 +13,22 @@
         $(document).ready(function() {
 
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var roleCode = $('#roleCode').val();
+                        var roleName = $('#roleName').val();
+                        if (roleCode=='') {
+                            bootbox.alert("角色编码不能为空!");
+                            return false;
+                        }else if(roleName=='') {
+                            bootbox.alert("角色名称不能为空!");
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                }
             });
             var roleName='${roleName}';
             if(roleName!=null&&roleName!=""){
