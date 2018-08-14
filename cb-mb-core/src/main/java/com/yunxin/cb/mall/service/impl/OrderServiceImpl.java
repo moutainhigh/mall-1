@@ -180,6 +180,7 @@ public class OrderServiceImpl implements OrderService {
             order.setConsigneeName(deliveryAddress.getConsigneeName());
             order.setConsigneeMobile(deliveryAddress.getConsigneeMobile());
             order.setConsigneeTelephone(deliveryAddress.getConsigneeTelephone());
+            order.setPostCode(deliveryAddress.getPostCode());
         }
         order.setProdQuantity(totalQuantity);
         order.setTotalPrice(totalPrice);

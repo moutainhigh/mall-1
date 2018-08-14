@@ -65,10 +65,10 @@
       },
       {
         "name": "退货管理", "code": "52", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/returnOrders.do"
-      },
-      {
-        "name": "换货管理", "code": "53", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/barterOrders.do"
       }
+//      {
+//        "name": "换货管理", "code": "53", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/barterOrders.do"
+//      }
     ]
   },
   {

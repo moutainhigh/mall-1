@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lte9 lte8 lte7 no-js"> <![endif]-->
@@ -292,7 +293,7 @@
                                 <label>下单时间：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                ${order.createTime}
+                                <fmt:formatDate value="${order.createTime}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -303,13 +304,16 @@
                                 <label>订单金额：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                <span>${order.totalPrice}</span>
+                                <span>
+                                <fmt:formatNumber value="${order.totalPrice}" pattern="#.##" minFractionDigits="2" > </fmt:formatNumber> </span>
                             </div>
                             <div class="col-sm-2">
                                 <label>运费金额：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                <span>${order.deliveryFeeTotal}</span>
+                                <span>
+                                    <fmt:formatNumber value="${order.deliveryFeeTotal}" pattern="#.##" minFractionDigits="2" > </fmt:formatNumber>
+                                </span>
                             </div>
                         </div>
 
@@ -319,7 +323,9 @@
                                 <label>订单总金额：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                <span>${order.feeTotal}</span>
+                                <span>
+                                      <fmt:formatNumber value="${order.feeTotal}" pattern="#.##" minFractionDigits="2" > </fmt:formatNumber>
+                                </span>
                             </div>
                             <div class="col-sm-2">
                                 <label>订单状态：</label>
@@ -419,7 +425,7 @@
                                 <label>详细地址：</label>
                             </div>
                             <div class="col-sm-7 col-label" id="conAddressDiv">
-                                <span>${order.consigneeAddress}</span>
+                                <span style="white-space:normal; word-break:break-all;">${order.consigneeAddress}</span>
                             </div>
                         </div>
 
@@ -593,12 +599,16 @@
                         <tbody>
                         <c:forEach items="${order.orderItems}" var="item">
                             <tr>
-                                <td><a><img src="../images/${item.product.commodity.defaultPicPath}_64_69.jpg"/></a></td>
+                                <td><a><img src="${item.product.commodity.defaultPicPath}_64_69.jpg"/></a></td>
                                 <td>${item.product.commodity.commodityName}</td>
                                 <td>${item.product.productName}</td>
-                                <td>${item.product.salePrice}</td>
+                                <td>
+                                    <fmt:formatNumber value="${item.product.salePrice}" pattern="#.##" minFractionDigits="2" ></fmt:formatNumber>
+                                </td>
                                 <td>${item.productNum}</td>
-                                <td><span class="btn brand-pinterest">${item.product.salePrice * item.productNum}</span></td>
+                                <td><span class="btn brand-pinterest">
+                                         <fmt:formatNumber value="${item.product.salePrice * item.productNum}" pattern="#.##" minFractionDigits="2" ></fmt:formatNumber>
+                                    </span></td>
                             </tr>
                         </c:forEach>
 
