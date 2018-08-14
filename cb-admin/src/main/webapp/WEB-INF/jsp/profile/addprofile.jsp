@@ -77,59 +77,55 @@
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
                     <legend>事项组</legend>
-                    <form:form id="validateSubmitForm" action="addProfile.do"
-                               cssClass="form-horizontal" method="post">
-                    <div class="row">
-                        <script type="text/javascript">
-                            /**
-                             *上传apk
-                             */
-                            function upload(){
-                                var formData = new FormData();
-                                formData.append("file", $('#upfile')[0].files[0]);
-                                $.ajax({
-                                    url: "/admin/uploads/upload/ANDROID.do",
-                                    type: 'POST',
-                                    cache: false,
-                                    data: formData,
-                                    processData: false,
-                                    contentType: false,
-                                    beforeSend : function(){     //请求成功前触发的局部事件
-                                        $('#loadgif').show();
-                                        $('#mainload').show();
-                                    },
-                                    success: function (result) {
-                                        $('#ANDROID_URL').val(result.url);
-                                        $('#ANDROID_VERSION_CODE').val(result.versionCode);
-                                        $('#ANDROID_VERSION_NAME').val(result.versionName);
-                                        $('#loadgif').css("display","none");
-                                        $('#mainload').css("display","none");
-                                        bootbox.alert("上传成功！");
-                                    },
-                                    error: function (err) {
-                                    }
-                                });
-                            }
+                    <link rel="stylesheet" href="../js/qiniu/style/index.css">
+                    <script src="https://cdn.bootcss.com/json3/3.3.2/json3.min.js"></script>
+                    <script type="text/javascript" src='../js/qiniu/js/plupload.full.min.js'></script>
+                    <script type="text/javascript" src='../js/qiniu/js/qiniu.js'></script>
+                    <script type="text/javascript" src='../js/qiniu/component/widget.js'></script>
+                    <script type="text/javascript" src='../js/qiniu/common/common.js'></script>
+                    <script type="text/javascript" src='../js/qiniu/component/ui.js'></script>
+                    <script type="text/javascript" src='../js/qiniu/scripts/uploadWithOthers.js'></script>
+                    <script type="text/javascript" src='../js/qiniu/scripts/uploadWithForm.js'></script>
+                    <script type="text/javascript" src='../js/qiniu/scripts/uploadWithSDK.js'></script>
+                    <script type="text/javascript" src='../js/qiniu/main.js'></script>
+                    <script>
+                        function uploadQiniuFile() {
+                            uploadWithSDK(token, putExtra, config, domain);
+                        }
+                    </script>
 
-
-                        </script>
-
-
-                        <div class="col-sm-2">
-                            <label><span class="asterisk">*</span>apk文件导入：</label>
-                        </div>
-                        <div class="col-sm-3">
-                            <div style="float: left">
-                                <input id="upfile" type="file" name="upfile">
+                    <div class="mainContainer" style="margin-top: -100px">
+                        <form method="post" enctype="multipart/form-data" id="form" action="upload">
+                            <div id="box2">
+                                <button class="select-button">选择文件</button>
+                                <input class="file-input" type="file" id="selectFile" onchange="uploadQiniuFile()"/>
                             </div>
-                            <div style="float: left;margin-left: 50px">
-                                <button onclick="upload()" class="btn btn-primary" type="button">导入</button>
-                            </div>
+                        </form>
+                        <div class="nav-box" style="margin-top:30px">
+                            <ul id="myTab" class="nav nav-tabs">
+                                <div id="process" class="tab-content">
+                                    <div class="tab-pane fade in active" id="h5">
+                                        <table class="table table-striped table-hover text-left" style="margin-top:30px">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-4">Filename</th>
+                                                <th class="col-md-2">Size</th>
+                                                <th class="col-md-6">Detail</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="fsUploadProgress">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                         </div>
                     </div>
-
-
-                    <div class="spacer-10"></div>
+                    <form:form id="validateSubmitForm" action="addProfile.do"
+                               cssClass="form-horizontal" method="post">
+                    <div class="spacer-30"></div>
+                    <div class="spacer-30"></div>
+                    <div class="spacer-30"></div>
+                    <div class="spacer-30"></div>
                     <div class="row">
                         <div class="col-sm-2">
                             <label><span class="asterisk">*</span>安卓版本编号：</label>
