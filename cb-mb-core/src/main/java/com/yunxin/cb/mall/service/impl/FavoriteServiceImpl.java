@@ -50,13 +50,8 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	@Override
-	public int removeFavorite(int favoriteId) {
-		return favoriteMapper.deleteByPrimaryKey(favoriteId);
-	}
-
-	@Override
-	public int removeFavoriteBatch(String[] favoriteIds){
-		return favoriteMapper.removeFavoriteBatch(favoriteIds);
+	public int removeFavoriteBatch(List<Integer> favoriteIds,Integer customerId){
+		return favoriteMapper.removeFavoriteBatch(favoriteIds,customerId);
 	}
 
 	@Override

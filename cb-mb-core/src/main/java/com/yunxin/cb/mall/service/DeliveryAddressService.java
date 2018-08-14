@@ -1,7 +1,10 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.DeliveryAddress;
+import com.yunxin.cb.mall.vo.DeliveryAddressVO;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface DeliveryAddressService {
@@ -16,19 +19,20 @@ public interface DeliveryAddressService {
      * @param addressId
      * @return
      */
+
     DeliveryAddress selectByPrimaryKey(Integer addressId,Integer customerId);
     /**
      * 新增收货地址
      */
-    int insert(DeliveryAddress record);
+    void insert(DeliveryAddressVO deliveryAddressVO) throws Exception;
     /**
      * 删除收货地址
      */
-    int deleteByPrimaryKey(Integer addressId);
+    void deleteByPrimaryKey(Integer addressId)throws Exception;
     /**
      * 更新收货地址
      */
-    int updateByPrimaryKey(DeliveryAddress record);
+    void updateByPrimaryKey(int addressId,DeliveryAddressVO deliveryAddressVO)throws Exception;
 
     /**
      * 查询用户默认收货地址

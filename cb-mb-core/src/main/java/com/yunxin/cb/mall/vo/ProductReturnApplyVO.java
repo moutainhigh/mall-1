@@ -16,21 +16,21 @@ public class ProductReturnApplyVO implements java.io.Serializable{
     /**
      * 订单id
      */
-    @ApiModelProperty(value="订单id",name="orderId",example="1")
+    @ApiModelProperty(value="订单id",name="orderId",example="1", required = true)
     private Integer orderId;
     /**
      * 订单商品id
      */
-    @ApiModelProperty(value="订单商品id",name="itemId",example="1")
+    @ApiModelProperty(value="订单商品id",name="itemId",example="1", required = true)
     private Integer[] itemIds;
     /**
      * 退货原因
      */
-    @ApiModelProperty(value="退货原因",name="returnReason",example="我不想买了")
+    @ApiModelProperty(value="退货原因",name="returnReason",example="我不想买了", required = true)
     private ReturnReason returnReason;
 
     /** 原因 */
-    @ApiModelProperty(value="原因",name="reason",example="我不想买了")
+    @ApiModelProperty(value="原因",name="reason",example="我不想买了", required = true)
     private String reason;
 
     public Integer getOrderId() {

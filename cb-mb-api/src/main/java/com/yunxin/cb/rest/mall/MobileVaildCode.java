@@ -12,6 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value = "/{version}/mall/mobile")
 public class MobileVaildCode {
 
+    private static final Log log = LogFactory.getLog(MobileVaildCode.class);
 
     @ApiOperation(value = "发送验证码")
     @PostMapping("sendMobileValidCode/{sendType}/{mobile}")
@@ -57,7 +60,7 @@ public class MobileVaildCode {
                 responseResult.setMessage("短信发送失败，请确认手机号或稍后再试!");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Exception is "+e);
             responseResult.setMessage("服务器出错！");
         }
         return responseResult;

@@ -63,10 +63,10 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     public ResponseResult<CommodityVo> getCommdityDetail(@PathVariable int productId){
         CommodityVo commodityVo= null;
         try {
-            int customerId=getCustomerId();
+            int customerId=1;//getCustomerId();
             commodityVo = commodityService.getCommdityDetail(productId,customerId);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Exception is "+e);
         }
         return new ResponseResult(commodityVo);
     }

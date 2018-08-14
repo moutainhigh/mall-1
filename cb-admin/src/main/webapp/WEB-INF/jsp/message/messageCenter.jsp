@@ -142,79 +142,79 @@
             <!-- End .actionbar-->
             <!-- End .toolbar -->
 
-                <div class="spacer-10"></div>
+            <div class="spacer-10"></div>
 
-                <div class="toolbar responsive-helper">
-                    <header>
-                        <div class="pull-left">
-                            <h3>消息中心配置 </h3>
+            <div class="toolbar responsive-helper">
+                <header>
+                    <div class="pull-left">
+                        <h3>消息中心配置 </h3>
+                    </div>
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                         </div>
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
-                            </div>
-                            <div class="btn-group">
-                                <a href="toEditMessage.do?messageId=0" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;消息新增</a>
-                            </div>
-                            <div class="btn-group">
-                                <a href="javascript:void(0);" onclick="pushMessage()" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;推送</a>
-                            </div>
+                        <div class="btn-group">
+                            <a href="toEditMessage.do?messageId=0" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;消息新增</a>
                         </div>
-                    </header>
-                </div>
-                <div class="table-wrapper">
-                    <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" selectable="true"
-                                height="450" resizable="true">
-                        <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="20"/>
-                        <kendo:grid-filterable extra="false">
-                            <kendo:grid-filterable-messages filter="查询" clear="清除" info="请输入查询条件:"/>
-                            <kendo:grid-filterable-operators>
-                                <kendo:grid-filterable-operators-string contains="包含" eq="等于"/>
-                                <kendo:grid-filterable-operators-date gte="小于" eq="等于" lte="大于"/>
-                            </kendo:grid-filterable-operators>
-                        </kendo:grid-filterable>
-                        <kendo:grid-columns>
-                            <kendo:grid-column title="ID" field="messageId" width="30px"/>
-                            <kendo:grid-column title="推送标题" sortable="false" field="pushTitle"  width="200px"/>
-                            <kendo:grid-column title="消息内容" sortable="false" field="messageContent" width="200px"/>
-                            <kendo:grid-column title="推送状态" sortable="false" field="pushSatus" template="#=getPushStatus(pushStatus)#" width="200px"/>
-                            <kendo:grid-column title="推送时间" field="pushTime" format="{0:yyyy-MM-dd HH:mm}" width="200px"/>
-                            <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}"  width="200px"/>
-                        </kendo:grid-columns>
-                        <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
-                            <kendo:dataSource-schema data="content" total="totalElements">
-                                <kendo:dataSource-schema-model>
-                                    <kendo:dataSource-schema-model-fields>
-                                        <kendo:dataSource-schema-model-field name="createTime" type="date"/>
-                                    </kendo:dataSource-schema-model-fields>
-                                </kendo:dataSource-schema-model>
-                            </kendo:dataSource-schema>
-                            <kendo:dataSource-transport>
-                                <kendo:dataSource-transport-read url="pageMessage.do" type="POST"
-                                                                 contentType="application/json"/>
-                                <kendo:dataSource-transport-parameterMap>
-                                    <script>
-                                        function parameterMap(options, type) {
-                                            return JSON.stringify(options);
-                                        }
-                                    </script>
-                                </kendo:dataSource-transport-parameterMap>
-                            </kendo:dataSource-transport>
-                        </kendo:dataSource>
-                    </kendo:grid>
-                </div>
-
+                        <div class="btn-group">
+                            <a href="javascript:void(0);" onclick="pushMessage()" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;推送</a>
+                        </div>
+                    </div>
+                </header>
+            </div>
+            <div class="table-wrapper">
+                <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" selectable="true"
+                            height="450" resizable="true">
+                    <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="20"/>
+                    <kendo:grid-filterable extra="false">
+                        <kendo:grid-filterable-messages filter="查询" clear="清除" info="请输入查询条件:"/>
+                        <kendo:grid-filterable-operators>
+                            <kendo:grid-filterable-operators-string contains="包含" eq="等于"/>
+                            <kendo:grid-filterable-operators-date gte="小于" eq="等于" lte="大于"/>
+                        </kendo:grid-filterable-operators>
+                    </kendo:grid-filterable>
+                    <kendo:grid-columns>
+                        <kendo:grid-column title="ID" field="messageId" width="30px"/>
+                        <kendo:grid-column title="推送标题" sortable="false" field="pushTitle"  width="200px"/>
+                        <kendo:grid-column title="消息内容" sortable="false" field="messageContent" width="200px"/>
+                        <kendo:grid-column title="推送状态" sortable="false" field="pushSatus" template="#=getPushStatus(pushStatus)#" width="200px"/>
+                        <kendo:grid-column title="推送时间" field="pushTime" format="{0:yyyy-MM-dd HH:mm}" width="200px"/>
+                        <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}"  width="200px"/>
+                    </kendo:grid-columns>
+                    <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
+                        <kendo:dataSource-schema data="content" total="totalElements">
+                            <kendo:dataSource-schema-model>
+                                <kendo:dataSource-schema-model-fields>
+                                    <kendo:dataSource-schema-model-field name="createTime" type="date"/>
+                                </kendo:dataSource-schema-model-fields>
+                            </kendo:dataSource-schema-model>
+                        </kendo:dataSource-schema>
+                        <kendo:dataSource-transport>
+                            <kendo:dataSource-transport-read url="pageMessage.do" type="POST"
+                                                             contentType="application/json"/>
+                            <kendo:dataSource-transport-parameterMap>
+                                <script>
+                                    function parameterMap(options, type) {
+                                        return JSON.stringify(options);
+                                    }
+                                </script>
+                            </kendo:dataSource-transport-parameterMap>
+                        </kendo:dataSource-transport>
+                    </kendo:dataSource>
+                </kendo:grid>
             </div>
 
-            <div class="spacer-40"></div>
-            <div class="hr-totop"><span>Top</span></div>
-            <div class="spacer-40"></div>
-
-            <!-- End .inner-padding -->
         </div>
-        <jsp:include page="../layouts/footer.jsp"/>
-        <!-- End #footer-main -->
+
+        <div class="spacer-40"></div>
+        <div class="hr-totop"><span>Top</span></div>
+        <div class="spacer-40"></div>
+
+        <!-- End .inner-padding -->
     </div>
+    <jsp:include page="../layouts/footer.jsp"/>
+    <!-- End #footer-main -->
+</div>
 </div>
 </body>
 </html>

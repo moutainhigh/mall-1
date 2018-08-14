@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * @title:  商城收藏夹接口
@@ -62,15 +63,20 @@ public class FavoriteResource extends BaseResource {
     @GetMapping(value = "findByCustomerAndCommodity/{commodityId}")
     @ApiVersion(1)
     public ResponseResult findByCustomerAndCommodity(@PathVariable(value = "commodityId") int commodityId) {
-        Favorite favorite=new Favorite();
-        favorite.setCommodityId(commodityId);
-        favorite.setCustomerId(getCustomerId());
-        favorite=favoriteService.findByCustomerAndCommodity(favorite);
-        if(favorite==null){
-            return new ResponseResult(Result.FAILURE);//收藏夹不存在
-        }else{
-            return new ResponseResult(Result.SUCCESS);//收藏夹已存在
+        try {
+            Favorite favorite=new Favorite();
+            favorite.setCommodityId(commodityId);
+            favorite.setCustomerId(getCustomerId());
+            favorite=favoriteService.findByCustomerAndCommodity(favorite);
+            if(favorite==null){
+                return new ResponseResult(Result.FAILURE);//收藏夹不存在
+            }else{
+                return new ResponseResult(Result.SUCCESS);//收藏夹已存在
+            }
+        }catch (Exception e){
+            logger.error("Exception is "+e);
         }
+        return new ResponseResult(Result.FAILURE);//失败
     }
 
     /**
@@ -100,35 +106,11 @@ public class FavoriteResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE);//失败
             }
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error("IllegalAccessException is "+e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            logger.error("InvocationTargetException is "+e);
         }
         return new ResponseResult(Result.SUCCESS);//成功
-    }
-
-    /**
-     * @title: 商品移出收藏夹
-     * @param: [favoriteId]
-     * @return: com.yunxin.cb.vo.ResponseResult
-     * @auther: eleven
-     * @date: 2018/7/17 18:27
-     */
-    @ApiOperation(value = "商品移出收藏夹")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "favoriteId", value = "收藏夹ID", required = true, paramType = "path", dataType = "Integer")})
-    @DeleteMapping(value = "delFavorite/{favoriteId}")
-    @ApiVersion(1)
-    public ResponseResult delFavorite(@PathVariable(value = "favoriteId") Integer favoriteId){
-        if(LogicUtils.isNull(favoriteId)){
-            return new ResponseResult(Result.FAILURE,"参数为空");//失败
-        }
-        int result=favoriteService.removeFavorite(favoriteId);
-        if(result>0){
-            return new ResponseResult(Result.SUCCESS);//成功
-        }else{
-            return new ResponseResult(Result.FAILURE);//失败
-        }
     }
 
     /**
@@ -140,18 +122,23 @@ public class FavoriteResource extends BaseResource {
      */
     @ApiOperation(value = "商品移出收藏夹(批量)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "favoriteIds", value = "收藏夹id,根据“,”拆分", required = true, paramType = "path", dataType = "String")})
-    @DeleteMapping(value = "delFavorites/{favoriteIds}")
+            @ApiImplicitParam(name = "favoriteIds", value = "收藏夹id集合", required = true, paramType = "post", dataType = "list<int>")})
+    @PostMapping(value = "delFavorites")
     @ApiVersion(1)
-    public ResponseResult delFavorites(@PathVariable(value = "favoriteIds") String favoriteIds){
-        if(LogicUtils.isNullOrEmpty(favoriteIds)){
-            return new ResponseResult(Result.FAILURE,"参数为空");//失败
+    public ResponseResult delFavorites(@RequestBody List<Integer> favoriteIds){
+        try {
+            if(LogicUtils.isNullOrEmpty(favoriteIds)){
+                return new ResponseResult(Result.FAILURE,"参数为空");//失败
+            }
+            int result=favoriteService.removeFavoriteBatch(favoriteIds, getCustomerId());
+            if(result>0){
+                return new ResponseResult(Result.SUCCESS);//成功
+            }else{
+                return new ResponseResult(Result.FAILURE);//失败
+            }
+        }catch (Exception e){
+            logger.error("Exception is "+e);
         }
-        int result=favoriteService.removeFavoriteBatch(favoriteIds.split(","));
-        if(result>0){
-            return new ResponseResult(Result.SUCCESS);//成功
-        }else{
-            return new ResponseResult(Result.FAILURE);//失败
-        }
+        return new ResponseResult(Result.FAILURE);//失败
     }
 }

@@ -4,6 +4,8 @@ import com.yunxin.cb.mall.entity.Favorite;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 
+import java.util.List;
+
 /**
  * @title: 收藏夹 服务接口类
  * @auther: eleven
@@ -21,22 +23,13 @@ public interface FavoriteService {
 	public Favorite addFavorite(Favorite favorite);
 
 	/**
-	 * @title: 移除收藏夹
-	 * @param: [favoriteId]
-	 * @return: void
-	 * @auther: eleven
-	 * @date: 2018/7/19 10:41
-	 */
-	public int removeFavorite(int favoriteId);
-
-	/**
 	 * @title: 商品移出收藏夹(批量)
 	 * @param: [commodityId]
 	 * @return: com.yunxin.cb.vo.ResponseResult
 	 * @auther: eleven
 	 * @date: 2018/7/17 18:27
 	 */
-	public int removeFavoriteBatch(String[] favoriteIds);
+	public int removeFavoriteBatch(List<Integer> favoriteIds,Integer customerId);
 
 	/**
 	 * @title: 分页查询收藏夹
