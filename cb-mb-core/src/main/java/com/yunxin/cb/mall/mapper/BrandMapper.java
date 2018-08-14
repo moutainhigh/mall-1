@@ -95,7 +95,9 @@ public interface BrandMapper {
         "BRAND_ID, BRAND_EN_NAME, BRAND_KEY, BRAND_NAME, BRAND_NO, BRAND_TITLE, CREATE_TIME, ",
         "DESCRIPTION, DISPLAY, ENABLED, HOT, PIC_PATH, REMARK, SEO_DESCRIPTION, SEO_KEY, ",
         "SEO_TITLE, WEBSITE, CATEGORY_ID",
-        "from brand"
+        "from brand",
+        "where enabled = 1 and display = 1"
+
     })
     @Results({
         @Result(column="BRAND_ID", property="brandId", jdbcType=JdbcType.INTEGER, id=true),
@@ -152,9 +154,10 @@ public interface BrandMapper {
             "select",
             "BRAND_ID, BRAND_EN_NAME, BRAND_KEY, BRAND_NAME, BRAND_NO, BRAND_TITLE, CREATE_TIME, ",
             "DESCRIPTION, DISPLAY, ENABLED, HOT, PIC_PATH, REMARK, SEO_DESCRIPTION, SEO_KEY, ",
-            "SEO_TITLE, WEBSITE, CATEGORY_ID",
+            "SEO_TITLE, WEBSITE, CATEGORY_ID,SORT",
             "from brand",
-            "where hot = 1"
+            "where hot = 1 and enabled = 1 and display = 1",
+            "order by sort"
     })
     @Results({
             @Result(column="BRAND_ID", property="brandId", jdbcType=JdbcType.INTEGER, id=true),
@@ -174,7 +177,8 @@ public interface BrandMapper {
             @Result(column="SEO_KEY", property="seoKey", jdbcType=JdbcType.VARCHAR),
             @Result(column="SEO_TITLE", property="seoTitle", jdbcType=JdbcType.VARCHAR),
             @Result(column="WEBSITE", property="website", jdbcType=JdbcType.VARCHAR),
-            @Result(column="CATEGORY_ID", property="categoryId", jdbcType=JdbcType.INTEGER)
+            @Result(column="CATEGORY_ID", property="categoryId", jdbcType=JdbcType.INTEGER),
+            @Result(column="SORT", property="sort", jdbcType=JdbcType.INTEGER)
     })
     List<Brand> selectHotBrand();
 }

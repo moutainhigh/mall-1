@@ -21,7 +21,20 @@
 
       });
 
-
+      function changeOtherMatter(flag) {
+          if(flag){
+              $("#sort").show();
+          }else {
+              $("#sort").hide();
+          }
+      }
+      function submitForm() {
+          var flag = $("input[name='otherMatter']:checked").val();
+          if(flag=="false"){
+              $("#hotSort").val(0);
+          }
+          return true;
+      }
   </script>
 </head>
 <body>
@@ -131,7 +144,7 @@
       </div>
       <!-- End .actionbar-->
       <div class="inner-padding">
-        <form:form id="validateSubmitForm" cssClass="form-horizontal" action="addBrand.do" method="post" commandName="brand" >
+        <form:form id="validateSubmitForm" cssClass="form-horizontal" action="addBrand.do" method="post" commandName="brand" onsubmit="return submitForm();">
 
           <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
           <fieldset>
@@ -266,14 +279,37 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="inline-labels">
-                    <form:radiobutton path="hot" value="1"/>是
-                    <form:radiobutton path="hot" value="0"/>否
+                    <form:radiobutton path="hot" name="otherMatter" value="1" onclick="changeOtherMatter(true);"/>是
+                    <form:radiobutton path="hot" name="otherMatter" value="0" onclick="changeOtherMatter(false);"/>否
                   </div>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
             </div>
+            <div class="spacer-10"></div>
 
+            <div class="row" id="sort" style="display: none;">
+              <div class="inline-labels">
+                <div class="col-sm-2">
+                  <label>热门排序：<span class="asterisk"></span></label>
+                </div>
+                <div class="col-sm-3">
+                  <div>
+                      <form:select path="sort" cssClass="form-control" id="hotSort">
+                        <form:option value="0">0</form:option>
+                        <form:option value="1">1</form:option>
+                        <form:option value="2">2</form:option>
+                        <form:option value="3">3</form:option>
+                        <form:option value="4">4</form:option>
+                        <form:option value="5">5</form:option>
+                        <form:option value="6">6</form:option>
+                        <form:option value="7">7</form:option>
+                        <form:option value="8">8</form:option>
+                      </form:select>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="spacer-30"></div>
             <hr>
             <div class="spacer-30"></div>
@@ -319,7 +355,7 @@
             <div class="spacer-30"></div>
             <div class="row">
               <div class="col-sm-2">
-                <label>图片</label>
+                <label>图片:<span class="asterisk">*</span></label>
               </div>
               <div class="col-sm-9">
                 <%--图片上传控件--%>

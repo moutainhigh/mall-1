@@ -94,7 +94,7 @@ public class BrandService implements IBrandService {
         Brand oldBrand = brandDao.findOne(brand.getBrandId());
         AttributeReplication.copying(brand, oldBrand, Brand_.brandNo, Brand_.brandName, Brand_.brandEnName, Brand_.brandTitle, Brand_.brandKey
                 , Brand_.website, Brand_.display, Brand_.picPath, Brand_.description, Brand_.seoKey, Brand_.seoTitle, Brand_.seoDescription,
-                Brand_.hot, Brand_.remark, Brand_.enabled, Brand_.category);
+                Brand_.hot, Brand_.remark, Brand_.enabled, Brand_.category,Brand_.sort);
         return oldBrand;
     }
 
