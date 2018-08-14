@@ -78,7 +78,8 @@ public class MessageCenterController {
         Message message = messageService.getMessage(messageId);
         if(null != message && message.getMessageId() > 0){
             //消息推送
-            RongCloudService.pushMessageToAll(message.getPushTitle());
+            RongCloudService rongCloudService = new RongCloudService();
+            rongCloudService.pushMessageToAll(message.getPushTitle());
 
             //状态更新
             message.setPushStatus(PushStatus.HAVE_PUSHED);

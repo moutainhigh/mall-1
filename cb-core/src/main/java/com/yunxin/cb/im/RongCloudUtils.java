@@ -7,7 +7,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class RongCloudUtils {
 
@@ -231,14 +231,12 @@ public class RongCloudUtils {
                               String encode, int timeout) {
         byte[] resultBuffer = null;
         Double nonce = Math.floor(Math.random() * 100000 + 100000);
-        Long timestamp = Timestamp.valueOf("2015-3-18 00:00:00").getTime();
-        String signature = getDigestOfString((appSecret + nonce + timestamp)
-                .getBytes());
+        Long timestamp = new Date().getTime();
+        String signature = getDigestOfString((appSecret + nonce + timestamp).getBytes());
         byte[] data = null;
         if (StringUtils.isNotEmpty(jsonParams)) {
             data = jsonParams.getBytes();
         }
-
         try{
             URL url = new URL(path);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -269,7 +267,9 @@ public class RongCloudUtils {
             System.out.println("融云URL请求结果：");
             System.out.println("URL：" + path);
             System.out.println("请求参数：" + jsonParams);
-            System.out.println("响应结果：" + conn.getResponseCode());
+            System.out.println("响应结果码：" + conn.getResponseCode());
+            System.out.println("响应结果内容：" + conn.getResponseMessage());
+
             resultBuffer = readStream(conn.getInputStream());
             conn.disconnect();
 
