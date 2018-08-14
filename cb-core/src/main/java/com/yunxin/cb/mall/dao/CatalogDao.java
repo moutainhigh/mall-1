@@ -78,4 +78,22 @@ public interface CatalogDao extends JpaRepository<Catalog, Integer>, JpaSpecific
     @Modifying
     @Query("update Catalog a set a.enabled = ?1 where a.catalogId=?2")
     void enableCatalogById(boolean enabled, int catalogId);
+
+    /**
+     * @Description:            按分类编码前部分模糊查询
+     * @author: lxc
+     * @param catalogCode       分类编码
+     * @Return java.util.List<com.yunxin.cb.mall.entity.Catalog>:
+     * @DateTime: 2018/8/14 15:34
+     */
+    List<Catalog> findCatalogByCatalogCodeStartingWith(String catalogCode);
+
+    /**
+     * @Description:        根据分类编码查询
+     * @author: lxc
+     * @param catalogCode   分类编码
+     * @Return com.yunxin.cb.mall.entity.Catalog:
+     * @DateTime: 2018/8/14 19:36
+     */
+    Catalog findCatalogByCatalogCode(String catalogCode);
 }
