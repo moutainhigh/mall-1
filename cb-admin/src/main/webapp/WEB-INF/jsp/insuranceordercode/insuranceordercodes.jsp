@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>品牌管理</title>
+    <title>保险合同编号管理</title>
 
     <script type="text/javascript">
 
@@ -224,6 +224,7 @@
                             </div>
                             <div style="float: left;margin-left: 50px">
                                 <button class="btn btn-primary" type="submit">导入</button>
+                                <a class="btn btn-primary" href="../templates/excel/insurance.xlsx">模板下载</a>
                             </div>
                         </form>
                     </div>

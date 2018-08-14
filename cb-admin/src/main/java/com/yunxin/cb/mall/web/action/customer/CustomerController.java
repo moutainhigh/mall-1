@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.sound.midi.SysexMessage;
 import javax.validation.Valid;
-import java.rmi.ServerError;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,8 +60,11 @@ public class CustomerController {
         Customer customer=customerService.getCustomerById(customerId);
 
         //S     add by lxc  2018-08-07        customer.getRecommendCustomer()推荐人的数据时,报could not initialize proxy - no Session,拿到推荐人id,再找推荐人信息
-        Customer recommendCustomer = customerService.findByCustomerId(customer.getRecommendCustomer().getCustomerId());
-        customer.setRecommendCustomer(recommendCustomer);
+        if(null!=customer.getRecommendCustomer()){
+            Customer recommendCustomer = customerService.findByCustomerId(customer.getRecommendCustomer().getCustomerId());
+            customer.setRecommendCustomer(recommendCustomer);
+        }
+
         //E
 
         List<Customer> listVo=customerService.findCustomerByLikeLevelCode(customer);
