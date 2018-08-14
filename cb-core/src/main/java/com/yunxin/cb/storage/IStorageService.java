@@ -44,4 +44,7 @@ public interface IStorageService {
 
 
     public Map<String,String> deleteByfileName(String fileName);
+
+
+    public Map<String,String> getQiniuInfo();
 }

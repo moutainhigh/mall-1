@@ -5,7 +5,7 @@ package com.yunxin.cb.mall.entity.meta;
  */
 public enum CommodityUnit {
 
-    Pieces("件"), bottles("瓶"), bags("包"), sets("套");
+    CAR("辆"),Pieces("件"), bottles("瓶"), bags("包"), sets("套");
 
     private String name;
 
