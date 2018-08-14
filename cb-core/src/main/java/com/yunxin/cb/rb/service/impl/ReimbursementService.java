@@ -37,7 +37,7 @@ import java.util.Map;
  * 报账信息wangteng
  */
 @Service
-@Transactional
+@Transactional(rollbackFor =RuntimeException.class)
 public class ReimbursementService implements IReimbursementService {
 
     private final Logger logger=LoggerFactory.getLogger(getClass());
