@@ -197,14 +197,14 @@
                   <label>SEO关键字：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control" path="seoKey" maxlength="255"/>
+                  <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="seoKey" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
                   <label>SEO标题：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control" path="seoTitle" maxlength="255"/>
+                  <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="seoTitle" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
