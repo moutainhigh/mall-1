@@ -665,7 +665,7 @@
                     <td>${address.defaultAddress==true?'是':'否'}</td>
                     <td>${address.consigneeName}</td>
                     <td>${address.consigneeMobile}</td>
-                    <td id="address${statu.index}">
+                    <td id="address${statu.index}"  style="word-break: break-word">
                       <script type="text/javascript">
                         var pa = $.citySelector.getProvince("${address.province}");
                         var ca = $.citySelector.getCity("${address.city}");
