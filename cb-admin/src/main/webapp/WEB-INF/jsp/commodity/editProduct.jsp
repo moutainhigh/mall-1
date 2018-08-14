@@ -20,6 +20,8 @@
 
         $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
     </script>
+    <%--后台页面共用的js--%>
+    <script src="../js/common/fixed_common.js"></script>
 </head>
 <body>
 <jsp:include page="../layouts/left.jsp"/>
@@ -132,7 +134,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="11"/>
                                 </div>
 
                             </div>
@@ -142,7 +144,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="salePrice" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" readonly="true" title="销售价等于成本价乘以比例配置"  path="salePrice" maxlength="11"/>
                                 </div>
                             </div>
                         </div>
