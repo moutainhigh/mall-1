@@ -190,7 +190,7 @@
                 <div class="toolbar responsive-helper">
                     <header>
                         <div class="pull-left">
-                            <h3>报账列表</h3>
+                            <h3>财务主管审批列表</h3>
                         </div>
 
                         <div class="pull-right">
@@ -222,11 +222,11 @@
                                                template="#=customer.realName#" />
                             <kendo:grid-column title="报账人手机" filterable="false" field="customer"
                                                template="#=customer.mobile#" width="100"/>
-                            <kendo:grid-column title="报账总金额" filterable="false" field="amount"
+                            <kendo:grid-column title="报账总金额" filterable="false" field="amountStr"
                                                width="100"/>
-                            <kendo:grid-column title="税" filterable="false" field="tax"
+                            <kendo:grid-column title="税" filterable="false" field="taxStr"
                                                 width="100"/>
-                            <kendo:grid-column title="报账订单总金额" filterable="false" field="orderAmount"
+                            <kendo:grid-column title="报账订单总金额" filterable="false" field="orderAmountStr"
                                                 width="100"/>
                             <%--<kendo:grid-column title="报账订单" filterable="false"--%>
                                                <%--width="100" template="<a href='reimbursementOrders.do?reimbursementId=#= reimbursementId#' style='color:blue'>查看</a>" />--%>
@@ -386,23 +386,42 @@
                 $("#orderBox").html("&nbsp;");
                 for(var i=0;i<data.length;i++){
                     debugger;
-                    var taxMoney=data[i].productPrice*data[i].tax;
-                    taxMoney = taxMoney.toFixed(2);
+                    var taxMoney = data[i].amount.toFixed(2);
+
+                    var productPrice=data[i].productPrice;
+                    if(productPrice>10000){
+                        productPrice=(productPrice/10000).toFixed(2)+"万";
+                    }
+                    if(taxMoney>10000){
+                        taxMoney=(taxMoney/10000).toFixed(2)+"万";
+                    }
+                    var tax =reimbursement.tax;
+                    if(tax>10000){
+                        tax=(tax/10000).toFixed(2)+"万";
+                    }
+                    var amount=reimbursement.amount;
+                    if(amount>10000){
+                        amount=(amount/10000).toFixed(2)+"万";
+                    }
+                    var orderAmount=reimbursement.orderAmount;
+                    if(orderAmount>10000){
+                        orderAmount=(orderAmount/10000).toFixed(2)+"万";
+                    }
+
                     $("#orderBox").append("<div class='orderItem '>\n" +
                         "                       <div class=\"orderNo\">订单号："+data[i].orderCode+"</div>\n" +
                         "                       <div class='orderImg'>\n" +
                         "                            <img src='"+data[i].imgPath+"' alt=\"\">\n" +
                         "                            <div class='orderDtail'><span class='orderDes' style='position: absolute'>"+data[i].productName+"</span><span class='orderMoney' style='position: absolute;margin-left: 130px;margin-top: 0px'>+&nbsp;"+data[i].productPrice+"</span></div>\n" +
                         "                       </div>\n" +
-                        "                       <div class='orderMoney'>订单金额："+data[i].productPrice+"，应缴纳税："+taxMoney+"</div>\n" +
+                        "                       <div class='orderMoney'>订单金额："+productPrice+"，应缴纳税："+taxMoney+"</div>\n" +
                         "                   </div>");
                 }
-                var allTaxMoney=reimbursement.tax*reimbursement.amount;
                 $("#reimbursement").html(" <div class='ceilTitle' >报账总金额：</div>\n" +
                     "               <div class='reimbursementDetail' style='width: 580px'>\n" +
-                    "                    <div>订单金额: "+reimbursement.amount+"</div>\n" +
-                    "                    <div>缴纳税点："+reimbursement.taxRate+"，税:"+reimbursement.tax+"</div>\n" +
-                    "                    <div>实际到账总金额："+reimbursement.orderAmount+"</div>\n" +
+                    "                    <div>订单金额: "+amount+"</div>\n" +
+                    "                    <div>缴纳税点："+(reimbursement.taxRate)*100+"%，税:"+tax+"</div>\n" +
+                    "                    <div>实际到账总金额："+orderAmount+"</div>\n" +
                     "               </div>\n" +
                     "\n" +
                     "               <div class='ceilTitle' >基本信息</div>\n" +
@@ -412,7 +431,6 @@
                     "                    <div>申报人："+reimbursement.customer.realName+"&nbsp;&nbsp;账号："+reimbursement.customer.mobile+"</div>\n" +
                     "                    <div>状态："+state+"</div>\n" +
                     "                   ");
-
 
                 if(reimbursementProcess.length>0){
                     for (var j=0;j<reimbursementProcess.length;j++){
@@ -455,13 +473,14 @@
             return false;
         }
         $.get("reimbursementAuditing.do?operType="+operType,$("#auditForm").serialize(),function(result){
-            if(result){
+            // if(result){
                 $("#auditForm")[0].reset();
                 $('#auditDialog').modal("hide");
                 $("#grid").data("kendoGrid").dataSource.read();
-            }else{
-                bootbox.alert("审核失败！");
-            }
+                bootbox.alert(result);
+            // }else{
+            //     bootbox.alert("审核失败！");
+            // }
         });
     }
 

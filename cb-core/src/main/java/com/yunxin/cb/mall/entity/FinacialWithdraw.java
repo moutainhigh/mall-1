@@ -38,9 +38,6 @@ public class FinacialWithdraw implements Serializable {
     /** 提现金额 */
     private BigDecimal amount;
 
-    private BigDecimal amountBegin;
-    private BigDecimal amountEnd;
-
     /** 实际提现金额 */
     private BigDecimal realAmount;
 
@@ -221,21 +218,5 @@ public class FinacialWithdraw implements Serializable {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
-    }
-
-    public BigDecimal getAmountBegin() {
-        return amountBegin;
-    }
-
-    public void setAmountBegin(BigDecimal amountBegin) {
-        this.amountBegin = amountBegin;
-    }
-
-    public BigDecimal getAmountEnd() {
-        return amountEnd;
-    }
-
-    public void setAmountEnd(BigDecimal amountEnd) {
-        this.amountEnd = amountEnd;
     }
 }

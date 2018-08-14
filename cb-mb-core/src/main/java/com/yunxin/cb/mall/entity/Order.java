@@ -143,6 +143,15 @@ public class Order {
 
     /** 审核时间 */
     private Date auditTime;
+    /**
+     * 发货时间
+     */
+    private Date deliverTime;
+
+    /**
+     * 收货时间
+     */
+    private Date collectTime;
 
     /** 卖家id */
     private Integer sellerId;
@@ -565,5 +574,21 @@ public class Order {
 
     public void setAuditTime(Date auditTime) {
         this.auditTime = auditTime;
+    }
+
+    public Date getDeliverTime() {
+        return deliverTime;
+    }
+
+    public void setDeliverTime(Date deliverTime) {
+        this.deliverTime = deliverTime;
+    }
+
+    public Date getCollectTime() {
+        return collectTime;
+    }
+
+    public void setCollectTime(Date collectTime) {
+        this.collectTime = collectTime;
     }
 }

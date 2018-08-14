@@ -128,6 +128,10 @@ public class OrderResource extends BaseResource {
             Order model = orderService.getByOrderIdAndCustomerId(orderId, getCustomerId());
             if (model != null) {
                 orderDetailVO = OrderDetailVO.dOconvertVO(model);
+                if (orderDetailVO.getPayOvertimeTime() == 0 && OrderState.PENDING_PAYMENT.equals(orderDetailVO.getOrderState())) { //超时订单
+                    orderService.updateOrderStatusTimeOut(orderId, model.getOrderCode(), getCustomerId());
+                    orderDetailVO.setOrderState(OrderState.CANCELED);
+                }
             }
             return new ResponseResult(orderDetailVO);
         } catch (Exception e) {

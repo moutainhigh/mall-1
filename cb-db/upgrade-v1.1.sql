@@ -765,3 +765,7 @@ ALTER TABLE bank_info MODIFY COLUMN CARD_TYPE VARCHAR(60) DEFAULT NULL COMMENT '
 ##add by guwenshao 2018-08-13
 ALTER TABLE `order_form` add  `DELIVER_TIME` datetime DEFAULT NULL COMMENT '发货时间';
 ALTER TABLE `order_form` add  `COLLECT_TIME` datetime DEFAULT NULL COMMENT '收货时间';
+
+ALTER TABLE customer modify column ENABLED int(2);
+ALTER TABLE `insurance_informed_matter` add  `INSURE_PEOPLE` INT(2) DEFAULT 0 COMMENT '投保人';
+ALTER TABLE `insurance_informed_matter` add  `INSURED_PEOPLE` INT(2) DEFAULT 0 COMMENT '被保人';

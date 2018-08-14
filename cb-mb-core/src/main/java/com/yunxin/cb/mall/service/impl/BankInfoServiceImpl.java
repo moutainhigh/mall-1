@@ -97,6 +97,7 @@ public class BankInfoServiceImpl implements BankInfoService {
         bankInfo.setCreateTime(new Date());
         result=bankInfoMapper.insert(bankInfo);
         result=customerService.updateAuthFlagByCustomerId(customerId, Constant.AUTH_FLAG_OK);
+        //创建用户钱包
         return result;
     }
 }
