@@ -269,7 +269,9 @@ public class RongCloudUtils {
             System.out.println("融云URL请求结果：");
             System.out.println("URL：" + path);
             System.out.println("请求参数：" + jsonParams);
-            System.out.println("响应结果：" + conn.getResponseCode());
+            System.out.println("响应结果码：" + conn.getResponseCode());
+            System.out.println("响应结果内容：" + conn.getResponseMessage());
+
             resultBuffer = readStream(conn.getInputStream());
             conn.disconnect();
 
