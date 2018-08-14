@@ -122,7 +122,7 @@ public class FavoriteResource extends BaseResource {
      */
     @ApiOperation(value = "商品移出收藏夹(批量)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "favoriteIds", value = "收藏夹id集合", required = true, paramType = "post", dataType = "int")})
+            @ApiImplicitParam(name = "favoriteIds", value = "收藏夹id集合", required = true, paramType = "post", dataType = "list<int>")})
     @PostMapping(value = "delFavorites")
     @ApiVersion(1)
     public ResponseResult delFavorites(@RequestBody List<Integer> favoriteIds){
