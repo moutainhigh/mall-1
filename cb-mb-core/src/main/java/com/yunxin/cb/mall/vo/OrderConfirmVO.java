@@ -18,18 +18,18 @@ public class OrderConfirmVO implements java.io.Serializable{
     /**
      * 支付方式
      */
-    @ApiModelProperty(value="支付方式",name="paymentType",example="FULL_SECTION")
+    @ApiModelProperty(value="支付方式",name="paymentType",example="FULL_SECTION", required = true)
     private PaymentType paymentType;
 
     /**
      * 收货地址id
      */
-    @ApiModelProperty(value="收货地址id",name="addressId",example="1")
+    @ApiModelProperty(value="收货地址id",name="addressId",example="1", required = true)
     private int addressId;
     /**
      * 商家id
      */
-    @ApiModelProperty(value="商家id",name="sellerId",example="1")
+    @ApiModelProperty(value="商家id",name="sellerId",example="1", required = true)
     private String sellerId;
     /**
      * 购买货品信息
