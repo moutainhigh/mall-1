@@ -773,3 +773,5 @@ ALTER TABLE `insurance_informed_matter` add  `INSURED_PEOPLE` INT(2) DEFAULT 0 C
 ###add by lxc 2018-08-14 15:58
 ALTER TABLE `crystal_ball`.`catalog`
 MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT 1.00000 COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+ALTER TABLE `crystal_ball`.`catalog`
+MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT NULL COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
