@@ -112,12 +112,15 @@
                             <div class="col-sm-3">
                                 <form:input cssClass="form-control validate[required],custom[number]" path="sortOrder" maxlength="3"/>
                             </div>
+                            <%--不是一级分类时，不需要配置--%>
+                            <span id="hidd">
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input cssClass="form-control validate[required],custom[gtOne]" path="ratio" maxlength="10" />
                             </div>
+                            </span>
                         </div>
                         <div class="row">
                             <div class="col-sm-2">
@@ -205,6 +208,11 @@
                 $("#parentCatalogId").val(catalogId);
                 $("#parentCatalogName").val(catalogName);
                 //loadSpecs(catalogId);
+                if(catalogId !=1){
+                    $('#hidd').hide();
+                }else{
+                    $('#hidd').show();
+                }
             }
         </script>
     </div>
