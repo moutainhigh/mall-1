@@ -152,6 +152,10 @@ public class CommodityController implements ServletContextAware {
         modelMap.addAttribute("currentSpecs", currentSpecs);
         List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.COMMODITY,commodity.getCommodityId());
         modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
+        //S 获得一级分类对象  2018-08-14    LXC
+        Catalog oneLevelCatalog = catalogService.findOneLevelCatalogByCatalogCode(commodity.getCatalog().getCatalogCode());
+        modelMap.addAttribute("oneLevelCatalog",oneLevelCatalog);
+        //E
         return "commodity/editCommodity";
     }
 
