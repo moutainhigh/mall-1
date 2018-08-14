@@ -23,7 +23,6 @@ import java.util.List;
 
 @Api(description = "报账")
 @RestController
-@RequestMapping(value = "/{version}/reimbursement")
 public class ReimbursementQueryResource extends BaseResource {
     @Resource
     private ReimbursementQueryService reimbursementQueryService;
