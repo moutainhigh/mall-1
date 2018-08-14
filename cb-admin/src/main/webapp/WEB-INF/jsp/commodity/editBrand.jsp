@@ -17,7 +17,29 @@
   <title>编辑品牌</title>
 
   <script type="text/javascript">
-
+      $(document).ready(function() {
+          debugger;
+          var flag=${brand.hot};
+          if(flag){
+              $("#sort").show();
+          }else {
+              $("#sort").hide();
+          }
+      });
+      function changeOtherMatter(flag) {
+          if(flag){
+              $("#sort").show();
+          }else {
+              $("#sort").hide();
+          }
+      }
+      function submitForm() {
+          var flag = $("input[name='otherMatter']:checked").val();
+          if(flag=="false"){
+              $("#hotSort").val(0);
+          }
+          return true;
+      }
 
   </script>
 </head>
@@ -128,7 +150,7 @@
       </div>
       <!-- End .actionbar-->
       <div class="inner-padding">
-        <form:form id="validateSubmitForm" cssClass="form-horizontal" action="editBrand.do" method="post" commandName="brand" >
+        <form:form id="validateSubmitForm" cssClass="form-horizontal" action="editBrand.do" method="post" commandName="brand" onsubmit="return submitForm();">
           <form:hidden path="brandId"/>
           <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
           <fieldset>
@@ -181,14 +203,14 @@
                   <label>SEO关键字：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control" path="seoKey" maxlength="255"/>
+                  <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="seoKey" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
                   <label>SEO标题：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control" path="seoTitle" maxlength="255"/>
+                  <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="seoTitle" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -265,14 +287,35 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="inline-labels">
-                    <form:radiobutton path="hot" value="1"/>是
-                    <form:radiobutton path="hot" value="0"/>否
+                    <form:radiobutton path="hot" name="otherMatter" id="otherMatter" value="1" onclick="changeOtherMatter(true);"/>是
+                    <form:radiobutton path="hot" name="otherMatter" id="otherMatter" value="0" onclick="changeOtherMatter(false);"/>否
                   </div>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
             </div>
-
+            <div class="row" id="sort" style="display: none;">
+              <div class="inline-labels">
+                <div class="col-sm-2">
+                  <label>热门排序：<span class="asterisk"></span></label>
+                </div>
+                <div class="col-sm-3">
+                  <div>
+                    <form:select path="sort" cssClass="form-control" id="hotSort">
+                      <form:option value="0">0</form:option>
+                      <form:option value="1">1</form:option>
+                      <form:option value="2">2</form:option>
+                      <form:option value="3">3</form:option>
+                      <form:option value="4">4</form:option>
+                      <form:option value="5">5</form:option>
+                      <form:option value="6">6</form:option>
+                      <form:option value="7">7</form:option>
+                      <form:option value="8">8</form:option>
+                    </form:select>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="spacer-30"></div>
             <hr>
             <div class="spacer-30"></div>
@@ -319,7 +362,7 @@
             <div class="spacer-30"></div>
             <div class="row">
               <div class="col-sm-2">
-                <label>图片</label>
+                <label>图片:<span class="asterisk">*</span></label>
               </div>
               <div class="col-sm-9">
                   <%--图片上传控件--%>

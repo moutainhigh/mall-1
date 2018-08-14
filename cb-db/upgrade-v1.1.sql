@@ -776,3 +776,6 @@ CREATE TABLE `history_record` (
   `CUSTOMER_ID` int(11) NOT NULL,
   PRIMARY KEY (`RECORD_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='浏览记录表';
+
+##add by pengcong 2018-08-14
+ALTER TABLE `brand` ADD COLUMN `SORT` int(11) COMMENT '热门品牌排序';
