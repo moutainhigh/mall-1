@@ -344,7 +344,7 @@
                   <label>手机号：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="16"/>
+                  <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="11"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
