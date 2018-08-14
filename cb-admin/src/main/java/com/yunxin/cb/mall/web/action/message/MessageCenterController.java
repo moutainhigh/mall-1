@@ -36,7 +36,7 @@ public class MessageCenterController {
         if(messageId > 0){
             modelMap.addAttribute("message", messageService.getMessage(messageId));
         }else{
-            modelMap.addAttribute(new Message());
+            modelMap.addAttribute("message",new Message());
         }
         return "message/editMessage";
     }

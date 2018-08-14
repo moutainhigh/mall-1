@@ -53,6 +53,11 @@
             $('#serNo').val("");
         });
 
+        function resetForm(){
+            $("#pushTitle").val("");
+            $("#pushDigest").text("");
+            $("#messageContent").text("");
+        }
     </script>
 </head>
 <body>
@@ -189,7 +194,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button type="reset" class="btn btn-default" onclick="resetForm()"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>

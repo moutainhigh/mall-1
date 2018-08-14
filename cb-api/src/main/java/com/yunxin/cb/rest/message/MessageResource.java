@@ -3,6 +3,7 @@ package com.yunxin.cb.rest.message;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.rest.customer.MainResource;
 import com.yunxin.cb.system.entity.Message;
+import com.yunxin.cb.system.meta.PushStatus;
 import com.yunxin.cb.system.service.imp.MessageService;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.core.persistence.PageSpecification;
@@ -41,6 +42,12 @@ public class MessageResource extends BaseResource {
     @ApiImplicitParams({})
     @RequestMapping(value = "getMessages" , method = RequestMethod.POST)
     public ResponseResult getMessages(@RequestBody PageSpecification<Message> query) {
+        PageSpecification.FilterDescriptor filterDescriptor = new PageSpecification.FilterDescriptor();
+        filterDescriptor.setField("pushStatus");
+        filterDescriptor.setLogic("and");
+        filterDescriptor.setOperator("eq");
+        filterDescriptor.setValue(PushStatus.HAVE_PUSHED);
+        query.getFilter().getFilters().add(filterDescriptor);
         Page<Message> pagelist = messageService.pageMessage(query);
         return new ResponseResult(pagelist);
     }
