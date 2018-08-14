@@ -454,13 +454,13 @@
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             allowedFileExtensions: ["jpg", "png", "gif"],
-                                            autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
-                                            overwriteInitial: false,//不覆盖已存在的图片
+                                            autoReplace : true,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                                            overwriteInitial: true,//不覆盖已存在的图片
                                             browseClass:"btn btn-primary", //按钮样式
                                             // layoutTemplates:{
                                             //     actionUpload:''    //设置为空可去掉上传按钮
                                             // },
-                                            maxFileCount: 10  //上传的个数
+                                            maxFileCount: 1  //上传的个数
                                         }).on("fileuploaded", function (event, data) {
                                             var response = data.response;
                                             //添加url到隐藏域
@@ -468,9 +468,9 @@
                                             $('#imgDiv').html($('#imgDiv').html()+html);
                                             //上传完成回调
                                             var index=0;
-                                            if(initPreview.length>0 ){
-                                                index=initPreview.length;
-                                            }
+                                            // if(initPreview.length>0 ){
+                                            //     index=initPreview.length;
+                                            // }
                                             initPreview[index]  = response.url;
                                             var config = new Object();
                                             config.caption = "";
