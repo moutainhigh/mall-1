@@ -176,6 +176,111 @@
                                 <form:textarea id="editorContent1" path="messageDigest" cssClass="form-control"/>
                             </div>
                         </div>
+
+                        <div class="spacer-10"></div>
+                        <div class="spacer-10"></div>
+                        <div class="spacer-10"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>商品图片：</label>
+                            </div>
+                            <div class="col-sm-9">
+                                    <%--图片上传控件--%>
+                                <link href="../js/plugins/fileinput/fileinput.min.css" media="all" rel="stylesheet" type="text/css"/>
+                                <script src="../js/plugins/fileinput/fileinput.min.js" type="text/javascript"></script>
+                                <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $("#validateSubmitForm").validationEngine({
+                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
+                                            onValidationComplete: function (form, valid) {
+                                                if (valid) {
+                                                    var defaultPicPath = $('input[name="imgurl"]');
+                                                    if (defaultPicPath.size()==0) {
+                                                        bootbox.alert("请选择一张图片!");
+                                                        return false;
+                                                    } else {
+                                                        return true;
+                                                    }
+                                                }
+                                            }
+                                        });
+                                        var initPreview = new Array();//展示元素
+                                        var initPreviewConfig = new Array();//展示设置
+                                        //初始化图片上传组件
+                                        $("#digestPic").fileinput({
+                                            uploadUrl: "/admin/uploads/uploadFile/COMMODITY.do",
+                                            showCaption: true,
+                                            minImageWidth: 50,
+                                            minImageHeight: 50,
+                                            showUpload:true, //是否显示上传按钮
+                                            showRemove :false, //显示移除按钮
+                                            showPreview :true, //是否显示预览
+                                            showCaption:false,//是否显示标题
+                                            browseOnZoneClick: true,//是否显示点击选择文件
+                                            language: "zh" ,
+                                            showBrowse : false,
+                                            maxFileSize : 2000,
+                                            allowedFileExtensions: ["jpg", "png", "gif"],
+                                            autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                                            overwriteInitial: false,//不覆盖已存在的图片
+                                            browseClass:"btn btn-primary", //按钮样式
+                                            // layoutTemplates:{
+                                            //     actionUpload:''    //设置为空可去掉上传按钮
+                                            // },
+                                            maxFileCount: 1  //上传的个数
+                                        }).on("fileuploaded", function (event, data) {
+                                            var response = data.response;
+                                            //添加url到隐藏域
+                                            var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
+                                            $('#imgDiv').html($('#imgDiv').html()+html);
+                                            //上传完成回调
+                                            var index=0;
+                                            if(initPreview.length>0 ){
+                                                index=initPreview.length;
+                                            }
+                                            initPreview[index]  = response.url;
+                                            var config = new Object();
+                                            config.caption = "";
+                                            config.url="/admin/uploads/delete/COMMODITY.do";
+                                            config.key=response.timeStr;
+                                            initPreviewConfig[index]=config;
+                                            $("#digestPic").fileinput('refresh', {
+                                                initialPreview: initPreview,
+                                                initialPreviewConfig: initPreviewConfig,
+                                                initialPreviewAsData: true
+                                            });
+                                            $(".btn-default").attr("disabled",false);
+                                        }).on("filepredelete", function(jqXHR) {
+                                            var abort = true;
+                                            if (confirm("确定要删除吗？(删除后不会恢复)")) {
+                                                abort = false;
+                                            }
+                                            return abort;
+                                        }).on('filedeleted', function(event, id) {
+                                            $("#"+id).remove();
+                                            for (var i=0;i<initPreview.length;i++)
+                                            {
+                                                if(initPreview[i].indexOf(id) != -1){
+                                                    initPreview.splice(i)
+                                                    initPreviewConfig.splice(i)
+                                                }
+                                            }
+                                        }).on('filebatchselected', function (event, files) {//选中文件事件
+                                            $(".kv-file-upload").click();
+                                        });
+                                    })
+                                </script>
+                                <input id="digestPic" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                                <div id="imgDiv">
+
+                                </div>
+                                    <%--图片上传控件结束--%>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+
                         <div class="spacer-10"></div>
                         <div class="spacer-10"></div>
                         <div class="spacer-10"></div>

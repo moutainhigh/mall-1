@@ -16,9 +16,9 @@ description: 省市区三级(二级)联动
     	        jsonDistrict : "../js/district/json-array-of-district.js",
                 jsonAddress : "../js/district/address.js",
     	        hasDistrict : true,
-    	        initProvince : "<option value='0'>请选择省份</option>",
-    	        initCity : "<option value='0'>请选择城市</option>",
-    	        initDistrict : "<option value='0'>请选择区县</option>"
+    	        initProvince : "<option value=''>请选择省份</option>",
+    	        initCity : "<option value=''>请选择城市</option>",
+    	        initDistrict : "<option value=''>请选择区县</option>"
     	};
         return {
             init: function (dataObj) {
