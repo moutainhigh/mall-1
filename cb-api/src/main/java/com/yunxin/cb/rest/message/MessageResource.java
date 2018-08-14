@@ -30,7 +30,6 @@ public class MessageResource extends BaseResource {
     private MessageService messageService;
 
     /**
-     *
      * 功能描述: 查询消息列表
      *
      * @param: query
@@ -40,17 +39,10 @@ public class MessageResource extends BaseResource {
      */
     @ApiOperation(value = "查询消息列表")
     @ApiImplicitParams({})
-    @PostMapping(value = "getMessages")
+    @RequestMapping(value = "getMessages" , method = RequestMethod.POST)
     public ResponseResult getMessages(@RequestBody PageSpecification<Message> query) {
-        PageSpecification.FilterDescriptor filterDescriptor = new PageSpecification.FilterDescriptor();
-        filterDescriptor.setField("message.messageId");
-        filterDescriptor.setLogic("and");
-        filterDescriptor.setOperator("eq");
-        filterDescriptor.setValue(getCustomerId());
-        query.getFilter().getFilters().add(filterDescriptor);
         Page<Message> pagelist = messageService.pageMessage(query);
         return new ResponseResult(pagelist);
-
     }
 
     /**
@@ -62,10 +54,10 @@ public class MessageResource extends BaseResource {
      * @date: 2018/8/10 18:27
      */
     @ApiOperation(value = "查询消息详情")
-    @RequestMapping(value = "getMessageInfo")
+    @RequestMapping(value = "getMessageInfo",method = RequestMethod.POST)
     @ResponseBody
     public ResponseResult getMessageInfo(@RequestParam("messageId") int messageId) {
-        Message  message = messageService.getMessage(messageId);
+        Message message = messageService.getMessage(messageId);
         return new ResponseResult(message);
     }
 

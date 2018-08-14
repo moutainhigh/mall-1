@@ -22,14 +22,6 @@ public class CommodityQuery extends PageSpecification<Commodity> {
 
     private PriceSection priceSection;
 
-    public CommodityQuery() {
-    }
-
-    public CommodityQuery(int page, int pageSize, Category category) {
-        super(page, pageSize);
-        this.category = category;
-    }
-
     public Category getCategory() {
         return category;
     }

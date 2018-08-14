@@ -754,7 +754,8 @@ public class CustomerService implements ICustomerService {
                 ration = new BigDecimal(0.05);
             }
             BigDecimal price=new BigDecimal(list.get(0).getPrice());
-            BigDecimal rationPrice=price.multiply(ration).setScale(4,BigDecimal.ROUND_DOWN);
+//            BigDecimal rationPrice=price.multiply(ration).setScale(4,BigDecimal.ROUND_DOWN);
+            BigDecimal rationPrice=price.multiply(ration);
             if (listCustomer != null && listCustomer.size() > 0) {
                 for (Customer listCustome : listCustomer){
 //                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getPrice());
