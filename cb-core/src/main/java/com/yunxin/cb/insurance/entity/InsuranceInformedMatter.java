@@ -85,6 +85,12 @@ public class InsuranceInformedMatter implements Serializable {
     @ApiModelProperty(value="所属组",name="matterGroup",example="所属组")
     private InsuranceInformedMatterGroup matterGroup;
 
+    @ApiModelProperty(value="投保人",name="insurePeople",example="0：不是；1：是")
+    private int insurePeople;
+
+    @ApiModelProperty(value="被保人",name="insuredPeople",example="0：不是；1：是")
+    private int insuredPeople;
+
     private Set<InsuranceProduct> insuranceProducts = new HashSet(0);
     //columns END
 
@@ -146,6 +152,24 @@ public class InsuranceInformedMatter implements Serializable {
 
     public void setEnabled(int enabled) {
         this.enabled = enabled;
+    }
+
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 10)
+    public int getInsurePeople() {
+        return insurePeople;
+    }
+
+    public void setInsurePeople(int insurePeople) {
+        this.insurePeople = insurePeople;
+    }
+
+    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 10)
+    public int getInsuredPeople() {
+        return insuredPeople;
+    }
+
+    public void setInsuredPeople(int insuredPeople) {
+        this.insuredPeople = insuredPeople;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

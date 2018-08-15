@@ -206,4 +206,6 @@ public interface ICustomerService {
      */
     MyTotalVo getInterpersonal(int customerId);
 
+    void enableCustomerById(int customerId,boolean enabled);
+
 }

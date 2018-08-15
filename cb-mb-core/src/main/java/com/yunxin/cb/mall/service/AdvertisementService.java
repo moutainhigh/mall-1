@@ -19,4 +19,9 @@ public interface AdvertisementService {
      * @return
      */
     List<Advertisement> select(Boolean enabled);
+
+    /**
+     * 查询banner
+     */
+    List<Advertisement> selectByAdvertisementPlace(AdvertisementPlace advertisementPlace,Boolean enabled);
 }

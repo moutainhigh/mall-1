@@ -146,7 +146,7 @@
                 alert("请选择事项");
                 return ;
             }
-            clearCheck();
+            // clearCheck();
             $('#commodityDialog').modal("hide");
         }
     </script>

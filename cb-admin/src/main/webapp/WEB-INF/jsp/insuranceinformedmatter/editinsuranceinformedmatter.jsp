@@ -185,6 +185,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>投保人被选：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="inline-labels">
+                                    <form:radiobutton path="insurePeople" value="1"/>是
+                                    <form:radiobutton path="insurePeople" value="0"/>否
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>被保人被选：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="inline-labels">
+                                    <form:radiobutton path="insuredPeople" value="1"/>是
+                                    <form:radiobutton path="insuredPeople" value="0"/>否
+                                </div>
+                            </div>
+                        </div>
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>

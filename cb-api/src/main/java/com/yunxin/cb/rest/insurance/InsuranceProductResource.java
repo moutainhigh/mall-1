@@ -45,7 +45,8 @@ public class InsuranceProductResource {
     })
     @PostMapping(value = "getResponseResultByProdId")
     public ResponseResult getResponseResultByProdId(int prodId){
-        Set<InsuranceInformedMatter> list=insuranceProductService.getInsuranceProductById(prodId).getInsuranceInformedMatters();
+        InsuranceProduct insuranceProduct = insuranceProductService.getInsuranceProductById(prodId);
+        Set<InsuranceInformedMatter> list=insuranceProduct.getInsuranceInformedMatters();
         return new ResponseResult(list);
     }
 

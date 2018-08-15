@@ -195,4 +195,33 @@ public interface AdvertisementMapper {
             @Result(column="VIDEO_PATH", property="videoPath", jdbcType=JdbcType.VARCHAR)
     })
     List<Advertisement> select(@Param("enabled")Boolean enabled);
+
+    @Select({
+            "select",
+            "ADVERT_ID, ADVERT_CODE, ADVERT_TITLE, ADVERT_URL, ADVERTISEMENT_PLACE, ADVERTISEMENT_TYPE, ",
+            "ADVERTISEMENT_URLTYPE, CLIENT_TYPES, CONTENT, CREATE_TIME, ENABLED, PIC_PATH, ",
+            "REMARK, TEMPLATE_PATH, VIDEO_PATH",
+            "from advertisement",
+            "where ADVERTISEMENT_PLACE = #{advertisementPlace,jdbcType=INTEGER}",
+            "and ENABLED = #{enabled,jdbcType=BIT}"
+    })
+    @Results({
+            @Result(column="ADVERT_ID", property="advertId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="ADVERT_CODE", property="advertCode", jdbcType=JdbcType.VARCHAR),
+            @Result(column="ADVERT_TITLE", property="advertTitle", jdbcType=JdbcType.VARCHAR),
+            @Result(column="ADVERT_URL", property="advertUrl", jdbcType=JdbcType.VARCHAR),
+            @Result(column="ADVERTISEMENT_PLACE", property="advertisementPlace", jdbcType=JdbcType.INTEGER),
+            @Result(column="ADVERTISEMENT_TYPE", property="advertisementType", jdbcType=JdbcType.BIT),
+            @Result(column="ADVERTISEMENT_URLTYPE", property="advertisementUrltype", jdbcType=JdbcType.INTEGER),
+            @Result(column="CLIENT_TYPES", property="clientTypes", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CONTENT", property="content", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="ENABLED", property="enabled", jdbcType=JdbcType.BIT),
+            @Result(column="PIC_PATH", property="picPath", jdbcType=JdbcType.VARCHAR),
+            @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR),
+            @Result(column="TEMPLATE_PATH", property="templatePath", jdbcType=JdbcType.VARCHAR),
+            @Result(column="VIDEO_PATH", property="videoPath", jdbcType=JdbcType.VARCHAR)
+    })
+    List<Advertisement> selectByAdvertisementPlace(@Param("advertisementPlace")AdvertisementPlace advertisementPlace,@Param("enabled")Boolean enabled);
+
 }

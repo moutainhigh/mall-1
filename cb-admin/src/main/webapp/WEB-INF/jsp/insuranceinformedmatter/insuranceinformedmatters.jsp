@@ -246,6 +246,8 @@
                             <kendo:grid-column title="类型" filterable="false" field="matterType" template="#= matterType ?  '填空题' : '是否题' #" width="20px"/>
                             <kendo:grid-column title="所属组" filterable="false" field="matterGroup.description" width="50px"/>
                             <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="25px"/>
+                            <kendo:grid-column title="投保人被选" filterable="false" field="insurePeople" template="#= insurePeople ? '是' : '否' #" width="25px"/>
+                            <kendo:grid-column title="被保人被选" filterable="false" field="insuredPeople" template="#= insuredPeople ? '是' : '否' #" width="25px"/>
                             <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="30px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">

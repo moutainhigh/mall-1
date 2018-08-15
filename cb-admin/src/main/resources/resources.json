@@ -62,10 +62,10 @@
     "children": [
       {
         "name": "订单管理", "code": "51", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/orders.do"
-      },
-      {
-        "name": "退货管理", "code": "52", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/returnOrders.do"
       }
+//      {
+//        "name": "退货管理", "code": "52", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/returnOrders.do"
+//      }
 //      {
 //        "name": "换货管理", "code": "53", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/barterOrders.do"
 //      }

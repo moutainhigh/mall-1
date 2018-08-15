@@ -788,3 +788,7 @@ CREATE TABLE `insurance_order_code` (
 
 ##add by pengcong 2018-08-14
 ALTER TABLE `brand` ADD COLUMN `SORT` int(11) COMMENT '热门品牌排序';
+
+ALTER TABLE customer modify column ENABLED int(2);
+ALTER TABLE `insurance_informed_matter` add  `INSURE_PEOPLE` INT(2) DEFAULT 0 COMMENT '投保人';
+ALTER TABLE `insurance_informed_matter` add  `INSURED_PEOPLE` INT(2) DEFAULT 0 COMMENT '被保人';
