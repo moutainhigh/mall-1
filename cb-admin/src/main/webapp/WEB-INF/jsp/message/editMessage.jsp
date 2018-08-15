@@ -76,7 +76,7 @@
             <div class="pull-left">
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
-                    <li><a href="#">系统设置 </a></li>
+                    <li><a href="#">运营管理 </a></li>
                     <li><a href="#">消息中心配置</a></li>
                     <c:choose>
                         <c:when test="message.messageId > 0">
@@ -151,7 +151,7 @@
                                 <label>推送标题：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input id="pushTitle" path="pushTitle" cssClass="form-control validate[required,minSize[5]]"/>
+                                <form:input id="pushTitle" path="pushTitle" cssClass="form-control validate[required,minSize[5]]" maxlength="100"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -162,7 +162,7 @@
                                 <label>消息摘要：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input id="messageDigest" path="messageDigest" cssClass="form-control validate[required,minSize[5]]"/>
+                                <form:input id="messageDigest" path="messageDigest" cssClass="form-control validate[required,minSize[5]]" maxlength="200"/>
                             </div>
                         </div>
 
