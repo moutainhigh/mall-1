@@ -542,7 +542,7 @@
                                 <label>备注：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea cssClass=" form-control validate[maxSize[5000]]" path="remark"></form:textarea>
+                                <form:textarea cssClass=" form-control validate[maxSize[255]]" path="remark"></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
