@@ -76,7 +76,6 @@ public class InsuranceOrderCodeController {
     /**
      * 导入EXCEL
      * @author      likang
-     * @param request
     * @param response
     * @param session
      * @return      java.lang.String
@@ -84,9 +83,8 @@ public class InsuranceOrderCodeController {
      * @date        2018/7/17 21:01
      */
     @RequestMapping(value = "uploadPayerCreditInfoExcel")
-    public String uploadPayerCreditInfoExcel(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        MultipartFile file = multipartRequest.getFile("upfile");
+    @ResponseBody
+    public String uploadPayerCreditInfoExcel(@RequestParam("file") MultipartFile file,  HttpServletResponse response, HttpSession session) throws Exception {
         if (file.isEmpty()) {
             throw new Exception("文件不存在！");
         }
