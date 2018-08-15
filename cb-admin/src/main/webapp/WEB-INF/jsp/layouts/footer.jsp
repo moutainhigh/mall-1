@@ -10,11 +10,11 @@
             </a>
 
             <div class="dropup" id="ext-dropdown-chat">
-                <a class="btn dropdown-toggle ext-dropdown-chat-btn" data-toggle="dropdown" href="#">
+                <%--<a class="btn dropdown-toggle ext-dropdown-chat-btn" data-toggle="dropdown" href="#">
                     <span class="online-dot"></span>
                     Steven Watson
                     <i class="fa fa-comments chat-blink-icon"></i>
-                </a>
+                </a>--%>
 
                 <div class="ext-dropdown-chat dropdown-menu pull-right">
                     <div class="ext-dropdown-chat-inner">

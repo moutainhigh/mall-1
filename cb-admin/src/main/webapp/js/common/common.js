@@ -59,8 +59,9 @@ function clearFilters(gridName) {
     $(".grid-filter").each(function () {
         $(this).val("");
     });
-
+    debugger
     var gridData = $("#" + gridName).data("kendoGrid");
+    gridData.dataSource._take=10;
     gridData.dataSource.filter({});
 }
 

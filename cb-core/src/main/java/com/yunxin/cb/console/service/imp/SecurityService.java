@@ -191,6 +191,7 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         }
         Role dbRole = roleDao.findOne(role.getRoleId());
         dbRole.setRoleName(role.getRoleName());
+        dbRole.setRoleCode(role.getRoleCode());
         dbRole.setRemark(role.getRemark());
         // 保存新的可访问资源
         permissionDao.deleteByRole_RoleId(dbRole.getRoleId());
@@ -221,6 +222,8 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         if (dbRole.getUsers().isEmpty()) {
             permissionDao.deleteByRole_RoleId(roleId);
             roleDao.delete(roleId);
+        }else{
+            throw new Exception("该角色下存在用户无法删除");
         }
     }
 

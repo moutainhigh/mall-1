@@ -385,6 +385,20 @@
 
             <div class="spacer-10"></div>
 
+
+            <div class="row">
+              <div class="inline-labels">
+                <div class="col-sm-2">
+                  <label>Email：<span class="asterisk">*</span></label>
+                </div>
+                <div class="col-sm-3">
+                  <form:input path="email" cssClass="form-control validate[required,minSize[1]]" maxlength="30" />
+                </div>
+                <div class="col-sm-1"></div>
+
+              </div>
+            </div>
+
             <%--<div class="row">--%>
               <%--<div class="inline-labels">--%>
 

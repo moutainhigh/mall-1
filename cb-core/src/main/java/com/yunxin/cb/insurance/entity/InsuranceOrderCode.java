@@ -37,7 +37,6 @@ public class InsuranceOrderCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     //columns START
     /**
      * 编码ID
