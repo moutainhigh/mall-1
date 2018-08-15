@@ -244,7 +244,7 @@
 
                             <div class="btn-group">
                                 <a href="javascript:void(0);" onclick="toProducts()" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;货品</a>
-                                <%--<a href="javascript:void(0);" onclick="toCombinations()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 组合</a>--%>
+                                <%--<a href="javascript:void(0);" onclick="combicombi()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 组合</a>--%>
                             </div>
                         </div>
                     </header>
