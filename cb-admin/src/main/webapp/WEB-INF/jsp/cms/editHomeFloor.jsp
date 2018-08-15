@@ -116,13 +116,13 @@
                                 <label><span class="asterisk">*</span>楼层名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2],maxSize[32]]"  path="floorName" maxlength="32"/>
+                                <form:input cssClass="form-control form-control validate[required,minSize[2],maxSize[32]]"  path="floorName" maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>排序：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input id="sortOrder" cssClass="form-control validate[required,custom[integer],min[0]]" path="sortOrder" maxlength="4"/>
+                                <form:input id="sortOrder" cssClass="form-control form-control validate[required,custom[integer],min[0]]" path="sortOrder" maxlength="4"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -154,20 +154,6 @@
                                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
-                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
-                                            onValidationComplete: function (form, valid) {
-                                                if (valid) {
-                                                    var defaultPicPath = $('input[name="imgurl"]');
-                                                    if (defaultPicPath.size()==0) {
-                                                        bootbox.alert("请至少选择一张图片!");
-                                                        return false;
-                                                    } else {
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        });
                                         var initPreview = new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
@@ -476,7 +462,7 @@
                                 <label>备注：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea cssClass="form-control validate[maxSize[255]]" path="remark" ></form:textarea>
+                                <form:textarea cssClass="form-control form-control validate[maxSize[255]]" path="remark" ></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -486,7 +472,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>

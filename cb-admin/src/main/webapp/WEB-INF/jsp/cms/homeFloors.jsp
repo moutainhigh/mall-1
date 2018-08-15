@@ -141,7 +141,7 @@
                                 <strong>状态:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <select data-filter="enabled" data-operator="eq" class="form-control simpleselect grid-filter">
+                                <select data-filter="enabled" data-operator="eq" class="form-control  grid-filter">
                                     <option value="">全部</option>
                                     <option value="true">启用</option>
                                     <option value="false">停用</option>

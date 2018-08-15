@@ -589,7 +589,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button"   class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>

@@ -304,7 +304,7 @@
                                         });
                                     })
                                 </script>
-                                <input id="picUrl1" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                                <input  id="picUrl1" name="file" type="file" class="file-loading" accept="image/*" multiple>
                                 <div id="imgDiv1">
 
                                 </div>
@@ -317,7 +317,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品列表：<span class="asterisk">*</span></label>
+                                <label>商品列表11：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="commodityTable" class="table table-bordered table-striped">
@@ -398,7 +398,7 @@
                                 <label>备注：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea cssClass="form-control validate[maxSize[255]]" path="remark" ></form:textarea>
+                                <form:textarea cssClass=" form-control validate[maxSize[255]]" path="remark" ></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -408,7 +408,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>
