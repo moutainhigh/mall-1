@@ -105,7 +105,7 @@
                 <div class="pull-left">
                     <h2>品牌管理</h2>
                 </div>
-                <div class="pull-right">
+<%--                <div class="pull-right">
                     <div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
@@ -117,7 +117,7 @@
                             <i class="fa fa-cog"></i>
                         </a>
                     </div>
-                </div>
+                </div>--%>
             </div>
             <!-- End .inner-padding -->
         </header>
