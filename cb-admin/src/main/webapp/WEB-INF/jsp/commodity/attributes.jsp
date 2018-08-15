@@ -245,13 +245,13 @@
                   <strong>属性名称:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" class="form-control" placeholder="请输入属性名称"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" class="form-control" placeholder="请输入属性名称"/>
                 </div>
                 <div class="toolbar-field">
                   <strong>属性组名称:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" class="form-control" placeholder="请输入属性组名称"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" class="form-control" placeholder="请输入属性组名称"/>
                 </div>
                 <div class="toolbar-field">
                   <strong>规格属性:</strong>

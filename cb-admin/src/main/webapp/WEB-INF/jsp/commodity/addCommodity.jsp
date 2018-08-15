@@ -475,14 +475,15 @@
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
-
+                        <div class="spacer-30"></div>
+                        <hr>
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品配置内容：</label>
+                                <label>商品详情内容：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
-                                    <form:textarea cssClass="form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -491,10 +492,10 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品详情内容：</label>
+                                <label>商品配置内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
+                                    <form:textarea cssClass="form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>

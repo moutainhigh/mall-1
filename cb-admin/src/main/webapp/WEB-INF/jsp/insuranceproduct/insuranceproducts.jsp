@@ -32,7 +32,7 @@
 
         function checkTime() {
             if ($('#createTime').val() > $('#createTimes').val() && '' != $('#createTimes').val()) {
-                alert("开始时间不能大于结束时间")
+                bootbox.alert("开始时间不能大于结束时间!");
                 $('#createTimes').val('')
             }
         }
@@ -173,7 +173,7 @@
                                 <strong>产品名称:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="prodName" data-operator="contains" class="form-control grid-filter" placeholder="产品名称"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="prodName" data-operator="contains" class="form-control grid-filter" placeholder="产品名称"/>
                             </div>
                         </div>
                         <div class="pull-left">

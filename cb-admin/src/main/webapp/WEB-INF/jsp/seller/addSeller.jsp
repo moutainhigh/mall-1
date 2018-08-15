@@ -17,7 +17,18 @@
   <script type="application/javascript">
     $(document).ready(function(){
       $("#validateSubmitForm").validationEngine({
-        autoHidePrompt: true, scroll: false, showOneMessage: true
+        autoHidePrompt: true, scroll: false, showOneMessage: true,
+        onValidationComplete: function (form, valid) {
+              if (valid) {
+                  var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                  if (!myreg.test($('#mobile').val())) {
+                      bootbox.alert("手机格式不正确!");
+                      return false;
+                  } else {
+                      return true;
+                  }
+              }
+        }
       });
     });
     function returnSellers(){
@@ -153,7 +164,7 @@
                 <label><span class="asterisk">*</span> 手机：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="11"/>
+                <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" id="mobile" maxlength="11"/>
               </div>
             </div>
 
