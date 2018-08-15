@@ -123,7 +123,7 @@
                 <label><span class="asterisk">*</span> 商家地址：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.sellerAddress}
+                <span style="word-break:break-all">${seller.sellerAddress}</span>
               </div>
               <div class="col-sm-2">
                 <label><span class="asterisk">*</span> 商家类型：</label>
@@ -210,7 +210,7 @@
                 <label><span class="asterisk">*</span> 营业执照名称：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.busName}
+                <span style="word-break:break-all">${seller.busName}</span>
               </div>
               <div class="col-sm-2">
                 <label><span class="asterisk">*</span> 营业执照注册号：</label>
