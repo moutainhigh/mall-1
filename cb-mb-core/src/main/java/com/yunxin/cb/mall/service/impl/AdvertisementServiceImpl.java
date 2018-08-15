@@ -23,4 +23,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public List<Advertisement> select(Boolean enabled) {
         return advertisementMapper.select(enabled);
     }
+
+    @Override
+    public List<Advertisement> selectByAdvertisementPlace(AdvertisementPlace advertisementPlace, Boolean enabled) {
+        return advertisementMapper.selectByAdvertisementPlace(advertisementPlace,enabled);
+    }
 }

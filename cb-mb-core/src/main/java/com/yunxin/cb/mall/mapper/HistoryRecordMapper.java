@@ -76,7 +76,7 @@ public interface HistoryRecordMapper {
 
     @Delete({"<script>",
             "delete from history_record",
-            "WHERE CUSTOMER_ID = #{customerId} and FAVORITE_ID IN",
+            "WHERE CUSTOMER_ID = #{customerId} and RECORD_ID IN",
             "<foreach item='item' index='index' collection='recordIds'",
             "open='(' separator=',' close=')'>",
             "#{item}",
