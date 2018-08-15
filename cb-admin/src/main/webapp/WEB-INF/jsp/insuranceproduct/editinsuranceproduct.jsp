@@ -813,9 +813,11 @@
                             var idIndex = ${insuranceProduct.insuranceProductPrices.size()==0}?0:${insuranceProduct.insuranceProductPrices.size()};
                             function addAttribute() {
                                 var json = {idIndex: idIndex};
-                                $("#attributeTable tr:last").after($('#attributeTr').tmpl(json));
-                                $('#attributeTable tr').find('td:eq(1) td:eq(2)').hide();
-                                idIndex++;
+                                if(idIndex<5) {
+                                    $("#attributeTable tr:last").after($('#attributeTr').tmpl(json));
+                                    $('#attributeTable tr').find('td:eq(1) td:eq(2)').hide();
+                                    idIndex++;
+                                }
                             }
                             function removeprice(indx) {
                                 $("#price" + indx).remove();
@@ -824,8 +826,8 @@
                         </script>
                         <script id="attributeTr" type="text/x-jquery-tmpl">
                             <tr id='price{{= idIndex}}'>
-                                <td><input type='text' name='price' class='form-control validate[required,custom[number]]' maxlength='32'/></td>
-                                <td><input type='text' name='unit' class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
+                                <td><input type='text' name='price' class='form-control validate[required,custom[number]]' maxlength='7' onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/></td>
+                                <td><input type='text' name='unit' value='元' class='form-control validate[required,minSize[1]]' maxlength='32' readonly/></td>
                                 <td class="text-center"><a class='btn btn-default' href='javascript:removeprice({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
                             </tr>
                         </script>
@@ -858,9 +860,9 @@
                                     <c:forEach var="pri" items="${insuranceProduct.insuranceProductPrices}">
                                         <tr id="price${pri.priceId}">
                                             <td><input type="hidden" name="priceId" value="${pri.priceId}}">
-                                                <input type='text' name='price' value="${pri.price}" class='form-control validate[required,custom[number]]' maxlength='32'/>
+                                                <input type='text' name='price' value="${pri.price}" class='form-control validate[required,custom[number]]' maxlength='7' onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
                                             </td>
-                                            <td><input type='text' name='unit' value="${pri.unit}" class='form-control validate[required,minSize[1]]' maxlength='2'/></td>
+                                            <td><input type='text' name='unit' value="${pri.unit}" class='form-control validate[required,minSize[1]]' value='元' maxlength='2' readonly/></td>
                                             <td><a type='button' title='删除' class='btn btn-default' href='javascript:removeprice(${pri.priceId})'><i class='fa fa-minus-circle'></i></a>
                                             </td>
                                         </tr>
