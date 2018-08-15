@@ -183,14 +183,14 @@
             <div class="inner-padding">
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
-                    <legend>事项组</legend>
+                    <legend>参数配置</legend>
                     <form:form id="validateSubmitForm" action="updateProfile.do" cssClass="form-horizontal" method="post"
                                commandName="profile">
                         <form:hidden path="fileId"/>
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>参数名称：</label>
+                                <label>参数名称：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <input style="padding: 5px;" id="profileName" readonly="readonly" cssClass="form-control validate[required,minSize[1]]"/>
@@ -280,7 +280,7 @@
                                 <label>参数值：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea id="fileValue"    path="fileValue" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:textarea id="fileValue"    path="fileValue" cssClass="formClear form-control validate[required,minSize[1]]"/>
                             </div>
                         </div>
                         <div id="fileValeImg" class="row" style="display: none">
@@ -291,16 +291,16 @@
                                 <img id="headPic" src="${profile.fileValue}" width="350px" height="350px"
                                      style="padding: 5px">
                                 <input id="upload" onchange="onchangeImg('fileValue')" name="file" multiple="multiple" accept="image/*" type="file"
-                                       style="display: none"/>
+                                       style="display: none" />
                             </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div  class="row">
                             <div class="col-sm-2">
-                                <label>备注：<span class="asterisk">*</span></label>
+                                <label>备注：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea id="remarks"    path="remarks" cssClass="form-control"/>
+                                <form:textarea id="remarks"  maxlength="100"   path="remarks" cssClass="formClear form-control"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -310,7 +310,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button type="button" onclick="clearInput('formClear')" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>
