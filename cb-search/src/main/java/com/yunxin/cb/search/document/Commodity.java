@@ -1,12 +1,14 @@
 package com.yunxin.cb.search.document;
 
 import com.yunxin.cb.search.vo.*;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.GeoPointField;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,29 +18,31 @@ import java.util.Set;
  *
  * @author
  */
-@Document(indexName = "crystal_ball", type = "commodity")
+@Document(indexName = "crystal_ball", type = "commodity", createIndex = false)
 public class Commodity implements java.io.Serializable {
 
-    public static final String index_name="crystal_ball";
-    public static final String index_type="commodity";
+    public static final String index_name = "crystal_ball";
+    public static final String index_type = "commodity";
 
     private static final long serialVersionUID = -3993560903203859821L;
+
+    @Id
+    private String id;
 
     /**
      * 商品ID
      */
-    @Id
     private int commodityId;
 
     /**
      * 商品所属价格段
      */
-    private PriceSection priceSection;
+    private com.yunxin.cb.search.vo.PriceSection priceSection;
     /**
      * 品牌
      */
-    @Field(type = FieldType.Object,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
-    private Brand brand;
+    @Field(type = FieldType.Object, fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    private com.yunxin.cb.search.vo.Brand brand;
     /**
      * 供应商
      */
@@ -50,7 +54,7 @@ public class Commodity implements java.io.Serializable {
     /**
      * 商品名
      */
-    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    @Field(type = FieldType.Text, fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String commodityName;
     /**
      * 商品拼音名
@@ -59,17 +63,17 @@ public class Commodity implements java.io.Serializable {
     /**
      * 简称
      */
-    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    @Field(type = FieldType.Text, fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String shortName;
     /**
      * 商品标题
      */
-    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    @Field(type = FieldType.Text, fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String commodityTitle;
     /**
      * 描述
      */
-    @Field(type = FieldType.Text,fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
+    @Field(type = FieldType.Text, fielddata = true, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String description;
     /**
      * 销售价
@@ -114,7 +118,7 @@ public class Commodity implements java.io.Serializable {
     /**
      * 商品分类
      */
-    private Set<Category> categories = new HashSet<>();
+    private Set<com.yunxin.cb.search.vo.Category> categories = new HashSet<>();
 
     /**
      * 商品规格
@@ -126,6 +130,26 @@ public class Commodity implements java.io.Serializable {
      */
     private int defaultProduct;
 
+    /**
+     * 地理位置经纬度
+     * lat纬度，lon经度 "40.715,-74.011"
+     * 如果用数组则相反[-73.983, 40.719]
+     */
+    @GeoPointField
+    private GeoPoint location;
+
+    /**
+     * 距离
+     */
+    private BigDecimal distance;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getCommodityId() {
         return commodityId;
@@ -135,19 +159,19 @@ public class Commodity implements java.io.Serializable {
         this.commodityId = commodityId;
     }
 
-    public PriceSection getPriceSection() {
+    public com.yunxin.cb.search.vo.PriceSection getPriceSection() {
         return priceSection;
     }
 
-    public void setPriceSection(PriceSection priceSection) {
+    public void setPriceSection(com.yunxin.cb.search.vo.PriceSection priceSection) {
         this.priceSection = priceSection;
     }
 
-    public Brand getBrand() {
+    public com.yunxin.cb.search.vo.Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(Brand brand) {
+    public void setBrand(com.yunxin.cb.search.vo.Brand brand) {
         this.brand = brand;
     }
 
@@ -287,11 +311,11 @@ public class Commodity implements java.io.Serializable {
         this.saleNum = saleNum;
     }
 
-    public Set<Category> getCategories() {
+    public Set<com.yunxin.cb.search.vo.Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Set<com.yunxin.cb.search.vo.Category> categories) {
         this.categories = categories;
     }
 
@@ -309,5 +333,21 @@ public class Commodity implements java.io.Serializable {
 
     public void setDefaultProduct(int defaultProduct) {
         this.defaultProduct = defaultProduct;
+    }
+
+    public GeoPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(GeoPoint location) {
+        this.location = location;
+    }
+
+    public BigDecimal getDistance() {
+        return distance;
+    }
+
+    public void setDistance(BigDecimal distance) {
+        this.distance = distance;
     }
 }
