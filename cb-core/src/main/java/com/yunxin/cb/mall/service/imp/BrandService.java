@@ -40,7 +40,7 @@ public class BrandService implements IBrandService {
         if (!brandDao.isOrUnique(brand, Brand_.brandNo, Brand_.brandName)) {
             throw new EntityExistException("品牌编号或品牌中文名称已存在");
         }
-        brand.setEnabled(true);
+//        brand.setEnabled(true);
         brand.setCreateTime(new Date());
         return brandDao.save(brand);
     }
