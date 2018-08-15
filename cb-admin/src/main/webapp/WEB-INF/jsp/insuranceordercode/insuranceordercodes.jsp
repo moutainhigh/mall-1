@@ -245,7 +245,6 @@
                             </div>
                             <div style="float: left;margin-left: 50px">
                                 <button class="btn btn-primary" onclick="upload()">导入</button>
-                                <button class="btn btn-primary" type="submit">导入</button>
                                 <a class="btn btn-primary" href="../templates/excel/insurance.xlsx">模板下载</a>
                             </div>
                     </div>
