@@ -106,7 +106,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>消息中心配置 </h2>
+                    <h2>消息中心配置</h2>
                 </div>
                 <div class="pull-right">
                     <div class="btn-group">
