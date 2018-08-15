@@ -571,7 +571,7 @@
                                             showCaption: true,
                                             minImageWidth: 50,
                                             minImageHeight: 50,
-                                            showUpload:true, //是否显示上传按钮
+                                            showUpload:false, //是否显示上传按钮
                                             showRemove :false, //显示移除按钮
                                             showPreview :true, //是否显示预览
                                             showCaption:false,//是否显示标题

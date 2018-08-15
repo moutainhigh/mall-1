@@ -346,7 +346,7 @@
                                 <label><span class="asterisk">*</span> 编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass=" form-control validate[required,minSize[2]]" path="advertCode" maxlength="64"/>
+                                <form:input cssClass=" form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="advertCode" maxlength="64" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
                             </div>
                         </div>
 
@@ -542,7 +542,7 @@
                                 <label>备注：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea cssClass=" form-control validate[maxSize[5000]]" path="remark"></form:textarea>
+                                <form:textarea cssClass=" form-control validate[maxSize[255]]" path="remark"></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

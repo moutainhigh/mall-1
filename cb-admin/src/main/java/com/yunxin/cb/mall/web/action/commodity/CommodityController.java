@@ -116,7 +116,7 @@ public class CommodityController implements ServletContextAware {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
-                if(LogicUtils.isNull(commodity.getSeller())){
+                if(LogicUtils.isNull(commodity.getSeller())&&commodity.getSeller().getSellerId()!=0){
                     Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
                     commodity.setSeller(seller);
                 }
@@ -169,7 +169,7 @@ public class CommodityController implements ServletContextAware {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
-                if(LogicUtils.isNull(commodity.getSeller())){
+                if(LogicUtils.isNull(commodity.getSeller())&&commodity.getSeller().getSellerId()!=0){
                     Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
                     commodity.setSeller(seller);
                 }
@@ -291,6 +291,24 @@ public class CommodityController implements ServletContextAware {
             return false;
         }
 
+    }
+
+    /**
+     * @Description:                根据分类id,返回一级分类的比例配置
+     * @author: lxc
+     * @param catalogId             分类id
+     * @Return java.lang.String:
+     * @DateTime: 2018/8/15 17:41
+     */
+    @ResponseBody
+    @RequestMapping(value = "getOneLevelCatalog",method = RequestMethod.GET)
+    public String getOneLevelCatalog(@RequestParam("catalogId") int catalogId) {
+        Catalog one = catalogService.findOne(catalogId);
+        if(one.getParentCatalogId() == 1){
+            return one.getRatio().toString();
+        }
+        Catalog catalog = catalogService.findOneLevelCatalogByCatalogCode(one.getCatalogCode());
+        return catalog.getRatio().toString();
     }
 
 //    @RequestMapping(method = RequestMethod.GET)
