@@ -329,13 +329,13 @@
                                 <label><span class="asterisk">*</span>标题：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input  cssClass="form-control validate[required,minSize[2]]"  path="advertTitle" maxlength="512"/>
+                                <form:input  cssClass=" form-control validate[required,minSize[2]]"  path="advertTitle" maxlength="512"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="advertCode" maxlength="64"/>
+                                <form:input cssClass=" form-control validate[required,minSize[2]]" path="advertCode" maxlength="64"/>
                             </div>
                         </div>
 
@@ -346,7 +346,7 @@
                                 <label><span class="asterisk">*</span> 广告类型：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="advertisementType" cssClass="form-control simpleselect">
+                                <form:select path="advertisementType" cssClass=" form-control simpleselect">
                                     <form:options items="${advertisementType}" itemLabel="name"/>
                                 </form:select>
                             </div>
@@ -367,7 +367,7 @@
                                 <label><span class="asterisk">*</span> 广告位：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="advertisementPlace" cssClass="form-control simpleselect">
+                                <form:select path="advertisementPlace" cssClass=" form-control simpleselect">
                                     <form:options items="${advertisementPlace}" itemLabel="name"/>
                                 </form:select>
                             </div>
@@ -375,7 +375,7 @@
                                 <label> 视频路径：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control" path="videoPath" maxlength="512"/>
+                                <form:input cssClass=" form-control" path="videoPath" maxlength="512"/>
                             </div>
                         </div>
 
@@ -386,7 +386,7 @@
                                 <label><span class="asterisk">*</span> 广告URL类型：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="advertisementURLType" cssClass="form-control simpleselect">
+                                <form:select path="advertisementURLType" cssClass=" form-control simpleselect">
                                     <form:options items="${advertisementURLType}" itemLabel="name"/>
                                 </form:select>
                             </div>
@@ -394,7 +394,7 @@
                                 <label> 广告URL：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control" path="advertURL" maxlength="5121"/>
+                                <form:input cssClass=" form-control" path="advertURL" maxlength="5121"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -521,7 +521,7 @@
                                 <label>内容：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea  cssClass="form-control validate[maxSize[5000]]" path="content"></form:textarea>
+                                <form:textarea  cssClass=" form-control validate[maxSize[5000]]" path="content"></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -531,7 +531,7 @@
                                 <label>备注：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea cssClass="form-control validate[maxSize[5000]]" path="remark"></form:textarea>
+                                <form:textarea cssClass=" form-control validate[maxSize[5000]]" path="remark"></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -541,7 +541,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>

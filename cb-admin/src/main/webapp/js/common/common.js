@@ -66,6 +66,16 @@ function clearFilters(gridName) {
 }
 
 /**
+ * 根据class重置
+ * @param className
+ */
+function clearInput(className){
+    $("."+className).each(function () {
+        var e = $(this)[0];
+        e.value=e.defaultValue;//取消时还原
+    });
+}
+/**
  * 应用表格的查询条件，并查询
  * @param gridName
  * @param filters,operator:eq,neq,gt,gte,lt,lte,startswith,endswith,contains,doesnotcontain
