@@ -507,7 +507,6 @@
                                             }
                                             return abort;
                                         }).on('filedeleted', function(event, id) {
-                                            debugger;
                                             $("#"+id).remove();
                                             for (var i=0;i<initPreview.length;i++)
                                             {

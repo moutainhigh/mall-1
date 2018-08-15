@@ -34,7 +34,6 @@ function uploadWithSDK(token, putExtra, config, domain) {
           .html(
             "成功"
           );
-        debugger;
           $('#ANDROID_URL').val(domain+res.key);
         if (res.key && res.key.match(/\.(jpg|jpeg|png|gif)$/)) {
           imageDeal(board, res.key, domain);

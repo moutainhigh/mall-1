@@ -70,7 +70,6 @@
                 {
                     dpi: 172,//导出pdf清晰度
                     onrendered: function (canvas) {
-                        debugger;
                         var contentWidth = canvas.width;
                         var contentHeight = canvas.height;
 
@@ -86,7 +85,6 @@
 
                         var pageData = canvas.toDataURL('image/jpeg', 1.0);
                         var pdf = new jsPDF('', 'pt', 'a4');
-                        debugger;
                         //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
                         //当内容未超过pdf一页显示的范围，无需分页
                         if (leftHeight < pageHeight) {

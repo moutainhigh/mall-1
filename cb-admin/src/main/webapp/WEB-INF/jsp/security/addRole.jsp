@@ -15,7 +15,6 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
-                        debugger;
                         var roleCode = $('#roleCode').val();
                         var roleName = $('#roleName').val();
                         alert(roleCode)
@@ -177,7 +176,6 @@
 <script>
 
     function checkedNodeIds(nodes, checkedNodes) {
-        debugger;
         for (var i = 0; i < nodes.length; i++) {
             if (nodes[i].checked) {
                 var id = nodes[i].id;

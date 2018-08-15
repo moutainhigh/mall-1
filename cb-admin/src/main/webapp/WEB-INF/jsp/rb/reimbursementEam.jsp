@@ -385,7 +385,6 @@
                 }
                 $("#orderBox").html("&nbsp;");
                 for(var i=0;i<data.length;i++){
-                    debugger;
                     var taxMoney=data[i].productPrice*data[i].tax;
                     taxMoney = taxMoney.toFixed(2);
                     $("#orderBox").append("<div class='orderItem '>\n" +

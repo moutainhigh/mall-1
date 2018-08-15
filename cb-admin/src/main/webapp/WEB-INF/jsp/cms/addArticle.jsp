@@ -116,7 +116,6 @@
          *上传图片
          */
         function onchangeImg(imgId){
-            debugger;
             var formData = new FormData();
             formData.append("file", $('#upload'+imgId)[0].files[0]);
             $.ajax({

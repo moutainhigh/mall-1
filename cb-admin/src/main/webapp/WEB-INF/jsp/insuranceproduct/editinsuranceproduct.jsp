@@ -35,7 +35,6 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
-                        debugger;
                         var defaultPicPath = $('input[name="imgurl"]');
                         var defaultPicPath1 = $('input[name="imgurl1"]');
                         var price=$('input[name="price"]');

@@ -34,7 +34,6 @@
         function addMatter(prodId,matterId) {
             bootbox.confirm("确认添加吗？", function (result) {
                 if (result) {
-                    debugger;
                     var formData = new FormData();
                     formData.append("prodId", prodId);
                     formData.append("matterId", matterId);
