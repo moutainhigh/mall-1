@@ -60,6 +60,9 @@
 
     function formatPayType(ptype){
       switch (ptype){
+        case "UNDER_LINE":{
+            return "线下支付";
+        }
         case "FULL_SECTION":{
             return "全款支付";
         }
@@ -219,10 +222,10 @@
               <div class="pull-right">
                 <div class="btn-group">
                   <a href="javascript:viewItem()" class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;详情</a>
-                  <a href="javascript:changePriceItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;调价</a>
-                  <a href="javascript:initLogistic();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 设置物流</a>
+                  <!--<a href="javascript:changePriceItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;调价</a>-->
+                  <!--<a href="javascript:initLogistic();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 设置物流</a>-->
                   <a href="javascript:auditItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 审核</a>
-                  <a href="javascript:cancelItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 取消订单</a>
+                  <!--<a href="javascript:cancelItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 取消订单</a>-->
                 </div>
               </div>
             </header>
@@ -578,18 +581,21 @@
                 bootbox.alert("请选择待付款订单操作！");
                 return;
             }
-            if (dataItem.paymentType != "LOAN") {
-                bootbox.alert("请选择贷款支付订单操作！");
+            if (dataItem.paymentType != "UNDER_LINE") {
+                bootbox.alert("请选择线下支付订单操作！");
                 return;
             }
+            $('#auditDialog').modal();
+            $("#orderIdAuditHid").val(dataItem.orderId);
+            $("#orderCodeAuditSpan").html(dataItem.orderCode);
         }
-        $('#auditDialog').modal();
-        $("#orderIdAuditHid").val(dataItem.orderId);
-        $("#orderCodeAuditSpan").html(dataItem.orderCode);
     }
 
     function submitAudit(){
-        if($("input[name='auditState']:checked").val()=="NOT_AUDIT" && $("#auditRemark").val() == ""){
+        if (!$("#auditForm").validationEngine("validate")) {
+            return false;
+        }
+        if($("input[name='auditState']:checked").val()=="NOT_AUDIT" && $("#auditRemark").val().replace(/^\s+|\s+$/g,"") == ""){
             bootbox.alert("请填写审核不通过原因!");
             return false;
         }
@@ -611,12 +617,15 @@
                 bootbox.alert("请选择待付款订单操作！");
                 return;
             }
+            $('#cancelDialog').modal();
+            $("#orderIdCancelHid").val(dataItem.orderId);
+            $("#orderCodeCancelSpan").html(dataItem.orderCode);
         }
-        $('#cancelDialog').modal();
-        $("#orderIdCancelHid").val(dataItem.orderId);
-        $("#orderCodeCancelSpan").html(dataItem.orderCode);
     }
     function submitCancel() {
+        if (!$("#cancelForm").validationEngine("validate")) {
+            return false;
+        }
         var dataItem = getSelectedGridItem("grid");
         if($("#cancelRemark").val() == ""){
             bootbox.alert("请填写取消原因!");
@@ -628,10 +637,11 @@
                 $('#cancelDialog').modal("hide");
                 $("#grid").data("kendoGrid").dataSource.read();
             }else{
-                alert("取消失败！");
+                bootbox.alert("取消失败！");
             }
         });
     }
+
   </script>
 </body>
 </html>

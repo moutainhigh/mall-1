@@ -294,16 +294,16 @@
                         <legend>新增货品</legend>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>分类比例配置：</label>
+                                <label><span class="asterisk">*</span>一级分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control"  path="commodity.catalog.ratio" id="catalogRatio" readonly="true"  maxlength="32"/>
+                                <form:input cssClass="form-control"  path="" id="oneLevelCatalog" readonly="true"  maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>商品比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control " path="commodity.ratio" id="ratio" readonly="true" maxlength="11"/>
+                                <form:input cssClass="form-control " path="commodity.ratio" id="ratio" readonly="true" title="商品比例配置不填,则取分类比例配置" maxlength="11"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -333,7 +333,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="salePrice" readonly="true" placeholder="销售价等于成本价乘以比例配置" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="salePrice" readonly="true" title="销售价等于成本价乘以比例配置" maxlength="11"/>
                                 </div>
                             </div>
                             <div class="col-sm-2">
@@ -502,7 +502,7 @@
                     $("#commodityAttributeGroupsForm")[0].submit();
                     $('#attributeGroupDialog').modal("hide");
                 }
-
+                $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
             </script>
         </div>
     </div>

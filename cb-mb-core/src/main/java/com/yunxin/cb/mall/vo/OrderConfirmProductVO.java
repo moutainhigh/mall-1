@@ -15,12 +15,12 @@ public class OrderConfirmProductVO implements java.io.Serializable{
     /**
      * 货品id
      */
-    @ApiModelProperty(value="货品id",name="productId",example="1")
+    @ApiModelProperty(value="货品id",name="productId",example="1", required = true)
     private Integer productId;
     /**
      * 购买数量
      */
-    @ApiModelProperty(value="购买数量",name="productNum",example="1")
+    @ApiModelProperty(value="购买数量",name="productNum",example="1", required = true)
     private Integer productNum;
 
     public Integer getProductId() {

@@ -5,7 +5,7 @@
       {
         "name": "首页管理", "code": "21", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../cms/homeFloors.do"
       },
-      {
+      /*{
         "name": "频道栏目", "code": "22", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../cms/channelProgramas.do"
       },
       {
@@ -13,7 +13,7 @@
       },
       {
         "name": "文章管理", "code": "24", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../cms/articles.do"
-      },
+      },*/
       {
         "name": "广告管理", "code": "25", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../cms/advertisements.do"
       }
@@ -46,11 +46,14 @@
       {
         "name": "运营分类", "code": "41", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/categories.do"
       },
-      {
+      /*{
         "name": "站内信", "code": "44", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/systemLetters.do"
-      },
+      },*/
       {
         "name": "用户反馈管理", "code": "47", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../feedback/feedbacks.do"
+      },
+      {
+        "name": "消息中心配置", "code": "172", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../message/message.do"
       }
     ]
   },
@@ -59,13 +62,13 @@
     "children": [
       {
         "name": "订单管理", "code": "51", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/orders.do"
-      },
-      {
-        "name": "退货管理", "code": "52", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/returnOrders.do"
-      },
-      {
-        "name": "换货管理", "code": "53", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/barterOrders.do"
       }
+//      {
+//        "name": "退货管理", "code": "52", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/returnOrders.do"
+//      }
+//      {
+//        "name": "换货管理", "code": "53", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/barterOrders.do"
+//      }
     ]
   },
   {
@@ -106,17 +109,14 @@
       }
     ]
   },
-  {
+  /*{
     "name": "财务管理", "code": "8", "type": "MENU", "cssClass": "fa fa-tasks", "value": "financial", "childrenCssClass": "children",
     "children": [
       {
         "name": "报账管理", "code": "81", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursements.do"
-      },
-      {
-        "name": "贷款管理", "code": "82", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/loanOrders.do"
       }
     ]
-  },
+  },*/
   {
     "name": "统计分析", "code": "10", "type": "MENU", "cssClass": "fa fa-bar-chart-o", "value": "statistics", "childrenCssClass": "children",
     "children": [
@@ -125,10 +125,10 @@
       },
       {
         "name": "金额统计", "code": "102", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/moneyStatistics.do"
-      },
-      {
-        "name": "账单统计", "code": "103", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/billStatistics.do"
       }
+      /*{
+        "name": "账单统计", "code": "103", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../statistics/billStatistics.do"
+      }*/
     ]
   },
   {
@@ -137,7 +137,6 @@
       {
         "name": "参数配置", "code": "113", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"
       }
-
     ]
   },
   {

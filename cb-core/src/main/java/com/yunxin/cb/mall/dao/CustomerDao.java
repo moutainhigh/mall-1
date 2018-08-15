@@ -99,6 +99,10 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     long countByQqOpenId(String qqOpenId);
 
     List<Customer> findByRecommendCustomer_CustomerIdAndPraise(int customerId, boolean paraise);
+
+    @Modifying
+    @Query("update Customer c set c.enabled =?2 where c.customerId=?1")
+    public void enableCustomerById(int customerId,boolean enabled);
 }
 
 interface CustomerPlusDao {

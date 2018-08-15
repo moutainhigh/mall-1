@@ -108,6 +108,23 @@
             });
         }
 
+        function selectSeller() {
+            $('#sellerDialog').modal();
+        }
+
+        function chooseSeller() {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                var sellerId=dataItem.sellerId;
+                $("#sellerId").val(dataItem.sellerId);
+                $("#sellerName").val(dataItem.sellerName);
+            }else{
+                $("#sellerId").val('');
+                $("#sellerName").val('');
+            }
+            $('#sellerDialog').modal("hide")
+        }
+
     </script>
 </head>
 <body>
@@ -232,10 +249,10 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span> 分类比例配置：</label>
+                                <label><span class="asterisk"></span> 一级分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control"  path="catalog.ratio" id="catalogRatio" readonly="true" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control"  path="" id="oneLevelCatalog" readonly="true" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
@@ -346,22 +363,40 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 热门商品：</label>
+                                <label> 热门商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="popular" cssClass="checkbox-master"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 特惠商品：</label>
+                                <label> 特惠商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="special"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 推荐商品：</label>
+                                <label> 推荐商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="recommend"/>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>商家：</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="col-sm-3">
+                                    <form:input type="hidden" cssClass="form-control" path="seller.sellerId" id="sellerId" />
+                                    <form:input type="text" cssClass="form-control" path="seller.sellerName" id="sellerName" disabled="true"/>
+                                    <button type="button" onclick="selectSeller();" title="添加" class="btn btn-default">
+                                        <i class="fa fa-plus-circle"></i>选择商家
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -472,7 +507,6 @@
                                             }
                                             return abort;
                                         }).on('filedeleted', function(event, id) {
-                                            debugger;
                                             $("#"+id).remove();
                                             for (var i=0;i<initPreview.length;i++)
                                             {
@@ -554,7 +588,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button"   class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>
@@ -616,8 +650,26 @@
                 salePrice_f();//设置销售价
                 loadSpecs(catalogId);
             }
+            $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
         </script>
 
+    </div>
+</div>
+<div class="modal fade" id="sellerDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择商家</h4>
+            </div>
+            <div class="modal-body">
+                <jsp:include page="../seller/chooseSeller.jsp"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary pull-right" onclick="chooseSeller();">确认</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>

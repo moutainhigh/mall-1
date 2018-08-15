@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +54,8 @@ public class OrderServiceImpl implements OrderService {
     private ProductMapper productMapper;
     @Resource
     private CustomerMapper customerMapper;
+    @Resource
+    private SellerMapper sellerMapper;
 
     /***
      * 获取预下单数据（订单确认页数据）
@@ -127,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderCode(UUIDGeneratorUtil.getUUCode());
         order.setOrderState(OrderState.PENDING_PAYMENT);
         defaultValue(order);//添加默认数据
-        double totalPrice = 0; // 订单总价
+        BigDecimal totalPrice = BigDecimal.ZERO; // 订单总价
         int totalQuantity = 0;//订单货品总数量
 
         //TODO :活动相关和会员积分相关的还未加
@@ -156,33 +159,44 @@ public class OrderServiceImpl implements OrderService {
                 int reservedStoreNum = product.getReservedStoreNum() == null ? 0  : product.getReservedStoreNum();
                 product.setReservedStoreNum(productNum + reservedStoreNum);
                 productMapper.updateByPrimaryKey(product);
-                totalPrice += product.getSalePrice();
+                totalPrice = totalPrice.add(new BigDecimal(String.valueOf(product.getSalePrice())));
             }
         }
+        //是否需要判断买过保单用户才能购买商品
+        Customer customer = customerMapper.selectByPrimaryKey(order.getCustomerId());
+        if (customer.getPolicy() != 2) { //policy==2才算买过保单
+            throw new CommonException("请先买保单后再购买商品");
+        }
         //支付方式
-        if (order.getPaymentType()== PaymentType.LOAN) {
+        if (order.getPaymentType()== PaymentType.UNDER_LINE) {
             order.setAuditState(AuditState.WAIT_AUDIT);
-            //是否需要判断买过保单用户才能购买商品
-            Customer customer = customerMapper.selectByPrimaryKey(order.getCustomerId());
-            if (customer.getPolicy() != 2) { //policy==2才算买过保单
-                throw new CommonException("请先买保单后再购买商品");
-            }
         } else {
             order.setAuditState(AuditState.AUDITED);
         }
         //收货地址
-        DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());
-        if (deliveryAddress != null){
-            order.setProvince(deliveryAddress.getProvince());
-            order.setCity(deliveryAddress.getCity());
-            order.setDistrict(deliveryAddress.getDistrict());
-            order.setConsigneeAddress(deliveryAddress.getConsigneeAddress());
-            order.setConsigneeName(deliveryAddress.getConsigneeName());
-            order.setConsigneeMobile(deliveryAddress.getConsigneeMobile());
-            order.setConsigneeTelephone(deliveryAddress.getConsigneeTelephone());
+        if (DeliveryType.ZT != order.getDeliveryType()) {
+            DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());
+            if (deliveryAddress != null){
+                order.setProvince(deliveryAddress.getProvince());
+                order.setCity(deliveryAddress.getCity());
+                order.setDistrict(deliveryAddress.getDistrict());
+                order.setConsigneeAddress(deliveryAddress.getConsigneeAddress());
+                order.setConsigneeName(deliveryAddress.getConsigneeName());
+                order.setConsigneeMobile(deliveryAddress.getConsigneeMobile());
+                order.setConsigneeTelephone(deliveryAddress.getConsigneeTelephone());
+                order.setPostCode(deliveryAddress.getPostCode());
+            }
+        } else {
+            Seller seller = sellerMapper.selectByPrimaryKey(order.getSellerId());
+            if (seller == null) {
+                throw new CommonException("店铺不存在");
+            }
+            order.setProvince("0");
+            order.setCity("0");
+            order.setDistrict("0");
         }
         order.setProdQuantity(totalQuantity);
-        order.setTotalPrice(totalPrice);
+        order.setTotalPrice(totalPrice.doubleValue());
         order.setFeeTotal(order.getTotalPrice());
         orderMapper.insert(order);
 

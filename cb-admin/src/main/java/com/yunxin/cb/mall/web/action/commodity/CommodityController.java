@@ -28,8 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author gonglei
@@ -115,8 +116,10 @@ public class CommodityController implements ServletContextAware {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
-                Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
-                commodity.setSeller(seller);
+                if(LogicUtils.isNull(commodity.getSeller())&&commodity.getSeller().getSellerId()!=0){
+                    Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
+                    commodity.setSeller(seller);
+                }
                 commodity = commodityService.addCommodity(commodity);
                 //保存图片路径
                 attachmentService.deleteAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId());
@@ -148,19 +151,28 @@ public class CommodityController implements ServletContextAware {
         modelMap.addAttribute("priceSections", priceService.getAllPriceSections());
         Commodity commodity = commodityService.getCommodityDetailById(commodityId);
         modelMap.addAttribute("commodity", commodity);
+        modelMap.addAttribute("seller", commodity.getSeller());
         List<CommoditySpec> currentSpecs = commodityService.getCommoditySpecsByCommodityId(commodityId);
         modelMap.addAttribute("currentSpecs", currentSpecs);
         List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.COMMODITY,commodity.getCommodityId());
         modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
+        //S 获得一级分类对象  2018-08-14    LXC
+        Catalog oneLevelCatalog = catalogService.findOneLevelCatalogByCatalogCode(commodity.getCatalog().getCatalogCode());
+        modelMap.addAttribute("oneLevelCatalog",oneLevelCatalog);
+        //E
         return "commodity/editCommodity";
     }
 
     @RequestMapping(value = "editCommodity", method = RequestMethod.POST)
-    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
+    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
         try {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
+                if(LogicUtils.isNull(commodity.getSeller())&&commodity.getSeller().getSellerId()!=0){
+                    Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
+                    commodity.setSeller(seller);
+                }
                 commodity = commodityService.updateCommodity(commodity);
                 //保存图片路径
                 attachmentService.deleteAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId());
@@ -279,6 +291,24 @@ public class CommodityController implements ServletContextAware {
             return false;
         }
 
+    }
+
+    /**
+     * @Description:                根据分类id,返回一级分类的比例配置
+     * @author: lxc
+     * @param catalogId             分类id
+     * @Return java.lang.String:
+     * @DateTime: 2018/8/15 17:41
+     */
+    @ResponseBody
+    @RequestMapping(value = "getOneLevelCatalog",method = RequestMethod.GET)
+    public String getOneLevelCatalog(@RequestParam("catalogId") int catalogId) {
+        Catalog one = catalogService.findOne(catalogId);
+        if(one.getParentCatalogId() == 1){
+            return one.getRatio().toString();
+        }
+        Catalog catalog = catalogService.findOneLevelCatalogByCatalogCode(one.getCatalogCode());
+        return catalog.getRatio().toString();
     }
 
 //    @RequestMapping(method = RequestMethod.GET)

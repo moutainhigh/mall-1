@@ -28,6 +28,17 @@ public class FileResource {
     @Resource
     private IStorageService qiniuStorageService;
 
+
+    /**
+     * 获取七牛信息
+     * @return
+     */
+    @RequestMapping(value = "getQiniuInfo")
+    @ResponseBody
+    public Map getQiniuInfo(){
+        return qiniuStorageService.getQiniuInfo();
+    }
+
     /**
      * 七牛云文件上传（用于保险产品保留）
      *

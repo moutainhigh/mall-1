@@ -134,7 +134,7 @@ public class CommodityService implements ICommodityService {
         }
         //E
 
-        AttributeReplication.copying(commodity, dbCommodity, Commodity_.catalog, Commodity_.priceSection, Commodity_.brand,
+        AttributeReplication.copying(commodity, dbCommodity, Commodity_.catalog, Commodity_.priceSection, Commodity_.brand, Commodity_.seller,
                 Commodity_.commodityCode, Commodity_.commodityName, Commodity_.commodityPYName, Commodity_.shortName, Commodity_.commodityTitle,
                 Commodity_.costPrice, Commodity_.sellPrice, Commodity_.marketPrice, Commodity_.unit, Commodity_.province, Commodity_.city, Commodity_.seoKey,
                 Commodity_.seoTitle, Commodity_.seoDescription, Commodity_.popular, Commodity_.special, Commodity_.recommend, Commodity_.giveaway,

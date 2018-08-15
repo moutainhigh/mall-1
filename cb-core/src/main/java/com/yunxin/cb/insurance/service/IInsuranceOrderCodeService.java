@@ -31,4 +31,9 @@ public interface IInsuranceOrderCodeService {
      */
     Page<InsuranceOrderCode> pageInsuranceOrderCode(PageSpecification<InsuranceOrderCode> query);
 
+    /**
+     * 邮件提醒
+     */
+    public void mailReminding();
+
 }

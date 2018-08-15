@@ -229,6 +229,7 @@
                                             showRemove :false, //显示移除按钮
                                             showPreview :true, //是否显示预览
                                             showCaption:false,//是否显示标题
+                                            showClose: false,
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
                                             showBrowse : false,

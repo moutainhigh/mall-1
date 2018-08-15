@@ -18,30 +18,17 @@
                     if(valid){
                         var defaultPicPath = $('input[name="imgurl"]');
                         var defaultPicPath1 = $('input[name="imgurl1"]');
-                        if($("#sortOrder").val() == 2){
-                            if ($('input[name="brandId"]').length==0) {
-                                bootbox.alert("请至少添加一个品牌!");
-                                return false;
-                            }
-                        }else if($("#sortOrder").val() == 3){
-                            if ($('input[name="categoryId"]').length==0) {
-                                bootbox.alert("请至少添加一个分类!");
-                                return false;
-                            }
-                        }else if($("#sortOrder").val() == 5){
-                            if ($('input[name="categoryId"]').length==0) {
-                                bootbox.alert("请至少添加一个分类!");
-                                return false;
-                            }
-                        }else if (defaultPicPath.size()==0) {
+                        if (defaultPicPath.size()==0) {
                             bootbox.alert("请至少选择一张图片!");
                             return false;
                         }else if (defaultPicPath1.size()==0) {
                             bootbox.alert("请至少选择一张图片!");
                             return false;
-                        }else{
-                            bootbox.alert("请填写正确的序号!");
+                        }else if($('input[name="commodityId"]').length==0 && $('input[name="categoryId"]').length==0 && $('input[name="brandId"]').length==0){
+                            bootbox.alert("请至少添加商品或者分类或者品牌其中一条数据!");
                             return false;
+                        }else{
+                            return true;
                         }
                     }
                 }
@@ -136,7 +123,7 @@
                                 <form:radiobutton path="floorLayout" value="VERTICAL"/>&nbsp;&nbsp;左边(图片大小：423*611)
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 是否启用：</label>
+                                <label> 是否启用：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:checkbox path="enabled"/>
@@ -170,6 +157,7 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             allowedFileExtensions: ["jpg", "png", "gif"],
@@ -254,6 +242,7 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
@@ -305,7 +294,7 @@
                                         });
                                     })
                                 </script>
-                                <input id="picUrl1" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                                <input  id="picUrl1" name="file" type="file" class="file-loading" accept="image/*" multiple>
                                 <div id="imgDiv1">
 
                                 </div>
@@ -318,7 +307,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品列表：<span class="asterisk">*</span></label>
+                                <label>商品列表11：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="commodityTable" class="table table-bordered table-striped">
@@ -399,7 +388,7 @@
                                 <label>备注：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea cssClass="form-control validate[maxSize[255]]" path="remark" ></form:textarea>
+                                <form:textarea cssClass=" form-control validate[maxSize[255]]" path="remark" ></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -409,7 +398,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>
@@ -616,7 +605,6 @@
         }
 
         function chooseBrand() {
-            debugger;
             var selectedBrandIds=$("#brandGrid input[type='checkbox'][name='selectedBrandId']:checked");
             if(selectedBrandIds!=null&&selectedBrandIds.length>0){
                 $.each(selectedBrandIds,function(n,selectedBox) {

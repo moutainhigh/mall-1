@@ -18,8 +18,10 @@
             });
         });
 
-
+        $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
     </script>
+    <%--后台页面共用的js--%>
+    <script src="../js/common/fixed_common.js"></script>
 </head>
 <body>
 <jsp:include page="../layouts/left.jsp"/>
@@ -97,6 +99,21 @@
                         <legend>编辑货品</legend>
                         <div class="row">
                             <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>一级分类比例配置：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input cssClass="form-control"  path="" id="oneLevelCatalog" readonly="true"  maxlength="32"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>商品比例配置：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input cssClass="form-control " path="commodity.ratio" id="ratio" readonly="true" title="商品比例配置不填,则取分类比例配置" maxlength="11"/>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>货品编号：</label>
                             </div>
                             <div class="col-sm-3">
@@ -117,7 +134,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="11"/>
                                 </div>
 
                             </div>
@@ -127,7 +144,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="salePrice" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" readonly="true" title="销售价等于成本价乘以比例配置"  path="salePrice" maxlength="11"/>
                                 </div>
                             </div>
                         </div>
@@ -224,6 +241,8 @@
 </div>
 <!-- End #main -->
 
-
+<script type="application/javascript">
+    $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
+</script>
 </body>
 </html>

@@ -1,7 +1,11 @@
 package com.yunxin.cb.mall.web.action.message;
 
 
+import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.im.RongCloudService;
+import com.yunxin.cb.mall.entity.Attachment;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.imp.AttachmentService;
 import com.yunxin.cb.system.entity.Message;
 import com.yunxin.cb.system.meta.PushStatus;
 import com.yunxin.cb.system.service.IMessageService;
@@ -13,12 +17,16 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/message")
 public class MessageCenterController {
     @Resource
     private IMessageService messageService;
+
+    @Resource
+    private AttachmentService attachmentService;
 
     @RequestMapping(value = "message")
     public String message( ModelMap modelMap) {
@@ -34,7 +42,11 @@ public class MessageCenterController {
     @RequestMapping(value = "toEditMessage")
     public String toEditMessage(ModelMap modelMap,@RequestParam(value = "messageId",required = false) int messageId){
         if(messageId > 0){
+            //消息对象信息
             modelMap.addAttribute("message", messageService.getMessage(messageId));
+            //消息摘要图片信息
+            List<Attachment> listAttachment = attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.MESSAGEDIGEST,messageId);
+            modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
         }else{
             modelMap.addAttribute(new Message());
         }
@@ -48,9 +60,10 @@ public class MessageCenterController {
      */
     @RequestMapping(value = "editMessage", method = RequestMethod.POST)
     public String editMessage(@ModelAttribute("message")Message message){
+        //新增/修改的消息，推送状态均为未推送
+        message.setPushStatus(PushStatus.HAVE_NOT_PUSHED);
         if(message.getMessageId() == 0){
             message.setCreateTime(new Date());
-            message.setPushStatus(PushStatus.HAVE_NOT_PUSHED);
         }
         messageService.addMessage(message);
         return "redirect:../common/success.do?reurl=message/message.do";
@@ -78,7 +91,8 @@ public class MessageCenterController {
         Message message = messageService.getMessage(messageId);
         if(null != message && message.getMessageId() > 0){
             //消息推送
-            RongCloudService.pushMessageToAll(message.getPushTitle());
+            RongCloudService rongCloudService = new RongCloudService();
+            rongCloudService.pushMessageToAll(message.getPushTitle());
 
             //状态更新
             message.setPushStatus(PushStatus.HAVE_PUSHED);

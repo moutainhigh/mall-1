@@ -178,13 +178,13 @@
                                 <strong>商品编码:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="commodityCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入商品编码"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="commodityCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入商品编码"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>商品名称:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="commodityName" data-operator="contains" class="form-control grid-filter" placeholder="请输入商品名称"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="commodityName" data-operator="contains" class="form-control grid-filter" placeholder="请输入商品名称"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>商品状态:</strong>
@@ -244,7 +244,7 @@
 
                             <div class="btn-group">
                                 <a href="javascript:void(0);" onclick="toProducts()" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;货品</a>
-                                <a href="javascript:void(0);" onclick="toCombinations()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 组合</a>
+                                <%--<a href="javascript:void(0);" onclick="combicombi()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 组合</a>--%>
                             </div>
                         </div>
                     </header>

@@ -95,7 +95,10 @@ public class Brand implements java.io.Serializable {
      * 备注
      */
     private String remark;
-
+    /**
+     * 热门排序
+     */
+    private int sort;
     private Category category;
 
     private Set<Commodity> commodities = new HashSet<>();
@@ -262,6 +265,13 @@ public class Brand implements java.io.Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+    @Column(nullable = false, length = 11)
+    public int getSort() {
+        return sort;
+    }
+    public void setSort(int sort) {
+        this.sort = sort;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

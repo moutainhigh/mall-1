@@ -23,7 +23,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -131,7 +130,7 @@ public class SellerService implements ISellerService {
         AttributeReplication.copying(seller, sellerDB, Seller_.sellerName, Seller_.sellerCode, Seller_.sellerAddress, Seller_.sellerType, Seller_.linkman,
                 Seller_.mobile, Seller_.telephone, Seller_.email, Seller_.qq, Seller_.wechat, Seller_.channelType, Seller_.channelAccount,
                 Seller_.busName, Seller_.buslicenseNo, Seller_.accountName, Seller_.publicAccount, Seller_.bankAccount,
-                Seller_.bankAccountAddress, Seller_.idCardNum, Seller_.remark);
+                Seller_.bankAccountAddress, Seller_.idCardNum, Seller_.remark, Seller_.positionX, Seller_.positionY);
         return sellerDB;
     }
 

@@ -145,13 +145,13 @@
                                 <strong>品牌编码:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="brandNo" data-operator="contains" class="form-control grid-filter" placeholder="请输入品牌编码"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="brandNo" data-operator="contains" class="form-control grid-filter" placeholder="请输入品牌编码"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>品牌名称:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="brandName" data-operator="contains" class="form-control grid-filter" placeholder="请输入品牌编码"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="brandName" data-operator="contains" class="form-control grid-filter" placeholder="请输入品牌名称"/>
                             </div>
                         </div>
                         <!-- End .pull-left -->
@@ -201,15 +201,15 @@
                         <kendo:grid-columns>
                             <kendo:grid-column title="所属分类" field="category" width="150px" template="#=category.categoryName#"/>
                             <kendo:grid-column title="图片" field="picPath" width="140px" template="<img src='#=picPath#'  width='120px' height='60px'/>" sortable="false" filterable="false"/>
-                            <kendo:grid-column title="编码" field="brandNo" width="100px"/>
-                            <kendo:grid-column title="名称" field="brandName" width="100px" template="<a href='brandDetail.do?brandId=#=brandId#'>#=brandName#</a>"/>
-                            <kendo:grid-column title="标题" field="brandTitle" width="100px"/>
-                            <kendo:grid-column title="关键字" field="brandKey" width="100px"/>
-                            <kendo:grid-column title="seo关键字" field="seoKey" width="100px"/>
-                            <kendo:grid-column title="seo标题" field="seoTitle" width="100px"/>
-                            <kendo:grid-column title="显示" field="display" width="100px" template="#= display ? '是' : '否' #"/>
-                            <kendo:grid-column title="热门" field="hot" width="100px" template="#= hot ? '是' : '否' #"/>
-                            <kendo:grid-column title="状态" field="enabled" width="100px" template="#= enabled ? '启用' : '停用' #"/>
+                            <kendo:grid-column title="编码" filterable="false" field="brandNo" width="100px"/>
+                            <kendo:grid-column title="名称" filterable="false" field="brandName" width="100px" template="<a href='brandDetail.do?brandId=#=brandId#'>#=brandName#</a>"/>
+                            <kendo:grid-column title="标题" filterable="false" field="brandTitle" width="100px"/>
+                            <kendo:grid-column title="关键字" filterable="false" field="brandKey" width="100px"/>
+                            <kendo:grid-column title="seo关键字" filterable="false" field="seoKey" width="100px"/>
+                            <kendo:grid-column title="seo标题" filterable="false" field="seoTitle" width="100px"/>
+                            <kendo:grid-column title="显示" filterable="false" field="display" width="100px" template="#= display ? '是' : '否' #"/>
+                            <kendo:grid-column title="热门" filterable="false" field="hot" width="100px" template="#= hot ? '是' : '否' #"/>
+                            <kendo:grid-column title="状态" filterable="false" field="enabled" width="100px" template="#= enabled ? '启用' : '停用' #"/>
                             <kendo:grid-column title="创建时间" field="createTime" width="150px" format="{0:yyyy-MM-dd HH:mm}" filterable="false"/>
                             <kendo:grid-column title="备注" field="remark" filterable="false" width="200px"/>
                         </kendo:grid-columns>

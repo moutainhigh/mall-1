@@ -147,6 +147,16 @@ public class Seller implements java.io.Serializable {
      **/
     private Set<User> users = new HashSet<>();
 
+    /**
+     * 商家纬度
+     **/
+    private String positionX;
+
+    /**
+     * 商家Y轴坐标
+     **/
+    private String positionY;
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)
@@ -421,5 +431,23 @@ public class Seller implements java.io.Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Column(length = 32)
+    public String getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(String positionX) {
+        this.positionX = positionX;
+    }
+
+    @Column(length = 32)
+    public String getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(String positionY) {
+        this.positionY = positionY;
     }
 }

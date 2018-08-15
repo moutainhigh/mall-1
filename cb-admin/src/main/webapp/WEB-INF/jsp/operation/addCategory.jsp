@@ -128,7 +128,7 @@
                                 <label><span class="asterisk">*</span> 价格区间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="lowestPrice" maxlength="32"/>-
+                                <form:input  path="lowestPrice" maxlength="32"/>-
                                 <form:input path="highestPrice" maxlength="32"/>万
                             </div>
                         </div>
@@ -173,6 +173,7 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             autoReplace : true,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
@@ -205,6 +206,7 @@
                                             });
                                             $(".btn-default").attr("disabled",false);
                                         }).on("filepredelete", function(jqXHR) {
+                                            debugger;
                                             var abort = true;
                                             if (confirm("确定要删除吗？(删除后不会恢复)")) {
                                                 abort = false;

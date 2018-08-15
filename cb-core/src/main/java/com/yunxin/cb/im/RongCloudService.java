@@ -168,7 +168,7 @@ public class RongCloudService {
      * 推送消息（向应用内所有用户推送消息）
      * @param content
      */
-    public static void pushMessageToAll(String content){
+    public void pushMessageToAll(String content){
         if(StringUtils.isEmpty(content)){
             return;
         }
@@ -182,7 +182,4 @@ public class RongCloudService {
         }
     }
 
-    public static void main(String[] agrs){
-        pushMessageToAll("yunxintest");
-    }
 }

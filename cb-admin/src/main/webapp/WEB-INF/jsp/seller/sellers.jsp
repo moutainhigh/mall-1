@@ -157,13 +157,13 @@
                 <strong>商家编码:</strong>
               </div>
               <div class="toolbar-field">
-                <input type="text" data-filter="sellerCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入商家编码"/>
+                <input type="text" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" data-filter="sellerCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入商家编码"/>
               </div>
               <div class="toolbar-field">
                 <strong>商家名称:</strong>
               </div>
               <div class="toolbar-field">
-                <input type="text" data-filter="sellerName" data-operator="contains" class="form-control grid-filter" placeholder="请输入商家名称"/>
+                <input type="text" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" data-filter="sellerName" data-operator="contains" class="form-control grid-filter" placeholder="请输入商家名称"/>
               </div>
               <div class="spacer-10"></div>
             </div>

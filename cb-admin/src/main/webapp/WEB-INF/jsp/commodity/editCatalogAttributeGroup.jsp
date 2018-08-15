@@ -108,7 +108,7 @@
                  <img id="img{{= idIndex}}"    onclick="addImage({{= idIndex}})" src="" width="130px" height="120px" style="padding: 5px">
                  <input id="upload{{= idIndex}}" onchange="onchangeImg('{{= idIndex}}')" name="file" multiple="multiple" accept="image/*" type="file" style="display: none"/>
             </td>
-            <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2'/></td>
+            <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2' onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
             <td class="text-center"><a class='btn btn-default' href='javascript:removeAttribute({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
         </tr>
     </script>
@@ -117,7 +117,7 @@
         <tr id='attribute{{= idIndex}}'>
             <td><input type='text' name='attributeName' required="true" class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
             <td><input id='imagePath{{= idIndex}}' type='hidden' name='imagePath' value=''/></td>
-            <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2'/></td>
+            <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2' onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
             <td class="text-center"><a class='btn btn-default' href='javascript:removeAttribute({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
         </tr>
     </script>
@@ -276,7 +276,7 @@
                                                     <td><input id="imagePath${attribute.attributeId}" type='hidden' name='imagePath' value=""/></td>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <td><input type='text' name='sortOrder' value="${attribute.sortOrder}" class='form-control validate[required,custom[number]]' maxlength='2'/></td>
+                                            <td><input type='text' name='sortOrder' value="${attribute.sortOrder}" class='form-control validate[required,custom[number]]' maxlength='2' onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><a type='button' title='删除' class='btn btn-default' href='javascript:removeAttribute(${attribute.attributeId})'><i class='fa fa-minus-circle'></i></a>
                                             </td>
                                         </tr>

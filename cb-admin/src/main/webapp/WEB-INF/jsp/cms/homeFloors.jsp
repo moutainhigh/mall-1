@@ -135,13 +135,13 @@
                                 <strong>楼层名称:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="floorName" data-operator="contains" class="form-control grid-filter" placeholder="请输入楼层名称"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="floorName" data-operator="contains" class="form-control grid-filter" placeholder="请输入楼层名称"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>状态:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <select data-filter="enabled" data-operator="eq" class="form-control simpleselect grid-filter">
+                                <select data-filter="enabled" data-operator="eq" class="form-control  grid-filter">
                                     <option value="">全部</option>
                                     <option value="true">启用</option>
                                     <option value="false">停用</option>

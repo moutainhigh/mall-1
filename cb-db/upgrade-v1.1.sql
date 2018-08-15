@@ -764,3 +764,55 @@ ALTER TABLE bank_info MODIFY COLUMN CARD_TYPE VARCHAR(60) DEFAULT NULL COMMENT '
 ##add by guwenshao 2018-08-13
 ALTER TABLE `order_form` add  `DELIVER_TIME` datetime DEFAULT NULL COMMENT '发货时间';
 ALTER TABLE `order_form` add  `COLLECT_TIME` datetime DEFAULT NULL COMMENT '收货时间';
+
+DROP TABLE IF EXISTS `history_record`;
+
+##add by eleven 2018-08-14
+CREATE TABLE `history_record` (
+  `RECORD_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CREATE_TIME` datetime DEFAULT NULL,
+  `SALE_PRICE` float NOT NULL,
+  `COMMODITY_ID` int(11) NOT NULL,
+  `CUSTOMER_ID` int(11) NOT NULL,
+  PRIMARY KEY (`RECORD_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='浏览记录表';
+
+DROP TABLE IF EXISTS `insurance_order_code`;
+CREATE TABLE `insurance_order_code` (
+  `CODE_ID` int(10) NOT NULL COMMENT '编码ID',
+  `CODE_NO` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '编码',
+  `USEED` int(10) DEFAULT NULL COMMENT '是否使用',
+  `CREATE_TIME` datetime DEFAULT NULL ON UPDATE current_timestamp() COMMENT '创建时间',
+  PRIMARY KEY (`CODE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+##add by pengcong 2018-08-14
+ALTER TABLE `brand` ADD COLUMN `SORT` int(11) COMMENT '热门品牌排序';
+
+ALTER TABLE customer modify column ENABLED int(2);
+ALTER TABLE `insurance_informed_matter` add  `INSURE_PEOPLE` INT(2) DEFAULT 0 COMMENT '投保人';
+ALTER TABLE `insurance_informed_matter` add  `INSURED_PEOPLE` INT(2) DEFAULT 0 COMMENT '被保人';
+
+###add by lxc 2018-08-14 15:58
+ALTER TABLE `crystal_ball`.`catalog`
+MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT 1.00000 COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+ALTER TABLE `crystal_ball`.`catalog`
+MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT NULL COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+
+##add by tangou 2018-08-15
+ALTER TABLE `seller` ADD COLUMN `POSITION_X` varchar(32) COMMENT '商家经度';
+ALTER TABLE `seller` ADD COLUMN `POSITION_Y` varchar(32) COMMENT '商家纬度';
+
+##add by wangteng 2018-08-15
+alter table insurance_order_code add SORT int(11) DEFAULT 0;
+DROP TABLE IF EXISTS `insurance_email`;
+CREATE TABLE `insurance_email` (
+  `INSURANCE_EMAIL_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `FROM_EMAIL` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发送邮箱',
+  `RECEIVE_EMAIL` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '接收邮箱',
+  `CONTEXT` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发送内容',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '发送时间',
+  PRIMARY KEY (`insurance_email_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='保单合同邮件提醒';
+ALTER TABLE `favorite` ADD COLUMN `PRODUCT_ID` int(11) COMMENT '货品id';
+ALTER TABLE `history_record` ADD COLUMN `PRODUCT_ID` int(11) COMMENT '货品id';

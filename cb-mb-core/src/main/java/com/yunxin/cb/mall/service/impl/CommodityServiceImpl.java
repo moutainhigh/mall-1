@@ -13,6 +13,7 @@ import com.yunxin.cb.mall.mapper.CommodityMapper;
 import com.yunxin.cb.mall.mapper.FavoriteMapper;
 import com.yunxin.cb.mall.mapper.ProductMapper;
 import com.yunxin.cb.mall.service.CommodityService;
+import com.yunxin.cb.mall.service.HistoryRecordService;
 import com.yunxin.cb.mall.vo.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
@@ -44,6 +45,9 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Resource
     private AttachmentMapper attachmentMapper;
+
+    @Resource
+    private HistoryRecordService historyRecordService;
 
     @Override
     public Commodity selectByPrimaryKey(int commodityId) {
@@ -79,11 +83,19 @@ public class CommodityServiceImpl implements CommodityService {
             paymentType.put(pay,pay.getName());
         }
         Favorite favorite=null;
-        if(customerId>0){//用户存在则查询商品收藏夹
+        if(customerId>0){//用户存在则查询商品收藏夹和加入浏览历史
             favorite=new Favorite();
             favorite.setCustomerId(customerId);
+            favorite.setProductId(productId);
             favorite.setCommodityId(product.getCommodityId());
             favorite=favoriteMapper.findByCustomerAndCommodity(favorite);
+
+            HistoryRecord hr=new HistoryRecord();
+            hr.setCommodityId(product.getCommodityId());
+            hr.setProductId(productId);
+            hr.setCustomerId(customerId);
+            hr.setSalePrice(product.getSalePrice());
+            historyRecordService.addHistoryRecord(hr);
         }
         List<Attachment> attachments=attachmentMapper.selectByObjectTypeAndId(ObjectType.COMMODITY.name(),commodity.getCommodityId());//商品图片组
         Set imageSet=new HashSet<>();

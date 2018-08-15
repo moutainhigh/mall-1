@@ -10,7 +10,7 @@
 function salePrice_f() {
     var ratio = $('#ratio').val();      //商品比例设置
     if(ratio == null || ratio == 0){
-        ratio = $("#catalogRatio").val();//分类比例设置
+        ratio = $("#oneLevelCatalog").val();//分类比例设置
     }
     var costPrice = $('#costPrice');//成本价
     if(costPrice.val() != null && costPrice.val() != ''){

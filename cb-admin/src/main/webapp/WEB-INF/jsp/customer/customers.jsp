@@ -76,6 +76,23 @@
       }
     }
 
+    function enabledItem(enabled) {
+        var dataItem = getSelectedGridItem("grid");
+        if (dataItem) {
+            $.get("enableCustomerById.do", {
+                customerId: dataItem.customerId,
+                enabled: enabled,
+                rad: Math.random()
+            }, function (data) {
+                if (true == data) {
+                    commonNotify("操作成功！", "success");
+                    $("#grid").data("kendoGrid").dataSource.read();
+                } else {
+                    commonNotify("操作失败!", "error");
+                }
+            });
+        }
+    }
   </script>
 </head>
 <body>
@@ -159,19 +176,19 @@
                   <strong>账户名:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" data-filter="accountName" data-operator="contains" class="form-control grid-filter" placeholder="请输入账户名"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="accountName" data-operator="contains" class="form-control grid-filter" placeholder="请输入账户名"/>
                 </div>
                 <div class="toolbar-field">
                   <strong>姓名:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" data-filter="realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入姓名"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入姓名"/>
                 </div>
                 <div class="toolbar-field">
                   <strong>手机号:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" data-filter="mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
                 </div>
               </div><!-- End .pull-left -->
               <div class="pull-right">
@@ -199,6 +216,10 @@
                   <%--<a href="javascript:editItem();"  class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>--%>
                   <%--<a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>--%>
                 </div>
+                <div class="btn-group">
+                  <a href="javascript:void(0);" onclick="enabledItem(true)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
+                  <a href="javascript:void(0);" onclick="enabledItem(false)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
+                </div>
                 <!--
                 <div class="btn-group">
                   <a href="javascript:resetPwd();" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;重置密码</a>
@@ -223,6 +244,7 @@
                 <kendo:grid-column title="手机号" field="mobile" width="100px"/>
                 <kendo:grid-column title="Email" field="email" width="100px"/>
                 <kendo:grid-column filterable="false" title="性别" field="sex" width="100px" template="#=formatSex(sex)#"/>
+                <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
                 <kendo:grid-column title="创建时间" field="createTime" width="150px" format="{0:yyyy-MM-dd HH:mm}" filterable="false"/>
               </kendo:grid-columns>
               <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">

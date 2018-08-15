@@ -40,7 +40,7 @@ public class BrandService implements IBrandService {
         if (!brandDao.isOrUnique(brand, Brand_.brandNo, Brand_.brandName)) {
             throw new EntityExistException("品牌编号或品牌中文名称已存在");
         }
-        brand.setEnabled(true);
+//        brand.setEnabled(true);
         brand.setCreateTime(new Date());
         return brandDao.save(brand);
     }
@@ -94,7 +94,7 @@ public class BrandService implements IBrandService {
         Brand oldBrand = brandDao.findOne(brand.getBrandId());
         AttributeReplication.copying(brand, oldBrand, Brand_.brandNo, Brand_.brandName, Brand_.brandEnName, Brand_.brandTitle, Brand_.brandKey
                 , Brand_.website, Brand_.display, Brand_.picPath, Brand_.description, Brand_.seoKey, Brand_.seoTitle, Brand_.seoDescription,
-                Brand_.hot, Brand_.remark, Brand_.enabled, Brand_.category);
+                Brand_.hot, Brand_.remark, Brand_.enabled, Brand_.category,Brand_.sort);
         return oldBrand;
     }
 

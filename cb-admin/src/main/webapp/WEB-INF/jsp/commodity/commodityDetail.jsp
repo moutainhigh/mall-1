@@ -185,22 +185,28 @@
                                 <label><span class="asterisk">*</span> 商品单位：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                ${commodity.unit}
+                                ${commodity.unit.name}
                             </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
+                            <script type="text/javascript">
+                                var province=$.citySelector.getAddress("${commodity.province}")
+                                var city=$.citySelector.getAddress("${commodity.city}")
+                                $(function(){
+                                    $('#province').html(province);
+                                    $('#city').html(city);
+                                })
+                            </script>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 产地省份：</label>
                             </div>
-                            <div class="col-sm-3 col-label">
-                                ${commodity.province}
+                            <div class="col-sm-3 col-label" id="province">
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 产地市区：</label>
                             </div>
-                            <div class="col-sm-3 col-label">
-                                ${commodity.city}
+                            <div class="col-sm-3 col-label" id="city">
                             </div>
                         </div>
                         <div class="spacer-30"></div>
