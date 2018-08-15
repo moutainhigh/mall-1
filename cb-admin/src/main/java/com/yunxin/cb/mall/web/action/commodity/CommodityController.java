@@ -116,7 +116,7 @@ public class CommodityController implements ServletContextAware {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
-                if(LogicUtils.isNull(commodity.getSeller())){
+                if(LogicUtils.isNull(commodity.getSeller())&&commodity.getSeller().getSellerId()!=0){
                     Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
                     commodity.setSeller(seller);
                 }
@@ -169,7 +169,7 @@ public class CommodityController implements ServletContextAware {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
-                if(LogicUtils.isNull(commodity.getSeller())){
+                if(LogicUtils.isNull(commodity.getSeller())&&commodity.getSeller().getSellerId()!=0){
                     Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
                     commodity.setSeller(seller);
                 }
