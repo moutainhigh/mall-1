@@ -240,23 +240,6 @@ public class OrderController {
         return "sale/loanOrders";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "pageLoanOrders",method = RequestMethod.POST)
-    public Page<OrderLoanApply> pageLoanOrders(@RequestBody PageSpecification query, HttpServletRequest request) {
-        Page<OrderLoanApply> page = orderService.pageLoanOrders(query);
-        return page;
-    }
-
-    @RequestMapping(value = "orderLoanApplyAudit",method = RequestMethod.GET)
-    @ResponseBody
-    public boolean orderLoanApplyAudit(@RequestParam("loanId") int loanId, @RequestParam("auditState") AuditState auditState,@RequestParam("auditRemark") String auditRemark) {
-        try {
-            return orderService.orderLoanApplyAudit(loanId, auditState, auditRemark);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     /**
      * 订单审核（贷款订单审核V1）
      * @param orderId
