@@ -22,6 +22,18 @@
     $(document).ready(function() {
       $("#validateSubmitForm").validationEngine({
         autoHidePrompt: true, scroll: false, showOneMessage: true,
+          onValidationComplete: function (form, valid) {
+              if (valid) {
+                  var defaultPicPath = $('input[name="imgurl"]');
+                  if (defaultPicPath.size()==0) {
+                      bootbox.alert("请至少选择一张图片!");
+                      return false;
+                  } else {
+                      return true;
+                  }
+              }
+          }
+
       });
     });
 
@@ -422,7 +434,7 @@
                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                 <script type="text/javascript">
                     $(function(){
-                        $("#validateSubmitForm").validationEngine({
+                        /*$("#validateSubmitForm").validationEngine({
                             autoHidePrompt: true, scroll: false, showOneMessage: true,
                             onValidationComplete: function (form, valid) {
                                 if (valid) {
@@ -435,7 +447,7 @@
                                     }
                                 }
                             }
-                        });
+                        });*/
                         var initPreview = new Array();//展示元素
                         var initPreviewConfig = new Array();//展示设置
                         //初始化图片上传组件
