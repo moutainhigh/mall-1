@@ -217,16 +217,37 @@
                         <h4 class="modal-title">选择EXCEL</h4>
                     </div>
                     <div class="modal-body" style="padding-bottom: 80px">
-                        <form id="uploadForm" action="uploadPayerCreditInfoExcel.do" enctype="multipart/form-data"
-                              method="post">
+                        <script type="text/javascript">
+                        function upload(){
+                            var formData = new FormData();
+                            formData.append("file", $('#upfile')[0].files[0]);
+                            $.ajax({
+                                url: "/admin/insuranceordercode/uploadPayerCreditInfoExcel.do",
+                                type: 'POST',
+                                cache: false,
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                beforeSend : function(){     //请求成功前触发的局部事件
+                            },
+                            success: function (result) {
+                                bootbox.alert("上传成功！");
+                                setTimeout("window.location.reload()",500);
+                            },
+                            error: function (err) {
+                                bootbox.alert("上传失败，请检查文件格式");
+                            }
+                            });
+                        }
+                        </script>
                             <div style="float: left">
                                 <input id="upfile" type="file" name="upfile">
                             </div>
                             <div style="float: left;margin-left: 50px">
+                                <button class="btn btn-primary" onclick="upload()">导入</button>
                                 <button class="btn btn-primary" type="submit">导入</button>
                                 <a class="btn btn-primary" href="../templates/excel/insurance.xlsx">模板下载</a>
                             </div>
-                        </form>
                     </div>
                 </div>
                 <script type="application/javascript">
