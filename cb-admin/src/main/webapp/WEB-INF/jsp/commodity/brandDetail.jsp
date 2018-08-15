@@ -360,17 +360,17 @@
               <legend>品牌详情</legend>
               <div class="row">
                 <div class="inline-labels">
-                  <div class="col-sm-2">
+                  <div class="col-sm-1">
                     <label>品牌编码：</label>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     ${brand.brandNo}
                   </div>
                   <div class="col-sm-1"></div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-1">
                     <label>品牌名称：</label>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     ${brand.brandName}
                   </div>
                   <div class="col-sm-1"></div>
@@ -381,17 +381,17 @@
               <div class="row">
                 <div class="inline-labels">
 
-                  <div class="col-sm-2">
+                  <div class="col-sm-1">
                     <label>品牌关键字：</label>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     ${brand.brandKey}
                   </div>
                   <div class="col-sm-1"></div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-1">
                     <label>品牌标题：</label>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     ${brand.brandTitle}
                   </div>
                   <div class="col-sm-1"></div>
@@ -404,18 +404,18 @@
 
               <div class="row">
                 <div class="inline-labels">
-                  <div class="col-sm-2">
+                  <div class="col-sm-1">
                     <label>SEO关键字：</label>
                   </div>
-                  <div class="col-sm-3">
-                    ${brand.seoKey}
+                  <div class="col-sm-4">
+                    <textarea  rows="10" cols="90" maxlength="255"  readonly="true">${brand.seoKey}</textarea>
                   </div>
                   <div class="col-sm-1"></div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-1">
                     <label>SEO标题：</label>
                   </div>
-                  <div class="col-sm-3">
-                    ${brand.seoTitle}
+                  <div class="col-sm-4">
+                    <textarea  rows="10" cols="90" maxlength="255"  readonly="true">${brand.seoTitle}</textarea>
                   </div>
                   <div class="col-sm-1"></div>
                 </div>
@@ -425,7 +425,7 @@
 
               <div class="row">
                 <div class="inline-labels">
-                  <div class="col-sm-2">
+                  <div class="col-sm-1">
                     <label>品牌英文名称：</label>
                   </div>
                   <div class="col-sm-3">
@@ -435,7 +435,7 @@
                   <div class="col-sm-2">
                     <label>品牌网址：</label>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     ${brand.website}
                   </div>
                   <div class="col-sm-1"></div>
@@ -447,10 +447,10 @@
               <div class="spacer-30"></div>
 
               <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   <label>品牌分类：</label>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                   ${brand.category.categoryName}
                 </div>
                 <div class="col-sm-1"></div>
@@ -460,20 +460,20 @@
               <div class="spacer-10"></div>
               <div class="row">
                 <div class="inline-labels">
-                  <div class="col-sm-2">
+                  <div class="col-sm-1">
                     <label>是否显示：</label>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     <div class="inline-labels">
                       <c:if test="${brand.display == true}">是</c:if>
                       <c:if test="${brand.display == false}">否</c:if>
                     </div>
                   </div>
                   <div class="col-sm-1"></div>
-                  <div class="col-sm-2">
+                  <div class="col-sm-1">
                     <label>是否热门：</label>
                   </div>
-                  <div class="col-sm-3">
+                  <div class="col-sm-4">
                     <div class="inline-labels">
                       <c:if test="${brand.hot == true}">是</c:if>
                       <c:if test="${brand.hot == false}">否</c:if>
@@ -487,7 +487,7 @@
               <div class="spacer-30"></div>
 
               <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   <label>品牌图片：</label>
                 </div>
                 <div class="col-sm-9">
@@ -556,11 +556,11 @@
               <div class="spacer-30"></div>
 
               <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   <label>品牌描述：</label>
                 </div>
                 <div class="col-sm-9">
-                  ${brand.description}
+                  <textarea  rows="10" cols="101" maxlength="512"  readonly="true">${brand.description}</textarea>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -568,11 +568,11 @@
               <hr>
               <div class="spacer-30"></div>
               <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   <label>SEO描述：</label>
                 </div>
                 <div class="col-sm-9">
-                  ${brand.seoDescription}
+                  <textarea  rows="10" cols="101" maxlength="512"  readonly="true">${brand.seoDescription}</textarea>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -581,11 +581,11 @@
               <hr>
               <div class="spacer-30"></div>
               <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   <label>备注</label>
                 </div>
                 <div class="col-sm-9">
-                  ${brand.remark}
+                  <textarea  rows="10" cols="101" maxlength="255"  readonly="true">${brand.remark}</textarea>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
