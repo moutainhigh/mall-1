@@ -70,7 +70,7 @@
     </div>
     <div class="table-wrapper">
         <kendo:grid name="commodityGrid" pageable="true" sortable="true" filterable="true" selectable="true" height="500">
-            <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="6"/>
+            <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="5"/>
             <kendo:grid-filterable extra="false">
                 <kendo:grid-filterable-messages filter="查询" clear="清除" info="请输入查询条件:"/>
                 <kendo:grid-filterable-operators>

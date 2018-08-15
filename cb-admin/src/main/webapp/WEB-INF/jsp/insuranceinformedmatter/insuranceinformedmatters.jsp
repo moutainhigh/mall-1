@@ -74,6 +74,13 @@
                 });
             }
         }
+
+        function checkTime() {
+            if ($('#createTime').val() > $('#createTimes').val() && '' != $('#createTimes').val()) {
+                alert("开始时间不能大于结束时间")
+                $('#createTimes').val('')
+            }
+        }
     </script>
 </head>
 <body>
@@ -185,14 +192,14 @@
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                                <input name="createTime" id="createTime" placeholder="请选择开始时间"  onchange="checkTime()" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')"  data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
                             </div>
 
                             <div class="toolbar-field">
                                 <strong>-</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
+                                <input name="createTime"  id="createTimes" placeholder="请选择结束时间"  onchange="checkTime()" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')"  data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
                             </div>
                         </div>
 
@@ -218,14 +225,14 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="toAddMatter.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
-                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
-                                <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
+                                <%--<a href="toAddMatter.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>--%>
+                                <%--<a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>--%>
+                                <%--<a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>--%>
                             </div>
-                            <div class="btn-group">
-                                <a href="javascript:void(0);" onclick="enabledItem(1)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
-                                <a href="javascript:void(0);" onclick="enabledItem(0)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
-                            </div>
+                            <%--<div class="btn-group">--%>
+                                <%--<a href="javascript:void(0);" onclick="enabledItem(1)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>--%>
+                                <%--<a href="javascript:void(0);" onclick="enabledItem(0)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>--%>
+                            <%--</div>--%>
                         </div>
                     </header>
                 </div>
@@ -240,8 +247,8 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="事项ID" field="matterId" template="<a href='toEditMatter.do?matterId=#= matterId#'>#= matterId#</a>" width="30px"/>
-                            <kendo:grid-column title="序号" field="serNo" width="20px"/>
+                            <kendo:grid-column title="事项ID" filterable="false"  field="matterId" template="<a href='toEditMatter.do?matterId=#= matterId#'>#= matterId#</a>" width="30px"/>
+                            <kendo:grid-column title="序号" filterable="false"  field="serNo" width="20px"/>
                             <kendo:grid-column title="事项描述" template="<a href='toEditMatter.do?matterId=#= matterId#'>#= matterDescription#</a>" field="matterDescription" width="200px"/>
                             <kendo:grid-column title="类型" filterable="false" field="matterType" template="#= matterType ?  '填空题' : '是否题' #" width="20px"/>
                             <kendo:grid-column title="所属组" filterable="false" field="matterGroup.description" width="50px"/>

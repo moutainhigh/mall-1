@@ -128,7 +128,7 @@
                                 <label><span class="asterisk">*</span> 价格区间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="lowestPrice" maxlength="32"/>-
+                                <form:input  path="lowestPrice" maxlength="32"/>-
                                 <form:input path="highestPrice" maxlength="32"/>万
                             </div>
                         </div>
@@ -205,6 +205,7 @@
                                             });
                                             $(".btn-default").attr("disabled",false);
                                         }).on("filepredelete", function(jqXHR) {
+                                            debugger;
                                             var abort = true;
                                             if (confirm("确定要删除吗？(删除后不会恢复)")) {
                                                 abort = false;

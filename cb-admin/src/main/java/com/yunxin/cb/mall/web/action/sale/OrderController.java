@@ -233,30 +233,6 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "loanOrders",method = RequestMethod.GET)
-    public String loanOrders(HttpSession session,ModelMap modelMap) {
-        Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
-        modelMap.put("seller",seller);
-        return "sale/loanOrders";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "pageLoanOrders",method = RequestMethod.POST)
-    public Page<OrderLoanApply> pageLoanOrders(@RequestBody PageSpecification query, HttpServletRequest request) {
-        Page<OrderLoanApply> page = orderService.pageLoanOrders(query);
-        return page;
-    }
-
-    @RequestMapping(value = "orderLoanApplyAudit",method = RequestMethod.GET)
-    @ResponseBody
-    public boolean orderLoanApplyAudit(@RequestParam("loanId") int loanId, @RequestParam("auditState") AuditState auditState,@RequestParam("auditRemark") String auditRemark) {
-        try {
-            return orderService.orderLoanApplyAudit(loanId, auditState, auditRemark);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     /**
      * 订单审核（贷款订单审核V1）
      * @param orderId
