@@ -319,20 +319,20 @@
                     <div id="myPageTop">
                       <table>
                         <tr>
-                          <td>
+                          <%--<td>
                             <label>按关键字搜索：</label>
-                          </td>
+                          </td>--%>
                           <td class="column2">
                             <label>左击获取经纬度：</label>
                           </td>
                         </tr>
                         <tr>
-                          <td>
+                          <%--<td>
                             <input type="text" placeholder="请输入关键字进行搜索" id="tipinput">
-                          </td>
+                          </td>--%>
                           <td class="column2">
 
-                            <input type="text" readonly="true" placeholder="左击获取经纬度" id="lnglat" <c:if test="${seller.positionX ne null and seller.positionY ne null}">
+                            <input type="text" readonly="true" placeholder="左击获取经纬度" id="lnglat" <c:if test="${seller.positionX ne '' and seller.positionY ne ''}">
                                    value="${seller.positionX}${','}${seller.positionY}"
                             </c:if>>
                           </td>
