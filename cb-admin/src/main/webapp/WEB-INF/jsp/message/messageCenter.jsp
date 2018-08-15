@@ -91,7 +91,7 @@
             <div class="pull-left">
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
-                    <li><a href="#">系统配置 </a></li>
+                    <li><a href="#">运营管理 </a></li>
                     <li><a href="#">消息中心配置 </a></li>
                 </ul>
                 <!-- End .breadcrumb -->
