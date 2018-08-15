@@ -82,7 +82,7 @@
                 <div class="pull-left">
                     <h2>价格段管理</h2>
                 </div>
-                <div class="pull-right">
+                <%--<div class="pull-right">
                     <div class="dropdown">
                         <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-comments"></i>
@@ -226,7 +226,7 @@
                         </div>
                     </div>
                     <!-- End .dropdown -->
-                </div>
+                </div>--%>
             </div>
             <!-- End .inner-padding -->
         </header>
