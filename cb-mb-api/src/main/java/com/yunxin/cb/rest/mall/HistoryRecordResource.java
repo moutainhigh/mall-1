@@ -14,11 +14,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @Api(description = "我的浏览接口")
@@ -29,7 +27,7 @@ public class HistoryRecordResource extends BaseResource {
     @Resource
     private HistoryRecordService historyRecordService;
 
-    @ApiOperation(value = "获取用户收藏夹")
+    @ApiOperation(value = "获取用户我的浏览")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")})
@@ -45,7 +43,7 @@ public class HistoryRecordResource extends BaseResource {
         return new ResponseResult(page);
     }
 
-    @ApiOperation(value = "商品添加收藏夹")
+    /*@ApiOperation(value = "商品添加我的浏览")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "salePrice", value = "销售价", required = true, paramType = "post", dataType = "int")})
@@ -70,18 +68,18 @@ public class HistoryRecordResource extends BaseResource {
             logger.error("InvocationTargetException is "+e);
         }
         return new ResponseResult(Result.SUCCESS);//成功
-    }
+    }*/
 
     /**
-     * @title: 商品移出收藏夹(批量)
+     * @title: 商品移出我的浏览(批量)
      * @param: [HistoryRecordIds]
      * @return: com.yunxin.cb.vo.ResponseResult
      * @auther: eleven
      * @date: 2018/7/17 18:27
      */
-    @ApiOperation(value = "商品移出收藏夹(批量)")
+    @ApiOperation(value = "商品移出我的浏览(批量)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "HistoryRecordIds", value = "收藏夹id集合", required = true, paramType = "post", dataType = "list<int>")})
+            @ApiImplicitParam(name = "HistoryRecordIds", value = "我的浏览id集合", required = true, paramType = "post", dataType = "list<int>")})
     @PostMapping(value = "delHistoryRecords")
     @ApiVersion(1)
     public ResponseResult delHistoryRecords(@RequestBody List<Integer> historyRecordIds){
