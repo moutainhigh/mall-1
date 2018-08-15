@@ -233,13 +233,6 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = "loanOrders",method = RequestMethod.GET)
-    public String loanOrders(HttpSession session,ModelMap modelMap) {
-        Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
-        modelMap.put("seller",seller);
-        return "sale/loanOrders";
-    }
-
     /**
      * 订单审核（贷款订单审核V1）
      * @param orderId
