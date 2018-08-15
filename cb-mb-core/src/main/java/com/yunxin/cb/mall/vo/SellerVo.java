@@ -52,6 +52,14 @@ public class SellerVo implements java.io.Serializable {
     @ApiModelProperty(value="商家名称",name="sellerName",example="BMW4S店")
     private String sellerName;
 
+    /** 商家X轴坐标：经度 */
+    @ApiModelProperty(value="经度 ",name="positionX",example="5.55")
+    private String positionX;
+
+    /** 商家Y轴坐标：纬度*/
+    @ApiModelProperty(value="纬度",name="positionY",example="3.22")
+    private String positionY;
+
     public Integer getSellerId() {
         return sellerId;
     }
@@ -124,6 +132,22 @@ public class SellerVo implements java.io.Serializable {
         this.sellerName = sellerName;
     }
 
+    public String getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(String positionX) {
+        this.positionX = positionX;
+    }
+
+    public String getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(String positionY) {
+        this.positionY = positionY;
+    }
+
     @Override
     public String toString() {
         return "SellerVo{" +
@@ -136,6 +160,8 @@ public class SellerVo implements java.io.Serializable {
                 ", sellerAddress='" + sellerAddress + '\'' +
                 ", sellerCode='" + sellerCode + '\'' +
                 ", sellerName='" + sellerName + '\'' +
+                ", positionX='" + positionX + '\'' +
+                ", positionY='" + positionY + '\'' +
                 '}';
     }
 }

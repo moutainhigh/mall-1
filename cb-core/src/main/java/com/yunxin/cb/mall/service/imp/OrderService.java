@@ -973,7 +973,7 @@ public class OrderService implements IOrderService {
     public boolean orderAudit(int orderId, AuditState auditState, String auditRemark) {
         Order order = orderDao.findOne(orderId);
         if (order == null || order.getOrderState() != OrderState.PENDING_PAYMENT
-                || order.getPaymentType() != PaymentType.LOAN){
+                || order.getPaymentType() != PaymentType.UNDER_LINE){
             return false;
         }
         Date now = new Date();

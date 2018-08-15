@@ -21,11 +21,23 @@ public class OrderConfirmVO implements java.io.Serializable{
     @ApiModelProperty(value="支付方式",name="paymentType",example="FULL_SECTION", required = true)
     private PaymentType paymentType;
 
-    /**
-     * 收货地址id
+     /**
+     * 收货人姓名
      */
-    @ApiModelProperty(value="收货地址id",name="addressId",example="1", required = true)
-    private int addressId;
+    @ApiModelProperty(value="收货人姓名",name="consigneeName",example="张三", required = true)
+    private String consigneeName;
+
+    /**
+     * 收货人手机号
+     */
+    @ApiModelProperty(value="收货人手机号",name="consigneeMobile",example="13856953362", required = true)
+    private String consigneeMobile;
+
+    /**
+     * 自提地址
+     */
+    @ApiModelProperty(value="自提地址",name="consigneeAddress",example="深圳市", required = true)
+    private String consigneeAddress;
     /**
      * 商家id
      */
@@ -44,14 +56,6 @@ public class OrderConfirmVO implements java.io.Serializable{
         this.paymentType = paymentType;
     }
 
-    public int getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
-    }
-
     public String getSellerId() {
         return sellerId;
     }
@@ -68,11 +72,34 @@ public class OrderConfirmVO implements java.io.Serializable{
         this.orderConfirmProductList = orderConfirmProductList;
     }
 
+    public String getConsigneeName() {
+        return consigneeName;
+    }
+
+    public void setConsigneeName(String consigneeName) {
+        this.consigneeName = consigneeName;
+    }
+
+    public String getConsigneeMobile() {
+        return consigneeMobile;
+    }
+
+    public void setConsigneeMobile(String consigneeMobile) {
+        this.consigneeMobile = consigneeMobile;
+    }
+
+    public String getConsigneeAddress() {
+        return consigneeAddress;
+    }
+
+    public void setConsigneeAddress(String consigneeAddress) {
+        this.consigneeAddress = consigneeAddress;
+    }
+
     @Override
     public String toString() {
         return "OrderConfirmVO{" +
                 "paymentType=" + paymentType +
-                ", addressId=" + addressId +
                 ", sellerId='" + sellerId + '\'' +
                 ", orderConfirmProductList=" + orderConfirmProductList +
                 '}';

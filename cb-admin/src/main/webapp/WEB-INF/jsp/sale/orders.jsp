@@ -60,6 +60,9 @@
 
     function formatPayType(ptype){
       switch (ptype){
+        case "UNDER_LINE":{
+            return "线下支付";
+        }
         case "FULL_SECTION":{
             return "全款支付";
         }
@@ -578,8 +581,8 @@
                 bootbox.alert("请选择待付款订单操作！");
                 return;
             }
-            if (dataItem.paymentType != "LOAN") {
-                bootbox.alert("请选择贷款支付订单操作！");
+            if (dataItem.paymentType != "UNDER_LINE") {
+                bootbox.alert("请选择线下支付订单操作！");
                 return;
             }
             $('#auditDialog').modal();
