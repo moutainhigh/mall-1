@@ -28,8 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author gonglei
@@ -115,8 +116,10 @@ public class CommodityController implements ServletContextAware {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
-                Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
-                commodity.setSeller(seller);
+                if(LogicUtils.isNull(commodity.getSeller())){
+                    Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
+                    commodity.setSeller(seller);
+                }
                 commodity = commodityService.addCommodity(commodity);
                 //保存图片路径
                 attachmentService.deleteAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId());
@@ -148,6 +151,7 @@ public class CommodityController implements ServletContextAware {
         modelMap.addAttribute("priceSections", priceService.getAllPriceSections());
         Commodity commodity = commodityService.getCommodityDetailById(commodityId);
         modelMap.addAttribute("commodity", commodity);
+        modelMap.addAttribute("seller", commodity.getSeller());
         List<CommoditySpec> currentSpecs = commodityService.getCommoditySpecsByCommodityId(commodityId);
         modelMap.addAttribute("currentSpecs", currentSpecs);
         List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.COMMODITY,commodity.getCommodityId());
@@ -160,11 +164,15 @@ public class CommodityController implements ServletContextAware {
     }
 
     @RequestMapping(value = "editCommodity", method = RequestMethod.POST)
-    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
+    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
         try {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
+                if(LogicUtils.isNull(commodity.getSeller())){
+                    Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
+                    commodity.setSeller(seller);
+                }
                 commodity = commodityService.updateCommodity(commodity);
                 //保存图片路径
                 attachmentService.deleteAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId());
