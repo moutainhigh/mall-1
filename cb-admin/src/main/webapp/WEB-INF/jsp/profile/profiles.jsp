@@ -189,9 +189,6 @@
                             <div class="btn-group">
                                 <a href="toAddProfileAndroid.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;安卓版本更新</a>
                             </div>
-                            <div class="btn-group">
-                                <a href="toAddProfileIos.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;苹果版本更新</a>
-                            </div>
                         </div>
                     </header>
                 </div>
@@ -207,8 +204,8 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="ID" field="fileId" width="30px"/>
-                            <kendo:grid-column title="名称" field="profileName" template="#=getprofileName(profileName)#" width="200px"/>
+                            <kendo:grid-column title="ID" filterable="false" field="fileId" width="30px"/>
+                            <kendo:grid-column title="名称"  filterable="false" field="profileName" template="#=getprofileName(profileName)#" width="200px"/>
                             <kendo:grid-column title="值" field="fileValue" template="#=getprofileValue(fileValue,isPicture)#" width="200px"/>
                             <kendo:grid-column title="备注" field="remarks"  width="200px"/>
                         </kendo:grid-columns>
