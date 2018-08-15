@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
+import com.yunxin.cb.mall.entity.meta.AdvertisementPlace;
 import com.yunxin.cb.mall.entity.meta.AdvertisementType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,6 +28,10 @@ public class AdvertisementVO implements java.io.Serializable{
 
     @ApiModelProperty(value="广告类型",name="advertisementType",example="枚举")
     private AdvertisementType advertisementType;
+
+    @ApiModelProperty(value="广告类型",name="advertisementPlace",example="枚举")
+    private AdvertisementPlace advertisementPlace;
+
 
     public Integer getAdvertId() {
         return advertId;
@@ -74,5 +79,13 @@ public class AdvertisementVO implements java.io.Serializable{
 
     public void setAdvertisementType(AdvertisementType advertisementType) {
         this.advertisementType = advertisementType;
+    }
+
+    public AdvertisementPlace getAdvertisementPlace() {
+        return advertisementPlace;
+    }
+
+    public void setAdvertisementPlace(AdvertisementPlace advertisementPlace) {
+        this.advertisementPlace = advertisementPlace;
     }
 }

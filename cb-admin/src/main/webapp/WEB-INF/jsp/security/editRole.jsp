@@ -12,7 +12,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-            $("#validateSubmitForm").validationEngine({
+            $("#roleForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {

@@ -776,3 +776,15 @@ CREATE TABLE `history_record` (
   `CUSTOMER_ID` int(11) NOT NULL,
   PRIMARY KEY (`RECORD_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='浏览记录表';
+
+DROP TABLE IF EXISTS `insurance_order_code`;
+CREATE TABLE `insurance_order_code` (
+  `CODE_ID` int(10) NOT NULL COMMENT '编码ID',
+  `CODE_NO` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '编码',
+  `USEED` int(10) DEFAULT NULL COMMENT '是否使用',
+  `CREATE_TIME` datetime DEFAULT NULL ON UPDATE current_timestamp() COMMENT '创建时间',
+  PRIMARY KEY (`CODE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+##add by pengcong 2018-08-14
+ALTER TABLE `brand` ADD COLUMN `SORT` int(11) COMMENT '热门品牌排序';

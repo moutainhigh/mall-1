@@ -11,12 +11,14 @@
 
         $(document).ready(function() {
 
-            $("#validateSubmitForm").validationEngine({
+            $("#roleForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
+                        debugger;
                         var roleCode = $('#roleCode').val();
                         var roleName = $('#roleName').val();
+                        alert(roleCode)
                         if (roleCode=='') {
                             bootbox.alert("角色编码不能为空!");
                             return false;
@@ -109,13 +111,13 @@
                                 <label><span class="asterisk">*</span>角色编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="roleCode" maxlength="64"/>
+                                <form:input cssClass="form-control validate[required,minSize[2]]" path="roleCode" id="roleCode" maxlength="64"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>角色名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="roleName" maxlength="32" cssStyle="width: 200px"/>
+                                <form:input cssClass="form-control validate[required,minSize[2]]" path="roleName" id="roleName" maxlength="32" cssStyle="width: 200px"/>
                               <!--  <form:errors path="roleName" cssClass="Validform_checktip"/>-->
                             </div>
                         </div>

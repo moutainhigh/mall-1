@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,12 +37,12 @@ public class BrandResource extends BaseResource {
     public ResponseResult<List<BrandVO>> getBrand() {
         try {
             List<Brand> list = brandService.selectAll();
-            List<BrandVO> listVO = new ArrayList<>();
-            for(Brand brand : list){
-                BrandVO brandVO = new BrandVO();
-                BeanUtils.copyProperties(brand,brandVO);
-                listVO.add(brandVO);
-            }
+            List<BrandVO> listVO = list.stream()
+                    .map(brand -> {
+                        BrandVO brandVO = new BrandVO();
+                        BeanUtils.copyProperties(brand,brandVO);
+                        return brandVO;
+                    }).collect(Collectors.toList());
             return new ResponseResult(listVO);
         } catch (Exception e) {
             logger.info("brand failed", e);
@@ -62,16 +61,9 @@ public class BrandResource extends BaseResource {
             List<BrandVO> listVO = list.stream()
                     .map(brand -> {
                         BrandVO brandVO = new BrandVO();
-                        BeanUtils.copyProperties(brandVO, brand);
+                        BeanUtils.copyProperties(brand,brandVO);
                         return brandVO;
                     }).collect(Collectors.toList());
-
-//                    new ArrayList<>();
-//            for(Brand brand : list){
-//                BrandVO brandVO = new BrandVO();
-//                BeanUtils.copyProperties(brandVO, brand);
-//                listVO.add(brandVO);
-//            }
             return new ResponseResult(listVO);
         }
         catch (Exception e) {
