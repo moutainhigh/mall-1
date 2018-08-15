@@ -4,10 +4,7 @@ import com.yunxin.cb.console.service.ILogsService;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
-import com.yunxin.cb.mall.service.IAttributeService;
-import com.yunxin.cb.mall.service.ICommodityService;
-import com.yunxin.cb.mall.service.IProductService;
-import com.yunxin.cb.mall.service.IStoreService;
+import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.web.vo.ResponseResult;
 import com.yunxin.cb.mall.web.vo.ResultType;
 import com.yunxin.core.exception.EntityExistException;
@@ -51,7 +48,8 @@ public class ProductController {
 
     @Resource
     private MessageSource messageSource;
-
+    @Resource
+    private ICatalogService catalogService;
 
     @RequestMapping(value = "editProducts")
     public String editProducts(@RequestParam("commodityId") int commodityId, @ModelAttribute("product") Product product, ModelMap modelMap) {
@@ -70,6 +68,10 @@ public class ProductController {
         List<Store> stores = storeService.getAllStores();
         modelMap.addAttribute("stores", stores);
 
+        //S 获得一级分类对象  2018-08-14    LXC
+        Catalog oneLevelCatalog = catalogService.findOneLevelCatalogByCatalogCode(commodity.getCatalog().getCatalogCode());
+        modelMap.addAttribute("oneLevelCatalog",oneLevelCatalog);
+        //E
         return "commodity/editProducts";
     }
 
@@ -146,6 +148,10 @@ public class ProductController {
         modelMap.addAttribute("productAttributes", productAttributes);
         List<Store> stores = storeService.getAllStores();
         modelMap.addAttribute("stores", stores);
+        //S 获得一级分类对象  2018-08-14    LXC
+        Catalog oneLevelCatalog = catalogService.findOneLevelCatalogByCatalogCode(commodity.getCatalog().getCatalogCode());
+        modelMap.addAttribute("oneLevelCatalog",oneLevelCatalog);
+        //E
         return "commodity/editProduct";
     }
 

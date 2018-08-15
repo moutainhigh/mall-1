@@ -812,35 +812,35 @@ public class CustomerService implements ICustomerService {
                                     });
                                 }
 
-                            }
                         }
-
-
-
                     }
+
+
+
                 }
-            };
+            }
+        };
     }
     public Map<String,Object> getCustomer(){
         redisService.deleteKey("customers");
-                Map<String,Object> map=new HashMap<>();
-                if(null!=redisService.getKey("customers"))
-                    map= (Map<String,Object>)redisService.getKey("customers");
-                else{
-                    List<Customer> list= customerDao.findAll();
-                    if(null!=list&&list.size()>0){
-                        Map<String,Object> mp=new HashMap<String,Object>(){
-                            {
-                                for (Customer customer:list) {
-                                    put("customer_"+customer.getMobile(),customer);
-                                }
-                            }
-                        };
-                        map.put("customers",mp);
-//                        redisService.setKey("customers",mp);
+        Map<String,Object> map=new HashMap<>();
+        if(null!=redisService.getKey("customers"))
+            map= (Map<String,Object>)redisService.getKey("customers");
+        else{
+            List<Customer> list= customerDao.findAll();
+            if(null!=list&&list.size()>0){
+                Map<String,Object> mp=new HashMap<String,Object>(){
+                    {
+                        for (Customer customer:list) {
+                            put("customer_"+customer.getMobile(),customer);
+                        }
                     }
+                };
+                map.put("customers",mp);
+//                        redisService.setKey("customers",mp);
+            }
 
-                }
+        }
         return map;
 
     }
@@ -1112,5 +1112,11 @@ public class CustomerService implements ICustomerService {
                 setRecordTotal((int)historyRecordDao.countByCustomer(customer));
             }
         };
+
+    }
+
+    @Override
+    public  void enableCustomerById(int customerId,boolean enabled){
+        customerDao.enableCustomerById(customerId,enabled);
     }
 }

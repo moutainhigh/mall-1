@@ -789,6 +789,16 @@ CREATE TABLE `insurance_order_code` (
 ##add by pengcong 2018-08-14
 ALTER TABLE `brand` ADD COLUMN `SORT` int(11) COMMENT '热门品牌排序';
 
+ALTER TABLE customer modify column ENABLED int(2);
+ALTER TABLE `insurance_informed_matter` add  `INSURE_PEOPLE` INT(2) DEFAULT 0 COMMENT '投保人';
+ALTER TABLE `insurance_informed_matter` add  `INSURED_PEOPLE` INT(2) DEFAULT 0 COMMENT '被保人';
+
+###add by lxc 2018-08-14 15:58
+ALTER TABLE `crystal_ball`.`catalog`
+MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT 1.00000 COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+ALTER TABLE `crystal_ball`.`catalog`
+MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT NULL COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+
 ##add by tangou 2018-08-15
 ALTER TABLE `seller` ADD COLUMN `POSITION_X` varchar(32) COMMENT '商家经度';
 ALTER TABLE `seller` ADD COLUMN `POSITION_Y` varchar(32) COMMENT '商家纬度';
