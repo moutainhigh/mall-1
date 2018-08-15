@@ -84,9 +84,11 @@ public class IndexResource extends BaseResource {
                         for(FloorBrand floorBrand :fbList){
                             Integer brandId = floorBrand.getBrandId();
                             Brand brand = brandService.selectByPrimaryKey(brandId);
-                            BrandVO bVO = new BrandVO();
-                            BeanUtils.copyProperties(bVO, brand);
-                            brandList.add(bVO);
+                            if(brand != null){
+                                BrandVO bVO = new BrandVO();
+                                BeanUtils.copyProperties(bVO, brand);
+                                brandList.add(bVO);
+                            }
                         }
                     }
                     //获取第三层分类
@@ -95,9 +97,11 @@ public class IndexResource extends BaseResource {
                         for(FloorCategory floorCategory : fcyList){
                             Integer categoryId = floorCategory.getCategoryId();
                             Category category = categoryService.selectByPrimaryKey(categoryId);
-                            CategoryVO cVO = new CategoryVO();
-                            BeanUtils.copyProperties(cVO, category);
-                            categoryThreeList.add(cVO);
+                            if(category != null){
+                                CategoryVO cVO = new CategoryVO();
+                                BeanUtils.copyProperties(cVO, category);
+                                categoryThreeList.add(cVO);
+                            }
                         }
                     }
                     //获取第五层分类
@@ -106,9 +110,11 @@ public class IndexResource extends BaseResource {
                         for(FloorCategory floor_Category : fcy_List){
                             Integer categoryId = floor_Category.getCategoryId();
                             Category cate_gory = categoryService.selectByPrimaryKey(categoryId);
-                            CategoryVO cVO = new CategoryVO();
-                            BeanUtils.copyProperties(cVO, cate_gory);
-                            categoryFiveList.add(cVO);
+                            if(cate_gory != null){
+                                CategoryVO cVO = new CategoryVO();
+                                BeanUtils.copyProperties(cVO, cate_gory);
+                                categoryFiveList.add(cVO);
+                            }
                         }
                     }
                 }
@@ -158,30 +164,36 @@ public class IndexResource extends BaseResource {
                     if(fbList != null){
                         for(FloorBrand floorBrand :fbList){
                             Brand brand = brandService.selectByPrimaryKey(floorBrand.getBrandId());
-                            BrandVO bVO = new BrandVO();
-                            BeanUtils.copyProperties(bVO, brand);
-                            brandList.add(bVO);
-                            homeFloorVO.setBrand(brandList);
+                            if(brand != null){
+                                BrandVO bVO = new BrandVO();
+                                BeanUtils.copyProperties(bVO, brand);
+                                brandList.add(bVO);
+                                homeFloorVO.setBrand(brandList);
+                            }
                         }
                     }
                     List<FloorCategory> fcyList = floorCategoryService.selectByFloorId(floorId);
                     if(fcyList != null){
                         for(FloorCategory floorCategory : fcyList){
                             Category category = categoryService.selectByPrimaryKey(floorCategory.getCategoryId());
-                            CategoryVO cVO = new CategoryVO();
-                            BeanUtils.copyProperties(cVO, category);
-                            categoryList.add(cVO);
-                            homeFloorVO.setCategory(categoryList);
+                            if(category != null){
+                                CategoryVO cVO = new CategoryVO();
+                                BeanUtils.copyProperties(cVO, category);
+                                categoryList.add(cVO);
+                                homeFloorVO.setCategory(categoryList);
+                            }
                         }
                     }
                     List<FloorCommodity> fcList = floorCommodityService.selectByFloorId(floorId);
                     if(fcList != null){
                         for(FloorCommodity floorCommodity : fcList){
                             Commodity commodity = commodityService.selectByPrimaryKey(floorCommodity.getCommodityId());
-                            IndexCommodityVO indexCommodityVO = new IndexCommodityVO();
-                            BeanUtils.copyProperties(indexCommodityVO, commodity);
-                            indexCommodityList.add(indexCommodityVO);
-                            homeFloorVO.setIndexCommodityList(indexCommodityList);
+                            if(commodity != null){
+                                IndexCommodityVO indexCommodityVO = new IndexCommodityVO();
+                                BeanUtils.copyProperties(indexCommodityVO, commodity);
+                                indexCommodityList.add(indexCommodityVO);
+                                homeFloorVO.setIndexCommodityList(indexCommodityList);
+                            }
                         }
                     }
                     homeFloorVOList.add(homeFloorVO);
