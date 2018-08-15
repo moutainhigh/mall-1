@@ -232,10 +232,10 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span> 分类比例配置：</label>
+                                <label><span class="asterisk"></span> 一级分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control"  path="catalog.ratio" id="catalogRatio" readonly="true" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control"  path="" id="oneLevelCatalog" readonly="true" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
@@ -616,6 +616,7 @@
                 salePrice_f();//设置销售价
                 loadSpecs(catalogId);
             }
+            $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
         </script>
 
     </div>

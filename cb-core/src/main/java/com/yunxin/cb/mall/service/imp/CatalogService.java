@@ -123,17 +123,22 @@ public class CatalogService implements ICatalogService {
         AttributeReplication.copying(catalog, dbCatalog, Catalog_.catalogName, Catalog_.enabled, Catalog_.supportAddedTax, Catalog_.leaf, Catalog_.sortOrder, Catalog_.remark, Catalog_.parentCatalog, Catalog_.ratio);
         //S     add by lxc  2018-08-07
         if (dbCatalog != null ){
-            //当分类比例设置有改变,则需要修改货品销售价
-            if(catalog.getRatio().compareTo(db_ratio) !=0){
-                List<Commodity> commoditiesByCatalog = commodityDao.findCommoditiesByCatalog(catalog);
-                commoditiesByCatalog.stream().forEach(o ->{
-                    if(null == o.getRatio()){//商品比例配置为null,货品的销售价=货品成本价*分类比例配置
-                        float ratio = catalog.getRatio().floatValue();
-                        int j = productDao.updateSalePriceByCommodityId(ratio, o.getCommodityId());
-                        if(j > 0){
-                            logger.info("更新货品的销售价成功....");
+            System.err.println(decimalFormat.format(5));
+            //当一级分类比例设置有改变,则需要修改货品销售价
+            if(dbCatalog.getParentCatalogId()==1 && catalog.getRatio().compareTo(db_ratio) !=0 ){
+                List<Catalog> catalogByLikeCatalogCode = catalogDao.findCatalogByCatalogCodeStartingWith(dbCatalog.getCatalogCode());
+                catalogByLikeCatalogCode.stream().forEach(c -> {
+                    List<Commodity> commoditiesByCatalog = commodityDao.findCommoditiesByCatalog(c);
+                    commoditiesByCatalog.stream().forEach(o ->{
+                        if(null == o.getRatio()){//商品比例配置为null,货品的销售价=货品成本价*分类比例配置
+                            float ratio = catalog.getRatio().floatValue();
+                            o.setSellPrice(ratio * o.getCostPrice());//当一级分类比例设置有改变,则需要修改商品销售价
+                            int j = productDao.updateSalePriceByCommodityId(ratio, o.getCommodityId());
+                            if(j > 0){
+                                logger.info("更新货品的销售价成功....");
+                            }
                         }
-                    }
+                    });
                 });
             }
             FundsPool fundsPool = fundsPoolDao.findByCatalog_CatalogId(catalog.getCatalogId());
@@ -379,5 +384,11 @@ public class CatalogService implements ICatalogService {
     @Override
     public void enableCatalogById(int catalogId, boolean enabled) {
         catalogDao.enableCatalogById(enabled, catalogId);
+    }
+
+    @Override
+    public Catalog findOneLevelCatalogByCatalogCode(String catalogCode) {
+        catalogCode = catalogCode.substring(0,6);
+        return catalogDao.findCatalogByCatalogCode(catalogCode);
     }
 }
