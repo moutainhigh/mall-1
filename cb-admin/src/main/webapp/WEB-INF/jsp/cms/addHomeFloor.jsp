@@ -18,22 +18,7 @@
                     if(valid){
                         var defaultPicPath = $('input[name="imgurl"]');
                         var defaultPicPath1 = $('input[name="imgurl1"]');
-                        if($("#sortOrder").val() == 2){
-                            if ($('input[name="brandId"]').length==0) {
-                                bootbox.alert("请至少添加一个品牌!");
-                                return false;
-                            }
-                        }else if($("#sortOrder").val() == 3){
-                            if ($('input[name="categoryId"]').length==0) {
-                                bootbox.alert("请至少添加一个分类!");
-                                return false;
-                            }
-                        }else if($("#sortOrder").val() == 5){
-                            if ($('input[name="categoryId"]').length==0) {
-                                bootbox.alert("请至少添加一个分类!");
-                                return false;
-                            }
-                        }else if (defaultPicPath.size()==0) {
+                        if (defaultPicPath.size()==0) {
                             bootbox.alert("请至少选择一张图片!");
                             return false;
                         }else if (defaultPicPath1.size()==0) {

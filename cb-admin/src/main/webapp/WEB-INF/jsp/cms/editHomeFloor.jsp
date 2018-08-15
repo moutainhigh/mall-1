@@ -17,24 +17,10 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if(valid){
+                        debugger;
                         var defaultPicPath = $('input[name="imgurl"]');
                         var defaultPicPath1 = $('input[name="imgurl1"]');
-                        if($("#sortOrder").val() == 2){
-                            if ($('input[name="brandId"]').length==0) {
-                                bootbox.alert("请至少添加一个品牌!");
-                                return false;
-                            }
-                        }else if($("#sortOrder").val() == 3){
-                            if ($('input[name="categoryId"]').length==0) {
-                                bootbox.alert("请至少添加一个分类!");
-                                return false;
-                            }
-                        }else if($("#sortOrder").val() == 5){
-                            if ($('input[name="categoryId"]').length==0) {
-                                bootbox.alert("请至少添加一个分类!");
-                                return false;
-                            }
-                        }else if (defaultPicPath.size()==0) {
+                        if (defaultPicPath.size()==0) {
                             bootbox.alert("请至少选择一张图片!");
                             return false;
                         }else if (defaultPicPath1.size()==0) {
@@ -253,20 +239,6 @@
                                     <%--图片上传控件--%>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
-                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
-                                            onValidationComplete: function (form, valid) {
-                                                if (valid) {
-                                                    var defaultPicPath = $('input[name="imgurl1"]');
-                                                    if (defaultPicPath.size()==0) {
-                                                        bootbox.alert("请至少选择一张图片!");
-                                                        return false;
-                                                    } else {
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        });
                                         var initPreview= new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
