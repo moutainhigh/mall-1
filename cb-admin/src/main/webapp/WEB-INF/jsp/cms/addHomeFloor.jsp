@@ -24,6 +24,9 @@
                         }else if (defaultPicPath1.size()==0) {
                             bootbox.alert("请至少选择一张图片!");
                             return false;
+                        }else if($('input[name="commodityId"]').length==0 && $('input[name="categoryId"]').length==0 && $('input[name="brandId"]').length==0){
+                            bootbox.alert("请至少添加商品或者分类或者品牌其中一条数据!");
+                            return false;
                         }else{
                             return true;
                         }
@@ -120,7 +123,7 @@
                                 <form:radiobutton path="floorLayout" value="VERTICAL"/>&nbsp;&nbsp;左边(图片大小：423*611)
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 是否启用：</label>
+                                <label> 是否启用：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:checkbox path="enabled"/>

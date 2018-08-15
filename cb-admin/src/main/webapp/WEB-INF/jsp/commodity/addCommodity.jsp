@@ -341,19 +341,19 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 热门商品：</label>
+                                <label> 热门商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="popular" cssClass=" checkbox-master"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 特惠商品：</label>
+                                <label> 特惠商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="special"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 推荐商品：</label>
+                                <label> 推荐商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="recommend"/>

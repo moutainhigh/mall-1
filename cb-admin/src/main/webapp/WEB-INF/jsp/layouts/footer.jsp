@@ -5,9 +5,9 @@
             <p>Copyright © 2017 深圳市云信时代科技有限公司</p>
         </div>
         <div class="pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <%--<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-cogs"></i>
-            </a>
+            </a>--%>
 
             <div class="dropup" id="ext-dropdown-chat">
                 <%--<a class="btn dropdown-toggle ext-dropdown-chat-btn" data-toggle="dropdown" href="#">
