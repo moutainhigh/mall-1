@@ -209,6 +209,7 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             // },
                                             // layoutTemplates:{

@@ -242,8 +242,8 @@
       <div class="header-main-bottom">
         <div class="pull-left">
           <ul class="breadcrumb">
-            <li><a href="#">首页</a></li>
-            <li><a href="#">统计分析</a></li>
+            <li>首页</li>
+            <li>统计分析</li>
             <li class="active"><a href="orderStatistics.do">订单统计</a></li>
           </ul>
           <!-- End .breadcrumb -->

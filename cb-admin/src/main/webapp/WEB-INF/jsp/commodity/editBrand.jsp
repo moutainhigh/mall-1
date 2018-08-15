@@ -395,6 +395,7 @@
                             showUpload:true, //是否显示上传按钮
                             showRemove :false, //显示移除按钮
                             showPreview :true, //是否显示预览
+                            showClose: false,
                             showCaption:false,//是否显示标题
                             browseOnZoneClick: true,//是否显示点击选择文件
                             language: "zh" ,
@@ -430,6 +431,7 @@
                                 initialPreviewAsData: true
                             });
                             $(".btn-default").attr("disabled",false);
+
                         }).on("filepredelete", function(jqXHR) {
                             var abort = true;
                             if (confirm("确定要删除吗？(删除后不会恢复)")) {

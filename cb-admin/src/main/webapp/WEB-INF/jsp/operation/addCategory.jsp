@@ -173,6 +173,7 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             autoReplace : true,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
