@@ -788,3 +788,7 @@ CREATE TABLE `insurance_order_code` (
 
 ##add by pengcong 2018-08-14
 ALTER TABLE `brand` ADD COLUMN `SORT` int(11) COMMENT '热门品牌排序';
+
+##add by tangou 2018-08-15
+ALTER TABLE `seller` ADD COLUMN `POSITION_X` varchar(32) COMMENT '商家经度';
+ALTER TABLE `seller` ADD COLUMN `POSITION_Y` varchar(32) COMMENT '商家纬度';
