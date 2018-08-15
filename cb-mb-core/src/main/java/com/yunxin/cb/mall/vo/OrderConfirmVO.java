@@ -100,6 +100,9 @@ public class OrderConfirmVO implements java.io.Serializable{
     public String toString() {
         return "OrderConfirmVO{" +
                 "paymentType=" + paymentType +
+                ", consigneeName='" + consigneeName + '\'' +
+                ", consigneeMobile='" + consigneeMobile + '\'' +
+                ", consigneeAddress='" + consigneeAddress + '\'' +
                 ", sellerId='" + sellerId + '\'' +
                 ", orderConfirmProductList=" + orderConfirmProductList +
                 '}';
