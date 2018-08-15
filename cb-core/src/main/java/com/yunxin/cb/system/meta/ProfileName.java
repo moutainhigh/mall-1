@@ -12,8 +12,8 @@ public enum ProfileName {
     ANDROID_VERSION_CODE("1"),//安卓版本编码
     ANDROID_VERSION_NAME("v1.0.0"),//安卓版本名称
     ANDROID_APP_NAME("云信"),//安卓APP名称
-    ANDROID_URL(""),//安卓APP下载地址
-    ANDROID_DESCRIPTION(""),//安卓APP更新描述
+    ANDROID_URL("123"),//安卓APP下载地址
+    ANDROID_DESCRIPTION("123"),//安卓APP更新描述
     ANDROID_FORCE_UPGRADE("false"),//安卓APP是否强制更新
     GIVE_THE_THUMBS_UP("0.05"),//点赞推荐人及所有上级加5%的授信额度
     LOAN_EXPECTED_RETURN_FIFTY("0.5"),//下单推荐人增加50%的贷款预期收益

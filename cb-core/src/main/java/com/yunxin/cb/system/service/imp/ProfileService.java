@@ -218,6 +218,7 @@ public class ProfileService implements IProfileService {
     }
 
     @Override
+    @Transactional
     public void addProfileByProfileIsExit(){
         for (ProfileName e : ProfileName.values()) {
             Profile profile=profileDao.getProfileByProfileName(e);
@@ -229,6 +230,9 @@ public class ProfileService implements IProfileService {
                 profile.setIsPicture(0);
                 profileDao.save(profile);
                 redisService.setKey(e.toString(),e.getDefaultValue());
+            }else if(null==profile.getFileValue()||profile.getFileValue().equals("")){
+                profile=profileDao.getOne(profile.getFileId());
+                profile.setFileValue(e.getDefaultValue());
             }
         }
     }
