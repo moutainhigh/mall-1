@@ -4,6 +4,7 @@ import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.entity.Category;
+import com.yunxin.cb.mall.entity.meta.AdvertisementPlace;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.meta.Result;
@@ -53,7 +54,7 @@ public class IndexResource extends BaseResource {
     public ResponseResult index(){
         try{
             //获取首页banner
-            List<Advertisement> firstList = advertisementService.selectByPlace("HOME",true);
+            List<Advertisement> firstList = advertisementService.selectByAdvertisementPlace(AdvertisementPlace.HOME,true);
             List<AdvertisementVO> homeList = new ArrayList<>();
             for(Advertisement adm : firstList){
                 AdvertisementVO adVO = new AdvertisementVO();
@@ -61,7 +62,7 @@ public class IndexResource extends BaseResource {
                 homeList.add(adVO);
             }
             //获取中部banner
-            List<Advertisement> secondList = advertisementService.selectByPlace("MIDDLE",true);
+            List<Advertisement> secondList = advertisementService.selectByAdvertisementPlace(AdvertisementPlace.MIDDLE,true);
             List<AdvertisementVO> middleList = new ArrayList<>();
             for(Advertisement advment : secondList){
                 AdvertisementVO adVO = new AdvertisementVO();
