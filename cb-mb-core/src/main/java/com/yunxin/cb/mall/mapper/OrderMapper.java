@@ -293,8 +293,8 @@ public interface OrderMapper {
           "SELLER_ID = #{sellerId,jdbcType=INTEGER},",
           "AUDIT_STATE = #{auditState,jdbcType=INTEGER},",
           "AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR},",
-          "AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP}",
-          "DELIVER_TIME = #{deliverTime,jdbcType=TIMESTAMP}",
+          "AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},",
+          "DELIVER_TIME = #{deliverTime,jdbcType=TIMESTAMP},",
           "COLLECT_TIME = #{collectTime,jdbcType=TIMESTAMP}",
         "where ORDER_ID = #{orderId,jdbcType=INTEGER}"
     })
