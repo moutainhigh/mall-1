@@ -798,3 +798,7 @@ ALTER TABLE `crystal_ball`.`catalog`
 MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT 1.00000 COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
 ALTER TABLE `crystal_ball`.`catalog`
 MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT NULL COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+
+##add by tangou 2018-08-15
+ALTER TABLE `seller` ADD COLUMN `POSITION_X` varchar(32) COMMENT '商家经度';
+ALTER TABLE `seller` ADD COLUMN `POSITION_Y` varchar(32) COMMENT '商家纬度';

@@ -302,6 +302,24 @@
             </div>
 
             <div class="spacer-30"></div>
+            <div class="spacer-30"></div>
+
+            <div class="row">
+              <div class="col-sm-2">
+                <label> 商家经纬度：</label>
+              </div>
+              <div class="col-sm-8">
+                <table>
+                  <tr>
+                    <td><form:input cssClass="form-control" path="positionX" maxlength="10"/></td>
+                    <td>-</td>
+                    <td><form:input cssClass="form-control" path="positionY" maxlength="10"/></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="spacer-30"></div>
             <hr>
             <div class="spacer-30"></div>
             <div class="row">
