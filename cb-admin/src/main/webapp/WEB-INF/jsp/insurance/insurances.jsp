@@ -183,7 +183,7 @@
                                 <strong>保单编号:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="orderCode" data-operator="contains"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="orderCode" data-operator="contains"
                                        class="form-control grid-filter" placeholder="请输入保单编号"/>
                             </div>
                             <div class="toolbar-field">
@@ -230,7 +230,7 @@
                                 <strong>合同编号:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="contractNo" data-operator="contains"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="contractNo" data-operator="contains"
                                        class="form-control grid-filter" placeholder="请输入合同编号"/>
                             </div>
 
@@ -238,7 +238,7 @@
                                 <strong>投保人&nbsp;&nbsp;&nbsp;:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="insuranceOrderPolicyholder.policyholderName"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="insuranceOrderPolicyholder.policyholderName"
                                        style="width:165px;" data-operator="contains" class="form-control grid-filter"
                                        placeholder="请输入投保人"/>
                             </div>
@@ -247,7 +247,7 @@
                                 <strong>被保人&nbsp;&nbsp;:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="insuranceOrderInsured.insuredName"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')"  type="text" data-filter="insuranceOrderInsured.insuredName"
                                        data-operator="contains" class="form-control grid-filter" placeholder="请输入被保人"/>
                             </div>
 
@@ -255,7 +255,7 @@
                                 <strong>投保人手机号:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="insuranceOrderPolicyholder.policyholderMobile"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="insuranceOrderPolicyholder.policyholderMobile"
                                        data-operator="contains" class="form-control grid-filter"
                                        placeholder="请输入投保人手机号"/>
                             </div>

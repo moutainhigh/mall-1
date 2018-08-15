@@ -23,7 +23,7 @@
         function checkTime()
         {
             if($('#createTime').val()>$('#createTimes').val()&&''!=$('#createTimes').val()){
-                alert("开始时间不能大于结束时间")
+                bootbox.alert("开始时间不能大于结束时间!");
                 $('#createTimes').val('')
             }
         }
@@ -112,7 +112,7 @@
                                 <strong>反馈帐户手机号:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text"  data-filter="customer.mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
+                                <input type="text" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')"  data-filter="customer.mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>创建时间:</strong>

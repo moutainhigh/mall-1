@@ -176,19 +176,19 @@
                   <strong>账户名:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" data-filter="accountName" data-operator="contains" class="form-control grid-filter" placeholder="请输入账户名"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="accountName" data-operator="contains" class="form-control grid-filter" placeholder="请输入账户名"/>
                 </div>
                 <div class="toolbar-field">
                   <strong>姓名:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" data-filter="realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入姓名"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入姓名"/>
                 </div>
                 <div class="toolbar-field">
                   <strong>手机号:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" data-filter="mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
                 </div>
               </div><!-- End .pull-left -->
               <div class="pull-right">

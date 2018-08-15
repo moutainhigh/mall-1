@@ -145,13 +145,13 @@
                                 <strong>品牌编码:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="brandNo" data-operator="contains" class="form-control grid-filter" placeholder="请输入品牌编码"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="brandNo" data-operator="contains" class="form-control grid-filter" placeholder="请输入品牌编码"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>品牌名称:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="brandName" data-operator="contains" class="form-control grid-filter" placeholder="请输入品牌编码"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="brandName" data-operator="contains" class="form-control grid-filter" placeholder="请输入品牌编码"/>
                             </div>
                         </div>
                         <!-- End .pull-left -->

@@ -150,7 +150,7 @@
                                 <strong>事项组描述:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="description" data-operator="contains" class="form-control grid-filter" placeholder="事项描述"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="description" data-operator="contains" class="form-control grid-filter" placeholder="事项描述"/>
                             </div>
                         </div>
 

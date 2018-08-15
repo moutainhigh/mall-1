@@ -129,7 +129,7 @@
                 <label><span class="asterisk">*</span> 商家类型：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.sellerType}
+                ${seller.sellerType.name}
               </div>
             </div>
 
@@ -193,7 +193,7 @@
                 <label><span class="asterisk">*</span> 商家支付平台类型：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.channelType}
+                ${seller.channelType.name}
               </div>
               <div class="col-sm-2">
                 <label><span class="asterisk">*</span> 商家支付平台号：</label>
