@@ -78,9 +78,10 @@ public class InsuranceOrderResource extends BaseResource {
     @PostMapping(value = "getOrders")
     public ResponseResult getOrders(@RequestBody PageSpecification<InsuranceOrder> query) {
         PageSpecification.FilterDescriptor filterDescriptor = new PageSpecification.FilterDescriptor();
-        filterDescriptor.setField("customerId");
+        filterDescriptor.setField("customer.customerId");
         filterDescriptor.setLogic("and");
         filterDescriptor.setOperator("eq");
+
         filterDescriptor.setValue(getCustomerId());
         query.getFilter().getFilters().add(filterDescriptor);
         Page<InsuranceOrder> pagelist = insuranceOrderService.pageInsuranceOrder(query);

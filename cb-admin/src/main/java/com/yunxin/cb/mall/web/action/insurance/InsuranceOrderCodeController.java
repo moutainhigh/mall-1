@@ -10,10 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -41,7 +39,9 @@ public class InsuranceOrderCodeController {
      * @date        2018/7/17 20:59
      */
     @RequestMapping(value = "insuranceordercodes")
-    public String insuranceordercodes(ModelMap modelMap) {
+    public String insuranceordercodes(ModelMap modelMap)
+    {
+        insuranceOrderCodeService.mailReminding();
         return "insuranceordercode/insuranceordercodes";
     }
 

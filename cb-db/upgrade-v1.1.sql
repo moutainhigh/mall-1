@@ -802,5 +802,17 @@ MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT NULL COMMENT '分类比例配�
 ##add by tangou 2018-08-15
 ALTER TABLE `seller` ADD COLUMN `POSITION_X` varchar(32) COMMENT '商家经度';
 ALTER TABLE `seller` ADD COLUMN `POSITION_Y` varchar(32) COMMENT '商家纬度';
+
+##add by wangteng 2018-08-15
+alter table insurance_order_code add SORT int(11) DEFAULT 0;
+DROP TABLE IF EXISTS `insurance_email`;
+CREATE TABLE `insurance_email` (
+  `INSURANCE_EMAIL_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `FROM_EMAIL` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发送邮箱',
+  `RECEIVE_EMAIL` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '接收邮箱',
+  `CONTEXT` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '发送内容',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '发送时间',
+  PRIMARY KEY (`insurance_email_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='保单合同邮件提醒';
 ALTER TABLE `favorite` ADD COLUMN `PRODUCT_ID` int(11) COMMENT '货品id';
 ALTER TABLE `history_record` ADD COLUMN `PRODUCT_ID` int(11) COMMENT '货品id';
