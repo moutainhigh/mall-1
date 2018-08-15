@@ -27,7 +27,7 @@ spring:
       properties:
           hibernate.format_sql: true
           hibernate.search.default.indexBase: /opt/www/cb/api/index
-#7牛云存储
+#7牛云 存储
 qiniu:
   accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
   secretKey: 9fglZdOXWmLXbU1rzroDOr2anFZydhnuKZjzBb-c
