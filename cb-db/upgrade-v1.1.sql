@@ -802,3 +802,5 @@ MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT NULL COMMENT '分类比例配�
 ##add by tangou 2018-08-15
 ALTER TABLE `seller` ADD COLUMN `POSITION_X` varchar(32) COMMENT '商家经度';
 ALTER TABLE `seller` ADD COLUMN `POSITION_Y` varchar(32) COMMENT '商家纬度';
+ALTER TABLE `favorite` ADD COLUMN `PRODUCT_ID` int(11) COMMENT '货品id';
+ALTER TABLE `history_record` ADD COLUMN `PRODUCT_ID` int(11) COMMENT '货品id';
