@@ -176,7 +176,7 @@
                     <kendo:grid-columns>
                         <kendo:grid-column title="ID" field="messageId" width="30px"/>
                         <kendo:grid-column title="推送标题" sortable="false" field="pushTitle"  width="200px"/>
-                        <kendo:grid-column title="消息内容" sortable="false" field="messageContent" width="200px"/>
+                        <kendo:grid-column title="消息摘要" sortable="false" field="messageDigest" width="200px"/>
                         <kendo:grid-column title="推送状态" sortable="false" field="pushSatus" template="#=getPushStatus(pushStatus)#" width="200px"/>
                         <kendo:grid-column title="推送时间" field="pushTime" format="{0:yyyy-MM-dd HH:mm}" width="200px"/>
                         <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}"  width="200px"/>

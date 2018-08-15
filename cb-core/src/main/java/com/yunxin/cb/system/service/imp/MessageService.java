@@ -1,5 +1,7 @@
 package com.yunxin.cb.system.service.imp;
 
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.imp.AttachmentService;
 import com.yunxin.cb.system.dao.MessageDao;
 import com.yunxin.cb.system.entity.Message;
 import com.yunxin.cb.system.entity.Message_;
@@ -22,6 +24,9 @@ public class MessageService implements IMessageService {
 
     @Resource
     private MessageDao messageDao;
+
+    @Resource
+    private AttachmentService attachmentService;
 
     /**
      * 功能描述: 消息列表分页查询
@@ -60,7 +65,11 @@ public class MessageService implements IMessageService {
     @Override
     @Transactional
     public Message addMessage(Message message) {
-        return messageDao.save(message);
+        message = messageDao.save(message);
+        //保存图片路径
+        attachmentService.deleteAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId());
+        attachmentService.addAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId(),message.getDigestPic());
+        return message;
     }
 
     /**
