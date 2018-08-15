@@ -90,6 +90,19 @@
             }
             $('#sellerDialog').modal("hide")
         }
+
+        /**
+         *  根据分类id,返回一级分类的比例配置
+         *  @author lxc
+         * @param catalogId     分类id
+         */
+        function getOneLevelCatalog(catalogId) {
+            $.getJSON("getOneLevelCatalog.do", {
+                catalogId: catalogId
+            }, function (json) {
+                $("#oneLevelCatalog").val(json);
+            });
+        }
     </script>
 </head>
 <body>
@@ -214,10 +227,10 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span> 分类比例配置：</label>
+                                <label><span class="asterisk"></span>一级分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control"  path="catalog.ratio" id="catalogRatio" readonly="true" maxlength="12"/>
+                                <form:input type="text" cssClass=" form-control"  path="" id="oneLevelCatalog" readonly="true" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
@@ -611,7 +624,7 @@
                 $('#catalogDialog').modal("hide");
                 $("#catalogId").val(catalogId);
                 $("#catalogName").val(catalogName);
-                $("#catalogRatio").val(RATIO);
+                getOneLevelCatalog(catalogId);
                 salePrice_f();//设置销售价
                 loadSpecs(catalogId);
             }

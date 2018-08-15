@@ -96,7 +96,17 @@
         });
         $(document).ready(function () {
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if(valid){
+                        if ($('#fileValue').val()=='') {
+                            bootbox.alert("参数值不能为空!");
+                            return false;
+                        }else{
+                            return true;
+                        }
+                    }
+                }
             });
             $('#serNo').val("")
         });
@@ -149,6 +159,9 @@
             <div class="inner-padding">
                 <div class="pull-left">
                     <h2>事项组</h2>
+                </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="profiles.do"><i class="fa fa-reply"></i></a>
                 </div>
             </div>
             <!-- End .inner-padding -->
