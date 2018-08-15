@@ -293,6 +293,24 @@ public class CommodityController implements ServletContextAware {
 
     }
 
+    /**
+     * @Description:                根据分类id,返回一级分类的比例配置
+     * @author: lxc
+     * @param catalogId             分类id
+     * @Return java.lang.String:
+     * @DateTime: 2018/8/15 17:41
+     */
+    @ResponseBody
+    @RequestMapping(value = "getOneLevelCatalog",method = RequestMethod.GET)
+    public String getOneLevelCatalog(@RequestParam("catalogId") int catalogId) {
+        Catalog one = catalogService.findOne(catalogId);
+        if(one.getParentCatalogId() == 1){
+            return one.getRatio().toString();
+        }
+        Catalog catalog = catalogService.findOneLevelCatalogByCatalogCode(one.getCatalogCode());
+        return catalog.getRatio().toString();
+    }
+
 //    @RequestMapping(method = RequestMethod.GET)
 //    @ResponseBody
 //    public boolean sendSms() {
