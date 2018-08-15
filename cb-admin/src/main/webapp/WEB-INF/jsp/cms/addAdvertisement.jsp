@@ -20,6 +20,17 @@
         $(document).ready(function() {
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                }
             });
         });
 
@@ -350,14 +361,14 @@
                                     <form:options items="${advertisementType}" itemLabel="name"/>
                                 </form:select>
                             </div>
-                            <div class="col-sm-2">
+                            <%--<div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 客户端类型：</label>
                             </div>
                             <div class="col-sm-3">
                                 <input type="checkbox" name="clientTypesTemporary" value="PC" cssClass="form-control validate[minCheckbox[1]]"/>网站
                                 <input type="checkbox" name="clientTypesTemporary" value="PAD" cssClass="form-control validate[minCheckbox[1]]"/>平板
                                 <input type="checkbox" name="clientTypesTemporary" value="MOBILE" cssClass="form-control validate[minCheckbox[1]]"/>手机
-                            </div>
+                            </div>--%>
                         </div>
 
                         <div class="spacer-10"></div>
@@ -423,7 +434,7 @@
                                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
+                                        /*$("#validateSubmitForm").validationEngine({
                                             autoHidePrompt: true, scroll: false, showOneMessage: true,
                                             onValidationComplete: function (form, valid) {
                                                 if (valid) {
@@ -436,7 +447,7 @@
                                                     }
                                                 }
                                             }
-                                        });
+                                        });*/
                                         var initPreview = new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件

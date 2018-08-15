@@ -395,7 +395,7 @@
                         </div>
                         <div class="spacer-10"></div>
 
-                        <div class="row">
+                       <!-- <div class="row">
                             <div class="col-sm-2">
                                 <label>电话：</label>
                             </div>
@@ -418,11 +418,11 @@
                             <div class="col-sm-7 col-label" id="conPCDDiv">
                                 <span id="pcdAddress"></span>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>详细地址：</label>
+                                <label>自提地址：</label>
                             </div>
                             <div class="col-sm-7 col-label" id="conAddressDiv">
                                 <span style="white-space:normal; word-break:break-all;">${order.consigneeAddress}</span>

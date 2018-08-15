@@ -108,6 +108,23 @@
             });
         }
 
+        function selectSeller() {
+            $('#sellerDialog').modal();
+        }
+
+        function chooseSeller() {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                var sellerId=dataItem.sellerId;
+                $("#sellerId").val(dataItem.sellerId);
+                $("#sellerName").val(dataItem.sellerName);
+            }else{
+                $("#sellerId").val('');
+                $("#sellerName").val('');
+            }
+            $('#sellerDialog').modal("hide")
+        }
+
     </script>
 </head>
 <body>
@@ -370,6 +387,24 @@
 
                         <div class="row">
                             <div class="col-sm-2">
+                                <label>商家：</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="col-sm-3">
+                                    <form:input type="hidden" cssClass="form-control" path="seller.sellerId" id="sellerId" />
+                                    <form:input type="text" cssClass="form-control" path="seller.sellerName" id="sellerName" disabled="true"/>
+                                    <button type="button" onclick="selectSeller();" title="添加" class="btn btn-default">
+                                        <i class="fa fa-plus-circle"></i>选择商家
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
                                 <label>商品规格：</label>
                             </div>
                             <div class="col-sm-8">
@@ -619,6 +654,23 @@
             $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
         </script>
 
+    </div>
+</div>
+<div class="modal fade" id="sellerDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择商家</h4>
+            </div>
+            <div class="modal-body">
+                <jsp:include page="../seller/chooseSeller.jsp"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary pull-right" onclick="chooseSeller();">确认</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>

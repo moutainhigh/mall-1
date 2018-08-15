@@ -1109,7 +1109,19 @@ public class CustomerService implements ICustomerService {
                 String levelCode = customer.getLevelCode()+"%";
                 setInterpersonalTotal(customerDao.findAllCustomerByLikeLevelCode(customerId,levelCode,PolicyType.PAYMENT));
                 setFavoriteTotal((int)favoriteDao.countByCustomer(customer));
-                setRecordTotal((int)historyRecordDao.countByCustomer(customer));
+                //足迹统计
+                Calendar calendar=Calendar.getInstance();
+                calendar.setTime(new Date());
+                //结束时间
+                Date endTime=calendar.getTime();
+                calendar.add(Calendar.MONTH, -1);
+                //开始时间
+                Date startTime=calendar.getTime();
+                List<HistoryRecord> list=historyRecordDao.countHistoryRecordByCustomer(customer.getCustomerId(),startTime,endTime);
+                if(null!=list&&list.size()>0)
+                    setRecordTotal(list.size());
+                else
+                    setRecordTotal(0);
             }
         };
 
