@@ -22,6 +22,9 @@ public class HistoryRecord implements Serializable {
     /**  */
     private Integer commodityId;
 
+    /** 货品id */
+    private Integer productId;
+
     /**  */
     private Integer customerId;
 
@@ -73,5 +76,13 @@ public class HistoryRecord implements Serializable {
 
     public void setCommodity(Commodity commodity) {
         this.commodity = commodity;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 }

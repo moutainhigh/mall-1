@@ -88,7 +88,7 @@ public class FavoriteResource extends BaseResource {
      */
     @ApiOperation(value = "商品添加收藏夹")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int"),
+            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "salePrice", value = "销售价", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "addFavorite")
     @ApiVersion(1)

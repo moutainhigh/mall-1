@@ -86,11 +86,13 @@ public class CommodityServiceImpl implements CommodityService {
         if(customerId>0){//用户存在则查询商品收藏夹和加入浏览历史
             favorite=new Favorite();
             favorite.setCustomerId(customerId);
+            favorite.setProductId(productId);
             favorite.setCommodityId(product.getCommodityId());
             favorite=favoriteMapper.findByCustomerAndCommodity(favorite);
 
             HistoryRecord hr=new HistoryRecord();
             hr.setCommodityId(product.getCommodityId());
+            hr.setProductId(productId);
             hr.setCustomerId(customerId);
             hr.setSalePrice(product.getSalePrice());
             historyRecordService.addHistoryRecord(hr);

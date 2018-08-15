@@ -11,17 +11,17 @@ import java.util.List;
 public interface HistoryRecordMapper {
     @Insert({
         "insert into history_record (RECORD_ID, CREATE_TIME, ",
-        "SALE_PRICE, COMMODITY_ID, ",
+        "SALE_PRICE, COMMODITY_ID, PRODUCT_ID,",
         "CUSTOMER_ID)",
         "values (#{recordId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, ",
-        "#{salePrice,jdbcType=REAL}, #{commodityId,jdbcType=INTEGER}, ",
+        "#{salePrice,jdbcType=REAL}, #{commodityId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, ",
         "#{customerId,jdbcType=INTEGER})"
     })
     @Options(useGeneratedKeys=true, keyProperty="recordId", keyColumn="RECORD_ID")
     int insert(HistoryRecord record);
 
     @Select("<script>"
-            +"select RECORD_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID from history_record where 1=1 "
+            +"select RECORD_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, PRODUCT_ID, CUSTOMER_ID from history_record where 1=1 "
             + "<if test='customerId!=null'>"
             + "AND CUSTOMER_ID = #{data.customerId} "
             + "</if>"
@@ -35,12 +35,13 @@ public interface HistoryRecordMapper {
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
+            @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
     })
     List<HistoryRecord> selectAll(Query q);
 
     @Select("<script>"
-            +"select RECORD_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID from history_record "
+            +"select RECORD_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, PRODUCT_ID, CUSTOMER_ID from history_record "
             + "where <![CDATA[DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= DATE(CREATE_TIME)]]> "
             + "<if test='data.customerId!=null'>"
             + "AND CUSTOMER_ID = #{data.customerId} "
@@ -48,7 +49,7 @@ public interface HistoryRecordMapper {
             + "<if test='data.recordId!=null'>"
             + "AND RECORD_ID = #{data.recordId} "
             + "</if>"
-            + "GROUP BY COMMODITY_ID,CUSTOMER_ID ORDER BY CREATE_TIME DESC "
+            + "GROUP BY PRODUCT_ID,CUSTOMER_ID ORDER BY CREATE_TIME DESC "
             + "LIMIT #{rowIndex},#{pageSize}"
             + "</script>")
     @Results({
@@ -56,6 +57,7 @@ public interface HistoryRecordMapper {
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
+            @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
             @Result(column="COMMODITY_ID", property="commodity", jdbcType=JdbcType.INTEGER,
                     one = @One(select = "com.yunxin.cb.mall.mapper.CommodityMapper.selectByPrimaryKey"))
@@ -71,7 +73,7 @@ public interface HistoryRecordMapper {
             + "<if test='data.recordId!=null'>"
             + "AND RECORD_ID = #{data.recordId} "
             + "</if>"
-            + "GROUP BY COMMODITY_ID,CUSTOMER_ID"
+            + "GROUP BY PRODUCT_ID,CUSTOMER_ID"
             + "</script>")
     long count(Query q);
 
