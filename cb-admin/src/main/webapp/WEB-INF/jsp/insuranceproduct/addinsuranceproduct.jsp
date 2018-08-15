@@ -39,10 +39,10 @@
                         var defaultPicPath1 = $('input[name="imgurl1"]');
                         var price=$('input[name="price"]');
                         if (defaultPicPath.size()==0) {
-                            bootbox.alert("请至少选择一张图片!");
+                            bootbox.alert("请至少选择一张产品图片!");
                             return false;
                         }else if(defaultPicPath1.size()==0) {
-                            bootbox.alert("请至少选择一张图片!");
+                            bootbox.alert("请至少选择一张详情图片!");
                             return false;
                         }else if(price.size()==0){
                             bootbox.alert("请至少填写一个价格!");

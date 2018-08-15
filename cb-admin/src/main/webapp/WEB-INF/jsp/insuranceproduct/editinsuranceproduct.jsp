@@ -35,20 +35,23 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
+                        debugger;
                         var defaultPicPath = $('input[name="imgurl"]');
                         var defaultPicPath1 = $('input[name="imgurl1"]');
                         var price=$('input[name="price"]');
                         if (defaultPicPath.size()==0) {
-                            bootbox.alert("请至少选择一张图片!");
+                            bootbox.alert("请至少选择一张产品图片!");
                             return false;
                         }else if(defaultPicPath1.size()==0) {
-                            bootbox.alert("请至少选择一张图片!");
+                            bootbox.alert("请至少选择一张详情图片!");
                             return false;
                         } else if(price.size()==0){
                             bootbox.alert("请至少填写一个价格!");
                             return false;
+                        }else{
+                            return true;
                         }
-                        return true;
+
                     }
                 }
             });
@@ -578,20 +581,20 @@
                                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
-                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
-                                            onValidationComplete: function (form, valid) {
-                                                if (valid) {
-                                                    var defaultPicPath = $('input[name="imgurl"]');
-                                                    if (defaultPicPath.size()==0) {
-                                                        bootbox.alert("请至少选择一张图片!");
-                                                        return false;
-                                                    } else {
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        });
+                                        // $("#validateSubmitForm").validationEngine({
+                                        //     autoHidePrompt: true, scroll: false, showOneMessage: true,
+                                        //     onValidationComplete: function (form, valid) {
+                                        //         if (valid) {
+                                        //             var defaultPicPath = $('input[name="imgurl"]');
+                                        //             if (defaultPicPath.size()==0) {
+                                        //                 bootbox.alert("请至少选择一张图片!");
+                                        //                 return false;
+                                        //             } else {
+                                        //                 return true;
+                                        //             }
+                                        //         }
+                                        //     }
+                                        // });
                                         var initPreview = new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
@@ -692,20 +695,20 @@
                                     <%--图片上传控件--%>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
-                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
-                                            onValidationComplete: function (form, valid) {
-                                                if (valid) {
-                                                    var defaultPicPath = $('input[name="imgurl1"]');
-                                                    if (defaultPicPath.size()==0) {
-                                                        bootbox.alert("请至少选择一张图片!");
-                                                        return false;
-                                                    } else {
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        });
+                                        // $("#validateSubmitForm").validationEngine({
+                                        //     autoHidePrompt: true, scroll: false, showOneMessage: true,
+                                        //     onValidationComplete: function (form, valid) {
+                                        //         if (valid) {
+                                        //             var defaultPicPath = $('input[name="imgurl1"]');
+                                        //             if (defaultPicPath.size()==0) {
+                                        //                 bootbox.alert("请至少选择一张图片!");
+                                        //                 return false;
+                                        //             } else {
+                                        //                 return true;
+                                        //             }
+                                        //         }
+                                        //     }
+                                        // });
                                         var initPreview= new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
