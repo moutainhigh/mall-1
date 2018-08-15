@@ -39,6 +39,10 @@ public class FavoriteVo implements java.io.Serializable{
     @ApiModelProperty(value="商品id",name="commodityId",example="476")
     private Integer commodityId;
 
+    /** 货品id */
+    @ApiModelProperty(value="货品id",name="productId",example="476")
+    private Integer productId;
+
     @ApiModelProperty(value="商品",name="commodity",example="commodity")
     private CommodityVo commodityVo;
 
@@ -94,6 +98,14 @@ public class FavoriteVo implements java.io.Serializable{
         this.customerId = customerId;
     }
 
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
     @Override
     public String toString() {
         return "FavoriteVo{" +
@@ -101,7 +113,8 @@ public class FavoriteVo implements java.io.Serializable{
                 ", createTime=" + createTime +
                 ", salePrice=" + salePrice +
                 ", commodityId=" + commodityId +
-                ", commodity=" + commodityVo +
+                ", productId=" + productId +
+                ", commodityVo=" + commodityVo +
                 ", customerId=" + customerId +
                 '}';
     }

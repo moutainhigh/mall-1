@@ -27,10 +27,10 @@ public interface FavoriteMapper {
 
     @Insert({
         "insert into favorite (FAVORITE_ID, CREATE_TIME, ",
-        "SALE_PRICE, COMMODITY_ID, ",
+        "SALE_PRICE, COMMODITY_ID, PRODUCT_ID, ",
         "CUSTOMER_ID)",
         "values (#{favoriteId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, ",
-        "#{salePrice,jdbcType=REAL}, #{commodityId,jdbcType=INTEGER}, ",
+        "#{salePrice,jdbcType=REAL}, #{commodityId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, ",
         "#{customerId,jdbcType=INTEGER})"
     })
     @Options(useGeneratedKeys=true, keyProperty="favoriteId", keyColumn="FAVORITE_ID")
@@ -38,7 +38,7 @@ public interface FavoriteMapper {
 
     @Select({
         "select",
-        "FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID",
+        "FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, PRODUCT_ID, CUSTOMER_ID ",
         "from favorite",
         "where FAVORITE_ID = #{favoriteId,jdbcType=INTEGER}"
     })
@@ -47,12 +47,13 @@ public interface FavoriteMapper {
         @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
         @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
+        @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER),
         @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
     })
     Favorite selectByPrimaryKey(Integer favoriteId);
 
     @Select("<script>"
-            +"select FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID from favorite where 1=1 "
+            +"select FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, PRODUCT_ID, CUSTOMER_ID from favorite where 1=1 "
             + "<if test='customerId!=null'>"
             + "AND CUSTOMER_ID = #{data.customerId} "
             + "</if>"
@@ -66,22 +67,24 @@ public interface FavoriteMapper {
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
+            @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
     })
     List<Favorite> selectAll(Query q);
 
     @Select({
             "select",
-            "FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID",
+            "FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, PRODUCT_ID, CUSTOMER_ID ",
             "from favorite",
             "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}",
-            "and   COMMODITY_ID = #{commodityId,jdbcType=INTEGER}"
+            "and   PRODUCT_ID = #{productId,jdbcType=INTEGER}"
     })
     @Results({
             @Result(column="FAVORITE_ID", property="favoriteId", jdbcType=JdbcType.INTEGER, id=true),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
+            @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
     })
     Favorite findByCustomerAndCommodity(Favorite record);
@@ -91,13 +94,14 @@ public interface FavoriteMapper {
         "set CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},",
           "SALE_PRICE = #{salePrice,jdbcType=REAL},",
           "COMMODITY_ID = #{commodityId,jdbcType=INTEGER},",
+          "PRODUCT_ID = #{productId,jdbcType=INTEGER},",
           "CUSTOMER_ID = #{customerId,jdbcType=INTEGER}",
         "where FAVORITE_ID = #{favoriteId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Favorite record);
 
     @Select("<script>"
-            +"select FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, CUSTOMER_ID from favorite where 1=1"
+            +"select FAVORITE_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, PRODUCT_ID, CUSTOMER_ID from favorite where 1=1"
             + "<if test='data.customerId!=null'>"
             + "AND CUSTOMER_ID = #{data.customerId} "
             + "</if>"
@@ -112,6 +116,7 @@ public interface FavoriteMapper {
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
+            @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
             @Result(column="COMMODITY_ID", property="commodity", jdbcType=JdbcType.INTEGER,
                     one = @One(select = "com.yunxin.cb.mall.mapper.CommodityMapper.selectByPrimaryKey"))

@@ -44,14 +44,22 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             if (ignoreAuthentication == null)
                 ignoreAuthentication = handlerMethod.getMethod().getAnnotation(IgnoreAuthentication.class);
 
-            if (ignoreAuthentication != null)
+            String authHeader = request.getHeader(HEADER_STRING);
+            if (ignoreAuthentication != null){
+                //如果用户有token，就保存
+                if (authHeader != null){
+                    authHeader = authHeader.replace(TOKEN_PREFIX, "");
+                    Token token = JwtUtil.getToken(authHeader);
+                    int customerId = token.getAccountId();
+                    CustomerContextHolder.setCustomerId(customerId);
+                }
                 // don't need token
                 return true;
+            }
 
 
             response.setContentType("application/json;charset=utf-8");
             response.setCharacterEncoding("UTF-8");
-            String authHeader = request.getHeader(HEADER_STRING);
             if ((authHeader == null) ||
                     !authHeader.startsWith(TOKEN_PREFIX)) {
                 ObjectMapper mapper = new ObjectMapper();
