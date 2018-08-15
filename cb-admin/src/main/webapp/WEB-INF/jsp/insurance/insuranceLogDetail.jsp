@@ -219,7 +219,17 @@
                                 <label><span class="asterisk"></span> 保险期间：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceProduct.insurePeriod}
+
+                                    <c:if test="${insuranceOrder.insuranceProduct.insurePeriod=='TEN_YEAR'}">
+                                        十年
+                                    </c:if>
+                                    <c:if test="${insuranceOrder.insuranceProduct.insurePeriod=='TWENTY_YEAR'}">
+                                        20年
+                                    </c:if>
+                                    <c:if test="${insuranceOrder.insuranceProduct.insurePeriod=='LIFITIME'}">
+                                        终身
+                                    </c:if>
+
                             </div>
                         </div>
 
@@ -230,7 +240,15 @@
                                 <label><span class="asterisk"></span> 缴费期限：</label>
                             </div>
                             <div class="col-sm-2 col-label">
-                                ${insuranceOrder.insuranceProduct.protectionYear}
+                                <c:if test="${insuranceOrder.insuranceProduct.protectionYear=='TEN_YEAR'}">
+                                    十年
+                                </c:if>
+                                <c:if test="${insuranceOrder.insuranceProduct.protectionYear=='TWENTY_YEAR'}">
+                                    20年
+                                </c:if>
+                                <c:if test="${insuranceOrder.insuranceProduct.protectionYear=='LIFITIME'}">
+                                    终身
+                                </c:if>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 基本保额：</label>
@@ -908,8 +926,15 @@
                             <hr>
                             <div class="spacer-30">
                                 6、是否有其他需要说明事项：
-                                <input type="radio"  name="otherMatter" value="true" <c:if test="${not empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> checked</c:if> onclick="changeOtherMatter(true);"/> 是&nbsp;&nbsp;
-                                <input type="radio"  name="otherMatter" value="false" <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}" > checked </c:if> onclick="changeOtherMatter(false);"/> 否
+                                <c:choose>
+                                    <c:when test="${not empty insuranceOrder.insuranceOrderOffsite.otherMatter}">
+                                        是
+                                    </c:when>
+                                    <c:otherwise>否</c:otherwise>
+                                </c:choose>
+
+                                <%--<input type="radio"  name="otherMatter" value="true" <c:if test="${not empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> checked</c:if> onclick="changeOtherMatter(true);"/> 是&nbsp;&nbsp;--%>
+                                <%--<input type="radio"  name="otherMatter" value="false" <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}" > checked </c:if> onclick="changeOtherMatter(false);"/> 否--%>
                             </div>
                                     <div id="otherMatterDiv" style='float: left;margin-left: 10px; <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> display:none;</c:if>' >
                                             <%--<label><span class="asterisk"></span>${otherMatter}</label>--%>

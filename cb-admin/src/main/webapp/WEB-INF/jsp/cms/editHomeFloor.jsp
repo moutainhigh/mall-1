@@ -41,8 +41,7 @@
                             bootbox.alert("请至少选择一张图片!");
                             return false;
                         }else{
-                            bootbox.alert("请填写正确的序号!");
-                            return false;
+                            return true;
                         }
                     }
                 }
@@ -336,7 +335,7 @@
                                             return abort;
                                         }).on('filedeleted', function(event, id) {
                                             $("#"+id).remove();
-                                            for (var i=0;i<initPreview1.length;i++)
+                                            for (var i=0;i<initPreview.length;i++)
                                             {
                                                 if(initPreview[i].indexOf(id) != -1){
                                                     initPreview.splice(i)
@@ -350,7 +349,7 @@
                                         var a1='${listAttachment1}';
                                         var json1=eval('(' + a1 + ')')
                                         for(var i=0,l=json1.length;i<l;i++){
-                                            initPreview1[i]  = json1[i].filePath;
+                                            initPreview[i]  = json1[i].filePath;
                                             var config = new Object();
                                             config.caption = "";
                                             config.url="/admin/uploads/delete/HOMEFLOORICO.do";
@@ -689,7 +688,6 @@
         }
 
         function chooseBrand() {
-            debugger;
             var selectedBrandIds=$("#brandGrid input[type='checkbox'][name='selectedBrandId']:checked");
             if(selectedBrandIds!=null&&selectedBrandIds.length>0){
                 $.each(selectedBrandIds,function(n,selectedBox) {

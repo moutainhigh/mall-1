@@ -40,8 +40,7 @@
                             bootbox.alert("请至少选择一张图片!");
                             return false;
                         }else{
-                            bootbox.alert("请填写正确的序号!");
-                            return false;
+                            return true;
                         }
                     }
                 }
@@ -616,7 +615,6 @@
         }
 
         function chooseBrand() {
-            debugger;
             var selectedBrandIds=$("#brandGrid input[type='checkbox'][name='selectedBrandId']:checked");
             if(selectedBrandIds!=null&&selectedBrandIds.length>0){
                 $.each(selectedBrandIds,function(n,selectedBox) {
