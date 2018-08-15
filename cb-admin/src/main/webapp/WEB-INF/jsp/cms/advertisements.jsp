@@ -170,12 +170,12 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="广告标题" field="advertTitle" width="150"/>
-                            <kendo:grid-column title="广告编码" field="advertCode" width="150"/>
-                            <kendo:grid-column title="广告类型" field="advertisementType" width="100" template="#=formatAdvertiseType(advertisementType)#"/>
-                            <kendo:grid-column title="广告位" field="advertisementType" width="100" template="#=formatAdvertisementPlace(advertisementPlace)#"/>
-                            <kendo:grid-column title="创建时间" field="createTime" width="120" format="{0:yyyy-MM-dd HH:mm}"/>
-                            <kendo:grid-column title="状态" field="enabled" template="#= enabled ? '启用' : '停用' #" width="80"/>
+                            <kendo:grid-column title="广告标题" filterable="false" field="advertTitle" width="150"/>
+                            <kendo:grid-column title="广告编码" filterable="false" field="advertCode" width="150"/>
+                            <kendo:grid-column title="广告类型" filterable="false" field="advertisementType" width="100" template="#=formatAdvertiseType(advertisementType)#"/>
+                            <kendo:grid-column title="广告位" filterable="false" field="advertisementType" width="100" template="#=formatAdvertisementPlace(advertisementPlace)#"/>
+                            <kendo:grid-column title="创建时间" filterable="false" field="createTime" width="120" format="{0:yyyy-MM-dd HH:mm}"/>
+                            <kendo:grid-column title="状态" filterable="false" field="enabled" template="#= enabled ? '启用' : '停用' #" width="80"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">

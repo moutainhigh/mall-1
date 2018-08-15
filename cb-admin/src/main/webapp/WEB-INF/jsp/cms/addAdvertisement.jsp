@@ -346,7 +346,7 @@
                                 <label><span class="asterisk">*</span> 编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass=" form-control validate[required,minSize[2]]" path="advertCode" maxlength="64"/>
+                                <form:input cssClass=" form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="advertCode" maxlength="64" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
                             </div>
                         </div>
 
