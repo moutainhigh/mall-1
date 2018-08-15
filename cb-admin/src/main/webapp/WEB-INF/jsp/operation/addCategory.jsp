@@ -205,6 +205,7 @@
                                             });
                                             $(".btn-default").attr("disabled",false);
                                         }).on("filepredelete", function(jqXHR) {
+                                            debugger;
                                             var abort = true;
                                             if (confirm("确定要删除吗？(删除后不会恢复)")) {
                                                 abort = false;
