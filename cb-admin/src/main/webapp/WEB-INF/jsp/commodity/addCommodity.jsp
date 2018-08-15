@@ -73,6 +73,23 @@
                 });
             });
         }
+
+        function selectSeller() {
+            $('#sellerDialog').modal();
+        }
+
+        function chooseSeller() {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                var sellerId=dataItem.sellerId;
+                $("#sellerId").val(dataItem.sellerId);
+                $("#sellerName").val(dataItem.sellerName);
+            }else{
+                $("#sellerId").val('');
+                $("#sellerName").val('');
+            }
+            $('#sellerDialog').modal("hide")
+        }
     </script>
 </head>
 <body>
@@ -127,7 +144,7 @@
                             <div class="col-sm-3">
                                 <form:hidden id="catalogId" path="catalog.catalogId"/>
                                 <div class="input-group">
-                                    <form:input id="catalogName" readonly="true" cssClass="form-control validate[required]" path="catalog.catalogName" maxlength="32"/>
+                                    <form:input id="catalogName" readonly="true" cssClass=" form-control validate[required]" path="catalog.catalogName" maxlength="32"/>
                                     <span class="input-group-btn">
                                         <button id="catalogNameBtn" class="btn btn-default" type="button">选择</button>
                                     </span>
@@ -147,13 +164,13 @@
                                 <label><span class="asterisk">*</span> 商品标题：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityTitle" maxlength="64"/>
+                                <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="commodityTitle" maxlength="64"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品价格段：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="priceSection.sectionId" cssClass="form-control simpleselect validate[required]">
+                                <form:select path="priceSection.sectionId" cssClass=" form-control simpleselect validate[required]">
                                     <c:forEach items="${priceSections}" var="section">
                                         <option value="${section.sectionId}">${section.startPrice} - ${section.endPrice}</option>
                                     </c:forEach>
@@ -166,13 +183,13 @@
                                 <label><span class="asterisk">*</span> 商品编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
+                                <form:input type="text" cssClass=" form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品简称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="shortName" maxlength="255"/>
+                                <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="shortName" maxlength="255"/>
                             </div>
 
                         </div>
@@ -183,13 +200,13 @@
                                 <label><span class="asterisk">*</span> 商品全称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityName" maxlength="255"/>
+                                <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="commodityName" maxlength="255"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品拼音名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityPYName" maxlength="64"/>
+                                <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="commodityPYName" maxlength="64"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -200,13 +217,13 @@
                                 <label><span class="asterisk"></span> 分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control"  path="catalog.ratio" id="catalogRatio" readonly="true" maxlength="12"/>
+                                <form:input type="text" cssClass=" form-control"  path="catalog.ratio" id="catalogRatio" readonly="true" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[custom[gtOne]]" path="ratio" onkeyup="salePrice_f();" placeholder="商品比例配置不填,则取分类比例配置" maxlength="12" />
+                                <form:input type="text" cssClass=" form-control validate[custom[gtOne]]" path="ratio" onkeyup="salePrice_f();" placeholder="商品比例配置不填,则取分类比例配置" maxlength="12" />
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -215,13 +232,13 @@
                                 <label><span class="asterisk">*</span> 成本价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="12"/>
+                                <form:input type="text" cssClass=" form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 销售价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="sellPrice" readonly="true" placeholder="销售价等于成本价乘以比例配置"  maxlength="12"/>
+                                <form:input type="text" cssClass=" form-control validate[required,custom[number]]" path="sellPrice" readonly="true" placeholder="销售价等于成本价乘以比例配置"  maxlength="12"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -230,13 +247,13 @@
                                 <label><span class="asterisk">*</span> 市场价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="marketPrice" maxlength="12"/>
+                                <form:input type="text" cssClass=" form-control validate[required,custom[number]]" path="marketPrice" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品单位：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select class="form-control simpleselect" path="unit">
+                                <form:select class=" form-control simpleselect" path="unit">
                                     <form:options items="${unit}" itemLabel="name"/>
                                 </form:select>
                             </div>
@@ -247,13 +264,13 @@
                                 <label>重量：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="weight" maxlength="12"/>
+                                <form:input type="text" cssClass=" form-control validate[required,custom[number]]" path="weight" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label>体积：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="volume" maxlength="12"/>
+                                <form:input type="text" cssClass=" form-control validate[required,custom[number]]" path="volume" maxlength="12"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -262,7 +279,7 @@
                                 <label><span class="asterisk">*</span> 产地省份：</label>
                             </div>
                             <div class="col-sm-3">
-                                <select class="form-control validate[required]" id="province" name="province">
+                                <select class=" form-control validate[required]" id="province" name="province">
                                 </select>
 
                             </div>
@@ -270,7 +287,7 @@
                                 <label><span class="asterisk">*</span> 产地市区：</label>
                             </div>
                             <div class="col-sm-3">
-                                <select class="form-control validate[required]" id="city" name="city">
+                                <select class=" form-control validate[required]" id="city" name="city">
                                 </select>
                             </div>
                         </div>
@@ -283,7 +300,7 @@
                                 <label>SEO关键字：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:input type="text" cssClass="form-control" path="seoKey" maxlength="255"/>
+                                <form:input type="text" cssClass=" form-control" path="seoKey" maxlength="255"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -292,7 +309,7 @@
                                 <label>SEO标题：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:input type="text" cssClass="form-control" path="seoTitle" maxlength="255"/>
+                                <form:input type="text" cssClass=" form-control" path="seoTitle" maxlength="255"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -301,7 +318,7 @@
                                 <label>SEO描述：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea rows="10" cols="101" path="seoDescription" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" cssClass="" path="seoDescription" maxlength="255"></form:textarea>
                             </div>
                         </div>
 
@@ -314,7 +331,7 @@
                                 <label><span class="asterisk">*</span> 热门商品：</label>
                             </div>
                             <div class="col-sm-1">
-                                <form:checkbox path="popular" cssClass="checkbox-master"/>
+                                <form:checkbox path="popular" cssClass=" checkbox-master"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 特惠商品：</label>
@@ -352,6 +369,24 @@
                             <%--</div>--%>
                         <%--</div>--%>
 
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>商家：</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="col-sm-3">
+                                    <form:input type="hidden" cssClass="form-control" path="seller.sellerId" id="sellerId" />
+                                    <form:input type="text" cssClass="form-control" path="seller.sellerName" id="sellerName" disabled="true"/>
+                                    <button type="button" onclick="selectSeller();" title="添加" class="btn btn-default">
+                                        <i class="fa fa-plus-circle"></i>选择商家
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
@@ -483,7 +518,7 @@
                                 <label>商品详情内容：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass=" form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -495,7 +530,7 @@
                                 <label>商品配置内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                    <form:textarea cssClass="form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;"></form:textarea>
+                                    <form:textarea cssClass=" form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -507,7 +542,7 @@
                                 <label>商品说明内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass=" form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -518,7 +553,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button"  class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>
@@ -581,6 +616,23 @@
                 loadSpecs(catalogId);
             }
         </script>
+    </div>
+</div>
+<div class="modal fade" id="sellerDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择商家</h4>
+            </div>
+            <div class="modal-body">
+                <jsp:include page="../seller/chooseSeller.jsp"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary pull-right" onclick="chooseSeller();">确认</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>

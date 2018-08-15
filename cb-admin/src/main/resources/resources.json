@@ -114,9 +114,6 @@
     "children": [
       {
         "name": "报账管理", "code": "81", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursements.do"
-      },
-      {
-        "name": "贷款管理", "code": "82", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../sale/loanOrders.do"
       }
     ]
   },*/

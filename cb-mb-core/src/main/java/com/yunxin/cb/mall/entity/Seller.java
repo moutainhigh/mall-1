@@ -95,6 +95,12 @@ public class Seller {
     /** 商家微信 */
     private String wechat;
 
+    /** 商家X轴坐标：经度 */
+    private String positionX;
+
+    /** 商家Y轴坐标：纬度*/
+    private String positionY;
+
     public Integer getSellerId() {
         return sellerId;
     }
@@ -325,5 +331,21 @@ public class Seller {
 
     public void setWechat(String wechat) {
         this.wechat = wechat == null ? null : wechat.trim();
+    }
+
+    public String getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(String positionX) {
+        this.positionX = positionX;
+    }
+
+    public String getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(String positionY) {
+        this.positionY = positionY;
     }
 }

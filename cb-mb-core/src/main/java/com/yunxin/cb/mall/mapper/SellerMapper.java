@@ -28,7 +28,7 @@ public interface SellerMapper {
         "QQ, REMARK, SELLER_ADDRESS, ",
         "SELLER_CODE, SELLER_NAME, ",
         "SELLER_TYPE, TELEPHONE, ",
-        "WECHAT)",
+        "WECHAT, POSITION_X, POSITION_Y",
         "values (#{sellerId,jdbcType=INTEGER}, #{accountName,jdbcType=VARCHAR}, ",
         "#{agreementPicPath,jdbcType=VARCHAR}, #{audit,jdbcType=BIT}, ",
         "#{bankAccount,jdbcType=VARCHAR}, #{bankAccountAddress,jdbcType=VARCHAR}, ",
@@ -42,7 +42,7 @@ public interface SellerMapper {
         "#{qq,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{sellerAddress,jdbcType=VARCHAR}, ",
         "#{sellerCode,jdbcType=VARCHAR}, #{sellerName,jdbcType=VARCHAR}, ",
         "#{sellerType,jdbcType=INTEGER}, #{telephone,jdbcType=VARCHAR}, ",
-        "#{wechat,jdbcType=VARCHAR})"
+        "#{wechat,jdbcType=VARCHAR},#{positionX,jdbcType=VARCHAR}, #{positionY,jdbcType=VARCHAR})"
     })
     int insert(Seller record);
 
@@ -52,7 +52,7 @@ public interface SellerMapper {
         "BUS_NAME, BUSLICENSE_NO, BUSLICENSE_PIC_PATH, CHANNEL_ACCOUNT, CHANNEL_TYPE, ",
         "CREATE_TIME, EMAIL, ENABLED, HOLD_ID_POTO_PIC_PATH, ID_CARD_NUM, INTRODUCTION, ",
         "LINKMAN, MOBILE, POSITIVE_ID_POTO_PIC_PATH, PUBLIC_ACCOUNT, QQ, REMARK, SELLER_ADDRESS, ",
-        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT",
+        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y",
         "from seller",
         "where SELLER_ID = #{sellerId,jdbcType=INTEGER}"
     })
@@ -85,7 +85,9 @@ public interface SellerMapper {
         @Result(column="SELLER_NAME", property="sellerName", jdbcType=JdbcType.VARCHAR),
         @Result(column="SELLER_TYPE", property="sellerType", jdbcType=JdbcType.INTEGER),
         @Result(column="TELEPHONE", property="telephone", jdbcType=JdbcType.VARCHAR),
-        @Result(column="WECHAT", property="wechat", jdbcType=JdbcType.VARCHAR)
+        @Result(column="WECHAT", property="wechat", jdbcType=JdbcType.VARCHAR),
+        @Result(column="POSITION_X", property="positionX", jdbcType=JdbcType.VARCHAR),
+        @Result(column="POSITION_Y", property="positionY", jdbcType=JdbcType.VARCHAR)
     })
     Seller selectByPrimaryKey(Integer sellerId);
 
@@ -95,7 +97,7 @@ public interface SellerMapper {
         "BUS_NAME, BUSLICENSE_NO, BUSLICENSE_PIC_PATH, CHANNEL_ACCOUNT, CHANNEL_TYPE, ",
         "CREATE_TIME, EMAIL, ENABLED, HOLD_ID_POTO_PIC_PATH, ID_CARD_NUM, INTRODUCTION, ",
         "LINKMAN, MOBILE, POSITIVE_ID_POTO_PIC_PATH, PUBLIC_ACCOUNT, QQ, REMARK, SELLER_ADDRESS, ",
-        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT",
+        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y",
         "from seller"
     })
     @Results({
@@ -127,7 +129,9 @@ public interface SellerMapper {
         @Result(column="SELLER_NAME", property="sellerName", jdbcType=JdbcType.VARCHAR),
         @Result(column="SELLER_TYPE", property="sellerType", jdbcType=JdbcType.INTEGER),
         @Result(column="TELEPHONE", property="telephone", jdbcType=JdbcType.VARCHAR),
-        @Result(column="WECHAT", property="wechat", jdbcType=JdbcType.VARCHAR)
+        @Result(column="WECHAT", property="wechat", jdbcType=JdbcType.VARCHAR),
+        @Result(column="POSITION_X", property="positionX", jdbcType=JdbcType.VARCHAR),
+        @Result(column="POSITION_Y", property="positionY", jdbcType=JdbcType.VARCHAR)
     })
     List<Seller> selectAll();
 
@@ -160,7 +164,9 @@ public interface SellerMapper {
           "SELLER_NAME = #{sellerName,jdbcType=VARCHAR},",
           "SELLER_TYPE = #{sellerType,jdbcType=INTEGER},",
           "TELEPHONE = #{telephone,jdbcType=VARCHAR},",
-          "WECHAT = #{wechat,jdbcType=VARCHAR}",
+          "WECHAT = #{wechat,jdbcType=VARCHAR},",
+          "POSITION_X = #{positionX,jdbcType=VARCHAR},",
+          "POSITION_Y = #{positionY,jdbcType=VARCHAR}",
         "where SELLER_ID = #{sellerId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Seller record);
