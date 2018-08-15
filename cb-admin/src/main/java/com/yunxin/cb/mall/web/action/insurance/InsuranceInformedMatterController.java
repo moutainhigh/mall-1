@@ -103,12 +103,14 @@ public class InsuranceInformedMatterController {
         modelMap.addAttribute("insuranceInformedMatter",insuranceInformedMatter);
         modelMap.addAttribute("metterType",insuranceInformedMatter.getMatterType());
         if(null!=insuranceInformedMatter.getMatterGroup()){
-            modelMap.addAttribute("groupId",insuranceInformedMatter.getMatterGroup().getGroupId());
-        }else{
-            modelMap.addAttribute("groupId",0);
+//            modelMap.addAttribute("groupId",insuranceInformedMatter.getMatterGroup().getGroupId());
+            modelMap.addAttribute("group",insuranceInformedMatter.getMatterGroup().getDescription());
         }
-        modelMap.addAttribute("groups",insuranceInformedMatterGroupService.findList(1));
-        return "insuranceinformedmatter/editinsuranceinformedmatter";
+//        else{
+//            modelMap.addAttribute("groupId",0);
+//        }
+//        modelMap.addAttribute("groups",insuranceInformedMatterGroupService.findList(1));
+        return "insuranceinformedmatter/insuranceinformedmatterDetails";
     }
 
     /**

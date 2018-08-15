@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>反馈详情</title>
+    <title>事项详情</title>
 
     <script type="text/javascript">
         $(function () {
@@ -122,7 +122,7 @@
             <div class="inner-padding">
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
-                    <legend>事项修改</legend>
+                    <legend>事项详情</legend>
                     <form:form id="validateSubmitForm" action="updateinsuranceInformedMatter.do"
                                cssClass="form-horizontal" method="post"
                                commandName="insuranceInformedMatter">
@@ -131,9 +131,10 @@
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>序号：</label>
                             </div>
-                            <div class="col-sm-3">
-                                <form:input path="serNo" value="" cssClass="form-control validate[required,minSize[1]]"
-                                            maxlength="32"/>
+                            <div class="col-sm-3" style="margin-top: 5px;">
+                                <%--<form:input path="serNo" value="" cssClass="form-control validate[required,minSize[1]]"--%>
+                                            <%--maxlength="32"/>--%>
+                                ${insuranceInformedMatter.serNo}
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -141,9 +142,10 @@
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>事项描述：</label>
                             </div>
-                            <div class="col-sm-3">
-                                <form:textarea  path="matterDescription"
-                                               cssClass="form-control validate[required,minSize[1]]"  maxlength="500"/>
+                            <div class="col-sm-3"  style="margin-top: 5px;">
+                                <%--<form:textarea  path="matterDescription"--%>
+                                               <%--cssClass="form-control validate[required,minSize[1]]"  maxlength="500"/>--%>
+                                    ${insuranceInformedMatter.matterDescription}
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -151,11 +153,17 @@
                             <div class="col-sm-2">
                                 <label>类型：</label>
                             </div>
-                            <div class="col-sm-3">
-                                <select class="form-control simpleselect grid-filter" name="matterType">
-                                    <option value="0" <c:if test="${0 eq metterType}">selected</c:if>>是否题</option>
-                                    <option value="1" <c:if test="${1 eq metterType}">selected</c:if>>填空题</option>
-                                </select>
+                            <div class="col-sm-3"  style="margin-top: 5px;">
+
+                                    <c:choose>
+                                        <c:when test="${0 eq metterType}">是否题</c:when>
+                                        <c:otherwise>填空题</c:otherwise>
+                                    </c:choose>
+
+                                <%--<select class="form-control simpleselect grid-filter" name="matterType">--%>
+                                    <%--<option value="0" <c:if test="${0 eq metterType}">selected</c:if>>是否题</option>--%>
+                                    <%--<option value="1" <c:if test="${1 eq metterType}">selected</c:if>>填空题</option>--%>
+                                <%--</select>--%>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -163,47 +171,26 @@
                             <div class="col-sm-2">
                                 <label>事项组：</label>
                             </div>
-                            <div class="col-sm-3">
-                                <select class="form-control simpleselect grid-filter" name="groupId">
-                                    <option value="0">不选</option>
-                                    <c:forEach items="${groups}" var="group">
-                                        <option value="${group.groupId}"
-                                                <c:if test="${group.groupId eq groupId}">selected</c:if> >${group.description}</option>
-                                    </c:forEach>
-                                </select>
+                            <div class="col-sm-3" style="margin-top: 5px;">
+                                    ${group}
+                                <%--<select class="form-control simpleselect grid-filter" name="groupId">--%>
+                                    <%--<option value="0">不选</option>--%>
+                                    <%--<c:forEach items="${groups}" var="group">--%>
+                                        <%--<option value="${group.groupId}"--%>
+                                                <%--<c:if test="${group.groupId eq groupId}">selected</c:if> >${group.description}</option>--%>
+                                    <%--</c:forEach>--%>
+                                <%--</select>--%>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>是否启用：<span class="asterisk">*</span></label>
+                                <label>是否启用：<span class="asterisk"></span></label>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-3"  style="margin-top: 5px;">
                                 <div class="inline-labels">
                                     <form:radiobutton path="enabled" value="1"/>是
                                     <form:radiobutton path="enabled" value="0"/>否
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label>投保人被选：<span class="asterisk">*</span></label>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="inline-labels">
-                                    <form:radiobutton path="insurePeople" value="1"/>是
-                                    <form:radiobutton path="insurePeople" value="0"/>否
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label>被保人被选：<span class="asterisk">*</span></label>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="inline-labels">
-                                    <form:radiobutton path="insuredPeople" value="1"/>是
-                                    <form:radiobutton path="insuredPeople" value="0"/>否
                                 </div>
                             </div>
                         </div>
@@ -212,12 +199,12 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="btn-group pull-right">
-                                    <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;
-                                    </button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
-                                    </button>
-                                </div>
+                                <%--<div class="btn-group pull-right">--%>
+                                    <%--<button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;--%>
+                                    <%--</button>--%>
+                                    <%--<button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;--%>
+                                    <%--</button>--%>
+                                <%--</div>--%>
                             </div>
                         </div>
                     </form:form>
