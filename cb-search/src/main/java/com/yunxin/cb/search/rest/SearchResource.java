@@ -157,6 +157,7 @@ public class SearchResource extends BaseResource {
         Commodity commodity = new Commodity();
         BeanUtils.copyProperties(commodityVO, commodity);
         commodity.setId(String.valueOf(commodityVO.getCommodityId()));
+        setLocation(commodity, commodityVO.getSeller());
         commodityService.updateCommodity(commodity);
         return new ResponseResult(Result.SUCCESS);
     }

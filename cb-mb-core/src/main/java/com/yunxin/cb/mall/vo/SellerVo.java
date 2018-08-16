@@ -40,6 +40,16 @@ public class SellerVo implements java.io.Serializable {
     @ApiModelProperty(value="备注",name="remark",example="无")
     private String remark;
 
+    /**省*/
+    @ApiModelProperty(value="省",name="province",example="广东省")
+    private String province;
+    /**市*/
+    @ApiModelProperty(value="市",name="city",example="深圳市")
+    private String city;
+    /**区*/
+    @ApiModelProperty(value="区",name="district",example="福田区")
+    private String district;
+
     /** 商家地址 */
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="广东省深圳市富德大厦507")
     private String sellerAddress;
@@ -148,6 +158,30 @@ public class SellerVo implements java.io.Serializable {
         this.positionY = positionY;
     }
 
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
     @Override
     public String toString() {
         return "SellerVo{" +
@@ -157,6 +191,9 @@ public class SellerVo implements java.io.Serializable {
                 ", linkman='" + linkman + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", remark='" + remark + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
                 ", sellerAddress='" + sellerAddress + '\'' +
                 ", sellerCode='" + sellerCode + '\'' +
                 ", sellerName='" + sellerName + '\'' +

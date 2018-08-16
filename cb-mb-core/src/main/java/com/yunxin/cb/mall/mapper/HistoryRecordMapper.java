@@ -20,6 +20,19 @@ public interface HistoryRecordMapper {
     @Options(useGeneratedKeys=true, keyProperty="recordId", keyColumn="RECORD_ID")
     int insert(HistoryRecord record);
 
+    @Select({"select RECORD_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, PRODUCT_ID, CUSTOMER_ID from history_record where 1=1 ",
+            "AND CUSTOMER_ID = #{customerId} AND PRODUCT_ID = #{productId} "
+    })
+    @Results({
+            @Result(column="RECORD_ID", property="recordId", jdbcType=JdbcType.INTEGER),
+            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
+            @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
+            @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER),
+            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER)
+    })
+    HistoryRecord selectByCustomerIdAndProductId(@Param("customerId")int customerId,@Param("productId")int productId);
+
     @Select("<script>"
             +"select RECORD_ID, CREATE_TIME, SALE_PRICE, COMMODITY_ID, PRODUCT_ID, CUSTOMER_ID from history_record where 1=1 "
             + "<if test='customerId!=null'>"
@@ -86,4 +99,9 @@ public interface HistoryRecordMapper {
             "</foreach>",
             "</script>"})
     int removeHistoryRecordeBatch(@Param("recordIds") List<Integer> recordIds,@Param("customerId")Integer customerId);
+
+    @Delete({"delete from history_record",
+            "WHERE CUSTOMER_ID = #{customerId} AND PRODUCT_ID = #{productId}"
+    })
+    int removeByCustomerIdAndProductId(@Param("customerId")int customerId,@Param("productId")int productId);
 }

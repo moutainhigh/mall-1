@@ -19,6 +19,16 @@
   <title>编辑商家</title>
   <script type="application/javascript">
     $(document).ready(function(){
+
+        $.citySelector.init({
+            province: "province",
+            city: "city",
+            district:"district",
+            preProvince: "${seller.province}",
+            preCity: "${seller.city}",
+            preDistrict:"${seller.district}"
+        });
+
       $("#validateSubmitForm").validationEngine({
           autoHidePrompt: true, scroll: false, showOneMessage: true,
           onValidationComplete: function (form, valid) {
@@ -27,9 +37,17 @@
                   if (!myreg.test($('#mobile').val())) {
                       bootbox.alert("手机格式不正确!");
                       return false;
-                  } else {
-                      return true;
                   }
+
+                  var province = $("#province").val();
+                  var city = $("#city").val();
+                  var district = $("#district").val();
+                  if (province == 0 || city ==0 || district == 0) {
+                      bootbox.alert("请选择省市区!");
+                      return false;
+                  }
+
+                  return true;
               }
           }
       });
@@ -138,11 +156,12 @@
             <div class="spacer-10"></div>
 
             <div class="row">
+
               <div class="col-sm-2">
-                <label> 商家地址：</label>
+                <label> 联系电话：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="form-control" path="sellerAddress" maxlength="255"/>
+                <form:input cssClass="form-control" path="telephone" maxlength="16"/>
               </div>
               <div class="col-sm-2">
                 <label><span class="asterisk">*</span> 商家类型：</label>
@@ -167,7 +186,43 @@
                 <label><span class="asterisk">*</span> 手机：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="11"/>
+                <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" id="mobile" maxlength="11"/>
+              </div>
+            </div>
+
+            <div class="spacer-10"></div>
+
+            <div class="row">
+
+              <div class="col-sm-2">
+                <label><span class="asterisk">*</span> 邮箱：</label>
+              </div>
+              <div class="col-sm-3">
+                <form:input cssClass="form-control validate[required,custom[email]]" path="email" maxlength="32"/>
+              </div>
+              <div class="col-sm-2">
+                <label><span class="asterisk">*</span> 商家省份：</label>
+              </div>
+              <div class="col-sm-3">
+                <select class="form-control" id="province" name="province"></select>
+              </div>
+            </div>
+
+            <div class="spacer-10"></div>
+
+            <div class="row">
+
+              <div class="col-sm-2">
+                <label><span class="asterisk">*</span> 商家省市：</label>
+              </div>
+              <div class="col-sm-3">
+                <select class="form-control" id="city" name="city"></select>
+              </div>
+              <div class="col-sm-2">
+                <label><span class="asterisk">*</span> 商家区/县：</label>
+              </div>
+              <div class="col-sm-3">
+                <select class="form-control" id="district" name="district"></select>
               </div>
             </div>
 
@@ -175,16 +230,10 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label> 联系电话：</label>
+                <label><span class="asterisk">*</span> 商家地址：</label>
               </div>
-              <div class="col-sm-3">
-                <form:input cssClass="form-control" path="telephone" maxlength="16"/>
-              </div>
-              <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 邮箱：</label>
-              </div>
-              <div class="col-sm-3">
-                <form:input cssClass="form-control validate[required,custom[email]]" path="email" maxlength="32"/>
+              <div class="col-sm-8">
+                <form:input cssClass="form-control validate[required]" path="sellerAddress" maxlength="255"/>
               </div>
             </div>
 
@@ -319,17 +368,17 @@
                     <div id="myPageTop">
                       <table>
                         <tr>
-                          <%--<td>
+                          <td>
                             <label>按关键字搜索：</label>
-                          </td>--%>
+                          </td>
                           <td class="column2">
                             <label>左击获取经纬度：</label>
                           </td>
                         </tr>
                         <tr>
-                          <%--<td>
+                          <td>
                             <input type="text" placeholder="请输入关键字进行搜索" id="tipinput">
-                          </td>--%>
+                          </td>
                           <td class="column2">
 
                             <input type="text" readonly="true" placeholder="左击获取经纬度" id="lnglat" <c:if test="${seller.positionX ne '' and seller.positionY ne ''}">

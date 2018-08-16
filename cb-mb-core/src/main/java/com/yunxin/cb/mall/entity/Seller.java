@@ -76,6 +76,18 @@ public class Seller {
 
     /** 备注 */
     private String remark;
+    /**
+     * 省
+     */
+    private String province;
+    /**
+     * 市
+     */
+    private String city;
+    /**
+     * 区
+     */
+    private String district;
 
     /** 商家地址 */
     private String sellerAddress;
@@ -347,5 +359,29 @@ public class Seller {
 
     public void setPositionY(String positionY) {
         this.positionY = positionY;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 }
