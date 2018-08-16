@@ -6,22 +6,18 @@ import com.yunxin.cb.mall.service.ICatalogService;
 import com.yunxin.cb.mall.service.ICommodityService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.cb.mall.entity.Catalog;
-import com.yunxin.cb.mall.entity.Spec;
-import com.yunxin.cb.mall.service.ICatalogService;
-import com.yunxin.cb.mall.service.ICommodityService;
-import com.yunxin.cb.mall.vo.TreeViewItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author z001075
@@ -29,6 +25,8 @@ import java.util.Locale;
 @Controller
 @RequestMapping(value = "/commodity")
 public class SpecController {
+
+    private static Logger logger = LoggerFactory.getLogger(SpecController.class);
 
     @Resource
     private ICommodityService commodityService;
@@ -54,17 +52,17 @@ public class SpecController {
     }
 
     @RequestMapping(value = "addSpec",method = RequestMethod.POST)
-    public String addSpec(@Valid @ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String addSpec(@Valid @ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, HttpServletRequest request) {
         if (result.hasErrors()) {
             return catalogSpecs(spec.getCatalog().getCatalogId(), spec, modelMap);
         }
         try {
             spec = commodityService.addSpec(spec);
         } catch (EntityExistException e) {
-            e.printStackTrace();
-            result.addError(new FieldError("spec", "specName", spec.getSpecName(), true, null, null,
-                    messageSource.getMessage(e.getMessage(), null, locale)));
-            return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId() + "&msgTitle=添加规格失败&msgContent=" + e.getMessage();
+            logger.error("添加商品规格名称错误",e);
+            request.setAttribute("msgTitle","商品规格名称已存在，添加失败！");
+            //return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId() + "&msgTitle=商品规格名称已存在，添加失败！&msgContent=" + e.getMessage();
+            return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId() + "&msgContent=" + e.getMessage();
         }
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }
@@ -74,7 +72,7 @@ public class SpecController {
         try {
             spec = commodityService.updateSpec(spec);
         } catch (EntityExistException e) {
-            e.printStackTrace();
+            logger.error("修改商品规格名称错误",e);
         }
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }

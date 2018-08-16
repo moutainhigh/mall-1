@@ -199,4 +199,5 @@ public interface ICommodityService {
     public List<Commodity> getCommoditySellerByCommodityCode(List<String> commodityCodes);
 
     public void syncESCommodity();
+
 }

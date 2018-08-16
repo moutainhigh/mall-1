@@ -782,7 +782,7 @@ CREATE TABLE `insurance_order_code` (
   `CODE_ID` int(10) NOT NULL COMMENT '编码ID',
   `CODE_NO` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '编码',
   `USEED` int(10) DEFAULT NULL COMMENT '是否使用',
-  `CREATE_TIME` datetime DEFAULT NULL ON UPDATE current_timestamp() COMMENT '创建时间',
+  `CREATE_TIME` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`CODE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

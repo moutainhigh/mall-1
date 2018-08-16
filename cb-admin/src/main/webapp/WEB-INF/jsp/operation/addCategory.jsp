@@ -107,7 +107,7 @@
                                 <label><span class="asterisk">*</span> 排序：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,min[0],custom[integer]]" path="sortOrder" maxlength="4"/>
+                                <form:input cssClass="form-control validate[required,min[0],custom[integer]]"  path="sortOrder" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 是否启用：</label>
@@ -128,8 +128,8 @@
                                 <label><span class="asterisk">*</span> 价格区间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input  path="lowestPrice" maxlength="32"/>-
-                                <form:input path="highestPrice" maxlength="32"/>万
+                                <form:input  path="lowestPrice" maxlength="8" cssClass="validate[required,min[0],max[9999],custom[number]]"/>-
+                                <form:input path="highestPrice" maxlength="8" cssClass="validate[required,min[0],max[9999],custom[number]]"/>万
                             </div>
                         </div>
                         <div class="spacer-10"></div>

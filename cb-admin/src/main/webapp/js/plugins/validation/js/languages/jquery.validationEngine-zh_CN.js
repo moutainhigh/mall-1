@@ -170,6 +170,14 @@
                     "regex": /^([2-9]+(\.\d+)?)|(1\d+(\.\d+)?)|(1\.\d*[1-9]+)$/,
                     "alertText": "请输入大于1的比例"
                 },
+                "checkInputNumber": {//只能输入数字和字母
+                    "regex": /^[0-9]*$/,
+                    "alertText": "只能输入数字"
+                },
+                "checkInputNumLetter": {//只能输入数字和字母
+                    "regex": /^[0-9a-zA-Z]+$/,
+                    "alertText": "只能输入数字和字母"
+                },
                 // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {
                     "url": "ajaxValidateFieldUser",
