@@ -202,6 +202,8 @@ public class CommodityServiceImpl implements CommodityService {
 
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(queryBuilder)
+                .withIndices(Commodity.index_name)
+                .withTypes(Commodity.index_type)
                 .withPageable(pageable)
                 .withSort(sort)
                 .build();
