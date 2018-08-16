@@ -183,14 +183,14 @@
             <div class="row">
               <div class="inline-labels">
                 <div class="col-sm-2">
-                  <label>品牌编码：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>品牌编码：</label>
                 </div>
                 <div class="col-sm-3">
                   <form:input path="brandNo" id="brandNo" type="text" onblur="test(this)" cssClass=" form-control validate[required,minSize[2]]" maxlength="32"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
-                  <label>品牌名称：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>品牌名称：</label>
                 </div>
                 <div class="col-sm-3">
                   <form:input type="text" id="brandName" onblur="test(this)" cssClass=" form-control validate[required,minSize[2]]" path="brandName" maxlength="5"/>
@@ -204,14 +204,14 @@
               <div class="inline-labels">
 
                 <div class="col-sm-2">
-                  <label>品牌关键字：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>品牌关键字：</label>
                 </div>
                 <div class="col-sm-3">
                   <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="brandKey" maxlength="32"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
-                  <label>品牌标题：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>品牌标题：</label>
                 </div>
                 <div class="col-sm-3">
                   <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="brandTitle" maxlength="128"/>
@@ -225,14 +225,14 @@
             <div class="row">
               <div class="inline-labels">
                 <div class="col-sm-2">
-                  <label>SEO关键字：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>SEO关键字：</label>
                 </div>
                 <div class="col-sm-3">
                   <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="seoKey" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
-                  <label>SEO标题：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>SEO标题：</label>
                 </div>
                 <div class="col-sm-3">
                   <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="seoTitle" maxlength="255"/>
@@ -269,7 +269,7 @@
             <div class="row">
 
               <div class="col-sm-2">
-                <label>运营分类：<span class="asterisk">*</span></label>
+                <label><span class="asterisk">*</span>运营分类：</label>
               </div>
               <div class="col-sm-3">
                 <form:hidden id="categoryId" path="category.categoryId"/>
@@ -283,7 +283,7 @@
 
               <div class="col-sm-1"></div>
               <div class="col-sm-2">
-                <label>是否启用：<span class="asterisk">*</span></label>
+                <label><span class="asterisk">*</span>是否启用：</label>
               </div>
               <div class="col-sm-3">
                 <div class="inline-labels">
@@ -298,7 +298,7 @@
             <div class="row">
               <div class="inline-labels">
                 <div class="col-sm-2">
-                  <label>是否显示：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>是否显示：</label>
                 </div>
                 <div class="col-sm-3">
                   <div class="inline-labels">
@@ -308,7 +308,7 @@
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
-                  <label>是否热门：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>是否热门：</label>
                 </div>
                 <div class="col-sm-3">
                   <div class="inline-labels">
@@ -387,7 +387,7 @@
             <div class="spacer-30"></div>
             <div class="row">
               <div class="col-sm-2">
-                <label>图片:<span class="asterisk">*</span></label>
+                <label><span class="asterisk">*</span>图片:</label>
               </div>
               <div class="col-sm-9">
                   <%--图片上传控件--%>
