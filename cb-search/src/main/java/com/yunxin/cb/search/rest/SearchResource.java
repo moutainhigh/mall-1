@@ -144,7 +144,7 @@ public class SearchResource extends BaseResource {
             }
             pageFinder.setData(voList);
             pageFinder.setPageCount(result.getTotalPages());
-            pageFinder.setRowCount(result.getNumber());
+            pageFinder.setRowCount(result.getTotalElements());
             pageFinder.setPageNo(page);
             searchResultVo.setPageFinder(pageFinder);
         }
