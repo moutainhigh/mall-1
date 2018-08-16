@@ -25,7 +25,7 @@
         function getprofileName(state){
             switch (state){
                 case "ANDROID_VERSION_CODE":{
-                    return "安卓版本编码";
+                    return "安卓版本编号";
                 }
                 case "ANDROID_VERSION_NAME":{
                     return "安卓版本名称";
