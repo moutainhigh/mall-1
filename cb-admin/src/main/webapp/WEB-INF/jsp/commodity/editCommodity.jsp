@@ -241,7 +241,7 @@
                                 <label><span class="asterisk">*</span> 商品拼音名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityPYName" maxlength="64"/>
+                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityPYName" maxlength="64" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'')"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
