@@ -8,6 +8,8 @@ import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.cb.mall.web.action.MediaPather;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -31,6 +34,8 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/commodity")
 public class CatalogAttributeGroupController implements ServletContextAware {
+
+    private static Logger logger = LoggerFactory.getLogger(CatalogAttributeGroupController.class);
 
     @Value("${application.uploadPath}")
     private String uploadPath;
@@ -78,14 +83,19 @@ public class CatalogAttributeGroupController implements ServletContextAware {
     }
 
     @RequestMapping(value = "addCatalogAttributeGroup",method = RequestMethod.POST)
-    public String addCatalogAttributeGroup(@Valid @ModelAttribute("attributeGroup") CatalogAttributeGroup attributeGroup, BindingResult result, ModelMap modelMap) throws IOException {
+    public String addCatalogAttributeGroup(@Valid @ModelAttribute("attributeGroup") CatalogAttributeGroup attributeGroup,
+                                           BindingResult result, ModelMap modelMap,RedirectAttributes redirectAttributes) throws IOException {
         if (result.hasErrors()) {
             return toAddCatalogAttributeGroup(attributeGroup, result, modelMap);
         }
         try {
             attributeService.addCatalogAttributeGroup(attributeGroup);
         } catch (EntityExistException e) {
-            e.printStackTrace();
+            logger.error("添加商品属性组失败",e);
+            redirectAttributes.addFlashAttribute("msgTitle","商品属性组名称已存在，添加失败！");
+            redirectAttributes.addFlashAttribute("msgContent",e.getMessage());
+            return "redirect:../common/failure.do?reurl=commodity/catalogAttributeGroups.do";
+
         }
         return "redirect:../common/success.do?reurl=commodity/catalogAttributeGroups.do";
     }

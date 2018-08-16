@@ -54,7 +54,7 @@
             <jsp:param name="active" value="active"/>
         </jsp:include>
         <div id="sidebar-tab-2" class="tab-pane active clearfix">
-            <input type="hidden" id="catalogId" data-filter="catalog.catalogId" data-operator="eq" class="grid-filter" value="0"/>
+            <%--<input type="hidden" id="catalogId" data-filter="catalog.catalogId" data-operator="eq" class="grid-filter" value="0"/>--%>
             <div class="sidebar-module">
                 <ul class="easyfiletree">
                     <c:set var="instanceUnderCatalog" value="catalogAttributeGroup" scope="request"/>
