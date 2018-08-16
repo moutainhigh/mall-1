@@ -138,7 +138,7 @@
                                 <label><span class="asterisk">*</span>分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required],custom[gtOne]" path="ratio" maxlength="10" />
+                                <form:input cssClass="form-control validate[required],custom[eqOne]" path="ratio" maxlength="10" />
                             </div>
                             </c:if>
                         </div>

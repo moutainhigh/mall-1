@@ -108,7 +108,7 @@
                                 <label><span class="asterisk">*</span>商品比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control " path="commodity.ratio" id="ratio" readonly="true" title="商品比例配置不填,则取分类比例配置" maxlength="11"/>
+                                <form:input cssClass="form-control " path="commodity.ratio" id="ratio" readonly="true" placeholder="商品比例配置不填,则取分类比例配置"  title="商品比例配置不填,则取分类比例配置" maxlength="11"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
