@@ -1,8 +1,10 @@
 package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
+import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.FinacialExpectBill;
 import com.yunxin.cb.mall.entity.FinacialLiabilitiesBill;
+import com.yunxin.cb.mall.service.CustomerService;
 import com.yunxin.cb.mall.service.FinacialExpectBillService;
 import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
 import com.yunxin.cb.mall.vo.FinacialExpectBillVO;
@@ -31,7 +33,8 @@ public class FinacialLiabilitiesBillResource extends BaseResource {
     @Resource
     private FinacialLiabilitiesBillService finacialLiabilitiesBillService;
 
-    private static final Log log = LogFactory.getLog(FinacialLiabilitiesBillResource.class);
+    @Resource
+    private CustomerService customerService;
 
     @ApiOperation(value = "获取负债交易信息")
     @ApiImplicitParams({
@@ -42,31 +45,35 @@ public class FinacialLiabilitiesBillResource extends BaseResource {
     @PostMapping(value = "get")
     public ResponseResult<PageFinder<FinacialLiabilitiesBillVO>> get(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
         try {
+            Customer customer = customerService.getCustomerById(getCustomerId());
+            if (customer == null) {
+                return new ResponseResult(Result.FAILURE, "未获取到用户信息");
+            }
             Query q = new Query(pageNo, pageSize);
             FinacialLiabilitiesBill fbill=new FinacialLiabilitiesBill();
-            fbill.setCustomerId(getCustomerId());
+            fbill.setCustomerId(customer.getCustomerId());
             q.setData(fbill);
             PageFinder<FinacialLiabilitiesBill> pageFinder=finacialLiabilitiesBillService.page(q);
             PageFinder<FinacialLiabilitiesBillVO> page=FinacialLiabilitiesBillVO.dOconvertVOPage(pageFinder);
             return new ResponseResult(page);
         } catch (Exception e) {
-            log.info("get failed", e);
+            logger.error("get failed", e);
         }
         return new ResponseResult(Result.FAILURE);
     }
 
-    @ApiOperation(value = "添加负债交易信息")
-    @ApiImplicitParams({
-    })
-    @ApiVersion(1)
-    @GetMapping(value = "add")
-    public ResponseResult<FinacialLiabilitiesBillVO> add(@RequestBody FinacialLiabilitiesBillVO vo){
-        try {
-            finacialLiabilitiesBillService.addFinacialLiabilitiesBill(vo);
-            return new ResponseResult(vo);
-        } catch (Exception e) {
-            log.info("get failed", e);
-        }
-        return new ResponseResult(Result.FAILURE);
-    }
+//    @ApiOperation(value = "添加负债交易信息")
+//    @ApiImplicitParams({
+//    })
+//    @ApiVersion(1)
+//    @GetMapping(value = "add")
+//    public ResponseResult<FinacialLiabilitiesBillVO> add(@RequestBody FinacialLiabilitiesBillVO vo){
+//        try {
+//            finacialLiabilitiesBillService.addFinacialLiabilitiesBill(vo);
+//            return new ResponseResult(vo);
+//        } catch (Exception e) {
+//            log.info("get failed", e);
+//        }
+//        return new ResponseResult(Result.FAILURE);
+//    }
 }
