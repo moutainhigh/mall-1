@@ -37,6 +37,11 @@
         }
 
         function defaultProduct(productId,commodityId) {
+            var state="${commodity.publishState}";
+            if(state=='UP_SHELVES'){
+                bootbox.alert("失败,请先下架商品!");
+                return false;
+            }
             bootbox.confirm("确认设置为默认货品吗?", function(result) {
                 if(result){
                     $.post('defaultProductById.do', {productId:productId,commodityId:commodityId}, function(data) {
@@ -81,6 +86,11 @@
 
 
         function upOrDownShelvesProduct(pid,pState){
+            var state="${commodity.publishState}";
+            if(pState=='DOWN_SHELVES'&&state=='UP_SHELVES'){
+                bootbox.alert("失败,请先下架商品!");
+                return false;
+            }
             bootbox.confirm("确认上/下架该货品吗？", function (result) {
                 if (result) {
                     $.get("upOrDownShelvesProduct.do", {
