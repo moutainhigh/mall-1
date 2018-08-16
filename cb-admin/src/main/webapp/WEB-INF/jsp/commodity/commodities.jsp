@@ -28,6 +28,10 @@
         function editItem() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
+                if(dataItem.publishState=='UP_SHELVES'){
+                    bootbox.alert("失败,请先下架商品!");
+                    return false;
+                }
                 window.location.href = "toEditCommodity.do?commodityId=" + dataItem.commodityId;
             }
         }
@@ -35,6 +39,10 @@
         function removeItem() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
+                if(dataItem.publishState=="UP_SHELVES"){
+                    bootbox.alert("失败,请先下架商品!");
+                    return false;
+                }
                 bootbox.confirm("确认删除吗？", function (result) {
                     if (result) {
                         $.get("removeCommodityById.do", {
