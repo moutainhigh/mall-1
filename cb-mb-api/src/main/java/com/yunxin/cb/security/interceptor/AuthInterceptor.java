@@ -7,7 +7,6 @@ import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.orm.CustomerContextHolder;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
-import com.yunxin.cb.util.JsonUtil;
 import com.yunxin.cb.vo.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
