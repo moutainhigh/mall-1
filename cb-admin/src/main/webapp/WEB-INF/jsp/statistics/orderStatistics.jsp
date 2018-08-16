@@ -369,7 +369,7 @@
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>年</strong></div>
+                        <div class="col-md-2"  style="margin-top: 5px;"><strong>年</strong></div>
 
 
                       </div>

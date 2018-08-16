@@ -219,6 +219,11 @@
                     <div class="modal-body" style="padding-bottom: 80px">
                         <script type="text/javascript">
                         function upload(){
+                            var upfile=$("#upfile").val();
+                            if(upfile==""){
+                                bootbox.alert("请先选择文件");
+                                return false;
+                            }
                             var formData = new FormData();
                             formData.append("file", $('#upfile')[0].files[0]);
                             $.ajax({

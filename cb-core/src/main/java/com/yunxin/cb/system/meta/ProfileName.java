@@ -31,6 +31,8 @@ public enum ProfileName {
     IOS_URL(""),//苹果APP下载地址
     IOS_DESCRIPTION(""),//苹果APP更新描述
     IOS_FORCE_UPGRADE("false"),//苹果PP是否强制更新
+    INSURANCE_CODE_RECEIVE_EMAIL(""),//保单合同编号接收邮箱
+    INSURANCE_CODE_RECEIVE_CONTEXT(""),//保单合同编号发送内容
     ;
 
     private String i18nName;

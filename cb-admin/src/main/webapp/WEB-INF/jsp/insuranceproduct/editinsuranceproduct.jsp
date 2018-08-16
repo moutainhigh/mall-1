@@ -824,6 +824,8 @@
                                     $("#attributeTable tr:last").after($('#attributeTr').tmpl(json));
                                     $('#attributeTable tr').find('td:eq(1) td:eq(2)').hide();
                                     idIndex++;
+                                }else{
+                                    bootbox.alert("产品价格不能超过五个!");
                                 }
                             }
                             function removeprice(indx) {

@@ -20,8 +20,16 @@ public interface InsuranceOrderCodeDao extends JpaRepository<InsuranceOrderCode,
     @Query("select  a from InsuranceOrderCode a where a.useed=0")
     List<InsuranceOrderCode> getInsuranceOrderCodeByUseed();
 
+    @Query("select  max(a.sort)  from InsuranceOrderCode a ")
+    int getInsuranceOrderCodeMaxSort();
+
+    @Query("select  sum(case when  a.useed=0 then 1 else 0 end) as notUseed,sum(case when a.useed=1 then 1 else 0 end) as onUseed from InsuranceOrderCode a where a.sort=?1")
+    Object getInsuranceOrderCodeBySort(int sort);
+
+    @Query("select  count(a.codeId) from InsuranceOrderCode a where a.useed=?1 and  a.sort=?2")
+    int getInsuranceOrdernotUseedBySort(int useed,int sort);
     @Modifying
-    @Query("update InsuranceOrderCode set useed=1 where codeNo=?1")
-    void updateInsuranceOrderCode(String codeNo);
+    @Query("update InsuranceOrderCode set useed=1 where codeId=?1")
+    void updateInsuranceOrderCode(int codeId);
 
 }
