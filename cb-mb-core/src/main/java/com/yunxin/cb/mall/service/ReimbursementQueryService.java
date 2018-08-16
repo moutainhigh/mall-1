@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Reimbursement;
+import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
@@ -44,10 +45,10 @@ public interface ReimbursementQueryService {
 
     /**
      * 用户取消报账
-     * @param reimbursement
+     * @param reimbursementId
      * @throws Exception
      */
-    public void cancelReimbursement(Reimbursement reimbursement)throws Exception;
+    public ResponseResult cancelReimbursement(int reimbursementId)throws Exception;
 
     /**
      * 报账已完成列表

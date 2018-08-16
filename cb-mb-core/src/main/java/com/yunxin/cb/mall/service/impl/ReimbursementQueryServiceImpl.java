@@ -5,6 +5,8 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.mapper.*;
+import com.yunxin.cb.mall.restful.ResponseResult;
+import com.yunxin.cb.mall.restful.meta.Result;
 import com.yunxin.cb.mall.service.ReimbursementQueryService;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.util.CalendarUtils;
@@ -174,10 +176,10 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             BigDecimal tax = accountSalePrice.multiply(taxPoint);
             //到账金额
             BigDecimal accountAmount = accountSalePrice.subtract(tax);
-            reimbursement.setAmount(accountSalePrice);
+            reimbursement.setAmount(accountAmount);
             reimbursement.setCreateTime(new Date());
             reimbursement.setCustomerId(getCustomerId());
-            reimbursement.setOrderAmount(accountAmount);
+            reimbursement.setOrderAmount(accountSalePrice);
             reimbursement.setTax(tax);
             reimbursement.setReimbursementNo("RB"+UUIDGeneratorUtil.getUUCode());
             reimbursement.setOrderState(ReimbursementState.FINANCE_IN_APPROVAL);
@@ -286,13 +288,20 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     }
     /**
      * 用户取消报账
-     * @param reimbursement
+     * @param reimbursementId
      * @throws Exception
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void cancelReimbursement(Reimbursement reimbursement)throws Exception{
-        reimbursementMapper.updateByPrimaryKey(reimbursement);
+    public ResponseResult cancelReimbursement(int reimbursementId)throws Exception{
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId, getCustomerId());
+        if (reimbursement.getOrderState().ordinal() == ReimbursementState.FINANCE_IN_APPROVAL.ordinal()) {
+            reimbursement.setOrderState(ReimbursementState.CANCEL_REIMBURSEMENT);
+            reimbursementMapper.updateByPrimaryKey(reimbursement);
+            return new ResponseResult(Result.SUCCESS);
+        } else {
+            return new ResponseResult(Result.FAILURE, "该报账订单不能取消");
+        }
     }
     /**
      * 报账已完成列表
