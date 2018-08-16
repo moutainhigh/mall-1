@@ -38,6 +38,12 @@
             }
         }
 
+        function checkPrice() {
+            if(''!=$('#endPrice').val()&&'0'!=$('#endPrice').val()&&parseInt($('#startPrice').val())>parseInt($('#endPrice').val())){
+                bootbox.alert("最大价格不能小于最小价格!");
+                $('#endPrice').val('')
+            }
+        }
     </script>
 </head>
 <body>
@@ -82,151 +88,6 @@
                 <div class="pull-left">
                     <h2>价格段管理</h2>
                 </div>
-                <%--<div class="pull-right">
-                    <div class="dropdown">
-                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-comments"></i>
-                            <span class="indicator-dot">3</span>
-                        </a>
-
-                        <div role="menu" class="dropdown-menu pull-center ext-dropdown-comments">
-                            <div class="ext-dropdown-header">
-                                <i class="fa fa-comments"></i>
-                                <h5>Comments</h5>
-                                <a href="#" class="btn btn-default btn-sm delete-master"><i class="fa fa-trash-o"></i></a>
-                                <span class="indicator-dot">3</span>
-                            </div>
-                            <div class="ext-dropdown-comments-content">
-                                <div>
-                                    <img src="../images/users/user-1.jpg" alt="" class="avatar"/>
-                                    <a href="#">Karma, a good thing</a>
-                                    <ul>
-                                        <li><span>Posted by:</span> <a href="#">Steven</a></li>
-                                        <li><span>Date:</span> Dec 11, 2012</li>
-                                        <li>
-                                            <span>Actions:</span>
-                                            <a href="#">Read</a> -
-                                            <a href="#" class="delete">Delete</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <img src="../images/users/user-4.jpg" alt="" class="avatar"/>
-                                    <a href="#">A simple, fast way to reduce stress</a>
-                                    <ul>
-                                        <li><span>Posted by:</span> <a href="#">Linda</a></li>
-                                        <li><span>Date:</span> Dec 3, 2012</li>
-                                        <li>
-                                            <span>Actions:</span>
-                                            <a href="#">Read</a> -
-                                            <a href="#" class="delete">Delete</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <img src="../images/users/user-6.jpg" alt="" class="avatar"/>
-                                    <a href="#">Blog: karma and revenge</a>
-                                    <ul>
-                                        <li><span>Posted by:</span> <a href="#">Debra Hopper</a></li>
-                                        <li><span>Date:</span> Nov 18, 2012</li>
-                                        <li>
-                                            <span>Actions:</span>
-                                            <a href="#">Read</a> -
-                                            <a href="#" class="delete">Delete</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <span>No new comments</span>
-                            </div>
-                            <div class="ext-dropdown-footer">
-                                <p>Updated: 11/12/2012 - 14:12</p>
-                                <a href="#" class="btn btn-default btn-sm"><i class="fa fa-caret-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End .dropdown -->
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="#">
-                            <i class="fa fa-star"></i>
-                        </a>
-                        <a class="btn btn-default" href="#" id="modal-update-trigger">
-                            Modal
-                        </a>
-                        <a class="btn btn-default" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                    </div>
-                    <!-- End .btn-group -->
-                    <div class="dropdown">
-                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-inbox"></i>
-                            <span class="indicator-dot">3</span>
-                        </a>
-
-                        <div role="menu" class="dropdown-menu pull-right ext-dropdown-inbox">
-                            <div class="ext-dropdown-header">
-                                <h5>Inbox</h5>
-                                <a href="#" class="btn btn-default btn-sm delete-master"><i class="fa fa-trash-o"></i></a>
-                                <span class="indicator-dot">3</span>
-                            </div>
-                            <div class="ext-dropdown-inbox-content">
-                                <div>
-                                    <a href="#">He did you get my new blog post?</a>
-                                    <ul class="nav">
-                                        <li><span>Send by:</span> <a href="#">Debra Hopper</a></li>
-                                        <li><span>Date:</span> Dec 12, 2012 - 14:03:09</li>
-                                        <li>
-                                            <span>Actions:</span>
-                                            <a href="#">Reply</a> -
-                                            <a href="#">Read</a> -
-                                            <a href="#">Spam</a> -
-                                            <a href="#" class="delete">Delete</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <a href="#">I really love your karma theme</a>
-                                    <ul class="nav">
-                                        <li><span>Send by:</span> <a href="#">Nathan Rupertson</a></li>
-                                        <li><span>Date:</span> Dec 3, 2012 - 22:44:12</li>
-                                        <li>
-                                            <span>Actions:</span>
-                                            <a href="#">Reply</a> -
-                                            <a href="#">Read</a> -
-                                            <a href="#">Spam</a> -
-                                            <a href="#" class="delete">Delete</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <a href="#">Feedback of a happy customer</a>
-                                    <ul class="nav">
-                                        <li><span>Send by:</span> <a href="#">Steven Watson</a></li>
-                                        <li><span>Date:</span> Dec 11, 2012 - 10:53:59</li>
-                                        <li>
-                                            <span>Actions:</span>
-                                            <a href="#">Reply</a> -
-                                            <a href="#">Read</a> -
-                                            <a href="#">Spam</a> -
-                                            <a href="#" class="delete">Delete</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <span>No new emails</span>
-                            </div>
-                            <div class="ext-dropdown-footer">
-                                <div class="progress bar-small">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                                        <span class="sr-only">60% Complete</span>
-                                    </div>
-                                </div>
-                                <p>60%</p>
-                                <a href="#" class="btn btn-default btn-sm"><i class="fa fa-caret-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End .dropdown -->
-                </div>--%>
             </div>
             <!-- End .inner-padding -->
         </header>
@@ -254,13 +115,13 @@
                                 <strong>起始价格:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="number" data-filter="startPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                                <input type="number" data-filter="startPrice" id="startPrice" onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()" data-operator="gte" class="form-control grid-filter" style="width: 60px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                             </div>
                             <div class="toolbar-field">
                                 <strong>结束价格:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="number" data-filter="endPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                                <input type="number" data-filter="endPrice" id="endPrice"  onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()" data-operator="lte" class="form-control grid-filter" style="width: 60px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                             </div>
                         </div>
                         <!-- End .pull-left -->
