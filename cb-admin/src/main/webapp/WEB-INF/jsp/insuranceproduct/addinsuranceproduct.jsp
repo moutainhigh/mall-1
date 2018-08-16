@@ -571,7 +571,7 @@
                                             showCaption: true,
                                             minImageWidth: 50,
                                             minImageHeight: 50,
-                                            showUpload:false, //是否显示上传按钮
+                                            showUpload:true, //是否显示上传按钮
                                             showRemove :false, //显示移除按钮
                                             showPreview :true, //是否显示预览
                                             showCaption:false,//是否显示标题
@@ -608,7 +608,7 @@
                                                 initialPreviewConfig: initPreviewConfig,
                                                 initialPreviewAsData: true
                                             });
-                                            $(".btn-default").attr("disabled",false);
+                                            // $(".btn-default").attr("disabled",false);
                                         }).on("filepredelete", function(jqXHR) {
                                             var abort = true;
                                             if (confirm("确定要删除吗？(删除后不会恢复)")) {
@@ -636,7 +636,9 @@
                                     <%--图片上传控件结束--%>
                             </div>
                         </div>
-
+                        <div class="spacer-10"></div>
+                        <hr>
+                        <div class="spacer-10"></div>
 
                         <div class="row">
                             <div class="col-sm-2">
