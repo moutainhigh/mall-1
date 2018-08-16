@@ -85,7 +85,7 @@ public class CommodityServiceImpl implements CommodityService {
 
     public Page<Commodity> keywordSearch(String keyword, GeoPoint geoPoint, Pageable pageable) {
 
-        return queryPage(geoPoint, keywordSearchQuery(keyword), pageable);
+        return queryPage(geoPoint, keywordSearchQuery(keyword), null, pageable);
     }
 
     private QueryBuilder keywordSearchQuery(String keyword) {
@@ -182,30 +182,41 @@ public class CommodityServiceImpl implements CommodityService {
             geoPoint = new GeoPoint(searchVo.getLat(), searchVo.getLon());
         }
 
-        return queryPage(geoPoint, boolQueryBuilder, pageable);
+        SortBuilder sortBuilder = null;
+        if (searchVo.getDirection() != null && searchVo.getSortBy() != null) {
+            sortBuilder = SortBuilders.fieldSort(searchVo.getSortBy().name())
+                    .order(SortOrder.valueOf(searchVo.getDirection().name()));
+        }
+
+        return queryPage(geoPoint, boolQueryBuilder, sortBuilder, pageable);
     }
 
-    private Page<Commodity> queryPage(GeoPoint geoPoint, QueryBuilder queryBuilder, Pageable pageable) {
+    private Page<Commodity> queryPage(GeoPoint geoPoint, QueryBuilder queryBuilder, SortBuilder sortBuilder, Pageable pageable) {
 
-        SortBuilder sort;
+        SortBuilder defaultSort;
         Page<Commodity> page;
         boolean geoSearch = false;
 
         if (geoPoint != null) {
             geoSearch = true;
             // 获取距离以及距离排序查询
-            sort = SortBuilders.geoDistanceSort("location", geoPoint).unit(DistanceUnit.KILOMETERS).order(SortOrder.ASC);
+            defaultSort = SortBuilders.geoDistanceSort("location", geoPoint).unit(DistanceUnit.KILOMETERS).order(SortOrder.ASC);
         } else {
             // 默认排序
-            sort = SortBuilders.fieldSort("commodityId").order(SortOrder.DESC);
+            defaultSort = SortBuilders.fieldSort("commodityId").order(SortOrder.DESC);
         }
 
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+        NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder()
                 .withQuery(queryBuilder)
                 .withIndices(Commodity.index_name)
                 .withTypes(Commodity.index_type)
-                .withPageable(pageable)
-                .withSort(sort)
+                .withPageable(pageable);
+        if (sortBuilder != null) {
+            // 指定的排序，第一排序
+            nativeSearchQueryBuilder.withSort(sortBuilder);
+        }
+        SearchQuery searchQuery = nativeSearchQueryBuilder
+                .withSort(defaultSort)  //默认排序，第二排序
                 .build();
 
         if (geoSearch) {
@@ -218,7 +229,13 @@ public class CommodityServiceImpl implements CommodityService {
                     // 获取距离值，并保留两位小数点
                     Commodity commodity = gson.fromJson(hit.getSourceAsString(), Commodity.class);
                     commodities.add(commodity);
-                    BigDecimal geoDis = new BigDecimal((Double) hit.getSortValues()[0]);
+                    Object[] sorts = hit.getSortValues();
+                    // 商品没有坐标，得到无穷距离，不返回距离
+                    Double distance_d = (Double) sorts[sorts.length - 1];
+                    if (distance_d.isInfinite() || distance_d.isNaN()) {
+                        continue;
+                    }
+                    BigDecimal geoDis = new BigDecimal(distance_d);
                     BigDecimal distance = geoDis.setScale(2, BigDecimal.ROUND_HALF_DOWN);
                     commodity.setDistance(distance);
                 }
