@@ -24,9 +24,9 @@
                         var form=null;
                         var sId = $("#specId").val();
                         if(sId == "" || sId == undefined || sId==null || sId==0){
-                            form =$("#validateSubmitForm").attr("action","addSpec.do");
+                            $("#validateSubmitForm").attr("action","addSpec.do");
                         }else{
-                            form =$("#validateSubmitForm").attr("action","editSpec.do");
+                            $("#validateSubmitForm").attr("action","editSpec.do");
                         }
                         form.submit();
                         return true;
@@ -34,7 +34,6 @@
                     return false;
                 }
             });
-
         });
 
         function removeItem(specId){
@@ -194,7 +193,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="btn-group pull-right">
-                                            <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
+                                            <button id="saveBtn" class="btn btn-default" type="submit" ><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
                                             <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                         </div>
                                     </div>
