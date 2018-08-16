@@ -149,6 +149,17 @@ public interface SellerMapper {
     })
     List<Seller> selectAll();
 
+    @Select({
+            "SELECT city,CITY_NAME " +
+            "FROM seller " +
+            "WHERE city_name IS NOT NULL GROUP BY CITY_NAME "
+    })
+    @Results({
+            @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CITY_NAME", property="cityName", jdbcType=JdbcType.VARCHAR)
+    })
+    List<Seller> getAllSellerAddress();
+
     @Update({
         "update seller",
         "set ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},",

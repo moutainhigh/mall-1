@@ -9,6 +9,7 @@ import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.mall.vo.AttributeGroupVO;
 import com.yunxin.cb.mall.vo.CommodityVo;
+import com.yunxin.cb.mall.vo.SellerVo;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
@@ -107,6 +108,23 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
         }
         //转换成VO返回(需实现VO中Comparable的compareTo排序方法)
         return new ResponseResult(AttributeGroupVO.convertVO(groups));
+    }
+
+    /**
+     * @title: 获取所有商家的地区编码及名称
+     * @param: []
+     * @return: com.yunxin.cb.vo.ResponseResult<java.util.List<com.yunxin.cb.mall.vo.SellerVo>>
+     * @auther: eleven
+     * @date: 2018/8/16 16:30
+     */
+    @ApiOperation(value = "获取所有商家的地区编码及名称")
+    @ApiImplicitParams({
+    })
+    @GetMapping(value = "getAllSellerAddress")
+    @ApiVersion(1)
+    @IgnoreAuthentication
+    public ResponseResult<List<SellerVo>> getAllSellerAddress() {
+        return new ResponseResult(commodityService.getAllSellerAddress());
     }
 
 }
