@@ -20,8 +20,36 @@
                 if(!data.pushTime){
                     window.location.href = "toEditMessage.do?messageId=" + data.messageId;
                 }else{
-                    commonNotify("已推送，无法进行修改!", "error");
+                    commonNotify("已推送的消息无法修改!", "error");
                 }
+            }
+        }
+
+        /**
+         * 点击-删除
+         */
+        function removeItem() {
+            var itemData = getKendoSelectedRowData();
+            if(itemData){
+                if(itemData.pushTime){
+                    commonNotify("已推送的消息无法删除!", "error");
+                    return;
+                }
+                bootbox.confirm("确定删除吗？", function(result) {
+                    if(result){
+                        $.get("removeMessageById.do", {
+                            messageId : itemData.messageId,
+                        }, function(data) {
+                            if (data) {
+                                commonNotify("删除成功！", "success");
+                                //$("#treelist").data("kendoTreeList").dataSource.read();
+                                window.location.reload();
+                            } else {
+                                commonNotify("删除失败!", "error");
+                            }
+                        });
+                    }
+                });
             }
         }
 
@@ -34,7 +62,7 @@
                 if(!data.pushTime){
                     window.location.href = "pushMessage.do?messageId=" + data.messageId;
                 }else{
-                    commonNotify("已推送，无法再次推送!", "error");
+                    commonNotify("已推送的消息无法再次推送!", "error");
                 }
             }
         }
@@ -109,7 +137,7 @@
                     <h2>消息中心配置</h2>
                 </div>
                 <div class="pull-right">
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -119,7 +147,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <!-- End .inner-padding -->
@@ -151,10 +179,13 @@
                     </div>
                     <div class="pull-right">
                         <div class="btn-group">
+                            <a href="toEditMessage.do?messageId=0" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;消息新增</a>
+                        </div>
+                        <div class="btn-group">
                             <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                         </div>
                         <div class="btn-group">
-                            <a href="toEditMessage.do?messageId=0" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;消息新增</a>
+                            <a href="javascript:void(0);" onclick="removeItem()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                         </div>
                         <div class="btn-group">
                             <a href="javascript:void(0);" onclick="pushMessage()" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;推送</a>

@@ -1,7 +1,7 @@
 package com.yunxin.cb.rest.message;
 
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
-import com.yunxin.cb.rest.customer.MainResource;
 import com.yunxin.cb.system.entity.Message;
 import com.yunxin.cb.system.meta.PushStatus;
 import com.yunxin.cb.system.service.imp.MessageService;
@@ -25,7 +25,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping(value = "/message")
 public class MessageResource extends BaseResource {
-    private static Logger logger = LoggerFactory.getLogger(MainResource.class);
+    private static Logger logger = LoggerFactory.getLogger(MessageResource.class);
 
     @Resource
     private MessageService messageService;
@@ -41,15 +41,25 @@ public class MessageResource extends BaseResource {
     @ApiOperation(value = "查询消息列表")
     @ApiImplicitParams({})
     @RequestMapping(value = "getMessages" , method = RequestMethod.POST)
-    public ResponseResult getMessages(@RequestBody PageSpecification<Message> query) {
+    public ResponseResult getMessages(@RequestParam("pageSize")int pageSize,@RequestParam("pageNo")int pageNo) {
+        PageSpecification<Message> query = new PageSpecification<>();
+        query.setPage(pageNo == 0?1:pageNo);
+        query.setPageSize(pageSize == 0?10:pageSize);
+
         PageSpecification.FilterDescriptor filterDescriptor = new PageSpecification.FilterDescriptor();
-        filterDescriptor.setField("pushStatus");
         filterDescriptor.setLogic("and");
         filterDescriptor.setOperator("eq");
+        //APP接口仅查询状态为已推送的消息列表
+        filterDescriptor.setField("pushStatus");
         filterDescriptor.setValue(PushStatus.HAVE_PUSHED);
         query.getFilter().getFilters().add(filterDescriptor);
-        Page<Message> pagelist = messageService.pageMessage(query);
-        return new ResponseResult(pagelist);
+        try {
+            Page<Message> pagelist = messageService.pageMessage(query);
+            return new ResponseResult(pagelist);
+        }catch (Exception e){
+            logger.error("查询消息列表失败",e);
+        }
+        return new ResponseResult(Result.FAILURE);
     }
 
     /**
@@ -64,8 +74,16 @@ public class MessageResource extends BaseResource {
     @RequestMapping(value = "getMessageInfo",method = RequestMethod.GET)
     @ResponseBody
     public ResponseResult getMessageInfo(@RequestParam("messageId") int messageId) {
-        Message message = messageService.getMessage(messageId);
-        return new ResponseResult(message);
+        if(messageId == 0){
+            return new ResponseResult(Result.FAILURE);
+        }
+        try {
+            Message message = messageService.getMessage(messageId);
+            return new ResponseResult(message);
+        }catch (Exception e){
+            logger.error("查询消息详情失败",e);
+        }
+        return new ResponseResult(Result.FAILURE);
     }
 
 }

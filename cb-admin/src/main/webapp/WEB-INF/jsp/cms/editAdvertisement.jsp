@@ -363,14 +363,14 @@
                   <form:options items="${advertisementType}" itemLabel="name"/>
                 </form:select>
               </div>
-              <div class="col-sm-2">
+              <%--<div class="col-sm-2">
                 <label><span class="asterisk">*</span> 客户端类型：</label>
               </div>
               <div class="col-sm-3">
                 <input type="checkbox" name="clientTypesTemporary" value="PC" cssClass="form-control validate[minCheckbox[1]]"     <c:if test="${fn:contains(advertisement.clientTypes, 'PC')}">checked="checked" </c:if> />网站
                 <input type="checkbox" name="clientTypesTemporary" value="PAD" cssClass="form-control validate[minCheckbox[1]]"    <c:if test="${fn:contains(advertisement.clientTypes, 'PAD')}">checked="checked" </c:if> />平板
                 <input type="checkbox" name="clientTypesTemporary" value="MOBILE" cssClass="form-control validate[minCheckbox[1]]" <c:if test="${fn:contains(advertisement.clientTypes, 'MOBILE')}">checked="checked" </c:if> />手机
-              </div>
+              </div>--%>
             </div>
 
             <div class="spacer-10"></div>

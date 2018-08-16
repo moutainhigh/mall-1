@@ -9,6 +9,13 @@
 
     <title>编辑运营分类</title>
     <script type="text/javascript">
+        $(function () {
+            $("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true,//自动隐藏提示信息
+                scroll: false,
+                showOneMessage: true
+            });
+        });
     </script>
 </head>
 <body>
@@ -128,8 +135,8 @@
                                 <label><span class="asterisk">*</span> 价格区间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="lowestPrice" maxlength="32"/>-
-                                <form:input path="highestPrice" maxlength="32"/>万
+                                <form:input id="lowestPrice" path="lowestPrice" maxlength="32" cssClass="validate[required,min[0],custom[number]]"/>-
+                                <form:input id="highestPrice" path="highestPrice" maxlength="32" cssClass="validate[required,min[0],custom[number]]"/>万
                             </div>
                         </div>
                         <div class="spacer-10"></div>

@@ -131,7 +131,7 @@
                                 <label><span class="asterisk">*</span>排序：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required],custom[number]" path="sortOrder" maxlength="3"/>
+                                <form:input cssClass="form-control validate[required],custom[number]" path="sortOrder" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
                             </div>
                             <c:if test="${catalog.parentCatalog.catalogId == 1}">
                             <div class="col-sm-2">

@@ -10,6 +10,8 @@ import com.yunxin.cb.system.entity.Message;
 import com.yunxin.cb.system.meta.PushStatus;
 import com.yunxin.cb.system.service.IMessageService;
 import com.yunxin.core.persistence.PageSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +24,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/message")
 public class MessageCenterController {
+
+    private static Logger logger = LoggerFactory.getLogger(MessageCenterController.class);
+
     @Resource
     private IMessageService messageService;
 
@@ -34,45 +39,65 @@ public class MessageCenterController {
     }
 
     /**
-     * 进入消息修改/新增页面
-     * @param modelMap
+     * 功能描述: 进入消息修改/新增页面
+     *
+     * @param: modelMap
      * @param messageId 消息ID
-     * @return
+     * @return:
+     * @auther: yangzhen
+     * @date: 2018/8/15 17:22
      */
     @RequestMapping(value = "toEditMessage")
     public String toEditMessage(ModelMap modelMap,@RequestParam(value = "messageId",required = false) int messageId){
-        if(messageId > 0){
+        if(messageId == 0){
+            //新增消息
+            modelMap.addAttribute(new Message());
+        }else{
+            //修改消息
             //消息对象信息
             modelMap.addAttribute("message", messageService.getMessage(messageId));
             //消息摘要图片信息
             List<Attachment> listAttachment = attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.MESSAGEDIGEST,messageId);
             modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
-        }else{
-            modelMap.addAttribute(new Message());
         }
         return "message/editMessage";
     }
 
     /**
-     * 消息新增/修改
-     * @param message
-     * @return
+     * 功能描述: 消息新增/修改
+     *
+     * @param: message form表单对象
+     * @return:
+     * @auther: yangzhen
+     * @date: 2018/8/15 17:21
      */
     @RequestMapping(value = "editMessage", method = RequestMethod.POST)
     public String editMessage(@ModelAttribute("message")Message message){
         //新增/修改的消息，推送状态均为未推送
         message.setPushStatus(PushStatus.HAVE_NOT_PUSHED);
         if(message.getMessageId() == 0){
+            //新增消息
             message.setCreateTime(new Date());
         }
-        messageService.addMessage(message);
+        try {
+            messageService.addMessage(message);
+        }catch (Exception e){
+            if(message.getMessageId() == 0){
+                logger.error("消息新增失败",e);
+            }else{
+                logger.error("消息修改失败",e);
+            }
+        }
         return "redirect:../common/success.do?reurl=message/message.do";
     }
 
     /**
-     * 消息中心分页信息
-     * @param query
-     * @return
+     * 功能描述: 消息中心-分页列表查询
+     *
+     * @param:query 查询对象
+     * @return:
+     * @auther: yangzhen
+     * @date: 2018/8/15 17:20
      */
     @RequestMapping(value = "pageMessage", method = RequestMethod.POST)
     @ResponseBody
@@ -82,9 +107,12 @@ public class MessageCenterController {
     }
 
     /**
-     * 消息推送
-     * @param messageId 消息ID
-     * @return
+     * 功能描述: 消息推送
+     *
+     * @param: messageId 消息ID
+     * @return:
+     * @auther: yangzhen
+     * @date: 2018/8/15 17:20
      */
     @RequestMapping(value = "pushMessage", method = RequestMethod.GET)
     public String pushMessage(@RequestParam(value = "messageId") int messageId){
@@ -100,6 +128,28 @@ public class MessageCenterController {
             messageService.addMessage(message);
         }
         return "redirect:../common/success.do?reurl=message/message.do";
+    }
+
+    /**
+     * 功能描述: 通过消息ID删除消息
+     *
+     * @param: messageId 消息ID
+     * @return:
+     * @auther: yangzhen
+     * @date: 2018/8/15 17:19
+     */
+    @RequestMapping(value = "removeMessageById",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean removeMessageById(@RequestParam("messageId") int messageId) {
+        if(messageId == 0){
+            return false;
+        }
+        try {
+            messageService.removeMessageById(messageId);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

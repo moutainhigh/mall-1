@@ -65,10 +65,12 @@ public class MessageService implements IMessageService {
     @Override
     @Transactional
     public Message addMessage(Message message) {
+        String imgUrl = message.getDigestPic();
+        message.setDigestPic(message.getDigestPic().split(",")[0]);
         message = messageDao.save(message);
         //保存图片路径
         attachmentService.deleteAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId());
-        attachmentService.addAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId(),message.getDigestPic());
+        attachmentService.addAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId(),imgUrl);
         return message;
     }
 
@@ -85,4 +87,18 @@ public class MessageService implements IMessageService {
         return messageDao.findOne(messageId);
     }
 
+    /**
+     * 功能描述: 通过消息ID删除消息
+     *
+     * @param: messageId 消息ID
+     * @return:
+     * @auther: yangzhen
+     * @date: 2018/8/15 17:24
+     */
+    @Override
+    @Transactional
+    public void removeMessageById(int messageId) {
+        attachmentService.deleteAttachmentPictures(ObjectType.MESSAGEDIGEST,messageId);
+        messageDao.delete(messageId);
+    }
 }

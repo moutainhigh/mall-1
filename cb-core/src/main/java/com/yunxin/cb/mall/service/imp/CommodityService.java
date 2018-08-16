@@ -835,5 +835,4 @@ public class CommodityService implements ICommodityService {
             logger.error("syncESCommodity failed", e);
         }
     }
-
 }

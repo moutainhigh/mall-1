@@ -167,7 +167,7 @@
                   <label>品牌名称：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="brandName" maxlength="128"/>
+                  <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="brandName" maxlength="5"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>

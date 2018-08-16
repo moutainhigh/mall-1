@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lte9 lte8 lte7 no-js"> <![endif]-->
@@ -12,12 +13,25 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
+  <link href="../css/map.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=ee5df0152ef1afcbc5bbd58839991d2f&plugin=AMap.Autocomplete"></script>
+  <script type="text/javascript" src="../js/map/map.js"></script>
   <title>编辑商家</title>
   <script type="application/javascript">
     $(document).ready(function(){
       $("#validateSubmitForm").validationEngine({
-        autoHidePrompt: true, scroll: false, showOneMessage: true
+          autoHidePrompt: true, scroll: false, showOneMessage: true,
+          onValidationComplete: function (form, valid) {
+              if (valid) {
+                  var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                  if (!myreg.test($('#mobile').val())) {
+                      bootbox.alert("手机格式不正确!");
+                      return false;
+                  } else {
+                      return true;
+                  }
+              }
+          }
       });
     });
     function returnSellers(){
@@ -287,6 +301,79 @@
               </div>
               <div class="col-sm-8">
                 <form:textarea cssClass="form-control" path="remark" maxlength="255"/>
+              </div>
+            </div>
+
+            <div class="spacer-30"></div>
+
+            <div class="row">
+              <div class="col-sm-2">
+                <label> 商家经纬度：</label>
+              </div>
+              <div class="col-sm-8">
+                <form:input type="hidden" cssClass="form-control" path="positionX" maxlength="10" id="positionX" readonly="true"/>
+                <form:input type="hidden" cssClass="form-control" path="positionY" maxlength="10" id="positionY" readonly="true"/>
+                <div class="modal-content" >
+                  <div class="modal-body"  style="height: 600px;padding: 0px;">
+                    <div id="containerMap" style="height: 600px;"></div>
+                    <div id="myPageTop">
+                      <table>
+                        <tr>
+                          <%--<td>
+                            <label>按关键字搜索：</label>
+                          </td>--%>
+                          <td class="column2">
+                            <label>左击获取经纬度：</label>
+                          </td>
+                        </tr>
+                        <tr>
+                          <%--<td>
+                            <input type="text" placeholder="请输入关键字进行搜索" id="tipinput">
+                          </td>--%>
+                          <td class="column2">
+
+                            <input type="text" readonly="true" placeholder="左击获取经纬度" id="lnglat" <c:if test="${seller.positionX ne '' and seller.positionY ne ''}">
+                                   value="${seller.positionX}${','}${seller.positionY}"
+                            </c:if>>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <script type="text/javascript">
+                        var map;
+                        var positionX=$("#positionX").val();
+                        var positionY=$("#positionY").val();
+                        if(positionX==""||positionY==""){
+                            map = new AMap.Map("containerMap", {
+                                resizeEnable: true,
+                                zoom:11
+                            });
+                        }else{
+                            map = new AMap.Map("containerMap", {
+                                resizeEnable: true,
+                                zoom:11,
+                                center: [positionX, positionY]
+                            });
+                        }
+                        //为地图注册click事件获取鼠标点击出的经纬度坐标
+                        var clickEventListener = map.on('click', function(e) {
+                            $("#lnglat").val(e.lnglat.getLng() + ',' + e.lnglat.getLat());
+                            $("#positionX").val(e.lnglat.getLng());
+                            $("#positionY").val(e.lnglat.getLat());
+                        });
+                        var auto = new AMap.Autocomplete({
+                            input: "tipinput"
+                        });
+                        AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+                        function select(e) {
+                            if (e.poi && e.poi.location) {
+                                map.setZoom(15);
+                                map.setCenter(e.poi.location);
+                            }
+                        }
+                    </script>
+                  </div>
+                </div>
               </div>
             </div>
 

@@ -39,14 +39,20 @@
           categories:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
           title: {
             text: "时间:日"
-          }
+          },
+            //minRange:31,
+            //max:5,
+            //tickWidth:1000,
+            labels:{
+
+            }
         },
         yAxis: {
           min: 0,
           title: {
             text: "单位: 元 RMB"
           },
-          alternateGridColor: '#FDFFD5'
+           alternateGridColor: '#FDFFD5'
         },
         plotOptions: {
           series: {
@@ -72,11 +78,22 @@
         series: [
           {
             name: "成交金额",
-            color: '#029402'
+            color: '#029402',
+            dataLabels: {  // 针对不同的数据列做数据标签偏移及加颜色处理
+                  enabled: true,
+                  allowOverlap: true,
+                  color: '#029402',
+            }
           },
           {
             name: "已付款金额",
-            color: '#ff0000'
+            color: '#ff0000',
+            dataLabels: {  // 针对不同的数据列做数据标签偏移及加颜色处理
+                  y: -10,
+                  enabled: true,
+                  allowOverlap: true,
+                  color: '#ff0000',
+             }
           }
         ]
 
@@ -166,11 +183,22 @@
         series: [
           {
             name: "成交金额",
-            color: '#029402'
+            color: '#029402',
+              dataLabels: {  // 针对不同的数据列做数据标签偏移及加颜色处理
+                  enabled: true,
+                  allowOverlap: true,
+                  color: '#029402',
+              }
           },
           {
             name: "已付款金额",
-            color: '#ff0000'
+            color: '#ff0000',
+              dataLabels: {  // 针对不同的数据列做数据标签偏移及加颜色处理
+                  y: -10,
+                  enabled: true,
+                  allowOverlap: true,
+                  color: '#ff0000',
+              }
           }
         ]
 
@@ -239,8 +267,8 @@
       <div class="header-main-bottom">
         <div class="pull-left">
           <ul class="breadcrumb">
-            <li><a href="#">首页</a></li>
-            <li><a href="#">统计分析</a></li>
+            <li>首页</li>
+            <li>统计分析</li>
             <li class="active"><a href="moneyStatistics.do">金额统计</a></li>
           </ul>
           <!-- End .breadcrumb -->

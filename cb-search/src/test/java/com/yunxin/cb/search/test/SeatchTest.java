@@ -15,6 +15,7 @@ public class SeatchTest {
     public void addCommodity() throws JsonProcessingException {
         String url = "http://localhost:8168/search/mall/search/commodity";
         Commodity commodity = new Commodity();
+        commodity.setId("5");
         commodity.setCommodityId(5);
         commodity.setCommodityName("保时捷911");
         commodity.setCommodityCode("201807242011");

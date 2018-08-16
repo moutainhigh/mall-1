@@ -46,6 +46,11 @@ public class SearchVo implements java.io.Serializable {
     @ApiModelProperty(value="页码",name="page",example="0")
     private int page;
 
+    @ApiModelProperty(value="地理纬度",name="lat",example="0")
+    private Double lat;
+    @ApiModelProperty(value="地理经度",name="lon",example="0")
+    private Double lon;
+
     public int getBrandId() {
         return brandId;
     }
@@ -132,5 +137,21 @@ public class SearchVo implements java.io.Serializable {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
     }
 }

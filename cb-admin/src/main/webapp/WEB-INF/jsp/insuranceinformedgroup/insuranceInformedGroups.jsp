@@ -121,7 +121,7 @@
                     <h2>事项组</h2>
                 </div>
                 <div class="pull-right">
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -131,7 +131,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <!-- End .inner-padding -->
