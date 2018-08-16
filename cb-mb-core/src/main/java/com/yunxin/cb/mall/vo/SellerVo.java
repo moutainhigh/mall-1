@@ -41,14 +41,20 @@ public class SellerVo implements java.io.Serializable {
     private String remark;
 
     /**省*/
-    @ApiModelProperty(value="省",name="province",example="广东省")
+    @ApiModelProperty(value="省",name="province",example="234443")
     private String province;
+    @ApiModelProperty(value="省名",name="province",example="广东省")
+    private String provinceName;
     /**市*/
-    @ApiModelProperty(value="市",name="city",example="深圳市")
+    @ApiModelProperty(value="市",name="city",example="234234")
     private String city;
+    @ApiModelProperty(value="市名",name="city",example="深圳市")
+    private String cityName;
     /**区*/
-    @ApiModelProperty(value="区",name="district",example="福田区")
+    @ApiModelProperty(value="区",name="district",example="324344")
     private String district;
+    @ApiModelProperty(value="区名",name="district",example="福田区")
+    private String districtName;
 
     /** 商家地址 */
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="广东省深圳市富德大厦507")
@@ -180,6 +186,30 @@ public class SellerVo implements java.io.Serializable {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 
     @Override

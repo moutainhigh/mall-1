@@ -40,14 +40,17 @@ public class Seller implements java.io.Serializable {
      * 省
      */
     private String province;
+    private String provinceName;
     /**
      * 市
      */
     private String city;
+    private String cityName;
     /**
      * 区
      */
     private String district;
+    private String districtName;
     /**
      * 商家地址
      **/
@@ -488,5 +491,32 @@ public class Seller implements java.io.Serializable {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    @Column(length = 32)
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    @Column(length = 32)
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    @Column(length = 32)
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 }

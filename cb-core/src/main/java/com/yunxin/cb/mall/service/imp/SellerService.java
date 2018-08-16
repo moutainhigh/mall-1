@@ -130,7 +130,8 @@ public class SellerService implements ISellerService {
         AttributeReplication.copying(seller, sellerDB, Seller_.sellerName, Seller_.sellerCode, Seller_.sellerAddress, Seller_.sellerType, Seller_.linkman,
                 Seller_.mobile, Seller_.telephone, Seller_.email, Seller_.qq, Seller_.wechat, Seller_.channelType, Seller_.channelAccount,
                 Seller_.busName, Seller_.buslicenseNo, Seller_.accountName, Seller_.publicAccount, Seller_.bankAccount,
-                Seller_.bankAccountAddress, Seller_.idCardNum, Seller_.remark, Seller_.positionX, Seller_.positionY, Seller_.province, Seller_.city, Seller_.district);
+                Seller_.bankAccountAddress, Seller_.idCardNum, Seller_.remark, Seller_.positionX, Seller_.positionY,
+                Seller_.province, Seller_.city, Seller_.district,Seller_.provinceName, Seller_.cityName, Seller_.districtName);
         return sellerDB;
     }
 

@@ -68,7 +68,7 @@
               </kendo:dataSource-schema-model>
             </kendo:dataSource-schema>
             <kendo:dataSource-transport>
-              <kendo:dataSource-transport-read url="http://localhost:8080/admin/seller/pageSellers.do" type="POST" contentType="application/json"/>
+              <kendo:dataSource-transport-read url="../seller/pageSellers.do" type="POST" contentType="application/json"/>
               <kendo:dataSource-transport-parameterMap>
                 <script>
                   function parameterMap(options, type) {

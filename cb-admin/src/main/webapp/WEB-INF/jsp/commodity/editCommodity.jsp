@@ -405,7 +405,7 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品规格：</label>
+                                <label><span class="asterisk">*</span> 商品规格：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="specTable" class="table table-bordered table-striped">
@@ -431,7 +431,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>图片</label>
+                                <label><span class="asterisk">*</span> 商品图片：</label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>
