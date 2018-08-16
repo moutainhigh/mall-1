@@ -7,6 +7,7 @@ import com.yunxin.cb.mall.dao.*;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
+import com.yunxin.cb.mall.service.ICommodityService;
 import com.yunxin.cb.mall.service.IProductService;
 import com.yunxin.cb.search.restful.RestfulFactory;
 import com.yunxin.cb.search.service.SearchRestService;
@@ -60,6 +61,9 @@ public class ProductService implements IProductService {
 
     @Resource
     private AttributeDao attributeDao;
+
+    @Resource
+    private ICommodityService commodityService;
 
     @Override
     public Product addProduct(Product product) {
@@ -326,6 +330,22 @@ public class ProductService implements IProductService {
             if (commodity.getDefaultProduct()==null||commodity.getDefaultProduct().getPublishState()!=PublishState.UP_SHELVES) {
                     commodity.setDefaultProduct(product);
                     commodityDao.updateDefaultProductById(product, product.getCommodity().getCommodityId());
+            }
+            boolean flag=true;
+            for(Product pro:commodity.getProducts()){//遍历所有货品,如果所有货品都商家，商品自动上架
+                if(pro.getProductId()!=productId){//默认取该商品还在上架的第一个货品为默认货品
+                    if(pro.getPublishState()==PublishState.DOWN_SHELVES){
+                        flag=false;
+                        break;
+                    }
+                }
+            }
+            if(flag){
+                try {
+                    commodityService.upOrDownShelvesCommodity(commodity.getCommodityId(), publishState);
+                } catch (Exception e) {
+                    logger.error("auto up commodity result flag is = "+e);
+                }
             }
             return true;
         } else if ((product.getPublishState() == PublishState.WAIT_UP_SHELVES || product.getPublishState() == PublishState.UP_SHELVES)

@@ -295,7 +295,7 @@
                                 <label>消息内容：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea id="editorContent2" path="messageContent" cssClass="form-control"/>
+                                <form:textarea id="editorContent2" path="messageContent" cssClass="form-control validate[required,maxSize[40]]" maxlength="40"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

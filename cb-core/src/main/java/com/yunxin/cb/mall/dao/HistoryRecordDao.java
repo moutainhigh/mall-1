@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface HistoryRecordDao  extends JpaRepository<HistoryRecord, Integer>, JpaSpecificationExecutor<HistoryRecord> {
 
-    @Query(" select c.recordId from HistoryRecord c where c.customer.customerId=?1 and c.createTime between ?2 and ?3 group by c.commodity.commodityId")
+    @Query(" select c.recordId from HistoryRecord c where c.customer.customerId=?1 and c.createTime between ?2 and ?3 group by c.productId")
     List<HistoryRecord> countHistoryRecordByCustomer(int customerId, Date startDate,Date endDate);
     long countByCustomer(Customer customer);
 

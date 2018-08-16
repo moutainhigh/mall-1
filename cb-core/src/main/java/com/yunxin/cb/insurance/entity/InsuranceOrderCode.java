@@ -58,6 +58,9 @@ public class InsuranceOrderCode implements Serializable {
     @Max(9999999999L)
     @ApiModelProperty(value="是否使用",name="useed",example="1")
     private int useed;
+
+    @ApiModelProperty(value="序号",name="sort",example="1")
+    private int sort;
     /**
      * 创建时间
      */
@@ -66,7 +69,10 @@ public class InsuranceOrderCode implements Serializable {
     @ApiModelProperty(value="创建时间",name="createTime",example="1990-10-12 20:10")
     private Date createTime;
     //columns END
-
+    @ApiModelProperty(value="未使用",name="notUseed",example="11")
+    private int notUseed;
+    @ApiModelProperty(value="已使用",name="onUseed",example="11")
+    private int onUseed;
 
     public InsuranceOrderCode() {
     }
@@ -118,5 +124,29 @@ public class InsuranceOrderCode implements Serializable {
         this.createTime = createTime;
     }
 
+    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 10)
+    public int getSort() {
+        return sort;
+    }
 
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    @Transient
+    public int getNotUseed() {
+        return notUseed;
+    }
+
+    public void setNotUseed(int notUseed) {
+        this.notUseed = notUseed;
+    }
+    @Transient
+    public int getOnUseed() {
+        return onUseed;
+    }
+
+    public void setOnUseed(int onUseed) {
+        this.onUseed = onUseed;
+    }
 }

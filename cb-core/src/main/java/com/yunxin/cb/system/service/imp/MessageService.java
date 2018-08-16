@@ -8,6 +8,7 @@ import com.yunxin.cb.system.entity.Message_;
 import com.yunxin.cb.system.service.IMessageService;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -66,11 +67,13 @@ public class MessageService implements IMessageService {
     @Transactional
     public Message addMessage(Message message) {
         String imgUrl = message.getDigestPic();
-        message.setDigestPic(message.getDigestPic().split(",")[0]);
-        message = messageDao.save(message);
         //保存图片路径
         attachmentService.deleteAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId());
-        attachmentService.addAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId(),imgUrl);
+        if(!StringUtils.isEmpty(imgUrl)){
+            message.setDigestPic(!StringUtils.isEmpty(imgUrl)?imgUrl.split(",")[0]:null);
+            attachmentService.addAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId(),imgUrl);
+        }
+        message = messageDao.save(message);
         return message;
     }
 

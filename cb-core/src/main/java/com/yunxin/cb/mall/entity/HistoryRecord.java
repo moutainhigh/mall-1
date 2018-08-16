@@ -41,6 +41,10 @@ public class HistoryRecord implements java.io.Serializable {
      * 创建时间
      */
     private Date createTime;
+    /**
+     * 货品id
+     */
+    private int productId;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -91,5 +95,13 @@ public class HistoryRecord implements java.io.Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

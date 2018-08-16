@@ -13,9 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class SpecController {
     }
 
     @RequestMapping(value = "addSpec",method = RequestMethod.POST)
-    public String addSpec(@Valid @ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, HttpServletRequest request) {
+    public String addSpec(@Valid @ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return catalogSpecs(spec.getCatalog().getCatalogId(), spec, modelMap);
         }
@@ -60,9 +60,10 @@ public class SpecController {
             spec = commodityService.addSpec(spec);
         } catch (EntityExistException e) {
             logger.error("添加商品规格名称错误",e);
-            request.setAttribute("msgTitle","商品规格名称已存在，添加失败！");
+            redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，添加失败！");
+            redirectAttributes.addFlashAttribute("msgContent",e.getMessage());
+            return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
             //return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId() + "&msgTitle=商品规格名称已存在，添加失败！&msgContent=" + e.getMessage();
-            return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId() + "&msgContent=" + e.getMessage();
         }
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }

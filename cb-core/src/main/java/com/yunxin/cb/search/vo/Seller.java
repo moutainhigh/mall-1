@@ -32,6 +32,12 @@ public class Seller implements java.io.Serializable {
      **/
     private String positionY;
 
+    /**
+     * 市
+     */
+    private String city;
+    private String cityName;
+
     public Seller() {
     }
 
@@ -42,6 +48,8 @@ public class Seller implements java.io.Serializable {
         this.sellerType = SellerType.values()[seller.getSellerType().ordinal()];
         this.positionX = seller.getPositionX();
         this.positionY = seller.getPositionY();
+        this.city = seller.getCity();
+        this.cityName = seller.getCityName();
     }
 
 
@@ -91,5 +99,21 @@ public class Seller implements java.io.Serializable {
 
     public void setPositionY(String positionY) {
         this.positionY = positionY;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 }
