@@ -102,7 +102,7 @@ public class CommodityController implements ServletContextAware {
 //		modelMap.addAttribute("commoditySpecs", commoditySpecs);
         TreeViewItem catalogTree = catalogService.getCatalogTree();
         modelMap.addAttribute("catalogTree", Arrays.asList(catalogTree));
-        modelMap.addAttribute("priceSections", priceService.getAllPriceSections());
+        modelMap.addAttribute("priceSections", priceService.findAllByEnabled());
         return "commodity/addCommodity";
     }
 
@@ -147,7 +147,7 @@ public class CommodityController implements ServletContextAware {
         modelMap.addAttribute("brands", brands);
         TreeViewItem catalogTree = catalogService.getCatalogTree();
         modelMap.addAttribute("catalogTree", Arrays.asList(catalogTree));
-        modelMap.addAttribute("priceSections", priceService.getAllPriceSections());
+        modelMap.addAttribute("priceSections", priceService.findAllByEnabled());
         Commodity commodity = commodityService.getCommodityDetailById(commodityId);
         modelMap.addAttribute("commodity", commodity);
         modelMap.addAttribute("seller", commodity.getSeller());
