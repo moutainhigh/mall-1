@@ -25,17 +25,20 @@ public class SearchResource extends BaseResource {
 
     @ApiOperation(value = "关键字搜索")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "keyword", value = "搜索关键字", required = true, paramType = "post", dataType = "String"),
-            @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "post", dataType = "int")
+            @ApiImplicitParam(name = "keyword", value = "搜索关键字", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "lat", value = "地理纬度", paramType = "query", dataType = "Double"),
+            @ApiImplicitParam(name = "lon", value = "地理经度", paramType = "query", dataType = "Double")
     })
     @PostMapping(value = "keywordSearch")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<SearchResultVo> keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+    public ResponseResult keywordSearch(@RequestParam String keyword, @RequestParam int page, @RequestParam int size,
+                                        Double lat, Double lon) {
         try {
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
-            Call<ResponseResult<SearchResultVo>> call = restService.keywordSearch(keyword, page, size);
+            Call<ResponseResult> call = restService.keywordSearch(keyword, page, size, lat, lon);
             ResponseResult result = call.execute().body();
             return result;
         } catch (Exception e) {
@@ -46,8 +49,6 @@ public class SearchResource extends BaseResource {
 
     @ApiOperation(value = "分类搜索")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "post", dataType = "int")
     })
     @PostMapping(value = "categorySearch")
     @ApiVersion(1)
@@ -55,7 +56,7 @@ public class SearchResource extends BaseResource {
     public ResponseResult<SearchResultVo> categorySearch(@RequestBody SearchVo searchVo) {
         try {
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
-            Call<ResponseResult<SearchResultVo>> call = restService.categorySearch(searchVo);
+            Call<ResponseResult> call = restService.categorySearch(searchVo);
             ResponseResult result = call.execute().body();
             return result;
         } catch (Exception e) {
@@ -67,10 +68,10 @@ public class SearchResource extends BaseResource {
     @GetMapping(value = "commodity")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<CombinationVO> selectAll() {
+    public ResponseResult selectAll() {
         try {
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
-            Call<ResponseResult<CombinationVO>> call = restService.selectAll();
+            Call<ResponseResult> call = restService.selectAll();
             ResponseResult result = call.execute().body();
             return result;
         } catch (Exception e) {
