@@ -62,8 +62,7 @@ dependencies {
             "com.squareup.retrofit2:retrofit:2.3.0",
             "com.squareup.retrofit2:converter-gson:2.3.0",
             "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
-            'com.squareup.okhttp3:logging-interceptor:3.8.1',
-            'org.codehaus.jackson:jackson-mapper-lgpl:1.9.13'//用jackson处理json       add by lxc  2018-08-16
+            'com.squareup.okhttp3:logging-interceptor:3.8.1'
     )
 
     //IJPay 支付
