@@ -36,7 +36,7 @@ public interface ReimbursementQueryService {
     /**
      * 已报账详情
      * @param reimbursementId
-     * @param cuntomerId
+     * @param customerId
      * @return
      * @throws Exception
      */

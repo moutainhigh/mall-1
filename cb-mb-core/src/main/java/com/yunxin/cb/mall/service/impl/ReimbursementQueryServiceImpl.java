@@ -54,7 +54,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     public PageFinder<ReimbursementVO> pageReimbursementQuery(Query q)throws Exception {
         ReimbursementQuery reimbursement = (ReimbursementQuery)q.getData();
         List<ReimbursementOrder> listMent = reimbursementOrderMapper.selectByOrderState(reimbursement.getReimbursement_state(),reimbursement.getReimbursementState(),getCustomerId());
-        if(listMent.size()>0){
+        if(listMent != null){
             //调用dao查询满足条件的分页数据
             List<ReimbursementQuery> list = reimbursementQueryMapper.selectReimbursementQuery(q);
             //税点
