@@ -59,13 +59,13 @@ public class FavoriteResource extends BaseResource {
 
     @ApiOperation(value = "商品是否存在收藏夹")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "post", dataType = "int")})
     @GetMapping(value = "findByCustomerAndCommodity/{commodityId}")
     @ApiVersion(1)
-    public ResponseResult findByCustomerAndCommodity(@PathVariable(value = "commodityId") int commodityId) {
+    public ResponseResult findByCustomerAndCommodity(@PathVariable(value = "productId") int productId) {
         try {
             Favorite favorite=new Favorite();
-            favorite.setCommodityId(commodityId);
+            favorite.setProductId(productId);
             favorite.setCustomerId(getCustomerId());
             favorite=favoriteService.findByCustomerAndCommodity(favorite);
             if(favorite==null){

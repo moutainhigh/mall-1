@@ -29,8 +29,11 @@ public class HistoryRecordServiceImpl implements HistoryRecordService {
 
     @Override
     public HistoryRecord addHistoryRecord(HistoryRecord historyRecord) {
+        //先删后加
+        int result=0;
+        result=historyRecordMapper.removeByCustomerIdAndProductId(historyRecord.getCustomerId(),historyRecord.getProductId());
         historyRecord.setCreateTime(new Date());
-        int result=historyRecordMapper.insert(historyRecord);
+        result=historyRecordMapper.insert(historyRecord);
         return result>0?historyRecord:null;
     }
 
@@ -57,5 +60,10 @@ public class HistoryRecordServiceImpl implements HistoryRecordService {
         PageFinder<HistoryRecord> page = new PageFinder<>(q.getPageNo(), q.getPageSize(), rowCount);
         page.setData(list);
         return page;
+    }
+
+    @Override
+    public HistoryRecord selectByCustomerIdAndProductId(int customerId, int productId) {
+        return historyRecordMapper.selectByCustomerIdAndProductId(customerId,productId);
     }
 }
