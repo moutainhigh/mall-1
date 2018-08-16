@@ -129,7 +129,7 @@
                         <form:hidden path="matterId"/>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>序号：</label>
+                                <label><span class="asterisk"></span>序号：</label>
                             </div>
                             <div class="col-sm-3" style="margin-top: 5px;">
                                 <%--<form:input path="serNo" value="" cssClass="form-control validate[required,minSize[1]]"--%>
@@ -140,7 +140,7 @@
                         <div class="spacer-10"></div>
                         <div class="row" >
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>事项描述：</label>
+                                <label><span class="asterisk"></span>事项描述：</label>
                             </div>
                             <div class="col-sm-3"  style="margin-top: 5px;">
                                 <%--<form:textarea  path="matterDescription"--%>

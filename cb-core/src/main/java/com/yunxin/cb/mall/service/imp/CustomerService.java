@@ -248,6 +248,13 @@ public class CustomerService implements ICustomerService {
         Customer customer = customerDao.findOne(customerId);
         customer.setAvatarUrl(avatar);
         rongCloudService.update(customer);
+        //加入缓存
+        Executors.newCachedThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                redisService.setCustomerList(customer.getMobile(),customer);
+            }
+        });
         return customer;
     }
 
@@ -258,6 +265,13 @@ public class CustomerService implements ICustomerService {
         if (StringUtils.isNotBlank(nickName)) {
             customer.setNickName(nickName);
             rongCloudService.update(customer);
+            //加入缓存
+            Executors.newCachedThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    redisService.setCustomerList(customer.getMobile(),customer);
+                }
+            });
         }
         return customer;
     }

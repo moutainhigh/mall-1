@@ -106,7 +106,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         List<InsuranceOrderCode> list= insuranceOrderCodeDao.getInsuranceOrderCodeByUseed();
         if(null!=list&&list.size()>0){
             insuranceOrder.setContractNo(list.get(0).getCodeNo());
-            insuranceOrderCodeDao.updateInsuranceOrderCode(list.get(0).getCodeNo());
+            insuranceOrderCodeDao.updateInsuranceOrderCode(list.get(0).getCodeId());
         }else
             insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
 
