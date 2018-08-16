@@ -224,6 +224,13 @@
                                 bootbox.alert("请先选择文件");
                                 return false;
                             }
+                            var suffixName=upfile.toLowerCase().split('.').splice(-1);
+
+                            if(suffixName!='xls'&&suffixName!='xlsx'){
+                                bootbox.alert("上传失败，请检查文件格式");
+                                return false;
+                            }
+
                             var formData = new FormData();
                             formData.append("file", $('#upfile')[0].files[0]);
                             $.ajax({

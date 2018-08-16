@@ -829,3 +829,10 @@ ALTER TABLE `seller` ADD COLUMN `DISTRICT_NAME` varchar(32) COMMENT '商家区�
 ##add by wangteng 2018-08-16
 INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('INSURANCE_CODE_RECEIVE_EMAIL', 'Wangt@999shuijingqiu.com', '0', '保单合同编号接收邮箱');
 INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('INSURANCE_CODE_RECEIVE_CONTEXT', '保险合同号库存不足,请尽快导入保险合同号', '0', '保单合同编号发送内容');
+
+
+##add by lxc 2018-08-16 19:21
+ALTER TABLE `crystal_ball`.`commodity`
+MODIFY COLUMN `RATIO` decimal(10, 0) NULL DEFAULT NULL COMMENT '商品比例配置' AFTER `SETTING_CONTENT`;
+ALTER TABLE `crystal_ball`.`catalog`
+MODIFY COLUMN `RATIO` decimal(10, 0) NULL DEFAULT NULL COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;

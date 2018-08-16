@@ -109,3 +109,13 @@
 #myPageTop .column2{
     padding-left: 25px;
 }
+
+ .marker {
+     color: #ff6600;
+     padding: 4px 10px;
+     border: 1px solid #fff;
+     white-space: nowrap;
+     font-size: 12px;
+     font-family: "";
+     background-color: #0066ff;
+ }
