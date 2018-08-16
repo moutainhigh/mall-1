@@ -16,9 +16,9 @@ public class AlreadyReimbursementVO implements Serializable {
     private ReimbursementState orderState;
     @ApiModelProperty(value="报账商品总数量",name="sum",example="1")
     private int sum;
-    @ApiModelProperty(value="合计",name="accountSalePrice",example="111")
+    @ApiModelProperty(value="合计",name="orderAmount",example="111")
     private BigDecimal orderAmount;
-    @ApiModelProperty(value="到账金额",name="accountAmount",example="111")
+    @ApiModelProperty(value="到账金额",name="amount",example="111")
     private BigDecimal amount;
     @ApiModelProperty(value="税",name="tax",example="111")
     private BigDecimal tax;
