@@ -26,10 +26,10 @@
         function changeDelivery() {
             $("#comfrimDiv").show();
             $("#conNameDiv").empty().append("<input type='text' id='consigneeName' maxlength='32'/>");
-            $("#conMobileDiv").empty().append("<input type='text' id='consigneeMobile' maxlength='11'/>");
-            $("#conPCDDiv").empty().append("<select id='province'></select>")
-                    .append("<select id='city'></select>")
-                    .append("<select id='district'></select>");
+            $("#conMobileDiv").empty().append("<input type='number' min='0' id='consigneeMobile' maxlength='11'/>");
+            $("#conPCDDiv").empty().append("<select class='form-control' style='width:auto;display: initial;' id='province'></select>")
+                    .append("<select class='form-control' style='width:auto;display: initial;' id='city'></select>")
+                    .append("<select class='form-control' style='width:auto;display: initial;' id='district'></select>");
             $.citySelector.init({
                 province: "province",
                 city: "city",
@@ -71,10 +71,10 @@
                 return;
             }
             var postCode = $("#postCode").val();
-            if (null == postCode || "" == postCode || undefined == postCode) {
-                alert("请填写邮编");
-                return;
-            }
+            // if (null == postCode || "" == postCode || undefined == postCode) {
+            //     alert("请填写邮编");
+            //     return;
+            // }
             var telephone = $("#consigneeTelephone").val();
             var mobile = $("#consigneeMobile").val();
             if (null == mobile || "" == mobile || undefined == mobile) {
@@ -395,7 +395,7 @@
                         </div>
                         <div class="spacer-10"></div>
 
-                       <!-- <div class="row">
+                       <!--<div class="row">
                             <div class="col-sm-2">
                                 <label>电话：</label>
                             </div>
@@ -408,7 +408,7 @@
                             <div class="col-sm-3 col-label" id="conPostCodeDiv">
                                 <span>${order.postCode}</span>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="spacer-10"></div>
 
                         <div class="row">
@@ -418,7 +418,7 @@
                             <div class="col-sm-7 col-label" id="conPCDDiv">
                                 <span id="pcdAddress"></span>
                             </div>
-                        </div>-->
+                        </div>
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
