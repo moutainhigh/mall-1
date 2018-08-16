@@ -76,8 +76,8 @@ dependencies {
 
 compileJava {
     dependsOn clean
-    println("setting options.bootClasspath = $System.env.JAVA_HOME/jre/lib/rt.jar")
-    options.bootClasspath = "$System.env.JAVA_HOME/jre/lib/rt.jar;$System.env.JAVA_HOME/jre/lib/jce.jar"
+//    println("setting options.bootClasspath = $System.env.JAVA_HOME/jre/lib/rt.jar")
+//    options.bootClasspath = "$System.env.JAVA_HOME/jre/lib/rt.jar;$System.env.JAVA_HOME/jre/lib/jce.jar"
 //    options.bootClasspath = "/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/jce.jar"
 }
 
