@@ -128,8 +128,8 @@
                                 <label><span class="asterisk">*</span> 价格区间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input  path="lowestPrice" maxlength="8" cssClass="validate[required,min[0],max[9999],custom[number]]"/>-
-                                <form:input path="highestPrice" maxlength="8" cssClass="validate[required,min[0],max[9999],custom[number]]"/>万
+                                <form:input  path="lowestPrice" maxlength="6" cssClass="validate[required,min[0],max[999.99],custom[number]]"/>-
+                                <form:input path="highestPrice" maxlength="6" cssClass="validate[required,min[0],max[999.99],custom[number]]"/>万
                             </div>
                         </div>
                         <div class="spacer-10"></div>

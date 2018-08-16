@@ -22,8 +22,8 @@
       });
 
     });
-    function checkPrice()
-    {
+    function checkPrice(){
+        debugger;
         if(''!=$('#endPrice').val()&&'0'!=$('#endPrice').val()&&parseInt($('#startPrice').val())>parseInt($('#endPrice').val())){
             bootbox.alert("最大价格不能小于最小价格!");
             $('#endPrice').val('')
@@ -149,14 +149,14 @@
                   <label>起始价格：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input path="startPrice" onkeyup="value=value.replace(/[^\d]/g,'')" id="startPrice" onchange="checkPrice()" cssClass="form-control validate[required,custom[number]]" maxlength="11"/>
-                </div>
+                  <form:input path="startPrice" onkeyup="value=value.replace(/[^\d]/g,'')" id="startPrice" onchange="checkPrice()" cssClass="form-control validate[required,custom[number]]" maxlength="9"/>
+                </div>元
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
                   <label>结束价格：<span class="asterisk">*</span></label>
-                </div>
+                </div>元
                 <div class="col-sm-3">
-                  <form:input path="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')" id="endPrice" onchange="checkPrice()" cssClass="form-control validate[required,custom[number]]" maxlength="11"/>
+                  <form:input path="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')" id="endPrice" onchange="checkPrice()" cssClass="form-control validate[required,custom[number]]" maxlength="9"/>
                 </div>
                 <div class="col-sm-1"><form:errors path="endPrice"/> </div>
               </div>
