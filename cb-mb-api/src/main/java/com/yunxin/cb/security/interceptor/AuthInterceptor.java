@@ -5,7 +5,9 @@ import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.jwt.Token;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.orm.CustomerContextHolder;
+import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
+import com.yunxin.cb.util.JsonUtil;
 import com.yunxin.cb.vo.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +37,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         //用户访问日志
         logger.info("AppAccess info: clientIp=" + getIpAddr(request) + " access_url=" + request.getRequestURI() + " attime=" + new Date().toString()
                 + " Bymethod= " + request.getMethod() + ",user-Agent='" + request.getHeader("user-Agent") + "'");
-
+        logger.info("请求参数：" + BaseResource.getFullParam(request));//打印请求参数  add by lxc  2018-08-16
         if (!request.getMethod().equals("OPTIONS")) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
 
