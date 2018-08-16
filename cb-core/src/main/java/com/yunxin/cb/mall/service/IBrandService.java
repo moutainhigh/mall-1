@@ -33,4 +33,6 @@ public interface IBrandService {
     Page<Brand> pageBrands(final PageSpecification<Brand> queryRequest);
 
     void enableBrandById(int brandId, boolean enabled);
+
+    String checkBrandNoAndBrandName(Brand brand);
 }

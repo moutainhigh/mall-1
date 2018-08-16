@@ -392,7 +392,7 @@
                     <label>品牌标题：</label>
                   </div>
                   <div class="col-sm-4">
-                    ${brand.brandTitle}
+                    <textarea  rows="10" cols="90" maxlength="255"  readonly="true">${brand.brandTitle}</textarea>
                   </div>
                   <div class="col-sm-1"></div>
                 </div>
@@ -429,14 +429,14 @@
                     <label>品牌英文名称：</label>
                   </div>
                   <div class="col-sm-3">
-                    ${brand.brandEnName}
+                    <textarea  rows="10" cols="90" maxlength="255"  readonly="true">${brand.brandEnName}</textarea>
                   </div>
                   <div class="col-sm-1"></div>
                   <div class="col-sm-2">
                     <label>品牌网址：</label>
                   </div>
                   <div class="col-sm-4">
-                    ${brand.website}
+                    <textarea  rows="10" cols="90" maxlength="255"  readonly="true">${brand.website}</textarea>
                   </div>
                   <div class="col-sm-1"></div>
                 </div>

@@ -207,4 +207,13 @@ public class BrandController {
         return "success";
     }
 
+    @RequestMapping(value = "checkBrandNoAndBrandName", method = RequestMethod.GET)
+    @ResponseBody
+    public Object checkBrandNoAndBrandName(@RequestParam("brandNo") String brandNo, @RequestParam("brandName") String brandName) {
+        Brand brand = new Brand();
+        brand.setBrandNo(brandNo);
+        brand.setBrandName(brandName);
+        String result = brandService.checkBrandNoAndBrandName(brand);
+        return result;
+    }
 }
