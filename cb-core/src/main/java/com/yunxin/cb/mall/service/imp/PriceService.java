@@ -95,4 +95,8 @@ public class PriceService implements IPriceService {
         return priceSectionDao.findByEnabledOrderByStartPriceAsc(enabled);
     }
 
+    @Override
+    public List<PriceSection> findAllByEnabled() {
+        return priceSectionDao.findAllByEnabled();
+    }
 }

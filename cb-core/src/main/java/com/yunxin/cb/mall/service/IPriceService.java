@@ -28,4 +28,7 @@ public interface IPriceService {
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     List<PriceSection> getAllPriceSections(boolean enabled);
+
+    List<PriceSection> findAllByEnabled();
+
 }
