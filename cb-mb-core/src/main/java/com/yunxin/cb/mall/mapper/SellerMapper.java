@@ -28,7 +28,7 @@ public interface SellerMapper {
         "QQ, REMARK, SELLER_ADDRESS, ",
         "SELLER_CODE, SELLER_NAME, ",
         "SELLER_TYPE, TELEPHONE, ",
-        "WECHAT, POSITION_X, POSITION_Y",
+        "WECHAT",
         "values (#{sellerId,jdbcType=INTEGER}, #{accountName,jdbcType=VARCHAR}, ",
         "#{agreementPicPath,jdbcType=VARCHAR}, #{audit,jdbcType=BIT}, ",
         "#{bankAccount,jdbcType=VARCHAR}, #{bankAccountAddress,jdbcType=VARCHAR}, ",
@@ -52,7 +52,7 @@ public interface SellerMapper {
         "BUS_NAME, BUSLICENSE_NO, BUSLICENSE_PIC_PATH, CHANNEL_ACCOUNT, CHANNEL_TYPE, ",
         "CREATE_TIME, EMAIL, ENABLED, HOLD_ID_POTO_PIC_PATH, ID_CARD_NUM, INTRODUCTION, ",
         "LINKMAN, MOBILE, POSITIVE_ID_POTO_PIC_PATH, PUBLIC_ACCOUNT, QQ, REMARK, SELLER_ADDRESS, ",
-        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y",
+        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y, PROVINCE, CITY, DISTRICT ",
         "from seller",
         "where SELLER_ID = #{sellerId,jdbcType=INTEGER}"
     })
@@ -87,7 +87,10 @@ public interface SellerMapper {
         @Result(column="TELEPHONE", property="telephone", jdbcType=JdbcType.VARCHAR),
         @Result(column="WECHAT", property="wechat", jdbcType=JdbcType.VARCHAR),
         @Result(column="POSITION_X", property="positionX", jdbcType=JdbcType.VARCHAR),
-        @Result(column="POSITION_Y", property="positionY", jdbcType=JdbcType.VARCHAR)
+        @Result(column="POSITION_Y", property="positionY", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PROVINCE", property="province", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DISTRICT", property="district", jdbcType=JdbcType.VARCHAR)
     })
     Seller selectByPrimaryKey(Integer sellerId);
 
@@ -97,7 +100,7 @@ public interface SellerMapper {
         "BUS_NAME, BUSLICENSE_NO, BUSLICENSE_PIC_PATH, CHANNEL_ACCOUNT, CHANNEL_TYPE, ",
         "CREATE_TIME, EMAIL, ENABLED, HOLD_ID_POTO_PIC_PATH, ID_CARD_NUM, INTRODUCTION, ",
         "LINKMAN, MOBILE, POSITIVE_ID_POTO_PIC_PATH, PUBLIC_ACCOUNT, QQ, REMARK, SELLER_ADDRESS, ",
-        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y",
+        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y, PROVINCE, CITY, DISTRICT ",
         "from seller"
     })
     @Results({
@@ -131,7 +134,10 @@ public interface SellerMapper {
         @Result(column="TELEPHONE", property="telephone", jdbcType=JdbcType.VARCHAR),
         @Result(column="WECHAT", property="wechat", jdbcType=JdbcType.VARCHAR),
         @Result(column="POSITION_X", property="positionX", jdbcType=JdbcType.VARCHAR),
-        @Result(column="POSITION_Y", property="positionY", jdbcType=JdbcType.VARCHAR)
+        @Result(column="POSITION_Y", property="positionY", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PROVINCE", property="province", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DISTRICT", property="district", jdbcType=JdbcType.VARCHAR)
     })
     List<Seller> selectAll();
 

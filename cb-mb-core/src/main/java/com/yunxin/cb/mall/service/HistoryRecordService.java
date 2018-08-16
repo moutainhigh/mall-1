@@ -39,4 +39,13 @@ public interface HistoryRecordService {
      * @date: 2018/8/14 11:26
      */
     public PageFinder<HistoryRecord> pageCustomerHistoryRecords(Query q);
+
+    /**
+     * @title:根据用户和货品查询记录
+     * @param: [customerId, productId]
+     * @return: void
+     * @auther: eleven
+     * @date: 2018/8/16 11:29
+     */
+    HistoryRecord selectByCustomerIdAndProductId(int customerId, int productId);
 }
