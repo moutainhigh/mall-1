@@ -52,7 +52,8 @@ public interface SellerMapper {
         "BUS_NAME, BUSLICENSE_NO, BUSLICENSE_PIC_PATH, CHANNEL_ACCOUNT, CHANNEL_TYPE, ",
         "CREATE_TIME, EMAIL, ENABLED, HOLD_ID_POTO_PIC_PATH, ID_CARD_NUM, INTRODUCTION, ",
         "LINKMAN, MOBILE, POSITIVE_ID_POTO_PIC_PATH, PUBLIC_ACCOUNT, QQ, REMARK, SELLER_ADDRESS, ",
-        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y, PROVINCE, CITY, DISTRICT ",
+        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y, PROVINCE, CITY, ",
+        "DISTRICT, PROVINCE_NAME, CITY_NAME, DISTRICT_NAME ",
         "from seller",
         "where SELLER_ID = #{sellerId,jdbcType=INTEGER}"
     })
@@ -90,7 +91,10 @@ public interface SellerMapper {
         @Result(column="POSITION_Y", property="positionY", jdbcType=JdbcType.VARCHAR),
         @Result(column="PROVINCE", property="province", jdbcType=JdbcType.VARCHAR),
         @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DISTRICT", property="district", jdbcType=JdbcType.VARCHAR)
+        @Result(column="DISTRICT", property="district", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PROVINCE_NAME", property="province", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CITY_NAME", property="city", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DISTRICT_NAME", property="district", jdbcType=JdbcType.VARCHAR)
     })
     Seller selectByPrimaryKey(Integer sellerId);
 
@@ -100,7 +104,8 @@ public interface SellerMapper {
         "BUS_NAME, BUSLICENSE_NO, BUSLICENSE_PIC_PATH, CHANNEL_ACCOUNT, CHANNEL_TYPE, ",
         "CREATE_TIME, EMAIL, ENABLED, HOLD_ID_POTO_PIC_PATH, ID_CARD_NUM, INTRODUCTION, ",
         "LINKMAN, MOBILE, POSITIVE_ID_POTO_PIC_PATH, PUBLIC_ACCOUNT, QQ, REMARK, SELLER_ADDRESS, ",
-        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y, PROVINCE, CITY, DISTRICT ",
+        "SELLER_CODE, SELLER_NAME, SELLER_TYPE, TELEPHONE, WECHAT, POSITION_X, POSITION_Y, PROVINCE, CITY, ",
+        "DISTRICT, PROVINCE_NAME, CITY_NAME, DISTRICT_NAME ",
         "from seller"
     })
     @Results({
@@ -137,9 +142,23 @@ public interface SellerMapper {
         @Result(column="POSITION_Y", property="positionY", jdbcType=JdbcType.VARCHAR),
         @Result(column="PROVINCE", property="province", jdbcType=JdbcType.VARCHAR),
         @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DISTRICT", property="district", jdbcType=JdbcType.VARCHAR)
+        @Result(column="DISTRICT", property="district", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PROVINCE_NAME", property="province", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CITY_NAME", property="city", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DISTRICT_NAME", property="district", jdbcType=JdbcType.VARCHAR)
     })
     List<Seller> selectAll();
+
+    @Select({
+            "SELECT city,CITY_NAME " +
+            "FROM seller " +
+            "WHERE city_name IS NOT NULL GROUP BY CITY_NAME "
+    })
+    @Results({
+            @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CITY_NAME", property="cityName", jdbcType=JdbcType.VARCHAR)
+    })
+    List<Seller> getAllSellerAddress();
 
     @Update({
         "update seller",

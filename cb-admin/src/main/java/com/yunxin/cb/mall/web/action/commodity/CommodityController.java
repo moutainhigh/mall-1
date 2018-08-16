@@ -10,7 +10,6 @@ import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.core.util.LogicUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -116,7 +115,7 @@ public class CommodityController implements ServletContextAware {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
-                if(LogicUtils.isNull(commodity.getSeller())&&commodity.getSeller().getSellerId()!=0){
+                if(commodity.getSeller().getSellerId()==0){
                     Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
                     commodity.setSeller(seller);
                 }
@@ -169,7 +168,7 @@ public class CommodityController implements ServletContextAware {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
-                if(LogicUtils.isNull(commodity.getSeller())&&commodity.getSeller().getSellerId()!=0){
+                if(commodity.getSeller().getSellerId()==0){
                     Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
                     commodity.setSeller(seller);
                 }

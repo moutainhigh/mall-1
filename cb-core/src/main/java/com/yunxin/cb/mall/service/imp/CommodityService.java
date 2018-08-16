@@ -124,7 +124,11 @@ public class CommodityService implements ICommodityService {
                 }
             }
         }else{
-            ratio = commodity.getCatalog().getRatio().floatValue();
+            if(commodity.getCatalog()==null){
+                ratio = 1.0f;
+            }else{
+                ratio = commodity.getCatalog().getRatio().floatValue();
+            }
         }
         if(updateProductSalePrice) {
             int j = productDao.updateSalePriceByCommodityId(ratio, dbCommodity.getCommodityId());

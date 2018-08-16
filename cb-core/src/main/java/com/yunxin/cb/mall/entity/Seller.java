@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.entity.meta.ChannelType;
 import com.yunxin.cb.mall.entity.meta.SellerType;
-import com.yunxin.core.web.json.serializer.JsonDateSerializer;
+import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -40,14 +40,17 @@ public class Seller implements java.io.Serializable {
      * 省
      */
     private String province;
+    private String provinceName;
     /**
      * 市
      */
     private String city;
+    private String cityName;
     /**
      * 区
      */
     private String district;
+    private String districtName;
     /**
      * 商家地址
      **/
@@ -436,7 +439,7 @@ public class Seller implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, length = 7)
-    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Date getCreateTime() {
         return createTime;
     }
@@ -488,5 +491,32 @@ public class Seller implements java.io.Serializable {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    @Column(length = 32)
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    @Column(length = 32)
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    @Column(length = 32)
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 }

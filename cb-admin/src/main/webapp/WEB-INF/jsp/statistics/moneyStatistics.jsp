@@ -50,7 +50,7 @@
         yAxis: {
           min: 0,
           title: {
-            text: "单位: 元 RMB"
+            text: "单位: 元 RMB（K:千元，M:百万元，G:十亿元）"
           },
            alternateGridColor: '#FDFFD5'
         },
@@ -155,7 +155,7 @@
         yAxis: {
           min: 0,
           title: {
-            text: "单位: 元 RMB"
+            text: "单位: 元 RMB（K:千元，M:百万元，G:十亿元）"
           },
           alternateGridColor: '#FDFFD5'
         },
@@ -328,13 +328,13 @@
                     <div class="toolbar-field">
                       <div class="row">
                         <div class="col-md-4">
-                          <select id="yearSelect" name="year" class="form-control input-sm">
+                          <select id="yearSelect" name="year" class="form-control input-sm" style="width: 80px;">
                             <c:forEach var="i" begin="2015" end="2050">
                               <option <c:if test="${year==i}"> selected="selected"</c:if> value="${i}"> ${i}</option>
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>年</strong></div>
+                        <div class="col-md-2"  style="margin-top: 5px;"><strong>年</strong></div>
                         <div class="col-md-4">
                           <select id="monthSelect" name="month" class="form-control input-sm">
                             <c:forEach var="i" begin="1" end="12">
@@ -342,7 +342,7 @@
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>月</strong></div>
+                        <div class="col-md-2"  style="margin-top: 5px;"><strong>月</strong></div>
 
 
                       </div>
@@ -394,7 +394,7 @@
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>年</strong></div>
+                        <div class="col-md-2"  style="margin-top: 5px;"><strong>年</strong></div>
 
 
                       </div>

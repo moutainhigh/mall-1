@@ -36,6 +36,12 @@ public class Seller implements java.io.Serializable {
     @ApiModelProperty(value="商家地理位置纬度",name="positionY",example="39.929986")
     private String positionY;
 
+    @ApiModelProperty(value="商家所在城市code",name="city",example="440300")
+    private String city;
+
+    @ApiModelProperty(value="商家所在城市",name="cityName",example="深圳")
+    private String cityName;
+
     public int getSellerId() {
         return sellerId;
     }
@@ -82,5 +88,21 @@ public class Seller implements java.io.Serializable {
 
     public void setPositionY(String positionY) {
         this.positionY = positionY;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 }

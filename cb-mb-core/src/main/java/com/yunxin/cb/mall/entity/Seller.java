@@ -80,14 +80,17 @@ public class Seller {
      * 省
      */
     private String province;
+    private String provinceName;
     /**
      * 市
      */
     private String city;
+    private String cityName;
     /**
      * 区
      */
     private String district;
+    private String districtName;
 
     /** 商家地址 */
     private String sellerAddress;
@@ -383,5 +386,29 @@ public class Seller {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 }

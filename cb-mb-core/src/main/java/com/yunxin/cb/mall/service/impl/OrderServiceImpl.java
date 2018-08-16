@@ -191,9 +191,9 @@ public class OrderServiceImpl implements OrderService {
             if (seller == null) {
                 throw new CommonException("店铺不存在");
             }
-            order.setProvince("0");
-            order.setCity("0");
-            order.setDistrict("0");
+            order.setProvince(seller.getProvince());
+            order.setCity(seller.getCity());
+            order.setDistrict(seller.getDistrict());
         }
         order.setProdQuantity(totalQuantity);
         order.setTotalPrice(totalPrice.doubleValue());

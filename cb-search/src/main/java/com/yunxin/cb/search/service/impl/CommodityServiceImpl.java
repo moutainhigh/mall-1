@@ -176,6 +176,9 @@ public class CommodityServiceImpl implements CommodityService {
                 boolQueryBuilder.must(QueryBuilders.queryStringQuery(commoditySpec.getValue()).field("commoditySpecs.value").defaultOperator(AND));
             }
         }
+        if (StringUtils.isNotBlank(searchVo.getCityCode())) {
+            boolQueryBuilder.must(termQuery("seller.city", searchVo.getCityCode()));
+        }
 
         GeoPoint geoPoint = null;
         if (searchVo.getLat() != null && searchVo.getLon() != null) {

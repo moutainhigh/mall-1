@@ -8,10 +8,7 @@ import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.entity.meta.PaymentType;
 import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
-import com.yunxin.cb.mall.mapper.AttachmentMapper;
-import com.yunxin.cb.mall.mapper.CommodityMapper;
-import com.yunxin.cb.mall.mapper.FavoriteMapper;
-import com.yunxin.cb.mall.mapper.ProductMapper;
+import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.mall.service.HistoryRecordService;
 import com.yunxin.cb.mall.vo.*;
@@ -22,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -48,6 +46,9 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Resource
     private HistoryRecordService historyRecordService;
+
+    @Resource
+    private SellerMapper sellerMap;
 
     @Override
     public Commodity selectByPrimaryKey(int commodityId) {
@@ -162,4 +163,21 @@ public class CommodityServiceImpl implements CommodityService {
         return commodityMapper.selectByBrandId(brandId);
     }
 
+    @Override
+    public List<SellerVo> getAllSellerAddress() {
+        List<SellerVo> sellerVos=new ArrayList<>();
+        List<Seller> sellers=sellerMap.getAllSellerAddress();
+        sellers.stream().forEach(seller -> {
+            try {
+                SellerVo sellerVo=new SellerVo();
+                BeanUtils.copyProperties(sellerVo,seller);
+                sellerVos.add(sellerVo);
+            } catch (IllegalAccessException e) {
+                log.error("error "+e);
+            } catch (InvocationTargetException e) {
+                log.error("error "+e);
+            }
+        });
+        return sellerVos;
+    }
 }

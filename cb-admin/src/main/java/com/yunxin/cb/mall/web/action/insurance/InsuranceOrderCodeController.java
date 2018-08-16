@@ -41,7 +41,6 @@ public class InsuranceOrderCodeController {
     @RequestMapping(value = "insuranceordercodes")
     public String insuranceordercodes(ModelMap modelMap)
     {
-        insuranceOrderCodeService.mailReminding();
         return "insuranceordercode/insuranceordercodes";
     }
 
@@ -90,6 +89,7 @@ public class InsuranceOrderCodeController {
         }
         java.io.InputStream in = file.getInputStream();
         List<List<Object>> listob = ExcelUtils.getBankListByExcel(in,file.getOriginalFilename());
+        int maxSort=insuranceOrderCodeService.getInsuranceOrderCodeMaxSort();
         for (int i = 0; i < listob.size(); i++) {
             List<Object> ob = listob.get(i);
             String codeno=ob.get(0).toString();
@@ -98,6 +98,7 @@ public class InsuranceOrderCodeController {
                 insuranceOrderCode.setCodeNo(codeno);
                 insuranceOrderCode.setUseed(0);
                 insuranceOrderCode.setCreateTime(new Date());
+                insuranceOrderCode.setSort(maxSort+1);
                 insuranceOrderCodeService.addInsuranceOrderCode(insuranceOrderCode);
             }
         }

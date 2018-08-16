@@ -108,4 +108,12 @@ public class BrandService implements IBrandService {
         brandDao.enableBrandById(enabled, brandId);
     }
 
+    @Override
+    public String checkBrandNoAndBrandName(Brand brand) {
+        if (!brandDao.isOrUnique(brand, Brand_.brandNo, Brand_.brandName)) {
+            return "failure";
+        }
+        return "success";
+    }
+
 }

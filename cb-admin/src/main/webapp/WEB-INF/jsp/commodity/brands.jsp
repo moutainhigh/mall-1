@@ -34,7 +34,8 @@
                         }, function (data) {
                             if (data) {
                                 bootbox.alert("成功");
-                                $("#grid").data("kendoGrid").dataSource.read();
+                                // $("#grid").data("kendoGrid").dataSource.read();
+                                window.location.reload();
                             } else {
                                 bootbox.alert("失败");
                             }
@@ -199,11 +200,11 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="所属分类" field="category" width="150px" template="#=category.categoryName#"/>
+                            <kendo:grid-column title="所属分类" filterable="false" field="category" width="150px" template="#=category.categoryName#"/>
                             <kendo:grid-column title="图片" field="picPath" width="140px" template="<img src='#=picPath#'  width='120px' height='60px'/>" sortable="false" filterable="false"/>
-                            <kendo:grid-column title="编码" filterable="false" field="brandNo" width="100px"/>
-                            <kendo:grid-column title="名称" filterable="false" field="brandName" width="100px" template="<a href='brandDetail.do?brandId=#=brandId#'>#=brandName#</a>"/>
-                            <kendo:grid-column title="标题" filterable="false" field="brandTitle" width="100px"/>
+                            <kendo:grid-column title="编码" field="brandNo" width="100px"/>
+                            <kendo:grid-column title="名称" field="brandName" width="100px" template="<a href='brandDetail.do?brandId=#=brandId#'>#=brandName#</a>"/>
+                            <kendo:grid-column title="标题"  field="brandTitle" width="100px"/>
                             <kendo:grid-column title="关键字" filterable="false" field="brandKey" width="100px"/>
                             <kendo:grid-column title="seo关键字" filterable="false" field="seoKey" width="100px"/>
                             <kendo:grid-column title="seo标题" filterable="false" field="seoTitle" width="100px"/>

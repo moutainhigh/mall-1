@@ -599,7 +599,7 @@
                         <tbody>
                         <c:forEach items="${order.orderItems}" var="item">
                             <tr>
-                                <td><a><img src="${item.product.commodity.defaultPicPath}_64_69.jpg"/></a></td>
+                                <td><a><img src="${item.product.commodity.defaultPicPath}?imageView/1/w/64/h/69/></a></td>
                                 <td>${item.product.commodity.commodityName}</td>
                                 <td>${item.product.productName}</td>
                                 <td>

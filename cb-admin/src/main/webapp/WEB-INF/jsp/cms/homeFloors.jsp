@@ -187,14 +187,14 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="楼层名称" field="floorName" width="150px"/>
-                            <kendo:grid-column title="排序" field="sortOrder" width="100px"/>
-                            <kendo:grid-column title="品牌数量" field="brandAmount" width="100px"/>
-                            <kendo:grid-column title="类别数量" field="categoryAmount" width="100px"/>
-                            <kendo:grid-column title="商品数量" field="commodityAmount" width="100px"/>
+                            <kendo:grid-column title="楼层名称" filterable="false" field="floorName" width="150px"/>
+                            <kendo:grid-column title="排序" filterable="false" field="sortOrder" width="100px"/>
+                            <kendo:grid-column title="品牌数量" filterable="false" field="brandAmount" width="100px"/>
+                            <kendo:grid-column title="类别数量" filterable="false" field="categoryAmount" width="100px"/>
+                            <kendo:grid-column title="商品数量" filterable="false" field="commodityAmount" width="100px"/>
                             <%--<kendo:grid-column title="模板" field="templateId" width="100px"/>--%>
                             <kendo:grid-column title="备注" field="remark" filterable="false" width="200px"/>
-                            <kendo:grid-column title="状态" field="enabled" template="#= enabled ? '启用' : '停用' #" width="80"/>
+                            <kendo:grid-column title="状态" field="enabled" filterable="false" template="#= enabled ? '启用' : '停用' #" width="80"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">

@@ -46,6 +46,12 @@
                       bootbox.alert("请选择省市区!");
                       return false;
                   }
+                  var provinceName = $("#province").find("option:selected").text();;
+                  var cityName = $("#city").find("option:selected").text();;
+                  var districtName = $("#district").find("option:selected").text();;
+                  $("#provinceName").val(provinceName);
+                  $("#cityName").val(cityName);
+                  $("#districtName").val(districtName);
 
                   return true;
               }
@@ -205,6 +211,7 @@
               </div>
               <div class="col-sm-3">
                 <select class="form-control" id="province" name="province"></select>
+                <form:input cssClass="form-control" type="hidden" id="provinceName" path="provinceName"/>
               </div>
             </div>
 
@@ -213,16 +220,18 @@
             <div class="row">
 
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家省市：</label>
+                <label><span class="asterisk">*</span> 商家市：</label>
               </div>
               <div class="col-sm-3">
                 <select class="form-control" id="city" name="city"></select>
+                <form:input cssClass="form-control" type="hidden" id="cityName" path="cityName"/>
               </div>
               <div class="col-sm-2">
                 <label><span class="asterisk">*</span> 商家区/县：</label>
               </div>
               <div class="col-sm-3">
                 <select class="form-control" id="district" name="district"></select>
+                <form:input cssClass="form-contro" type="hidden" id="districtName" path="districtName"/>
               </div>
             </div>
 
