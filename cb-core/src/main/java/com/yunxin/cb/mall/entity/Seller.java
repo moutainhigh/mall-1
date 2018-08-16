@@ -148,12 +148,12 @@ public class Seller implements java.io.Serializable {
     private Set<User> users = new HashSet<>();
 
     /**
-     * 商家纬度
+     * 商家地理位置经度 X轴坐标
      **/
     private String positionX;
 
     /**
-     * 商家Y轴坐标
+     * 商家地理位置玮度 Y轴坐标
      **/
     private String positionY;
 
