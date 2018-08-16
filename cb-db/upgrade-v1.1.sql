@@ -816,3 +816,8 @@ CREATE TABLE `insurance_email` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='保单合同邮件提醒';
 ALTER TABLE `favorite` ADD COLUMN `PRODUCT_ID` int(11) COMMENT '货品id';
 ALTER TABLE `history_record` ADD COLUMN `PRODUCT_ID` int(11) COMMENT '货品id';
+
+##add by tangou 2018-08-16
+ALTER TABLE `seller` ADD COLUMN `PROVINCE` varchar(32) COMMENT '商家省';
+ALTER TABLE `seller` ADD COLUMN `CITY` varchar(32) COMMENT '商家市';
+ALTER TABLE `seller` ADD COLUMN `DISTRICT` varchar(32) COMMENT '商家区';
