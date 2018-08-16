@@ -81,29 +81,29 @@ public class SellerService implements ISellerService {
         seller.setCreateTime(new Date());
         Seller sellerDb = sellerDao.save(seller);
 
-        // 自动分配user账号
-        Role role = new Role();
-        role.setRoleCode(sellerDb.getSellerCode() + "_ADMIN");
-        role.setRoleName(sellerDb.getSellerName() + "_管理员");
-        role.setRemark(sellerDb.getSellerName() + "_管理员");
-        role.setSeller(sellerDb);
-        String rescCodes = "3,33,5,51,52,53";
+        // 自动分配user账号删除
+//        Role role = new Role();
+//        role.setRoleCode(sellerDb.getSellerCode() + "_ADMIN");
+//        role.setRoleName(sellerDb.getSellerName() + "_管理员");
+//        role.setRemark(sellerDb.getSellerName() + "_管理员");
+//        role.setSeller(sellerDb);
+//        String rescCodes = "3,33,5,51,52,53";
+//
+//        role.setRescCodes(rescCodes);
+//
+//        role = securityService.addRole(role);
 
-        role.setRescCodes(rescCodes);
-
-        role = securityService.addRole(role);
-
-        User user = new User();
-        user.setUserName(seller.getSellerCode());
-        user.setPassword("123456");
-        user.setCreateTime(new Date());
-        user.setLastTime(new Date());
-        user.setEmail("123456");
-        user.setMobile("123456");
-        user.setSeller(sellerDb);
-
-        user.getRoles().add(role);
-        userDao.save(user);
+//        User user = new User();
+//        user.setUserName(seller.getSellerCode());
+//        user.setPassword("123456");
+//        user.setCreateTime(new Date());
+//        user.setLastTime(new Date());
+//        user.setEmail("123456");
+//        user.setMobile("123456");
+//        user.setSeller(sellerDb);
+//
+//        user.getRoles().add(role);
+//        userDao.save(user);
         return sellerDb;
     }
 
