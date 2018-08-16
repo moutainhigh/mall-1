@@ -30,6 +30,12 @@ public class Seller implements java.io.Serializable {
     @ApiModelProperty(value="商家类型",name="sellerType",example="枚举：SELLER(‘商家’), SELF_OPERATION(‘自营’)")
     private SellerType sellerType;
 
+    @ApiModelProperty(value="商家地理位置经度",name="positionX",example="116.395645")
+    private String positionX;
+
+    @ApiModelProperty(value="商家地理位置纬度",name="positionY",example="39.929986")
+    private String positionY;
+
     public int getSellerId() {
         return sellerId;
     }
@@ -60,5 +66,21 @@ public class Seller implements java.io.Serializable {
 
     public void setSellerType(SellerType sellerType) {
         this.sellerType = sellerType;
+    }
+
+    public String getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(String positionX) {
+        this.positionX = positionX;
+    }
+
+    public String getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(String positionY) {
+        this.positionY = positionY;
     }
 }

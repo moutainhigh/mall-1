@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.common.geo.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,8 +88,7 @@ public class SearchResource extends BaseResource {
         Commodity commodity = new Commodity();
         BeanUtils.copyProperties(commodityVO, commodity);
         commodity.setId(String.valueOf(commodityVO.getCommodityId()));
-        // 北京 test
-        commodity.setLocation(new org.springframework.data.elasticsearch.core.geo.GeoPoint(39.929986,116.395645));
+        setLocation(commodity, commodityVO.getSeller());
         commodityService.addCommodity(commodity);
         return new ResponseResult(Result.SUCCESS);
     }
@@ -110,19 +110,11 @@ public class SearchResource extends BaseResource {
     public ResponseResult bulkIndex(@RequestBody List<CommodityVO> voList) {
         try {
             List<Commodity> list = new ArrayList<>();
-            boolean first = true;
             for (CommodityVO commodityVO : voList) {
                 Commodity commodity = new Commodity();
                 BeanUtils.copyProperties(commodityVO, commodity);
                 commodity.setId(String.valueOf(commodityVO.getCommodityId()));
-                if (first) {
-                    // 北京 test
-                    commodity.setLocation(new org.springframework.data.elasticsearch.core.geo.GeoPoint(39.929986,116.395645));
-                    first = false;
-                } else {
-                    // 青岛 test
-                    commodity.setLocation(new org.springframework.data.elasticsearch.core.geo.GeoPoint(36.105215,120.384428));
-                }
+                setLocation(commodity, commodityVO.getSeller());
                 list.add(commodity);
             }
             commodityService.bulkIndex(list);
@@ -130,6 +122,15 @@ public class SearchResource extends BaseResource {
             logger.info("bulkIndex failled", e);
         }
         return new ResponseResult(Result.SUCCESS);
+    }
+
+    private void setLocation(Commodity commodity, Seller seller) {
+        if (seller == null || StringUtils.isBlank(seller.getPositionX())
+                || StringUtils.isBlank(seller.getPositionY())) {
+            return;
+        }
+        commodity.setLocation(new org.springframework.data.elasticsearch.core.geo.GeoPoint(Double.valueOf(seller.getPositionY()),
+                Double.valueOf(seller.getPositionX())));
     }
 
     private void dealResult( int page, Page<Commodity> result, PageFinder<CommodityVO> pageFinder, SearchResultVo searchResultVo) {

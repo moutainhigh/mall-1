@@ -22,6 +22,16 @@ public class Seller implements java.io.Serializable {
      **/
     private SellerType sellerType;
 
+    /**
+     * 商家地理位置经度 X轴坐标
+     **/
+    private String positionX;
+
+    /**
+     * 商家地理位置玮度 Y轴坐标
+     **/
+    private String positionY;
+
     public Seller() {
     }
 
@@ -30,6 +40,8 @@ public class Seller implements java.io.Serializable {
         this.sellerCode = seller.getSellerCode();
         this.sellerName = seller.getSellerName();
         this.sellerType = SellerType.values()[seller.getSellerType().ordinal()];
+        this.positionX = seller.getPositionX();
+        this.positionY = seller.getPositionY();
     }
 
 
@@ -63,5 +75,21 @@ public class Seller implements java.io.Serializable {
 
     public void setSellerType(SellerType sellerType) {
         this.sellerType = sellerType;
+    }
+
+    public String getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(String positionX) {
+        this.positionX = positionX;
+    }
+
+    public String getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(String positionY) {
+        this.positionY = positionY;
     }
 }

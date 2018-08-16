@@ -461,6 +461,7 @@
                             showPreview :true, //是否显示预览
                             showCaption:false,//是否显示标题
                             showClose: false,
+                            elCaptionText:"123",
                             browseOnZoneClick: true,//是否显示点击选择文件
                             language: "zh" ,
                             showBrowse : false,
@@ -510,6 +511,7 @@
                                     initPreviewConfig.splice(i)
                                 }
                             }
+                            $('.file-drop-zone-title').html("");
                         }).on('filebatchselected', function (event, files) {//选中文件事件
                             $(".kv-file-upload").click();
                         });

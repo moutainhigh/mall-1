@@ -157,7 +157,7 @@
                         </div>
                         <div class="col-sm-3">
                             <input   name="ANDROID_VERSION_CODE" id="ANDROID_VERSION_CODE" value=""
-                                   cssClass="form-control validate[required,minSize[1]]"
+                                   cssClass="form-control validate[required]" onkeyup="value=value.replace(/[^\d]/g,'')"
                                    style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>
@@ -168,7 +168,7 @@
                         </div>
                         <div class="col-sm-3">
                             <input  name="ANDROID_VERSION_NAME" id="ANDROID_VERSION_NAME" value=""
-                                   cssClass="form-control validate[required,minSize[1]]"
+                                   cssClass="form-control validate[required,minSize[1]" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"
                                    style="width: 600px;padding: 5px;"/>
                         </div>
                     </div>

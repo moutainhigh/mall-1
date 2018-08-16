@@ -464,6 +464,7 @@
                                             language: "zh" ,
                                             showClose: false,
                                             showBrowse : false,
+                                            elCaptionText:"123",
                                             maxFileSize : 2000,
                                             allowedFileExtensions: ["jpg", "png", "gif"],
                                             autoReplace : true,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
@@ -494,7 +495,6 @@
                                                 initialPreviewConfig: initPreviewConfig,
                                                 initialPreviewAsData: true
                                             });
-                                            $(".btn-default").attr("disabled",false);
                                         }).on("filepredelete", function(jqXHR) {
                                             var abort = true;
                                             if (confirm("确定要删除吗？(删除后不会恢复)")) {

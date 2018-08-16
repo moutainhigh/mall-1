@@ -625,6 +625,7 @@
                                             var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
                                             $('#imgDiv').html($('#imgDiv').html()+html);
                                             //上传完成回调
+
                                             var index=0;
                                             if(initPreview.length>0 ){
                                                 index=initPreview.length;
