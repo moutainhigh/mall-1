@@ -50,7 +50,7 @@
         yAxis: {
           min: 0,
           title: {
-            text: "单位: 元 RMB"
+            text: "单位: 元 RMB（K:千元，M:百万元，G:十亿元）"
           },
            alternateGridColor: '#FDFFD5'
         },
@@ -155,7 +155,7 @@
         yAxis: {
           min: 0,
           title: {
-            text: "单位: 元 RMB"
+            text: "单位: 元 RMB（K:千元，M:百万元，G:十亿元）"
           },
           alternateGridColor: '#FDFFD5'
         },

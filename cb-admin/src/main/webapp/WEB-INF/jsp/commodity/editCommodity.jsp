@@ -316,13 +316,13 @@
                                 <label>重量(kg)：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="weight" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control validate[custom[number]]" path="weight" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label>体积(m³)：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="volume" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control validate[custom[number]]" path="volume" maxlength="12"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -448,7 +448,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>图片</label>
+                                <label><span class="asterisk">*</span>商品图片</label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>
@@ -556,7 +556,7 @@
                                 <label><span class="asterisk">*</span>商品详情内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control validate[required,minSize[100]]" id="editorContent" path="content" cssStyle="height:500px;" maxlength="255"></form:textarea>
+                                <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;" maxlength="255"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
