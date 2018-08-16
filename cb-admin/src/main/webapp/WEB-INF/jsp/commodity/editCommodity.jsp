@@ -68,8 +68,25 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        }
                         if (null == $("#editorContent").val() || "" == $("#editorContent").val()) {
                             bootbox.alert("请填写商品详情内容!");
+                            return false;
+                        }
+                        if ($("#editorContent").val().length > 4098) {
+                            bootbox.alert("商品详情内容过长，请输入小于4098个字符!");
+                            return false;
+                        }
+                        if ($("#editorContent2").val().length > 4098) {
+                            bootbox.alert("商品配置内容过长，请输入小于4098个字符!");
+                            return false;
+                        }
+                        if ($("#editorContent1").val().length > 4098) {
+                            bootbox.alert("商品说明内容过长，请输入小于4098个字符!");
                             return false;
                         }
                         return true;
@@ -264,13 +281,13 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 成本价：</label>
+                                <label><span class="asterisk">*</span> 成本价(元)：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 销售价：</label>
+                                <label><span class="asterisk">*</span> 销售价(元)：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="sellPrice" readonly="true" maxlength="12"/>
@@ -279,7 +296,7 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 市场价：</label>
+                                <label><span class="asterisk">*</span> 市场价(元)：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="marketPrice" maxlength="12"/>
@@ -296,13 +313,13 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>重量：</label>
+                                <label>重量(kg)：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="weight" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
-                                <label>体积：</label>
+                                <label>体积(m³)：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="volume" maxlength="12"/>
@@ -440,20 +457,6 @@
                                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
-                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
-                                            onValidationComplete: function (form, valid) {
-                                                if (valid) {
-                                                    var defaultPicPath = $('input[name="imgurl"]');
-                                                    if (defaultPicPath.size()==0) {
-                                                        bootbox.alert("请至少选择一张图片!");
-                                                        return false;
-                                                    } else {
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        });
                                         var initPreview = new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
@@ -550,10 +553,10 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品配置内容：</label>
+                                <label><span class="asterisk">*</span>商品详情内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass="form-control validate[required,minSize[100]]" id="editorContent" path="content" cssStyle="height:500px;" maxlength="255"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -562,10 +565,10 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品详情内容：</label>
+                                <label>商品配置内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass="form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -577,7 +580,7 @@
                                 <label>商品说明内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
