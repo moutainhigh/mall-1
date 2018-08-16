@@ -162,11 +162,11 @@ public class OrderServiceImpl implements OrderService {
                 totalPrice = totalPrice.add(new BigDecimal(String.valueOf(product.getSalePrice())));
             }
         }
-        //是否需要判断买过保单用户才能购买商品
-        Customer customer = customerMapper.selectByPrimaryKey(order.getCustomerId());
-        if (customer.getPolicy() != 2) { //policy==2才算买过保单
-            throw new CommonException("请先买保单后再购买商品");
-        }
+        //是否需要判断买过保单用户才能购买商品(无需判断了)
+//        Customer customer = customerMapper.selectByPrimaryKey(order.getCustomerId());
+//        if (customer.getPolicy() != 2) { //policy==2才算买过保单
+//            throw new CommonException("请先买保单后再购买商品");
+//        }
         //支付方式
         if (order.getPaymentType()== PaymentType.UNDER_LINE) {
             order.setAuditState(AuditState.WAIT_AUDIT);
