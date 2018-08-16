@@ -212,7 +212,7 @@
               <kendo:grid-column title="QQ" field="qq" width="100"/>
               <kendo:grid-column title="商家微信" field="wechat" width="100"/>
               <kendo:grid-column title="商家支付平台类型" field="channelType" width="120" template="#=formatChannelType(channelType)#"/>
-              <kendo:grid-column title="创建时间" field="createTime" width="120" format="{0:yyyy-MM-dd HH:mm}"/>
+              <kendo:grid-column title="创建时间" field="createTime" width="120" format="{0:yyyy-MM-dd HH:mm:ss}"/>
             </kendo:grid-columns>
             <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
               <kendo:dataSource-schema data="content" total="totalElements">

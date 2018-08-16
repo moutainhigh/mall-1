@@ -120,7 +120,7 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家地址：</label>
+                <label><span class="asterisk">*</span>商家地址：</label>
               </div>
               <div class="col-sm-3">
                 <span style="word-break:break-all">${seller.sellerAddress}</span>
@@ -154,7 +154,7 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 联系电话：</label>
+                <label> 联系电话：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.telephone}
@@ -173,13 +173,13 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> QQ：</label>
+                <label> QQ：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.qq}
                 </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家微信：</label>
+                <label> 商家微信：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.wechat}

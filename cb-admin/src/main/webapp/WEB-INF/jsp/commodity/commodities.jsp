@@ -104,6 +104,11 @@
                     return "下架";
             }
         }
+        $(function() {
+            $("#commodityQuery").submit(function() {
+                reloadGridFilters('grid');
+            });
+        });
 
     </script>
 </head>
@@ -172,7 +177,7 @@
             <!-- End .actionbar-->
             <div class="inner-padding">
                 <div class="toolbar responsive-helper">
-                    <form style="width: 100%">
+                    <form style="width: 100%" id="commodityQuery" onsubmit="return false">
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>商品编码:</strong>
@@ -204,16 +209,16 @@
                             <div class="toolbar-field">
                                 <table>
                                     <tr>
-                                        <td><input type="number" data-filter="sellPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px"/></td>
+                                        <td><input type="number" min="0" step="0.0001" data-filter="sellPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px"/></td>
                                         <td>-</td>
-                                        <td><input type="number" data-filter="sellPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px"/></td>
+                                        <td><input type="number" min="0" step="0.0001" data-filter="sellPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px"/></td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="pull-right">
                             <div class="toolbar-field">
-                                <button type="button" class="btn btn-default" onclick="reloadGridFilters('grid')"><i class="fa fa-search"></i>查询</button>
+                                <button type="submit" id="commodityQuerySubmit" class="btn btn-default"><i class="fa fa-search"></i>查询</button>
                                 &nbsp;&nbsp;&nbsp;
                                 <button type="button" class="btn btn-default" onclick="clearFilters('grid')">清空</button>
                             </div>
