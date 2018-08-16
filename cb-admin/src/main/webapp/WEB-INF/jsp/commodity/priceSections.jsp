@@ -254,13 +254,13 @@
                                 <strong>起始价格:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="number" data-filter="startPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px"/>
+                                <input type="number" data-filter="startPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                             </div>
                             <div class="toolbar-field">
                                 <strong>结束价格:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="number" data-filter="endPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px"/>
+                                <input type="number" data-filter="endPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                             </div>
                         </div>
                         <!-- End .pull-left -->
