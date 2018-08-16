@@ -1,10 +1,7 @@
 package com.yunxin.cb.aop;
 
 import com.yunxin.cb.meta.Result;
-import com.yunxin.cb.rest.BaseResource;
-//import com.yunxin.cb.util.JsonUtil;
 import com.yunxin.cb.vo.ResponseResult;
-import com.yunxin.core.util.JacksonUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -12,12 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -85,7 +78,8 @@ public class LogAspect {
 			long endTime = System.currentTimeMillis();
 			float excTime = (float) (endTime - startTime) / 1000;
 			log.info("methodName：" + methodName + ";" + "\n result："
-					+ new JacksonUtil().toJson(outputParam) + "执行时间:" + excTime);
+//					+ new JacksonUtil().toJson(outputParam) + "执行时间:" + excTime
+			);
 		} catch (Throwable e) {
 			e.printStackTrace();
 			StringWriter sw = new StringWriter();
