@@ -204,7 +204,7 @@
                 <form:input cssClass="form-control validate[required,custom[email]]" path="email" maxlength="32"/>
               </div>
               <div class="col-sm-2">
-                <label> 商家省份：</label>
+                <label><span class="asterisk">*</span> 商家省份：</label>
               </div>
               <div class="col-sm-3">
                 <select class="form-control" id="province" name="province"></select>
@@ -217,14 +217,14 @@
             <div class="row">
 
               <div class="col-sm-2">
-                <label> 商家市：</label>
+                <label><span class="asterisk">*</span> 商家市：</label>
               </div>
               <div class="col-sm-3">
                 <select class="form-control" id="city" name="city"></select>
                 <form:input cssClass="form-control" type="hidden" id="cityName" path="cityName"/>
               </div>
               <div class="col-sm-2">
-                <label> 商家区/县：</label>
+                <label><span class="asterisk">*</span> 商家区/县：</label>
               </div>
               <div class="col-sm-3">
                 <select class="form-control" id="district" name="district"></select>
