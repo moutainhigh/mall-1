@@ -821,6 +821,10 @@ ALTER TABLE `history_record` ADD COLUMN `PRODUCT_ID` int(11) COMMENT '货品id';
 ALTER TABLE `seller` ADD COLUMN `PROVINCE` varchar(32) COMMENT '商家省';
 ALTER TABLE `seller` ADD COLUMN `CITY` varchar(32) COMMENT '商家市';
 ALTER TABLE `seller` ADD COLUMN `DISTRICT` varchar(32) COMMENT '商家区';
+##add by tangou 2018-08-16
+ALTER TABLE `seller` ADD COLUMN `PROVINCE_NAME` varchar(32) COMMENT '商家省名称';
+ALTER TABLE `seller` ADD COLUMN `CITY_NAME` varchar(32) COMMENT '商家市名称';
+ALTER TABLE `seller` ADD COLUMN `DISTRICT_NAME` varchar(32) COMMENT '商家区名称';
 
 ##add by wangteng 2018-08-16
 INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('INSURANCE_CODE_RECEIVE_EMAIL', 'Wangt@999shuijingqiu.com', '0', '保单合同编号接收邮箱');
