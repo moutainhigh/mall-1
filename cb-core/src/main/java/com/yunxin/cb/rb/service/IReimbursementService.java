@@ -1,5 +1,6 @@
 package com.yunxin.cb.rb.service;
 
+import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.rb.entity.Reimbursement;
 import com.yunxin.cb.rb.entity.ReimbursementOrder;
@@ -8,7 +9,6 @@ import com.yunxin.cb.rb.entity.meta.ReimbursementType;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -47,8 +47,8 @@ public interface IReimbursementService {
      * @param reimbursementType
      * @param remarks
      * @param operType
-     * @param request
+     *
      * @return
      */
-    String reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType, String remarks, int operType, HttpServletRequest request);
+    String reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType, String remarks, int operType,User user);
 }
