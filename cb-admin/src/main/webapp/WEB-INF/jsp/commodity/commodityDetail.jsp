@@ -96,13 +96,13 @@
                     <div class="inner-padding">
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品分类：</label>
+                                <label> 商品分类：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.catalog.catalogName}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品品牌：</label>
+                                <label> 商品品牌：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.brand.brandName}
@@ -112,13 +112,13 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品标题：</label>
+                                <label> 商品标题：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.commodityTitle}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品价格段：</label>
+                                <label> 商品价格段：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.priceSection.endPrice}
@@ -127,13 +127,13 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品编码：</label>
+                                <label> 商品编码：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.commodityCode}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品简称：</label>
+                                <label> 商品简称：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.shortName}
@@ -144,13 +144,13 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品全称：</label>
+                                <label> 商品全称：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.commodityName}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品拼音名称：</label>
+                                <label> 商品拼音名称：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.commodityPYName}
@@ -161,13 +161,13 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 成本价(元)：</label>
+                                <label> 成本价(元)：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.costPrice}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 销售价(元)：</label>
+                                <label> 销售价(元)：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.sellPrice}
@@ -176,13 +176,13 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 市场价(元)：</label>
+                                <label> 市场价(元)：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.marketPrice}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品单位：</label>
+                                <label> 商品单位：</label>
                             </div>
                             <div class="col-sm-3 col-label">
                                 ${commodity.unit.name}
@@ -199,12 +199,12 @@
                                 })
                             </script>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 产地省份：</label>
+                                <label> 产地省份：</label>
                             </div>
                             <div class="col-sm-3 col-label" id="province">
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 产地市区：</label>
+                                <label> 产地市区：</label>
                             </div>
                             <div class="col-sm-3 col-label" id="city">
                             </div>
@@ -258,19 +258,19 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span> 热门商品：</label>
+                                <label> 热门商品：</label>
                             </div>
                             <div class="col-sm-1 col-label">
                                 ${commodity.popular==true?'是':'否'}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span> 特惠商品：</label>
+                                <label> 特惠商品：</label>
                             </div>
                             <div class="col-sm-1 col-label">
                                 ${commodity.special==true?'是':'否'}
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span> 推荐商品：</label>
+                                <label> 推荐商品：</label>
                             </div>
                             <div class="col-sm-1 col-label">
                                 ${commodity.recommend==true?'是':'否'}
@@ -280,19 +280,19 @@
                         <%--<div class="row">--%>
 
                             <%--<div class="col-sm-2">--%>
-                                <%--<label><span class="asterisk">*</span>赠品：</label>--%>
+                                <%--<label>赠品：</label>--%>
                             <%--</div>--%>
                             <%--<div class="col-sm-1 col-label">--%>
                                 <%--${commodity.giveaway==true?'是':'否'}--%>
                             <%--</div>--%>
                             <%--<div class="col-sm-2">--%>
-                                <%--<label><span class="asterisk">*</span> 换购：</label>--%>
+                                <%--<label> 换购：</label>--%>
                             <%--</div>--%>
                             <%--<div class="col-sm-1 col-label">--%>
                                 <%--${commodity.barter==true?'是':'否'}--%>
                             <%--</div>--%>
                             <%--<div class="col-sm-2">--%>
-                                <%--<label><span class="asterisk">*</span> 预售：</label>--%>
+                                <%--<label> 预售：</label>--%>
                             <%--</div>--%>
                             <%--<div class="col-sm-1 col-label">--%>
                                 <%--${commodity.preSell==true?'是':'否'}--%>
