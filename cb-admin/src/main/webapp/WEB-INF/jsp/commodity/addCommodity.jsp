@@ -274,7 +274,7 @@
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control validate[custom[gtOne]]" path="ratio" onkeyup="salePrice_f();" placeholder="商品比例配置不填,则取分类比例配置" maxlength="12" readonly="true"/>
+                                <form:input type="text" cssClass=" form-control validate[custom[gtOne]]" path="ratio" onkeyup="salePrice_f();" placeholder="默认取一级分类比例配置" maxlength="12" readonly="true"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
