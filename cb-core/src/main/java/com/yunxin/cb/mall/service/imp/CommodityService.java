@@ -34,6 +34,7 @@ import retrofit2.Call;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -82,6 +83,9 @@ public class CommodityService implements ICommodityService {
     @Resource
     private ProductEvaluateDao productEvaluateDao;
 
+    @Resource
+    private CatalogService catalogService;
+
     @Override
     public Commodity addCommodity(Commodity commodity) throws EntityExistException {
         if (!commodityDao.isOrUnique(commodity, Commodity_.commodityCode, Commodity_.commodityName)) {
@@ -124,11 +128,8 @@ public class CommodityService implements ICommodityService {
                 }
             }
         }else{
-            if(commodity.getCatalog()==null){
-                ratio = 1.0f;
-            }else{
-                ratio = commodity.getCatalog().getRatio().floatValue();
-            }
+            Catalog catalog = catalogService.findOneLevelCatalogByCatalogCode(dbCommodity.getCatalog().getCatalogCode());
+            ratio = catalog.getRatio().floatValue();
         }
         if(updateProductSalePrice) {
             int j = productDao.updateSalePriceByCommodityId(ratio, dbCommodity.getCommodityId());
@@ -137,7 +138,7 @@ public class CommodityService implements ICommodityService {
             }
         }
         //E
-
+        commodity.setRatio(new BigDecimal(ratio));
         AttributeReplication.copying(commodity, dbCommodity, Commodity_.catalog, Commodity_.priceSection, Commodity_.brand, Commodity_.seller,
                 Commodity_.commodityCode, Commodity_.commodityName, Commodity_.commodityPYName, Commodity_.shortName, Commodity_.commodityTitle,
                 Commodity_.costPrice, Commodity_.sellPrice, Commodity_.marketPrice, Commodity_.unit, Commodity_.province, Commodity_.city, Commodity_.seoKey,

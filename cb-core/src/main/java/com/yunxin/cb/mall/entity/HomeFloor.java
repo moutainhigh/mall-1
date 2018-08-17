@@ -47,6 +47,8 @@ public class HomeFloor implements Serializable {
     private int commodityAmount;
     private int brandAmount;
 
+    private int advertAmount;
+
     /**
      * 模板ID
      */
@@ -79,7 +81,7 @@ public class HomeFloor implements Serializable {
 
     private Set<FloorBrand> floorBrands = new LinkedHashSet<>();
 
-
+    private Set<FloorAdvert> floorAdverts = new LinkedHashSet<>();
     private int[] categoryId;
     /**
      * 分类排序
@@ -97,6 +99,10 @@ public class HomeFloor implements Serializable {
      * 品牌排序
      */
     private int[] brandOrder;
+
+    private int[] advertId;
+
+    private int[] advertOrder;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -282,5 +288,38 @@ public class HomeFloor implements Serializable {
 
     public void setBrandOrder(int[] brandOrder) {
         this.brandOrder = brandOrder;
+    }
+    @Transient
+    public int[] getAdvertId() {
+        return advertId;
+    }
+
+    public void setAdvertId(int[] advertId) {
+        this.advertId = advertId;
+    }
+    @Transient
+    public int[] getAdvertOrder() {
+        return advertOrder;
+    }
+
+    public void setAdvertOrder(int[] advertOrder) {
+        this.advertOrder = advertOrder;
+    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "homeFloor", cascade = CascadeType.REMOVE)
+    @OrderBy(value = "sortOrder")
+    public Set<FloorAdvert> getFloorAdverts() {
+        return floorAdverts;
+    }
+
+    public void setFloorAdverts(Set<FloorAdvert> floorAdverts) {
+        this.floorAdverts = floorAdverts;
+    }
+
+    public int getAdvertAmount() {
+        return advertAmount;
+    }
+
+    public void setAdvertAmount(int advertAmount) {
+        this.advertAmount = advertAmount;
     }
 }

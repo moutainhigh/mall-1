@@ -90,7 +90,7 @@ public class LogAspect {
 			long endTime = System.currentTimeMillis();
 			float excTime = (float) (endTime - startTime) / 1000;
 			log.info("\n 完整路径：" +getFullUrlIsTrue(request,true) + "methodName:" + methodName + ";" + "\n result:"
-					+ JSON.toJSON(outputParam) + "执行时间:" + excTime
+					+ isJson(outputParam) + "执行时间:" + excTime
 			);
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -132,4 +132,12 @@ public class LogAspect {
 		}
 		return url.toString();
 	}
+
+    public String isJson(Object outputParam){
+        try {
+            return JSON.toJSON(outputParam).toString();
+        } catch (Exception e) {
+            return outputParam.toString();
+        }
+    }
 }

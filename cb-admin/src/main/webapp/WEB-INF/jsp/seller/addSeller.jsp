@@ -43,6 +43,12 @@
                       bootbox.alert("请选择省市区!");
                       return false;
                   }
+                  var positionX=$("#positionX").val();
+                  var positionY=$("#positionY").val();
+                  if(positionX==""||positionY==""){
+                      bootbox.alert("请在地图上选择经纬度!");
+                      return false;
+                  }
                   var provinceName = $("#province").find("option:selected").text();;
                   var cityName = $("#city").find("option:selected").text();;
                   var districtName = $("#district").find("option:selected").text();;
@@ -363,7 +369,7 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label> 商家经纬度：</label>
+                <label><span class="asterisk">*</span> 商家经纬度：</label>
               </div>
               <div class="col-sm-8">
                 <form:input type="hidden" cssClass="form-control" path="positionX" maxlength="10" id="positionX" readonly="true"/>
