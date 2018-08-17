@@ -137,7 +137,6 @@
                 </div>
             </header>
             <div class="window">
-
                 <div class="actionbar">
                     <div class="pull-left">
                         <a href="#" class="btn small-toggle-btn" data-toggle-sidebar="left"></a>

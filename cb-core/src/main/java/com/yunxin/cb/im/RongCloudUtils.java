@@ -1,6 +1,8 @@
 package com.yunxin.cb.im;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -10,6 +12,8 @@ import java.net.URL;
 import java.util.Date;
 
 public class RongCloudUtils {
+
+    private static Logger logger = LoggerFactory.getLogger(RongCloudUtils.class);
 
     private final static int[] abcde = { 0x67452301, 0xefcdab89, 0x98badcfe,
             0x10325476, 0xc3d2e1f0 };// sha1加密产参数
@@ -227,7 +231,7 @@ public class RongCloudUtils {
      * @return byte[] byte数组
      * @throws Exception
      */
-    public static byte[] post(String appKey,String appSecret,String path, String jsonParams,
+    public static String post(String appKey,String appSecret,String path, String jsonParams,
                               String encode, int timeout) {
         byte[] resultBuffer = null;
         Double nonce = Math.floor(Math.random() * 100000 + 100000);
@@ -264,19 +268,16 @@ public class RongCloudUtils {
             outStream.flush();
             outStream.close();
 
-            System.out.println("融云URL请求结果：");
-            System.out.println("URL：" + path);
-            System.out.println("请求参数：" + jsonParams);
-            System.out.println("响应结果码：" + conn.getResponseCode());
-            System.out.println("响应结果内容：" + conn.getResponseMessage());
+            logger.info("融云推送 请求参数：" + jsonParams);
+            logger.info("融云推送 响应结果码：" + conn.getResponseCode());
+            logger.info("融云推送 响应结果内容：" + conn.getResponseMessage());
 
             resultBuffer = readStream(conn.getInputStream());
             conn.disconnect();
-
         }catch(Exception e){
-            e.printStackTrace();
+            logger.error("融云推送失败",e);
         }
-        return resultBuffer;
+        return (null != resultBuffer && resultBuffer.length > 0) ? new String(resultBuffer) : null;
     }
 
     /**
