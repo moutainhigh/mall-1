@@ -146,22 +146,23 @@ public class RongCloudService {
             {
                 setId(groupId);
                 setName(groupName);
-                GroupMember[] groupMember=new GroupMember[1];
-                groupMember[0]=new GroupMember(){
+                GroupMember groupMember=new  GroupMember(){
                     {
                         setGroupId(groupId);
                         setId(customerId);
                         setName(groupName);
                     }
                 };
-                setMembers(groupMember);
+                GroupMember[] groupMembers={groupMember};
+                setMembers(groupMembers);
             }
         };
         Result result = (Result)rongCloud.group.create(groupModel);
-        if (result.getCode() != 200)
-            return true;
-        else
-            return false;
+        if (result.getCode() != 200){
+            throw new Exception(result.getMsg());
+        }
+        return true;
+
     }
 
     /**
