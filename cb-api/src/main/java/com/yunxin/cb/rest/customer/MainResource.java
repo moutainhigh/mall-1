@@ -100,7 +100,7 @@ public class MainResource extends BaseResource {
             customer.setMobile(mobile);
             customer.setNickName(mobile);
             customer.setPassword(pwd);
-            customer.setAvatarUrl(avatarUrl);
+//            customer.setAvatarUrl(avatarUrl);
             customer.setCustomerType(CustomerType.PLATFORM_SELF);
             customer.setEnabled(true);
             if (recommendCustomer != null) {
