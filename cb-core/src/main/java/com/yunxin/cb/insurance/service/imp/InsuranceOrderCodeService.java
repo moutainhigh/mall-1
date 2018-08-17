@@ -4,6 +4,7 @@ import com.yunxin.cb.insurance.dao.InsuranceEmailDao;
 import com.yunxin.cb.insurance.dao.InsuranceOrderCodeDao;
 import com.yunxin.cb.insurance.entity.InsuranceEmail;
 import com.yunxin.cb.insurance.entity.InsuranceOrderCode;
+import com.yunxin.cb.insurance.entity.InsuranceOrderCode_;
 import com.yunxin.cb.insurance.service.IInsuranceOrderCodeService;
 import com.yunxin.cb.mail.EmailSendService;
 import com.yunxin.cb.system.entity.Profile;
@@ -38,6 +39,7 @@ public class InsuranceOrderCodeService implements IInsuranceOrderCodeService {
     @Resource
     private IProfileService iProfileService;
     /**
+     *
      *
      * @param codeNo
      * @return
@@ -76,6 +78,7 @@ public class InsuranceOrderCodeService implements IInsuranceOrderCodeService {
             @Override
             public void addConditions(Root<InsuranceOrderCode> root, CriteriaQuery<?> query,
                                       CriteriaBuilder builder, List<Predicate> predicates) {
+                query.orderBy(builder.desc(root.get(InsuranceOrderCode_.createTime)));
             }
         });
         Page<InsuranceOrderCode> page = insuranceOrderCodeDao.findAll(query, query.getPageRequest());

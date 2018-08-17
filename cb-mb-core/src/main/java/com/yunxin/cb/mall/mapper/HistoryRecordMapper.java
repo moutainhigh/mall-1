@@ -62,7 +62,7 @@ public interface HistoryRecordMapper {
             + "<if test='data.recordId!=null'>"
             + "AND RECORD_ID = #{data.recordId} "
             + "</if>"
-            + "GROUP BY PRODUCT_ID,CUSTOMER_ID ORDER BY CREATE_TIME DESC "
+            + "ORDER BY CREATE_TIME DESC "
             + "LIMIT #{rowIndex},#{pageSize}"
             + "</script>")
     @Results({
@@ -86,7 +86,6 @@ public interface HistoryRecordMapper {
             + "<if test='data.recordId!=null'>"
             + "AND RECORD_ID = #{data.recordId} "
             + "</if>"
-            + "GROUP BY PRODUCT_ID,CUSTOMER_ID"
             + "</script>")
     long count(Query q);
 

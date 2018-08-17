@@ -392,14 +392,17 @@
                       </table>
                     </div>
                     <script type="text/javascript">
-                        var map = new AMap.Map("containerMap", {
+                        var marker, map = new AMap.Map("containerMap", {
                             resizeEnable: true
                         });
                         //为地图注册click事件获取鼠标点击出的经纬度坐标
                         var clickEventListener = map.on('click', function(e) {
-                            $("#lnglat").val(e.lnglat.getLng() + ',' + e.lnglat.getLat());
-                            $("#positionX").val(e.lnglat.getLng());
-                            $("#positionY").val(e.lnglat.getLat());
+                            var positionX=e.lnglat.getLng();
+                            var positionY=e.lnglat.getLat();
+                            $("#lnglat").val(positionX + ',' + positionY);
+                            $("#positionX").val(positionX);
+                            $("#positionY").val(positionY);
+                            updateMarker(positionX,positionY);
                         });
                         var auto = new AMap.Autocomplete({
                             input: "tipinput"
@@ -410,6 +413,35 @@
                                 map.setZoom(15);
                                 map.setCenter(e.poi.location);
                             }
+                        }
+                        AMap.event.addDomListener(document.getElementById('addMarker'), 'click', function() {
+                            addMarker();
+                        }, false);
+                        AMap.event.addDomListener(document.getElementById('updateMarker'), 'click', function() {
+                            marker && updateMarker();
+                        }, false);
+                        AMap.event.addDomListener(document.getElementById('clearMarker'), 'click', function() {
+                            if (marker) {
+                                marker.setMap(null);
+                                marker = null;
+                            }
+                        }, false);
+                        // 实例化点标记
+                        function addMarker(positionX,positionY) {
+                            marker = new AMap.Marker({
+                                icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+                                position: [positionX, positionY]
+                            });
+                            marker.setAnimation('AMAP_ANIMATION_BOUNCE');
+                            marker.setMap(map);
+                        }
+                        //更新点标记位置
+                        function updateMarker(positionX,positionY) {
+                            if(marker==null||marker==undefined){
+                                addMarker(positionX,positionY);
+                            }
+                            //更新点标记位置
+                            marker.setPosition([positionX, positionY]);
                         }
                     </script>
                   </div>

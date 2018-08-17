@@ -93,13 +93,15 @@ public class InsuranceOrderCodeController {
         for (int i = 0; i < listob.size(); i++) {
             List<Object> ob = listob.get(i);
             String codeno=ob.get(0).toString();
-            if (insuranceOrderCodeService.getInsuranceOrderCodeByCodeNo(codeno) == null) {
-                InsuranceOrderCode insuranceOrderCode = new InsuranceOrderCode();
-                insuranceOrderCode.setCodeNo(codeno);
-                insuranceOrderCode.setUseed(0);
-                insuranceOrderCode.setCreateTime(new Date());
-                insuranceOrderCode.setSort(maxSort+1);
-                insuranceOrderCodeService.addInsuranceOrderCode(insuranceOrderCode);
+            if(codeno.matches("^[0-9_]+$")) {
+                if (insuranceOrderCodeService.getInsuranceOrderCodeByCodeNo(codeno) == null) {
+                    InsuranceOrderCode insuranceOrderCode = new InsuranceOrderCode();
+                    insuranceOrderCode.setCodeNo(codeno);
+                    insuranceOrderCode.setUseed(0);
+                    insuranceOrderCode.setCreateTime(new Date());
+                    insuranceOrderCode.setSort(maxSort + 1);
+                    insuranceOrderCodeService.addInsuranceOrderCode(insuranceOrderCode);
+                }
             }
         }
         return "redirect:../common/success.do?reurl=insuranceordercode/insuranceordercodes.do";
