@@ -900,11 +900,13 @@ public class OrderService implements IOrderService {
             } else {
                 order.setOrderState(OrderState.PAID_PAYMENT);
             }
+            order.setPaymentState(PaymentState.SUCCESS_PAID);
             order.setPaymentTime(now);
             order.setDeliverTime(now);
             order.setUpdateTime(now);
             orderLog.setRemark("订单审核通过");
         } else if (auditState == AuditState.NOT_AUDIT) {
+            order.setPaymentState(PaymentState.FAIL_PAID);
             order.setOrderState(OrderState.CANCELED);
             order.setCancelReason(auditRemark);
             order.setCancelTime(now);

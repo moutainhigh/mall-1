@@ -54,15 +54,6 @@ public class OrderItem {
     /** 重量 */
     private Float weight;
 
-    /** 商品id */
-    private Integer commodityId;
-
-    /** 商品名 */
-    private String commodityName;
-
-    /** 商品标题 */
-    private String commodityTitle;
-
     /** 货品 */
     private Product product;
 
@@ -168,5 +159,45 @@ public class OrderItem {
 
     public void setCostPrice(Float costPrice) {
         this.costPrice = costPrice;
+    }
+
+    public Float getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(Float marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public String getProductNo() {
+        return productNo;
+    }
+
+    public void setProductNo(String productNo) {
+        this.productNo = productNo;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Float getVolume() {
+        return volume;
+    }
+
+    public void setVolume(Float volume) {
+        this.volume = volume;
+    }
+
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Float weight) {
+        this.weight = weight;
     }
 }

@@ -221,6 +221,9 @@ public class Order implements java.io.Serializable {
     /** 审核时间 */
     private Date auditTime;
 
+    /** 支付状态 */
+    private PaymentState paymentState;
+
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private Set<OrderInvoice> orderInvoices = new HashSet<>();
@@ -709,6 +712,16 @@ public class Order implements java.io.Serializable {
 
     public void setCollectTime(Date collectTime) {
         this.collectTime = collectTime;
+    }
+
+    @Column(nullable = false, precision = 1)
+    @Enumerated(EnumType.ORDINAL)
+    public PaymentState getPaymentState() {
+        return paymentState;
+    }
+
+    public void setPaymentState(PaymentState paymentState) {
+        this.paymentState = paymentState;
     }
 
     public void setDeliveryAddress(DeliveryAddress address) {

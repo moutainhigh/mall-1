@@ -849,3 +849,11 @@ CREATE TABLE `floor_advert`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 ALTER TABLE `home_floor` ADD COLUMN `ADVERT_AMOUNT` int(11) NOT NULL AFTER `BRAND_AMOUNT`;
+
+##add by gws 2018-08-17
+ALTER TABLE `order_form` add `PAYMENT_STATE` int(11) DEFAULT NULL COMMENT '支付状态';
+ALTER TABLE `order_item` add `PRODUCT_NAME` varchar(64) DEFAULT NULL COMMENT '货品名称';
+ALTER TABLE `order_item` add `PRODUCT_NO` varchar(32) DEFAULT NULL COMMENT '货品编号';
+ALTER TABLE `order_item` add `MARKET_PRICE` float NOT NULL COMMENT '市场价';
+ALTER TABLE `order_item` add `VOLUME` float DEFAULT NULL COMMENT '体积';
+ALTER TABLE `order_item` add `WEIGHT` float DEFAULT NULL COMMENT '重量';
