@@ -39,6 +39,30 @@ public class OrderItem {
     /** 成本价 */
     private Float costPrice;
 
+    /** 市场价 */
+    private Float marketPrice;
+
+    /** 货品编码 */
+    private String productNo;
+
+    /** 货品名称：由 商品名称+上规格值 组成  用&分隔 */
+    private String productName;
+
+    /** 体积 */
+    private Float volume;
+
+    /** 重量 */
+    private Float weight;
+
+    /** 商品id */
+    private Integer commodityId;
+
+    /** 商品名 */
+    private String commodityName;
+
+    /** 商品标题 */
+    private String commodityTitle;
+
     /** 货品 */
     private Product product;
 
