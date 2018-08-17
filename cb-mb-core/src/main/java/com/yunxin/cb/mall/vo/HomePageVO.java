@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 @ApiModel(value="商城首页",description="商城首页VO对象 HomePageVO")
 public class HomePageVO implements Serializable {
     @ApiModelProperty(value="楼层信息",name="homeFloorVOList",example="1")

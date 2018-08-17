@@ -5,7 +5,6 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.entity.Category;
 import com.yunxin.cb.mall.entity.meta.AdvertisementPlace;
-import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.meta.Result;
@@ -23,9 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Api(description = "商城首页")
 @RestController
@@ -139,19 +136,6 @@ public class IndexResource extends BaseResource {
     @IgnoreAuthentication
     public ResponseResult getIndexList(){
         try{
-            //获取首页banner
-            /*Map<String, List<AdvertisementVO>> advertisementMap = new HashMap<>();
-            List<Advertisement> firstList = advertisementService.select(true);
-            for(Advertisement adm : firstList){
-                List<AdvertisementVO> items = advertisementMap.get(adm.getAdvertisementPlace().name());
-                AdvertisementVO adVO = new AdvertisementVO();
-                BeanUtils.copyProperties(adVO, adm);
-                if(items == null){
-                    items = new ArrayList<>();
-                }
-                items.add(adVO);
-                advertisementMap.put(adm.getAdvertisementPlace().name(),items);
-            }*/
             //获取楼层信息
             List<HomeFloor> hList = homeFloorService.selectByEnabledAll();
             HomePageVO homePageVO = new HomePageVO();
@@ -216,7 +200,6 @@ public class IndexResource extends BaseResource {
                 }
             }
             homePageVO.setHomeFloorVOList(homeFloorVOList);
-//            homePageVO.setAdvertisementMap(advertisementMap);
             return new ResponseResult(homePageVO);
 
         }catch (Exception e){
