@@ -44,6 +44,10 @@
         function enabledItem(enabled) {
             var dataItem = getSelectedTreeListItem("treelist");
             if (dataItem) {
+                if(dataItem.catalogCode && dataItem.catalogCode.length == 3){
+                    commonNotify("根分类禁止进行停用/启用操作!", "error");
+                    return;
+                }
                 $.get("enableCatalogById.do", {
                     catalogId: dataItem.catalogId,
                     enabled: enabled,
@@ -158,6 +162,7 @@
                     <kendo:treeList name="treelist" height="450" selectable="true">
                         <kendo:treeList-columns>
                             <kendo:treeList-column field="catalogName" title="分类名称"></kendo:treeList-column>
+                            <kendo:treeList-column field="catalogCode" hidden="true" title="分类编码"></kendo:treeList-column>
                             <kendo:treeList-column field="ratio" title="分类比例配置"></kendo:treeList-column>
                             <kendo:treeList-column field="enabled" title="状态" template="#= enabled ? '启用' : '停用' #"></kendo:treeList-column>
                             <kendo:treeList-column field="supportAddedTax" title="增值税发票" template="#= supportAddedTax ? '支持' : '不支持' #"></kendo:treeList-column>

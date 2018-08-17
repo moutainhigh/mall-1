@@ -79,7 +79,7 @@ public class LogAspect {
 			long endTime = System.currentTimeMillis();
 			float excTime = (float) (endTime - startTime) / 1000;
 			log.info("methodName：" + methodName + ";" + "\n result："
-					+ JSON.toJSON(outputParam) + "执行时间:" + excTime
+					+ JSON.toJSON(outputParam) + "执行时间:" + excTime+ "\n "
 			);
 		} catch (Throwable e) {
 			e.printStackTrace();
