@@ -5,6 +5,7 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.entity.Category;
 import com.yunxin.cb.mall.entity.meta.AdvertisementPlace;
+import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.meta.Result;
@@ -47,6 +48,8 @@ public class IndexResource extends BaseResource {
     private CommodityService commodityService;
     @Resource
     private FloorCommodityService floorCommodityService;
+    @Resource
+    private FloorAdvertService floorAdvertService;
     @ApiOperation(value = "商城首页 V1")
     @GetMapping(value = "getIndex")
     @ApiVersion(1)
@@ -137,7 +140,7 @@ public class IndexResource extends BaseResource {
     public ResponseResult getIndexList(){
         try{
             //获取首页banner
-            Map<String, List<AdvertisementVO>> advertisementMap = new HashMap<>();
+            /*Map<String, List<AdvertisementVO>> advertisementMap = new HashMap<>();
             List<Advertisement> firstList = advertisementService.select(true);
             for(Advertisement adm : firstList){
                 List<AdvertisementVO> items = advertisementMap.get(adm.getAdvertisementPlace().name());
@@ -148,7 +151,7 @@ public class IndexResource extends BaseResource {
                 }
                 items.add(adVO);
                 advertisementMap.put(adm.getAdvertisementPlace().name(),items);
-            }
+            }*/
             //获取楼层信息
             List<HomeFloor> hList = homeFloorService.selectByEnabledAll();
             HomePageVO homePageVO = new HomePageVO();
@@ -158,9 +161,10 @@ public class IndexResource extends BaseResource {
                     List<BrandVO> brandList = new ArrayList<>();
                     List<CategoryVO> categoryList = new ArrayList<>();
                     List<IndexCommodityVO> indexCommodityList = new ArrayList<>();
+                    List<AdvertisementVO> advertisementVOList = new ArrayList<>();
                     HomeFloorVO homeFloorVO = new HomeFloorVO();
-                    Integer floorId = homeFloor.getFloorId();
-                    List<FloorBrand> fbList = floorBrandService.selectByFloorId(floorId);
+                    homeFloorVO.setSortOrder(homeFloor.getSortOrder());
+                    List<FloorBrand> fbList = floorBrandService.selectByFloorId(homeFloor.getFloorId());
                     if(fbList != null){
                         for(FloorBrand floorBrand :fbList){
                             Brand brand = brandService.selectByPrimaryKey(floorBrand.getBrandId());
@@ -172,7 +176,7 @@ public class IndexResource extends BaseResource {
                             }
                         }
                     }
-                    List<FloorCategory> fcyList = floorCategoryService.selectByFloorId(floorId);
+                    List<FloorCategory> fcyList = floorCategoryService.selectByFloorId(homeFloor.getFloorId());
                     if(fcyList != null){
                         for(FloorCategory floorCategory : fcyList){
                             Category category = categoryService.selectByPrimaryKey(floorCategory.getCategoryId());
@@ -184,7 +188,7 @@ public class IndexResource extends BaseResource {
                             }
                         }
                     }
-                    List<FloorCommodity> fcList = floorCommodityService.selectByFloorId(floorId);
+                    List<FloorCommodity> fcList = floorCommodityService.selectByFloorId(homeFloor.getFloorId());
                     if(fcList != null){
                         for(FloorCommodity floorCommodity : fcList){
                             Commodity commodity = commodityService.selectByPrimaryKey(floorCommodity.getCommodityId());
@@ -196,11 +200,23 @@ public class IndexResource extends BaseResource {
                             }
                         }
                     }
+                    List<FloorAdvert> floorAdvertList =  floorAdvertService.selectByFloorId(homeFloor.getFloorId());
+                    if(floorAdvertList != null){
+                        for(FloorAdvert floorAdvert : floorAdvertList){
+                            Advertisement advertisement = advertisementService.selectByAdvertId(floorAdvert.getAdvertId());
+                            if(advertisement != null){
+                                AdvertisementVO adVO = new AdvertisementVO();
+                                BeanUtils.copyProperties(adVO, advertisement);
+                                advertisementVOList.add(adVO);
+                                homeFloorVO.setAdvertisementList(advertisementVOList);
+                            }
+                        }
+                    }
                     homeFloorVOList.add(homeFloorVO);
                 }
             }
             homePageVO.setHomeFloorVOList(homeFloorVOList);
-            homePageVO.setAdvertisementMap(advertisementMap);
+//            homePageVO.setAdvertisementMap(advertisementMap);
             return new ResponseResult(homePageVO);
 
         }catch (Exception e){

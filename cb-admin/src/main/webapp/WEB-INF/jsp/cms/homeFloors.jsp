@@ -192,6 +192,7 @@
                             <kendo:grid-column title="品牌数量" filterable="false" field="brandAmount" width="100px"/>
                             <kendo:grid-column title="类别数量" filterable="false" field="categoryAmount" width="100px"/>
                             <kendo:grid-column title="商品数量" filterable="false" field="commodityAmount" width="100px"/>
+                            <kendo:grid-column title="广告数量" filterable="false" field="advertAmount" width="100px"/>
                             <%--<kendo:grid-column title="模板" field="templateId" width="100px"/>--%>
                             <kendo:grid-column title="备注" field="remark" filterable="false" width="200px"/>
                             <kendo:grid-column title="状态" field="enabled" filterable="false" template="#= enabled ? '启用' : '停用' #" width="80"/>

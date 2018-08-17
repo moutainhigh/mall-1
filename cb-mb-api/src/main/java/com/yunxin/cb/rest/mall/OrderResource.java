@@ -125,9 +125,11 @@ public class OrderResource extends BaseResource {
             Order model = orderService.getByOrderIdAndCustomerId(orderId, getCustomerId());
             if (model != null) {
                 orderDetailVO = OrderDetailVO.dOconvertVO(model);
+                orderDetailVO.setPaymentType(model.getPaymentType().getName());
                 if (orderDetailVO.getPayOvertimeTime() == 0 && OrderState.PENDING_PAYMENT.equals(orderDetailVO.getOrderState())) { //超时订单
-                    orderService.updateOrderStatusTimeOut(orderId, model.getOrderCode(), getCustomerId());
-                    orderDetailVO.setOrderState(OrderState.CANCELED);
+                   //目前不需要定时取消
+                    //orderService.updateOrderStatusTimeOut(orderId, model.getOrderCode(), getCustomerId());
+                    //orderDetailVO.setOrderState(OrderState.CANCELED);
                 }
             }else {
                 return new ResponseResult(Result.FAILURE, "订单不存在");

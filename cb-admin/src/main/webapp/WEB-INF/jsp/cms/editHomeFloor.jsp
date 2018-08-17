@@ -432,6 +432,39 @@
                             </div>
                         </div>
                         <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>广告列表：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-8">
+                                <table id="advertisementTable" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">广告标题</th>
+                                        <th scope="col" width="140">排序</th>
+                                        <th scope="col" width="80">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="fc" items="${homeFloor.floorAdverts}">
+                                        <tr id='advertisement${homeFloor.floorId}${fc.advertisement.advertId}'>
+                                            <td><input type='hidden' name='advertId' class='form-control' value='${fc.advertisement.advertId}'/>${fc.advertisement.advertTitle}</td>
+                                            <td><input type='text' name='advertOrder' class='form-control' value='${fc.sortOrder}'/></td>
+                                            <td class='text-center'><a type='button' title='删除' class='btn btn-default' href='javascript:removeAdvertisement(${homeFloor.floorId}${fc.advertisement.advertId})'><i class='fa fa-minus-circle'></i></a></td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="button" onclick="showAdvertisementDialog();" title="添加" class="btn btn-default">
+                                    <i class="fa fa-plus-circle"></i>添加广告
+                                </button>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
                                 <label>备注：</label>
@@ -676,7 +709,57 @@
         }
     </script>
 </div>
+<div class="modal fade" id="showAdvertisementDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择广告</h4>
+            </div>
+            <div class="modal-body">
+                <jsp:include page="../commodity/chooseAdvertment.jsp"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary pull-right" onclick="chooseAdvertisement();">确认</button>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript">
+        var idcIndex = 0;
 
+        function showAdvertisementDialog() {
+            $('#showAdvertisementDialog').modal();
+        }
+
+        function chooseAdvertisement() {
+            var selectedAdvertIds=$("#advertGrid input[type='checkbox'][name='selectedAdvertId']:checked");
+            if(selectedAdvertIds!=null&&selectedAdvertIds.length>0){
+                $.each(selectedAdvertIds,function(n,selectedBox) {
+                    var gridData = $("#advertGrid").data("kendoGrid").dataSource;
+                    var selectedAdvertId=$(selectedBox).attr('value');
+                    $.each(gridData.data(),function(i,dataItem){
+                        if(dataItem.advertId==selectedAdvertId){
+                            var newRow = "<tr id='advertisement" + idcIndex + "'><td><input type='hidden' name='advertId' value='"+selectedAdvertId+"'/>"+dataItem.advertTitle+"</td><td><input type='text' name='advertOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeAdvertisement(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
+                            $("#advertisementTable tr:last").after(newRow);
+                            idcIndex++;
+                            return ;
+                        }
+                    });
+                });
+            }else{
+                alert("请选择广告");
+                return ;
+            }
+            clearCheck();
+            $('#showAdvertisementDialog').modal("hide");
+        }
+        function removeAdvertisement(indx) {
+            $("#advertisement" + indx).remove();
+            idcIndex--;
+        }
+    </script>
+</div>
 
 </body>
 </html>
