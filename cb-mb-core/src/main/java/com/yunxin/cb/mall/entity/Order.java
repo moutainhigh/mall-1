@@ -93,6 +93,9 @@ public class Order {
     /** 支付时间 */
     private Date paymentTime;
 
+    /** 支付状态 */
+    private PaymentState paymentState;
+
     /** 付款方式 */
     private PaymentType paymentType;
 
@@ -590,5 +593,13 @@ public class Order {
 
     public void setCollectTime(Date collectTime) {
         this.collectTime = collectTime;
+    }
+
+    public PaymentState getPaymentState() {
+        return paymentState;
+    }
+
+    public void setPaymentState(PaymentState paymentState) {
+        this.paymentState = paymentState;
     }
 }
