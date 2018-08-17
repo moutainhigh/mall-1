@@ -28,4 +28,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public List<Advertisement> selectByAdvertisementPlace(AdvertisementPlace advertisementPlace, Boolean enabled) {
         return advertisementMapper.selectByAdvertisementPlace(advertisementPlace,enabled);
     }
+
+    @Override
+    public Advertisement selectByAdvertId(int advertId) {
+        return advertisementMapper.selectByPrimaryKey(advertId);
+    }
 }

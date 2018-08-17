@@ -6,7 +6,6 @@ import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.entity.Order;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.meta.OrderState;
-import com.yunxin.cb.mall.entity.meta.PaymentType;
 import com.yunxin.cb.util.DateUtils;
 import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
@@ -54,8 +53,8 @@ public class OrderDetailVO implements java.io.Serializable{
     /**
      * 支付方式
      */
-    @ApiModelProperty(value="支付方式",name="paymentType",example="FULL_SECTION")
-    private PaymentType paymentType;
+    @ApiModelProperty(value="支付方式",name="paymentType",example="线下支付")
+    private String paymentType;
 
     /** 创建时间 */
     @ApiModelProperty(value="提交时间",name="createTime",example="2018-07-24")
@@ -131,11 +130,11 @@ public class OrderDetailVO implements java.io.Serializable{
         this.totalPrice = totalPrice;
     }
 
-    public PaymentType getPaymentType() {
+    public String getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(PaymentType paymentType) {
+    public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
     }
 

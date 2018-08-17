@@ -55,6 +55,19 @@ public class AdvertisementController {
         return page;
     }
 
+    /**
+     *
+     * @param query
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "chooseAdvertment",method = RequestMethod.POST)
+    public Page<Advertisement> chooseAdvertment(@RequestBody PageSpecification<Advertisement> query, HttpServletRequest request) {
+        Page<Advertisement> page = advertisementService.pageAdvertisements(query);
+        return page;
+    }
+
     @RequestMapping(value = "toAddAdvertisement", method = RequestMethod.GET)
     public String toAddAdvertisement(@ModelAttribute("advertisement") Advertisement advertisement, ModelMap modelMap) {
 
