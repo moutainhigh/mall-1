@@ -324,6 +324,9 @@ public class OrderServiceImpl implements OrderService {
         order.setPayByIntegral(0d);
         order.setDiscountTotal(0d);
         order.setDiscountDeliveryFeeTotal(0d);
+        order.setProvince("0");
+        order.setCity("0");
+        order.setDistrict("0");
         //order.setSellerId(0);
         //order.setLogisticId(0);
     }
