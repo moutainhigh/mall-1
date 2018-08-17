@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 消息中心
@@ -41,11 +43,10 @@ public class MessageResource extends BaseResource {
     @ApiOperation(value = "查询消息列表")
     @ApiImplicitParams({})
     @RequestMapping(value = "getMessages" , method = RequestMethod.POST)
-    public ResponseResult getMessages(@RequestParam("pageSize")int pageSize,@RequestParam("pageNo")int pageNo) {
+    public ResponseResult getMessages(@RequestParam("pageSize")int pageSize, @RequestParam("pageNo")int pageNo) {
         PageSpecification<Message> query = new PageSpecification<>();
         query.setPage(pageNo == 0?1:pageNo);
         query.setPageSize(pageSize == 0?10:pageSize);
-
         PageSpecification.FilterDescriptor filterDescriptor = new PageSpecification.FilterDescriptor();
         filterDescriptor.setLogic("and");
         filterDescriptor.setOperator("eq");
@@ -54,8 +55,20 @@ public class MessageResource extends BaseResource {
         filterDescriptor.setValue(PushStatus.HAVE_PUSHED);
         query.getFilter().getFilters().add(filterDescriptor);
         try {
-            Page<Message> pagelist = messageService.pageMessage(query);
-            return new ResponseResult(pagelist);
+            Page<Message> oldPage = messageService.pageMessage(query);
+
+            //适配其他模块接口返回的数据格式
+            Map<String,Object> newPageMap = new HashMap<>();
+            newPageMap.put("pageSize",pageSize);
+            newPageMap.put("rowCount",oldPage.getTotalElements());
+            newPageMap.put("pageCount",oldPage.getTotalPages());
+            newPageMap.put("pageNo",pageNo);
+            newPageMap.put("hasPrevious",true);
+            newPageMap.put("hasNext",oldPage.getTotalPages() > pageNo ? true:false);
+            newPageMap.put("startOfPage",(pageNo - 1) * pageSize);
+            newPageMap.put("data",oldPage.getContent());
+
+            return new ResponseResult(newPageMap);
         }catch (Exception e){
             logger.error("查询消息列表失败",e);
         }
