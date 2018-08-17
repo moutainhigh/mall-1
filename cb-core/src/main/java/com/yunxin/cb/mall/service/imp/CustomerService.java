@@ -36,6 +36,7 @@ import io.rong.models.user.UserModel;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -815,17 +816,11 @@ public class CustomerService implements ICustomerService {
                             for(CustomerMatchsVo customerMatchVos:listVo){
                                 if(null!=map.get(customerMatchVos.getMobile())){
                                     Customer customer=(Customer)map.get(customerMatchVos.getMobile());
-                                    add(new CustomerMatchVo(){
-                                        {
-                                            setCustomerId(customer.getCustomerId());
-                                            setAvatarUrl(customer.getAvatarUrl());
-                                            setNickName(customer.getNickName());
-                                            setRealName(customerMatchVos.getRealName());
-                                            setMobile(customer.getMobile());
-                                        }
-                                    });
+                                    CustomerMatchVo customerMatchVo=new CustomerMatchVo();
+                                    BeanUtils.copyProperties(customer,customerMatchVo);
+                                    customerMatchVo.setRealName(customerMatchVos.getRealName());
+                                    add(customerMatchVo);
                                 }
-
                         }
                     }
 

@@ -19,7 +19,7 @@ public class OrderCompleteTask {
     @Resource
     private IOrderService orderService;
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void orderComplete(){
         logger.info("orderComplete start");
         orderService.completedOrders();
