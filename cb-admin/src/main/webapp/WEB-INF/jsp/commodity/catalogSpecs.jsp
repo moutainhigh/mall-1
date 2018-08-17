@@ -173,7 +173,7 @@
                                         <label><span class="asterisk">*</span>商品规格名称：</label>
                                     </div>
                                     <div class="col-sm-7">
-                                        <form:input cssClass="form-control validate[required,minSize[2]]" path="specName" maxlength="64"/>
+                                        <form:input cssClass="form-control validate[required,minSize[2],maxSize[15]]" path="specName" maxlength="15"/>
                                     </div>
                                 </div>
                                 <div class="spacer-10"></div>
