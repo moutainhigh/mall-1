@@ -20,7 +20,7 @@ pipeline {
           steps {
             sh 'chmod +x ./gradlew'
             sh './gradlew clean build'
-            archiveArtifacts artifacts:'${DOCKER_MODULE_NAME}/build/libs/*.war', fingerprint: true
+            archiveArtifacts artifacts:'cb-admin/build/libs/*.war', fingerprint: true
           }
         }
         stage('Docker build') {
