@@ -7,6 +7,7 @@ import java.util.List;
 public class TreeViewItem {
     private String id;
     private String text;
+    private String treeLevel;
     private Boolean expanded;
     private String spriteCssClass;
     private boolean hasChildren;
@@ -19,9 +20,10 @@ public class TreeViewItem {
     public TreeViewItem() {
     }
 
-    public TreeViewItem(String id, String text, Boolean expanded, String spriteCssClass, boolean hasChildren, boolean checked) {
+    public TreeViewItem(String id, String text,String treeLevel, Boolean expanded, String spriteCssClass, boolean hasChildren, boolean checked) {
         this.id = id;
         this.text = text;
+        this.treeLevel = treeLevel;
         this.expanded = expanded;
         this.spriteCssClass = spriteCssClass;
         this.hasChildren = hasChildren;
@@ -68,9 +70,10 @@ public class TreeViewItem {
         return this.items;
     }
 
-    public void setFields(String id, String text, String spriteCssClass, Boolean expanded) {
+    public void setFields(String id, String text, String treeLevel,String spriteCssClass, Boolean expanded) {
         this.setId(id);
         this.setText(text);
+        this.setTreeLevel(treeLevel);
         this.setSpriteCssClass(spriteCssClass);
         this.setExpanded(expanded);
     }
@@ -101,5 +104,13 @@ public class TreeViewItem {
 
     public void setRatio(BigDecimal ratio) {
         this.ratio = ratio;
+    }
+
+    public String getTreeLevel() {
+        return treeLevel;
+    }
+
+    public void setTreeLevel(String treeLevel) {
+        this.treeLevel = treeLevel;
     }
 }

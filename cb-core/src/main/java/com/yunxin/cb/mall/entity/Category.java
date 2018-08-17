@@ -361,6 +361,7 @@ public class Category implements java.io.Serializable {
         TreeViewItem category = new TreeViewItem();
         category.setId(String.valueOf(categoryId));
         category.setText(categoryName);
+        category.setTreeLevel(String.valueOf(level));
         return category;
     }
 }

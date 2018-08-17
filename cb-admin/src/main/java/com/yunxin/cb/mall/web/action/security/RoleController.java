@@ -8,13 +8,10 @@ import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.console.service.ISecurityService;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.cb.mall.web.vo.TreeNode;
-import com.yunxin.cb.security.IPermission;
 import com.yunxin.cb.security.Privilege;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.cb.security.SecurityProvider;
 import com.yunxin.core.exception.EntityExistException;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -144,7 +141,7 @@ public class RoleController  implements ServletContextAware {
 	public List<TreeViewItem> buildResourceTree(List<com.yunxin.cb.security.Privilege> resources, Set<Permission> roleRescs) {
 		List<TreeViewItem> viewItems = new ArrayList<>();
 		for (com.yunxin.cb.security.Privilege resource : resources) {
-			TreeViewItem viewItem = new TreeViewItem(resource.getCode(), resource.getName(), true, resource.getType().toString(), true, true);
+			TreeViewItem viewItem = new TreeViewItem(resource.getCode(), resource.getName(),null, true, resource.getType().toString(), true, true);
 			List<com.yunxin.cb.security.Privilege> children = resource.getChildren();
 			if (children != null && children.size() > 0) {
 				List<TreeViewItem> childItems = buildResourceTree(children, roleRescs);

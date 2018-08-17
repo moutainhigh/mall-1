@@ -17,14 +17,14 @@ import java.util.List;
 public interface CatalogDao extends JpaRepository<Catalog, Integer>, JpaSpecificationExecutor<Catalog>, BaseDao<Catalog> {
 
 
-    public List<Catalog> findByParentCatalog_CatalogIdAndCatalogIdNotAndEnabledOrderByCatalogNameAsc(int categoryId,
+    List<Catalog> findByParentCatalog_CatalogIdAndCatalogIdNotAndEnabledOrderByCatalogNameAsc(int categoryId,
                                                                                                      int pcategoryId, boolean enable);
 
-    public List<Catalog> findByParentCatalog_CatalogIdAndCatalogIdNotAndEnabledOrderByCatalogNameAsc(int categoryId,
+    List<Catalog> findByParentCatalog_CatalogIdAndCatalogIdNotAndEnabledOrderByCatalogNameAsc(int categoryId,
                                                                                                      int pcategoryId, boolean enable, Pageable pageable);
 
     @Query("select c from Catalog c left join fetch c.parentCatalog cp where c.catalogId=?1")
-    public Catalog findByCategoryId(int categoryId);
+    Catalog findByCategoryId(int categoryId);
 
     List<Catalog> findByCatalogIdIn(int[] categoryIds);
 
@@ -44,10 +44,10 @@ public interface CatalogDao extends JpaRepository<Catalog, Integer>, JpaSpecific
     Long findCategoryQuantity();
 
     @Query("select count(c.catalogId) from Catalog c left join c.parentCatalog cp where cp.catalogId=?1 and cp.enabled=true")
-    public Long findCategoryNum(int pcategoryId);
+    Long findCategoryNum(int pcategoryId);
 
     @Query("select c from Catalog c where c.catalogCode in(?1)")
-    public List<Catalog> searchParentsByCodes(String[] codes);
+    List<Catalog> searchParentsByCodes(String[] codes);
 
     List<Catalog> findByParentCatalog_CatalogIdAndCatalogIdNotAndEnabledOrderBySortOrderAsc(int categoryId, int i, boolean b);
 
@@ -56,20 +56,20 @@ public interface CatalogDao extends JpaRepository<Catalog, Integer>, JpaSpecific
 
     List<Catalog> findByParentCatalog_CatalogIdOrderBySortOrderAsc(int categoryId);
 
-    public List<Catalog> findByCatalogCodeIn(String[] array);
+    List<Catalog> findByCatalogCodeIn(String[] array);
 
 
-    public List<Catalog> findByEnabledOrderByCatalogCodeAsc(boolean enabled);
+    List<Catalog> findByEnabledOrderByCatalogCodeAsc(boolean enabled);
 
-    public List<Catalog> findByEnabledOrderByCatalogIdAsc(boolean enabled);
+    List<Catalog> findByEnabledOrderByCatalogIdAsc(boolean enabled);
 
     @Query("select c from Catalog c left join fetch c.catalogAttributeGroups p where p.groupId=?1")
     List<Catalog> findCategoriesByGroupId(int propGroupId);
 
 
-    public Catalog findByParentCatalog_CatalogIdAndCatalogNameAndEnabled(int parentCategoryId, String categoryName, boolean del);
+    Catalog findByParentCatalog_CatalogIdAndCatalogNameAndEnabled(int parentCategoryId, String categoryName, boolean del);
 
-    public Catalog findByParentCatalog_CatalogIdAndCatalogIdNotAndCatalogNameAndEnabled(int parentCategoryId, int categoryId, String categoryName, boolean b);
+    Catalog findByParentCatalog_CatalogIdAndCatalogIdNotAndCatalogNameAndEnabled(int parentCategoryId, int categoryId, String categoryName, boolean b);
 
     @Query("select c.catalogId from Catalog c where c.parentCatalog.catalogId in ?1 and c.enabled=true")
     List<Integer> fidnByParentCategoryIds(List<Integer> activityScopeIds);
@@ -96,4 +96,17 @@ public interface CatalogDao extends JpaRepository<Catalog, Integer>, JpaSpecific
      * @DateTime: 2018/8/14 19:36
      */
     Catalog findCatalogByCatalogCode(String catalogCode);
+
+    /**
+     * 功能描述: 批量更新分类状态（启用/禁用）
+     *
+     * @param enabled 状态
+     * @param catalogCodeList 分类编码集合
+     * @return:
+     * @auther: yangzhen
+     * @date: 2018/8/16 20:08
+     */
+    @Modifying
+    @Query("update Catalog a set a.enabled = ?1 where a.catalogCode in(?2)")
+    void batchEnableCatalogByCatalogCode(boolean enabled,List<String> catalogCodeList);
 }
