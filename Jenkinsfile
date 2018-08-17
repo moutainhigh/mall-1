@@ -25,7 +25,7 @@ pipeline {
         }
         stage('Docker build') {
             steps {
-                sh 'docker build -t ${DOCKER_IMAGE_NAME} -f dockerfile/Dockerfile .'
+                sh 'docker build -t ${DOCKER_IMAGE_NAME} -f ${DOCKER_MODULE_NAME}/dockerfile/Dockerfile .'
             }
         }
 
