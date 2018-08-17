@@ -59,6 +59,44 @@
                 province: "province",
                 city: "city"
             });
+
+            $("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        }
+                        if (null == $("#editorContent").val() || "" == $("#editorContent").val()) {
+                            bootbox.alert("请填写商品详情内容!");
+                            return false;
+                        }
+                        if (null == $("#editorContent2").val() || "" == $("#editorContent2").val()) {
+                            bootbox.alert("请填写商品配置内容!");
+                            return false;
+                        }
+                        if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
+                            bootbox.alert("请填写商品说明内容!");
+                            return false;
+                        }
+                        if ($("#editorContent").val().length > 4098) {
+                            bootbox.alert("商品详情内容过长，请输入小于4098个字符!");
+                            return false;
+                        }
+                        if ($("#editorContent2").val().length > 4098) {
+                            bootbox.alert("商品配置内容过长，请输入小于4098个字符!");
+                            return false;
+                        }
+                        if ($("#editorContent1").val().length > 4098) {
+                            bootbox.alert("商品说明内容过长，请输入小于4098个字符!");
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            });
         });
 
         function loadSpecs(catalogId) {
