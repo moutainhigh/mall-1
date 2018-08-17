@@ -18,6 +18,15 @@ public class HomeFloorVO implements java.io.Serializable {
      */
     private List<IndexCommodityVO> indexCommodityList;
 
+    /**
+     * baner
+     * @return
+     */
+    private List<AdvertisementVO> advertisementList;
+    /**
+     * 排序
+     */
+    private int sortOrder;
     public List<BrandVO> getBrand() {
         return brand;
     }
@@ -40,5 +49,21 @@ public class HomeFloorVO implements java.io.Serializable {
 
     public void setIndexCommodityList(List<IndexCommodityVO> indexCommodityList) {
         this.indexCommodityList = indexCommodityList;
+    }
+
+    public List<AdvertisementVO> getAdvertisementList() {
+        return advertisementList;
+    }
+
+    public void setAdvertisementList(List<AdvertisementVO> advertisementList) {
+        this.advertisementList = advertisementList;
+    }
+
+    public int getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(int sortOrder) {
+        this.sortOrder = sortOrder;
     }
 }

@@ -10,8 +10,6 @@ import java.util.Map;
 public class HomePageVO implements Serializable {
     @ApiModelProperty(value="楼层信息",name="homeFloorVOList",example="1")
     private List<HomeFloorVO> homeFloorVOList;
-    @ApiModelProperty(value="banner",name="advertisementMap",example="1")
-    private Map<String, List<AdvertisementVO>> advertisementMap;
 
     public List<HomeFloorVO> getHomeFloorVOList() {
         return homeFloorVOList;
@@ -19,13 +17,5 @@ public class HomePageVO implements Serializable {
 
     public void setHomeFloorVOList(List<HomeFloorVO> homeFloorVOList) {
         this.homeFloorVOList = homeFloorVOList;
-    }
-
-    public Map<String, List<AdvertisementVO>> getAdvertisementMap() {
-        return advertisementMap;
-    }
-
-    public void setAdvertisementMap(Map<String, List<AdvertisementVO>> advertisementMap) {
-        this.advertisementMap = advertisementMap;
     }
 }
