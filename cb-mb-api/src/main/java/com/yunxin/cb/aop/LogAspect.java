@@ -79,7 +79,7 @@ public class LogAspect {
 			long endTime = System.currentTimeMillis();
 			float excTime = (float) (endTime - startTime) / 1000;
 			log.info("methodName：" + methodName + ";" + "\n result："
-					+ JSON.toJSON(outputParam) + "执行时间:" + excTime+ "\n "
+					+ isJson(outputParam) + "执行时间:" + excTime+ "\n "
 			);
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -90,5 +90,13 @@ public class LogAspect {
 			return new ResponseResult(Result.FAILURE,"系统繁忙，请稍后重试...");
 		}
 		return outputParam;
+	}
+
+	public String isJson(Object outputParam){
+		try {
+			return JSON.toJSON(outputParam).toString();
+		} catch (Exception e) {
+			return outputParam.toString();
+		}
 	}
 }

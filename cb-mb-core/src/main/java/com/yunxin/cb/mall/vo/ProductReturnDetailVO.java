@@ -36,7 +36,7 @@ public class ProductReturnDetailVO implements java.io.Serializable{
 
     /** 申请时间 */
     @ApiModelProperty(value="申请时间 ",name="applyTime",example="1")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date applyTime;
 
     /** 退货退款状态 0:申请退货退款 1:待退货退款 2:已退货待退款 3:已退货退款 4:拒绝退货退款 5:申请退款 6:待退款 7:已退款 8:拒绝退款 */
@@ -56,17 +56,17 @@ public class ProductReturnDetailVO implements java.io.Serializable{
     private AuditState auditState;
     /** 审核时间 */
     @ApiModelProperty(value="审核时间",name="auditTime",example="2018-04-5-23 11:11:11")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date auditTime;
 
     /** 退款时间 */
     @ApiModelProperty(value="退款时间",name="refundTime",example="2018-04-5-23 11:11:11")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date refundTime;
 
     /** 完成时间 */
     @ApiModelProperty(value="完成时间",name="disposeTime",example="2018-04-5-23 11:11:11")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date disposeTime;
 
     /** 退款金额 */

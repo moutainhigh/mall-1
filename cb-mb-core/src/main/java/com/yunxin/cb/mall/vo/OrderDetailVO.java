@@ -59,7 +59,7 @@ public class OrderDetailVO implements java.io.Serializable{
 
     /** 创建时间 */
     @ApiModelProperty(value="提交时间",name="createTime",example="2018-07-24")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     /** 支付超时倒计时时间 */
@@ -68,7 +68,7 @@ public class OrderDetailVO implements java.io.Serializable{
 
     /** 支付时间 */
     @ApiModelProperty(value="支付时间",name="paymentTime",example="2018-07-24")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date paymentTime;
 
     /** 商家名 */
