@@ -549,7 +549,8 @@ public class OrderService implements IOrderService {
     @Override
     public void completedOrders() {
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
+        //c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
+        c.add(Calendar.MINUTE ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
         //orderDao.taskCollectTimeOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
         List<Order> orders = orderDao.findOrderByOrderStateAndCollectTime(OrderState.RECEIVED, c.getTime());
         if (orders != null && !orders.isEmpty()) {
