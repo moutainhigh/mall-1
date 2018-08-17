@@ -36,7 +36,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         //用户访问日志
         logger.info("AppAccess info: clientIp=" + getIpAddr(request) + " access_url=" + request.getRequestURI() + " attime=" + new Date().toString()
                 + " Bymethod= " + request.getMethod() + ",user-Agent='" + request.getHeader("user-Agent") + "'");
-        logger.info("请求参数：" + BaseResource.getFullParam(request));//打印请求参数  add by lxc  2018-08-16
+        
         if (!request.getMethod().equals("OPTIONS")) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
 
