@@ -268,7 +268,7 @@ public class AttributeService implements IAttributeService {
             }
             attribute.setSortOrder((short) sortOrder[i]);
             attributeDao.save(attribute);
-            if(imagePath[i]!=null&&!"".equals(imagePath[i])){
+            if(attributeGroup.isShowAsImage()&&imagePath!=null&&imagePath[i]!=null&&!"".equals(imagePath[i])){
                 attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,attributeGroup.getGroupId(),imagePath[i]+",0,0");
             }
         }
