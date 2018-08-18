@@ -9,7 +9,6 @@ import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.restful.meta.Result;
 import com.yunxin.cb.mall.service.ReimbursementQueryService;
 import com.yunxin.cb.mall.vo.*;
-import com.yunxin.cb.util.CalendarUtils;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
@@ -52,6 +50,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
      * @return
      * @throws Exception
      */
+    //TODO 在订单表加报账状态
     @Override
     public PageFinder<ReimbursementVO> pageReimbursementQuery(Query q)throws Exception {
         ReimbursementQuery reimbursement = (ReimbursementQuery)q.getData();
@@ -268,16 +267,18 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         }
         //查询该报账订单审批时间
         List<ReimbursementProcess> list = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
-        //第一次审批时间
-        if(list.size() == 1){
-            ReimbursementProcess reimbursementProcess = list.get(0);
-            alreadyReimbursementVO.setOperationTime(reimbursementProcess.getCreateTime());
-            alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
-        }else if(list.size() > 1){
-            //到账时间
-            ReimbursementProcess reimbursementProcess = list.get(list.size()-1);
-            alreadyReimbursementVO.setExaminationTime(reimbursementProcess.getCreateTime());
-            alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
+        if(list != null){
+            //第一次审批时间
+            if(list.size() == 1){
+                ReimbursementProcess reimbursementProcess = list.get(0);
+                alreadyReimbursementVO.setOperationTime(reimbursementProcess.getCreateTime());
+                alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
+            }else if(list.size() > 1){
+                //到账时间
+                ReimbursementProcess reimbursementProcess = list.get(list.size()-1);
+                alreadyReimbursementVO.setExaminationTime(reimbursementProcess.getCreateTime());
+                alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
+            }
         }
         //组合参数
         BeanUtils.copyProperties(reimbursement, alreadyReimbursementVO);
@@ -362,7 +363,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         List<ReimbursementProcess> listVO = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
         completeReimbursementDetailVO.setAccountAmount(reimbursement.getAmount());
         completeReimbursementDetailVO.setOrderState(reimbursement.getOrderState());
-        completeReimbursementDetailVO.setOperationTime(listVO.get(listVO.size()-1).getCreateTime());
+        if(listVO != null){
+            completeReimbursementDetailVO.setOperationTime(listVO.get(listVO.size()-1).getCreateTime());
+        }
         completeReimbursementDetailVO.setReimbursementNo(reimbursement.getReimbursementNo());
         completeReimbursementDetailVO.setPayment(reimbursement.getRepaymentType());
         if(reimbursement.getRepaymentAmount() != null){
