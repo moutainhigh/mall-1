@@ -46,6 +46,9 @@ public class YicheSpecController {
                 Document document = res.parse();
 
                 Element selectFirst = document.selectFirst("#loadMoreList > li > div > div > a");
+                if(selectFirst == null) {
+                    selectFirst = document.selectFirst("#loadMoreList > li > a");
+                }
                 if (selectFirst != null) {
                     String carDetailUrl = selectFirst.attr("href");
                     //通过搜索获取汽车详情url
