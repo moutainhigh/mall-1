@@ -94,11 +94,11 @@
         var datasA = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasA.push([value.day, value.orderNum]);
+          datasA.push([value.day-1, value.orderNum]);
           categories.push(value.day);
         });
         options.series[0].data = datasA;
-        options.xAxis.categories = categories;
+        //options.xAxis.categories = categories;
         $('#chartContainer').highcharts(options);
       });
 
@@ -109,7 +109,7 @@
         var datasB = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasB.push([value.day, value.orderNum]);
+          datasB.push([value.day-1, value.orderNum]);
           categories.push(value.day);
         });
         options.series[1].data = datasB;

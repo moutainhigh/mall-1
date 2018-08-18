@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -73,7 +74,7 @@ public class ProductReturnResource extends BaseResource {
     })
     @ApiVersion(1)
     @PostMapping(value = "productReturn")
-    public ResponseResult addProductReturn(@RequestBody ProductReturnApplyVO productReturnApplyVO){
+    public ResponseResult addProductReturn(@Validated @RequestBody ProductReturnApplyVO productReturnApplyVO){
         try {
             logger.info("productReturnApplyVO:" + productReturnApplyVO.toString());
             ProductReturn productReturn = new ProductReturn();

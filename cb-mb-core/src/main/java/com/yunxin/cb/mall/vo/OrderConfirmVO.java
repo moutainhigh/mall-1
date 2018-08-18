@@ -3,8 +3,14 @@ package com.yunxin.cb.mall.vo;
 import com.yunxin.cb.mall.entity.meta.PaymentType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
+
+//import org.hibernate.validator.constraints.NotBlank;
 
 /**
 * @author gws
@@ -18,34 +24,42 @@ public class OrderConfirmVO implements java.io.Serializable{
     /**
      * 支付方式
      */
+    @NotNull(message = "支付方式不能为空")
     @ApiModelProperty(value="支付方式",name="paymentType",example="FULL_SECTION", required = true)
     private PaymentType paymentType;
 
      /**
      * 收货人姓名
      */
+    @NotBlank(message = "收货人姓名不能为空")
     @ApiModelProperty(value="收货人姓名",name="consigneeName",example="张三", required = true)
     private String consigneeName;
 
     /**
      * 收货人手机号
      */
+    @NotBlank(message = "收货人手机号不能为空")
+    @Pattern(regexp = "^(1)\\d{10}$", message = "请输入正确得手机格式")
     @ApiModelProperty(value="收货人手机号",name="consigneeMobile",example="13856953362", required = true)
     private String consigneeMobile;
 
     /**
      * 自提地址
      */
+    @NotBlank(message = "自提地址不能为空")
     @ApiModelProperty(value="自提地址",name="consigneeAddress",example="深圳市", required = true)
     private String consigneeAddress;
     /**
      * 商家id
      */
+    @NotBlank(message = "商家id不能为空")
     @ApiModelProperty(value="商家id",name="sellerId",example="1", required = true)
     private String sellerId;
     /**
      * 购买货品信息
      */
+    @Valid
+    @NotNull(message = "货品信息不能为空")
     private List<OrderConfirmProductVO> orderConfirmProductList;
 
     public PaymentType getPaymentType() {
