@@ -31,7 +31,7 @@ spring:
 qiniu:
   accessKey: ewsiGNq3V0B5p3XSZQkI9UndbxQDD03q5WiL-63k
   secretKey: 9fglZdOXWmLXbU1rzroDOr2anFZydhnuKZjzBb-c
-  bucket-1: crystal-ball-prod
+  bucket-1: crystal-ball-sandbox
   domain-1: http://sandbox.resource.999shuijingqiu.com/
 
 #融云IM

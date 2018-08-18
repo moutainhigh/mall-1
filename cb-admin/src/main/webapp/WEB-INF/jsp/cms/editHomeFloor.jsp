@@ -434,7 +434,7 @@
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
-                        <div class="row">
+                        <div class="row" style="display: none">
                             <div class="col-sm-2">
                                 <label>广告列表：<span class="asterisk">*</span></label>
                             </div>
