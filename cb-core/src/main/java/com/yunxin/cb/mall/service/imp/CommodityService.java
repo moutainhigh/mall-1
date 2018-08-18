@@ -698,9 +698,11 @@ public class CommodityService implements ICommodityService {
                         }
                     }
                 }
-                if(prodIds.size()<=0){//没有已上架的货品，商品不能上架
-                    responseResult.setMessage("没有已上架的货品，商品不能上架！");
-                    return responseResult;
+                if(commodity.getProducts().size() > 1){
+                    if(prodIds.size()<=0){//没有已上架的货品，商品不能上架
+                        responseResult.setMessage("没有已上架的货品，商品不能上架！");
+                        return responseResult;
+                    }
                 }
                 commodity.setDefaultProduct(defaultProduct);
                 commodity.setPublishState(PublishState.UP_SHELVES);
