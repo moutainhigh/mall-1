@@ -289,9 +289,6 @@
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
                             </kendo:dataSource-schema>
-                            <kendo:dataSource-filter>
-                                <kendo:dataSource-filterItem field="seller.sellerId" value="${seller.sellerType=='SELF_OPERATION'?null:seller.sellerId}" operator="eq"/>
-                            </kendo:dataSource-filter>
                             <kendo:dataSource-transport>
                                 <kendo:dataSource-transport-read url="pageCommodities.do" type="POST" contentType="application/json"/>
                                 <kendo:dataSource-transport-parameterMap>

@@ -306,7 +306,7 @@
                                 <label><span class="asterisk"></span>一级分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control"  path="catalog.ratio" id="catalogRatio" readonly="true" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control"  path="" id="oneLevelCatalog" readonly="true" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
