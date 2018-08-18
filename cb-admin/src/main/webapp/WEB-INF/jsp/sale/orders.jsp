@@ -284,9 +284,9 @@
                     </kendo:dataSource-schema-model-fields>
                   </kendo:dataSource-schema-model>
                 </kendo:dataSource-schema>
-                <kendo:dataSource-filter>
+                <%--<kendo:dataSource-filter>
                   <kendo:dataSource-filterItem field="seller.sellerId" value="${seller.sellerType=='SELF_OPERATION'?null:seller.sellerId}" operator="eq"/>
-                </kendo:dataSource-filter>
+                </kendo:dataSource-filter>--%>
                 <kendo:dataSource-transport>
                   <kendo:dataSource-transport-read url="pageOrders.do" type="POST" contentType="application/json"/>
                   <kendo:dataSource-transport-parameterMap>

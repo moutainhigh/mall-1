@@ -415,7 +415,7 @@
                                             <td>${group.groupName}</td>
                                             <td>
                                                 <c:forEach var="attribute" items="${group.attributes}">
-                                                <form:checkbox cssClass="validate[minCheckbox[1]]" path="attributeIds" data-gid="${group.groupId}" onchange="checkAttributes(this);" value="${attribute.attributeId}" data-errormessage="请选择至少一个属性"/>&nbsp;${attribute.attributeName}
+                                                <form:checkbox cssClass="validate[minCheckbox[${fn:length(attributeGroups) }]]" path="attributeIds" data-gid="${group.groupId}" onchange="checkAttributes(this);" value="${attribute.attributeId}" data-errormessage="请选择至少${fn:length(attributeGroups) }个属性"/>&nbsp;${attribute.attributeName}
                                                     <c:if test="${!empty attribute.imagePath}">
                                                         <img src="..${PIC_PATH}${attribute.imagePath}">
                                                     </c:if>
