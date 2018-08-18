@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.core.web.json.serializer.JsonDateSerializer;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -234,6 +235,7 @@ public class Catalog implements java.io.Serializable {
         TreeViewItem catalog = new TreeViewItem();
         catalog.setId(String.valueOf(catalogId));
         catalog.setText(catalogName);
+        catalog.setTreeLevel(!StringUtils.isEmpty(catalogCode) ? String.valueOf((catalogCode.length()/3) - 1) : null);
         catalog.setRatio(ratio);
         return catalog;
     }
