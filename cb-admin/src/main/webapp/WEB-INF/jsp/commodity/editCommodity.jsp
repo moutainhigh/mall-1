@@ -289,25 +289,34 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 成本价(元)：</label>
+                                <label><span class="asterisk">*</span> 成本价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="11"/>
+                                </div>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 销售价(元)：</label>
+                                <label><span class="asterisk">*</span> 销售价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="sellPrice" readonly="true" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="sellPrice" readonly="true" title="销售价等于成本价乘以比例配置" maxlength="11"/>
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 市场价(元)：</label>
+                                <label><span class="asterisk">*</span> 市场价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="marketPrice" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="marketPrice" maxlength="11"/>
+                                </div>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品单位：</label>
@@ -321,16 +330,22 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>重量(kg)：</label>
+                                <label>重量：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[custom[number]]" path="weight" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="11"/>
+                                    <span class="input-group-addon">Kg</span>
+                                </div>
                             </div>
                             <div class="col-sm-2">
                                 <label>体积(m³)：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[custom[number]]" path="volume" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="11"/>
+                                    <span class="input-group-addon">m3</span>
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
