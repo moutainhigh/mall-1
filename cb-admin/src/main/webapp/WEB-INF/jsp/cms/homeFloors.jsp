@@ -129,7 +129,7 @@
             </div>
             <div class="inner-padding">
                 <div class="toolbar responsive-helper">
-                    <form>
+                    <form style="width: 100%" >
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>楼层名称:</strong>
