@@ -339,7 +339,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-2">
-                                <label>体积(m³)：</label>
+                                <label>体积：</label>
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
