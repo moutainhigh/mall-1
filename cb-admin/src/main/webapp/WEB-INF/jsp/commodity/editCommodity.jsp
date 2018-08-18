@@ -204,7 +204,7 @@
                             <div class="col-sm-3">
                                 <form:hidden id="catalogId" path="catalog.catalogId"/>
                                 <div class="input-group">
-                                    <form:input id="catalogName" readonly="true" cssClass="form-control validate[required]" path="catalog.catalogName" maxlength="32"/>
+                                    <form:input id="catalogName" readonly="true" cssClass="form-control validate[required]" path="catalog.catalogName" maxlength="32" placeholder="仅可选择第三级商品分类"/>
                                     <span class="input-group-btn">
                                         <button id="catalogNameBtn" class="btn btn-default" type="button">选择</button>
                                     </span>
@@ -283,7 +283,7 @@
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate" path="ratio" onkeyup="salePrice_f();" placeholder="商品比例配置不填,则取分类比例配置" maxlength="12" readonly="true"/>
+                                <form:input type="text" cssClass="form-control validate" path="ratio" onkeyup="salePrice_f();" placeholder="默认取一级分类比例配置" maxlength="12" readonly="true"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -632,6 +632,9 @@
                     </div>
                 </div>
             </div>
+            <div class="alert alert-warning" id="modalMsg" style="display: none;">
+                <strong>提示：</strong>仅第三级商品分类可关联商品！
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button class="btn btn-primary pull-right" onclick="chooseCatalog();">确认</button>
@@ -641,8 +644,10 @@
             var catalogId = 0;
             var catalogName = "";
             var RATIO = 1;//分类比例配置
+            var treeLevel = "";
             $('#catalogNameBtn').click(function (e) {
                 $('#catalogDialog').modal();
+                $('#modalMsg').hide();
                 e.preventDefault();
             });
 
@@ -651,9 +656,15 @@
                 catalogId = data.id;
                 catalogName = data.text;
                 RATIO = data.ratio;
+                treeLevel = data.treeLevel;
             }
 
             function chooseCatalog() {
+                if(treeLevel != 3){
+                    $('#modalMsg').show();
+                    return;
+                }
+                $('#modalMsg').hide();
                 $('#catalogDialog').modal("hide");
                 $("#catalogId").val(catalogId);
                 $("#catalogName").val(catalogName);

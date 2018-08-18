@@ -35,16 +35,26 @@
             });
 
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var defaultPicPath = $('input[name="digestPic"]');
+                        if(defaultPicPath.size() > 1){
+                            bootbox.alert("只能选择一张摘要图片!");
+                            return false;
+                        }else {
+                            return true;
+                        }
+                    }
+                }
             });
-            $('#serNo').val("");
         });
 
         function resetForm(){
-
             $("#pushTitle").val("");
             $("#pushDigest").text("");
             $("#messageContent").text("");
+            
         }
     </script>
 </head>
@@ -151,7 +161,7 @@
                                 <label>推送标题：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input id="pushTitle" path="pushTitle" cssClass="form-control validate[required,minSize[5]]" maxlength="100"/>
+                                <form:input id="pushTitle" path="pushTitle" cssClass="form-control validate[required,minSize[2]]" maxlength="100"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -162,7 +172,7 @@
                                 <label>消息摘要：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input id="messageDigest" path="messageDigest" cssClass="form-control validate[required,minSize[5]]" maxlength="200"/>
+                                <form:input id="messageDigest" path="messageDigest" cssClass="form-control validate[required,minSize[2]]" maxlength="200"/>
                             </div>
                         </div>
 
@@ -181,20 +191,6 @@
                                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
-                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
-                                            onValidationComplete: function (form, valid) {
-                                                if (valid) {
-                                                    var defaultPicPath = $('input[name="digestPic"]');
-                                                    if (defaultPicPath.size()==0) {
-                                                        bootbox.alert("请选择一张图片!");
-                                                        return false;
-                                                    } else {
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        });
                                         var initPreview = new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
@@ -292,7 +288,7 @@
                         <div class="spacer-10"></div>
                         <div  class="row">
                             <div class="col-sm-2">
-                                <label>消息内容：<span class="asterisk">*</span></label>
+                                <label>消息内容：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:textarea id="editorContent2" path="messageContent" cssClass="form-control validate[required,maxSize[40]]" maxlength="40"/>

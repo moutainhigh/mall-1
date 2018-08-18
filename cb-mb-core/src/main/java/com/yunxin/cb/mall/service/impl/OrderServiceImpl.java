@@ -148,12 +148,17 @@ public class OrderServiceImpl implements OrderService {
                 totalQuantity += productNum;
                 orderItem.setOrderId(order.getOrderId());
                 orderItem.setOrderItemPrice(product.getSalePrice() * productNum);
+                orderItem.setEvaluate(false);
+                orderItem.setCreateTime(createTime);
                 orderItem.setProductId(product.getProductId());
                 orderItem.setSalePrice(product.getSalePrice());
                 orderItem.setProductImg(product.getDefaultPicPath());
-                orderItem.setEvaluate(false);
-                orderItem.setCreateTime(createTime);
                 orderItem.setCostPrice(product.getCostPrice());
+                orderItem.setProductNo(product.getProductNo());
+                orderItem.setProductName(product.getProductName());
+                orderItem.setMarketPrice(product.getMarketPrice());
+                orderItem.setVolume(product.getVolume());
+                orderItem.setWeight(product.getWeight());
                 //减少库存
                 product.setStoreNum(product.getStoreNum() - productNum);
                 int reservedStoreNum = product.getReservedStoreNum() == null ? 0  : product.getReservedStoreNum();
@@ -315,6 +320,7 @@ public class OrderServiceImpl implements OrderService {
         if (order.getDeliveryType() == null) {
             order.setDeliveryType(DeliveryType.ZT);
         }
+        order.setPaymentState(PaymentState.TO_BE_PAID);
         order.setScoreTotal(0);
         order.setEnabled(true);
         order.setWeightTotal(0d);

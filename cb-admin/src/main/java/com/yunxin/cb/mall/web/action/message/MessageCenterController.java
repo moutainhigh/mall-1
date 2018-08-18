@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -115,19 +116,26 @@ public class MessageCenterController {
      * @date: 2018/8/15 17:20
      */
     @RequestMapping(value = "pushMessage", method = RequestMethod.GET)
-    public String pushMessage(@RequestParam(value = "messageId") int messageId){
-        Message message = messageService.getMessage(messageId);
-        if(null != message && message.getMessageId() > 0){
-            //消息推送
-            RongCloudService rongCloudService = new RongCloudService();
-            rongCloudService.pushMessageToAll(message.getPushTitle());
-
-            //状态更新
-            message.setPushStatus(PushStatus.HAVE_PUSHED);
-            message.setPushTime(new Date());
-            messageService.addMessage(message);
+    public String pushMessage(@RequestParam(value = "messageId") int messageId, RedirectAttributes redirectAttributes){
+        try {
+            Message message = messageService.getMessage(messageId);
+            if(null != message && message.getMessageId() > 0){
+                //消息推送
+                RongCloudService rongCloudService = new RongCloudService();
+                if(rongCloudService.pushMessageToAll(message.getPushTitle())){
+                    //状态更新
+                    message.setPushStatus(PushStatus.HAVE_PUSHED);
+                    message.setPushTime(new Date());
+                    messageService.addMessage(message);
+                    return "redirect:../common/success.do?reurl=message/message.do";
+                }else {
+                    redirectAttributes.addFlashAttribute("msgTitle","融云推送失败，请联系管理员！");
+                }
+            }
+        }catch (Exception e){
+            logger.error("消息推送失败",e);
         }
-        return "redirect:../common/success.do?reurl=message/message.do";
+        return "redirect:../common/failure.do?reurl=message/message.do";
     }
 
     /**
@@ -148,6 +156,7 @@ public class MessageCenterController {
             messageService.removeMessageById(messageId);
             return true;
         } catch (Exception e) {
+            logger.error("消息删除失败",e);
             return false;
         }
     }
