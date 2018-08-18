@@ -36,7 +36,23 @@
 
       });
     });
+    function submitForm() {
+        var advertisementType = $("#advertisementType").val();
+        if(advertisementType == "VIDEO"){
+            var videoPath = $("#videoPath").val();
+            if("" == videoPath || videoPath == null){
+                bootbox.alert("视频路径不能为空");
+                return false;
+            }
+        }else if(advertisementType == "PTHOTO_AND_TEXT"){
+            var advertURL = $("#advertURL").val();
+            if("" == advertURL || advertURL == null){
+                bootbox.alert("广告URL不能为空");
+                return false;
+            }
 
+        }
+    }
     function returns(){
       window.location.href = "advertisements.do";
     }
@@ -332,7 +348,7 @@
       </div>
       <!-- End .actionbar-->
       <div class="inner-padding">
-        <form:form id="validateSubmitForm" cssClass="form-horizontal" action="editAdvertisement.do" method="post" commandName="advertisement">
+        <form:form id="validateSubmitForm" cssClass="form-horizontal" action="editAdvertisement.do" method="post" commandName="advertisement" onsubmit="return submitForm();">
           <form:hidden path="advertId"/>
           <fieldset>
             <legend>修改广告</legend>
@@ -363,6 +379,12 @@
                   <form:options items="${advertisementType}" itemLabel="name"/>
                 </form:select>
               </div>
+              <div class="col-sm-2">
+                <label> 广告URL：</label>
+              </div>
+              <div class="col-sm-3">
+                <form:input cssClass=" form-control" path="advertURL" id="advertURL" maxlength="5121"/>
+              </div>
               <%--<div class="col-sm-2">
                 <label><span class="asterisk">*</span> 客户端类型：</label>
               </div>
@@ -388,13 +410,13 @@
                 <label> 视频路径：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="clearInput form-control" path="videoPath" maxlength="512"/>
+                <form:input cssClass="clearInput form-control" path="videoPath" id="videoPath" maxlength="512"/>
               </div>
             </div>
 
             <div class="spacer-10"></div>
 
-            <div class="row">
+            <div class="row" style="display: none">
               <div class="col-sm-2">
                 <label><span class="asterisk">*</span> 广告URL类型：</label>
               </div>
@@ -403,12 +425,12 @@
                   <form:options items="${advertisementURLType}" itemLabel="name"/>
                 </form:select>
               </div>
-              <div class="col-sm-2">
+<%--              <div class="col-sm-2">
                 <label> 广告URL：</label>
               </div>
               <div class="col-sm-3">
                 <form:input cssClass="clearInput form-control" path="advertURL" maxlength="5121"/>
-              </div>
+              </div>--%>
             </div>
 
             <div class="row">
