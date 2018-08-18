@@ -42,7 +42,7 @@ public class FinacialExpectBillResource extends BaseResource {
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")
     })
     @ApiVersion(1)
-    @PostMapping(value = "get")
+    @GetMapping(value = "get")
     public ResponseResult<PageFinder<FinacialExpectBillVO>> get(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
         try {
             Customer customer = customerService.getCustomerById(getCustomerId());

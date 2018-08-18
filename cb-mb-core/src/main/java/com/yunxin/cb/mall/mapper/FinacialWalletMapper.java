@@ -58,7 +58,7 @@ public interface FinacialWalletMapper {
             "WALLET_ID, CUSTOMER_ID, ASSETS, BALANCE, EXPECTED_AMOUNT, DEBT_TOTAL, DEBT_EXPECTED, ",
             "DEBT_CREDIT, CREDIT_AMOUNT, FREEZING_AMOUNT, VERSION,INSURANCE_AMOUNT,TOTAL_AMOUNT",
             "from finacial_wallet",
-            "where WALLET_ID = #{customerId,jdbcType=INTEGER}"
+            "where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     @Results({
             @Result(column="WALLET_ID", property="walletId", jdbcType=JdbcType.INTEGER, id=true),
