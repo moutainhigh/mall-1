@@ -41,7 +41,7 @@ public class DemoResource extends BaseResource {
     @ApiOperation(value = "通过用户ID查询收货地址列表 V1")
     @ApiImplicitParams({
     })
-    @GetMapping(value = "deliveryAddress/list")
+    @GetMapping(value = "deliveryAddress123/list")
     @ApiVersion(1)
     public ResponseResult<List<DeliveryAddressVO>> getDeliveryAddress() {
         return new ResponseResult(Result.SUCCESS);

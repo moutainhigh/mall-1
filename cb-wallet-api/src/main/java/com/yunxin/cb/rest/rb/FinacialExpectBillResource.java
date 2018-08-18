@@ -1,10 +1,8 @@
 package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
-import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.Favorite;
 import com.yunxin.cb.mall.entity.FinacialExpectBill;
-import com.yunxin.cb.mall.service.CustomerService;
 import com.yunxin.cb.mall.service.FinacialExpectBillService;
 import com.yunxin.cb.mall.vo.FavoriteVo;
 import com.yunxin.cb.mall.vo.FinacialExpectBillVO;
@@ -32,9 +30,7 @@ public class FinacialExpectBillResource extends BaseResource {
     @Resource
     private FinacialExpectBillService finacialExpectBillService;
 
-    @Resource
-    private CustomerService customerService;
-
+    private static final Log log = LogFactory.getLog(FiaciaWalletResource.class);
 
     @ApiOperation(value = "获取预期收益交易信息")
     @ApiImplicitParams({
@@ -42,38 +38,34 @@ public class FinacialExpectBillResource extends BaseResource {
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")
     })
     @ApiVersion(1)
-    @GetMapping(value = "get")
+    @PostMapping(value = "get")
     public ResponseResult<PageFinder<FinacialExpectBillVO>> get(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
         try {
-            Customer customer = customerService.getCustomerById(getCustomerId());
-            if (customer == null) {
-                return new ResponseResult(Result.FAILURE, "未获取到用户信息");
-            }
             Query q = new Query(pageNo, pageSize);
             FinacialExpectBill fbill=new FinacialExpectBill();
-            fbill.setCustomerId(customer.getCustomerId());
+            fbill.setCustomerId(getCustomerId());
             q.setData(fbill);
             PageFinder<FinacialExpectBill> pageFinder=finacialExpectBillService.page(q);
             PageFinder<FinacialExpectBillVO> page=FinacialExpectBillVO.dOconvertVOPage(pageFinder);
             return new ResponseResult(page);
         } catch (Exception e) {
-            logger.info("get failed", e);
+            log.info("get failed", e);
         }
         return new ResponseResult(Result.FAILURE);
     }
 
-//    @ApiOperation(value = "添加预期收益交易信息")
-//    @ApiImplicitParams({
-//    })
-//    @ApiVersion(1)
-//    @GetMapping(value = "add")
-//    public ResponseResult<FinacialExpectBillVO> add(@RequestBody FinacialExpectBillVO vo){
-//        try {
-//            finacialExpectBillService.addFinacialExpectBill(vo);
-//            return new ResponseResult(vo);
-//        } catch (Exception e) {
-//            logger.info("get failed", e);
-//        }
-//        return new ResponseResult(Result.FAILURE);
-//    }
+    @ApiOperation(value = "添加预期收益交易信息")
+    @ApiImplicitParams({
+    })
+    @ApiVersion(1)
+    @GetMapping(value = "add")
+    public ResponseResult<FinacialExpectBillVO> add(@RequestBody FinacialExpectBillVO vo){
+        try {
+            finacialExpectBillService.addFinacialExpectBill(vo);
+            return new ResponseResult(vo);
+        } catch (Exception e) {
+            log.info("get failed", e);
+        }
+        return new ResponseResult(Result.FAILURE);
+    }
 }
