@@ -166,6 +166,8 @@ public class OrderServiceImpl implements OrderService {
                 productMapper.updateByPrimaryKey(product);
                 totalPrice = totalPrice.add(new BigDecimal(String.valueOf(product.getSalePrice())));
             }
+        } else {
+            throw new CommonException("请选择购买得商品");
         }
         //是否需要判断买过保单用户才能购买商品(无需判断了)
 //        Customer customer = customerMapper.selectByPrimaryKey(order.getCustomerId());
