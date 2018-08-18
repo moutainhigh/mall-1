@@ -135,7 +135,7 @@
             <!-- End .actionbar-->
             <div class="inner-padding">
                 <div class="toolbar responsive-helper">
-                    <form>
+                    <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>频道栏目名称:</strong>

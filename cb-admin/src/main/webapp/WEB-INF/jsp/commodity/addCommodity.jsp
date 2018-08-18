@@ -14,6 +14,11 @@
     <script src="../js/common/fixed_common.js"></script>
     <script type="application/javascript">
 
+        var errerMsg='${errerMsg}';
+        if(errerMsg!=null&&errerMsg!=""){
+            commonNotify(errerMsg,"error");
+        }
+
         var curStep = 0;
 
         $(document).ready(function () {
@@ -195,7 +200,7 @@
                             <div class="col-sm-3">
                                 <form:hidden id="catalogId" path="catalog.catalogId"/>
                                 <div class="input-group">
-                                    <form:input id="catalogName" readonly="true" cssClass=" form-control validate[required]" path="catalog.catalogName" maxlength="32" placeholder="仅可选择第三级商品分类"/>
+                                    <form:input id="catalogName" readonly="true" cssClass="form-control validate[required]" path="catalog.catalogName" maxlength="32"/>
                                     <span class="input-group-btn">
                                         <button id="catalogNameBtn" class="btn btn-default" type="button">选择</button>
                                     </span>
@@ -215,7 +220,7 @@
                                 <label><span class="asterisk">*</span> 商品标题：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="commodityTitle" maxlength="64"/>
+                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityTitle" maxlength="64"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品价格段：</label>
@@ -268,7 +273,7 @@
                                 <label><span class="asterisk"></span>一级分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control"  path="" id="oneLevelCatalog" readonly="true" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control"  path="catalog.ratio" id="catalogRatio" readonly="true" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
@@ -280,25 +285,34 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 成本价(元)：</label>
+                                <label><span class="asterisk">*</span> 成本价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="11"/>
+                                </div>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 销售价(元)：</label>
+                                <label><span class="asterisk">*</span> 销售价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control validate[required,custom[number]]" path="sellPrice" readonly="true" placeholder="销售价等于成本价乘以比例配置"  maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="sellPrice" readonly="true" title="销售价等于成本价乘以比例配置" maxlength="11"/>
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 市场价(元)：</label>
+                                <label><span class="asterisk">*</span> 市场价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control validate[required,custom[number]]" path="marketPrice" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="marketPrice" maxlength="11"/>
+                                </div>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品单位：</label>
@@ -312,16 +326,22 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>重量(kg)：</label>
+                                <label>重量：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control validate[custom[number]]" path="weight" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="11"/>
+                                    <span class="input-group-addon">Kg</span>
+                                </div>
                             </div>
                             <div class="col-sm-2">
-                                <label>体积(m³)：</label>
+                                <label>体积：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control validate[custom[number]]" path="volume" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="11"/>
+                                    <span class="input-group-addon">m3</span>
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -524,7 +544,6 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
-                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             allowedFileExtensions: ["jpg", "png", "gif"],

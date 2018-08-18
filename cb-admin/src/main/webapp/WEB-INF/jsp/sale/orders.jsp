@@ -177,38 +177,38 @@
         </div>
         <!-- End .actionbar-->
         <div class="inner-padding">
-          <div class="toolbar responsive-helper">
-            <form>
-              <div class="pull-left">
-                <div class="toolbar-field">
-                  <strong>订单编码:</strong>
+            <div class="toolbar responsive-helper">
+              <form style="width: 100%">
+                <div class="pull-left">
+                  <div class="toolbar-field">
+                    <strong>订单编码:</strong>
+                  </div>
+                  <div class="toolbar-field">
+                    <input type="text" data-filter="orderCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入订单编码"/>
+                  </div>
+                  <div class="toolbar-field">
+                    <strong>订单状态:</strong>
+                  </div>
+                  <div class="toolbar-field">
+                    <select class="form-control  grid-filter" data-filter="orderState" data-operator="eq">
+                      <option value="">全部</option>
+                      <option value="PENDING_PAYMENT">待付款</option>
+                      <option value="PAID_PAYMENT">待发货</option>
+                      <option value="OUT_STOCK">已发货</option>
+                      <option value="RECEIVED">已签收</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="toolbar-field">
-                  <input type="text" data-filter="orderCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入订单编码"/>
+                <!-- End .pull-left -->
+                <div class="pull-right">
+                  <div class="toolbar-field">
+                    <button type="button" class="btn btn-default" onclick="reloadGridFilters('grid')"><i class="fa fa-search"></i>查询</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-default" onclick="clearFilters('grid')">清空</button>
+                  </div>
                 </div>
-                <div class="toolbar-field">
-                  <strong>订单状态:</strong>
-                </div>
-                <div class="toolbar-field">
-                  <select class="form-control  grid-filter" data-filter="orderState" data-operator="eq">
-                    <option value="">全部</option>
-                    <option value="PENDING_PAYMENT">待付款</option>
-                    <option value="PAID_PAYMENT">待发货</option>
-                    <option value="OUT_STOCK">已发货</option>
-                    <option value="RECEIVED">已签收</option>
-                  </select>
-                </div>
-              </div>
-              <!-- End .pull-left -->
-              <div class="pull-right">
-                <div class="toolbar-field">
-                  <button type="button" class="btn btn-default" onclick="reloadGridFilters('grid')"><i class="fa fa-search"></i>查询</button>
-                  &nbsp;&nbsp;&nbsp;
-                  <button type="button" class="btn btn-default" onclick="clearFilters('grid')">清空</button>
-                </div>
-              </div>
-              <!-- End .pull-right -->
-            </form>
+                <!-- End .pull-right -->
+              </form>
           </div>
           <!-- End .toolbar -->
 
