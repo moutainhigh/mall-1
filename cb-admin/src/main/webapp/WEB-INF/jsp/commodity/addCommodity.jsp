@@ -14,6 +14,11 @@
     <script src="../js/common/fixed_common.js"></script>
     <script type="application/javascript">
 
+        var errerMsg='${errerMsg}';
+        if(errerMsg!=null&&errerMsg!=""){
+            commonNotify(errerMsg,"error");
+        }
+
         var curStep = 0;
 
         $(document).ready(function () {
