@@ -148,15 +148,17 @@
                 <div class="col-sm-2">
                   <label>起始价格：<span class="asterisk">*</span></label>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3" style="position:relative;">
                   <form:input path="startPrice" onkeyup="value=value.replace(/[^\d]/g,'')" id="startPrice" onchange="checkPrice()" cssClass="form-control validate[required,custom[number]]" maxlength="9"/>
-                </div>元
+                  <span style="position: absolute;top:4px;right: -3px;">元</span>
+                </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
                   <label>结束价格：<span class="asterisk">*</span></label>
-                </div>元
-                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-3" style="position:relative;">
                   <form:input path="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')" id="endPrice" onchange="checkPrice()" cssClass="form-control validate[required,custom[number]]" maxlength="9"/>
+                  <span style="position: absolute;top:4px;right: -3px;">元</span>
                 </div>
                 <div class="col-sm-1"><form:errors path="endPrice"/> </div>
               </div>
