@@ -20,6 +20,11 @@
   <script type="application/javascript">
     $(document).ready(function(){
 
+        var errerMsg='${errerMsg}';
+        if(errerMsg!=null&&errerMsg!=""){
+            commonNotify(errerMsg,"error");
+        }
+
         $.citySelector.init({
             province: "province",
             city: "city",
@@ -65,6 +70,28 @@
       window.location.href = "sellers.do";
     }
 
+    //查询商家类型（自营仅唯一）
+    /*function checkSellerType($this){
+        var selfType=$($this).val();
+        if(selfType=="SELF_OPERATION"){
+            $.ajax({
+                url: "/admin/seller/queryIsExistsMgt.do",
+                type: 'GET',
+                data: {
+                    "sellerId": 0
+                },
+                success: function (result) {
+                    if(result){
+                        bootbox.alert("平台自营已存在，请重新选择!");
+                        $($this).prop('selectedIndex', 0);
+                        return false;
+                    }
+                },
+                error: function (err) {
+                }
+            });
+        }
+    }*/
 
   </script>
 
@@ -144,7 +171,7 @@
           <fieldset>
             <legend>新增商家</legend>
 
-            <div class="row"><div class="col-sm-2"></div><div class="col-sm-3"><form:errors path="sellerName" /></div></div>
+            <div class="row"><div class="col-sm-2"></div><div class="col-sm-3"></div></div>
             <div class="spacer-10"></div>
             <div class="row">
               <div class="col-sm-2">
@@ -176,8 +203,8 @@
                 <label><span class="asterisk">*</span> 商家类型：</label>
               </div>
               <div class="col-sm-3">
-                <form:select path="sellerType" cssClass="form-control simpleselect">
-                  <form:options items="${sellerType}" itemLabel="name"/>
+                <form:select path="sellerType" cssClass="form-control" >
+                    <form:options items="${sellerType}" itemLabel="name"/>
                 </form:select>
               </div>
             </div>

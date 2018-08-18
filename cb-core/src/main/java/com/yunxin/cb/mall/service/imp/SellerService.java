@@ -1,8 +1,6 @@
 package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.console.dao.UserDao;
-import com.yunxin.cb.console.entity.Role;
-import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.console.service.ISecurityService;
 import com.yunxin.cb.mall.dao.SellerDao;
 import com.yunxin.cb.mall.entity.Seller;
@@ -149,5 +147,15 @@ public class SellerService implements ISellerService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public long getSellerCount() {
         return sellerDao.count();
+    }
+
+    @Override
+    public boolean queryIsExistsMgt(Integer sellerId) {
+        Seller oldSel = sellerDao.checkSellerBySellerTypeForEdit(SellerType.SELF_OPERATION, sellerId);
+        if (null != oldSel) {
+            return true;
+        }else{
+            return false;
+        }
     }
 }
