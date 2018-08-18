@@ -363,9 +363,6 @@
                     </div>
                 </div>
             </div>
-            <div class="alert alert-warning" id="modalMsg" style="display: none;">
-                <strong>提示：</strong>运营分类最多可新建三级！
-            </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;关闭</button>
                 <button class="btn btn-primary pull-right" onclick="chooseCategory();"><i class="fa fa-check"></i>&nbsp;确认</button>
@@ -374,10 +371,8 @@
         <script type="application/javascript">
             var categoryId = 0;
             var categoryName = "";
-            var treeLevel = "";
             $('#parentCategoryNameBtn').click(function (e) {
                 $('#categoryDialog').modal();
-                $('#modalMsg').hide();
                 e.preventDefault();
             });
 
@@ -385,15 +380,9 @@
                 var data = $('#treeview').data('kendoTreeView').dataItem(e.node);
                 categoryId = data.id;
                 categoryName = data.text;
-                treeLevel = data.treeLevel;
             }
 
             function chooseCategory() {
-                if(treeLevel >= 3){
-                    $('#modalMsg').show();
-                    return;
-                }
-                $('#modalMsg').hide();
                 $('#categoryDialog').modal("hide");
                 $("#categoryId").val(categoryId);
                 $("#parentCategoryName").val(categoryName);

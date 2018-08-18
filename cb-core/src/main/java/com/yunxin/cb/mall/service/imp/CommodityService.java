@@ -614,18 +614,30 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public Spec addSpec(Spec spec) throws EntityExistException {
-        if (specDao.findTopBySpecNameAndCatalog_CatalogId(spec.getSpecName(), spec.getCatalog().getCatalogId()) != null) {
+        if(spec.getCatalog().getCatalogId() > 0 && !StringUtils.isEmpty(spec.getSpecName())){
+            Spec validSpec = specDao.getSpecBySpecNameAndAndCatalog_CatalogId(spec.getSpecName(),spec.getCatalog().getCatalogId());
+            if (null != validSpec && validSpec.getSpecId() > 0) {
+                throw new EntityExistException("规格名称已存在");
+            }
+            spec = specDao.save(spec);
+        }
+       /* if (specDao.findTopBySpecNameAndCatalog_CatalogId(spec.getSpecName(), spec.getCatalog().getCatalogId()) != null) {
             throw new EntityExistException("规格名称已存在");
         }
-        spec = specDao.save(spec);
+        spec = specDao.save(spec);*/
         return spec;
     }
 
     @Override
     public Spec updateSpec(Spec spec) throws EntityExistException {
-        if (specDao.findTopBySpecNameAndCatalog_CatalogIdAndSpecIdNot(spec.getSpecName(), spec.getCatalog().getCatalogId(), spec.getSpecId()) != null) {
+        if(spec.getCatalog().getCatalogId() > 0 && !StringUtils.isEmpty(spec.getSpecName())){
+            Spec validSpec = specDao.getSpecBySpecNameAndAndCatalog_CatalogId(spec.getSpecName(),spec.getCatalog().getCatalogId());
+            if (null != validSpec && validSpec.getSpecId() > 0) {
+                throw new EntityExistException("规格名称已存在");
+            }
+       /* if (specDao.findTopBySpecNameAndCatalog_CatalogIdAndSpecIdNot(spec.getSpecName(), spec.getCatalog().getCatalogId(), spec.getSpecId()) != null) {
             throw new EntityExistException("规格名称已存在");
-        }
+        }*/
         Spec oldSpec = specDao.findOne(spec.getSpecId());
         AttributeReplication.copying(spec, oldSpec, Spec_.specName, Spec_.remark);
         return oldSpec;

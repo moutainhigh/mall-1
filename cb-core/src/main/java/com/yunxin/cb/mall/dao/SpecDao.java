@@ -14,6 +14,11 @@ public interface SpecDao extends JpaRepository<Spec, Integer>, JpaSpecificationE
 
     List<Spec> findByCatalog_CatalogId(int catalogId);
 
+//    @Query("select s from spec s left join fetch s.catalog  where s.specName=?1 and s.catalog.catalogId=?2 ")
+//    Spec validateSpecName(String specName,int catalogId);
+
+    Spec getSpecBySpecNameAndAndCatalog_CatalogId(String specName,int catalogId);
+
     Spec findTopBySpecNameAndCatalog_CatalogId(String specName, int catalogId);
 
     Spec findTopBySpecNameAndCatalog_CatalogIdAndSpecIdNot(String specName, int catalogId, int specId);

@@ -208,6 +208,9 @@
                     </div>
                 </div>
             </div>
+            <div class="alert alert-warning" id="modalMsg" style="display: none;">
+                <strong>提示：</strong>商品分类最多可新建三级！
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button class="btn btn-primary pull-right" onclick="chooseCatalog();">确认</button>
@@ -216,8 +219,10 @@
         <script type="application/javascript">
             var catalogId = 0;
             var catalogName = "";
+            var treeLevel = "";
             $('#parentCatalogNameBtn').focusin(function (e) {
                 $('#catalogDialog').modal();
+                $('#modalMsg').hide();
                 e.preventDefault();
             });
 
@@ -226,9 +231,15 @@
                 var data = $('#treeview').data('kendoTreeView').dataItem(e.node);
                 catalogId = data.id;
                 catalogName = data.text;
+                treeLevel = data.treeLevel;
             }
 
             function chooseCatalog() {
+                if(treeLevel >= 3){
+                    $('#modalMsg').show();
+                    return;
+                }
+                $('#modalMsg').hide();
                 $('#catalogDialog').modal("hide");
                 $("#parentCatalogId").val(catalogId);
                 $("#parentCatalogName").val(catalogName);

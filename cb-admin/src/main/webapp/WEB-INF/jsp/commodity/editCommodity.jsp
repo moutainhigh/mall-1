@@ -106,6 +106,16 @@
                     }
                 }
             });
+
+            $("#costPrice,#sellPrice,#marketPrice").blur(function(){
+                var inputValue = $(this).val();
+                var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
+                var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
+                if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
+                    bootbox.alert("价格须介于商品价格段范围内!");
+                    $(this).val('')
+                }
+            });
         });
 
         function loadAttributeGroups(catalogId) {
@@ -235,9 +245,9 @@
                                 <label><span class="asterisk">*</span> 商品价格段：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="priceSection.sectionId" cssClass="form-control simpleselect validate[required]">
+                                <form:select path="priceSection.sectionId" id="priceSection" cssClass="form-control simpleselect validate[required]">
                                     <c:forEach items="${priceSections}" var="section">
-                                        <option value="${section.sectionId}">${section.startPrice} - ${section.endPrice}</option>
+                                        <option value="${section.sectionId}" option-startPrice="${section.startPrice}" option-endPrice="${section.endPrice}">${section.startPrice} - ${section.endPrice}</option>
                                     </c:forEach>
                                 </form:select>
                             </div>
@@ -450,7 +460,7 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 商品规格：</label>
+                                <label>商品规格：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="specTable" class="table table-bordered table-striped">
