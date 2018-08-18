@@ -59,14 +59,14 @@
 					<h2>操作失败</h2>
 				</div>
 				<div class="pull-right">
-					<div class="dropdown">
+					<%--<div class="dropdown">
 						<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
 							<i class="fa fa-comments"></i>
 							<span class="indicator-dot">3</span>
 						</a>
 
 
-					</div>
+					</div>--%>
 					<!-- End .dropdown -->
 
 					<!-- End .dropdown -->
