@@ -151,7 +151,9 @@ public interface ICommodityService {
     List<CommoditySpec> getCommoditySpecsByCatalogId(int catalogId);
 
 
-    void removeSpecById(int catalogId);
+    void cloneSpec(int cloneCatalogId, int catalogId);
+
+    int removeSpecById(int catalogId);
 
     /**
      * 商品上下架

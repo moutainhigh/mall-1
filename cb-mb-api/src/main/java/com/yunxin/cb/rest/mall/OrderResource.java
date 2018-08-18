@@ -17,9 +17,13 @@ import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import com.yunxin.cb.vo.ResponseResult;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -67,19 +71,10 @@ public class OrderResource extends BaseResource {
     })
     @ApiVersion(1)
     @PostMapping(value = "order")
-    public ResponseResult addOrder(@RequestBody OrderConfirmVO orderConfirmVO){
+    public ResponseResult addOrder(@Validated @RequestBody OrderConfirmVO orderConfirmVO){
         try {
             logger.info("orderConfirmVO:" + orderConfirmVO.toString());
             Order order = new Order();
-            if (!StringUtils.isNotBlank(orderConfirmVO.getConsigneeName())) {
-                return new ResponseResult(Result.FAILURE, "收货人不能为空");
-            }
-            if (!StringUtils.isNotBlank(orderConfirmVO.getConsigneeMobile())) {
-                return new ResponseResult(Result.FAILURE, "手机号不能为空");
-            }
-            if (!StringUtils.isNotBlank(orderConfirmVO.getConsigneeAddress())) {
-                return new ResponseResult(Result.FAILURE, "自提地址不能为空");
-            }
             BeanUtils.copyProperties(order, orderConfirmVO);
             order.setCustomerId(getCustomerId());
             if (orderConfirmVO.getOrderConfirmProductList() != null && !orderConfirmVO.getOrderConfirmProductList().isEmpty()) {
@@ -159,6 +154,9 @@ public class OrderResource extends BaseResource {
     @PutMapping(value = "order/cancelOrder")
     public ResponseResult cancelOrder(@RequestParam("orderId") int orderId, @RequestParam("cancelReason") String cancelReason) {
         try {
+            if (StringUtils.isBlank(cancelReason)){
+                return new ResponseResult(Result.FAILURE, "取消原因不能为空");
+            }
             Order order = new Order();
             order.setOrderId(orderId);
             order.setCancelReason(cancelReason);

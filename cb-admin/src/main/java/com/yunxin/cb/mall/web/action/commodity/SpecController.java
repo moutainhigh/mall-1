@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,6 +49,9 @@ public class SpecController {
         modelMap.addAttribute("specs", specs);
         TreeViewItem catalogItem = catalogService.getCatalogTree();
         modelMap.addAttribute("catalogItem", catalogItem);
+
+        TreeViewItem catalogTree = catalogService.getCatalogTree();
+        modelMap.addAttribute("catalogTree", Arrays.asList(catalogTree));
         return "commodity/catalogSpecs";
     }
 
@@ -59,7 +63,7 @@ public class SpecController {
         try {
             spec = commodityService.addSpec(spec);
         } catch (EntityExistException e) {
-            logger.error("添加商品规格名称错误",e);
+            logger.error("商品规格名称已存在",e);
             redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，添加失败！");
             redirectAttributes.addFlashAttribute("msgContent",e.getMessage());
             return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
@@ -69,13 +73,21 @@ public class SpecController {
     }
 
     @RequestMapping(value = "editSpec",method = RequestMethod.POST)
-    public String editSpec(@ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap) {
+    public String editSpec(@ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, RedirectAttributes redirectAttributes) {
         try {
             spec = commodityService.updateSpec(spec);
         } catch (EntityExistException e) {
-            logger.error("修改商品规格名称错误",e);
+            logger.error("商品规格名称已存在",e);
+            redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，修改失败！");
+            return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
         }
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
+    }
+
+    @RequestMapping(value = "cloneSpec",method = RequestMethod.POST)
+    public String cloneSpec(@RequestParam("cloneCatalogId") int cloneCatalogId, @RequestParam("catalogId") int catalogId) {
+        commodityService.cloneSpec(cloneCatalogId, catalogId);
+        return "redirect:catalogSpecs.do?catalogId=" + catalogId;
     }
 
     @ResponseBody
@@ -88,8 +100,8 @@ public class SpecController {
     @RequestMapping(value = "removeSpecById",method = RequestMethod.GET)
     public boolean removeSpecById(@RequestParam("specId") int specId) {
         try {
-            commodityService.removeSpecById(specId);
-            return true;
+            int result=commodityService.removeSpecById(specId);
+            return result>0?true:false;
         } catch (Exception e) {
             return false;
         }

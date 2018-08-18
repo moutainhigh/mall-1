@@ -3,6 +3,8 @@ package com.yunxin.cb.mall.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotNull;
+
 /**
 * @author gws
 * @date 2018/7/24 19:59
@@ -15,11 +17,13 @@ public class OrderConfirmProductVO implements java.io.Serializable{
     /**
      * 货品id
      */
+    @NotNull(message = "货品id不能为空")
     @ApiModelProperty(value="货品id",name="productId",example="1", required = true)
     private Integer productId;
     /**
      * 购买数量
      */
+    @NotNull(message = "购买数量不能为空")
     @ApiModelProperty(value="购买数量",name="productNum",example="1", required = true)
     private Integer productNum;
 

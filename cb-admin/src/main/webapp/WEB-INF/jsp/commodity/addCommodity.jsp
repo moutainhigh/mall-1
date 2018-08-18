@@ -108,13 +108,46 @@
             $.getJSON("getSpecsByCatalogId.do", {
                 catalogId: catalogId
             }, function (json) {
-                $("#specTable  tr:not(:first)").empty()
+                $("#specTable  tr:not(:first)").empty();
                 $.each(json, function (date, value) {
-                    var newRow = "<tr><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control'/></td></tr>";
+                    var newRow = "<tr tag='"+value.specName+"'><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control'/></td></tr>";
                     $("#specTable tr:last").after(newRow);
 
                 });
             });
+        }
+
+        function specAuto() {
+            var keyword = $("#commodityTitle").val();
+            if(keyword == null || keyword == ""){
+                bootbox.alert("请先填写商品标题");
+                return;
+            }
+            $.getJSON("../commodity/specAuto/yicheSpecs.do", {
+                keyword: keyword
+            }, function (json) {
+                if(json.resultType=="SUCCESS"){
+                    var data = json.data;
+                    for(var key in data){
+                        var specTr = $("#specTable tr[tag='"+key+"']");
+                        if(specTr != null){
+                            $(specTr).find("input[name='specValue']").val(data[key]);
+                        }
+                    }
+                }
+            });
+        }
+
+        function findSpecTr(specName){
+            var tr;
+            $.each($("#specTable tr"), function(index,element){
+                if(($(element).attr("tag")+"").indexOf(specName) > -1){
+                    console.info($(element).attr("tag"));
+                    tr = $(element);
+                    return;
+                }
+            });
+            return tr;
         }
 
         function selectSeller() {
@@ -448,13 +481,13 @@
                             <div class="col-sm-2">
                                 <label>商家：</label>
                             </div>
-                            <div class="col-sm-8">
-                                <div class="col-sm-3">
-                                    <form:input type="hidden" cssClass="form-control" path="seller.sellerId" id="sellerId" />
+                            <div class="col-sm-3">
+                                <form:input type="hidden" cssClass="form-control" path="seller.sellerId" id="sellerId" />
+                                <div class="input-group">
                                     <form:input type="text" cssClass="form-control" path="seller.sellerName" id="sellerName" disabled="true" placeholder="不选默认为平台"/>
-                                    <button type="button" onclick="selectSeller();" title="添加" class="btn btn-default">
-                                        <i class="fa fa-plus-circle"></i>选择商家
-                                    </button>
+                                    <span class="input-group-btn">
+                                        <button type="button" onclick="selectSeller();" class="btn btn-default">选择</button>
+                                        </span>
                                 </div>
                             </div>
                         </div>
@@ -477,6 +510,9 @@
                                     <tbody>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-default" onclick="specAuto()"><i class="fa fa-search"></i>搜索汽车配置</button>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

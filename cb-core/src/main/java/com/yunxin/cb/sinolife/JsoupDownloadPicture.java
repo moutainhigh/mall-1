@@ -16,7 +16,7 @@ import org.jsoup.Jsoup;
  * @author tanggangyi
  *
  */
-public class JsoupDoloadPicture {
+public class JsoupDownloadPicture {
 
     /**
      * 带着cookie下载验证码图片

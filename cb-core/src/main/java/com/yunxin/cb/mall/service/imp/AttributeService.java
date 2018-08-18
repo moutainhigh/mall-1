@@ -112,7 +112,7 @@ public class AttributeService implements IAttributeService {
             }
             attribute.setSortOrder((short) sortOrder[i]);
             attribute=catalogAttributeDao.save(attribute);
-            if(imagePath[i]!=null&&!"".equals(imagePath[i])){
+            if(imagePath!=null&&imagePath[i]!=null&&!"".equals(imagePath[i])){
                 attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,oldAttributeGroup.getGroupId(),imagePath[i]+",0,0");
             }
         }
@@ -268,7 +268,7 @@ public class AttributeService implements IAttributeService {
             }
             attribute.setSortOrder((short) sortOrder[i]);
             attributeDao.save(attribute);
-            if(attributeGroup.isShowAsImage()&&imagePath!=null&&imagePath[i]!=null&&!"".equals(imagePath[i])){
+            if(imagePath!=null&&imagePath[i]!=null&&!"".equals(imagePath[i])){
                 attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,attributeGroup.getGroupId(),imagePath[i]+",0,0");
             }
         }
@@ -300,12 +300,12 @@ public class AttributeService implements IAttributeService {
         String[] attributeName = attributeGroup.getAttributeName();
         String[] imagePath = attributeGroup.getImagePath();
         int[] sortOrder = attributeGroup.getSortOrder();
-        for (int i = 0; i < attributeId.length; i++) {
+        for (int i = 0; i < attributeName.length; i++) {
             String imgPath = "";
             if (LogicUtils.isNotNullAndEmpty(imagePath)) {
                 imgPath = imagePath[i];
             }
-            if (attributeId[i] > 0) {
+            if (attributeId.length>i&&attributeId[i] > 0) {
                 Attribute attribute = attributeDao.findOne(attributeId[i]);
                 attribute.setAttributeName(attributeName[i]);
                 attribute.setImagePath(imgPath);
