@@ -1,0 +1,7 @@
+spring:
+  session:
+     store-type: none
+  data:
+     elasticsearch:
+       cluster-name: elasticsearch
+       cluster-nodes: 192.168.0.145:9300

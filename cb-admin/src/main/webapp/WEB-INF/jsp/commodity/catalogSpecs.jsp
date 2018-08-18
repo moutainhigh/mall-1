@@ -154,7 +154,7 @@
                             <tbody>
                             <c:forEach items="${specs}" var="spec">
                                 <tr>
-                                    <td><input type='hidden' name='specId' value='${spec.specId}'/>${spec.specName}</td>
+                                    <td style="width:100%;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"><input type='hidden' name='specId' value='${spec.specId}'/>${spec.specName}</td>
                                     <td><a href="javascript:void(0);" onclick="editItem(${spec.specId},'${spec.specName}','${spec.remark}')">编辑</a>&nbsp;&nbsp;<a href="javascript:void(0);" onclick="removeItem(${spec.specId})">删除</a> </td>
                                 </tr>
                             </c:forEach>

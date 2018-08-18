@@ -1,11 +1,17 @@
 package com.yunxin.cb.mall.vo;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+
 /**
  * 品牌
  */
 
 public class Brand implements java.io.Serializable {
 
+    @Min(0)
+    @Max(999)
     private int brandId;
     /**
      * 品牌编号
@@ -22,10 +28,12 @@ public class Brand implements java.io.Serializable {
     /**
      * 品牌标题
      */
+
     private String brandTitle;
     /**
      * 图片路径  150*58 png
      */
+    @Pattern(regexp = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", message = "出生日期格式不正确")
     private String picPath;
 
 
