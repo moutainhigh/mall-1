@@ -51,10 +51,16 @@ public class YicheSpecController {
                 }
                 if (selectFirst != null) {
                     String carDetailUrl = selectFirst.attr("href");
-                    //通过搜索获取汽车详情url
-                    Connection.Response typeRes = Jsoup.connect(carDetailUrl).ignoreContentType(true).method(Connection.Method.GET).execute();// 执行请求;
-                    Element typeElement = typeRes.parse().selectFirst("#yearDiv0 > div.car-card > ul > li");
-                    String typeUrl = BASE_URL + typeElement.select("a.car-info").attr("href");
+                    //分析URL规则，如果URL中有三个斜杠/,说明该URL已经具体到了车型版本，如果URL中只有两个斜杠/，说明搜索到车系
+                    String typeUrl;
+                    if(carDetailUrl.split("/").length == 4){
+                        //通过搜索获取汽车详情url
+                        Connection.Response typeRes = Jsoup.connect(carDetailUrl).ignoreContentType(true).method(Connection.Method.GET).execute();// 执行请求;
+                        Element typeElement = typeRes.parse().selectFirst("#yearDiv0 > div.car-card > ul > li");
+                        typeUrl = BASE_URL + typeElement.select("a.car-info").attr("href");
+                    }else {
+                        typeUrl = carDetailUrl;
+                    }
                     //从汽车详情页获取第一个汽车版本
                     Connection.Response detailRes = Jsoup.connect(typeUrl).ignoreContentType(true).method(Connection.Method.GET).execute();// 执行请求;
                     Elements elements = detailRes.parse().select("div.first-tags > ul > li > a");

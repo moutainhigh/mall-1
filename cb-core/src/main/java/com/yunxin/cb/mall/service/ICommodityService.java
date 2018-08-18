@@ -150,6 +150,8 @@ public interface ICommodityService {
     List<CommoditySpec> getCommoditySpecsByCatalogId(int catalogId);
 
 
+    void cloneSpec(int cloneCatalogId, int catalogId);
+
     void removeSpecById(int catalogId);
 
     /**

@@ -613,7 +613,7 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public Spec addSpec(Spec spec) throws EntityExistException {
-        if (!specDao.isUnique(spec, Spec_.specName)) {
+        if (specDao.findTopBySpecNameAndCatalog_CatalogId(spec.getSpecName(), spec.getCatalog().getCatalogId()) != null) {
             throw new EntityExistException("规格名称已存在");
         }
         spec = specDao.save(spec);
@@ -622,12 +622,38 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public Spec updateSpec(Spec spec) throws EntityExistException {
-        if (!specDao.isUnique(spec, Spec_.specName)) {
+        if (specDao.findTopBySpecNameAndCatalog_CatalogIdAndSpecIdNot(spec.getSpecName(), spec.getCatalog().getCatalogId(), spec.getSpecId()) != null) {
             throw new EntityExistException("规格名称已存在");
         }
         Spec oldSpec = specDao.findOne(spec.getSpecId());
         AttributeReplication.copying(spec, oldSpec, Spec_.specName, Spec_.remark);
         return oldSpec;
+    }
+
+    /**
+     * 克隆源分类下的规格到目标分类下
+     * @param cloneCatalogId 源分类ID
+     * @param catalogId 目标分类ID
+     */
+    @Override
+    public void cloneSpec(int cloneCatalogId, int catalogId) {
+        //该分类本身所有规格
+        List<Spec> specs = getSpecsByCatalogId(catalogId);
+        //需要克隆的分类所有规格
+        List<Spec> cloneSpecs = getSpecsByCatalogId(cloneCatalogId);
+        if(cloneSpecs != null){
+            List<Spec> newSpecs = new ArrayList<>();
+            cloneSpecs.forEach(spec -> {
+                if(specs != null){
+                    boolean exist = specs.contains(spec);
+                    if(!exist){
+                        Spec cloneSpec = new Spec(spec.getSpecName(), catalogId);
+                        newSpecs.add(cloneSpec);
+                    }
+                }
+            });
+            specDao.save(newSpecs);
+        }
     }
 
     @Override

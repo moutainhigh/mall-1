@@ -13,4 +13,8 @@ import java.util.List;
 public interface SpecDao extends JpaRepository<Spec, Integer>, JpaSpecificationExecutor<Spec>, BaseDao<Spec> {
 
     List<Spec> findByCatalog_CatalogId(int catalogId);
+
+    Spec findTopBySpecNameAndCatalog_CatalogId(String specName, int catalogId);
+
+    Spec findTopBySpecNameAndCatalog_CatalogIdAndSpecIdNot(String specName, int catalogId, int specId);
 }
