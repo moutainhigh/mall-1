@@ -27,7 +27,7 @@
                 if(dataItem.level==3){
                     window.location.href = "categoryCommodities.do?categoryId=" + dataItem.categoryId;
                 }else{
-                    commonNotify('第三级运营分类才能关联商品',"warning");
+                    commonNotify('仅第三级运营分类才能关联商品',"warning");
                 }
             }
         }

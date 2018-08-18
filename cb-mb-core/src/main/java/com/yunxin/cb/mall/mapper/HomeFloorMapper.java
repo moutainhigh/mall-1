@@ -129,7 +129,7 @@ public interface HomeFloorMapper {
             "FLOOR_ID, CATEGORY_AMOUNT, COMMODITY_AMOUNT, ENABLED, FLOOR_LAYOUT, FLOOR_NAME, ",
             "ICON_PATH, IMAGE_PATH, REMARK, SORT_ORDER, BRAND_AMOUNT",
             "from home_floor",
-            "where ENABLED = 1"
+            "where ENABLED = 1 order by SORT_ORDER"
     })
     @Results({
             @Result(column="FLOOR_ID", property="floorId", jdbcType=JdbcType.INTEGER, id=true),

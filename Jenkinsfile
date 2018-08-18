@@ -25,13 +25,13 @@ pipeline {
         }
         stage('Docker build') {
             steps {
-                sh 'docker build -t ${DOCKER_IMAGE_NAME} -f dockerfile/Dockerfile .'
+                sh 'docker login -udengcg -pDengcg0727 192.168.0.22'
+                sh 'docker build -t ${DOCKER_IMAGE_NAME} -f ${DOCKER_MODULE_NAME}/dockerfile/Dockerfile .'
             }
         }
 
         stage('Docker push') {
             steps {
-                sh 'docker login -udengcg -pDengcg0727 192.168.0.22'
                 sh 'docker push ${DOCKER_IMAGE_NAME}'
             }
         }

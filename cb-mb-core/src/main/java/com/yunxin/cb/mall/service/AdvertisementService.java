@@ -24,4 +24,9 @@ public interface AdvertisementService {
      * 查询banner
      */
     List<Advertisement> selectByAdvertisementPlace(AdvertisementPlace advertisementPlace,Boolean enabled);
+
+    /**
+     * 根据ID查询
+     */
+    Advertisement selectByAdvertId(int advertId);
 }

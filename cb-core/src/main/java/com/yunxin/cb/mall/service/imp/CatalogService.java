@@ -17,8 +17,6 @@ import com.yunxin.cb.rb.entity.FundsPool;
 import com.yunxin.common.ConstantsCB;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
-import com.yunxin.core.util.CommonUtils;
-import com.yunxin.core.util.DmSequenceFourUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
@@ -26,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -382,8 +379,43 @@ public class CatalogService implements ICatalogService {
     }
 
     @Override
+    @Transactional
     public void enableCatalogById(int catalogId, boolean enabled) {
-        catalogDao.enableCatalogById(enabled, catalogId);
+        Catalog catalog = catalogDao.getOne(catalogId);
+        if(catalog.getCatalogCode().length() == 3){
+            //根节点禁止进行停用/启用操作
+            return;
+        }
+
+        List<String> catalogCodedList = new ArrayList<>();
+        if(enabled){
+            //启用时，当前操作节点以及所有上级节点进行同步更新
+            int catalogLevelNum = catalog.getCatalogCode().length()/3;
+            if(catalogLevelNum > 1){//当前分类节点有上级分类（非根分类）
+                for(int i = 1;i < catalogLevelNum;i++){
+                    catalogCodedList.add(catalog.getCatalogCode().substring(0,3*(i + 1)));
+                }
+            }
+        }else{
+            //禁用时，当前操作节点以及其所有下级节点进行同步更新
+            List<Catalog> catalogList = catalogDao.findCatalogByCatalogCodeStartingWith(catalog.getCatalogCode());
+            if(null != catalogList && catalogList.size() > 0){
+                for (Catalog c : catalogList){
+                    catalogCodedList.add(c.getCatalogCode());
+                }
+            }
+        }
+        catalogDao.batchEnableCatalogByCatalogCode(enabled, catalogCodedList);
+    }
+
+    public static void main(String[] args){
+        String s = "000002";
+        int catalogLevelNum = s.length()/3;
+        if(catalogLevelNum > 1){//当前分类节点有上级分类（非根分类）
+            for(int i = 1;i < catalogLevelNum;i++){
+                System.out.println(s.substring(0,3*(i + 1)));
+            }
+        }
     }
 
     @Override

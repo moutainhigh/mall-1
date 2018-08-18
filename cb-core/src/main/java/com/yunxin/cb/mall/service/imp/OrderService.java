@@ -549,7 +549,8 @@ public class OrderService implements IOrderService {
     @Override
     public void completedOrders() {
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
+        //c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
+        c.add(Calendar.MINUTE ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
         //orderDao.taskCollectTimeOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
         List<Order> orders = orderDao.findOrderByOrderStateAndCollectTime(OrderState.RECEIVED, c.getTime());
         if (orders != null && !orders.isEmpty()) {
@@ -899,11 +900,13 @@ public class OrderService implements IOrderService {
             } else {
                 order.setOrderState(OrderState.PAID_PAYMENT);
             }
+            order.setPaymentState(PaymentState.SUCCESS_PAID);
             order.setPaymentTime(now);
             order.setDeliverTime(now);
             order.setUpdateTime(now);
             orderLog.setRemark("订单审核通过");
         } else if (auditState == AuditState.NOT_AUDIT) {
+            order.setPaymentState(PaymentState.FAIL_PAID);
             order.setOrderState(OrderState.CANCELED);
             order.setCancelReason(auditRemark);
             order.setCancelTime(now);

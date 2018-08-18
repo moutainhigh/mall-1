@@ -39,6 +39,21 @@ public class OrderItem {
     /** 成本价 */
     private Float costPrice;
 
+    /** 市场价 */
+    private Float marketPrice;
+
+    /** 货品编码 */
+    private String productNo;
+
+    /** 货品名称：由 商品名称+上规格值 组成  用&分隔 */
+    private String productName;
+
+    /** 体积 */
+    private Float volume;
+
+    /** 重量 */
+    private Float weight;
+
     /** 货品 */
     private Product product;
 
@@ -144,5 +159,45 @@ public class OrderItem {
 
     public void setCostPrice(Float costPrice) {
         this.costPrice = costPrice;
+    }
+
+    public Float getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(Float marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public String getProductNo() {
+        return productNo;
+    }
+
+    public void setProductNo(String productNo) {
+        this.productNo = productNo;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Float getVolume() {
+        return volume;
+    }
+
+    public void setVolume(Float volume) {
+        this.volume = volume;
+    }
+
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Float weight) {
+        this.weight = weight;
     }
 }

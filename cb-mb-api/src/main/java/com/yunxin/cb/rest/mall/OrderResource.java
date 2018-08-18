@@ -19,6 +19,7 @@ import com.yunxin.cb.util.page.Query;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.*;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -70,6 +71,15 @@ public class OrderResource extends BaseResource {
         try {
             logger.info("orderConfirmVO:" + orderConfirmVO.toString());
             Order order = new Order();
+            if (!StringUtils.isNotBlank(orderConfirmVO.getConsigneeName())) {
+                return new ResponseResult(Result.FAILURE, "收货人不能为空");
+            }
+            if (!StringUtils.isNotBlank(orderConfirmVO.getConsigneeMobile())) {
+                return new ResponseResult(Result.FAILURE, "手机号不能为空");
+            }
+            if (!StringUtils.isNotBlank(orderConfirmVO.getConsigneeAddress())) {
+                return new ResponseResult(Result.FAILURE, "自提地址不能为空");
+            }
             BeanUtils.copyProperties(order, orderConfirmVO);
             order.setCustomerId(getCustomerId());
             if (orderConfirmVO.getOrderConfirmProductList() != null && !orderConfirmVO.getOrderConfirmProductList().isEmpty()) {
@@ -125,9 +135,11 @@ public class OrderResource extends BaseResource {
             Order model = orderService.getByOrderIdAndCustomerId(orderId, getCustomerId());
             if (model != null) {
                 orderDetailVO = OrderDetailVO.dOconvertVO(model);
+                orderDetailVO.setPaymentType(model.getPaymentType().getName());
                 if (orderDetailVO.getPayOvertimeTime() == 0 && OrderState.PENDING_PAYMENT.equals(orderDetailVO.getOrderState())) { //超时订单
-                    orderService.updateOrderStatusTimeOut(orderId, model.getOrderCode(), getCustomerId());
-                    orderDetailVO.setOrderState(OrderState.CANCELED);
+                   //目前不需要定时取消
+                    //orderService.updateOrderStatusTimeOut(orderId, model.getOrderCode(), getCustomerId());
+                    //orderDetailVO.setOrderState(OrderState.CANCELED);
                 }
             }else {
                 return new ResponseResult(Result.FAILURE, "订单不存在");
