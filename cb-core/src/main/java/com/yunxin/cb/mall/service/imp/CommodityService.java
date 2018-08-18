@@ -632,8 +632,15 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
-    public void removeSpecById(int catalogId) {
-        specDao.delete(catalogId);
+    public int removeSpecById(int catalogId) {
+        int result=0;
+        try {
+            specDao.delete(catalogId);
+            result=1;
+        } catch (Exception e) {
+            logger.error("removeSpecById result flag is = "+e);
+        }
+        return result;
     }
 
     /**

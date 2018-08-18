@@ -34,6 +34,7 @@ public class CommodityVO implements java.io.Serializable {
             this.popular = commodity.isPopular();
             this.priceSection = new PriceSection(commodity.getPriceSection().getStartPrice(), commodity.getPriceSection().getEndPrice());
             this.recommend = commodity.isRecommend();
+            this.defaultPicPath=commodity.getDefaultPicPath();
             if(commodity.getDefaultProduct()!=null){
                 this.defaultProduct = commodity.getDefaultProduct().getProductId();
                 this.sellPrice = commodity.getDefaultProduct().getSalePrice();//EL里面商品销售价为默认货品价

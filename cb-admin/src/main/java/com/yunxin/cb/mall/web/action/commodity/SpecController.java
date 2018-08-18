@@ -88,8 +88,8 @@ public class SpecController {
     @RequestMapping(value = "removeSpecById",method = RequestMethod.GET)
     public boolean removeSpecById(@RequestParam("specId") int specId) {
         try {
-            commodityService.removeSpecById(specId);
-            return true;
+            int result=commodityService.removeSpecById(specId);
+            return result>0?true:false;
         } catch (Exception e) {
             return false;
         }

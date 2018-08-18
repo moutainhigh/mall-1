@@ -48,7 +48,7 @@
                             });
 
                         } else {
-                            bootbox.alert("失败");
+                            bootbox.alert("删除失败，该规格已关联商品，不能删除！");
                         }
                     });
                 }
