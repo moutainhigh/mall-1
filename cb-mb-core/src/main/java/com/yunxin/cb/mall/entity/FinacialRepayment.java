@@ -37,6 +37,23 @@ public class FinacialRepayment {
     /** 规定还款时间 */
     private Date repayTime;
 
+    public FinacialRepayment(Integer repaymentId) {
+        this.repaymentId = repaymentId;
+    }
+
+    public FinacialRepayment(Integer customerId, Integer loanId, BigDecimal amount, Date createTime, BigDecimal repayAmount, Date readyRepaymentTime) {
+        this.customerId = customerId;
+        this.loanId = loanId;
+        this.amount = amount;
+        this.createTime = createTime;
+        this.repayAmount = repayAmount;
+        this.readyRepaymentTime = readyRepaymentTime;
+        this.seq = 0;
+        this.lateFee = new BigDecimal(0);
+        this.interest = new BigDecimal(0);
+        this.repayTime = new Date();
+    }
+
     public Integer getRepaymentId() {
         return repaymentId;
     }

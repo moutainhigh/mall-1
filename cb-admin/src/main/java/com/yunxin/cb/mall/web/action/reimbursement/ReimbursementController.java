@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.web.action.reimbursement;
 
+import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.rb.entity.Reimbursement;
 import com.yunxin.cb.rb.entity.meta.ReimbursementType;
@@ -95,7 +96,8 @@ public class ReimbursementController {
     @ResponseBody
     public String reimbursementAuditing(@RequestParam("reimbursementId") int reimbursementId,@RequestParam("reimbursementType") ReimbursementType reimbursementType,
                                                     @RequestParam("remarks") String remarks,@RequestParam("operType") int operType,HttpServletRequest request) {
-            return iReimbursementService.reimbursementAuditing(reimbursementId,reimbursementType,remarks,operType,request);
+            User user = (User) request.getSession().getAttribute("loginSession");
+            return iReimbursementService.reimbursementAuditing(reimbursementId,reimbursementType,remarks,operType,user);
     }
 
 }

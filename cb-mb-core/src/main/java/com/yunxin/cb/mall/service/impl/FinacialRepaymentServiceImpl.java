@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.entity.meta.LoanType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
+import com.yunxin.cb.mall.exception.CommonException;
 import com.yunxin.cb.mall.mapper.FinacialRepaymentMapper;
 import com.yunxin.cb.mall.mapper.FinacialWalletMapper;
 import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
@@ -58,50 +59,48 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
      * @date        2018/8/9 14:47
      */
     @Override
-    @Transactional
-    public FinacialRepaymentVO add(FinacialRepaymentVO vo) {
-        log.info("add:"+vo);
+    @Transactional(rollbackFor = Exception.class)
+    public void add(BigDecimal repayAmount,int coutomerId) throws Exception{
         //获取用户钱包
-        FinacialWallet finacialWallet=finacialWalletMapper.selectByCustomerId(vo.getCustomerId());
-        FinacialRepayment finacialRepayment = new FinacialRepayment();
-        BeanUtils.copyProperties(finacialRepayment, vo);
-        finacialRepayment.setCreateTime(new Date());
-        finacialRepayment.setRepayTime(new Date());
-        BigDecimal totalAmount=finacialRepayment.getRepayAmount();//实际还款金
-        BigDecimal repayAmount=finacialRepayment.getRepayAmount();//实际还款金
+        FinacialWallet finacialWallet=finacialWalletMapper.selectByCustomerId(coutomerId);
+        BigDecimal totalAmount=repayAmount;//实际还款金
         if(finacialWallet.getDebtTotal().subtract(totalAmount).doubleValue()<0){
-
+            throw new CommonException("还款失败，还款金额不对");
         }
         /**还款，添加交易记录START*/
         FinacialLiabilitiesBillVO billvo = new FinacialLiabilitiesBillVO();
         billvo.setAmount(repayAmount);
-        billvo.setCustomerId(finacialRepayment.getCustomerId());
+        billvo.setCustomerId(coutomerId);
         billvo.setTransactionType(TransactionType.MANUAL_REPAYMENT);
         billvo.setType(CapitalType.ADD);
         billvo.setTransactionDesc("手动还款");
         finacialLiabilitiesBillService.addFinacialLiabilitiesBill(billvo);
         /**还款，添加交易记录END*/
-        log.info("start repay cutomerId:"+finacialRepayment.getCustomerId()+";repayAmount:"+repayAmount);
-        List<FinacialLoanVO> insuranlist = finacialLoanService.getByCustomerIdAndType(finacialRepayment.getCustomerId());
+        log.info("start repay cutomerId:"+coutomerId+";repayAmount:"+repayAmount);
+        List<FinacialLoanVO> insuranlist = finacialLoanService.getByCustomerIdAndType(coutomerId);
         for (FinacialLoanVO p : insuranlist) {
-            BigDecimal surplusAmount = p.getSurplusAmount();
-            BigDecimal insuranceAmount=p.getInsuranceAmount();
-            BigDecimal creditAmount=p.getCreditAmount();
-            //表示还款金大于贷款金
+            BigDecimal surplusAmount = p.getSurplusAmount();//该贷款总负债
+            BigDecimal insuranceAmount=p.getInsuranceAmount();//保险金负债
+            BigDecimal creditAmount=p.getCreditAmount();//信用金负债
+            /**表示还款金大于此次贷款金，直接还完*/
             if (repayAmount.doubleValue() > surplusAmount.doubleValue()) {
+                /**已还完，结清并修改剩余还款金为0*/
                 p.setSurplusAmount(new BigDecimal(0));
                 p.setState(LoanState.SETTLE);
                 p.setInsuranceAmount(new BigDecimal(0));
                 p.setCreditAmount(new BigDecimal(0));
-                FinacialLoanVO fvo = new FinacialLoanVO();
-                BeanUtils.copyProperties(p, fvo);
-                finacialLoanService.update(fvo);
+                finacialLoanService.update(p);
                 repayAmount = repayAmount.subtract(surplusAmount);
-                log.info("repay loanId"+p.getLoanId()+"cutomerId:"+finacialRepayment.getCustomerId()+
+                /**添加还款计划*/
+                FinacialRepayment finacialRepayment = new FinacialRepayment(p.getCustomerId(), p.getLoanId(), surplusAmount,
+                        new Date(), surplusAmount, new Date());
+                finacialRepaymentServiceMapper.insert(finacialRepayment);
+                log.info("repay loanId"+p.getLoanId()+"cutomerId:"+coutomerId+
                         ";repayAmount:"+repayAmount+";surplusAmount:"+surplusAmount);
             }else{
                 surplusAmount = surplusAmount.subtract(repayAmount);
                 p.setSurplusAmount(surplusAmount);
+                /**优先还保险负债*/
                 if(repayAmount.doubleValue()>insuranceAmount.doubleValue()){
                     p.setInsuranceAmount(new BigDecimal(0));
                     creditAmount = creditAmount.subtract(repayAmount);
@@ -110,23 +109,20 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
                     insuranceAmount = insuranceAmount.subtract(repayAmount);
                     p.setInsuranceAmount(insuranceAmount);
                 }
-                FinacialLoanVO fvo = new FinacialLoanVO();
-                BeanUtils.copyProperties(p, fvo);
-                finacialLoanService.update(fvo);
+                finacialLoanService.update(p);
                 repayAmount = new BigDecimal(0);
-                log.info("repay loanId"+p.getLoanId()+"cutomerId:"+finacialRepayment.getCustomerId()+
-                        ";repayAmount:"+repayAmount+";surplusAmount:"+surplusAmount);
+                /**添加还款计划*/
+                FinacialRepayment finacialRepayment = new FinacialRepayment(p.getCustomerId(), p.getLoanId(), repayAmount,
+                        new Date(), surplusAmount, new Date());
+                finacialRepaymentServiceMapper.insert(finacialRepayment);
                 break;
             }
         }
-        //总负债金额
+        /**更新负债金额*/
         finacialWallet.setDebtTotal(finacialWallet.getDebtTotal().subtract(totalAmount));
-        //更新负债金额
         FinacialWalletVO finacialWalletVO = new FinacialWalletVO();
         BeanUtils.copyProperties(finacialWalletVO,finacialWallet);
         finacialWalletService.updateFinacialWallet(finacialWalletVO);
-        finacialRepaymentServiceMapper.insert(finacialRepayment);
-        return vo;
     }
 
     /**

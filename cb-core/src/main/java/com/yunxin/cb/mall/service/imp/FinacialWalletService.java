@@ -108,6 +108,9 @@ public class FinacialWalletService implements IFinaciaWalletService {
     @Override
     public FinacialWallet updateFinacialWallet(FinacialWallet fw){
         FinacialWallet oldfw = finacialWalletDao.findOne(fw.getWalletId());
+        if(fw.getVersion()!=fw.getVersion()){
+            throw new RuntimeException("用户版本号不正确，请稍后再试");
+        }
         fw.setVersion(fw.getVersion()+1);
         /**钱包:更新钱包信息*/
         AttributeReplication.copying(fw, oldfw, FinacialWallet_.assets, FinacialWallet_.balance,FinacialWallet_.creditAmount,
