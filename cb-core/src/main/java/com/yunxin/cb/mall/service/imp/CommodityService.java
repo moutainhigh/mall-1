@@ -14,6 +14,7 @@ import com.yunxin.cb.search.restful.RestfulFactory;
 import com.yunxin.cb.search.service.SearchRestService;
 import com.yunxin.cb.search.vo.CommodityVO;
 import com.yunxin.cb.search.vo.ResponseResult;
+import com.yunxin.cb.search.vo.meta.Result;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -657,8 +658,15 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
-    public void removeSpecById(int catalogId) {
-        specDao.delete(catalogId);
+    public int removeSpecById(int catalogId) {
+        int result=0;
+        try {
+            specDao.delete(catalogId);
+            result=1;
+        } catch (Exception e) {
+            logger.error("removeSpecById result flag is = "+e);
+        }
+        return result;
     }
 
     /**
@@ -669,10 +677,12 @@ public class CommodityService implements ICommodityService {
      * @return
      */
     @Override
-    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception {
+    public ResponseResult upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception {
+        ResponseResult responseResult = new ResponseResult(Result.FAILURE);
         Commodity commodity = commodityDao.findDefaultProductById(commodityId);
         if (commodity.getCommodityState() != CommodityState.AUDITED) {
-            return false;
+            responseResult.setMessage("商品未审核，不能上下架操作！");
+            return responseResult;
         }
         if ((commodity.getPublishState() == PublishState.WAIT_UP_SHELVES || commodity.getPublishState() == PublishState.DOWN_SHELVES)
                 && publishState == PublishState.UP_SHELVES) {
@@ -689,7 +699,8 @@ public class CommodityService implements ICommodityService {
                     }
                 }
                 if(prodIds.size()<=0){//没有已上架的货品，商品不能上架
-                    return false;
+                    responseResult.setMessage("没有已上架的货品，商品不能上架！");
+                    return responseResult;
                 }
                 commodity.setDefaultProduct(defaultProduct);
                 commodity.setPublishState(PublishState.UP_SHELVES);
@@ -700,9 +711,12 @@ public class CommodityService implements ICommodityService {
                 Call<ResponseResult> call = restService.addCommodity(commodityVO);
                 ResponseResult result = call.execute().body();
                 logger.info("[elasticsearch] Commodity Sync State:" + result);
-                return true;
+                responseResult.setResult(Result.SUCCESS);
+                responseResult.setMessage("操作成功！");
+                return responseResult;
             } else {
-                return false;
+                responseResult.setMessage("商品没有所属货品，不能进行上下架操作！");
+                return responseResult;
             }
         } else if ((commodity.getPublishState() == PublishState.WAIT_UP_SHELVES || commodity.getPublishState() == PublishState.UP_SHELVES)
                 && publishState == PublishState.DOWN_SHELVES) {
@@ -719,12 +733,14 @@ public class CommodityService implements ICommodityService {
                 Call<ResponseResult> call = restService.removeCommodity(commodityId);
                 ResponseResult result = call.execute().body();
                 logger.info("[elasticsearch] remove commodity state:" + result);
-                return true;
+                responseResult.setResult(Result.SUCCESS);
+                responseResult.setMessage("操作成功！");
             } else {
-                return false;
+                responseResult.setMessage("商品没有所属货品，不能进行上下架操作！");
+                return responseResult;
             }
         }
-        return false;
+        return responseResult;
     }
 
     @Override

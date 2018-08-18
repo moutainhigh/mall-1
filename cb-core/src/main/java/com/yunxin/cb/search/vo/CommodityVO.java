@@ -25,9 +25,6 @@ public class CommodityVO implements java.io.Serializable {
             this.commodityPYName = commodity.getCommodityPYName();
             this.description = commodity.getDescription();
             this.brand = new Brand(commodity.getBrand());
-            if(commodity.getDefaultProduct()!=null){
-                this.defaultProduct = commodity.getDefaultProduct().getProductId();
-            }
             this.province = commodity.getProvince();
             this.city = commodity.getCity();
             this.marketPrice = commodity.getMarketPrice();
@@ -37,6 +34,11 @@ public class CommodityVO implements java.io.Serializable {
             this.popular = commodity.isPopular();
             this.priceSection = new PriceSection(commodity.getPriceSection().getStartPrice(), commodity.getPriceSection().getEndPrice());
             this.recommend = commodity.isRecommend();
+            this.defaultPicPath=commodity.getDefaultPicPath();
+            if(commodity.getDefaultProduct()!=null){
+                this.defaultProduct = commodity.getDefaultProduct().getProductId();
+                this.sellPrice = commodity.getDefaultProduct().getSalePrice();//EL里面商品销售价为默认货品价
+            }
             this.special = commodity.isSpecial();
             //商品分类
             commodity.getCommodityCategories().forEach(commodityCategory -> {

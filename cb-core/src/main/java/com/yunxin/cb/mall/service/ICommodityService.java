@@ -7,6 +7,7 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.CommodityState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.query.CommodityQuery;
+import com.yunxin.cb.search.vo.ResponseResult;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
@@ -152,7 +153,7 @@ public interface ICommodityService {
 
     void cloneSpec(int cloneCatalogId, int catalogId);
 
-    void removeSpecById(int catalogId);
+    int removeSpecById(int catalogId);
 
     /**
      * 商品上下架
@@ -161,7 +162,7 @@ public interface ICommodityService {
      * @param publishState
      * @return
      */
-    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception;
+    public ResponseResult upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception;
 
     void removeCombinationById(int combinationId);
 

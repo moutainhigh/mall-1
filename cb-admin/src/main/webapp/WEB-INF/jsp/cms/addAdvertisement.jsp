@@ -33,7 +33,32 @@
                 }
             });
         });
+/*        function gradeChange() {
+            var advertisementType = $("#advertisementType").val();
+            if(advertisementType == "VIDEO"){
+                $("#videoPath").show();
+            }else{
+                $("#videoPath").hide();
+            }
+        }*/
 
+        function submitForm() {
+            var advertisementType = $("#advertisementType").val();
+            if(advertisementType == "VIDEO"){
+                var videoPath = $("#videoPath").val();
+                if("" == videoPath || videoPath == null){
+                    bootbox.alert("视频路径不能为空");
+                    return false;
+                }
+            }else if(advertisementType == "PTHOTO_AND_TEXT"){
+                var advertURL = $("#advertURL").val();
+                if("" == advertURL || advertURL == null){
+                    bootbox.alert("广告URL不能为空");
+                    return false;
+                }
+
+            }
+        }
         function returns(){
             window.location.href = "advertisements.do";
         }
@@ -329,7 +354,7 @@
             </div>
             <!-- End .actionbar-->
             <div class="inner-padding">
-                <form:form id="validateSubmitForm" cssClass="form-horizontal" data-asf-expireafter="1" data-asf-time="10" action="addAdvertisement.do" method="post" commandName="advertisement">
+                <form:form id="validateSubmitForm" cssClass="form-horizontal" data-asf-expireafter="1" data-asf-time="10" action="addAdvertisement.do" method="post" commandName="advertisement" onsubmit="return submitForm();">
 
                     <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                     <fieldset>
@@ -357,9 +382,15 @@
                                 <label><span class="asterisk">*</span> 广告类型：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="advertisementType" cssClass=" form-control simpleselect">
+                                <form:select path="advertisementType" cssClass=" form-control simpleselect" id="advertisementType">
                                     <form:options items="${advertisementType}" itemLabel="name"/>
                                 </form:select>
+                            </div>
+                            <div class="col-sm-2">
+                                <label> 广告URL：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input cssClass=" form-control" path="advertURL" id="advertURL" maxlength="5121"/>
                             </div>
                             <%--<div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 客户端类型：</label>
@@ -382,17 +413,19 @@
                                     <form:options items="${advertisementPlace}" itemLabel="name"/>
                                 </form:select>
                             </div>
-                            <div class="col-sm-2">
-                                <label> 视频路径：</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <form:input cssClass=" form-control" path="videoPath" maxlength="512"/>
+                            <div>
+                                <div class="col-sm-2">
+                                    <label> 视频路径：</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form:input cssClass=" form-control" id="videoPath"  path="videoPath" maxlength="512"/>
+                                </div>
                             </div>
                         </div>
 
                         <div class="spacer-10"></div>
 
-                        <div class="row">
+                        <div class="row" style="display: none">
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 广告URL类型：</label>
                             </div>
@@ -401,12 +434,12 @@
                                     <form:options items="${advertisementURLType}" itemLabel="name"/>
                                 </form:select>
                             </div>
-                            <div class="col-sm-2">
+<%--                            <div class="col-sm-2">
                                 <label> 广告URL：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input cssClass=" form-control" path="advertURL" maxlength="5121"/>
-                            </div>
+                            </div>--%>
                         </div>
                         <div class="spacer-10"></div>
 

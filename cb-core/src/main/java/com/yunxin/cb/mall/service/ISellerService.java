@@ -29,4 +29,13 @@ public interface ISellerService {
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     long getSellerCount();
+
+    /**
+     * @title: 查询自营是否已存在
+     * @param: []
+     * @return: boolean
+     * @auther: eleven
+     * @date: 2018/8/17 18:00
+     */
+    boolean queryIsExistsMgt(Integer sellerId);
 }

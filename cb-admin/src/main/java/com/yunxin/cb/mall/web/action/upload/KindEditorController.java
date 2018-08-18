@@ -153,6 +153,7 @@ public class KindEditorController implements ServletContextAware {
         Map<String, Object> successMap = new HashMap<>();
         successMap.put("error", 0);
         successMap.put("url", url);
+        response.setContentType("application/json; charset=UTF-8");//注意:设置返回内容为josn
         writer.println(mapper.writeValueAsString(successMap));
     }
 

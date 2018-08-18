@@ -69,11 +69,11 @@
                             commodityId: dataItem.commodityId,
                             publishState : pState
                         }, function (data) {
-                            if (data) {
+                            if (data.result=="SUCCESS") {
                                 bootbox.alert("成功");
                                 $("#grid").data("kendoGrid").dataSource.read();
                             } else {
-                                bootbox.alert("失败,商品未通过审核或没有货品信息");
+                                bootbox.alert(data.message);
                             }
                         });
                     }

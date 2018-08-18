@@ -7,6 +7,8 @@ import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.TreeViewItem;
+import com.yunxin.cb.search.vo.ResponseResult;
+import com.yunxin.cb.search.vo.meta.Result;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
@@ -107,7 +109,7 @@ public class CommodityController implements ServletContextAware {
     }
 
     @RequestMapping(value = "addCommodity", method = RequestMethod.POST)
-    public String addCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
+    public String addCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request)  throws Exception  {
         if (result.hasErrors()) {
             return toAddCommodity(commodity, modelMap);
         }
@@ -128,8 +130,10 @@ public class CommodityController implements ServletContextAware {
             }
 
         } catch (EntityExistException e) {
-            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
-                    messageSource.getMessage("commodity_commodityName_repeat", null, locale)));
+//            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
+//                    messageSource.getMessage("commodity_commodityName_repeat", null, locale)));
+            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toAddCommodity(commodity, modelMap);
         }
         return "redirect:editProducts.do?commodityId=" + commodity.getCommodityId();
@@ -163,7 +167,7 @@ public class CommodityController implements ServletContextAware {
     }
 
     @RequestMapping(value = "editCommodity", method = RequestMethod.POST)
-    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
+    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request)  throws Exception  {
         try {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
@@ -182,8 +186,10 @@ public class CommodityController implements ServletContextAware {
             commodityService.updateCommodityES(commodity.getCommodityId());
 
         } catch (Exception e) {
-            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
-                    messageSource.getMessage("commodity_commodityName_repeat", null, locale)));
+            /*result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
+                    messageSource.getMessage("commodity_commodityName_repeat", null, locale)));*/
+            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toEditCommodity(commodity.getCommodityId(), modelMap, locale);
         }
         return "redirect:../common/success.do?reurl=commodity/commodities.do";
@@ -214,13 +220,15 @@ public class CommodityController implements ServletContextAware {
 
     @ResponseBody
     @RequestMapping(value = "upOrDownShelvesCommodity",method = RequestMethod.GET)
-    public boolean upOrDownShelvesCommodity(@RequestParam("commodityId") int commodityId, @RequestParam("publishState") PublishState publishState) {
+    public ResponseResult upOrDownShelvesCommodity(@RequestParam("commodityId") int commodityId, @RequestParam("publishState") PublishState publishState) {
+        ResponseResult responseResult = new ResponseResult(Result.FAILURE);
         try{
-            return commodityService.upOrDownShelvesCommodity(commodityId, publishState);
+            responseResult = commodityService.upOrDownShelvesCommodity(commodityId, publishState);
         }catch (Exception ex){
             logger.info(ex.getMessage());
-            return false;
+            responseResult.setData(ex.getMessage());
         }
+        return responseResult;
     }
 
     @RequestMapping(value = "commodityDetail",method = RequestMethod.GET)

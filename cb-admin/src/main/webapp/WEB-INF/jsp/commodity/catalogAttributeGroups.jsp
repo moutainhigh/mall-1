@@ -128,7 +128,7 @@
             </div>
             <div class="inner-padding">
                 <div class="toolbar responsive-helper">
-                    <form>
+                    <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>属性组名称:</strong>
@@ -171,7 +171,7 @@
                         <kendo:grid-columns>
                             <kendo:grid-column title="属性组名" field="groupName" width="350px"/>
                             <kendo:grid-column title="分类" field="catalog.catalogName"/>
-                            <kendo:grid-column title="是否以图片显示" field="showAsImage" width="150px" template="#= showAsImage ? '是' : '否' #"/>
+                            <%--<kendo:grid-column title="是否以图片显示" field="showAsImage" width="150px" template="#= showAsImage ? '是' : '否' #"/>--%>
                             <kendo:grid-column title="创建时间" field="createTime" width="130" format="{0:yyyy-MM-dd HH:mm}"/>
                         </kendo:grid-columns>
                         <kendo:grid-dataBound>
