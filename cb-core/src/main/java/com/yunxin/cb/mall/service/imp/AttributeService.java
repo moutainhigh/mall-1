@@ -112,7 +112,7 @@ public class AttributeService implements IAttributeService {
             }
             attribute.setSortOrder((short) sortOrder[i]);
             attribute=catalogAttributeDao.save(attribute);
-            if(imagePath[i]!=null&&!"".equals(imagePath[i])){
+            if(attributeGroup.isShowAsImage()&&imagePath!=null&&imagePath[i]!=null&&!"".equals(imagePath[i])){
                 attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,oldAttributeGroup.getGroupId(),imagePath[i]+",0,0");
             }
         }
