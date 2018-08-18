@@ -223,7 +223,8 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public void removeCommodityById(int commodityId) {
-        commodityDao.delete(commodityId);
+        //commodityDao.delete(commodityId);
+        commodityDao.updateCommodityStatusById(CommodityState.DEL, commodityId);
     }
 
     @Override
