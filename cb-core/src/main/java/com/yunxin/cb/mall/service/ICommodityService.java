@@ -162,7 +162,7 @@ public interface ICommodityService {
      * @param publishState
      * @return
      */
-    public ResponseResult upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception;
+    public ResponseResult upOrDownShelvesCommodity(int commodityId, PublishState publishState,Integer productId) throws Exception;
 
     void removeCombinationById(int combinationId);
 

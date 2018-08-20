@@ -14,7 +14,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>修改消息</title>
+    <title>
+        <c:choose>
+            <c:when test="${message.messageId > 0}">
+                消息修改
+            </c:when>
+            <c:otherwise>
+                消息新增
+            </c:otherwise>
+        </c:choose>
+    </title>
     <script charset="utf-8" src="../editor/kindeditor-all-min.js"></script>
     <script charset="utf-8" src="../editor/lang/zh_CN.js"></script>
     <script type="text/javascript">
@@ -42,9 +51,13 @@
                         if(defaultPicPath.size() > 1){
                             bootbox.alert("只能选择一张摘要图片!");
                             return false;
-                        }else {
-                            return true;
                         }
+                        debugger;
+                        if ($("#editorContent2").val().length > 4000) {
+                            bootbox.alert("消息内容过长，请输入小于4000个字符!");
+                            return false;
+                        }
+                        return true;
                     }
                 }
             });
@@ -89,15 +102,13 @@
                     <li><a href="#">运营管理 </a></li>
                     <li><a href="#">消息中心配置</a></li>
                     <c:choose>
-                        <c:when test="message.messageId > 0">
+                        <c:when test="${message.messageId > 0}">
                             <li><a href="#">消息修改</a></li>
                         </c:when>
                         <c:otherwise>
                             <li><a href="#">消息新增</a></li>
                         </c:otherwise>
                     </c:choose>
-
-
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -115,7 +126,7 @@
             <div class="inner-padding">
                 <div class="pull-left">
                     <c:choose>
-                        <c:when test="message.messageId > 0">
+                        <c:when test="${message.messageId > 0}">
                             <h2>消息修改</h2>
                         </c:when>
                         <c:otherwise>
@@ -144,7 +155,7 @@
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
                     <c:choose>
-                        <c:when test="message.messageId > 0">
+                        <c:when test="${message.messageId > 0}">
                             <legend>消息修改</legend>
                         </c:when>
                         <c:otherwise>
@@ -291,7 +302,7 @@
                                 <label>消息内容：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea id="editorContent2" path="messageContent" cssClass="form-control validate[required,maxSize[40]]" maxlength="40"/>
+                                <form:textarea id="editorContent2" path="messageContent" cssClass="form-control validate[required]" maxlength="40"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
