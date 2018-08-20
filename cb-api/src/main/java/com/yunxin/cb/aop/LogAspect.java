@@ -85,11 +85,22 @@ public class LogAspect {
 					//}
 				}
 			}
+
+			Enumeration headerNames=request.getHeaderNames();
+			//获取所有的头部参数
+			Map<String, Object> headermap = new HashMap<>();
+			while (headerNames.hasMoreElements()) {
+				String paramName = (String) headerNames.nextElement();
+				String paramValue = request.getHeader(paramName);
+				if (paramValue != null) {
+					headermap.put(paramName, paramValue);
+				}
+			}
 			// 执行目标方法
 			outputParam = joinPoint.proceed();
 			long endTime = System.currentTimeMillis();
 			float excTime = (float) (endTime - startTime) / 1000;
-			log.info("\n 完整路径：" +getFullUrlIsTrue(request,true) + "methodName:" + methodName + ";" + "\n result:"
+			log.info("\n 完整路径：" +getFullUrlIsTrue(request,true) + ",headermap:" + headermap + ",methodName:" + methodName + ";" + "\n result:"
 					+ isJson(outputParam) + "执行时间:" + excTime
 			);
 		} catch (Throwable e) {
