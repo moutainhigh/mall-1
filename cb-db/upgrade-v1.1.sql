@@ -876,7 +876,6 @@ INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VA
 
 ##add by likang 2018-08-20
 ALTER TABLE `customer` ADD COLUMN `YN_DELETE` int(2) DEFAULT 0  COMMENT '是否注销';
-ALTER TABLE `customer` ADD COLUMN `CANCEL` int(2) DEFAULT 0  COMMENT '是否注销';
 
 -- --------------------------
 -- spec_filter 规格过滤配置表  add by chenpeng 2018年8月20日
