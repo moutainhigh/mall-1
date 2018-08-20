@@ -129,3 +129,52 @@ ALTER TABLE `order_item` add `PRODUCT_NO` varchar(32) DEFAULT NULL COMMENT '货�
 ALTER TABLE `order_item` add `MARKET_PRICE` float NOT NULL COMMENT '市场价';
 ALTER TABLE `order_item` add `VOLUME` float DEFAULT NULL COMMENT '体积';
 ALTER TABLE `order_item` add `WEIGHT` float DEFAULT NULL COMMENT '重量';
+
+
+##add by yangzhen 2018-8-20
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
+  `message_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '消息ID',
+  `push_title` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '推送标题',
+  `message_digest` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '消息摘要（文字）',
+  `digest_pic` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '摘要图片（路径）',
+  `message_content` varchar(4098) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '消息内容',
+  `push_time` datetime DEFAULT NULL COMMENT '推送时间',
+  `push_status` tinyint(2) NOT NULL COMMENT '消息状态（0：未推送，1：已推送）',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`message_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=439 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
+
+
+##add by guwenshao 2018-08-20
+INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('HOT_SEARCH', '昂克赛拉,卡罗拉,福克斯,思域,凯美瑞,迈腾,雷克萨斯CT', '0', '热门搜索');
+
+##add by likang 2018-08-20
+ALTER TABLE `customer` ADD COLUMN `YN_DELETE` int(2) DEFAULT 0  COMMENT '是否注销';
+ALTER TABLE customer modify COLUMN MOBILE varchar(48);
+-- --------------------------
+-- spec_filter 规格过滤配置表  add by chenpeng 2018年8月20日
+-- -------------------------
+CREATE TABLE `spec_filter` (
+  `FILTER_ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `FILTER_NAME` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '规格名称',
+  `SORT_ORDER` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '排序',
+  `ENABLED` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否启用',
+  `UPDATE_TIME` datetime COMMENT '更新时间',
+  `CREATE_TIME` TIMESTAMP NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
+  PRIMARY KEY (`FILTER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='规格过滤配置表';
+
+-- --------------------------
+-- spec_filter_item 规格过滤配置值  add by chenpeng 2018年8月20日
+-- -------------------------
+CREATE TABLE `spec_filter_item` (
+  `ITEM_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ITEM_VALUE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '规格值',
+  `SORT_ORDER` smallint(6) NOT NULL DEFAULT 0 COMMENT '排序',
+  `FILTER_ID` int(11) NOT NULL COMMENT '规格id',
+  `UPDATE_TIME` datetime COMMENT '更新时间',
+  `CREATE_TIME` TIMESTAMP NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
+  PRIMARY KEY (`ITEM_ID`) USING BTREE,
+  KEY `FILTER_ID` (`FILTER_ID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='规格过滤配置值';
