@@ -66,6 +66,7 @@ public class SpecController {
             modelMap.put("errerMsg","商品规格名称已存在");
             return catalogSpecs(spec.getCatalog().getCatalogId(), spec, modelMap);
         }
+        redirectAttributes.addFlashAttribute("oppMsg","规格添加成功!");
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }
 
@@ -78,6 +79,7 @@ public class SpecController {
             redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，修改失败！");
             return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
         }
+        redirectAttributes.addFlashAttribute("oppMsg","规格修改成功!");
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }
 

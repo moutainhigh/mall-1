@@ -13,6 +13,12 @@
 
         $(document).ready(function () {
 
+            var oppMsg = '${oppMsg}';
+            if(oppMsg){
+                commonNotify(oppMsg,"success");
+            }
+
+
             var errerMsg='${errerMsg}';
             if(errerMsg!=null&&errerMsg!=""){
                 commonNotify(errerMsg,"error");

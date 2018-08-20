@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -89,7 +90,7 @@ public class ProductController {
 
 
     @RequestMapping(value = "addProduct", method = RequestMethod.POST)
-    public String addProduct(@ModelAttribute("product") Product product, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String addProduct(@ModelAttribute("product") Product product, BindingResult result, ModelMap modelMap, Locale locale, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             editProducts(product.getCommodity().getCommodityId(), product, modelMap);
         }
@@ -111,6 +112,7 @@ public class ProductController {
         Commodity commodity = commodityService.getCommodityDetailById(product.getCommodity().getCommodityId());
         product.setDefaultPicPath(commodity.getDefaultPicPath());
         product = productService.addProduct(product);
+        redirectAttributes.addFlashAttribute("oppMsg","货品新增成功！");
         return "redirect:editProducts.do?commodityId=" + product.getCommodity().getCommodityId();
     }
 
