@@ -255,7 +255,7 @@
                 <kendo:grid-column  field="customerId" width="350px" hidden="true"/>
                 <kendo:grid-column title="账户名" field="accountName" width="150px" />
                 <kendo:grid-column title="真实姓名" field="realName" width="100px"/>
-                <kendo:grid-column title="手机号" field="mobile" width="100px"/>
+                <kendo:grid-column title="手机号" field="mobile" width="150px"/>
                 <kendo:grid-column title="Email" field="email" width="100px"/>
                 <kendo:grid-column filterable="false" title="性别" field="sex" width="100px" template="#=formatSex(sex)#"/>
                 <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
