@@ -193,7 +193,7 @@ public class CustomerController {
     public boolean CancellationCustomerById(@RequestParam("customerId") int customerId,@RequestParam("ynDelete") boolean ynDelete) {
         try{
             Customer customer = customerService.getCustomerById(customerId);
-            String time=customer.getMobile()+"DELETE-"+CalendarUtils.formatDateTimeNotSecond(new Date());
+            String time=customer.getMobile()+"-delete-"+CalendarUtils.formatDate(new Date());
             customerService.CancellationCustomerById(customerId, ynDelete,time);
             return true;
         }catch (Exception e){

@@ -1,12 +1,12 @@
 package com.yunxin.core.meta;
 
 public enum IDType {
-    GOODS("GOODS"),
+    GOODS("GDS"),
     ADV("ADV"),
-    BRAND("BRAND"),
-    PRICE("PRICE"),
-    PRODUCT("PRODUCT"),
-    SELLER("SELLER");
+    BRAND("BRD"),
+    PRICE("PRI"),
+    PRODUCT("PRD"),
+    SELLER("SLR");
 
     private String type;
 
