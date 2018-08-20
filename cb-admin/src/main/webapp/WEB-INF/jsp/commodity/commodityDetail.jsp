@@ -121,7 +121,7 @@
                                 <label> 商品价格段：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                ${commodity.priceSection.endPrice}
+                                ${commodity.priceSection.startPrice}元-${commodity.priceSection.endPrice}元
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -451,7 +451,7 @@
                 <div id="content-tab-6" class="tab-pane ">
                     <div class="inner-padding">
                         <div class="subheading">
-                            <h3>详细信息</h3>
+                            <h3>说明内容</h3>
                         </div>
                         <div class="spacer-25"></div>
                         <div class="row">

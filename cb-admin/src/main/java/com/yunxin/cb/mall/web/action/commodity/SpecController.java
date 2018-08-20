@@ -8,7 +8,6 @@ import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.core.exception.EntityExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -34,11 +33,6 @@ public class SpecController {
 
     @Resource
     private ICatalogService catalogService;
-
-
-    @Resource
-    private MessageSource messageSource;
-
 
     @RequestMapping(value = "catalogSpecs",method = RequestMethod.GET)
     public String catalogSpecs(@RequestParam("catalogId") int catalogId, @ModelAttribute("spec") Spec spec, ModelMap modelMap) {
@@ -67,7 +61,6 @@ public class SpecController {
             redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，添加失败！");
             redirectAttributes.addFlashAttribute("msgContent",e.getMessage());
             return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
-            //return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId() + "&msgTitle=商品规格名称已存在，添加失败！&msgContent=" + e.getMessage();
         }
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }

@@ -24,11 +24,7 @@
         function queryCommodity(){
             var dataItem=getSelectedTreeListItem("treelist");
             if(dataItem){
-                if(dataItem.level==3){
-                    window.location.href = "categoryCommodities.do?categoryId=" + dataItem.categoryId;
-                }else{
-                    commonNotify('仅第三级运营分类才能关联商品',"warning");
-                }
+                window.location.href = "categoryCommodities.do?categoryId=" + dataItem.categoryId;
             }
         }
 

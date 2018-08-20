@@ -23,7 +23,6 @@
 
     });
     function checkPrice(){
-        debugger;
         if(''!=$('#endPrice').val()&&'0'!=$('#endPrice').val()&&parseInt($('#startPrice').val())>parseInt($('#endPrice').val())){
             bootbox.alert("最大价格不能小于最小价格!");
             $('#endPrice').val('')
