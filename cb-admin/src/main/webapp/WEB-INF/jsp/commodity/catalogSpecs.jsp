@@ -278,7 +278,7 @@
                 </div>
             </div>
             <div class="alert alert-warning" id="modalMsg" style="display: none;">
-                <strong>提示：</strong>仅第三级商品分类可关联商品！
+                <strong>提示：</strong>仅可选择第三级商品分类进行规格复制！
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -307,7 +307,15 @@
             function chooseCatalog() {
                 if(treeLevel != 3){
                     $('#modalMsg').show();
+                    $('#modalMsg').html("<strong>提示：</strong>仅可选择第三级商品分类进行规格复制！");
                     return;
+                }
+                if($("#catalogId").val()){
+                    if(Number(catalogId) == Number($("#catalogId").val())){
+                        $('#modalMsg').show();
+                        $('#modalMsg').html("<strong>提示：</strong>当前操作的商品分类无法选择！");
+                        return;
+                    }
                 }
                 $('#modalMsg').hide();
                 $('#catalogDialog').modal("hide");
