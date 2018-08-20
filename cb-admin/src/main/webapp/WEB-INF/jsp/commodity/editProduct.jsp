@@ -206,11 +206,12 @@
                             <div class="col-sm-2">
                                 <label>货品属性：</label>
                             </div>
-                            <div class="col-sm-8">
-                                <c:forEach var="proAttr" items="${productAttributes}">
-                                    <span>${proAttr.attribute.attributeName}</span>
-
-                                </c:forEach>
+                            <div class="col-sm-8" style="position:relative;">
+                                <span style="position: absolute;top:4px;">
+                                    <c:forEach var="proAttr" items="${productAttributes}">
+                                        ${proAttr.attribute.attributeName}&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </c:forEach>
+                                </span>
                             </div>
                         </div>
                         <div class="spacer-30"></div>

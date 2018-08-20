@@ -70,8 +70,8 @@ public class SellerService implements ISellerService {
             }
         }
 
-        if (!sellerDao.isOrUnique(seller, Seller_.sellerCode, Seller_.sellerName)) {
-            throw new EntityExistException("商家编码或商家名称已存在");
+        if (!sellerDao.isOrUnique(seller, Seller_.sellerCode, Seller_.sellerName,Seller_.mobile,Seller_.email,Seller_.idCardNum)) {
+            throw new EntityExistException("商家编码、名称、邮箱、手机号或身份证不能重复，请检查");
         }
 
         seller.setAudit(true);
@@ -121,8 +121,8 @@ public class SellerService implements ISellerService {
             }
         }
 
-        if (!sellerDao.isOrUnique(seller, Seller_.sellerCode, Seller_.sellerName)) {
-            throw new EntityExistException("商家编码或商家名称已存在");
+        if (!sellerDao.isOrUnique(seller, Seller_.sellerCode, Seller_.sellerName,Seller_.mobile,Seller_.email,Seller_.idCardNum)) {
+            throw new EntityExistException("商家编码、名称、邮箱、手机号或身份证不能重复，请检查");
         }
         Seller sellerDB = sellerDao.findOne(seller.getSellerId());
         AttributeReplication.copying(seller, sellerDB, Seller_.sellerName, Seller_.sellerCode, Seller_.sellerAddress, Seller_.sellerType, Seller_.linkman,

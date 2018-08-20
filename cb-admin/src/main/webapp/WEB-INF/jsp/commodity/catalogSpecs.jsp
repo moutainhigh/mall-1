@@ -12,6 +12,18 @@
     <script type="application/javascript">
 
         $(document).ready(function () {
+
+            var oppMsg = '${oppMsg}';
+            if(oppMsg){
+                commonNotify(oppMsg,"success");
+            }
+
+
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             $("#storeId").select2();
             $("#attributeIds").select2({
                 placeholder: "请选择货品属性"

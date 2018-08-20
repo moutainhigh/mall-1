@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,7 +36,7 @@ public class SpecController {
     private ICatalogService catalogService;
 
     @RequestMapping(value = "catalogSpecs",method = RequestMethod.GET)
-    public String catalogSpecs(@RequestParam("catalogId") int catalogId, @ModelAttribute("spec") Spec spec, ModelMap modelMap) {
+    public String catalogSpecs(@RequestParam("catalogId") int catalogId, @ModelAttribute("spec") Spec spec, ModelMap modelMap)  {
         Catalog catalog = catalogService.getCategoryById(catalogId);
         modelMap.addAttribute("catalog", catalog);
         spec.setCatalog(catalog);
@@ -50,7 +51,7 @@ public class SpecController {
     }
 
     @RequestMapping(value = "addSpec",method = RequestMethod.POST)
-    public String addSpec(@Valid @ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, RedirectAttributes redirectAttributes) {
+    public String addSpec(@Valid @ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, RedirectAttributes redirectAttributes)  throws Exception {
         if (result.hasErrors()) {
             return catalogSpecs(spec.getCatalog().getCatalogId(), spec, modelMap);
         }
@@ -58,10 +59,14 @@ public class SpecController {
             spec = commodityService.addSpec(spec);
         } catch (EntityExistException e) {
             logger.error("商品规格名称已存在",e);
-            redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，添加失败！");
-            redirectAttributes.addFlashAttribute("msgContent",e.getMessage());
-            return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
+            //redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，添加失败！");
+            //redirectAttributes.addFlashAttribute("msgContent",e.getMessage());
+            //return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
+            result.addError(new FieldError("spec", "sellerName", "商品规格名称已存在", true, null, null,e.getMessage()));
+            modelMap.put("errerMsg","商品规格名称已存在");
+            return catalogSpecs(spec.getCatalog().getCatalogId(), spec, modelMap);
         }
+        redirectAttributes.addFlashAttribute("oppMsg","规格添加成功!");
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }
 
@@ -74,6 +79,7 @@ public class SpecController {
             redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，修改失败！");
             return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
         }
+        redirectAttributes.addFlashAttribute("oppMsg","规格修改成功!");
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }
 
