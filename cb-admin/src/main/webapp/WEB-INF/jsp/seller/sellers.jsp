@@ -28,7 +28,7 @@
                 commonNotify("删除成功！", "success");
                 $("#grid").data("kendoGrid").dataSource.read();
               } else {
-                commonNotify("删除失败!", "error");
+                commonNotify("删除失败,商家下面有商品!", "error");
               }
             });
           }
