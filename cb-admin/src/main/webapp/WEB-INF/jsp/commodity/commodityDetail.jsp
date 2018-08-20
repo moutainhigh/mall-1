@@ -423,7 +423,7 @@
                                         <th scope="col" width="100">市场价</th>
                                         <th scope="col" width="140">仓库名称</th>
                                         <th scope="col" width="100">库存</th>
-                                        <th scope="col" width="140">状态</th>
+                                        <th scope="col" width="140">上下架状态</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -440,7 +440,16 @@
                                             <td>${product.marketPrice}</td>
                                             <td>${product.store.storeName}</td>
                                             <td>${product.storeNum}</td>
-                                            <td>${product.productState}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${product.publishState=='WAIT_UP_SHELVES' || product.publishState=='DOWN_SHELVES'}">
+                                                        已下架
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        已上架
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
