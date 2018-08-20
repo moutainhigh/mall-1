@@ -226,7 +226,7 @@ public class CommodityController implements ServletContextAware {
     public ResponseResult upOrDownShelvesCommodity(@RequestParam("commodityId") int commodityId, @RequestParam("publishState") PublishState publishState) {
         ResponseResult responseResult = new ResponseResult(Result.FAILURE);
         try{
-            responseResult = commodityService.upOrDownShelvesCommodity(commodityId, publishState);
+            responseResult = commodityService.upOrDownShelvesCommodity(commodityId, publishState,null);
         }catch (Exception ex){
             logger.info(ex.getMessage());
             responseResult.setData(ex.getMessage());
