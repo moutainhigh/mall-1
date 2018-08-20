@@ -19,8 +19,8 @@ public class IdGenerate {
     private static String strIp = "";
     private static String COMSTR = "CB";
 
-    public static final int SERIALNO_LENGTH = 4; // 流水号最大长度
-    public static final int SERIALNO_MAX_VALUE = 9999;// 流水号最大值
+    public static final int SERIALNO_LENGTH = 3; // 流水号最大长度
+    public static final int SERIALNO_MAX_VALUE = 999;// 流水号最大值
 
     public static final HashMap<String, AtomicInteger> AUTOMICMAP = new HashMap<String, AtomicInteger>();
 
@@ -99,7 +99,7 @@ public class IdGenerate {
         StringBuilder order = new StringBuilder(COMSTR);
         order.append(idType.getType());
         order.append(strIp);
-        order.append(SimpleDateFormatEnum.sdf15.format(new Date()));
+        order.append(SimpleDateFormatEnum.sdf17.format(new Date()));
         return IDSerialPart(order, idType.getType());
     }
 

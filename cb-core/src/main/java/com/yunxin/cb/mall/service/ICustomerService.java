@@ -208,6 +208,6 @@ public interface ICustomerService {
 
     void enableCustomerById(int customerId,boolean enabled);
 
-    public void CancellationCustomerById(int customerId,boolean cancel);
+    public void CancellationCustomerById(int customerId,boolean ynDelete,String time);
 
 }

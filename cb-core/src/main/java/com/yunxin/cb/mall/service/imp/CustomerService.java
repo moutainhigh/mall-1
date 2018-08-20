@@ -1142,7 +1142,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void CancellationCustomerById(int customerId,boolean cancel){
-        customerDao.CancellationCustomerById(customerId,cancel);
+    public void CancellationCustomerById(int customerId,boolean ynDelete,String time){
+        customerDao.CancellationCustomerById(customerId,ynDelete,time);
     }
 }
