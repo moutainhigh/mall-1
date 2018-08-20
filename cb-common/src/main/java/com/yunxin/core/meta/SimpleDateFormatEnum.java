@@ -19,7 +19,8 @@ public enum SimpleDateFormatEnum {
 	sdf13("yyyy年MM月"),
 	sdf14("yyyyMM"),
 	sdf15("yyMMddHHmmssSSS"),
-	sdf16("yyyy-MM");
+	sdf16("yyyy-MM"),
+	sdf17("MMddHHmmss");
 
 	private final String pattern;
 

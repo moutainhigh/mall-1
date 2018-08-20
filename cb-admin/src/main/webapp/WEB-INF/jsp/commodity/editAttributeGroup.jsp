@@ -101,7 +101,7 @@
                     <li><a href="#">商品管理</a></li>
                     <li><a href="#">属性管理</a></li>
                     <li><a href="#">属性组管理</a></li>
-                    <li class="active">新增属性组</li>
+                    <li class="active">编辑属性组</li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>

@@ -111,9 +111,19 @@
                 var inputValue = $(this).val();
                 var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
                 var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
-                if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
-                    bootbox.alert("价格须介于商品价格段范围内!");
-                    $(this).val('')
+                var documentId = $(this).attr("id");
+                if (documentId == "costPrice") {
+                    var salePrive = $("#sellPrice").val();
+                    if(Number(salePrive) < Number(startPrice) || Number(endPrice) < Number(salePrive)){
+                        bootbox.alert("价格须介于商品价格段范围内!");
+                        $(this).val('');
+                        $("#sellPrice").val('');
+                    }
+                } else {
+                    if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
+                        bootbox.alert("价格须介于商品价格段范围内!");
+                        $(this).val('')
+                    }
                 }
             });
         });
