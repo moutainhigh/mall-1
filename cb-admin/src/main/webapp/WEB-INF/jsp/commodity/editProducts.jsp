@@ -285,13 +285,13 @@
                                         <c:choose>
                                             <c:when test="${product.publishState=='WAIT_UP_SHELVES' || product.publishState=='DOWN_SHELVES'}">
                                                 <a href="javascript:upOrDownShelvesProduct('${product.productId}','UP_SHELVES');" title="上架" class=" btn-less"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="toEditProduct.do?productId=${product.productId}" title="编辑" class=" btn-less"><i class="fa fa-edit"></i></a>
+                                                <a href="javascript:removeProduct(${product.productId});" title="删除" class=" btn-less"><i class="fa fa-trash-o"></i></a>
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="javascript:upOrDownShelvesProduct('${product.productId}','DOWN_SHELVES');" title="下架" class=" btn-less"><i class="fa fa-arrow-down"></i></a>
                                             </c:otherwise>
                                         </c:choose>
-                                        <a href="toEditProduct.do?productId=${product.productId}" title="编辑" class=" btn-less"><i class="fa fa-edit"></i></a>
-                                        <a href="javascript:removeProduct(${product.productId});" title="删除" class=" btn-less"><i class="fa fa-trash-o"></i></a>
                                         <c:if test="${commodity.defaultProduct.productId!=product.productId}"><!-- 设置默认货品 -->
                                             <a href="javascript:defaultProduct('${product.productId}','${commodity.commodityId}');" title="默认" class=" btn-less"><i class="fa fa-level-up"></i></a>
                                         </c:if>
