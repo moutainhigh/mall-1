@@ -14,7 +14,6 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.cb.mall.service.ICustomerService;
-import com.yunxin.cb.mall.service.ICustomerWalletService;
 import com.yunxin.cb.mall.service.IFinaciaWalletService;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.redis.RedisService;
@@ -28,12 +27,16 @@ import com.yunxin.cb.sns.service.ICustomerFriendRequestService;
 import com.yunxin.cb.system.entity.Profile;
 import com.yunxin.cb.system.meta.ProfileName;
 import com.yunxin.cb.system.service.IProfileService;
+import com.yunxin.cb.util.DmSequenceFourUtils;
+import com.yunxin.cb.util.DmSequenceSixUtils;
 import com.yunxin.cb.util.PasswordHash;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.core.util.*;
+import com.yunxin.core.util.CommonUtils;
+import com.yunxin.core.util.IdGenerate;
+import com.yunxin.core.util.LogicUtils;
 import io.rong.models.response.BlackListResult;
 import io.rong.models.user.UserModel;
 import org.apache.commons.lang.StringUtils;
@@ -79,9 +82,6 @@ public class CustomerService implements ICustomerService {
 
     @Resource
     private ICustomerFriendRequestService customerFriendRequestService;
-
-    @Resource
-    private ICustomerWalletService iCustomerWalletService;
 
     @Resource
     private IProfileService iProfileService;
@@ -145,6 +145,16 @@ public class CustomerService implements ICustomerService {
         if (!customerDao.isUnique(customer, Customer_.accountName)) {
             throw new EntityExistException("客户账户名已存在");
         }
+        if(customer.getRecommendCustomer()==null){
+            throw new EntityExistException("推荐人不存在");
+        }
+        Customer customerCode = generateCodeByRecommendCustomer(customer.getRecommendCustomer());
+        if (customerCode != null) {
+            customer.setLevelCode(customerCode.getLevelCode());
+            customer.setCustomerLevel(customerCode.getCustomerLevel());
+            customer.setInvitationCode(customerCode.getInvitationCode());
+        }
+
         if (StringUtils.isBlank(customer.getPassword())) {
             // 初始密码
             customer.setPassword(CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE));
@@ -153,6 +163,7 @@ public class CustomerService implements ICustomerService {
         customer.setRank(rankDao.getRankByDefaultRank());
         String pwd = PasswordHash.createHash(customer.getPassword());
         customer.setPassword(pwd);
+
         Customer dbCustomer = customerDao.save(customer);
         String token = rongCloudService.register(dbCustomer);
         dbCustomer.setRongCloudToken(token);
@@ -193,19 +204,24 @@ public class CustomerService implements ICustomerService {
 //        Customer customer1 = customerDao.getOne(1);//此方法会引起,org.hibernate.lazyinitializationexception错误,解决方法,用另外一个根据customerId查询的方法
         Customer customer1 = customerDao.findRecommendCustomer(1);//add by lxc  2018-08-05
         if (customer1 != null) {
-            Customer customerCode = generateCode(customer1.getInvitationCode());
+            Customer customerCode = generateCodeByRecommendCustomer(customer1);
             if (customerCode != null) {
                 customer.setLevelCode(customerCode.getLevelCode());
                 customer.setCustomerLevel(customerCode.getCustomerLevel());
                 customer.setInvitationCode(customerCode.getInvitationCode());
+            }else{
+                throw new EntityExistException("注册失败");
             }
+            String pwd = PasswordHash.createHash(customer.getPassword());
+            customer.setPassword(pwd);
+            Customer dbCustomer = customerDao.save(customer);
+            String token = rongCloudService.register(dbCustomer);
+            dbCustomer.setRongCloudToken(token);
+            return dbCustomer;
+        }else{
+            throw new EntityExistException("注册失败");
         }
-        String pwd = PasswordHash.createHash(customer.getPassword());
-        customer.setPassword(pwd);
-        Customer dbCustomer = customerDao.save(customer);
-        String token = rongCloudService.register(dbCustomer);
-        dbCustomer.setRongCloudToken(token);
-        return dbCustomer;
+
     }
 
     @Override
@@ -380,14 +396,106 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public void resetLevelCodeCode() {
+       List<Customer> list=customerDao.findByLevelCodeIsNulls();
+        resetRepeatLevelCode(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void resetInvitationCode() {
+        //更新为空的邀请码
+        List<Customer> customer=customerDao.findByInvitationCodeIsNulls();
+        for (Customer list:customer){
+            Customer dbCustomer=customerDao.findRecommendCustomer(list.getCustomerId());
+            try {
+                String invitationCode=checkInvitationCode(new DmSequenceSixUtils().getNoRepeatId());
+                customerDao.updateInvitationCode(invitationCode,dbCustomer.getCustomerId());
+            } catch (Exception e) {
+                logger.error("resetInvitationCode failed",e);
+            }
+        }
+
+        //更新重复编码
+        List<Customer> customerRepeats=customerDao.findInvitationCodeByRepeat();
+        resetRepeatInvitationCode(customerRepeats);
+
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<Customer>  resetRepeatInvitationCode(List<Customer> customerRepeat) {
+
+        if(null!=customerRepeat&&customerRepeat.size()>0){
+
+            for (Customer customerRepeats:customerRepeat){
+
+                try {
+                    String invitationCode=checkInvitationCode(new DmSequenceSixUtils().getNoRepeatId());
+                    customerDao.updateInvitationCode(invitationCode,customerRepeats.getCustomerId());
+                } catch (Exception e) {
+                    logger.error("resetInvitationCodeRepeat failed",e);
+                }
+
+            }
+//            List<Customer> customerRepeats=customerDao.findInvitationCodeByRepeat();
+//            if(null!=customerRepeats&&customerRepeats.size()>0){
+//                return resetRepeatInvitationCode(customerRepeats);
+//            }
+
+        }
+
+        return customerRepeat;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<Customer>  resetRepeatLevelCode(List<Customer> customerRepeat) {
+
+        if(null!=customerRepeat&&customerRepeat.size()>0){
+
+            for (Customer customer:customerRepeat){
+
+                if(customer.getRecommendCustomer()!=null){
+
+                    Customer customerRecommendCustomer=customerDao.findRecommendCustomer(customer.getRecommendCustomer().getCustomerId());
+
+                    if(StringUtils.isNotEmpty(customerRecommendCustomer.getLevelCode())){
+
+                        try {
+                            Customer customers= generateCodeByRecommendCustomer(customerRecommendCustomer);
+                            if(customers!=null){
+                                customerDao.updateLevelCode(customers.getLevelCode(),customers.getCustomerLevel(),customer.getCustomerId());
+                            }
+
+                        } catch (Exception e) {
+                            logger.error("findByLevelCodeIsNull failed",e);
+                        }
+                    }
+
+                }
+
+            }
+
+//            List<Customer> list=customerDao.findByLevelCodeIsNulls();
+//            if(null!=list&&list.size()>0){
+//                return resetRepeatLevelCode(list);
+//            }
+        }
+        return customerRepeat;
+    }
+
+
+    @Override
     public Customer generateCode(String invitationCode) {
         logger.info("generateCode----------" + invitationCode);
         final int initialLevel = 1;
+
         return new Customer() {
             {
                 try {
-                    String generateCode = checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
-                    String invitationCodes = checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
+                    String generateCode = checkLevelCode(DmSequenceFourUtils.getNoRepeatId());
+                    String invitationCodes = checkInvitationCode(DmSequenceSixUtils.getNoRepeatId());
                     if (StringUtils.isNotBlank(invitationCode)) {
                         Customer recommendCustomer = getCustomerByInvitationCode(invitationCode);
                         if (recommendCustomer != null) {
@@ -408,7 +516,34 @@ public class CustomerService implements ICustomerService {
                     logger.info("invitationCodes----------" + invitationCodes);
                 } catch (Exception e) {
                     logger.error("生成编码异常", e);
+
                 }
+            }
+        };
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Customer generateCodeByRecommendCustomer(Customer recommendCustomer)  throws  Exception{
+        logger.info("recommendCustomer.invitationCode----------" + recommendCustomer.getInvitationCode());
+
+        final int initialLevel = 1;
+        return new Customer(){
+            {
+                //等级编码
+                String generateCode = checkLevelCode(DmSequenceFourUtils.getNoRepeatId());
+                //邀请码
+                String invitationCodes = checkInvitationCode(DmSequenceSixUtils.getNoRepeatId());
+                //推荐人等级
+                int customerLevel = recommendCustomer.getCustomerLevel();
+                //推荐人等级编码
+                String recommendLevelCode = recommendCustomer.getLevelCode();
+                //设置等级
+                setCustomerLevel(customerLevel + initialLevel);
+                //设置等级编码
+                setLevelCode(checkGenerateCode(recommendLevelCode, generateCode));
+                //设置邀请码
+                setInvitationCode(invitationCodes);
             }
         };
     }
@@ -435,9 +570,9 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer = getCustomerByInvitationCode(invitationCode);
         if (recommendCustomer != null) {
             try {
-                return checkInvitationCode(DmSequenceSixUtil.getNoRepeatId());
+                return checkInvitationCode(new DmSequenceSixUtils().getNoRepeatId());
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("生成编码异常", e);
             }
         }
         return invitationCode;
@@ -453,9 +588,9 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer = getByLevelCode(levelCode + generateCode);
         if (recommendCustomer != null) {
             try {
-                return checkGenerateCode(levelCode, DmSequenceFourUtil.getNoRepeatId());
+                return checkGenerateCode(levelCode,DmSequenceFourUtils.getNoRepeatId());
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("生成编码异常", e);
             }
         }
         return levelCode + generateCode;
@@ -465,9 +600,9 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer = getByLevelCode(generateCode);
         if (recommendCustomer != null) {
             try {
-                return checkLevelCode(DmSequenceFourUtil.getNoRepeatId());
+                return checkLevelCode(DmSequenceFourUtils.getNoRepeatId());
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("生成编码异常", e);
             }
         }
         return generateCode;
