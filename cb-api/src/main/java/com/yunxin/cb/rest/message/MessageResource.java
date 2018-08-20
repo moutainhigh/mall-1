@@ -71,7 +71,7 @@ public class MessageResource extends BaseResource {
             return new ResponseResult(newPageMap);
         }catch (Exception e){
             logger.error("查询消息列表失败",e);
-            return new ResponseResult(Result.FAILURE,e.getMessage());
+            return new ResponseResult(Result.FAILURE,"查询消息列表失败");
         }
     }
 
@@ -95,7 +95,7 @@ public class MessageResource extends BaseResource {
             return new ResponseResult(message);
         }catch (Exception e){
             logger.error("查询消息详情失败",e);
-            return new ResponseResult(Result.FAILURE,e.getMessage());
+            return new ResponseResult(Result.FAILURE,"查询消息详情失败");
         }
     }
 
