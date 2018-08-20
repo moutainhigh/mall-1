@@ -64,9 +64,9 @@ public class MainResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE, "密码不能为空");
             }
             //验证码不能为空
-            if (StringUtils.isBlank(code)) {
-                return new ResponseResult(Result.FAILURE, "验证码不能为空");
-            }
+//            if (StringUtils.isBlank(code)) {
+//                return new ResponseResult(Result.FAILURE, "验证码不能为空");
+//            }
             //邀请码不能为空
             if (StringUtils.isBlank(invitationCode)) {
                 return new ResponseResult(Result.FAILURE, "邀请码不能为空");
@@ -77,19 +77,19 @@ public class MainResource extends BaseResource {
             }
             //校验验证码
 //            redisService.getKey(mobile);
-            VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(mobile);
-            //验证码不存在
-            if (verificationCode == null) {
-                return new ResponseResult(Result.FAILURE, "验证码不存在");
-            }
-            //验证码超过5分钟，失效
-            if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
-                return new ResponseResult(Result.FAILURE, "验证码失效");
-            }
-            //验证码错误
-            if (!verificationCode.getCode().equals(code)) {
-                return new ResponseResult(Result.FAILURE, "验证码错误");
-            }
+//            VerificationCode verificationCode = (VerificationCode) redisService.getVerificationCode(mobile);
+//            //验证码不存在
+//            if (verificationCode == null) {
+//                return new ResponseResult(Result.FAILURE, "验证码不存在");
+//            }
+//            //验证码超过5分钟，失效
+//            if ((System.currentTimeMillis() - verificationCode.getSendTime()) > 300000) {
+//                return new ResponseResult(Result.FAILURE, "验证码失效");
+//            }
+//            //验证码错误
+//            if (!verificationCode.getCode().equals(code)) {
+//                return new ResponseResult(Result.FAILURE, "验证码错误");
+//            }
             //验证推荐人手机号
             Customer recommendCustomer = customerService.getCustomerByInvitationCode(invitationCode);
             if (recommendCustomer == null) {
