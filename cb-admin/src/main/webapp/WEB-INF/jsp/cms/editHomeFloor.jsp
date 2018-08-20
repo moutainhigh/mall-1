@@ -104,7 +104,7 @@
                                 <label><span class="asterisk">*</span>楼层名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control form-control validate[required,minSize[2],maxSize[32]]"  path="floorName" maxlength="32"/>
+                                <form:input cssClass="form-control form-control validate[required,minSize[2],maxSize[32]]" path="floorName" maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>排序：</label>

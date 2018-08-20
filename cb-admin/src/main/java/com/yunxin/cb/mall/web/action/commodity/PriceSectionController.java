@@ -6,6 +6,7 @@ import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.cb.mall.entity.PriceSection;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.cb.mall.service.IPriceService;
+import com.yunxin.core.util.IdGenerate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,6 +42,8 @@ public class PriceSectionController {
 
     @RequestMapping(value = "toAddPriceSection", method = RequestMethod.GET)
     public String toAddPriceSection(@ModelAttribute("priceSection") PriceSection priceSection, ModelMap modelMap) {
+        priceSection.setSectionNo(IdGenerate.genPriceID());
+        modelMap.addAttribute("priceSection", priceSection);
         return "commodity/addPriceSection";
     }
 

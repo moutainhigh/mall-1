@@ -5,7 +5,6 @@ import com.yunxin.cb.mall.entity.CatalogAttributeGroup;
 import com.yunxin.cb.mall.service.IAttributeService;
 import com.yunxin.cb.mall.service.ICatalogService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.cb.mall.web.action.MediaPather;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.slf4j.Logger;
@@ -22,9 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -133,20 +130,20 @@ public class CatalogAttributeGroupController implements ServletContextAware {
     @ResponseBody
     public String removeCatalogAttributeGroup(@RequestParam("groupId") int groupId) {
         try {
-            List<CatalogAttribute> catalogAttributes = attributeService.findAttributeByGroupId(groupId);
+            /*List<CatalogAttribute> catalogAttributes = attributeService.findAttributeByGroupId(groupId);
             List<String> imagePaths = new ArrayList<>();
             for (CatalogAttribute catalogAttribute : catalogAttributes) {
                 String imgDirectory = MediaPather.getPicStoreRealPath(servletContext, catalogAttribute.getImagePath());
                 imagePaths.add(imgDirectory);
-            }
+            }*/
             attributeService.removeCatalogAttributeGroupById(groupId);
             //待删除动作执行成功后删除文件
-            for (String imgPath : imagePaths) {
+            /*for (String imgPath : imagePaths) {
                 File imgFilePath = new File(imgPath);
                 if (imgFilePath.exists()) {
                     imgFilePath.delete();
                 }
-            }
+            }*/
             return "success";
         } catch (Exception e) {
             e.printStackTrace();

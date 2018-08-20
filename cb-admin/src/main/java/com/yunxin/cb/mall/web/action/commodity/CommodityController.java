@@ -12,6 +12,7 @@ import com.yunxin.cb.search.vo.meta.Result;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.IdGenerate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -94,6 +95,8 @@ public class CommodityController implements ServletContextAware {
 
     @RequestMapping(value = "toAddCommodity", method = RequestMethod.GET)
     public String toAddCommodity(@ModelAttribute("commodity") Commodity commodity, ModelMap modelMap, HttpServletRequest request) {
+        commodity.setCommodityCode(IdGenerate.genGoodsID());
+        modelMap.addAttribute("commodity", commodity);
         return toAddCommodity(commodity, modelMap);
     }
 

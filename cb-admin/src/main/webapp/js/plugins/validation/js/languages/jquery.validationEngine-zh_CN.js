@@ -187,8 +187,8 @@
                     "alertText": "手机号码格式不正确"
                 },
                 "checkInputNumLetter": {//只能输入数字和字母
-                    "regex": /^[0-9a-zA-Z]+$/,
-                    "alertText": "只能输入数字和字母"
+                    "regex": /^[0-9a-zA-Z.]+$/,
+                    "alertText": "只能输入数字，字母和小数点"
                 },
                 // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {

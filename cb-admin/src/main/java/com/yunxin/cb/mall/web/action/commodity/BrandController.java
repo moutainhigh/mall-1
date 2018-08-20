@@ -13,6 +13,7 @@ import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.IdGenerate;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -82,8 +83,10 @@ public class BrandController {
      */
     @RequestMapping(value = "toAddBrand", method = RequestMethod.GET)
     public String toAddBrand(@ModelAttribute("brand") Brand brand, ModelMap modelMap) {
+        brand.setBrandNo(IdGenerate.genBrandID());
         TreeViewItem categoryTree = categoryService.getCategoryTree();
         modelMap.addAttribute("categoryTree", Arrays.asList(categoryTree));
+        modelMap.addAttribute("brand", brand);
         return "commodity/addBrand";
     }
 
@@ -109,6 +112,7 @@ public class BrandController {
         } catch (EntityExistException e) {
             result.addError(new FieldError("brand", "brandName", brand.getBrandEnName(), true, null, null,
                     messageSource.getMessage("brand_brandName_repeat", null, locale)));
+            modelMap.put("errerMsg",e.getMessage());
             return toAddBrand(brand, modelMap);
         }
         return "redirect:../common/success.do?reurl=commodity/brands.do";

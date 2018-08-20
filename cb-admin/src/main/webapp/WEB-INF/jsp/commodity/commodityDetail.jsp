@@ -276,6 +276,19 @@
                                 ${commodity.recommend==true?'是':'否'}
                             </div>
                         </div>
+                        <hr>
+                        <div class="spacer-30"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>商家名称：</label>
+                            </div>
+                            <div class="col-sm-1 col-label">
+                                ${commodity.seller.sellerName}
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
                         <%--<div class="spacer-10"></div>--%>
                         <%--<div class="row">--%>
 
@@ -456,7 +469,7 @@
                         </div>
                         <div class="spacer-25"></div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" style="padding: 16px;overflow: hidden" >
                                 ${commodity.explainContent}
                             </div>
                         </div>

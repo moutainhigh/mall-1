@@ -54,7 +54,7 @@ public class SellerService implements ISellerService {
             public void addConditions(Root<Seller> root,
                                       CriteriaQuery<?> query, CriteriaBuilder builder,
                                       List<Predicate> predicates) {
-                query.orderBy(builder.asc(root.get(Seller_.sellerName)));
+                query.orderBy(builder.desc(root.get(Seller_.createTime)));
             }
         });
         Page<Seller> sellers = sellerDao.findAll(query, query.getPageRequest());
