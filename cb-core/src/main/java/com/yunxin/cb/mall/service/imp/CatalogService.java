@@ -345,7 +345,7 @@ public class CatalogService implements ICatalogService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public TreeViewItem getCatalogTree() {
-        List<Catalog> catalogs = catalogDao.findByEnabledOrderByCatalogIdAsc(true);
+        List<Catalog> catalogs = catalogDao.findByEnabledOrderBySortOrderAsc(true);
         Catalog catalog = catalogs.get(0);
         catalogs.remove(catalog);
         TreeViewItem root = catalog.cloneTreeItem();
