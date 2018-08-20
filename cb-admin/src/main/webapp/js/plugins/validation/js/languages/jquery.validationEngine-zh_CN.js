@@ -178,6 +178,10 @@
                     "regex": /^[0-9]*$/,
                     "alertText": "只能输入数字"
                 },
+                "checkPositive": {//只能输入数字和字母
+                    "regex":  /^[1-9]\d*$/,
+                    "alertText": "只能输入正整数"
+                },
                 "checkInputNumLetter": {//只能输入数字和字母
                     "regex": /^[0-9a-zA-Z]+$/,
                     "alertText": "只能输入数字和字母"

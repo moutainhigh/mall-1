@@ -368,7 +368,7 @@
                                 <label><span class="asterisk">*</span>库存数量：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[number]]" required="true" path="storeNum" maxlength="12"/>
+                                <form:input cssClass="form-control validate[required,custom[checkPositive]]" required="true" path="storeNum" maxlength="12"/>
                             </div>
                         </div>
 
