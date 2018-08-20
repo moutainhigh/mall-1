@@ -33,6 +33,7 @@ public enum ProfileName {
     IOS_FORCE_UPGRADE("false"),//苹果PP是否强制更新
     INSURANCE_CODE_RECEIVE_EMAIL(""),//保单合同编号接收邮箱
     INSURANCE_CODE_RECEIVE_CONTEXT(""),//保单合同编号发送内容
+    HOT_SEARCH("昂克赛拉,卡罗拉,福克斯,思域,凯美瑞,迈腾,雷克萨斯CT"),//热门搜索
     ;
 
     private String i18nName;
