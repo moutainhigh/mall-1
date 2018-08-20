@@ -2,11 +2,13 @@ package com.yunxin.cb.rest.mall;
 
 
 import com.yunxin.cb.annotation.ApiVersion;
+import com.yunxin.cb.mall.entity.Profile;
+import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.restful.RestfulFactory;
 import com.yunxin.cb.mall.restful.meta.Result;
+import com.yunxin.cb.mall.service.ProfileService;
 import com.yunxin.cb.mall.service.SearchRestService;
-import com.yunxin.cb.mall.vo.CombinationVO;
 import com.yunxin.cb.mall.vo.SearchResultVo;
 import com.yunxin.cb.mall.vo.SearchVo;
 import com.yunxin.cb.rest.BaseResource;
@@ -15,13 +17,19 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import retrofit2.Call;
+
+import javax.annotation.Resource;
 
 @Api(description = "商城商品搜索接口")
 @RestController
 @RequestMapping(value = "/{version}/mall/search")
 public class SearchResource extends BaseResource {
+
+    @Resource
+    private ProfileService profileService;
 
     @ApiOperation(value = "关键字搜索")
     @ApiImplicitParams({
@@ -81,5 +89,22 @@ public class SearchResource extends BaseResource {
     }
 
 
+    @ApiOperation(value = "热门搜索")
+    @GetMapping(value = "hotSearch")
+    @ApiVersion(1)
+    @IgnoreAuthentication
+    public ResponseResult<String []> hotSearch() {
+        try {
+            Profile profile = profileService.getProfileByName(ProfileState.HOT_SEARCH.name());
+            if (profile != null && StringUtils.isNotBlank(profile.getFileValue())) {
+                String [] hotSearchArr = profile.getFileValue().split(",");
+                return new ResponseResult(Result.SUCCESS, hotSearchArr);
+            }
+            return new ResponseResult(Result.SUCCESS);
+        } catch (Exception e) {
+            logger.info("hotSearch failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
+    }
 
 }

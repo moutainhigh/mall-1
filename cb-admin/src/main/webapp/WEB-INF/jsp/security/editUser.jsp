@@ -116,7 +116,7 @@
                                 <label><span class="asterisk">*</span>手机号码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input onblur="checkPhone(this.value)" id="phone"  cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="11"/>
+                                <form:input id="phone"  cssClass="form-control validate[required,custom[checkPhone]]" path="mobile" maxlength="11"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>邮箱：</label>

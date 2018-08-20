@@ -153,7 +153,7 @@
                     <div class="spacer-30"></div>
                     <div class="row">
                         <div class="col-sm-2">
-                            <label>安卓版本编号：<span class="asterisk">*</span></label>
+                            <label><span class="asterisk">*</span>安卓版本编号：</label>
                         </div>
                         <div class="col-sm-3">
                             <input   name="ANDROID_VERSION_CODE" id="ANDROID_VERSION_CODE" value=""
@@ -164,7 +164,7 @@
                     <div class="spacer-10"></div>
                     <div class="row">
                         <div class="col-sm-2">
-                            <label>安卓版本名称：<span class="asterisk">*</span></label>
+                            <label><span class="asterisk">*</span>安卓版本名称：</label>
                         </div>
                         <div class="col-sm-3">
                             <input  name="ANDROID_VERSION_NAME" id="ANDROID_VERSION_NAME" value=""
@@ -175,7 +175,7 @@
                     <div class="spacer-10"></div>
                     <div class="row">
                         <div class="col-sm-2">
-                            <label>安卓名称：<span class="asterisk">*</span></label>
+                            <label><span class="asterisk">*</span>安卓名称：</label>
                         </div>
                         <div class="col-sm-3">
                             <input name="ANDROID_APP_NAME" value=""
@@ -186,7 +186,7 @@
                     <div class="spacer-10"></div>
                     <div class="row">
                         <div class="col-sm-2">
-                            <label>安卓URL：<span class="asterisk">*</span></label>
+                            <label><span class="asterisk">*</span>安卓URL：</label>
                         </div>
                         <div class="col-sm-3">
                             <input readonly="readonly" name="ANDROID_URL" id="ANDROID_URL" value=""
@@ -197,7 +197,7 @@
                     <div class="spacer-10"></div>
                     <div class="row">
                         <div class="col-sm-2">
-                            <label>安卓描述：<span class="asterisk">*</span></label>
+                            <label><span class="asterisk">*</span>安卓描述：</label>
                         </div>
                         <div class="col-sm-3">
                                 <textarea rows="3" cols="100" name="ANDROID_DESCRIPTION"
