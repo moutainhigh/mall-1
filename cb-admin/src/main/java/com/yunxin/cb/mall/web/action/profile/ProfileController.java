@@ -149,7 +149,6 @@ public class ProfileController {
     @RequestMapping(value = "pageProfile", method = RequestMethod.POST)
     @ResponseBody
     public Page<Profile> pageProfile(@RequestBody PageSpecification<Profile> query) {
-        profileService.addProfileByProfileIsExit();
         Page<Profile> page = profileService.pageProfile(query);
         return page;
     }
