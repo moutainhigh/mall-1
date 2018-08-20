@@ -31,16 +31,16 @@ public class OrderConfirmVO implements java.io.Serializable{
      /**
      * 收货人姓名
      */
-    @NotBlank(message = "收货人姓名不能为空")
-    @ApiModelProperty(value="收货人姓名",name="consigneeName",example="张三", required = true)
+    @NotBlank(message = "联系人不能为空")
+    @ApiModelProperty(value="联系人",name="consigneeName",example="张三", required = true)
     private String consigneeName;
 
     /**
      * 收货人手机号
      */
-    @NotBlank(message = "收货人手机号不能为空")
+    @NotBlank(message = "手机号不能为空")
     @Pattern(regexp = "^(1)\\d{10}$", message = "请输入正确得手机格式")
-    @ApiModelProperty(value="收货人手机号",name="consigneeMobile",example="13856953362", required = true)
+    @ApiModelProperty(value="联系人手机号",name="consigneeMobile",example="13856953362", required = true)
     private String consigneeMobile;
 
     /**
