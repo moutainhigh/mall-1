@@ -5,6 +5,7 @@ import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.service.ISellerService;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.IdGenerate;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -50,6 +51,8 @@ public class SellerController {
 
     @RequestMapping(value = "toAddSeller",method = RequestMethod.GET)
     public String toAddSeller(@ModelAttribute("seller") Seller seller, ModelMap modelMap) {
+        seller.setBuslicenseNo(IdGenerate.genSellerID());
+        modelMap.addAttribute("seller", seller);
         return "seller/addSeller";
     }
 

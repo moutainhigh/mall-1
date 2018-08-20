@@ -342,7 +342,7 @@ public class ProductService implements IProductService {
             }
             if(flag){
                 try {
-                    commodityService.upOrDownShelvesCommodity(commodity.getCommodityId(), publishState);
+                    commodityService.upOrDownShelvesCommodity(commodity.getCommodityId(), publishState,productId);
                 } catch (Exception e) {
                     logger.error("auto up commodity result flag is = "+e);
                 }

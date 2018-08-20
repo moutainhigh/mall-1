@@ -276,6 +276,19 @@
                                 ${commodity.recommend==true?'是':'否'}
                             </div>
                         </div>
+                        <hr>
+                        <div class="spacer-30"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>商家名称：</label>
+                            </div>
+                            <div class="col-sm-1 col-label">
+                                ${commodity.seller.sellerName}
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
                         <%--<div class="spacer-10"></div>--%>
                         <%--<div class="row">--%>
 
@@ -410,7 +423,7 @@
                                         <th scope="col" width="100">市场价</th>
                                         <th scope="col" width="140">仓库名称</th>
                                         <th scope="col" width="100">库存</th>
-                                        <th scope="col" width="140">状态</th>
+                                        <th scope="col" width="140">上下架状态</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -427,7 +440,16 @@
                                             <td>${product.marketPrice}</td>
                                             <td>${product.store.storeName}</td>
                                             <td>${product.storeNum}</td>
-                                            <td>${product.productState}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${product.publishState=='WAIT_UP_SHELVES' || product.publishState=='DOWN_SHELVES'}">
+                                                        已下架
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        已上架
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -456,7 +478,7 @@
                         </div>
                         <div class="spacer-25"></div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" style="padding: 16px;overflow: hidden" >
                                 ${commodity.explainContent}
                             </div>
                         </div>

@@ -29,6 +29,10 @@
         function removeItem() {
             var dataItem=getSelectedTreeListItem("treelist");
             if(dataItem){
+                if(dataItem.catalogCode && dataItem.catalogCode.length <= 3*2){
+                    commonNotify("根分类和一级分类禁止删除!", "error");
+                    return;
+                }
                 bootbox.confirm("确定删除吗？", function(result) {
                     if(result){
                         var catalogId=dataItem.catalogId;

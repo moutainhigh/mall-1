@@ -12,6 +12,7 @@ import com.yunxin.cb.search.vo.meta.Result;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.IdGenerate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -28,7 +29,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -94,6 +94,8 @@ public class CommodityController implements ServletContextAware {
 
     @RequestMapping(value = "toAddCommodity", method = RequestMethod.GET)
     public String toAddCommodity(@ModelAttribute("commodity") Commodity commodity, ModelMap modelMap, HttpServletRequest request) {
+        commodity.setCommodityCode(IdGenerate.genGoodsID());
+        modelMap.addAttribute("commodity", commodity);
         return toAddCommodity(commodity, modelMap);
     }
 
@@ -199,17 +201,18 @@ public class CommodityController implements ServletContextAware {
     @ResponseBody
     public boolean removeCommodityById(@RequestParam("commodityId") int commodityId, HttpServletRequest request) {
         try {
-            Commodity commodity = commodityService.findByCommodityId(commodityId);
-            String imgDirectory = servletContext.getRealPath("/images/commodity/" + commodity.getCommodityCode());
             commodityService.removeCommodityById(commodityId);
-            File imageDir = new File(imgDirectory);
-            if (imageDir.isDirectory()) {
-                String[] children = imageDir.list();
-                for (int i = 0; i < children.length; i++) {
-                    new File(imageDir, children[i]).delete();
-                }
-                imageDir.delete();
-            }
+//            Commodity commodity = commodityService.findByCommodityId(commodityId);
+//            String imgDirectory = servletContext.getRealPath("/images/commodity/" + commodity.getCommodityCode());
+//
+//            File imageDir = new File(imgDirectory);
+//            if (imageDir.isDirectory()) {
+//                String[] children = imageDir.list();
+//                for (int i = 0; i < children.length; i++) {
+//                    new File(imageDir, children[i]).delete();
+//                }
+//                imageDir.delete();
+//            }
 
             return true;
         } catch (Exception e) {
@@ -223,7 +226,7 @@ public class CommodityController implements ServletContextAware {
     public ResponseResult upOrDownShelvesCommodity(@RequestParam("commodityId") int commodityId, @RequestParam("publishState") PublishState publishState) {
         ResponseResult responseResult = new ResponseResult(Result.FAILURE);
         try{
-            responseResult = commodityService.upOrDownShelvesCommodity(commodityId, publishState);
+            responseResult = commodityService.upOrDownShelvesCommodity(commodityId, publishState,null);
         }catch (Exception ex){
             logger.info(ex.getMessage());
             responseResult.setData(ex.getMessage());

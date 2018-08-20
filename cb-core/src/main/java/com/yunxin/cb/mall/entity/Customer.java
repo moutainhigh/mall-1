@@ -274,7 +274,7 @@ public class Customer implements java.io.Serializable {
     private String occupationalCategory;
 
     @ApiModelProperty(value="是否注销",name="cancel",example="true")
-    private boolean cancel;
+    private boolean ynDelete;
 
     private String token;
 
@@ -745,12 +745,12 @@ public class Customer implements java.io.Serializable {
 
 
     @Column(nullable = false, precision = 1)
-    public boolean isCancel() {
-        return cancel;
+    public boolean isYnDelete() {
+        return ynDelete;
     }
 
-    public void setCancel(boolean cancel) {
-        this.cancel = cancel;
+    public void setYnDelete(boolean ynDelete) {
+        this.ynDelete = ynDelete;
     }
 
     @Transient

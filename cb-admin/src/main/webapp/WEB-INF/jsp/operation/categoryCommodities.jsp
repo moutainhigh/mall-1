@@ -199,7 +199,7 @@
                         <kendo:grid-columns>
                             <kendo:grid-column title="商品分类" field="commodity.catalog.catalogName" width="80"/>
                             <kendo:grid-column title="商品品牌" field="commodity.brand.brandName" width="80"/>
-                            <kendo:grid-column title="商品图片" field="commodity.defaultPicPath" width="80" template="<img src='../images/#=commodity.defaultPicPath#_64_69.jpg'  width='51px' height='55px'/>" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="商品图片" field="commodity.defaultPicPath" width="80" template="<img src='#=commodity.defaultPicPath#'  width='51px' height='55px'/>" sortable="false" filterable="false"/>
                             <kendo:grid-column title="商品编码" field="commodity.commodityCode" width="80"/>
                             <kendo:grid-column title="商品名称" field="commodity.commodityName" width="80"/>
                             <kendo:grid-column title="推荐值排序" field="recommendValue" width="70"/>

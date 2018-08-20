@@ -18,6 +18,11 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
@@ -371,7 +376,7 @@
                                 <label><span class="asterisk">*</span> 编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass=" form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="advertCode" maxlength="64" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
+                                <form:input cssClass=" form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="advertCode" readonly="true"/>
                             </div>
                         </div>
 
@@ -390,7 +395,7 @@
                                 <label> 广告URL：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass=" form-control" path="advertURL" id="advertURL" maxlength="5121"/>
+                                <form:input cssClass=" form-control validate[custom[url]]" path="advertURL" id="advertURL" maxlength="5121" data-errormessage-custom-error="无效的网址"/>
                             </div>
                             <%--<div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 客户端类型：</label>

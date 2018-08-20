@@ -82,10 +82,10 @@
                             bootbox.alert("请填写商品详情内容!");
                             return false;
                         }
-                        if (null == $("#editorContent2").val() || "" == $("#editorContent2").val()) {
+                        /*if (null == $("#editorContent2").val() || "" == $("#editorContent2").val()) {
                             bootbox.alert("请填写商品配置内容!");
                             return false;
-                        }
+                        }*/
                         if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
                             bootbox.alert("请填写商品说明内容!");
                             return false;
@@ -94,10 +94,10 @@
                             bootbox.alert("商品详情内容过长，请输入小于4098个字符!");
                             return false;
                         }
-                        if ($("#editorContent2").val().length > 4098) {
+                        /*if ($("#editorContent2").val().length > 4098) {
                             bootbox.alert("商品配置内容过长，请输入小于4098个字符!");
                             return false;
-                        }
+                        }*/
                         if ($("#editorContent1").val().length > 4098) {
                             bootbox.alert("商品说明内容过长，请输入小于4098个字符!");
                             return false;
@@ -111,9 +111,19 @@
                 var inputValue = $(this).val();
                 var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
                 var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
-                if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
-                    bootbox.alert("价格须介于商品价格段范围内!");
-                    $(this).val('')
+                var documentId = $(this).attr("id");
+                if (documentId == "costPrice") {
+                    var salePrive = $("#sellPrice").val();
+                    if(Number(salePrive) < Number(startPrice) || Number(endPrice) < Number(salePrive)){
+                        bootbox.alert("价格须介于商品价格段范围内!");
+                        $(this).val('');
+                        $("#sellPrice").val('');
+                    }
+                } else {
+                    if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
+                        bootbox.alert("价格须介于商品价格段范围内!");
+                        $(this).val('')
+                    }
                 }
             });
         });
@@ -258,7 +268,7 @@
                                 <label><span class="asterisk">*</span> 商品编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2],custom[onlyLetterNumber]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
+                                <form:input type="text" readonly="true" cssClass="form-control validate[required,minSize[2],custom[onlyLetterNumber]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品简称：</label>
@@ -600,9 +610,7 @@
                             <div class="col-sm-1"></div>
                         </div>
                         <div class="spacer-30"></div>
-                        <hr>
-                        <div class="spacer-30"></div>
-                        <div class="row">
+                        <%--<div class="row">
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>商品配置内容：</label>
                             </div>
@@ -610,7 +618,7 @@
                                 <form:textarea cssClass="form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
-                        </div>
+                        </div>--%>
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>

@@ -24,7 +24,40 @@
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
+            var flag = true;
+            $("#costPrice,#marketPrice").blur(function(){
+                if (flag) {
+                    flag = false;
+                    var inputValue = $(this).val();
+                    var startPrice = '${commodity.priceSection.startPrice}';
+                    var endPrice = '${commodity.priceSection.endPrice}';
+                    var documentId = $(this).attr("id");
+                    if (documentId == "costPrice") {
+                        var salePrive = $("#salePrice").val();
+                        if(Number(salePrive) < Number(startPrice) || Number(endPrice) < Number(salePrive)){
+                            bootbox.alert("价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            $(this).val('');
+                            $("#salePrice").val('');
+                            setInterval(function(){
+                                flag = true;
+                            }, 2000);
+                        } else {
+                            flag = true;
+                        }
+                    } else {
+                        if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
+                            bootbox.alert("价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            $(this).val('');
+                            setInterval(function(){
+                                flag = true;
+                            }, 2000);
+                        } else {
+                            flag = true;
+                        }
+                    }
 
+                }
+            });
         });
 
         function removeProduct(productId) {
@@ -113,6 +146,7 @@
                 }
             });
         }
+
     </script>
 </head>
 <body>
@@ -285,13 +319,13 @@
                                         <c:choose>
                                             <c:when test="${product.publishState=='WAIT_UP_SHELVES' || product.publishState=='DOWN_SHELVES'}">
                                                 <a href="javascript:upOrDownShelvesProduct('${product.productId}','UP_SHELVES');" title="上架" class=" btn-less"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="toEditProduct.do?productId=${product.productId}" title="编辑" class=" btn-less"><i class="fa fa-edit"></i></a>
+                                                <a href="javascript:removeProduct(${product.productId});" title="删除" class=" btn-less"><i class="fa fa-trash-o"></i></a>
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="javascript:upOrDownShelvesProduct('${product.productId}','DOWN_SHELVES');" title="下架" class=" btn-less"><i class="fa fa-arrow-down"></i></a>
                                             </c:otherwise>
                                         </c:choose>
-                                        <a href="toEditProduct.do?productId=${product.productId}" title="编辑" class=" btn-less"><i class="fa fa-edit"></i></a>
-                                        <a href="javascript:removeProduct(${product.productId});" title="删除" class=" btn-less"><i class="fa fa-trash-o"></i></a>
                                         <c:if test="${commodity.defaultProduct.productId!=product.productId}"><!-- 设置默认货品 -->
                                             <a href="javascript:defaultProduct('${product.productId}','${commodity.commodityId}');" title="默认" class=" btn-less"><i class="fa fa-level-up"></i></a>
                                         </c:if>
@@ -328,7 +362,7 @@
                                 <label><span class="asterisk">*</span>货品编号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="productNo" maxlength="32"/>
+                                <form:input readonly="true" cssClass="form-control validate[required,minSize[2]]" path="productNo" maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>进货价：</label>

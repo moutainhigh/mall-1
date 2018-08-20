@@ -170,7 +170,7 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="inline-labels">
-                    <form:input path="sectionNo" cssClass="form-control validate[required,minSize[2]]" maxlength="32"/>
+                    <form:input path="sectionNo" readonly="true" cssClass="form-control validate[required,minSize[2]]" maxlength="32"/>
                   </div>
                 </div>
                 <div class="col-sm-1"></div>

@@ -39,32 +39,6 @@
           }
           return true;
       }
-      function test($event) {
-          console.log($event.value);
-          var brandNo = $("#brandNo").val();
-          var brandName = $("#brandName").val();
-          //光标离开，ajax发送请求
-          $.ajax({
-              url:"checkBrandNoAndBrandName.do",
-              type:"get",
-              data:{"brandNo":brandNo,
-                  "brandName":brandName
-              },
-              success:function(data){
-                  //判断再显示
-                  if(data == "failure"){
-                      bootbox.alert("编码或名称重复请重新输入");
-                      return false;
-                  }
-              },
-              error:function(data){
-                  if(data.responseText == "failure"){
-                      bootbox.alert("编码或名称重复请重新输入");
-                      return false;
-                  }
-              }
-          });
-      }
 
   </script>
 </head>
@@ -186,14 +160,14 @@
                   <label><span class="asterisk">*</span>品牌编码：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input path="brandNo" id="brandNo" type="text" onblur="test(this)" cssClass=" form-control validate[required,minSize[2]]" maxlength="32"/>
+                  <form:input path="brandNo" id="brandNo" type="text" readonly="true" cssClass=" form-control validate[required,minSize[2]]" maxlength="32"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
                   <label><span class="asterisk">*</span>品牌名称：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" id="brandName" onblur="test(this)" cssClass=" form-control validate[required,minSize[2]]" path="brandName" maxlength="5"/>
+                  <form:input type="text" id="brandName" cssClass=" form-control validate[required,minSize[2]]" path="brandName" maxlength="5"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -258,7 +232,7 @@
                   <label>品牌网址：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass=" form-control" path="website" maxlength="255"/>
+                  <form:input type="text" cssClass=" form-control validate[custom[url]]" path="website" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>

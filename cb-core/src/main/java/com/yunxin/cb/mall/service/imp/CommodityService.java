@@ -678,7 +678,7 @@ public class CommodityService implements ICommodityService {
      * @return
      */
     @Override
-    public ResponseResult upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception {
+    public ResponseResult upOrDownShelvesCommodity(int commodityId, PublishState publishState,Integer productId) throws Exception {
         ResponseResult responseResult = new ResponseResult(Result.FAILURE);
         Commodity commodity = commodityDao.findDefaultProductById(commodityId);
         if (commodity.getCommodityState() != CommodityState.AUDITED) {
@@ -692,6 +692,9 @@ public class CommodityService implements ICommodityService {
                 List<Integer> prodIds=new ArrayList<Integer>();
                 Product defaultProduct=commodity.getDefaultProduct();
                 for (int i = 0; i < products.size(); i++) {
+                    if(null!=productId&&products.get(i).getProductId()==productId){
+                        prodIds.add(products.get(i).getProductId());
+                    }
                     if(products.get(i).getPublishState()==PublishState.UP_SHELVES){
                         prodIds.add(products.get(i).getProductId());
                         if (i==0&&defaultProduct.getPublishState()!=PublishState.UP_SHELVES) {
@@ -699,11 +702,9 @@ public class CommodityService implements ICommodityService {
                         }
                     }
                 }
-                if(commodity.getProducts().size() > 1){
-                    if(prodIds.size()<=0){//没有已上架的货品，商品不能上架
-                        responseResult.setMessage("没有已上架的货品，商品不能上架！");
-                        return responseResult;
-                    }
+                if(commodity.getProducts().size() > 0&&prodIds.size()<=0){//没有已上架的货品，商品不能上架
+                    responseResult.setMessage("没有已上架的货品，商品不能上架！");
+                    return responseResult;
                 }
                 commodity.setDefaultProduct(defaultProduct);
                 commodity.setPublishState(PublishState.UP_SHELVES);
