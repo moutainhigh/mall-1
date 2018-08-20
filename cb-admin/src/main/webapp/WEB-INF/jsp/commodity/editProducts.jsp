@@ -24,7 +24,40 @@
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
+            var flag = true;
+            $("#costPrice,#marketPrice").blur(function(){
+                if (flag) {
+                    flag = false;
+                    var inputValue = $(this).val();
+                    var startPrice = '${commodity.priceSection.startPrice}';
+                    var endPrice = '${commodity.priceSection.endPrice}';
+                    var documentId = $(this).attr("id");
+                    if (documentId == "costPrice") {
+                        var salePrive = $("#salePrice").val();
+                        if(Number(salePrive) < Number(startPrice) || Number(endPrice) < Number(salePrive)){
+                            bootbox.alert("价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            $(this).val('');
+                            $("#salePrice").val('');
+                            setInterval(function(){
+                                flag = true;
+                            }, 2000);
+                        } else {
+                            flag = true;
+                        }
+                    } else {
+                        if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
+                            bootbox.alert("价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            $(this).val('');
+                            setInterval(function(){
+                                flag = true;
+                            }, 2000);
+                        } else {
+                            flag = true;
+                        }
+                    }
 
+                }
+            });
         });
 
         function removeProduct(productId) {
@@ -113,6 +146,7 @@
                 }
             });
         }
+
     </script>
 </head>
 <body>
