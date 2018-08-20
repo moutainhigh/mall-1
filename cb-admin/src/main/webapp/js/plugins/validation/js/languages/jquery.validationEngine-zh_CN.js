@@ -178,6 +178,14 @@
                     "regex": /^[0-9]*$/,
                     "alertText": "只能输入数字"
                 },
+                "checkPositive": {//只能输入正整数
+                    "regex":  /^[1-9]\d*$/,
+                    "alertText": "只能输入正整数"
+                },
+                "checkPhone": {//手机号码格式不正确
+                    "regex":  /^[1][3,4,5,7,8][0-9]{9}$/,
+                    "alertText": "手机号码格式不正确"
+                },
                 "checkInputNumLetter": {//只能输入数字和字母
                     "regex": /^[0-9a-zA-Z]+$/,
                     "alertText": "只能输入数字和字母"

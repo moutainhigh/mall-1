@@ -337,7 +337,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品列表：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>商品列表：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="commodityTable" class="table table-bordered table-striped">
@@ -370,7 +370,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>分类列表：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>分类列表：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="categoryTable" class="table table-bordered table-striped">
@@ -403,7 +403,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品列表：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>商品列表：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="brandTable" class="table table-bordered table-striped">
@@ -436,7 +436,7 @@
                         <div class="spacer-30"></div>
                         <div class="row" style="display: none">
                             <div class="col-sm-2">
-                                <label>广告列表：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>广告列表：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="advertisementTable" class="table table-bordered table-striped">
