@@ -140,8 +140,8 @@
             <div class="pull-left">
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
-                    <li><a href="#">保单管理 </a></li>
-                    <li><a href="#">事项组</a></li>
+                    <li><a href="#">系统管理</a></li>
+                    <li><a href="#">参数配置</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -158,7 +158,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>事项组</h2>
+                    <h2>参数配置</h2>
                 </div>
                 <div class="pull-right">
                     <a class="btn btn-default" href="profiles.do"><i class="fa fa-reply"></i></a>

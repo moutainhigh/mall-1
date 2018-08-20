@@ -106,9 +106,9 @@ public class ProfileService implements IProfileService {
         });
         Page<Profile> page = profileDao.findAll(query, query.getPageRequest());
         List<Profile> list=page.getContent();
-        list.stream().forEach(p ->{
-            redisService.updateRedisByKey(p.getProfileName().toString(),p.getFileValue());
-        });
+//        list.stream().forEach(p ->{
+//            redisService.updateRedisByKey(p.getProfileName().toString(),p.getFileValue());
+//        });
         return page;
     }
 
