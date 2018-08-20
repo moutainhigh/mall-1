@@ -65,7 +65,7 @@
                 city: "city"
             });
 
-            $("#validateSubmitForm").validationEngine({
+            /*$("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
@@ -101,7 +101,7 @@
                         return true;
                     }
                 }
-            });
+            });*/
 
             $("#costPrice,#sellPrice,#marketPrice").blur(function(){
                 var inputValue = $(this).val();
@@ -120,7 +120,7 @@
             }, function (json) {
                 $("#specTable  tr:not(:first)").empty();
                 $.each(json, function (date, value) {
-                    var newRow = "<tr tag='"+value.specName+"'><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control'/></td></tr>";
+                    var newRow = "<tr tag='"+value.specName+"'><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control' maxlength='255'/></td></tr>";
                     $("#specTable tr:last").after(newRow);
 
                 });
