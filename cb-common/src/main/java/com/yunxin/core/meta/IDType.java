@@ -5,6 +5,7 @@ public enum IDType {
     ADV("ADV"),
     BRAND("BRAND"),
     PRICE("PRICE"),
+    PRODUCT("PRODUCT"),
     SELLER("SELLER");
 
     private String type;

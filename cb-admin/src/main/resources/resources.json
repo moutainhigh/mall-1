@@ -46,6 +46,9 @@
       {
         "name": "运营分类", "code": "41", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/categories.do"
       },
+      {
+        "name": "规格过滤器", "code": "42", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/specFilters.do"
+      },
       /*{
         "name": "站内信", "code": "44", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../operation/systemLetters.do"
       },*/

@@ -282,7 +282,7 @@
                                 <label><span class="asterisk">*</span> 商品编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass=" form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
+                                <form:input type="text" readonly="true" cssClass=" form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品简称：</label>

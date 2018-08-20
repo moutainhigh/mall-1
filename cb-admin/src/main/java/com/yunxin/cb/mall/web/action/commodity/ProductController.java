@@ -8,6 +8,7 @@ import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.web.vo.ResponseResult;
 import com.yunxin.cb.mall.web.vo.ResultType;
 import com.yunxin.core.exception.EntityExistException;
+import com.yunxin.core.util.IdGenerate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -59,6 +60,7 @@ public class ProductController {
         modelMap.addAttribute("commodity", commodity);
         modelMap.addAttribute("products", products);
         product.setCommodity(commodity);
+        product.setProductNo(IdGenerate.genProductID());
 
         List<AttributeGroup> attributeGroups = attributeService.getAttributeGroupsByCommodityId(commodity.getCommodityId());
         modelMap.addAttribute("attributeGroups", attributeGroups);
