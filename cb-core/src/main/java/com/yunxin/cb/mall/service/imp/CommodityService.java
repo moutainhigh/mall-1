@@ -630,11 +630,12 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public Spec updateSpec(Spec spec) throws EntityExistException {
-        if(spec.getCatalog().getCatalogId() > 0 && !StringUtils.isEmpty(spec.getSpecName())){
-            Spec validSpec = specDao.getSpecBySpecNameAndAndCatalog_CatalogId(spec.getSpecName(),spec.getCatalog().getCatalogId());
+        if(spec.getCatalog().getCatalogId() > 0 && !StringUtils.isEmpty(spec.getSpecName())) {
+            Spec validSpec = specDao.getSpecBySpecNameAndAndCatalog_CatalogId(spec.getSpecName(), spec.getCatalog().getCatalogId());
             if (null != validSpec && validSpec.getSpecId() > 0) {
                 throw new EntityExistException("规格名称已存在");
             }
+        }
        /* if (specDao.findTopBySpecNameAndCatalog_CatalogIdAndSpecIdNot(spec.getSpecName(), spec.getCatalog().getCatalogId(), spec.getSpecId()) != null) {
             throw new EntityExistException("规格名称已存在");
         }*/
@@ -830,7 +831,7 @@ public class CommodityService implements ICommodityService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<ActivityCommodity> getActivityCommoditiesByCommodityIds(Set<Integer> commodityIds) {
+    public List<ActivityCommodity> getActivityCommoditiesByCommodityIds(Set<Integer> commodityIds){
         Date date = CalendarUtils.getFormatDate(new Date());
         return activityCommodityDao.getActivityCommoditiesByCommodityIds(commodityIds, date, date);
     }
