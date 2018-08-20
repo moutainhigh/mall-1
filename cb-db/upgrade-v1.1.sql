@@ -857,3 +857,16 @@ ALTER TABLE `order_item` add `PRODUCT_NO` varchar(32) DEFAULT NULL COMMENT '货�
 ALTER TABLE `order_item` add `MARKET_PRICE` float NOT NULL COMMENT '市场价';
 ALTER TABLE `order_item` add `VOLUME` float DEFAULT NULL COMMENT '体积';
 ALTER TABLE `order_item` add `WEIGHT` float DEFAULT NULL COMMENT '重量';
+
+##add by yangzhen 2018-8-20
+CREATE TABLE `message` (
+  `message_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '消息ID',
+  `push_title` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '推送标题',
+  `message_digest` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '消息摘要（文字）',
+  `digest_pic` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '摘要图片（路径）',
+  `message_content` varchar(4098) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '消息内容',
+  `push_time` datetime DEFAULT NULL COMMENT '推送时间',
+  `push_status` tinyint(2) NOT NULL COMMENT '消息状态（0：未推送，1：已推送）',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`message_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=439 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
