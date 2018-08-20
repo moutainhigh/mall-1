@@ -63,6 +63,8 @@ public interface CatalogDao extends JpaRepository<Catalog, Integer>, JpaSpecific
 
     List<Catalog> findByEnabledOrderByCatalogIdAsc(boolean enabled);
 
+    List<Catalog> findByEnabledOrderBySortOrderAsc(boolean enabled);
+
     @Query("select c from Catalog c left join fetch c.catalogAttributeGroups p where p.groupId=?1")
     List<Catalog> findCategoriesByGroupId(int propGroupId);
 
