@@ -257,6 +257,7 @@
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
                                             showBrowse : false,
+                                            showClose: false,
                                             maxFileSize : 2000,
                                             allowedFileExtensions: ["jpg", "png", "gif"],
                                             autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
