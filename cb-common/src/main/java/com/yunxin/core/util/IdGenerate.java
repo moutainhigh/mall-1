@@ -156,6 +156,14 @@ public class IdGenerate {
         return  genIDByType(IDType.SELLER);
     }
 
+    /**
+     * 生成货品编号
+     * @return
+     */
+    public static String genProductID() {
+        return  genIDByType(IDType.PRODUCT);
+    }
+
 
 
 }

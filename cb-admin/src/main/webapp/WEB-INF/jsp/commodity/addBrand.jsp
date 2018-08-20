@@ -158,7 +158,7 @@
                   <label><span class="asterisk">*</span>品牌编码：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input path="brandNo" id="brandNo" type="text" cssClass=" form-control validate[required,minSize[2]] custom[onlyLetterNumber]]" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
+                  <form:input path="brandNo" id="brandNo" type="text" readonly="true" cssClass=" form-control validate[required,minSize[2]] custom[onlyLetterNumber]]" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">

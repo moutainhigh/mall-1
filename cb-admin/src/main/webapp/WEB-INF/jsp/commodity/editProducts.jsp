@@ -328,7 +328,7 @@
                                 <label><span class="asterisk">*</span>货品编号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="productNo" maxlength="32"/>
+                                <form:input readonly="true" cssClass="form-control validate[required,minSize[2]]" path="productNo" maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>进货价：</label>
