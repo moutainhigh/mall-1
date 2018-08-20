@@ -552,10 +552,10 @@
                                                         bootbox.alert("请填写商品详情内容!");
                                                         return false;
                                                     }
-                                                    if (null == $("#editorContent2").val() || "" == $("#editorContent2").val()) {
+                                                    /*if (null == $("#editorContent2").val() || "" == $("#editorContent2").val()) {
                                                         bootbox.alert("请填写商品配置内容!");
                                                         return false;
-                                                    }
+                                                    }*/
                                                     if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
                                                         bootbox.alert("请填写商品说明内容!");
                                                         return false;
@@ -564,10 +564,10 @@
                                                         bootbox.alert("商品详情内容过长，请输入小于4098个字符!");
                                                         return false;
                                                     }
-                                                    if ($("#editorContent2").val().length > 4098) {
+                                                    /*if ($("#editorContent2").val().length > 4098) {
                                                         bootbox.alert("商品配置内容过长，请输入小于4098个字符!");
                                                         return false;
-                                                    }
+                                                    }*/
                                                     if ($("#editorContent1").val().length > 4098) {
                                                         bootbox.alert("商品说明内容过长，请输入小于4098个字符!");
                                                         return false;
@@ -664,9 +664,7 @@
                             <div class="col-sm-1"></div>
                         </div>
                         <div class="spacer-30"></div>
-                        <hr>
-                        <div class="spacer-30"></div>
-                        <div class="row">
+                        <%--<div class="row">
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>商品配置内容：</label>
                             </div>
@@ -674,7 +672,7 @@
                                     <form:textarea cssClass=" form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
-                        </div>
+                        </div>--%>
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>

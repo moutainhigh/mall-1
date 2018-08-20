@@ -273,6 +273,9 @@ public class Customer implements java.io.Serializable {
     @ApiModelProperty(value="职业类别",name="occupationalCategory",example="教师")
     private String occupationalCategory;
 
+    @ApiModelProperty(value="是否注销",name="cancel",example="true")
+    private boolean cancel;
+
     private String token;
 
     private boolean friend;
@@ -739,6 +742,17 @@ public class Customer implements java.io.Serializable {
     public void setOccupationalCategory(String occupationalCategory) {
         this.occupationalCategory = occupationalCategory;
     }
+
+
+    @Column(nullable = false, precision = 1)
+    public boolean isCancel() {
+        return cancel;
+    }
+
+    public void setCancel(boolean cancel) {
+        this.cancel = cancel;
+    }
+
     @Transient
     public String getAliasName() {
         return aliasName;

@@ -98,6 +98,7 @@ public class CustomerController {
 
     @RequestMapping(value = "toEditCustomer",method = RequestMethod.GET)
     public String toEditCustomer(@RequestParam("customerId") int customerId, ModelMap modelMap) {
+        Customer customer = customerService.getCustomerById(customerId);
         modelMap.addAttribute("customer",customerService.getCustomerById(customerId));
         return "customer/editCustomer";
     }
@@ -170,6 +171,24 @@ public class CustomerController {
     public boolean enableCustomerById(@RequestParam("customerId") int customerId,@RequestParam("enabled") boolean enabled) {
         try{
             customerService.enableCustomerById(customerId,enabled);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * 注销
+     * @param customerId
+     * @param cancel
+     * @return
+     */
+    @RequestMapping(value = "CancellationCustomerById",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean CancellationCustomerById(@RequestParam("customerId") int customerId,@RequestParam("cancel") boolean cancel) {
+        try{
+            customerService.CancellationCustomerById(customerId, cancel);
             return true;
         }catch (Exception e){
             System.out.println(e.getMessage());

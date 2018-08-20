@@ -103,6 +103,10 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Modifying
     @Query("update Customer c set c.enabled =?2 where c.customerId=?1")
     public void enableCustomerById(int customerId,boolean enabled);
+
+    @Modifying
+    @Query("update Customer c set c.cancel =?2 where c.customerId=?1")
+    public void CancellationCustomerById(int customerId,boolean cancel);
 }
 
 interface CustomerPlusDao {

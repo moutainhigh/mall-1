@@ -1140,4 +1140,9 @@ public class CustomerService implements ICustomerService {
     public  void enableCustomerById(int customerId,boolean enabled){
         customerDao.enableCustomerById(customerId,enabled);
     }
+
+    @Override
+    public void CancellationCustomerById(int customerId,boolean cancel){
+        customerDao.CancellationCustomerById(customerId,cancel);
+    }
 }
