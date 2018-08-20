@@ -169,10 +169,10 @@
                     <kendo:grid name="grid" pageable="false" sortable="true" selectable="true" height="510" detailTemplate="template">
                         <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="10"/>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="属性组名" field="groupName" width="350px"/>
+                            <kendo:grid-column title="属性组名" field="groupName" width="300px"/>
                             <kendo:grid-column title="分类" field="catalog.catalogName"/>
                             <%--<kendo:grid-column title="是否以图片显示" field="showAsImage" width="150px" template="#= showAsImage ? '是' : '否' #"/>--%>
-                            <kendo:grid-column title="创建时间" field="createTime" width="130" format="{0:yyyy-MM-dd HH:mm}"/>
+                            <kendo:grid-column title="创建时间" field="createTime" width="200" format="{0:yyyy-MM-dd HH:mm:ss}"/>
                         </kendo:grid-columns>
                         <kendo:grid-dataBound>
                             <script>
