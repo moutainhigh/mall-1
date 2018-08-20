@@ -358,13 +358,13 @@
                 <label><span class="asterisk">*</span>标题：</label>
               </div>
               <div class="col-sm-3">
-                <form:input  cssClass="clearInput form-control validate[required,minSize[2]]"  path="advertTitle" maxlength="512"/>
+                <form:input  cssClass="clearInput form-control validate[required,minSize[2]]" path="advertTitle" maxlength="512"/>
               </div>
               <div class="col-sm-2">
                 <label><span class="asterisk">*</span> 编码：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="clearInput form-control validate[required,minSize[2]],custom[onlyLetterNumber]]" path="advertCode" maxlength="64" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
+                <form:input cssClass="clearInput form-control validate[required,minSize[2]],custom[onlyLetterNumber]]" readonly="true" path="advertCode" maxlength="64" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
               </div>
             </div>
 

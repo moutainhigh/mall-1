@@ -52,7 +52,10 @@ public class FloorService implements IFloorService {
     }
 
     @Override
-    public HomeFloor addHomeFloor(HomeFloor homeFloor) {
+    public HomeFloor addHomeFloor(HomeFloor homeFloor)throws EntityExistException {
+        if (!homeFloorDao.isOrUnique(homeFloor, HomeFloor_.floorName)) {
+            throw new EntityExistException("楼层名称已存在");
+        }
         int[] categoryId = homeFloor.getCategoryId();
         int[] categoryOrder = homeFloor.getCategoryOrder();
         int[] commodityId = homeFloor.getCommodityId();
