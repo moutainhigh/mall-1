@@ -185,7 +185,7 @@ public class RongCloudService {
                 }
             }
         } catch (Exception e) {
-            logger.error("广播发送异常",e);
+            logger.error("推送消息异常",e);
         }
         return oppStatus;
     }
