@@ -65,7 +65,7 @@
                 city: "city"
             });
 
-            $("#validateSubmitForm").validationEngine({
+            /*$("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
@@ -101,7 +101,7 @@
                         return true;
                     }
                 }
-            });
+            });*/
 
             $("#costPrice,#sellPrice,#marketPrice").blur(function(){
                 var inputValue = $(this).val();
