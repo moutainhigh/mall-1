@@ -232,7 +232,7 @@
                   <label>品牌网址：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass=" form-control" path="website" maxlength="255"/>
+                  <form:input type="text" cssClass=" form-control validate[custom[url]]" path="website" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
