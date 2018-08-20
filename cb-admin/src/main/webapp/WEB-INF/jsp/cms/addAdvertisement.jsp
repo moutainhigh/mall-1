@@ -395,7 +395,7 @@
                                 <label> 广告URL：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass=" form-control" path="advertURL" id="advertURL" maxlength="5121"/>
+                                <form:input cssClass=" form-control validate[custom[url]]" path="advertURL" id="advertURL" maxlength="5121" data-errormessage-custom-error="无效的网址"/>
                             </div>
                             <%--<div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 客户端类型：</label>
