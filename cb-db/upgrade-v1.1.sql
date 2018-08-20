@@ -885,8 +885,8 @@ CREATE TABLE `spec_filter` (
   `FILTER_NAME` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '规格名称',
   `SORT_ORDER` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '排序',
   `ENABLED` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否启用',
-  `UPDATE_TIME` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新时间',
-  `CREATE_TIME` datetime NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
+  `UPDATE_TIME` datetime COMMENT '更新时间',
+  `CREATE_TIME` TIMESTAMP NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
   PRIMARY KEY (`FILTER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='规格过滤配置表';
 
@@ -898,8 +898,8 @@ CREATE TABLE `spec_filter_item` (
   `ITEM_VALUE` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '规格值',
   `SORT_ORDER` smallint(6) NOT NULL DEFAULT 0 COMMENT '排序',
   `FILTER_ID` int(11) NOT NULL COMMENT '规格id',
-  `UPDATE_TIME` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新时间',
-  `CREATE_TIME` datetime NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
+  `UPDATE_TIME` datetime COMMENT '更新时间',
+  `CREATE_TIME` TIMESTAMP NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
   PRIMARY KEY (`ITEM_ID`) USING BTREE,
   KEY `FILTER_ID` (`FILTER_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='规格过滤配置值';

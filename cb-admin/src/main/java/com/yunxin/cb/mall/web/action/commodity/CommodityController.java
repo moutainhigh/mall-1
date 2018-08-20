@@ -29,7 +29,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -202,17 +201,18 @@ public class CommodityController implements ServletContextAware {
     @ResponseBody
     public boolean removeCommodityById(@RequestParam("commodityId") int commodityId, HttpServletRequest request) {
         try {
-            Commodity commodity = commodityService.findByCommodityId(commodityId);
-            String imgDirectory = servletContext.getRealPath("/images/commodity/" + commodity.getCommodityCode());
             commodityService.removeCommodityById(commodityId);
-            File imageDir = new File(imgDirectory);
-            if (imageDir.isDirectory()) {
-                String[] children = imageDir.list();
-                for (int i = 0; i < children.length; i++) {
-                    new File(imageDir, children[i]).delete();
-                }
-                imageDir.delete();
-            }
+//            Commodity commodity = commodityService.findByCommodityId(commodityId);
+//            String imgDirectory = servletContext.getRealPath("/images/commodity/" + commodity.getCommodityCode());
+//
+//            File imageDir = new File(imgDirectory);
+//            if (imageDir.isDirectory()) {
+//                String[] children = imageDir.list();
+//                for (int i = 0; i < children.length; i++) {
+//                    new File(imageDir, children[i]).delete();
+//                }
+//                imageDir.delete();
+//            }
 
             return true;
         } catch (Exception e) {

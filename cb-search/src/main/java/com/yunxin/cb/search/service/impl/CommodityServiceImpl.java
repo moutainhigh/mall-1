@@ -390,7 +390,7 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public CombinationVO getCombination(String keyword) {
 
-        List<Spec> specs = getSearchSpecs(keyword);
+//        List<Spec> specs = getSearchSpecs(keyword);
 //        List<Brand> brands = getSearchBrands(keyword);
         List<PriceSection> priceSections = getSearchPriceSection(keyword);
         List<Category> categories = getSearchCategories(keyword);
@@ -400,16 +400,16 @@ public class CommodityServiceImpl implements CommodityService {
         List<com.yunxin.cb.search.vo.PriceSection> priceSectionVos = new ArrayList<>();
         Set<com.yunxin.cb.search.vo.Category> categoryVos = new HashSet<>();
 
-        specs.forEach(spec -> {
-            List<Object> values = specVos.get(spec.getSpecName());
-            if (values == null || values.size() == 0) {
-                values = new ArrayList<>();
-                values.add(spec.getValue());
-            } else {
-                values.add(spec.getValue());
-            }
-            specVos.put(spec.getSpecName(), values);
-        });
+//        specs.forEach(spec -> {
+//            List<Object> values = specVos.get(spec.getSpecName());
+//            if (values == null || values.size() == 0) {
+//                values = new ArrayList<>();
+//                values.add(spec.getValue());
+//            } else {
+//                values.add(spec.getValue());
+//            }
+//            specVos.put(spec.getSpecName(), values);
+//        });
 
         priceSections.forEach(priceSection -> {
             com.yunxin.cb.search.vo.PriceSection section = new com.yunxin.cb.search.vo.PriceSection();

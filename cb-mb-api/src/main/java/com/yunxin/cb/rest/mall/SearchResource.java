@@ -3,14 +3,17 @@ package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Profile;
+import com.yunxin.cb.mall.entity.SpecFilter;
 import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.restful.RestfulFactory;
 import com.yunxin.cb.mall.restful.meta.Result;
 import com.yunxin.cb.mall.service.ProfileService;
 import com.yunxin.cb.mall.service.SearchRestService;
+import com.yunxin.cb.mall.service.SpecFilterService;
 import com.yunxin.cb.mall.vo.SearchResultVo;
 import com.yunxin.cb.mall.vo.SearchVo;
+import com.yunxin.cb.mall.vo.SpecFilterVO;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import io.swagger.annotations.Api;
@@ -18,10 +21,13 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import retrofit2.Call;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Api(description = "商城商品搜索接口")
 @RestController
@@ -30,6 +36,8 @@ public class SearchResource extends BaseResource {
 
     @Resource
     private ProfileService profileService;
+    @Resource
+    private SpecFilterService specFilterService;
 
     @ApiOperation(value = "关键字搜索")
     @ApiImplicitParams({
@@ -103,6 +111,27 @@ public class SearchResource extends BaseResource {
             return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.info("hotSearch failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
+    }
+
+    @ApiOperation(value = "搜索条件-规格配置")
+    @GetMapping(value = "specFilter")
+    @ApiVersion(1)
+    @IgnoreAuthentication
+    public ResponseResult specFilter() {
+        try {
+            List<SpecFilter> specFilterList = specFilterService.getEnableAll();
+            List<SpecFilterVO> listVO = specFilterList.stream()
+                    .map(specFilter -> {
+                        SpecFilterVO filterVO = new SpecFilterVO();
+                        BeanUtils.copyProperties(specFilter, filterVO);
+                        return filterVO;
+                    }).collect(Collectors.toList());
+
+            return new ResponseResult(listVO);
+        } catch (Exception e) {
+            logger.info("get specFilter failed", e);
             return new ResponseResult(Result.FAILURE);
         }
     }
