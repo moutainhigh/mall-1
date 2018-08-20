@@ -129,7 +129,7 @@ public class AttributeService implements IAttributeService {
 
     @Override
     public void removeCatalogAttributeGroupById(int groupId) {
-        attachmentService.deleteAttachmentPictures(ObjectType.ATTRIBUTE,groupId);
+        //attachmentService.deleteAttachmentPictures(ObjectType.ATTRIBUTE,groupId);
         catalogAttributeGroupDao.delete(groupId);
     }
 

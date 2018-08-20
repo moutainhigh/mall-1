@@ -52,8 +52,8 @@
             </kendo:grid-filterable>
             <kendo:grid-columns>
                 <kendo:grid-column title="<input type='checkbox' id='checkall'>全选</input>" field="commodityId" width="20" template="<input type='checkbox' id='#: commodityId #' name='selectedCommodityId' value='#: commodityId #' />" sortable="false" filterable="false"/>
-                <kendo:grid-column title="商品编码" field="commodityCode" width="80"/>
-                <kendo:grid-column title="商品名称" field="commodityName" width="80"/>
+                <kendo:grid-column title="商品编码" field="commodityCode" width="100" sortable="false" filterable="false"/>
+                <kendo:grid-column title="商品名称" field="commodityName" width="100" sortable="false" filterable="false"/>
             </kendo:grid-columns>
             <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                 <kendo:dataSource-schema data="content" total="totalElements">
