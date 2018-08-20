@@ -5,8 +5,10 @@ import com.yunxin.cb.mall.entity.DeliveryAddress;
 import com.yunxin.cb.mall.service.IAddressService;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IRankService;
+import com.yunxin.cb.util.HttpsUtils;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.CalendarUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -181,14 +185,16 @@ public class CustomerController {
     /**
      * 注销
      * @param customerId
-     * @param cancel
+     * @param ynDelete
      * @return
      */
     @RequestMapping(value = "CancellationCustomerById",method = RequestMethod.GET)
     @ResponseBody
-    public boolean CancellationCustomerById(@RequestParam("customerId") int customerId,@RequestParam("cancel") boolean cancel) {
+    public boolean CancellationCustomerById(@RequestParam("customerId") int customerId,@RequestParam("ynDelete") boolean ynDelete) {
         try{
-            customerService.CancellationCustomerById(customerId, cancel);
+            Customer customer = customerService.getCustomerById(customerId);
+            String time=customer.getMobile()+"DELETE-"+CalendarUtils.formatDateTimeNotSecond(new Date());
+            customerService.CancellationCustomerById(customerId, ynDelete,time);
             return true;
         }catch (Exception e){
             System.out.println(e.getMessage());

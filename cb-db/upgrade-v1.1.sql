@@ -875,4 +875,4 @@ CREATE TABLE `message` (
 INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('HOT_SEARCH', '昂克赛拉,卡罗拉,福克斯,思域,凯美瑞,迈腾,雷克萨斯CT', '0', '热门搜索');
 
 ##add by likang 2018-08-20
-ALTER TABLE `customer` ADD COLUMN `CANCEL` int(2) DEFAULT 0  COMMENT '是否注销';
+ALTER TABLE `customer` ADD COLUMN `YN_DELETE` int(2) DEFAULT 0  COMMENT '是否注销';
