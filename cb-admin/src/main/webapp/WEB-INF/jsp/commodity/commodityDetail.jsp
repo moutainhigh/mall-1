@@ -456,7 +456,7 @@
                         </div>
                         <div class="spacer-25"></div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" style="padding: 16px;overflow: hidden" >
                                 ${commodity.explainContent}
                             </div>
                         </div>
