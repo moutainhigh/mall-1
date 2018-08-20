@@ -205,7 +205,7 @@
                         </kendo:grid-filterable-operators>
                     </kendo:grid-filterable>
                     <kendo:grid-columns>
-                        <kendo:grid-column title="ID" field="messageId" width="30px"/>
+                        <kendo:grid-column title="ID" hidden="true" field="messageId" width="30px"/>
                         <kendo:grid-column title="推送标题" sortable="false" field="pushTitle"  width="200px"/>
                         <kendo:grid-column title="消息摘要" sortable="false" field="messageDigest" width="200px"/>
                         <kendo:grid-column title="推送状态" sortable="false" field="pushSatus" template="#=getPushStatus(pushStatus)#" width="200px"/>
