@@ -75,7 +75,7 @@ public class LogAspect {
 
 			Map<String, Object> map = new HashMap<>();
 			@SuppressWarnings("rawtypes")
-			Enumeration paramNames = request.getParameterNames();
+			Enumeration<String> paramNames = request.getParameterNames();
 			System.err.println("paramNames:"+paramNames);
 			while (paramNames.hasMoreElements()) {
 				String paramName = (String) paramNames.nextElement();
