@@ -273,7 +273,7 @@
                         <table  class="table table-bordered table-striped">
                             <thead >
                             <tr>
-                                <th scope="col" width="140">编号</th>
+                                <th scope="col" width="260">编号</th>
                                 <th scope="col" >货品名称</th>
                                 <th scope="col" width="100">进货价</th>
                                 <th scope="col" width="100">销售价</th>
