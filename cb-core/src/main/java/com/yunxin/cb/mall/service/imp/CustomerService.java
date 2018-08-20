@@ -427,7 +427,7 @@ public class CustomerService implements ICustomerService {
         for (Customer list:customer){
             Customer dbCustomer=customerDao.findRecommendCustomer(list.getCustomerId());
             try {
-                String invitationCode=checkInvitationCode(new DmSequenceSixUtils().getNoRepeatId());
+                String invitationCode=checkInvitationCode(DmSequenceSixUtils.getNoRepeatId());
                 customerDao.updateInvitationCode(invitationCode,dbCustomer.getCustomerId());
             } catch (Exception e) {
                 logger.error("resetInvitationCode failed",e);
@@ -449,7 +449,7 @@ public class CustomerService implements ICustomerService {
             for (Customer customerRepeats:customerRepeat){
 
                 try {
-                    String invitationCode=checkInvitationCode(new DmSequenceSixUtils().getNoRepeatId());
+                    String invitationCode=checkInvitationCode(DmSequenceSixUtils.getNoRepeatId());
                     customerDao.updateInvitationCode(invitationCode,customerRepeats.getCustomerId());
                 } catch (Exception e) {
                     logger.error("resetInvitationCodeRepeat failed",e);
@@ -588,7 +588,7 @@ public class CustomerService implements ICustomerService {
         Customer recommendCustomer = getCustomerByInvitationCode(invitationCode);
         if (recommendCustomer != null) {
             try {
-                return checkInvitationCode(new DmSequenceSixUtils().getNoRepeatId());
+                return checkInvitationCode(DmSequenceSixUtils.getNoRepeatId());
             } catch (Exception e) {
                 logger.error("生成编码异常", e);
             }
