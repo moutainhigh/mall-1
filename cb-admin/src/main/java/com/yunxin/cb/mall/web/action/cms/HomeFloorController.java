@@ -73,13 +73,20 @@ public class HomeFloorController implements ServletContextAware {
     }
 
     @RequestMapping(value = "addHomeFloor", method = RequestMethod.POST)
-    public String addHomeFloor(@ModelAttribute HomeFloor homeFloor, HttpServletRequest request) {
+    public String addHomeFloor(@ModelAttribute HomeFloor homeFloor, HttpServletRequest request,BindingResult result, ModelMap modelMap) {
         String[] imgurl = request.getParameterValues("imgurl");
         String[] imgurl1 = request.getParameterValues("imgurl1");
         if(imgurl.length>0&&imgurl.length>0){
             homeFloor.setIconPath(imgurl[0].split(",")[0]);
             homeFloor.setImagePath(imgurl1[0].split(",")[0]);
-            homeFloor=floorService.addHomeFloor(homeFloor);
+            try {
+                homeFloor=floorService.addHomeFloor(homeFloor);
+            } catch (EntityExistException e) {
+                result.addError(new FieldError("homeFloor", "floorName", homeFloor.getFloorName(), true, null, null,e.getMessage()));
+                modelMap.put("errerMsg",e.getMessage());
+                return toAddHomeFloor(homeFloor, modelMap);
+//                e.printStackTrace();
+            }
             //保存图片路径
             attachmentService.deleteAttachmentPictures(ObjectType.HOMEFLOORICO,homeFloor.getFloorId());
             for (String imgpath:imgurl) {

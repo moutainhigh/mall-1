@@ -66,14 +66,20 @@ public class MessageService implements IMessageService {
     @Override
     @Transactional
     public Message addMessage(Message message) {
-        String imgUrl = message.getDigestPic();
-        //保存图片路径
-        attachmentService.deleteAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId());
-        if(!StringUtils.isEmpty(imgUrl)){
+        if(null == message.getPushTime()){
+            String imgUrl = message.getDigestPic();
             message.setDigestPic(!StringUtils.isEmpty(imgUrl)?imgUrl.split(",")[0]:null);
-            attachmentService.addAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId(),imgUrl);
+            message = messageDao.save(message);
+
+            //保存图片路径
+            attachmentService.deleteAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId());
+            if(!StringUtils.isEmpty(imgUrl)){
+                attachmentService.addAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId(),imgUrl);
+            }
+        }else{
+            //推送消息时，仅更新推送状态
+            message = messageDao.save(message);
         }
-        message = messageDao.save(message);
         return message;
     }
 

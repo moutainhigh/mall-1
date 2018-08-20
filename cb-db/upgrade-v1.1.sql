@@ -870,3 +870,9 @@ CREATE TABLE `message` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`message_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=439 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
+
+##add by guwenshao 2018-08-20
+INSERT INTO `profile` (`PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('HOT_SEARCH', '昂克赛拉,卡罗拉,福克斯,思域,凯美瑞,迈腾,雷克萨斯CT', '0', '热门搜索');
+
+##add by likang 2018-08-20
+ALTER TABLE `customer` ADD COLUMN `CANCEL` int(2) DEFAULT 0  COMMENT '是否注销';

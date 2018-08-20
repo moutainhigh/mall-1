@@ -93,6 +93,9 @@
                 case "IOS_FORCE_UPGRADE":{
                     return "苹果APP是否强制更新";
                 }
+                case "HOT_SEARCH":{
+                    return "热门搜索";
+                }
             }
             return state;
         }

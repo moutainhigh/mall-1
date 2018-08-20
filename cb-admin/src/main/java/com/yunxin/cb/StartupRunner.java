@@ -5,6 +5,7 @@ import com.yunxin.cb.mall.service.imp.CustomerService;
 import com.yunxin.cb.search.restful.RestfulFactory;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.cb.security.SecurityProvider;
+import com.yunxin.cb.system.service.IProfileService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -33,6 +34,9 @@ public class StartupRunner implements CommandLineRunner {
     @Resource
     private CustomerService customerService;
 
+    @Resource
+    private IProfileService profileService;
+
 
     @Override
     public void run(String... strings) throws Exception {
@@ -41,7 +45,8 @@ public class StartupRunner implements CommandLineRunner {
         batchPwdEncode();
         //全局加载资源表
         loadPrivileges();
-
+        //加载系统配置
+        loadProfile();
         RestfulFactory.getInstance().init(searchBaseUrl);
         //后台图片存放目录
 //        servletContext.setAttribute("PIC_PATH", servletContext.getInitParameter(SecurityConstants.PIC_PATH));
@@ -60,6 +65,13 @@ public class StartupRunner implements CommandLineRunner {
     private void batchPwdEncode() throws Exception{
         securityService.batchPwdEncode();
         customerService.batchPwdEncode();
+    }
+
+    /**
+     *加载系统配置
+     */
+    public void loadProfile() throws Exception{
+        profileService.addProfileByProfileIsExit();
     }
 
     /**

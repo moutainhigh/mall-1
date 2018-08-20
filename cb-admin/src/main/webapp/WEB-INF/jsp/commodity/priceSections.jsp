@@ -115,13 +115,13 @@
                                 <strong>起始价格:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="number" data-filter="startPrice" id="startPrice" onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()" data-operator="gte" class="form-control grid-filter" style="width: 60px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                                <input type="number" data-filter="startPrice" id="startPrice" onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()" data-operator="gte" class="form-control grid-filter" style="width: 160px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                             </div>
                             <div class="toolbar-field">
                                 <strong>结束价格:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="number" data-filter="endPrice" id="endPrice"  onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()" data-operator="lte" class="form-control grid-filter" style="width: 60px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                                <input type="number" data-filter="endPrice" id="endPrice"  onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()" data-operator="lte" class="form-control grid-filter" style="width: 160px" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                             </div>
                         </div>
                         <!-- End .pull-left -->
