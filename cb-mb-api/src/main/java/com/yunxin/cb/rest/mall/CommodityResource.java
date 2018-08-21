@@ -1,5 +1,7 @@
 package com.yunxin.cb.rest.mall;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Attribute;
 import com.yunxin.cb.mall.entity.AttributeGroup;
@@ -143,20 +145,20 @@ public class CommodityResource extends BaseResource {
     public ResponseResult<String> hotCity() {
         ResponseResult result=new ResponseResult(Result.FAILURE);
         try {
-            StringBuilder sb = new StringBuilder();
+            JSONArray jsonArray=new JSONArray();
             Profile profile = profileService.getProfileByName(ProfileState.HOT_CITY.name());
             if (profile != null && StringUtils.isNotBlank(profile.getFileValue())) {
-                sb.append("{");
                 String [] hotSearchArr = profile.getFileValue().split(",");
                 for (String city:hotSearchArr){
                     String [] cityArr = city.split("&");
-                    sb.append("\"city\":").append(cityArr[0]);
-                    sb.append(",\"code\":").append(cityArr[1]);
+                    JSONObject jsonObject=new JSONObject();
+                    jsonObject.put("city",cityArr[0]);
+                    jsonObject.put("code",cityArr[1]);
+                    jsonArray.add(jsonObject);
                 }
-                sb.append("}");
             }
             result.setResult(Result.SUCCESS);
-            result.setMessage(sb.toString());
+            result.setData(jsonArray.toJSONString());
         } catch (Exception e) {
             logger.info("hotCity failed", e);
         }
