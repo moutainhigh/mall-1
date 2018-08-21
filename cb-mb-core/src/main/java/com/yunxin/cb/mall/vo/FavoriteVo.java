@@ -6,6 +6,7 @@ import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -32,7 +33,8 @@ public class FavoriteVo implements java.io.Serializable{
     private Date createTime;
 
     /** 销售价 */
-    @ApiModelProperty(value="销售价",name="salePrice",example="200.00")
+    @NotBlank(message = "销售价不能为空")
+    @ApiModelProperty(value="销售价",name="salePrice",example="200.00", required = true)
     private Float salePrice;
 
     /** 商品id */
@@ -40,7 +42,8 @@ public class FavoriteVo implements java.io.Serializable{
     private Integer commodityId;
 
     /** 货品id */
-    @ApiModelProperty(value="货品id",name="productId",example="476")
+    @NotBlank(message = "货品id不能为空")
+    @ApiModelProperty(value="货品id",name="productId",example="476", required = true)
     private Integer productId;
 
     @ApiModelProperty(value="商品",name="commodity",example="commodity")
