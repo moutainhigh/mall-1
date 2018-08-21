@@ -232,7 +232,7 @@
                         <table class="table table-bordered ">
                             <thead>
                             <th style="width: 200px">属性名称</th>
-                            <th style="width: 100px">图片</th>
+                            <%--<th style="width: 100px">图片</th>--%>
                             <th>属性值</th>
                             <th scope="col" style="width: 100px" class="text-center">操作</th>
                             </thead>
@@ -240,7 +240,7 @@
                             <c:forEach var="group" items="${attributeGroups}">
                                 <tr id="group${group.groupId}">
                                     <td>${group.groupName}</td>
-                                    <td>${group.showAsImage==true?"是":"否"}</td>
+                                    <%--<td>${group.showAsImage==true?"是":"否"}</td>--%>
                                     <td>
                                         <c:forEach var="attribute" items="${group.attributes}">
                                              &nbsp;${attribute.attributeName}
@@ -508,7 +508,7 @@
                         <div class="sidebar-module">
                             <table class="table table-bordered table-striped">
                                 <thead>
-                                <th style="width: 100px">属性名称</th>
+                                <th style="width: 200px">属性名称</th>
                                 <th>属性值</th>
                                 </thead>
                                 <tbody>

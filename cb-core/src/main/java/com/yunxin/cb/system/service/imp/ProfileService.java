@@ -217,6 +217,9 @@ public class ProfileService implements IProfileService {
         return profileDao.getProfileByProfileName(profileName);
     }
 
+    /**
+     * 加载系统配置项
+     */
     @Override
     @Transactional
     public void addProfileByProfileIsExit(){
@@ -229,10 +232,16 @@ public class ProfileService implements IProfileService {
                 profile.setRemarks(e.getDefaultValue());
                 profile.setIsPicture(0);
                 profileDao.save(profile);
+                /**添加redis信息*/
                 redisService.setKey(e.toString(),e.getDefaultValue());
             }else if(null==profile.getFileValue()||profile.getFileValue().equals("")){
                 profile=profileDao.getOne(profile.getFileId());
                 profile.setFileValue(e.getDefaultValue());
+                /**更新redis信息*/
+                redisService.updateRedisByKey(profile.getProfileName().toString(),profile.getFileValue());
+            }else{
+                /**更新redis信息*/
+                redisService.updateRedisByKey(profile.getProfileName().toString(),profile.getFileValue());
             }
         }
     }
