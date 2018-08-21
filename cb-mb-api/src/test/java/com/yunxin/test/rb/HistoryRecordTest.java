@@ -27,12 +27,15 @@ import org.springframework.web.context.WebApplicationContext;
 @AutoConfigureMockMvc
 public class HistoryRecordTest {
     private static final Logger log = LoggerFactory.getLogger(HistoryRecordTest.class);
+    @Autowired
     private MockMvc mvc;
     @Autowired
     private WebApplicationContext context;
+    @Autowired
+    private HistoryRecordResource historyRecordResource;
     @Before
     public void setUp() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(new HistoryRecordResource()).build();
+        mvc = MockMvcBuilders.standaloneSetup(historyRecordResource).build();
     }
 
     @Test
