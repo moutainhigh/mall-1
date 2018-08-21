@@ -533,6 +533,22 @@
                                             autoHidePrompt: true, scroll: false, showOneMessage: true,
                                             onValidationComplete: function (form, valid) {
                                                 if (valid) {
+                                                    var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
+                                                    var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
+
+                                                    if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#costPrice").val())){
+                                                        bootbox.alert("成本价格须介于商品价格段范围内!");
+                                                        return false;
+                                                    }
+                                                    if(Number($("#sellPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#sellPrice").val())){
+                                                        bootbox.alert("销售价格须介于商品价格段范围内!");
+                                                        return false;
+                                                    }
+                                                    if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
+                                                        bootbox.alert("市场价格须介于商品价格段范围内!");
+                                                        return false;
+                                                    }
+
                                                     var defaultPicPath = $('input[name="imgurl"]');
                                                     if (defaultPicPath.size()==0) {
                                                         bootbox.alert("请至少选择一张图片!");
@@ -560,21 +576,6 @@
                                                     }*/
                                                     if ($("#editorContent1").val().length > 4098) {
                                                         bootbox.alert("商品说明内容过长，请输入小于4098个字符!");
-                                                        return false;
-                                                    }
-                                                    var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
-                                                    var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
-
-                                                    if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#sellPrice").val())){
-                                                        bootbox.alert("成本价格须介于商品价格段范围内!");
-                                                        return false;
-                                                    }
-                                                    if(Number($("#sellPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#sellPrice").val())){
-                                                        bootbox.alert("销售价格须介于商品价格段范围内!");
-                                                        return false;
-                                                    }
-                                                    if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
-                                                        bootbox.alert("市场价格须介于商品价格段范围内!");
                                                         return false;
                                                     }
                                                     return true;

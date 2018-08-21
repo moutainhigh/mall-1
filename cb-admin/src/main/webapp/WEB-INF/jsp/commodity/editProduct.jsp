@@ -14,7 +14,26 @@
             });
 
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var startPrice = '${commodity.priceSection.startPrice}';
+                        var endPrice = '${commodity.priceSection.endPrice}';
+                        if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#costPrice").val())){
+                            bootbox.alert("成本价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        if(Number($("#salePrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#salePrice").val())){
+                            bootbox.alert("销售价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
+                            bootbox.alert("市场价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        return true;
+                    }
+                }
             });
         });
 

@@ -79,7 +79,7 @@
                         var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
                         var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
 
-                        if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#sellPrice").val())){
+                        if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#costPrice").val())){
                             bootbox.alert("成本价格须介于商品价格段范围内!");
                             return false;
                         }
