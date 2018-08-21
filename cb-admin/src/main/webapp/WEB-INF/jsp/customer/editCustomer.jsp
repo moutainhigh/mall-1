@@ -326,7 +326,7 @@
                   <label>邮箱：<span class="asterisk">*</span></label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input cssClass="form-control validate[required]" path="email" maxlength="64"/>
+                  <form:input cssClass="form-control validate[required,custom[email]]" path="email" maxlength="64"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
