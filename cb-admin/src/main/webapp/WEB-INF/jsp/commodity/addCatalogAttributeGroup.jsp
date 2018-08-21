@@ -196,7 +196,7 @@
                                 <label><span class="asterisk">*</span>属性组名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[1]]" path="groupName" maxlength="64"/>
+                                <form:input cssClass="form-control validate[required,minSize[1]]" path="groupName" maxlength="20"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>商品分类：</label>

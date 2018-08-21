@@ -20,7 +20,7 @@ public class RedisService {
 
     public static final String VERIFICATION_CODE = "VerificationCode";
     public static final String CUSTOMER_LIST="customer";
-
+    public static final String CUSTOMERCODE="customerCode";
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
     @Resource
@@ -52,6 +52,38 @@ public class RedisService {
             data.put(key,obj);
         redisTemplate.opsForValue().set(VERIFICATION_CODE,data);
 
+    }
+
+    /**
+     * 获取等级编码与邀请码
+     * @param key
+     * @return
+     */
+    public Object getCustomercode(String key){
+        Map<String, Object> data = (Map<String, Object>) redisTemplate.opsForValue().get(CUSTOMERCODE);
+        if(data == null) {
+            if("invitationCode".equals(key)){
+                return "CCCCCC";
+            }else{
+                return "CCCC";
+            }
+        }else {
+            return data.get(key);
+        }
+    }
+
+    /**
+     * 设置等级编码与邀请码
+     * @param key
+     * @param obj
+     */
+    public void setCustomercode(String key, Object obj){
+        Map<String, Object> data = (Map<String, Object>) redisTemplate.opsForValue().get(CUSTOMERCODE);
+        if(data == null) {
+            data = new HashMap<>();
+        }
+        data.put(key,obj);
+        redisTemplate.opsForValue().set(CUSTOMERCODE,data);
     }
 
     /**

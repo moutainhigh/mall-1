@@ -859,6 +859,7 @@ ALTER TABLE `order_item` add `VOLUME` float DEFAULT NULL COMMENT '体积';
 ALTER TABLE `order_item` add `WEIGHT` float DEFAULT NULL COMMENT '重量';
 
 ##add by yangzhen 2018-8-20
+DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '消息ID',
   `push_title` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '推送标题',

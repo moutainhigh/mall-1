@@ -14,14 +14,15 @@
     <script src="../js/common/fixed_common.js"></script>
     <script type="application/javascript">
 
-        var errerMsg='${errerMsg}';
-        if(errerMsg!=null&&errerMsg!=""){
-            commonNotify(errerMsg,"error");
-        }
-
         var curStep = 0;
 
         $(document).ready(function () {
+
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             KindEditor.ready(function (K) {
                 window.editor = K.create('#editorContent', {
                     uploadJson: '../upload/fileUpload.do',

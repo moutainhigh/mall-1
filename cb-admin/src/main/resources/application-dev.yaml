@@ -6,6 +6,17 @@ spring:
     password: 123456
   session:
      store-type: none
+  redis:
+       database: 0
+       host: 192.168.0.104
+       port: 6379
+       password:
+       timeout: 0
+       pool:
+           max-active: 8
+           max-wait: -1
+           max-idle: 8
+           min-idle: 0
   jpa:
       hibernate:
           ddl-auto: none
