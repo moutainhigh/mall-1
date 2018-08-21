@@ -216,8 +216,8 @@
                 <label> 营业执照注册号：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.buslicenseNo}
-                </div>
+                <span style="word-break:break-all">${seller.buslicenseNo}</span>
+              </div>
             </div>
 
             <div class="spacer-30"></div>
@@ -277,7 +277,7 @@
                 <label> 备注：</label>
               </div>
               <div class="col-sm-8">
-                ${seller.remark}
+                <span style="word-break:break-all">${seller.remark}</span>
                 </div>
             </div>
 

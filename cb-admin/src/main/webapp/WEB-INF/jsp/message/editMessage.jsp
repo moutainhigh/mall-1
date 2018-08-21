@@ -52,11 +52,10 @@
                             bootbox.alert("只能选择一张摘要图片!");
                             return false;
                         }
-                        debugger;
-                        if ($("#editorContent2").val().length > 4000) {
+                        /*if ($("#editorContent2").val().length > 4000) {
                             bootbox.alert("消息内容过长，请输入小于4000个字符!");
                             return false;
-                        }
+                        }*/
                         return true;
                     }
                 }
@@ -67,7 +66,7 @@
             $("#pushTitle").val("");
             $("#pushDigest").text("");
             $("#messageContent").text("");
-            
+
         }
     </script>
 </head>
@@ -133,6 +132,9 @@
                             <h2>消息新增</h2>
                         </c:otherwise>
                     </c:choose>
+                </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="message.do"><i class="fa fa-reply"></i></a>
                 </div>
             </div>
             <!-- End .inner-padding -->
@@ -268,21 +270,23 @@
                                         });
                                         //加载图片
                                         var a='${listAttachment}';
-                                        var json=eval('(' + a + ')');
-                                        for(var i=0,l=json.length;i<l;i++){
-                                            initPreview[i]  = json[i].filePath;
-                                            var config = new Object();
-                                            config.caption = "";
-                                            config.url="/admin/uploads/delete/MESSAGEDIGEST.do";
-                                            config.key=json[i].inputId;
-                                            initPreviewConfig[i]=config;
-                                            $("#fileInput").fileinput('refresh', {
-                                                initialPreview: initPreview,
-                                                initialPreviewConfig: initPreviewConfig,
-                                                initialPreviewAsData: true
-                                            });
-                                            var html='<input name="digestPic" type="hidden" id="'+json[i].inputId+'" value="'+json[i].filePath+','+json[i].fileName+','+json[i].inputId+'">';
-                                            $('#imgDiv').html($('#imgDiv').html()+html);
+                                        if(a){
+                                            var json=eval('(' + a + ')');
+                                            for(var i=0,l=json.length;i<l;i++){
+                                                initPreview[i]  = json[i].filePath;
+                                                var config = new Object();
+                                                config.caption = "";
+                                                config.url="/admin/uploads/delete/MESSAGEDIGEST.do";
+                                                config.key=json[i].inputId;
+                                                initPreviewConfig[i]=config;
+                                                $("#fileInput").fileinput('refresh', {
+                                                    initialPreview: initPreview,
+                                                    initialPreviewConfig: initPreviewConfig,
+                                                    initialPreviewAsData: true
+                                                });
+                                                var html='<input name="digestPic" type="hidden" id="'+json[i].inputId+'" value="'+json[i].filePath+','+json[i].fileName+','+json[i].inputId+'">';
+                                                $('#imgDiv').html($('#imgDiv').html()+html);
+                                            }
                                         }
                                     });
                                 </script>
@@ -301,8 +305,8 @@
                             <div class="col-sm-2">
                                 <label>消息内容：</label>
                             </div>
-                            <div class="col-sm-3">
-                                <form:textarea id="editorContent2" path="messageContent" cssClass="form-control validate[required]" maxlength="40"/>
+                            <div class="col-sm-9">
+                                <form:textarea id="editorContent2" path="messageContent" cssStyle="height:500px;" cssClass="form-control validate[required]" maxlength="40"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
