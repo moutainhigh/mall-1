@@ -118,6 +118,14 @@ public class FinacialCreditAmountResource extends BaseResource {
     @ApiVersion(1)
     public ResponseResult submitLoan(@RequestBody FinacialLoanVO finacialLoanVO) {
         try {
+            Customer customer = customerService.getCustomerById(getCustomerId());
+            if (customer.getAuthFlag() != 1) {
+                return new ResponseResult(Result.FAILURE, "未实名认证");
+            }
+            List<BankInfoVO> bankInfoVOs = bankInfoService.selectAll(getCustomerId());
+            if (bankInfoVOs == null || bankInfoVOs.isEmpty()) {
+                return new ResponseResult(Result.FAILURE, "请先绑定银行卡再申请贷款");
+            }
             //最高可贷金额,判断额度是否满足贷款
             FinacialWalletVO walletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
             BigDecimal totalAmount = walletVO.getTotalAmount();
