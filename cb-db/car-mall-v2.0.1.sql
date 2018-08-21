@@ -177,3 +177,13 @@ CREATE TABLE `spec_filter_item` (
   PRIMARY KEY (`ITEM_ID`) USING BTREE,
   KEY `FILTER_ID` (`FILTER_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='规格过滤配置值';
+
+
+-----add by lxc 2018-08-21 16:17
+ALTER TABLE `crystal_ball`.`rb_funds_pool`
+CHANGE COLUMN `CATEGORY_ID` `CATALOG_ID` int(11) NOT NULL COMMENT '一级商品分类ID' AFTER `POOL_ID`;
+ALTER TABLE `crystal_ball`.`rb_funds_pool_log`
+CHANGE COLUMN `CATEGORY_ID` `CATALOG_ID` int(11) NOT NULL COMMENT '分类ID' AFTER `POOL_ID`;
+
+----初始化数据应该就要有的
+INSERT INTO `store` VALUES (1, '富德生命大厦507', '440300', '440304', b'0', 518000, '440000', '', 'NO0001', '福田仓库');

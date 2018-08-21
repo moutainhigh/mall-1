@@ -1,7 +1,6 @@
 package com.yunxin.test.rb;
 
 import com.yunxin.cb.Application;
-import com.yunxin.cb.mall.service.ReimbursementQueryService;
 import com.yunxin.cb.rest.mall.OrderResource;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -32,14 +30,12 @@ public class OrderQueryTest {
     private MockMvc mvc;
     @Autowired
     private WebApplicationContext context;
-    @MockBean
-    private ReimbursementQueryService reimbursementQueryService;
-
+    @Autowired
+    private OrderResource orderResource;
 
     @Before
     public void setUp() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(new OrderResource()).build();
-//        mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+        mvc = MockMvcBuilders.standaloneSetup(orderResource).build();
     }
 
 
@@ -47,8 +43,10 @@ public class OrderQueryTest {
     public void getOrderListTest() throws Exception {
         log.info("查询订单列表 V1 start");
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/order/pageList")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/order/pageList")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
+                .param("pageNo","1").param("pageSize","10"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
 

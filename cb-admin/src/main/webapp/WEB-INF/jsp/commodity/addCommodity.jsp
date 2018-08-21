@@ -103,28 +103,7 @@
                     }
                 }
             });*/
-
-            $("#costPrice,#sellPrice,#marketPrice").blur(function(){
-                var inputValue = $(this).val();
-                var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
-                var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
-                var documentId = $(this).attr("id");
-                if (documentId == "costPrice") {
-                    var salePrive = $("#sellPrice").val();
-                    if(Number(salePrive) < Number(startPrice) || Number(endPrice) < Number(salePrive)){
-                        bootbox.alert("价格须介于商品价格段范围内!");
-                        $(this).val('');
-                        $("#sellPrice").val('');
-                    }
-                } else {
-                    if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
-                        bootbox.alert("价格须介于商品价格段范围内!");
-                        $(this).val('')
-                    }
-                }
-            });
         });
-
         function loadSpecs(catalogId) {
             $.getJSON("getSpecsByCatalogId.do", {
                 catalogId: catalogId
@@ -188,18 +167,18 @@
             $('#sellerDialog').modal("hide")
         }
 
-        /**
-         *  根据分类id,返回一级分类的比例配置
-         *  @author lxc
-         * @param catalogId     分类id
-         */
-        function getOneLevelCatalog(catalogId) {
-            $.getJSON("getOneLevelCatalog.do", {
-                catalogId: catalogId
-            }, function (json) {
-                $("#oneLevelCatalog").val(json);
-            });
-        }
+            /**
+             *  根据分类id,返回一级分类的比例配置
+             *  @author lxc
+             * @param catalogId     分类id
+             */
+            function getOneLevelCatalog(catalogId) {
+                $.getJSON("getOneLevelCatalog.do", {
+                    catalogId: catalogId
+                }, function (json) {
+                    $("#oneLevelCatalog").val(json);
+                });
+            }
     </script>
 </head>
 <body>
@@ -581,6 +560,21 @@
                                                     }*/
                                                     if ($("#editorContent1").val().length > 4098) {
                                                         bootbox.alert("商品说明内容过长，请输入小于4098个字符!");
+                                                        return false;
+                                                    }
+                                                    var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
+                                                    var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
+
+                                                    if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#sellPrice").val())){
+                                                        bootbox.alert("成本价格须介于商品价格段范围内!");
+                                                        return false;
+                                                    }
+                                                    if(Number($("#sellPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#sellPrice").val())){
+                                                        bootbox.alert("销售价格须介于商品价格段范围内!");
+                                                        return false;
+                                                    }
+                                                    if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
+                                                        bootbox.alert("市场价格须介于商品价格段范围内!");
                                                         return false;
                                                     }
                                                     return true;

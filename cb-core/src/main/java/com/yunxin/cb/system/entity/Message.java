@@ -103,7 +103,7 @@ public class Message implements java.io.Serializable {
         this.pushTitle = pushTitle;
     }
 
-    @Column(nullable = true, length = 4098,name = "message_content")
+    @Column(nullable = true,name = "message_content")
     public String getMessageContent() {
         return messageContent;
     }
