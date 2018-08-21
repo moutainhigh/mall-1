@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +39,7 @@ import java.util.Set;
  * @return
  */
 @Api(description = "商城订单接口")
+@Validated
 @RestController
 @RequestMapping(value = "{version}/mall")
 public class OrderResource extends BaseResource {
@@ -152,11 +153,10 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "cancelReason", value = "取消原因", required = true, paramType = "form", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
-    public ResponseResult cancelOrder(@RequestParam("orderId") int orderId, @RequestParam("cancelReason") String cancelReason) {
+    public ResponseResult cancelOrder(@RequestParam("orderId") int orderId,
+                                      @NotBlank(message = "取消原因不能为空")
+                                      @RequestParam("cancelReason") String cancelReason) {
         try {
-            if (StringUtils.isBlank(cancelReason)){
-                return new ResponseResult(Result.FAILURE, "取消原因不能为空");
-            }
             Order order = new Order();
             order.setOrderId(orderId);
             order.setCancelReason(cancelReason);

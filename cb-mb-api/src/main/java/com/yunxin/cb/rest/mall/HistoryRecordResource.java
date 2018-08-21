@@ -43,32 +43,6 @@ public class HistoryRecordResource extends BaseResource {
         return new ResponseResult(page);
     }
 
-    /*@ApiOperation(value = "商品添加我的浏览")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "salePrice", value = "销售价", required = true, paramType = "post", dataType = "int")})
-    @PostMapping(value = "addHistoryRecord")
-    @ApiVersion(1)
-    public ResponseResult<HistoryRecordVO> addHistoryRecord(@RequestBody HistoryRecordVO HistoryRecordVO) {
-        try {
-            logger.info("input Parameter HistoryRecordVO:" + HistoryRecordVO.toString());
-            HistoryRecord historyRecord = new HistoryRecord();
-            BeanUtils.copyProperties(historyRecord, HistoryRecordVO);
-            historyRecord.setCustomerId(getCustomerId());
-            historyRecord = historyRecordService.addHistoryRecord(historyRecord);
-            if (historyRecord != null) {
-                BeanUtils.copyProperties(HistoryRecordVO, historyRecord);
-                return new ResponseResult(HistoryRecordVO);//成功
-            } else {
-                return new ResponseResult(Result.FAILURE);//失败
-            }
-        } catch (IllegalAccessException e) {
-            logger.error("IllegalAccessException is "+e);
-        } catch (InvocationTargetException e) {
-            logger.error("InvocationTargetException is "+e);
-        }
-        return new ResponseResult(Result.SUCCESS);//成功
-    }*/
 
     /**
      * @title: 商品移出我的浏览(批量)

@@ -87,6 +87,9 @@ public class CategoryResource extends BaseResource {
         try {
             List<CategoryVO> catagoryVOs = new ArrayList<>();
             List<Category> catagorys=categoryService.selectByParentCategoryId(categoryId);
+            if(LogicUtils.isNull(catagorys)){
+                return new ResponseResult(Result.FAILURE,"数据为空");
+            }
             for(Category category : catagorys){
                 CategoryVO cVO = new CategoryVO();
                 BeanUtils.copyProperties(cVO, category);
