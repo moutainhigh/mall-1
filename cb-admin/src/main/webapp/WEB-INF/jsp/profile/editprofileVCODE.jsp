@@ -140,8 +140,8 @@
             <div class="pull-left">
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
-                    <li><a href="#">保单管理 </a></li>
-                    <li><a href="#">事项组</a></li>
+                    <li><a href="#">系统管理</a></li>
+                    <li><a href="#">参数配置</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -158,7 +158,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>事项组</h2>
+                    <h2>参数配置</h2>
                 </div>
                 <div class="pull-right">
                     <a class="btn btn-default" href="profiles.do"><i class="fa fa-reply"></i></a>
@@ -190,7 +190,7 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>参数名称：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>参数名称：</label>
                             </div>
                             <div class="col-sm-3">
                                 <input style="padding: 5px;" id="profileName" readonly="readonly" cssClass="form-control validate[required,minSize[1]]"/>
@@ -200,7 +200,7 @@
                         <div class="spacer-10"></div>
                         <div class="row" style="display: none;">
                             <div class="col-sm-2">
-                                <label>是否图片：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>是否图片：</label>
                             </div>
                             <div class="col-sm-3">
                                 <div class="inline-labels">
@@ -277,7 +277,7 @@
                         <div class="spacer-10"></div>
                         <div id="fileValeDiv" class="row">
                             <div class="col-sm-2">
-                                <label>参数值：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>参数值：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:textarea id="fileValue"    path="fileValue" cssClass="formClear form-control validate[required,minSize[1],custom[checkInputNumber]"/>
@@ -285,7 +285,7 @@
                         </div>
                         <div id="fileValeImg" class="row" style="display: none">
                             <div class="col-sm-2">
-                                <label>参数值：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>参数值：</label>
                             </div>
                             <div class="col-sm-3">
                                 <img id="headPic" src="${profile.fileValue}" width="350px" height="350px"

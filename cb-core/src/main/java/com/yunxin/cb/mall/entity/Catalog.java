@@ -17,9 +17,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
-
-
-import javax.swing.JOptionPane;
 /**
  * 商品目录（商品分类）
  */

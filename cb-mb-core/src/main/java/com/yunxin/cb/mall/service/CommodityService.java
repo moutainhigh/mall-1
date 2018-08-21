@@ -49,4 +49,6 @@ public interface CommodityService {
     List<Commodity> selectByBrandId(Integer brandId);
 
     List<SellerVo> getAllSellerAddress();
+
+
 }

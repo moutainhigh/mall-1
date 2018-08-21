@@ -64,7 +64,7 @@ public class MessageResource extends BaseResource {
             newPageMap.put("pageCount",oldPage.getTotalPages());
             newPageMap.put("pageNo",pageNo);
             newPageMap.put("hasPrevious",true);
-            newPageMap.put("hasNext",oldPage.getTotalPages() > pageNo ? true:false);
+            newPageMap.put("hasNext",oldPage.getTotalPages() > pageNo);
             newPageMap.put("startOfPage",(pageNo - 1) * pageSize);
             newPageMap.put("data",oldPage.getContent());
 

@@ -404,7 +404,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>商品列表：</label>
+                                <label><span class="asterisk">*</span>品牌列表：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="brandTable" class="table table-bordered table-striped">

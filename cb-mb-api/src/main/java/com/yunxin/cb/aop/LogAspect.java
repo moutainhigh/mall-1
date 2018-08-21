@@ -2,7 +2,6 @@ package com.yunxin.cb.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.meta.Result;
-import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.vo.ResponseResult;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -15,11 +14,14 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -108,6 +110,16 @@ public class LogAspect {
 					+ isJson(outputParam) + "执行时间:" + excTime+ "\n "
 			);
 		} catch (Throwable e) {
+			if (e instanceof ConstraintViolationException) {
+				String message = "";
+				ConstraintViolationException ex = (ConstraintViolationException) e;
+				Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
+				for (ConstraintViolation<?> violation : violations) {
+					message = violation.getMessage();
+					break;
+				}
+				return new ResponseResult(Result.FAILURE, message);
+			}
 			e.printStackTrace();
 			StringWriter sw = new StringWriter();
 			e.printStackTrace(new PrintWriter(sw, true));

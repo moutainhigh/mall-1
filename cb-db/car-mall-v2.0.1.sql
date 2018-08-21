@@ -1,8 +1,6 @@
 
 
 
-
-
 #INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('11', 'SHARE_PATH', 'http://test.app.999shuijingqiu.com/register.html?invitationCode=', '0', '');
 #INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('12', 'SHARE_TITLE', '云信 - 让生活更美好', '0', '');
 #INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('13', 'SHARE_ICON', 'http://test.resource.999shuijingqiu.com/Firq1iyRsRVaVD4nxDfLlBexjoA5', '1', '');
@@ -130,6 +128,7 @@ ALTER TABLE `order_item` add `MARKET_PRICE` float NOT NULL COMMENT '市场价';
 ALTER TABLE `order_item` add `VOLUME` float DEFAULT NULL COMMENT '体积';
 ALTER TABLE `order_item` add `WEIGHT` float DEFAULT NULL COMMENT '重量';
 
+#############线上环境已执行到8月17号
 
 ##add by yangzhen 2018-8-20
 DROP TABLE IF EXISTS `message`;
@@ -178,3 +177,10 @@ CREATE TABLE `spec_filter_item` (
   PRIMARY KEY (`ITEM_ID`) USING BTREE,
   KEY `FILTER_ID` (`FILTER_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='规格过滤配置值';
+
+
+-----add by lxc 2018-08-21 16:17
+ALTER TABLE `crystal_ball`.`rb_funds_pool`
+CHANGE COLUMN `CATEGORY_ID` `CATALOG_ID` int(11) NOT NULL COMMENT '一级商品分类ID' AFTER `POOL_ID`;
+ALTER TABLE `crystal_ball`.`rb_funds_pool_log`
+CHANGE COLUMN `CATEGORY_ID` `CATALOG_ID` int(11) NOT NULL COMMENT '分类ID' AFTER `POOL_ID`;
