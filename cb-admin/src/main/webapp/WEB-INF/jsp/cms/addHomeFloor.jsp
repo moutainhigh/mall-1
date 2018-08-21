@@ -608,6 +608,11 @@
             $("#commodity" + indx).remove();
             idcIndex--;
         }
+
+        function clearCheck(){
+            $("#commodityFormId :checkbox").removeAttr("checked");
+            clearFilters('commodityGrid')
+        }
     </script>
 </div>
 
@@ -642,9 +647,13 @@
                     var selectedBrandId=$(selectedBox).attr('value');
                     $.each(gridData.data(),function(i,dataItem){
                         if(dataItem.brandId==selectedBrandId){
-                            var newRow = "<tr id='brand" + idcIndex + "'><td><input type='hidden' name='brandId' value='"+selectedBrandId+"'/>"+dataItem.brandName+"</td><td><input type='text' name='brandOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
-                            $("#brandTable tr:last").after(newRow);
-                            idcIndex++;
+                            // debugger;
+                            var idIn= $("#inp"+selectedBrandId).val();
+                            if(idIn==undefined||idIn==''){
+                                var newRow = "<tr id='brand" + idcIndex + "'><td><input type='hidden' id='inp"+selectedBrandId+"' name='brandId' value='"+selectedBrandId+"'/>"+dataItem.brandName+"</td><td><input type='text' name='brandOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
+                                $("#brandTable tr:last").after(newRow);
+                                idcIndex++;
+                            }
                             return ;
                         }
                     });
@@ -707,6 +716,10 @@
             }
             clearCheck();
             $('#showAdvertisementDialog').modal("hide");
+        }
+        function clearCheck(){
+            $("#brandGrid :checkbox").removeAttr("checked");
+            clearFilters('brandGrid')
         }
         function removeAdvertisement(indx) {
             $("#advertisement" + indx).remove();
