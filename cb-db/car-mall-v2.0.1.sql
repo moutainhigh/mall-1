@@ -1,11 +1,5 @@
 
 
-###add by lxc 2018-08-08 15:58
-ALTER TABLE `crystal_ball`.`catalog`
-ADD COLUMN `RATIO` decimal(10, 5) NOT NULL DEFAULT 1 COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
-ALTER TABLE `crystal_ball`.`commodity`
-ADD COLUMN `RATIO` decimal(10, 5) NULL COMMENT '商品比例配置' AFTER `SETTING_CONTENT`;
-
 
 #INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('11', 'SHARE_PATH', 'http://test.app.999shuijingqiu.com/register.html?invitationCode=', '0', '');
 #INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('12', 'SHARE_TITLE', '云信 - 让生活更美好', '0', '');
@@ -134,6 +128,7 @@ ALTER TABLE `order_item` add `MARKET_PRICE` float NOT NULL COMMENT '市场价';
 ALTER TABLE `order_item` add `VOLUME` float DEFAULT NULL COMMENT '体积';
 ALTER TABLE `order_item` add `WEIGHT` float DEFAULT NULL COMMENT '重量';
 
+#############线上环境已执行到8月17号
 
 ##add by yangzhen 2018-8-20
 DROP TABLE IF EXISTS `message`;
