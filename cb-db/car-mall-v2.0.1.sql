@@ -1,6 +1,10 @@
 
 
-
+###add by lxc 2018-08-08 15:58
+ALTER TABLE `crystal_ball`.`catalog`
+ADD COLUMN `RATIO` decimal(10, 5) NOT NULL DEFAULT 1 COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+ALTER TABLE `crystal_ball`.`commodity`
+ADD COLUMN `RATIO` decimal(10, 5) NULL COMMENT '商品比例配置' AFTER `SETTING_CONTENT`;
 
 
 #INSERT INTO `profile` (`FILE_ID`, `PROFILE_NAME`, `FILE_VALUE`, `IS_PICTURE`, `REMARKS`) VALUES ('11', 'SHARE_PATH', 'http://test.app.999shuijingqiu.com/register.html?invitationCode=', '0', '');
