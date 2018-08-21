@@ -1,15 +1,13 @@
 package com.yunxin.test.rb;
 
-import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.Application;
-import net.sf.json.JSONObject;
+import com.yunxin.cb.rest.rb.ReimbursementQueryResource;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -20,10 +18,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -33,18 +27,17 @@ public class ReimbursementTest {
 
     private static final Logger log = LoggerFactory.getLogger(ReimbursementTest.class);
     private MockMvc mvc;
-    @Autowired
-    private WebApplicationContext context;
+
     @Before
     public void setUp() throws Exception {
-//        mvc = MockMvcBuilders.standaloneSetup(new ReimbursementQueryResource()).build();
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
+        mvc = MockMvcBuilders.standaloneSetup(new ReimbursementQueryResource()).build();
     }
+
     @Test
     public void getReimbursementTest() throws Exception {
         log.info("查询可报账列表 V1 start");
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("localhost:8160/rb-api/v1/reimbursement/getReimbursement")
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/reimbursement/getReimbursement")
                 .param("pageNo","1").param("pageSize","10").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
