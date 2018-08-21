@@ -18,7 +18,7 @@
             });
         });
 
-
+        $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
     </script>
     <%--后台页面共用的js--%>
     <script src="../js/common/fixed_common.js"></script>
@@ -99,10 +99,10 @@
                         <legend>编辑货品</legend>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>分类比例配置：</label>
+                                <label><span class="asterisk">*</span>一级分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control"  path="commodity.catalog.ratio" id="catalogRatio" readonly="true"  maxlength="32"/>
+                                <form:input cssClass="form-control"  path="" id="oneLevelCatalog" readonly="true"  maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>商品比例配置：</label>
@@ -241,6 +241,8 @@
 </div>
 <!-- End #main -->
 
-
+<script type="application/javascript">
+    $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
+</script>
 </body>
 </html>

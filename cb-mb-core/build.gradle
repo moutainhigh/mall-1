@@ -81,7 +81,7 @@ dependencies {
     testCompile(
             "org.springframework:spring-test:$springVersion",
             "org.jboss.spec.javax.el:jboss-el-api_3.0_spec:1.0.9.Final",
-            "junit:junit:4.11",
+            "junit:junit:4.12",
     )
 }
 

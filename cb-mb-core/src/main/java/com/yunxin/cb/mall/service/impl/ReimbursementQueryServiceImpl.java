@@ -5,9 +5,10 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.mapper.*;
+import com.yunxin.cb.mall.restful.ResponseResult;
+import com.yunxin.cb.mall.restful.meta.Result;
 import com.yunxin.cb.mall.service.ReimbursementQueryService;
 import com.yunxin.cb.mall.vo.*;
-import com.yunxin.cb.util.CalendarUtils;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
@@ -16,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
@@ -50,11 +50,12 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
      * @return
      * @throws Exception
      */
+    //TODO 在订单表加报账状态
     @Override
     public PageFinder<ReimbursementVO> pageReimbursementQuery(Query q)throws Exception {
         ReimbursementQuery reimbursement = (ReimbursementQuery)q.getData();
         List<ReimbursementOrder> listMent = reimbursementOrderMapper.selectByOrderState(reimbursement.getReimbursement_state(),reimbursement.getReimbursementState(),getCustomerId());
-        if(listMent.size()>0){
+        if(listMent != null){
             //调用dao查询满足条件的分页数据
             List<ReimbursementQuery> list = reimbursementQueryMapper.selectReimbursementQuery(q);
             //税点
@@ -174,10 +175,10 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             BigDecimal tax = accountSalePrice.multiply(taxPoint);
             //到账金额
             BigDecimal accountAmount = accountSalePrice.subtract(tax);
-            reimbursement.setAmount(accountSalePrice);
+            reimbursement.setAmount(accountAmount);
             reimbursement.setCreateTime(new Date());
             reimbursement.setCustomerId(getCustomerId());
-            reimbursement.setOrderAmount(accountAmount);
+            reimbursement.setOrderAmount(accountSalePrice);
             reimbursement.setTax(tax);
             reimbursement.setReimbursementNo("RB"+UUIDGeneratorUtil.getUUCode());
             reimbursement.setOrderState(ReimbursementState.FINANCE_IN_APPROVAL);
@@ -266,16 +267,18 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         }
         //查询该报账订单审批时间
         List<ReimbursementProcess> list = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
-        //第一次审批时间
-        if(list.size() == 1){
-            ReimbursementProcess reimbursementProcess = list.get(0);
-            alreadyReimbursementVO.setOperationTime(reimbursementProcess.getCreateTime());
-            alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
-        }else if(list.size() > 1){
-            //到账时间
-            ReimbursementProcess reimbursementProcess = list.get(list.size()-1);
-            alreadyReimbursementVO.setExaminationTime(reimbursementProcess.getCreateTime());
-            alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
+        if(list != null){
+            //第一次审批时间
+            if(list.size() == 1){
+                ReimbursementProcess reimbursementProcess = list.get(0);
+                alreadyReimbursementVO.setOperationTime(reimbursementProcess.getCreateTime());
+                alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
+            }else if(list.size() > 1){
+                //到账时间
+                ReimbursementProcess reimbursementProcess = list.get(list.size()-1);
+                alreadyReimbursementVO.setExaminationTime(reimbursementProcess.getCreateTime());
+                alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
+            }
         }
         //组合参数
         BeanUtils.copyProperties(reimbursement, alreadyReimbursementVO);
@@ -286,13 +289,20 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     }
     /**
      * 用户取消报账
-     * @param reimbursement
+     * @param reimbursementId
      * @throws Exception
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void cancelReimbursement(Reimbursement reimbursement)throws Exception{
-        reimbursementMapper.updateByPrimaryKey(reimbursement);
+    public ResponseResult cancelReimbursement(int reimbursementId)throws Exception{
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId, getCustomerId());
+        if (reimbursement.getOrderState().ordinal() == ReimbursementState.FINANCE_IN_APPROVAL.ordinal()) {
+            reimbursement.setOrderState(ReimbursementState.CANCEL_REIMBURSEMENT);
+            reimbursementMapper.updateByPrimaryKey(reimbursement);
+            return new ResponseResult(Result.SUCCESS);
+        } else {
+            return new ResponseResult(Result.FAILURE, "该报账订单不能取消");
+        }
     }
     /**
      * 报账已完成列表
@@ -353,7 +363,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         List<ReimbursementProcess> listVO = reimbursementProcessMapper.selectAllByReimbursementId(reimbursement.getReimbursementId());
         completeReimbursementDetailVO.setAccountAmount(reimbursement.getAmount());
         completeReimbursementDetailVO.setOrderState(reimbursement.getOrderState());
-        completeReimbursementDetailVO.setOperationTime(listVO.get(listVO.size()-1).getCreateTime());
+        if(listVO != null){
+            completeReimbursementDetailVO.setOperationTime(listVO.get(listVO.size()-1).getCreateTime());
+        }
         completeReimbursementDetailVO.setReimbursementNo(reimbursement.getReimbursementNo());
         completeReimbursementDetailVO.setPayment(reimbursement.getRepaymentType());
         if(reimbursement.getRepaymentAmount() != null){

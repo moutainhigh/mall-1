@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -161,18 +160,21 @@ public class ReimbursementService implements IReimbursementService {
     }
 
     @Override
-    public String reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType,String remarks,int operType, HttpServletRequest request) {
+    public String reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType,String remarks,int operType, User user) {
 
     try {
 
        Reimbursement reimbursement=getReimbursement(reimbursementId);
-        User user = (User) request.getSession().getAttribute("loginSession");
+//        User user = (User) request.getSession().getAttribute("loginSession");
+        //TODO 审批不通过需重新生成订单详情
         ReimbursementProcess reimbursementProcess=new ReimbursementProcess();
         switch (reimbursementType){
             //财务人员审批
             case FINANCE_IN_APPROVAL:
-                if(!reimbursement.getOrderState().equals(ReimbursementType.FINANCE_IN_APPROVAL))
+                if(!reimbursement.getOrderState().equals(ReimbursementType.FINANCE_IN_APPROVAL)){
                     return "操作失败";
+                }
+
                 //审核通过
                 if(operType==1){
                     reimbursementProcess.setOrderState(ReimbursementProcessType.FINANCE_IN_APPROVAL);
@@ -185,14 +187,18 @@ public class ReimbursementService implements IReimbursementService {
                 break;
             //财务主管审批
             case DIRECTOR_IN_APPROVAL:
-                if(!reimbursement.getOrderState().equals(ReimbursementType.DIRECTOR_IN_APPROVAL))
+                if(!reimbursement.getOrderState().equals(ReimbursementType.DIRECTOR_IN_APPROVAL)){
                     return "操作失败";
+                }
+
                 //审核通过
                 if(operType==1){
 
                     FundsPool  fundsPool=fundsPoolDao.findByCatalog_CatalogId(reimbursement.getCatalogId());
-                    if(reimbursement.getOrderAmount().compareTo(fundsPool.getFunds())==1)
+                    if(reimbursement.getOrderAmount().compareTo(fundsPool.getFunds())==1){
                         return "操作失败，资金池不足";
+                    }
+
 
                     //更新资金池
 
@@ -208,8 +214,10 @@ public class ReimbursementService implements IReimbursementService {
                                 BigDecimal repayAmount=map.get("repayAmount");
                                 //实际到账
                                 BigDecimal realMoney=map.get("realMoney");
-                                if(!fundsPoolService.updateAndCountReimbursementAmout(reimbursementId))
+                                if(!fundsPoolService.updateAndCountReimbursementAmout(reimbursementId)){
                                     return "操作失败，资金池不足";
+                                }
+
                                 reimbursementDao.updateReimbursementsState(ReimbursementType.ALREADY_TO_ACCOUNT,repayAmount,realMoney, RepaymentType.WALLET,reimbursementId);
                             }
                         }catch (RuntimeException e){

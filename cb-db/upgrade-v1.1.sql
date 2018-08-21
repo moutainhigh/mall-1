@@ -359,14 +359,14 @@ CREATE TABLE `finacial_withdraw`  (
 DROP TABLE IF EXISTS `rb_funds_pool`;
 CREATE TABLE `rb_funds_pool`  (
   `POOL_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `CATEGORY_ID` int(11) NOT NULL COMMENT '一级运营分类ID',
+  `CATALOG_ID` int(11) NOT NULL COMMENT '一级商品分类ID',
   `POOL_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '分类名+“资金池”',
   `FUNDS` decimal(20, 4) NOT NULL COMMENT '资金',
   `VERSION` int(11) NOT NULL COMMENT '版本号',
   PRIMARY KEY (`POOL_ID`) USING BTREE,
-  INDEX `fk_fund_pool_category_id`(`CATEGORY_ID`) USING BTREE,
-  CONSTRAINT `fk_fund_pool_category_id` FOREIGN KEY (`CATEGORY_ID`) REFERENCES `category` (`CATEGORY_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  INDEX `fk_funds_pool_catalog_id`(`CATALOG_ID`) USING BTREE,
+  CONSTRAINT `fk_funds_pool_catalog_id` FOREIGN KEY (`CATALOG_ID`) REFERENCES `catalog` (`CATALOG_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for rb_funds_pool_log
@@ -375,19 +375,20 @@ DROP TABLE IF EXISTS `rb_funds_pool_log`;
 CREATE TABLE `rb_funds_pool_log`  (
   `POOL_LOG_ID` int(11) NOT NULL AUTO_INCREMENT,
   `POOL_ID` int(11) NOT NULL,
-  `CATEGORY_ID` int(11) NOT NULL COMMENT '分类ID',
+  `CATALOG_ID` int(11) NOT NULL COMMENT '分类ID',
   `POOL_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '分类名+“资金池”',
   `FUNDS` decimal(20, 4) NOT NULL,
-  `TYPE` int(2) NOT NULL COMMENT '类型：1.累计，2.报帐',
-  `TRANSACTION_ID` int(11) NOT NULL COMMENT '交易ID,累计为订单号，报帐为报帐ID',
-  `COMMODITY_ID` int(11) NOT NULL COMMENT '商品ID',
-  `AMOUNT` decimal(20, 4) NOT NULL COMMENT '金额',
+  `TYPE` int(2) DEFAULT NULL COMMENT '类型：1.累计，2.报帐',
+  `TRANSACTION_ID` int(11) DEFAULT NULL COMMENT '交易ID,累计为订单号，报帐为报帐ID',
+  `ITEM_ID` int(11) DEFAULT NULL COMMENT '订单详情ID/报账详情ID',
+  `PRODUCT_ID` int(11) DEFAULT NULL COMMENT '商品ID',
+  `AMOUNT` decimal(20, 4) DEFAULT NULL COMMENT '金额',
   `CREATE_TIME` datetime(0) NOT NULL COMMENT '操作时间',
   `VERSION` int(11) NOT NULL COMMENT '版本号',
   PRIMARY KEY (`POOL_LOG_ID`) USING BTREE,
   INDEX `fk_funds_pool_log_pool_id`(`POOL_ID`) USING BTREE,
   CONSTRAINT `fk_funds_pool_log_pool_id` FOREIGN KEY (`POOL_ID`) REFERENCES `rb_funds_pool` (`POOL_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 51 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for rb_reimbursement
@@ -768,3 +769,9 @@ ALTER TABLE `order_form` add  `COLLECT_TIME` datetime DEFAULT NULL COMMENT '收�
 ALTER TABLE customer modify column ENABLED int(2);
 ALTER TABLE `insurance_informed_matter` add  `INSURE_PEOPLE` INT(2) DEFAULT 0 COMMENT '投保人';
 ALTER TABLE `insurance_informed_matter` add  `INSURED_PEOPLE` INT(2) DEFAULT 0 COMMENT '被保人';
+
+###add by lxc 2018-08-14 15:58
+ALTER TABLE `crystal_ball`.`catalog`
+MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT 1.00000 COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;
+ALTER TABLE `crystal_ball`.`catalog`
+MODIFY COLUMN `RATIO` decimal(10, 5) NULL DEFAULT NULL COMMENT '分类比例配置' AFTER `SUPPORT_ADDED_TAX`;

@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lte9 lte8 lte7 no-js"> <![endif]-->
@@ -132,12 +133,14 @@
                             <div class="col-sm-3">
                                 <form:input cssClass="form-control validate[required],custom[number]" path="sortOrder" maxlength="3"/>
                             </div>
+                            <c:if test="${catalog.parentCatalog.catalogId == 1}">
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input cssClass="form-control validate[required],custom[gtOne]" path="ratio" maxlength="10" />
                             </div>
+                            </c:if>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
@@ -230,6 +233,8 @@
                 $("#parentCatalogId").val(catalogId);
                 $("#parentCatalogName").val(catalogName);
             }
+            var ratio = $('#ratio').val();      //商品比例设置
+            $('#ratio').val(parseFloat(ratio)) //去掉多余的零
         </script>
     </div>
 </div>
