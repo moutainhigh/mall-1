@@ -122,7 +122,7 @@
                                 <label><span class="asterisk">*</span> 分类编号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required]" path="categoryNo" maxlength="32"/>
+                                <form:input cssClass="form-control validate[required]" path="categoryNo" readonly="true" maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 价格区间：</label>

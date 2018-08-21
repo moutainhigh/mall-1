@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+/**
+ * 规格过滤配置
+ */
 @Controller
 @RequestMapping(value = "/operation")
 public class SpecFilterController {

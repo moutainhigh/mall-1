@@ -12,6 +12,7 @@ import com.yunxin.cb.security.Privilege;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.cb.security.SecurityProvider;
 import com.yunxin.core.exception.EntityExistException;
+import com.yunxin.core.util.IdGenerate;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -83,7 +84,9 @@ public class RoleController  implements ServletContextAware {
 		Set<Permission> roleRescs = new HashSet<>();
 		List<Privilege> resources = loadPrivileges();
 		List<TreeViewItem> viewItems = buildResourceTree(resources, roleRescs);
+		role.setRoleCode(IdGenerate.genRoleID());
 		modelMap.addAttribute("roleRescTree", viewItems);
+		modelMap.addAttribute("role", role);
 		return "security/addRole";
 	}
 
