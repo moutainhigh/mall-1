@@ -299,6 +299,11 @@ public class CommodityServiceImpl implements CommodityService {
             elasticsearchTemplate.putMapping(Commodity.class);
         }
 
+        // commodity list is empty
+        if (CollectionUtils.isEmpty(queries)) {
+            return;
+        }
+
         // spec && brand && category && priceSection
         List<Spec> specs = new ArrayList<>();
         List<Brand> brands = new ArrayList<>();
