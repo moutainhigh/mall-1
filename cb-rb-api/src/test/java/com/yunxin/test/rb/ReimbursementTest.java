@@ -43,13 +43,9 @@ public class ReimbursementTest {
     @Test
     public void getReimbursementTest() throws Exception {
         log.info("查询可报账列表 V1 start");
-        Map<String,Integer> map = new HashMap<>();
-        map.put("pageNo",1);
-        map.put("pageSize",10);
-        String a = JSON.toJSONString(map);
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/reimbursement/getReimbursement")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).param("pageNo","1").param("pageSize","10"))
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("localhost:8160/rb-api/v1/reimbursement/getReimbursement")
+                .param("pageNo","1").param("pageSize","10").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
 
