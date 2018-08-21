@@ -3,6 +3,7 @@ package com.yunxin.cb.mall.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -24,6 +25,7 @@ public class OrderConfirmProductVO implements java.io.Serializable{
      * 购买数量
      */
     @NotNull(message = "购买数量不能为空")
+    @Min(value = 1, message = "购买数量不能小于1")
     @ApiModelProperty(value="购买数量",name="productNum",example="1", required = true)
     private Integer productNum;
 

@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.Set;
+
 @ControllerAdvice
 @ResponseBody
 public class WebExceptionHandler {
@@ -79,5 +83,23 @@ public class WebExceptionHandler {
         logger.error("服务运行异常", e);
         return new ResponseResult(Result.FAILURE, "系统繁忙，请稍后重试");
     }
+
+    /**
+     * 如果aop日志拦截不抛异常就会执行该方法
+     * @param ex
+     * @return
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseResult handleApiConstraintViolationException(ConstraintViolationException ex) {
+        String message = "";
+        Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
+        for (ConstraintViolation<?> violation : violations) {
+            message = violation.getMessage();
+            break;
+        }
+        return new ResponseResult(Result.FAILURE, message);
+    }
+
 
 }
