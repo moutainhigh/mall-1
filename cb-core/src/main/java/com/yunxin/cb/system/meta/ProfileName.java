@@ -34,6 +34,7 @@ public enum ProfileName {
     INSURANCE_CODE_RECEIVE_EMAIL(""),//保单合同编号接收邮箱
     INSURANCE_CODE_RECEIVE_CONTEXT(""),//保单合同编号发送内容
     HOT_SEARCH("昂克赛拉,卡罗拉,福克斯,思域,凯美瑞,迈腾,雷克萨斯CT"),//热门搜索
+    HOT_CITY("北京市&110000,上海市&310000,广州市&440100,深圳市&440300"),//热门城市
     ;
 
     private String i18nName;

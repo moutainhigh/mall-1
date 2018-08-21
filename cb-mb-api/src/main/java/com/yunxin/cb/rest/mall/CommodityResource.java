@@ -4,12 +4,16 @@ import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Attribute;
 import com.yunxin.cb.mall.entity.AttributeGroup;
 import com.yunxin.cb.mall.entity.Product;
+import com.yunxin.cb.mall.entity.Profile;
 import com.yunxin.cb.mall.entity.meta.ProductState;
+import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.service.CommodityService;
+import com.yunxin.cb.mall.service.ProfileService;
 import com.yunxin.cb.mall.vo.AttributeGroupVO;
 import com.yunxin.cb.mall.vo.CommodityVo;
 import com.yunxin.cb.mall.vo.SellerVo;
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
@@ -17,14 +21,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.core.util.JsonUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.ServletContextAware;
-
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,17 +40,13 @@ import java.util.stream.Collectors;
 @Api(description = "商城商品接口")
 @RestController
 @RequestMapping(value = "/{version}/mall/commodity")
-public class CommodityResource extends BaseResource implements ServletContextAware {
+public class CommodityResource extends BaseResource {
 
     @Resource
     private CommodityService commodityService;
 
-    private ServletContext servletContext;
-
-    @Override
-    public void setServletContext(ServletContext servletContext) {
-        this.servletContext = servletContext;
-    }
+    @Resource
+    private ProfileService profileService;
 
     /**
      * @title: 通过货品ID查询商品详情
@@ -125,6 +125,33 @@ public class CommodityResource extends BaseResource implements ServletContextAwa
     @IgnoreAuthentication
     public ResponseResult<List<SellerVo>> getAllSellerAddress() {
         return new ResponseResult(commodityService.getAllSellerAddress());
+    }
+
+    @ApiOperation(value = "热门城市")
+    @GetMapping(value = "hotCity")
+    @ApiVersion(1)
+    @IgnoreAuthentication
+    public ResponseResult<String> hotCity() {
+        ResponseResult result=new ResponseResult(Result.FAILURE);
+        try {
+            StringBuilder sb = new StringBuilder();
+            Profile profile = profileService.getProfileByName(ProfileState.HOT_CITY.name());
+            if (profile != null && StringUtils.isNotBlank(profile.getFileValue())) {
+                sb.append("{");
+                String [] hotSearchArr = profile.getFileValue().split(",");
+                for (String city:hotSearchArr){
+                    String [] cityArr = city.split("&");
+                    sb.append("\"city\":").append(cityArr[0]);
+                    sb.append(",\"code\":").append(cityArr[1]);
+                }
+                sb.append("}");
+            }
+            result.setResult(Result.SUCCESS);
+            result.setMessage(sb.toString());
+        } catch (Exception e) {
+            logger.info("hotCity failed", e);
+        }
+        return result;
     }
 
 }
