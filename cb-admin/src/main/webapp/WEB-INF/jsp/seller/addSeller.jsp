@@ -184,7 +184,7 @@
                 <label><span class="asterisk">*</span> 商家编码：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="form-control validate[required,minSize[2]]" path="sellerCode" maxlength="32"/>
+                <form:input cssClass="form-control validate[required,minSize[2]]" readonly="true" path="sellerCode" maxlength="32"/>
               </div>
 
             </div>

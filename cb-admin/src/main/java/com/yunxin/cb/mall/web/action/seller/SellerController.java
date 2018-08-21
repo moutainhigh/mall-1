@@ -51,7 +51,7 @@ public class SellerController {
 
     @RequestMapping(value = "toAddSeller",method = RequestMethod.GET)
     public String toAddSeller(@ModelAttribute("seller") Seller seller, ModelMap modelMap) {
-        seller.setBuslicenseNo(IdGenerate.genSellerID());
+        seller.setSellerCode(IdGenerate.genSellerID());
         modelMap.addAttribute("seller", seller);
         return "seller/addSeller";
     }
