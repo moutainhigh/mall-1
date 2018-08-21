@@ -88,6 +88,7 @@ public class MessageCenterController {
             }else{
                 logger.error("消息修改失败",e);
             }
+            return "redirect:../common/failure.do?reurl=message/editMessage.do";
         }
         return "redirect:../common/success.do?reurl=message/message.do";
     }
