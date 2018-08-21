@@ -16,6 +16,7 @@ import com.yunxin.cb.mall.vo.SellerVo;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
+import com.yunxin.cb.util.LogicUtils;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -86,28 +87,38 @@ public class CommodityResource extends BaseResource {
     @ApiVersion(1)
     @IgnoreAuthentication
     public ResponseResult<List<AttributeGroupVO>> getProductsByCommodityId(@PathVariable int commodityId) {
-        //查询商品下面所有货品
-        List<Product> products = commodityService.getProductsByCommodityId(commodityId,ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());//审核通过并上架状态
-        //商品属性集合
-        Set<Attribute> attributes = new HashSet<>();
-        products.stream().forEach(p -> {
-            //遍历所有货品，取出所有货品属性
-            p.getProductAttributes().stream().forEach(pa -> attributes.add(pa.getAttribute()));
-        });
-        //根据属性里面的属性组对象进行对象分组
-        Map<AttributeGroup, List<Attribute>> attributeGroups = attributes.stream().collect(
-                Collectors.groupingBy(Attribute::getAttributeGroup));
-        //属性组集合
-        List<AttributeGroup> groups=new ArrayList<>();
-        //迭代对象分组，将属性与属性组关联
-        for (AttributeGroup attributeGroup : attributeGroups.keySet()) {
-            attributeGroup.setAttributes(new TreeSet<>());
-            //此处需实现属性实体中Comparable的compareTo排序方法
-            attributeGroup.getAttributes().addAll(attributeGroups.get(attributeGroup));
-            groups.add(attributeGroup);
+        ResponseResult result=new ResponseResult(Result.FAILURE);
+        try {
+            //查询商品下面所有货品
+            List<Product> products = commodityService.getProductsByCommodityId(commodityId,ProductState.AUDITED.ordinal(),PublishState.UP_SHELVES.ordinal());//审核通过并上架状态
+            if(LogicUtils.isNullOrEmpty(products)){
+                result.setMessage("该商品没有货品");
+                return result;
+            }
+            //商品属性集合
+            Set<Attribute> attributes = new HashSet<>();
+            products.stream().forEach(p -> {
+                //遍历所有货品，取出所有货品属性
+                p.getProductAttributes().stream().forEach(pa -> attributes.add(pa.getAttribute()));
+            });
+            //根据属性里面的属性组对象进行对象分组
+            Map<AttributeGroup, List<Attribute>> attributeGroups = attributes.stream().collect(
+                    Collectors.groupingBy(Attribute::getAttributeGroup));
+            //属性组集合
+            List<AttributeGroup> groups=new ArrayList<>();
+            //迭代对象分组，将属性与属性组关联
+            for (AttributeGroup attributeGroup : attributeGroups.keySet()) {
+                attributeGroup.setAttributes(new TreeSet<>());
+                //此处需实现属性实体中Comparable的compareTo排序方法
+                attributeGroup.getAttributes().addAll(attributeGroups.get(attributeGroup));
+                groups.add(attributeGroup);
+            }
+            //转换成VO返回(需实现VO中Comparable的compareTo排序方法)
+            result.setData(AttributeGroupVO.convertVO(groups));
+        } catch (Exception e) {
+            logger.error("Exception is "+e);
         }
-        //转换成VO返回(需实现VO中Comparable的compareTo排序方法)
-        return new ResponseResult(AttributeGroupVO.convertVO(groups));
+        return result;
     }
 
     /**
@@ -118,8 +129,6 @@ public class CommodityResource extends BaseResource {
      * @date: 2018/8/16 16:30
      */
     @ApiOperation(value = "获取所有商家的地区编码及名称")
-    @ApiImplicitParams({
-    })
     @GetMapping(value = "getAllSellerAddress")
     @ApiVersion(1)
     @IgnoreAuthentication
