@@ -38,7 +38,7 @@ public class CommodityVO implements java.io.Serializable {
             if(commodity.getDefaultProduct()!=null){
                 this.defaultProduct = commodity.getDefaultProduct().getProductId();
                 // 修改为显示商品的价格
-//                this.sellPrice = commodity.getDefaultProduct().getSalePrice();//EL里面商品销售价为默认货品价
+                this.sellPrice = commodity.getDefaultProduct().getSalePrice();
             }
             this.special = commodity.isSpecial();
             //商品分类
