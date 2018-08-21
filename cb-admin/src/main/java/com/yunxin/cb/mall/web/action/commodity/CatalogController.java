@@ -27,6 +27,7 @@ import java.util.Locale;
 /**
  * @author gonglei
  */
+
 @Controller
 @RequestMapping(value = "/commodity")
 public class CatalogController {
