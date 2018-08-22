@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,7 +84,9 @@ public class CategoryResource extends BaseResource {
     @GetMapping(value = "getCategoryById/{categoryId}")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<CategoryVO>> getCategoryById(@PathVariable("categoryId") int categoryId) {
+    public ResponseResult<List<CategoryVO>> getCategoryById(
+            @NotBlank(message = "分类ID不能为空")
+            @PathVariable("categoryId") int categoryId) {
         try {
             List<CategoryVO> catagoryVOs = new ArrayList<>();
             List<Category> catagorys=categoryService.selectByParentCategoryId(categoryId);
@@ -108,7 +111,9 @@ public class CategoryResource extends BaseResource {
     @GetMapping(value = "getCategoryByBrandId/{brandId}")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<CategoryVO>> getCategoryByBrandId(@PathVariable("brandId") int brandId) {
+    public ResponseResult<List<CategoryVO>> getCategoryByBrandId(
+            @NotBlank(message = "品牌ID不能为空")
+            @PathVariable("brandId") int brandId) {
         try {
             Brand brand=brandService.selectByPrimaryKey(brandId);//获取品牌数据
             if(LogicUtils.isNull(brand)){
