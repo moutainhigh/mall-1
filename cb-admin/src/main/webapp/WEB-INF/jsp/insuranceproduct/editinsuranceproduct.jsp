@@ -503,14 +503,14 @@
                         <form:hidden path="prodId"/>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>产品名称：</label>
+                                <label>产品名称：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input path="prodName" value="" cssClass="form-control validate[required,minSize[2]]"
                                             maxlength="50"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>保障年限：</label>
+                                <label>保障年限：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <select class="form-control  grid-filter" path="protectionYear" name="protectionYear">
@@ -523,7 +523,7 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>保险期间：</label>
+                                <label>保险期间：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <select class="form-control grid-filter" path="insurePeriod" name="insurePeriod">
@@ -549,7 +549,7 @@
                             </div>
 
                             <div class="col-sm-2" style="display: none">
-                                <label><span class="asterisk">*</span>投保须知：</label>
+                                <label>投保须知：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3" style="display: none">
                                 <form:input path="instruction" value="10" cssClass="form-control" maxlength="50"/>
@@ -844,7 +844,7 @@
                         <legend>产品价格</legend>
                         <div class="row" style="margin-left: 15px;">
                             <div class="col-sm-1">
-                                <label><span class="asterisk">*</span> 价格列表：</label>
+                                <label> 价格列表：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <button type="button" onclick="addAttribute();" title="添加" class="btn btn-default">

@@ -14,9 +14,11 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,13 +77,13 @@ public class DeliveryAddressResource extends BaseResource {
     })
     @PostMapping(value = "deliveryAddress")
     @ApiVersion(1)
-    public ResponseResult addDeliveryAddress(@RequestBody DeliveryAddressVO deliveryAddressVO) {
+    public ResponseResult addDeliveryAddress(@Valid @RequestBody DeliveryAddressVO deliveryAddressVO) {
         try {
             logger.info("deliveryAddressVO:" + deliveryAddressVO.toString());
             deliveryAddressService.insert(deliveryAddressVO);
         } catch (Exception e) {
             logger.info("addDeliveryAddress failed", e);
-            return new ResponseResult(Result.FAILURE);
+            return new ResponseResult(Result.FAILURE,e.getMessage());
         }
         return new ResponseResult(Result.SUCCESS);
     }
@@ -108,7 +110,7 @@ public class DeliveryAddressResource extends BaseResource {
     })
     @PutMapping(value = "deliveryAddress/{addressId}")
     @ApiVersion(1)
-    public ResponseResult updateDeliveryAddress(@PathVariable(value = "addressId") int addressId, @RequestBody DeliveryAddressVO deliveryAddressVO) {
+    public ResponseResult updateDeliveryAddress(@PathVariable(value = "addressId") int addressId, @Valid @RequestBody DeliveryAddressVO deliveryAddressVO) {
         try {
             logger.info("input Parameter deliveryAddressVO:" + deliveryAddressVO.toString());
             deliveryAddressService.updateByPrimaryKey(addressId,deliveryAddressVO);
