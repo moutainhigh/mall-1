@@ -70,7 +70,7 @@
                             <div class="col-sm-2">
                                 <label>过滤器名称：</label>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-3" style="line-height: 30px;">
                                 ${filter.filterName}
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             <div class="col-sm-2">
                                 <label>排序：</label>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-3" style="line-height: 30px;">
                                 ${filter.sortOrder}
                             </div>
                         </div>
