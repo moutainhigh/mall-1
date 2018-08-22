@@ -38,7 +38,17 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                script {
+                    timeout(5) {
+                        input "Should we deploy this image?"
+                    }
+                }
+
+                withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh-private-key', keyFileVariable: 'SSH_KEY_FOR_JENKINS', passphraseVariable: '', usernameVariable: 'USERNAME')]) {
+                    sh 'scp -i ${SSH_KEY_FOR_JENKINS} -o StrictHostKeyChecking=no -P ${DOCKER_LEADER_PORT} ./${DOCKER_MODULE_NAME}/dockerfile/${DOCKER_COMPOSE_FILE} ${USERNAME}@${DOCKER_LEADER_IP}:${DOCKER_WORKSPACE}'
+                    sh 'ssh -i ${SSH_KEY_FOR_JENKINS} -o StrictHostKeyChecking=no -p ${DOCKER_LEADER_PORT} ${USERNAME}@${DOCKER_LEADER_IP} "docker login -udengcg -pDengcg0727 192.168.0.22 && docker-compose up -f ${DOCKER_WORKSPACE}/${DOCKER_COMPOSE_FILE}"'
+                }
+
             }
         }
     }
