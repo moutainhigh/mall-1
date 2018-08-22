@@ -57,28 +57,6 @@ public class FavoriteResource extends BaseResource {
         return new ResponseResult(page);
     }
 
-    @ApiOperation(value = "商品是否存在收藏夹")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "post", dataType = "int")})
-    @GetMapping(value = "findByCustomerAndCommodity/{commodityId}")
-    @ApiVersion(1)
-    public ResponseResult findByCustomerAndCommodity(@PathVariable(value = "productId") int productId) {
-        try {
-            Favorite favorite=new Favorite();
-            favorite.setProductId(productId);
-            favorite.setCustomerId(getCustomerId());
-            favorite=favoriteService.findByCustomerAndCommodity(favorite);
-            if(favorite==null){
-                return new ResponseResult(Result.FAILURE);//收藏夹不存在
-            }else{
-                return new ResponseResult(Result.SUCCESS);//收藏夹已存在
-            }
-        }catch (Exception e){
-            logger.error("Exception is "+e);
-        }
-        return new ResponseResult(Result.FAILURE);//失败
-    }
-
     /**
      * @title: 商品添加收藏夹
      * @param: [commodityId]

@@ -56,8 +56,7 @@ public class HistoryRecordTest {
     public void delHistoryRecords() throws Exception {
         log.info("商品移出我的浏览(批量) V1 start");
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/history/delHistoryRecords")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content("[\"1\",\"2\",\"3\"]")
-                .param("pageSize","10"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content("[\"1\",\"2\",\"3\"]"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
