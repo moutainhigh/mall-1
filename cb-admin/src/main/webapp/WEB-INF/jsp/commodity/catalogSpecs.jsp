@@ -218,7 +218,7 @@
                                     <label><span class="asterisk">*</span>商品规格名称：</label>
                                 </div>
                                 <div class="col-sm-7">
-                                    <form:input cssClass="form-control validate[required,minSize[1],maxSize[30]]" path="specName" maxlength="30"/>
+                                    <form:input cssClass="form-control validate[required,minSize[1],maxSize[20]]" path="specName" maxlength="20"/>
                                 </div>
                             </div>
                             <div class="spacer-10"></div>
