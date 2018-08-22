@@ -30,7 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 @AutoConfigureMockMvc
 public class CustomerResourceTest {
-    private static final Logger log = LoggerFactory.getLogger(MainResourceTest.class);
+    private static final Logger log = LoggerFactory.getLogger(CustomerResourceTest.class);
     private MockMvc mvc;
     @Autowired
     private WebApplicationContext context;
