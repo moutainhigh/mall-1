@@ -716,8 +716,9 @@
         }
 
         function removeBrand(indx) {
+            debugger;
             $("#brand" + indx).remove();
-            idcIndex--;
+            /*idcIndex--;*/
         }
     </script>
 </div>

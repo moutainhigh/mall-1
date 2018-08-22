@@ -58,7 +58,7 @@ public class CommodityResource extends BaseResource {
      */
     @ApiOperation(value = "通过货品ID查询商品详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "path", dataType = "Integer")})
     @GetMapping(value = "getCommdityDetail/{productId}")
     @ApiVersion(1)
     @IgnoreAuthentication
@@ -82,7 +82,7 @@ public class CommodityResource extends BaseResource {
      */
     @ApiOperation(value = "通过商品ID查询所有货品属性")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "Integer")})
     @GetMapping(value = "getProductsByCommodityId/{commodityId}")
     @ApiVersion(1)
     @IgnoreAuthentication
