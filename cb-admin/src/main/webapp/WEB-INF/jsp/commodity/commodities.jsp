@@ -117,7 +117,12 @@
                 reloadGridFilters('grid');
             });
         });
-
+        function checkPrice() {
+            if(''!=$('#endPrice').val()&&'0'!=$('#endPrice').val()&&parseInt($('#startPrice').val())>parseInt($('#endPrice').val())){
+                bootbox.alert("最大价格不能小于最小价格!");
+                $('#endPrice').val('')
+            }
+        }
     </script>
 </head>
 <body>
@@ -217,9 +222,9 @@
                             <div class="toolbar-field">
                                 <table>
                                     <tr>
-                                        <td><input type="number" min="0" step="0.0001" data-filter="sellPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px"/></td>
+                                        <td><input type="number" id="startPrice" onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()"  min="0" step="0.0001" data-filter="sellPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px"/></td>
                                         <td>-</td>
-                                        <td><input type="number" min="0" step="0.0001" data-filter="sellPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px"/></td>
+                                        <td><input type="number" id="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()"  min="0" step="0.0001" data-filter="sellPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px"/></td>
                                     </tr>
                                 </table>
                             </div>

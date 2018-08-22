@@ -76,6 +76,21 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
+                        var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
+                        var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
+
+                        if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#costPrice").val())){
+                            bootbox.alert("成本价格须介于商品价格段范围内!");
+                            return false;
+                        }
+                        if(Number($("#sellPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#sellPrice").val())){
+                            bootbox.alert("销售价格须介于商品价格段范围内!");
+                            return false;
+                        }
+                        if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
+                            bootbox.alert("市场价格须介于商品价格段范围内!");
+                            return false;
+                        }
                         var defaultPicPath = $('input[name="imgurl"]');
                         if (defaultPicPath.size()==0) {
                             bootbox.alert("请至少选择一张图片!");
@@ -109,28 +124,7 @@
                     }
                 }
             });
-
-            $("#costPrice,#sellPrice,#marketPrice").blur(function(){
-                var inputValue = $(this).val();
-                var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
-                var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
-                var documentId = $(this).attr("id");
-                if (documentId == "costPrice") {
-                    var salePrive = $("#sellPrice").val();
-                    if(Number(salePrive) < Number(startPrice) || Number(endPrice) < Number(salePrive)){
-                        bootbox.alert("价格须介于商品价格段范围内!");
-                        $(this).val('');
-                        $("#sellPrice").val('');
-                    }
-                } else {
-                    if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
-                        bootbox.alert("价格须介于商品价格段范围内!");
-                        $(this).val('')
-                    }
-                }
-            });
         });
-
         function loadAttributeGroups(catalogId) {
             $.getJSON("getAttributeGroupsByCatalogId.do", {
                 catalogId: catalogId

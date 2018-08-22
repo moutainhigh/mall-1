@@ -601,7 +601,7 @@
                 alert("请选择商品");
                 return ;
             }
-            clearCheck();
+            clearCheck1();
             $('#commodityDialog').modal("hide");
         }
         function removeCommodity(indx) {
@@ -609,7 +609,7 @@
             idcIndex--;
         }
 
-        function clearCheck(){
+        function clearCheck1(){
             $("#commodityFormId :checkbox").removeAttr("checked");
             clearFilters('commodityGrid')
         }
@@ -647,7 +647,6 @@
                     var selectedBrandId=$(selectedBox).attr('value');
                     $.each(gridData.data(),function(i,dataItem){
                         if(dataItem.brandId==selectedBrandId){
-                            // debugger;
                             var idIn= $("#inp"+selectedBrandId).val();
                             if(idIn==undefined||idIn==''){
                                 var newRow = "<tr id='brand" + idcIndex + "'><td><input type='hidden' id='inp"+selectedBrandId+"' name='brandId' value='"+selectedBrandId+"'/>"+dataItem.brandName+"</td><td><input type='text' name='brandOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
@@ -665,6 +664,12 @@
             clearCheck();
             $('#brandDialog').modal("hide");
         }
+
+        function clearCheck(){
+            $("#brandGrid :checkbox").removeAttr("checked");
+            clearFilters('brandGrid')
+        }
+
         function removeBrand(indx) {
             $("#brand" + indx).remove();
             idcIndex--;

@@ -42,7 +42,8 @@ public class HistoryRecordTest {
     public void getExpectbillTest() throws Exception {
         log.info("获取用户我的浏览 V1 start");
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/history/getCustomerHistoryRecord")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED).param("pageNo","1").param("pageSize","10"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED).param("pageNo","1")
+                .param("pageSize","10"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -50,4 +51,19 @@ public class HistoryRecordTest {
         Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
         log.info("获取用户我的浏览 V1 end result : " + content);
     }
+
+    @Test
+    public void delHistoryRecords() throws Exception {
+        log.info("商品移出我的浏览(批量) V1 start");
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/history/delHistoryRecords")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content("[\"1\",\"2\",\"3\"]")
+                .param("pageSize","10"))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
+        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
+        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
+        log.info("商品移出我的浏览(批量) V1 end result : " + content);
+    }
+
 }

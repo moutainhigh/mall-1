@@ -102,6 +102,7 @@ public class OrderResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "query", dataType = "int")})
+    @ApiVersion(1)
     @PostMapping(value = "order/pageList")
     public ResponseResult<PageFinder<OrderDetailVO>> pageOrder(@RequestParam(value = "pageNo") int pageNo,
             @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "orderState", required = false) OrderState orderState) {
