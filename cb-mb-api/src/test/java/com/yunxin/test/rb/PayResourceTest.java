@@ -47,7 +47,7 @@ public class PayResourceTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .header(JwtUtil.HEADER_STRING,token)
                 .param("orderId","489")
-                .param("channcelType","1"))
+                .param("channcelType","ALIPAY"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
