@@ -418,7 +418,7 @@
                                     <tbody>
                                     <c:forEach var="fc" items="${homeFloor.floorBrands}">
                                         <tr id='brand${homeFloor.floorId}${fc.brand.brandId}'>
-                                            <td><input type='hidden' name='brandId' class='form-control' value='${fc.brand.brandId}'/>${fc.brand.brandName}</td>
+                                            <td><input type='hidden' name='brandId' id="inp${fc.brand.brandId}" class='form-control' value='${fc.brand.brandId}'/>${fc.brand.brandName}</td>
                                             <td><input type='text' name='brandOrder' class='form-control' value='${fc.sortOrder}'/></td>
                                             <td class='text-center'><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(${homeFloor.floorId}${fc.brand.brandId})'><i class='fa fa-minus-circle'></i></a></td>
                                         </tr>
@@ -649,10 +649,13 @@
                 alert("请选择商品");
                 return ;
             }
-            clearCheck();
+            clearCheckCommodityGrid();
             $('#commodityDialog').modal("hide");
         }
-
+        function clearCheckCommodityGrid(){
+            $("#commodityGrid :checkbox").removeAttr("checked");
+            clearFilters('commodityGrid')
+        }
         function removeCommodity(indx) {
             $("#commodity" + indx).remove();
             idcIndex--;
@@ -690,20 +693,28 @@
                     var selectedBrandId=$(selectedBox).attr('value');
                     $.each(gridData.data(),function(i,dataItem){
                         if(dataItem.brandId==selectedBrandId){
-                            var newRow = "<tr id='brand" + idcIndex + "'><td><input type='hidden' name='brandId' value='"+selectedBrandId+"'/>"+dataItem.brandName+"</td><td><input type='text' name='brandOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
-                            $("#brandTable tr:last").after(newRow);
-                            idcIndex++;
+                            var idIn= $("#inp"+selectedBrandId).val();
+                            if(idIn==undefined||idIn==''){
+                                var newRow = "<tr id='brand" + idcIndex + "'><td><input type='hidden' id='inp"+selectedBrandId+"' name='brandId' value='"+selectedBrandId+"'/>"+dataItem.brandName+"</td><td><input type='text' name='brandOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
+                                $("#brandTable tr:last").after(newRow);
+                                idcIndex++;
+                            }
                             return ;
-                        }
+                         }
                     });
                 });
             }else{
                 alert("请选择品牌");
                 return ;
             }
-            clearCheck();
+            clearCheckBrandGrid();
             $('#brandDialog').modal("hide");
         }
+        function clearCheckBrandGrid(){
+            $("#brandGrid :checkbox").removeAttr("checked");
+            clearFilters('brandGrid')
+        }
+
         function removeBrand(indx) {
             $("#brand" + indx).remove();
             idcIndex--;
