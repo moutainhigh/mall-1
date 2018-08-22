@@ -55,7 +55,7 @@ public class DeliveryAddressResource extends BaseResource {
 
     @ApiOperation(value = "收货地址详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "Integer")
     })
     @GetMapping(value = "deliveryAddress/{addressId}")
     @ApiVersion(1)
@@ -90,7 +90,7 @@ public class DeliveryAddressResource extends BaseResource {
 
     @ApiOperation(value = "删除收货地址")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "Integer")
     })
     @DeleteMapping(value = "deliveryAddress/{addressId}")
     @ApiVersion(1)
@@ -106,7 +106,7 @@ public class DeliveryAddressResource extends BaseResource {
 
     @ApiOperation(value = "更新收货地址")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "int")
+            @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "Integer")
     })
     @PutMapping(value = "deliveryAddress/{addressId}")
     @ApiVersion(1)
