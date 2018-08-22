@@ -25,12 +25,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.core.util.JsonUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.ServletContextAware;
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -60,7 +58,7 @@ public class CommodityResource extends BaseResource {
      */
     @ApiOperation(value = "通过货品ID查询商品详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "productId", value = "货品ID", required = true, paramType = "path", dataType = "Integer")})
     @GetMapping(value = "getCommdityDetail/{productId}")
     @ApiVersion(1)
     @IgnoreAuthentication
@@ -84,7 +82,7 @@ public class CommodityResource extends BaseResource {
      */
     @ApiOperation(value = "通过商品ID查询所有货品属性")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "commodityId", value = "商品ID", required = true, paramType = "path", dataType = "Integer")})
     @GetMapping(value = "getProductsByCommodityId/{commodityId}")
     @ApiVersion(1)
     @IgnoreAuthentication

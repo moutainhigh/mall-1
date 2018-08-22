@@ -84,7 +84,7 @@ public class CategoryResource extends BaseResource {
 
     @ApiOperation(value = "根据汽车品牌分类查询车系 V1")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "categoryId", value = "分类ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "categoryId", value = "分类ID", required = true, paramType = "path", dataType = "Integer")})
     @GetMapping(value = "getCategoryById/{categoryId}")
     @ApiVersion(1)
     @IgnoreAuthentication
@@ -111,7 +111,7 @@ public class CategoryResource extends BaseResource {
 
     @ApiOperation(value = "根据汽车品牌ID查询车系 V1")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "brandId", value = "品牌ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "brandId", value = "品牌ID", required = true, paramType = "path", dataType = "Integer")})
     @GetMapping(value = "getCategoryByBrandId/{brandId}")
     @ApiVersion(1)
     @IgnoreAuthentication

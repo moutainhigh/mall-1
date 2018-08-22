@@ -96,16 +96,16 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         String[] values = value.split(" ");
 
         String badStr = "'|and|exec|execute|insert|select|delete|update|count|drop|%|chr|mid|master|truncate|" +
-                "char|declare|sitename|net user|xp_cmdshell|;|or|-|+|,|like'|and|exec|execute|insert|create|drop|" +
+                "char|declare|sitename|net user|xp_cmdshell|like'|and|exec|execute|insert|create|drop|" +
                 "table|from|grant|use|group_concat|column_name|" +
                 "information_schema.columns|table_schema|union|where|select|delete|update|order|by|count|" +
-                "chr|mid|master|truncate|char|declare|or|;|-|--|,|like|//|/|%|#";
+                "chr|mid|master|truncate|char|declare|or|like|//|/|%|#";
 
         String[] badStrs = badStr.split("\\|");
         for (int i = 0;i<badStrs.length;i++){
             for (int j = 0;j<values.length;j++){
                 if (values[j].equalsIgnoreCase(badStrs[i])){
-                    values[j] = "forbid";
+                    values[j] = "";
                 }
             }
         }
