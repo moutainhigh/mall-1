@@ -65,7 +65,7 @@ public class HistoryRecordResource extends BaseResource {
             if(result>0){
                 return new ResponseResult(Result.SUCCESS);//成功
             }else{
-                return new ResponseResult(Result.FAILURE);//失败
+                return new ResponseResult(Result.FAILURE,"没有此浏览记录");//失败
             }
         }catch (Exception e){
             logger.error("Exception is "+e);

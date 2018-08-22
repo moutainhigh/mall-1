@@ -25,47 +25,57 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-public class HistoryRecordTest {
+public class CategoryResourceTest {
+
     private static final Logger log = LoggerFactory.getLogger(HistoryRecordTest.class);
     @Autowired
     private MockMvc mvc;
     @Autowired
     private WebApplicationContext context;
-    @Autowired
-    private HistoryRecordResource historyRecordResource;
     @Before
     public void setUp() throws Exception {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
     @Test
-    public void getCustomerHistoryRecordTest() throws Exception {
-        log.info("获取用户我的浏览 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/history/getCustomerHistoryRecord")
+    public void carBrandTest() throws Exception {
+        log.info("查询汽车品牌 V1 start");
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/category/list/carBrand")
                 .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED).param("pageNo","1")
-                .param("pageSize","10"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
         String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
         Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("获取用户我的浏览 V1 end result : " + content);
+        log.info("查询汽车品牌 V1 end result : " + content);
     }
 
     @Test
-    public void delHistoryRecords() throws Exception {
-        log.info("商品移出我的浏览(批量) V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/history/delHistoryRecords")
+    public void getCategoryByIdTest() throws Exception {
+        log.info("根据汽车品牌分类查询车系 V1 start");
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/category/getCategoryById/1")
                 .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content("[\"2457\",\"2\",\"3\"]")
-                .param("pageSize","10"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
         String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
         Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("商品移出我的浏览(批量) V1 end result : " + content);
+        log.info("根据汽车品牌分类查询车系 V1 end result : " + content);
     }
 
+    @Test
+    public void getCategoryByBrandIdTest() throws Exception {
+        log.info("根据汽车品牌ID查询车系 V1 start");
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/category/getCategoryByBrandId/1")
+                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
+        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
+        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
+        log.info("根据汽车品牌ID查询车系 V1 end result : " + content);
+    }
 }
