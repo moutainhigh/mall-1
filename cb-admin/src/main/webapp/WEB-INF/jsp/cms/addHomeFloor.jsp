@@ -672,7 +672,7 @@
 
         function removeBrand(indx) {
             $("#brand" + indx).remove();
-            idcIndex--;
+            /*idcIndex--;*/
         }
     </script>
 </div>
