@@ -8,7 +8,7 @@ pipeline {
     environment {
         DOCKER_MODULE_NAME = 'cb-admin'
         DOCKER_IMAGE_NAME = '192.168.0.22/crystal-ball/cb-admin:car-mall'
-        DOCKER_LEADER_IP = '192.168.0.22'
+        DOCKER_LEADER_IP = '192.168.0.206'
         DOCKER_LEADER_PORT = '22'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         DOCKER_WORKSPACE = '~/dockerfile/cb-admin'

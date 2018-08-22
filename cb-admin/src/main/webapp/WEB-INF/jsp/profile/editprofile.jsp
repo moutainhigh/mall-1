@@ -88,6 +88,22 @@
                 case "IOS_FORCE_UPGRADE":{
                     return "苹果APP是否强制更新";
                 }
+
+                case "HOT_CITY":{
+                    return "热门城市";
+                }
+                case "HOT_SEARCH":{
+                    return "热门搜索";
+                }
+                case "INSURANCE_CODE_RECEIVE_EMAIL":{
+                    return "保单合同编号接收邮箱";
+                }
+                case "INSURANCE_CODE_RECEIVE_CONTEXT":{
+                    return "保单合同编号发送内容";
+                }
+                case "CAR_CLASS_CONFIG":{
+                    return "汽车根分类配置";
+                }
             }
             return state;
         }
@@ -140,7 +156,7 @@
             <div class="pull-left">
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
-                    <li><a href="#">系统管理</a></li>
+                    <li><a href="#">系统配置</a></li>
                     <li><a href="#">参数配置</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
