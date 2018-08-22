@@ -329,7 +329,7 @@
                 <label><span class="asterisk">*</span> 营业执照注册号：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="form-control validate[required]" path="buslicenseNo" maxlength="128"/>
+                <form:input cssClass="form-control validate[required]" path="buslicenseNo" maxlength="30"/>
               </div>
             </div>
 
