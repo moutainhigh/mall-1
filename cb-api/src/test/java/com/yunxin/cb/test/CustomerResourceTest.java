@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -43,8 +42,6 @@ public class CustomerResourceTest {
     @Test
     public void getCustomerInfoTest() throws Exception{
         log.info("查询客户基本信息 start");
-        HttpHeaders httpHeaders=new HttpHeaders();
-        httpHeaders.add("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/customer/getCustomerInfo")
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
