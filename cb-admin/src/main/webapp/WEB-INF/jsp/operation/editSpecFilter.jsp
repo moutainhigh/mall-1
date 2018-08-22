@@ -142,7 +142,7 @@
                                 <table id="filterTable" class="table table-bordered table-striped">
                                     <thead id="attribute-table-th">
                                     <tr>
-                                        <td scope="col">规格值</td>
+                                        <td scope="col">规格值名称</td>
                                         <td scope="col" width="110">排序</td>
                                         <td scope="col" width="70" class="text-center">操作</td>
                                     </tr>

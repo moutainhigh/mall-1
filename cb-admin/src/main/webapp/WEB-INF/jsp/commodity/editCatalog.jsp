@@ -110,7 +110,7 @@
                                 <label><span class="asterisk">*</span>商品分类名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="catalogName" maxlength="64"/>
+                                <form:input cssClass="form-control validate[required,minSize[2],maxSize[20]]" path="catalogName" maxlength="20"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>上级分类：</label>

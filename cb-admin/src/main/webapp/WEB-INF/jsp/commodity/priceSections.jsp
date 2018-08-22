@@ -161,15 +161,15 @@
                             <kendo:grid-filterable-messages filter="查询" clear="清除" info="请输入查询条件:"/>
                             <kendo:grid-filterable-operators>
                                 <kendo:grid-filterable-operators-string contains="包含" eq="等于"/>
-                                <kendo:grid-filterable-operators-date gte="大于" eq="等于" lte="小于"/>
-                                <kendo:grid-filterable-operators-number gte="大于" eq="等于" lte="小于"/>
+                                <kendo:grid-filterable-operators-date gt="大于" eq="等于" lt="小于"/>
+                                <kendo:grid-filterable-operators-number gt="大于" eq="等于" lt="小于"/>
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
                             <kendo:grid-column title="价格段编码" field="sectionNo" width="100px"/>
                             <kendo:grid-column title="起始价格" field="startPrice" width="100px"/>
                             <kendo:grid-column title="结束价格" field="endPrice"  width="100px"/>
-                            <kendo:grid-column title="启用" field="enabled" width="100px" template="#= enabled ? '是' : '否' #"/>
+                            <kendo:grid-column title="启用" field="enabled" filterable="false" width="100px" template="#= enabled ? '是' : '否' #"/>
                             <kendo:grid-column title="备注" field="remark" filterable="false" width="200px"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">

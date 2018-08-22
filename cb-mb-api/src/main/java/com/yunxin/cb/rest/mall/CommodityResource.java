@@ -117,25 +117,11 @@ public class CommodityResource extends BaseResource {
             }
             //转换成VO返回(需实现VO中Comparable的compareTo排序方法)
             result.setData(AttributeGroupVO.convertVO(groups));
+            result.setResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.error("Exception is "+e);
         }
         return result;
-    }
-
-    /**
-     * @title: 获取所有商家的地区编码及名称
-     * @param: []
-     * @return: com.yunxin.cb.vo.ResponseResult<java.util.List<com.yunxin.cb.mall.vo.SellerVo>>
-     * @auther: eleven
-     * @date: 2018/8/16 16:30
-     */
-    @ApiOperation(value = "获取所有商家的地区编码及名称")
-    @GetMapping(value = "getAllSellerAddress")
-    @ApiVersion(1)
-    @IgnoreAuthentication
-    public ResponseResult<List<SellerVo>> getAllSellerAddress() {
-        return new ResponseResult(commodityService.getAllSellerAddress());
     }
 
     @ApiOperation(value = "热门城市")
