@@ -136,28 +136,20 @@
 
 
         <header id="header-sec">
-            <div class="inner-padding">
+            <!-- End .inner-padding -->
+            <div class="header-main-bottom">
                 <div class="pull-left">
-                    <h2>保单</h2>
+                    <ul class="breadcrumb">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">保单管理</a></li>
+                        <li class="active"><a href="#">保单列表</a></li>
+                    </ul>
+                    <!-- End .breadcrumb -->
                 </div>
                 <div class="pull-right">
-
-                    <%--<div class="btn-group">
-                        <a class="btn btn-default" href="#">
-                            <i class="fa fa-star"></i>
-                        </a>
-                        <a class="btn btn-default" href="#" id="modal-update-trigger">
-                            Modal
-                        </a>
-                        <a class="btn btn-default" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                    </div>--%>
-                    <!-- End .btn-group -->
-
+                    <p>Version 1.0.0</p>
                 </div>
             </div>
-            <!-- End .inner-padding -->
         </header>
         <!-- End #header-sec -->
 
