@@ -95,7 +95,12 @@
                   color: '#ff0000',
              }
           }
-        ]
+        ],
+          navigation: {
+              buttonOptions: {
+                  enabled: false
+              }
+          }
 
       };
 
