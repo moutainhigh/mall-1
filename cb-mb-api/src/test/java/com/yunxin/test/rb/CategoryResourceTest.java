@@ -21,6 +21,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+/**
+* @Description:    CategoryResourceTest
+* @Author:         likang
+* @CreateDate:     2018/8/22 10:40
+*/
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
@@ -68,7 +73,7 @@ public class CategoryResourceTest {
     @Test
     public void getCategoryByBrandIdTest() throws Exception {
         log.info("根据汽车品牌ID查询车系 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/category/getCategoryByBrandId/1")
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/category/getCategoryByBrandId/279")
                 .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(MockMvcResultHandlers.print())

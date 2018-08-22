@@ -3,8 +3,11 @@ package com.yunxin.cb.rest.mall;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.entity.Category;
+import com.yunxin.cb.mall.entity.Profile;
+import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.service.BrandService;
 import com.yunxin.cb.mall.service.CategoryService;
+import com.yunxin.cb.mall.service.ProfileService;
 import com.yunxin.cb.mall.vo.CategoryVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
@@ -39,10 +42,10 @@ public class CategoryResource extends BaseResource {
 
     @Resource
     private BrandService brandService;
-    /**
-     * 汽车运营分类编码
-     */
-    private static final String CAR_CATEGORY_CODE = "NO01";
+
+    @Resource
+    private ProfileService profileService;
+
 
     @ApiOperation(value = "查询汽车品牌 V1")
     @ApiImplicitParams({
@@ -52,7 +55,8 @@ public class CategoryResource extends BaseResource {
     @IgnoreAuthentication
     public ResponseResult<Map<String, List<CategoryVO>>> carBrand() {
         try {
-            Category cate=categoryService.selectByParentCategoryNo(CAR_CATEGORY_CODE);
+            Profile profile = profileService.getProfileByName(ProfileState.CAR_CLASS_CONFIG.name());
+            Category cate=categoryService.selectByParentCategoryNo(profile.getFileValue());
             if(LogicUtils.isNull(cate)){
                 return new ResponseResult(Result.FAILURE);
             }
