@@ -83,6 +83,8 @@
                   enabled: true,
                   allowOverlap: true,
                   color: '#029402',
+                crop:false,
+                overflow: 'none'
             }
           },
           {
@@ -93,6 +95,8 @@
                   enabled: true,
                   allowOverlap: true,
                   color: '#ff0000',
+                crop:false,
+                overflow: 'none'
              }
           }
         ],
