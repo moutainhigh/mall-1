@@ -96,6 +96,22 @@
                 case "HOT_SEARCH":{
                     return "热门搜索";
                 }
+
+                case "HOT_CITY":{
+                    return "热门城市";
+                }
+                case "HOT_SEARCH":{
+                    return "热门搜索";
+                }
+                case "INSURANCE_CODE_RECEIVE_EMAIL":{
+                    return "保单合同编号接收邮箱";
+                }
+                case "INSURANCE_CODE_RECEIVE_CONTEXT":{
+                    return "保单合同编号发送内容";
+                }
+                case "CAR_CLASS_CONFIG":{
+                    return "汽车根分类配置";
+                }
             }
             return state;
         }
