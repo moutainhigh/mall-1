@@ -12,14 +12,13 @@ pipeline {
         DOCKER_LEADER_PORT = '22'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         DOCKER_WORKSPACE = '~/dockerfile/cb-admin'
-        DOCKER_STACK_NAME = 'crystal-ball-cb-admin'
     }
 
     stages {
         stage('Build') {
           steps {
             sh 'chmod +x ./gradlew'
-            sh './gradlew clean build'
+            sh './gradlew cb-admin:clean build'
             archiveArtifacts artifacts:'cb-admin/build/libs/*.war', fingerprint: true
           }
         }
