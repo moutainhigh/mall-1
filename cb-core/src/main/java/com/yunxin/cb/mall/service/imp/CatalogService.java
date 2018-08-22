@@ -197,7 +197,7 @@ public class CatalogService implements ICatalogService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Catalog> getAllCatalogs() {
-        return catalogDao.findAll(new Sort(Direction.ASC, "sortOrder"));
+        return catalogDao.findAll(new Sort(Direction.ASC, "CatalogId"));
     }
 
     @Override
@@ -345,7 +345,7 @@ public class CatalogService implements ICatalogService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public TreeViewItem getCatalogTree() {
-        List<Catalog> catalogs = catalogDao.findByEnabledOrderBySortOrderAsc(true);
+        List<Catalog> catalogs = catalogDao.findByEnabledOrderByCatalogIdAsc(true);
         Catalog catalog = catalogs.get(0);
         catalogs.remove(catalog);
         TreeViewItem root = catalog.cloneTreeItem();
