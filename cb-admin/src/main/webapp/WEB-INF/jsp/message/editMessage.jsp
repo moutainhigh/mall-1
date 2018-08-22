@@ -48,14 +48,14 @@
                 onValidationComplete: function (form, valid) {
                     if (valid) {
                         var defaultPicPath = $('input[name="digestPic"]');
-                        if(defaultPicPath.size() > 1){
-                            bootbox.alert("只能选择一张摘要图片!");
+                        if(defaultPicPath.size() != 1){
+                            bootbox.alert("请选择一张摘要图片!");
                             return false;
                         }
-                        /*if ($("#editorContent2").val().length > 4000) {
-                            bootbox.alert("消息内容过长，请输入小于4000个字符!");
+                        if ($("#editorContent2").val().length == 0) {
+                            bootbox.alert("请输入消息内容!");
                             return false;
-                        }*/
+                        }
                         return true;
                     }
                 }
@@ -182,6 +182,17 @@
                         <div class="spacer-10"></div>
                         <div  class="row">
                             <div class="col-sm-2">
+                                <label>作者：<span class="asterisk">*</span></label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input id="messageDespatcher" path="messageDespatcher" cssClass="form-control validate[required,minSize[2]]" maxlength="10"/>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="spacer-10"></div>
+                        <div class="spacer-10"></div>
+                        <div  class="row">
+                            <div class="col-sm-2">
                                 <label>消息摘要：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
@@ -195,7 +206,7 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>摘要图片：</label>
+                                <label>摘要图片：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
                             <%--图片上传控件--%>
@@ -303,7 +314,7 @@
                         <div class="spacer-10"></div>
                         <div  class="row">
                             <div class="col-sm-2">
-                                <label>消息内容：</label>
+                                <label>消息内容：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-9">
                                 <form:textarea id="editorContent2" path="messageContent" cssStyle="height:500px;" cssClass="form-control validate[required]" maxlength="40"/>
