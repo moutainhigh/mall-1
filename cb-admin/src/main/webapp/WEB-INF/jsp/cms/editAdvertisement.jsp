@@ -41,13 +41,13 @@
         if(advertisementType == "VIDEO"){
             var videoPath = $("#videoPath").val();
             if("" == videoPath || videoPath == null){
-                bootbox.alert("视频路径不能为空");
+                bootbox.alert("当广告类型为视频时视频路径不能为空");
                 return false;
             }
         }else if(advertisementType == "PTHOTO_AND_TEXT"){
             var advertURL = $("#advertURL").val();
             if("" == advertURL || advertURL == null){
-                bootbox.alert("广告URL不能为空");
+                bootbox.alert("当广告类型为图文时广告URL不能为空");
                 return false;
             }
 

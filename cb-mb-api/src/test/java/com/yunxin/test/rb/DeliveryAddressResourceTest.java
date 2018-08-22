@@ -201,4 +201,54 @@ public class DeliveryAddressResourceTest {
         log.info("修改收货地址 V1 end result : " + content);
     }
 
+    @Test
+    public void putDeliveryAddress_mobile()throws Exception{
+        log.info("修改收货地址 V1 start");
+        DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
+        deliveryAddressVO.setAddressType(AddressType.COMPANY);
+        deliveryAddressVO.setCity("110100");
+        deliveryAddressVO.setConsigneeAddress("中关村4号中天大厦A座555");
+        deliveryAddressVO.setConsigneeMobile("1867930666");
+        deliveryAddressVO.setConsigneeTelephone("111111");
+        deliveryAddressVO.setConsigneeName("666");
+        deliveryAddressVO.setDistrict("110109");
+        deliveryAddressVO.setProvince("110000");
+        deliveryAddressVO.setPostCode("335500");
+        String deadVO = JSONObject.toJSONString(deliveryAddressVO);
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/v1/mall/deliveryAddress/80")
+                .contentType(MediaType.APPLICATION_JSON).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ")
+                .content(deadVO))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
+        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
+        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
+        log.info("修改收货地址 V1 end result : " + content);
+    }
+
+    @Test
+    public void putDeliveryAddress_postCode()throws Exception{
+        log.info("修改收货地址 V1 start");
+        DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
+        deliveryAddressVO.setAddressType(AddressType.COMPANY);
+        deliveryAddressVO.setCity("110100");
+        deliveryAddressVO.setConsigneeAddress("中关村4号中天大厦A座555");
+        deliveryAddressVO.setConsigneeMobile("18679306666");
+        deliveryAddressVO.setConsigneeTelephone("111111");
+        deliveryAddressVO.setConsigneeName("666");
+        deliveryAddressVO.setDistrict("110109");
+        deliveryAddressVO.setProvince("110000");
+        deliveryAddressVO.setPostCode("");
+        String deadVO = JSONObject.toJSONString(deliveryAddressVO);
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/v1/mall/deliveryAddress/80")
+                .contentType(MediaType.APPLICATION_JSON).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ")
+                .content(deadVO))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
+        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
+        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
+        log.info("修改收货地址 V1 end result : " + content);
+    }
+
 }
