@@ -217,6 +217,7 @@
                         <kendo:grid-column title="摘要图片" field="digestPic" width="140px" template="<img src='#=digestPic#'  width='120px' height='60px'/>" sortable="false" filterable="false"/>
                         <kendo:grid-column title="推送状态" filterable="false" sortable="false" field="pushSatus" template="#=getPushStatus(pushStatus)#" width="100px"/>
                         <kendo:grid-column title="推送时间" field="pushTime" format="{0:yyyy-MM-dd HH:mm}" width="150px" filterable="false" sortable="false"/>
+                        <kendo:grid-column title="作者" field="messageDespatcher" width="150px"/>
                         <kendo:grid-column title="创建时间" field="createTime" format="{0:yyyy-MM-dd HH:mm}"  width="150px" filterable="false" sortable="false"/>
                     </kendo:grid-columns>
                     <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">

@@ -908,3 +908,7 @@ CREATE TABLE `spec_filter_item` (
 #add by yangzhen 2018-8-21
 ALTER TABLE `crystal_ball`.`message`
 MODIFY COLUMN `message_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '消息内容' AFTER `digest_pic`;
+
+#add by yangzhen 2018-8-22
+ALTER TABLE `crystal_ball`.`message`
+ADD COLUMN `message_despatcher` varchar(15) COMMENT '消息作者' AFTER `push_status`;
