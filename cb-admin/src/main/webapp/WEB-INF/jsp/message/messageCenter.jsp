@@ -12,9 +12,21 @@
     <script type="text/javascript">
 
         /**
-         * 点击-修改
+         * 消息详情
          */
         function detailItem(){
+            var itemData = getKendoSelectedRowData();
+            if (itemData) {
+                window.location.href = "messageDetail.do?messageId=" + itemData.messageId;
+            }else{
+                commonNotify("请从表格中选择要操作的数据", "error");
+            }
+        }
+
+        /**
+         * 点击-修改
+         */
+        function editItem(){
             var data = getKendoSelectedRowData();
             if (data) {
                 if(!data.pushTime){
@@ -185,10 +197,13 @@
                     </div>
                     <div class="pull-right">
                         <div class="btn-group">
+                            <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;详情</a>
+                        </div>
+                        <div class="btn-group">
                             <a href="toEditMessage.do?messageId=0" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;消息新增</a>
                         </div>
                         <div class="btn-group">
-                            <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
+                            <a href="javascript:void(0);"  onclick="editItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
                         </div>
                         <div class="btn-group">
                             <a href="javascript:void(0);" onclick="removeItem()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
