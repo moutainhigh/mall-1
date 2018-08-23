@@ -27,6 +27,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,8 +54,13 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "form", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
-    public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId") int productId,
-            @RequestParam(value = "buyNum", defaultValue = "1") int buyNum, @RequestParam(value = "paymentType") PaymentType paymentType) {
+    public ResponseResult<TempOrderVO> getTempOrder(
+            @NotNull(message = "货品id不能为空")
+            @RequestParam(value = "productId") Integer productId,
+            @NotNull(message = "购买数量不能为空")
+            @RequestParam(value = "buyNum", defaultValue = "1") Integer buyNum,
+            @NotNull(message = "支付方式")
+            @RequestParam(value = "paymentType") PaymentType paymentType) {
         try {
             TempOrderVO tempOrderVO = orderService.getTempOrder(getCustomerId(), productId, buyNum, paymentType);
             return new ResponseResult(tempOrderVO);

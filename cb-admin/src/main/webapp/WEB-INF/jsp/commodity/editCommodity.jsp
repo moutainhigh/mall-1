@@ -104,10 +104,10 @@
                             bootbox.alert("请填写商品配置内容!");
                             return false;
                         }*/
-                        if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
+                        /*if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
                             bootbox.alert("请填写商品说明内容!");
                             return false;
-                        }
+                        }*/
                         if ($("#editorContent").val().length > 4098) {
                             bootbox.alert("商品详情内容过长，请输入小于4098个字符!");
                             return false;
@@ -152,6 +152,30 @@
                     $("#specTable tr:last").after(newRow);
 
                 });
+            });
+        }
+
+        function specAuto() {
+            var keyword = $("#commodityTitle").val();
+            if(keyword == null || keyword == ""){
+                bootbox.alert("请先填写商品标题");
+                return;
+            }
+            $.getJSON("../commodity/specAuto/yicheSpecs.do", {
+                keyword: keyword
+            }, function (json) {
+                if(json.resultType=="SUCCESS"){
+                    var data = json.data;
+                    for(var key in data){
+                        var specTr = $("#specTable tr[tag='"+key+"']");
+                        if(specTr != null){
+                            $(specTr).find("input[name='specValue']").val(data[key]);
+                        }
+                    }
+                    commonNotify("配置已自动填充完成","success");
+                }else{
+                    bootbox.alert(json.message);
+                }
             });
         }
 
@@ -487,6 +511,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-default" onclick="specAuto()"><i class="fa fa-search"></i>搜索汽车配置</button>
+                            </div>
                         </div>
                         <div class="spacer-30"></div>
                         <hr>
@@ -621,7 +648,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>商品说明内容：</label>
+                                <label>商品说明内容：</label>
                             </div>
                             <div class="col-sm-9">
                                 <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>
