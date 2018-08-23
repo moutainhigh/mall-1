@@ -89,7 +89,7 @@
                                 <label><span class="asterisk">*</span>商品分类名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="catalogName" maxlength="64"/>
+                                <form:input cssClass="form-control validate[required,minSize[1],maxSize[20]]" path="catalogName" maxlength="20"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>上级分类：</label>
@@ -110,7 +110,7 @@
                                 <label><span class="asterisk">*</span>排序：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required],custom[number]" path="sortOrder" maxlength="3"/>
+                                <form:input cssClass="form-control validate[required],min[0]" path="sortOrder" maxlength="3"/>
                             </div>
                             <%--不是一级分类时，不需要配置--%>
                             <span id="hidd">
@@ -122,15 +122,17 @@
                             </div>
                             </span>
                         </div>
+                        <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>是否支持增值税发票：</label>
+                                <label><span class="asterisk"></span>是否支持增值税发票：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:checkbox path="supportAddedTax"/>
+                                <form:checkbox path="enabled"/>
                             </div>
+
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>是否启用：</label>
+                                <label><span class="asterisk"></span>是否启用：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:checkbox path="enabled"/>

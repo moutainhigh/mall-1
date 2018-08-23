@@ -9,6 +9,8 @@ import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.core.persistence.PageSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -28,6 +31,7 @@ import java.util.*;
 @RequestMapping(value = "/insuranceproduct")
 public class InsuranceProductController {
 
+    private static Logger logger=LoggerFactory.getLogger(InsuranceProductController.class);
     @Resource
     private IInsuranceProductService insuranceProductService;
     @Resource
@@ -221,7 +225,7 @@ public class InsuranceProductController {
             insuranceProductService.enableInsuranceProductById(proId,enabled);
             return true;
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            logger.error("enableInsuranceProductById fail",e);
             return false;
         }
     }

@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +39,7 @@ import java.util.Set;
  * @return
  */
 @Api(description = "商城订单接口")
+@Validated
 @RestController
 @RequestMapping(value = "{version}/mall")
 public class OrderResource extends BaseResource {
@@ -48,8 +49,8 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "获取预下单数据")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "form", dataType = "int")})
+            @ApiImplicitParam(name = "productId", value = "货品id", required = true, paramType = "form", dataType = "Integer"),
+            @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "form", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
     public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId") int productId,
@@ -99,8 +100,9 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "查询用户订单列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "query", dataType = "int")})
+            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "query", dataType = "Integer"),
+            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "query", dataType = "Integer")})
+    @ApiVersion(1)
     @PostMapping(value = "order/pageList")
     public ResponseResult<PageFinder<OrderDetailVO>> pageOrder(@RequestParam(value = "pageNo") int pageNo,
             @RequestParam(value = "pageSize") int pageSize, @RequestParam(value = "orderState", required = false) OrderState orderState) {
@@ -121,7 +123,7 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "根据订单id查询订单详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "Integer")})
     @ApiVersion(1)
     @GetMapping(value = "order/{orderId}")
     public ResponseResult<OrderDetailVO> getOrder(@PathVariable(value = "orderId") int orderId) {
@@ -148,15 +150,14 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "根据订单id取消订单")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "form", dataType = "int"),
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "form", dataType = "Integer"),
             @ApiImplicitParam(name = "cancelReason", value = "取消原因", required = true, paramType = "form", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
-    public ResponseResult cancelOrder(@RequestParam("orderId") int orderId, @RequestParam("cancelReason") String cancelReason) {
+    public ResponseResult cancelOrder(@RequestParam("orderId") int orderId,
+                                      @NotBlank(message = "取消原因不能为空")
+                                      @RequestParam("cancelReason") String cancelReason) {
         try {
-            if (StringUtils.isBlank(cancelReason)){
-                return new ResponseResult(Result.FAILURE, "取消原因不能为空");
-            }
             Order order = new Order();
             order.setOrderId(orderId);
             order.setCancelReason(cancelReason);
@@ -177,7 +178,7 @@ public class OrderResource extends BaseResource {
 
     @ApiOperation(value = "根据订单id确认收货")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, paramType = "path", dataType = "Integer")})
     @ApiVersion(1)
     @PutMapping(value = "order/confirmOrder/{orderId}")
     public ResponseResult confirmOrder(@PathVariable(value = "orderId") int orderId) {

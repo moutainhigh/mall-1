@@ -186,7 +186,7 @@
                 <label><span class="asterisk">*</span> 商家编码：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="form-control validate[required,minSize[2]]" path="sellerCode" maxlength="32"/>
+                <form:input cssClass="form-control validate[required,minSize[2]]" path="sellerCode" readonly="true" maxlength="32"/>
               </div>
 
             </div>
@@ -329,7 +329,7 @@
                 <label><span class="asterisk">*</span> 营业执照注册号：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="form-control validate[required]" path="buslicenseNo" maxlength="128"/>
+                <form:input cssClass="form-control validate[required]" path="buslicenseNo" maxlength="30"/>
               </div>
             </div>
 

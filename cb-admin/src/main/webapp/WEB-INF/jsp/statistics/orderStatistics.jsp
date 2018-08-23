@@ -83,7 +83,12 @@
             name: "已付款订单量",
             color: '#ff0000'
           }
-        ]
+        ],
+          navigation: {
+              buttonOptions: {
+                  enabled: false
+              }
+          }
 
       };
 

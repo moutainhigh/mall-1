@@ -50,6 +50,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
             }else {
                 DeliveryAddress deliveryAddress = new DeliveryAddress();
                 BeanUtils.copyProperties(deliveryAddress, deliveryAddressVO);
+                deliveryAddress.setDefaultAddress(false);
                 deliveryAddressMapper.insert(deliveryAddress);
             }
         }

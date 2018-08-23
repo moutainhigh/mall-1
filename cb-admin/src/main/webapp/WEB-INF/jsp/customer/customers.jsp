@@ -197,7 +197,7 @@
                   <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="accountName" data-operator="contains" class="form-control grid-filter" placeholder="请输入账户名"/>
                 </div>
                 <div class="toolbar-field">
-                  <strong>姓名:</strong>
+                  <strong>真实姓名:</strong>
                 </div>
                 <div class="toolbar-field">
                   <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入姓名"/>

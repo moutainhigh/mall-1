@@ -92,9 +92,9 @@ public interface SellerMapper {
         @Result(column="PROVINCE", property="province", jdbcType=JdbcType.VARCHAR),
         @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
         @Result(column="DISTRICT", property="district", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PROVINCE_NAME", property="province", jdbcType=JdbcType.VARCHAR),
-        @Result(column="CITY_NAME", property="city", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DISTRICT_NAME", property="district", jdbcType=JdbcType.VARCHAR)
+        @Result(column="PROVINCE_NAME", property="provinceName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CITY_NAME", property="cityName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DISTRICT_NAME", property="districtName", jdbcType=JdbcType.VARCHAR)
     })
     Seller selectByPrimaryKey(Integer sellerId);
 
@@ -143,9 +143,9 @@ public interface SellerMapper {
         @Result(column="PROVINCE", property="province", jdbcType=JdbcType.VARCHAR),
         @Result(column="CITY", property="city", jdbcType=JdbcType.VARCHAR),
         @Result(column="DISTRICT", property="district", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PROVINCE_NAME", property="province", jdbcType=JdbcType.VARCHAR),
-        @Result(column="CITY_NAME", property="city", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DISTRICT_NAME", property="district", jdbcType=JdbcType.VARCHAR)
+        @Result(column="PROVINCE_NAME", property="provinceName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CITY_NAME", property="cityName", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DISTRICT_NAME", property="districtName", jdbcType=JdbcType.VARCHAR)
     })
     List<Seller> selectAll();
 

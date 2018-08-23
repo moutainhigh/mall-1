@@ -179,8 +179,8 @@
                         <div class="pull-right">
                             <div class="btn-group">
                                 <a href="javascript:void(0);" onclick="showCommodityDialog();" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;添加商品</a>
-                                <a href="javascript:void(0);" onclick="editItemFilters()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 搜索条件</a>
-                                <a href="javascript:void(0);" onclick="showLogisticDialog()" class="btn btn-default"><i class="fa fa-truck"></i>&nbsp; 设置物流</a>
+                                <%--<a href="javascript:void(0);" onclick="editItemFilters()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 搜索条件</a>
+                                <a href="javascript:void(0);" onclick="showLogisticDialog()" class="btn btn-default"><i class="fa fa-truck"></i>&nbsp; 设置物流</a>--%>
                                 <a href="javascript:void(0);" onclick="removeItem()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                             <kendo:grid-column title="商品图片" field="commodity.defaultPicPath" width="80" template="<img src='#=commodity.defaultPicPath#'  width='51px' height='55px'/>" sortable="false" filterable="false"/>
                             <kendo:grid-column title="商品编码" field="commodity.commodityCode" width="80"/>
                             <kendo:grid-column title="商品名称" field="commodity.commodityName" width="80"/>
-                            <kendo:grid-column title="推荐值排序" field="recommendValue" width="70"/>
+                            <%--<kendo:grid-column title="推荐值排序" field="recommendValue" width="70"/>--%>
                             <kendo:grid-column title="成本价" field="commodity.costPrice" width="80"/>
                             <kendo:grid-column title="销售价" field="commodity.sellPrice" width="80"/>
                             <kendo:grid-column title="市场价格" field="commodity.marketPrice" width="80"/>
@@ -319,6 +319,7 @@
 </div>
 
 <div class="modal fade" id="commodityDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <form id="commodityFormId" style="float: inherit;">
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -326,10 +327,9 @@
                 <h4 class="modal-title">选择商品分类</h4>
             </div>
             <div class="modal-body">
-                <form id="commodityFormId">
                     <input type="hidden" name="categoryId" value="${category.categoryId}"/>
                 <jsp:include page="../commodity/chooseCommodities.jsp"/>
-                </form>
+
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -337,6 +337,7 @@
             </div>
         </div>
     </div>
+    </form>
     <script type="application/javascript">
         function showCommodityDialog() {
             $('#commodityDialog').modal();
@@ -358,6 +359,7 @@
                 }
             });
             clearCheck();
+            reloadGridFilters('grid');
             $('#commodityDialog').modal("hide");
         }
     </script>

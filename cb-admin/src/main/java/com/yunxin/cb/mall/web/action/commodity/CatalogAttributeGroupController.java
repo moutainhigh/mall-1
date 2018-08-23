@@ -57,7 +57,6 @@ public class CatalogAttributeGroupController implements ServletContextAware {
         return "commodity/catalogAttributeGroups";
     }
 
-
     @RequestMapping(value = "pageCatalogAttributeGroups",method = RequestMethod.POST)
     @ResponseBody
     public Page<CatalogAttributeGroup> pageCatalogAttributeGroups(@RequestBody PageSpecification<CatalogAttributeGroup> query) {

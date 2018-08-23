@@ -22,44 +22,28 @@
             });
 
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
-            });
-            var flag = true;
-            $("#costPrice,#marketPrice").blur(function(){
-                if (flag) {
-                    flag = false;
-                    var inputValue = $(this).val();
-                    var startPrice = '${commodity.priceSection.startPrice}';
-                    var endPrice = '${commodity.priceSection.endPrice}';
-                    var documentId = $(this).attr("id");
-                    if (documentId == "costPrice") {
-                        var salePrive = $("#salePrice").val();
-                        if(Number(salePrive) < Number(startPrice) || Number(endPrice) < Number(salePrive)){
-                            bootbox.alert("价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
-                            $(this).val('');
-                            $("#salePrice").val('');
-                            setInterval(function(){
-                                flag = true;
-                            }, 2000);
-                        } else {
-                            flag = true;
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var startPrice = '${commodity.priceSection.startPrice}';
+                        var endPrice = '${commodity.priceSection.endPrice}';
+                        if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#costPrice").val())){
+                            bootbox.alert("成本价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
                         }
-                    } else {
-                        if(Number(inputValue) < Number(startPrice) || Number(endPrice) < Number(inputValue)){
-                            bootbox.alert("价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
-                            $(this).val('');
-                            setInterval(function(){
-                                flag = true;
-                            }, 2000);
-                        } else {
-                            flag = true;
+                        if(Number($("#salePrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#salePrice").val())){
+                            bootbox.alert("销售价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
                         }
+                        if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
+                            bootbox.alert("市场价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        return true;
                     }
-
                 }
             });
         });
-
         function removeProduct(productId) {
             bootbox.confirm("确认删除吗?", function(result) {
                 if(result){
@@ -232,7 +216,7 @@
                         <table class="table table-bordered ">
                             <thead>
                             <th style="width: 200px">属性名称</th>
-                            <th style="width: 100px">图片</th>
+                            <%--<th style="width: 100px">图片</th>--%>
                             <th>属性值</th>
                             <th scope="col" style="width: 100px" class="text-center">操作</th>
                             </thead>
@@ -240,7 +224,7 @@
                             <c:forEach var="group" items="${attributeGroups}">
                                 <tr id="group${group.groupId}">
                                     <td>${group.groupName}</td>
-                                    <td>${group.showAsImage==true?"是":"否"}</td>
+                                    <%--<td>${group.showAsImage==true?"是":"否"}</td>--%>
                                     <td>
                                         <c:forEach var="attribute" items="${group.attributes}">
                                              &nbsp;${attribute.attributeName}
@@ -508,7 +492,7 @@
                         <div class="sidebar-module">
                             <table class="table table-bordered table-striped">
                                 <thead>
-                                <th style="width: 100px">属性名称</th>
+                                <th style="width: 200px">属性名称</th>
                                 <th>属性值</th>
                                 </thead>
                                 <tbody>

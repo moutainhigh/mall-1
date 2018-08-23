@@ -130,7 +130,7 @@ public class IndexResource extends BaseResource {
             return new ResponseResult(Result.FAILURE);
         }
     }
-    @ApiOperation(value = "商城首页 V2")
+    /*@ApiOperation(value = "商城首页 V2")
     @GetMapping(value = "getIndex")
     @ApiVersion(2)
     @IgnoreAuthentication
@@ -206,5 +206,5 @@ public class IndexResource extends BaseResource {
             logger.info("indexResource failed", e);
             return new ResponseResult(Result.FAILURE);
         }
-    }
+    }*/
 }

@@ -44,7 +44,7 @@ public class ProductReturnResource extends BaseResource {
 
     @ApiOperation(value = "退货申请页数据获取")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "path", dataType = "Integer")})
     @ApiVersion(1)
     @GetMapping(value = "productReturn/apply/{orderId}")
     public ResponseResult<ProductReturnApplyDataVO> getProductReturnData(@PathVariable(value = "orderId")int orderId) {
@@ -93,8 +93,8 @@ public class ProductReturnResource extends BaseResource {
 
     @ApiOperation(value = "退货分页列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "form", dataType = "int")})
+            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "form", dataType = "Integer"),
+            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "form", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "productReturn/pageList")
     public ResponseResult<PageFinder<ProductReturnDetailVO>> pageProductReturn(@RequestParam(value = "pageNo") int pageNo,
@@ -115,7 +115,7 @@ public class ProductReturnResource extends BaseResource {
 
     @ApiOperation(value = "退货详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "productReturnId", value = "退货id", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "productReturnId", value = "退货id", required = true, paramType = "path", dataType = "Integer")})
     @ApiVersion(1)
     @GetMapping(value = "productReturn/{productReturnId}")
     public ResponseResult<ProductReturnDetailVO> getProductReturn(@PathVariable Integer productReturnId){

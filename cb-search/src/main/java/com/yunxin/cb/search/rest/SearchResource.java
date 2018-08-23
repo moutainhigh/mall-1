@@ -53,7 +53,7 @@ public class SearchResource extends BaseResource {
             Page<Commodity> result = commodityService.keywordSearch(keyword, geoPoint, pageable);
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
             SearchResultVo searchResultVo = new SearchResultVo();
-            dealResult(page, result, pageFinder, searchResultVo);
+            dealResult(result, pageFinder, searchResultVo);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("keywordSearch excption", e);
@@ -72,7 +72,7 @@ public class SearchResource extends BaseResource {
             Page<Commodity> result = commodityService.categorySearch(searchVo, PageRequest.of(searchVo.getPage(), searchVo.getSize()));
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
             SearchResultVo searchResultVo = new SearchResultVo();
-            dealResult(searchVo.getPage(), result, pageFinder, searchResultVo);
+            dealResult(result, pageFinder, searchResultVo);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("categorySearch excption", e);
@@ -133,7 +133,7 @@ public class SearchResource extends BaseResource {
                 Double.valueOf(seller.getPositionX())));
     }
 
-    private void dealResult( int page, Page<Commodity> result, PageFinder<CommodityVO> pageFinder, SearchResultVo searchResultVo) {
+    private void dealResult(Page<Commodity> result, PageFinder<CommodityVO> pageFinder, SearchResultVo searchResultVo) {
         if (result.getTotalElements() > 0) {
             List<Commodity> list = result.getContent();
             List<CommodityVO> voList = new ArrayList<>();
@@ -145,7 +145,8 @@ public class SearchResource extends BaseResource {
             pageFinder.setData(voList);
             pageFinder.setPageCount(result.getTotalPages());
             pageFinder.setRowCount(result.getTotalElements());
-            pageFinder.setPageNo(page);
+            pageFinder.setPageNo(result.getNumber());
+            pageFinder.setPageSize(result.getSize());
             searchResultVo.setPageFinder(pageFinder);
         }
     }

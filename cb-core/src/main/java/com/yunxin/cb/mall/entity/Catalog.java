@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
-
 /**
  * 商品目录（商品分类）
  */
@@ -144,7 +143,7 @@ public class Catalog implements java.io.Serializable {
     }
 
     public void setSortOrder(int seqNum) {
-        this.sortOrder = seqNum;
+            this.sortOrder = seqNum;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

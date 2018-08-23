@@ -22,6 +22,13 @@
             });
         });
 
+        function checkTime() {
+            if ($('#createTime').val() > $('#createTimes').val() && '' != $('#createTimes').val()) {
+                alert("开始时间不能大于结束时间")
+                $('#createTimes').val('')
+            }
+        }
+
 
     </script>
 </head>
@@ -116,7 +123,8 @@
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime"
+                                <input name="createTime" id="createTime"  onchange="checkTime()"
+                                       onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="createTime" placeholder="请选择开始时间" data-filter="createTime"
                                        data-operator="gte" class="form-control grid-filter"/>
                             </div>
 
@@ -124,7 +132,8 @@
                                 <strong>-</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" id="createTimes" placeholder="请选择结束时间" data-filter="createTime"
+                                <input name="createTime" id="createTimes"  onchange="checkTime()"
+                                       onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="createTimes" placeholder="请选择结束时间" data-filter="createTime"
                                        data-operator="lte" class="form-control grid-filter"/>
                             </div>
                         </div>

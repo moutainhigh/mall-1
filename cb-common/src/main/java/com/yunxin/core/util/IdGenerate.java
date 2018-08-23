@@ -164,6 +164,24 @@ public class IdGenerate {
         return  genIDByType(IDType.PRODUCT);
     }
 
+    /**
+     * 生成角色编码
+     * @return
+     */
+    public static String genRoleID() {
+        return  genIDByType(IDType.ROLE);
+    }
+
+    /**
+     * 生成运营分类编号
+     * @return
+     */
+    public static String genCatalogID() {
+        return  genIDByType(IDType.CATALOG);
+    }
+
+
+
 
 
 }

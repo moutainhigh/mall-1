@@ -8,6 +8,7 @@ import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.service.ICategoryService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.core.exception.EntityExistException;
+import com.yunxin.core.util.IdGenerate;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -68,7 +69,9 @@ public class CategoryController implements ServletContextAware {
     @RequestMapping(value = "toAddCategory",method = RequestMethod.GET)
     public String toAddCategory(@ModelAttribute("category") Category category, ModelMap modelMap) {
         TreeViewItem categoryTree = categoryService.getCategoryTree();
+        category.setCategoryNo(IdGenerate.genCatalogID());
         modelMap.addAttribute("categoryTree", Arrays.asList(categoryTree));
+        modelMap.addAttribute("category", category);
         return "operation/addCategory";
     }
 

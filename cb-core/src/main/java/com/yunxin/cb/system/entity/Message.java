@@ -79,6 +79,12 @@ public class Message implements java.io.Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date pushTime;
 
+    /**
+     * 消息发送人
+     */
+    @ApiModelProperty(value="消息发送人",name="messageDespatcher",example="消息发送人")
+    private String messageDespatcher;
+
     public Message() {
     }
 
@@ -103,7 +109,7 @@ public class Message implements java.io.Serializable {
         this.pushTitle = pushTitle;
     }
 
-    @Column(nullable = true, length = 4098,name = "message_content")
+    @Column(nullable = true,name = "message_content")
     public String getMessageContent() {
         return messageContent;
     }
@@ -160,5 +166,14 @@ public class Message implements java.io.Serializable {
 
     public void setDigestPic(String digestPic) {
         this.digestPic = digestPic;
+    }
+
+    @Column(nullable = true , name = "message_despatcher")
+    public String getMessageDespatcher() {
+        return messageDespatcher;
+    }
+
+    public void setMessageDespatcher(String messageDespatcher) {
+        this.messageDespatcher = messageDespatcher;
     }
 }

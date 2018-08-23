@@ -18,8 +18,8 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#pcdAddress").html($.citySelector.getPCDNames(${order.province}, ${order.city}, ${order.district}));
             $("#comfrimDiv").hide();
+            $("#pcdAddress").html($.citySelector.getPCDNames(${order.province}, ${order.city}, ${order.district}));
 
         });
 
