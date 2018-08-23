@@ -82,6 +82,7 @@ public class FavoriteResource extends BaseResource {
             favorite = favoriteService.addFavorite(favorite);
             if (favorite != null) {
                 BeanUtils.copyProperties(favoriteVo, favorite);
+                result.setData(favoriteVo);
                 result.setResult(Result.SUCCESS);
             }
         } catch (IllegalAccessException e) {
