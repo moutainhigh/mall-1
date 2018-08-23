@@ -17,6 +17,12 @@
     <title>编辑商品分类</title>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             $('#catalogTrigger').focusin(function (e) {
                 $('#catalogDialog').modal();
                 e.preventDefault();
