@@ -195,7 +195,6 @@
                       <option value="PENDING_PAYMENT">待付款</option>
                       <option value="PAID_PAYMENT">待发货</option>
                       <option value="OUT_STOCK">已发货</option>
-                      <option value="RECEIVED">已签收</option>
                       <option value="CANCELED">已取消</option>
                       <option value="SUCCESS">交易成功</option>
                     </select>

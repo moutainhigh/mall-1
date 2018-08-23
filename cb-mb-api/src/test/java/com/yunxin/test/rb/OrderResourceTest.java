@@ -47,6 +47,22 @@ public class OrderResourceTest extends MockHttpUtils{
     }
 
     @Test
+    public void getTempOrderTest_productId() throws Exception {
+        log.info("获取预下单数据 V1 start");
+        //mock进行模拟
+        String url = "/v1/mall/order/tempOrder";
+        String content = "";
+        String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus = Result.FAILURE.name();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        map.add("productId","");
+        map.add("buyNum","1");
+        map.add("paymentType","UNDER_LINE");
+        commonMvcPerFormPost(url, content, contentType, acceptStatus, map);
+        log.info("获取预下单数据 V1 end result : " + content);
+    }
+
+    @Test
     public void addOrderTest() throws Exception {
         log.info("添加订单 V1 start");
         //mock进行模拟

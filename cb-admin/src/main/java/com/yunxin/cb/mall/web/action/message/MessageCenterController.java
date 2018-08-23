@@ -162,4 +162,20 @@ public class MessageCenterController {
         }
     }
 
+    /**
+     * 功能描述:消息详情
+     *
+     * @param messageId 消息ID
+     * @return
+     * @auther yangzhen
+     * @date 2018/8/23 15:36
+     */
+    @GetMapping("messageDetail")
+    public String messageDetail(@RequestParam(value = "messageId") Integer messageId,ModelMap modelMap){
+        modelMap.addAttribute("message", messageService.getMessage(messageId));
+        List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.MESSAGEDIGEST,messageId);
+        modelMap.addAttribute("listAttachment",JSON.toJSON(listAttachment));
+        return "message/messageDetail";
+    }
+
 }
