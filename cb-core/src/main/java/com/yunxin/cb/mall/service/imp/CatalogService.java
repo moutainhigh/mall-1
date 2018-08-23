@@ -75,7 +75,7 @@ public class CatalogService implements ICatalogService {
 
 
     @Override
-    public Catalog addCatalog(Catalog catalog) throws EntityExistException, CommonException {
+    public Catalog addCatalog(Catalog catalog) throws EntityExistException {
         if (!catalogDao.isOrUnique(catalog, Catalog_.catalogName)) {
             throw new EntityExistException("商品分类名称已存在");
         }
@@ -92,7 +92,7 @@ public class CatalogService implements ICatalogService {
                 .getCatalogId());
         // 兼容旧数据,旧数据中有商品分类编码为空
         if (StringUtils.isBlank(pCatalog.getCatalogCode())) {
-            throw new CommonException("父商品分类编码为空!");
+            throw new EntityExistException("商品分类名称已存在");
         }
         int tcode = calParentCategoryCode(pCatalog);
         catalog.setParentCatalog(pCatalog);

@@ -27,6 +27,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,8 +54,12 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "buyNum", value = "购买数量", required = true, defaultValue = "1", paramType = "form", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "order/tempOrder")
-    public ResponseResult<TempOrderVO> getTempOrder(@RequestParam(value = "productId") int productId,
-            @RequestParam(value = "buyNum", defaultValue = "1") int buyNum, @RequestParam(value = "paymentType") PaymentType paymentType) {
+    public ResponseResult<TempOrderVO> getTempOrder(
+            @NotNull(message = "货品id不能为空")
+            @RequestParam(value = "productId") Integer productId,
+            @RequestParam(value = "buyNum", defaultValue = "1") Integer buyNum,
+            @NotNull(message = "支付方式")
+            @RequestParam(value = "paymentType") PaymentType paymentType) {
         try {
             TempOrderVO tempOrderVO = orderService.getTempOrder(getCustomerId(), productId, buyNum, paymentType);
             return new ResponseResult(tempOrderVO);
@@ -154,9 +159,10 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "cancelReason", value = "取消原因", required = true, paramType = "form", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
-    public ResponseResult cancelOrder(@RequestParam("orderId") int orderId,
-                                      @NotBlank(message = "取消原因不能为空")
-                                      @RequestParam("cancelReason") String cancelReason) {
+    public ResponseResult cancelOrder(
+            @RequestParam("orderId") int orderId,
+            @NotBlank(message = "取消原因不能为空")
+            @RequestParam("cancelReason") String cancelReason) {
         try {
             Order order = new Order();
             order.setOrderId(orderId);

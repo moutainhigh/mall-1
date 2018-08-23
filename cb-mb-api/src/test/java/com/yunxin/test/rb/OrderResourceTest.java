@@ -3,28 +3,21 @@ package com.yunxin.test.rb;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yunxin.cb.Application;
-import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.mall.entity.meta.PaymentType;
 import com.yunxin.cb.mall.vo.OrderConfirmProductVO;
 import com.yunxin.cb.mall.vo.OrderConfirmVO;
-import org.junit.Assert;
-import org.junit.Before;
+import com.yunxin.cb.meta.Result;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,35 +26,39 @@ import java.util.List;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-public class OrderResourceTest {
-    private static final Logger log = LoggerFactory.getLogger(OrderResourceTest.class);
-    private MockMvc mvc;
-    @Autowired
-    private WebApplicationContext context;
-
-    private String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxODA4NjQ2MDAwMyIsImV4cCI6MTUzNTQ1MDY4NCwianRpIjoiNTMzIn0.FK3d6ofCa1kgr8wB1uyO50Xs7LqYmfLfLnvXnzSdA8TkMcLYl6CFaIPbG8q98W8fnYsiHm0zyr5m8fN9DSIfAg";
-
-    @Before
-    public void setUp() throws Exception {
-        //MockMvcBuilders使用构建MockMvc对象   （项目拦截器有效）
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+@Transactional(transactionManager = "transactionManager")
+@Rollback(value = true)
+public class OrderResourceTest extends MockHttpUtils{
 
     @Test
     public void getTempOrderTest() throws Exception {
         log.info("获取预下单数据 V1 start");
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/order/tempOrder")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(JwtUtil.HEADER_STRING,token)
-                .param("productId","489")
-                .param("buyNum","1")
-                .param("paymentType","UNDER_LINE"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
+        String url = "/v1/mall/order/tempOrder";
+        String content = "";
+        String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus = Result.SUCCESS.name();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        map.add("productId","532");
+        map.add("buyNum","1");
+        map.add("paymentType","UNDER_LINE");
+        commonMvcPerFormPost(url, content, contentType, acceptStatus, map);
+        log.info("获取预下单数据 V1 end result : " + content);
+    }
+
+    @Test
+    public void getTempOrderTest_productId() throws Exception {
+        log.info("获取预下单数据 V1 start");
+        //mock进行模拟
+        String url = "/v1/mall/order/tempOrder";
+        String content = "";
+        String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus = Result.FAILURE.name();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        map.add("productId","");
+        map.add("buyNum","1");
+        map.add("paymentType","UNDER_LINE");
+        commonMvcPerFormPost(url, content, contentType, acceptStatus, map);
         log.info("获取预下单数据 V1 end result : " + content);
     }
 
@@ -77,22 +74,18 @@ public class OrderResourceTest {
         orderConfirmVO.setSellerId("1");
         List<OrderConfirmProductVO> orderConfirmProductList = new ArrayList<OrderConfirmProductVO>();
         OrderConfirmProductVO orderConfirmProductVO = new OrderConfirmProductVO();
-        orderConfirmProductVO.setProductId(489);
+        orderConfirmProductVO.setProductId(532);
         orderConfirmProductVO.setProductNum(1);
         orderConfirmProductList.add(orderConfirmProductVO);
         orderConfirmVO.setOrderConfirmProductList(orderConfirmProductList);
 
         ObjectMapper objectMapper = new ObjectMapper()
                 .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/order")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .header(JwtUtil.HEADER_STRING,token)
-                .content(objectMapper.writeValueAsString(orderConfirmVO)))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
+        String url = "/v1/mall/order";
+        String content = objectMapper.writeValueAsString(orderConfirmVO);
+        String contentType = MediaType.APPLICATION_JSON_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        commonMvcPerFormPost(url, content, contentType, acceptStatus,null);
         log.info("添加订单 V1 end result : " + content);
     }
 
@@ -100,16 +93,30 @@ public class OrderResourceTest {
     public void getOrderListTest() throws Exception {
         log.info("查询订单列表 V1 start");
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/order/pageList")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(JwtUtil.HEADER_STRING,token)
-                .param("pageNo","1")
-                .param("pageSize","10"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
+        String url = "/v1/mall/order/pageList";
+        String content = "";
+        String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus = Result.SUCCESS.name();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        map.add("pageNo","1");
+        map.add("pageSize","10");
+        commonMvcPerFormPost(url, content, contentType, acceptStatus, map);
+        log.info("查询订单列表 V1 end result : " + content);
+    }
+
+    @Test
+    public void getOrderListTest_orderState() throws Exception {
+        log.info("查询订单列表 V1 start");
+        //mock进行模拟
+        String url = "/v1/mall/order/pageList";
+        String content = "";
+        String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus = Result.SUCCESS.name();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        map.add("pageNo","1");
+        map.add("pageSize","10");
+        map.add("orderState","PENDING_PAYMENT");
+        commonMvcPerFormPost(url, content, contentType, acceptStatus, map);
         log.info("查询订单列表 V1 end result : " + content);
     }
 
@@ -117,14 +124,11 @@ public class OrderResourceTest {
     public void getOrderTest() throws Exception {
         log.info("根据订单id查询订单详情 V1 start");
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/order/372")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(JwtUtil.HEADER_STRING,token))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
+        String url = "/v1/mall/order/372";
+        String content = "";
+        String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus = Result.SUCCESS.name();
+        commonMvcPerFormGet(url, content, contentType, acceptStatus, null);
         log.info("根据订单id查询订单详情 V1 end result : " + content);
     }
 
@@ -132,16 +136,14 @@ public class OrderResourceTest {
     public void cancelOrderTest() throws Exception {
         log.info("根据订单id取消订单 V1 start");
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/v1/mall/order/cancelOrder")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(JwtUtil.HEADER_STRING,token)
-                .param("orderId","372")
-                .param("cancelReason","取消测试"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
+        String url = "/v1/mall/order/cancelOrder";
+        String content = "";
+        String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus = Result.SUCCESS.name();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        map.add("orderId","403");
+        map.add("cancelReason","取消测试");
+        commonMvcPerFormPut(url, content, contentType, acceptStatus, map);
         log.info("根据订单id取消订单 V1 end result : " + content);
     }
 
@@ -149,15 +151,11 @@ public class OrderResourceTest {
     public void confirmOrderTest() throws Exception {
         log.info("根据订单id确认收货 V1 start");
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/v1/mall/order/confirmOrder/372")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(JwtUtil.HEADER_STRING,token))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("根据订单id确认收货 V1 end result : " + content);
+        String url = "/v1/mall/order/confirmOrder/404";
+        String content = "";
+        String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus = Result.SUCCESS.name();
+        commonMvcPerFormPut(url, content, contentType, acceptStatus, null);
     }
 
 }

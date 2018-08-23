@@ -140,7 +140,10 @@ public class OrderServiceImpl implements OrderService {
                 //根据货品id查询货品（审核通过且上架货品）
                 Product product = productMapper.selectProductById(orderItem.getProductId(), ProductState.AUDITED.ordinal(), PublishState.UP_SHELVES.ordinal());
                 //判断货品是否存在，且库存足够
-                if (product == null || product.getStoreNum() <= 0) {
+                if (product == null) {
+                    throw new CommonException("货品未上架或者不存在");
+                }
+                if (product.getStoreNum() <= 0) {
                     //库存不足
                     throw new CommonException("库存不足");
                 }

@@ -17,6 +17,11 @@
   <script type="text/javascript">
     $(document).ready(function() {
 
+        var errerMsg='${errerMsg}';
+        if(errerMsg!=null&&errerMsg!=""){
+            commonNotify(errerMsg,"error");
+        }
+
       $("#validateSubmitForm").validationEngine({
         autoHidePrompt: true, scroll: false, showOneMessage: true
       });
@@ -160,7 +165,6 @@
                   <form:input path="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')" id="endPrice" onchange="checkPrice()" cssClass="form-control validate[required,custom[number]]" maxlength="11"/>
                   <span style="position: absolute;top:4px;right: -3px;">元</span>
                 </div>
-                <div class="col-sm-1"><form:errors path="endPrice"/> </div>
               </div>
               <div class="spacer-10"></div>
 
