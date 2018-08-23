@@ -251,7 +251,7 @@
                                 <label>分类描述：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" path="description" maxlength="512"></form:textarea>
+                                <form:textarea cssClass="form-control" path="description" maxlength="10"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>

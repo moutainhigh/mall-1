@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import retrofit2.Call;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,7 +70,7 @@ public class SearchResource extends BaseResource {
     @PostMapping(value = "categorySearch")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<SearchResultVo> categorySearch(@RequestBody SearchVo searchVo) {
+    public ResponseResult<SearchResultVo> categorySearch(@RequestBody @Valid SearchVo searchVo) {
         try {
             SearchRestService restService = RestfulFactory.getInstance().getSearchRestService();
             Call<ResponseResult> call = restService.categorySearch(searchVo);

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.domain.Sort;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,10 +45,12 @@ public class SearchVo implements java.io.Serializable {
     @ApiModelProperty(value="排序方向，枚举:升序or降序",name="direction",example="ASC|DESC")
     private Sort.Direction direction;
 
+    @NotNull(message = "返回行数size不能为空")
     @ApiModelProperty(value="返回行数",name="size",example="10", required = true)
-    private int size;
+    private Integer size;
+    @NotNull(message = "页码page不能为空")
     @ApiModelProperty(value="页码",name="page",example="0", required = true)
-    private int page;
+    private Integer page;
 
     @ApiModelProperty(value="地理纬度",name="lat",example="18.257776")
     private Double lat;
@@ -126,19 +129,19 @@ public class SearchVo implements java.io.Serializable {
         this.sellerId = sellerId;
     }
 
-    public int getSize() {
+    public Integer getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
-    public int getPage() {
+    public Integer getPage() {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(Integer page) {
         this.page = page;
     }
 

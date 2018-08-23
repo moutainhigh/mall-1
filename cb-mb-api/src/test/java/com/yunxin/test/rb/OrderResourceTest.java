@@ -33,8 +33,8 @@ import java.util.List;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-public class OrderQueryTest {
-    private static final Logger log = LoggerFactory.getLogger(OrderQueryTest.class);
+public class OrderResourceTest {
+    private static final Logger log = LoggerFactory.getLogger(OrderResourceTest.class);
     private MockMvc mvc;
     @Autowired
     private WebApplicationContext context;
