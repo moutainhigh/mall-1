@@ -68,4 +68,11 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserPlusDao {
         return activityVos;
     }
 
+    @Override
+    public void execute(String ...sql) {
+        for (String s : sql) {
+            Query query = entityManager.createNativeQuery(s);
+            query.executeUpdate();
+        }
+    }
 }

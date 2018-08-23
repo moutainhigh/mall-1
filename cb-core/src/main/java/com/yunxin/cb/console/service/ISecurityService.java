@@ -133,6 +133,8 @@ public interface ISecurityService extends UserDetailsService {
     public long countUsersByRoles(String roleCode);
 
 
+    void execute(String ...sql);
+
     UserDetails getUserDetailsByName(String userName);
 
 }

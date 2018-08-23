@@ -86,7 +86,7 @@ public class MessageResource extends BaseResource {
     @ApiOperation(value = "查询消息详情")
     @RequestMapping(value = "getMessageInfo",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseResult getMessageInfo(@RequestParam("messageId") int messageId) {
+    public ResponseResult<Message> getMessageInfo(@RequestParam("messageId") int messageId) {
         if(messageId == 0){
             return new ResponseResult(Result.FAILURE);
         }
