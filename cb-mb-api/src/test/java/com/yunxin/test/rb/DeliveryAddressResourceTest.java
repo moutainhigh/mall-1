@@ -42,7 +42,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String url = "/v1/mall/deliveryAddress/list";
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,200,map);
+        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",map);
     }
     @Test
     public void getDeliveryAddressDetail() throws Exception{
@@ -50,7 +50,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String url = "/v1/mall/deliveryAddress/96";
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,200,map);
+        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",map);
     }
     @Test
     public void addDeliveryAddress_notNull()throws Exception{
@@ -69,7 +69,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,200,map);
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,200,map);
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,200,map);
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
     }
 
     @Test
@@ -130,7 +130,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,200,map);
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String url = "/v1/mall/deliveryAddress/96";
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormDelete(url,"",MediaType.APPLICATION_JSON_VALUE,200,map);
+        commonMvcPerFormDelete(url,"",MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 
     @Test
@@ -159,7 +159,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,200,map);
+        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 
     @Test
@@ -179,7 +179,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,200,map);
+        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
     }
 
     @Test
@@ -199,7 +199,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
         Map<String,Object> map = new HashMap<>();
         map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,200,map);
+        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
     }
 
 }

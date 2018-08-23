@@ -26,6 +26,6 @@ public class IndexResourceTest extends MockHttpUtils{
         log.info("获取首页 V1 start");
         String url = "/v1/mall/index/getIndex";
         Map<String,Object> map = new HashMap<>();
-        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_VALUE,200,map);
+        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 }

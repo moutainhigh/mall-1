@@ -1,5 +1,6 @@
 package com.yunxin.test.rb;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yunxin.cb.Application;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
@@ -46,7 +47,7 @@ public class MockHttpUtils {
      * @date: 2018/8/22 17:47
      */
     public void commonMvcPerFormPost(String url,
-                                     String content, String contentType, int acceptStatus,Map<String,Object>map)throws Exception{
+                                     String content, String contentType, Object acceptStatus,Map<String,Object>map)throws Exception{
         commonMvcPerForm("post",url,content,contentType,acceptStatus,map);
     }
 
@@ -63,7 +64,7 @@ public class MockHttpUtils {
      * @date: 2018/8/22 17:47
      */
     public void commonMvcPerFormGet(String url,
-                                    String content,String contentType,int acceptStatus,Map<String,Object>map)throws Exception{
+                                    String content,String contentType,Object acceptStatus,Map<String,Object>map)throws Exception{
         commonMvcPerForm("get",url,content,contentType,acceptStatus,map);
     }
     /**
@@ -79,7 +80,7 @@ public class MockHttpUtils {
      * @date: 2018/8/22 17:47
      */
     public void commonMvcPerFormPut(String url,
-                                    String content,String contentType,int acceptStatus,Map<String,Object>map)throws Exception{
+                                    String content,String contentType,Object acceptStatus,Map<String,Object>map)throws Exception{
         commonMvcPerForm("put",url,content,contentType,acceptStatus,map);
 
     }
@@ -96,14 +97,14 @@ public class MockHttpUtils {
      * @date: 2018/8/22 17:47
      */
     public void commonMvcPerFormDelete(String url,
-                                    String content,String contentType,int acceptStatus,Map<String,Object>map)throws Exception{
+                                    String content,String contentType,Object acceptStatus,Map<String,Object>map)throws Exception{
         commonMvcPerForm("delete",url,content,contentType,acceptStatus,map);
 
     }
 
 
     public void commonMvcPerForm(String perFormType,String url,
-                                     String content,String contentType,int acceptStatus,Map<String,Object>map)throws Exception{
+                                     String content,String contentType,Object acceptStatus,Map<String,Object>map)throws Exception{
 
         MockHttpServletRequestBuilder requestBuilder;
         if(StringUtils.isEmpty(perFormType) || "post".equals(perFormType)){
@@ -127,7 +128,9 @@ public class MockHttpUtils {
         MvcResult mvcResult = mvc.perform(requestBuilder)
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
-        Assert.assertEquals(acceptStatus, mvcResult.getResponse().getStatus());
+        String result = mvcResult.getResponse().getContentAsString();
+        JSONObject resultJson =  JSONObject.parseObject(result);
+        Assert.assertEquals(acceptStatus, resultJson.get("result"));
         log.info("响应内容：" + mvcResult.getResponse().getContentAsString());
 
     }
