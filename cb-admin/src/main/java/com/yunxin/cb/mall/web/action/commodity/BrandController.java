@@ -159,6 +159,7 @@ public class BrandController {
         } catch (EntityExistException e) {
             result.addError(new FieldError("brand", "brandName", brand.getBrandEnName(), true, null, null,
                     messageSource.getMessage("brand_brandName_repeat", null, locale)));
+            modelMap.put("errerMsg",e.getMessage());
             return toEditBrand(brand.getBrandId(), modelMap);
         }
         return "redirect:../common/success.do?reurl=commodity/brands.do";

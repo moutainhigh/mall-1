@@ -223,7 +223,7 @@
                   <label>品牌英文名称：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass=" form-control" path="brandEnName" maxlength="128"/>
+                  <form:input type="text" cssClass=" form-control validate[custom[onlyLetterSp]]" path="brandEnName" maxlength="128" data-errormessage-custom-error="必须为英文字母"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
