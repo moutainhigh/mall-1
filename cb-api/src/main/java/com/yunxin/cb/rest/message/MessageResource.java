@@ -35,10 +35,11 @@ public class MessageResource extends BaseResource {
     /**
      * 功能描述: 查询消息列表
      *
-     * @param: query
-     * @return:
-     * @auther: yangzhen
-     * @date: 2018/8/10 18:28
+     * @param pageNo 当前页
+     * @param pageSize 每页显示条数
+     * @return
+     * @auther yangzhen
+     * @date 2018/8/10 18:28
      */
     @ApiOperation(value = "查询消息列表")
     @ApiImplicitParams({})
@@ -86,7 +87,7 @@ public class MessageResource extends BaseResource {
     @ApiOperation(value = "查询消息详情")
     @RequestMapping(value = "getMessageInfo",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseResult getMessageInfo(@RequestParam("messageId") int messageId) {
+    public ResponseResult<Message> getMessageInfo(@RequestParam("messageId") int messageId) {
         if(messageId == 0){
             return new ResponseResult(Result.FAILURE);
         }

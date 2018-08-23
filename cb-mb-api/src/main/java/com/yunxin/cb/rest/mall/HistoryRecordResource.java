@@ -61,12 +61,8 @@ public class HistoryRecordResource extends BaseResource {
             if(LogicUtils.isNullOrEmpty(historyRecordIds)){
                 return new ResponseResult(Result.FAILURE,"参数为空");//失败
             }
-            int result=historyRecordService.removeHistoryRecordBatch(historyRecordIds, getCustomerId());
-            if(result>0){
-                return new ResponseResult(Result.SUCCESS);//成功
-            }else{
-                return new ResponseResult(Result.FAILURE,"没有此浏览记录");//失败
-            }
+            historyRecordService.removeHistoryRecordBatch(historyRecordIds, getCustomerId());
+            return new ResponseResult(Result.SUCCESS);
         }catch (Exception e){
             logger.error("Exception is "+e);
         }

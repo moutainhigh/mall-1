@@ -128,6 +128,19 @@
             </div>
         </div>
         <!-- End #header-main-top -->
+        <div class="header-main-bottom">
+            <div class="pull-left">
+                <ul class="breadcrumb">
+                    <li><a href="#">首页 </a></li>
+                    <li><a href="#">保单管理 </a></li>
+                    <li><a href="#" class="active">保单列表</a></li>
+                </ul>
+                <!-- End .breadcrumb -->
+            </div>
+            <div class="pull-right">
+                <p>Version 1.0.0</p>
+            </div>
+        </div>
         <!-- End #header-main-bottom -->
     </header>
     <!-- End #header-main -->
@@ -137,19 +150,27 @@
 
         <header id="header-sec">
             <!-- End .inner-padding -->
-            <div class="header-main-bottom">
+
+            <div class="inner-padding">
                 <div class="pull-left">
-                    <ul class="breadcrumb">
-                        <li><a href="#">首页</a></li>
-                        <li><a href="#">保单管理</a></li>
-                        <li class="active"><a href="#">保单列表</a></li>
-                    </ul>
-                    <!-- End .breadcrumb -->
+                    <h2>保单列表</h2>
                 </div>
-                <div class="pull-right">
-                    <p>Version 1.0.0</p>
-                </div>
-            </div>
+
+            <%--<div class="header-main-bottom">--%>
+
+                <%--<div class="pull-left">--%>
+                    <%--<ul class="breadcrumb">--%>
+                        <%--<li><a href="#">首页 </a></li>--%>
+                        <%--<li><a href="#">保单管理 </a></li>--%>
+                        <%--<li><a class="active">保单列表</a></li>--%>
+                    <%--</ul>--%>
+                    <%--<!-- End .breadcrumb -->--%>
+                <%--</div>--%>
+
+                <%--<div class="pull-right">--%>
+                    <%--<p>Version 1.0.0</p>--%>
+                <%--</div>--%>
+            <%--</div>--%>
         </header>
         <!-- End #header-sec -->
 

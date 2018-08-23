@@ -1,5 +1,5 @@
 # 自定义基础image
-FROM 192.168.0.22/jre/8-apine
+FROM 192.168.0.22/jre/8-alpine
 LABEL maintainer="chenp@999shuijingqiu.com"
 
 VOLUME /tmp

@@ -67,7 +67,7 @@
     </script>
     <script id="attributeTr" type="text/x-jquery-tmpl">
         <tr id='attribute{{= idIndex}}'>
-            <td><input type='text' name='attributeName' class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
+            <td><input type='text' name='attributeName' class='form-control validate[required,minSize[1]]' maxlength='20'/></td>
             <%--<td><input id='imagePath{{= idIndex}}' type='hidden' name='imagePath' value=""/></td>--%>
             <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2'/></td>
             <td class="text-center"><a class='btn btn-default' href='javascript:removeAttribute({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
@@ -159,7 +159,7 @@
                                 <label><span class="asterisk">*</span>属性名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[1]]" path="groupName" maxlength="64"/>
+                                <form:input cssClass="form-control validate[required,minSize[1]]" path="groupName" maxlength="20"/>
                             </div>
                             <%--<div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 显示方式：</label>

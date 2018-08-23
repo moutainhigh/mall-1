@@ -153,7 +153,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="11" />
                                 </div>
 
                             </div>
@@ -194,7 +194,7 @@
                                 <label><span class="asterisk">*</span>库存数量：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[checkPositive]]" path="storeNum" maxlength="12"/>
+                                <form:input cssClass="form-control validate[required,custom[checkPositive]]" path="storeNum" maxlength="12" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -204,7 +204,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
-                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                                     <span class="input-group-addon">Kg</span>
                                 </div>
                             </div>
@@ -213,7 +213,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
-                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                                     <span class="input-group-addon">m3</span>
                                 </div>
 

@@ -368,6 +368,11 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
     }
 
     @Override
+    public void execute(String ...sql){
+        userDao.execute(sql);
+    }
+
+    @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public UserDetails getUserDetailsByName(String userName) {
         User user = userDao.findByUserName(userName);
