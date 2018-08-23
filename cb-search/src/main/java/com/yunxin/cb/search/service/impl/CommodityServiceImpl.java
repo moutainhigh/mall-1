@@ -94,8 +94,10 @@ public class CommodityServiceImpl implements CommodityService {
             return matchAllQuery();
         }
         return QueryBuilders.multiMatchQuery(keyword, "commodityCode", "commodityName", "commodityPYName",
-                "shortName", "commodityTitle", "description", "categories.categoryName", "seller.sellerCode",
-                "seller.sellerName", "brand.brandNo", "brand.brandName", "brand.brandEnName", "brand.brandTitle");
+                "shortName", "commodityTitle", "description", "categories.categoryName", "brand.brandName", "brand.brandEnName", "brand.brandTitle"
+                // 去除商家相关关键字搜索
+//                ,"seller.sellerCode","seller.sellerName", "brand.brandNo"
+        );
     }
 
     public Page<Commodity> categorySearch(SearchVo searchVo, Pageable pageable) throws Exception {
