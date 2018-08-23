@@ -1,6 +1,8 @@
 package com.yunxin.test.rb;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yunxin.cb.Application;
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.mall.HistoryRecordResource;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +21,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 * @Description:    HistoryRecordTest
@@ -30,47 +37,34 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-public class HistoryRecordTest {
-    private static final Logger log = LoggerFactory.getLogger(HistoryRecordTest.class);
-    @Autowired
-    private MockMvc mvc;
-    @Autowired
-    private WebApplicationContext context;
-    @Autowired
-    private HistoryRecordResource historyRecordResource;
-    @Before
-    public void setUp() throws Exception {
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+public class HistoryRecordTest extends MockHttpUtils{
 
     @Test
     public void getCustomerHistoryRecordTest() throws Exception {
-        log.info("获取用户我的浏览 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/history/getCustomerHistoryRecord")
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED).param("pageNo","1")
-                .param("pageSize","10"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("获取用户我的浏览 V1 end result : " + content);
+        log.info("获取用户我的浏览 start");
+        String url="/v1/mall/history/getCustomerHistoryRecord";
+        String content="";
+        String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+        map.add("pageNo","1");
+        map.add("pageSize","10");
+        commonMvcPerFormPost(url,content,contentType,acceptStatus,map);
+        log.info("获取用户我的浏览 end ");
     }
 
     @Test
     public void delHistoryRecords() throws Exception {
-        log.info("商品移出我的浏览(批量) V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/history/delHistoryRecords")
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content("[\"2457\",\"2\",\"3\"]")
-                .param("pageSize","10"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("商品移出我的浏览(批量) V1 end result : " + content);
+        log.info("商品移出我的浏览 start");
+        String url="/v1/mall/history/delHistoryRecords";
+        String content="";
+        String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        List<Integer> historyRecordIds = new ArrayList<>();
+        historyRecordIds.add(1);
+        content = JSONObject.toJSONString(historyRecordIds);
+        commonMvcPerFormPost(url,content,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",null);
+        log.info("商品移出我的浏览 end ");
     }
 
 }
