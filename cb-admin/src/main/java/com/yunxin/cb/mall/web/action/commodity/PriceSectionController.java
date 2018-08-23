@@ -48,11 +48,13 @@ public class PriceSectionController {
     }
 
     @RequestMapping(value = "addPriceSection", method = RequestMethod.POST)
-    public String addPriceSection(@ModelAttribute("priceSection") PriceSection priceSection, ModelMap modelMap,BindingResult result) {
+    public String addPriceSection(@ModelAttribute("priceSection") PriceSection priceSection, ModelMap modelMap,BindingResult result) throws Exception  {
         try {
             priceService.addPriceSection(priceSection);
         } catch (EntityExistException e) {
-            result.addError(new FieldError("priceSection", "endPrice", priceSection.getEndPrice(), true, null, null,"该价格段已存在"));
+//            result.addError(new FieldError("priceSection", "endPrice", priceSection.getEndPrice(), true, null, null,"该价格段已存在"));
+            result.addError(new FieldError("priceSection", "endPrice", priceSection.getEndPrice(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toAddPriceSection(priceSection, modelMap);
         }
         return "redirect:../common/success.do?reurl=commodity/priceSections.do";
@@ -65,11 +67,13 @@ public class PriceSectionController {
     }
 
     @RequestMapping(value = "editPriceSection", method = RequestMethod.POST)
-    public String editPriceSection(@Valid @ModelAttribute("priceSection") PriceSection priceSection, ModelMap modelMap, BindingResult result) {
+    public String editPriceSection(@Valid @ModelAttribute("priceSection") PriceSection priceSection, ModelMap modelMap, BindingResult result)  throws Exception  {
         try {
             priceService.updatePriceSection(priceSection);
         } catch (EntityExistException e) {
-            result.addError(new FieldError("priceSection", "endPrice", priceSection.getEndPrice(), true, null, null, "该价格段已存在"));
+//            result.addError(new FieldError("priceSection", "endPrice", priceSection.getEndPrice(), true, null, null, "该价格段已存在"));
+            result.addError(new FieldError("priceSection", "endPrice", priceSection.getEndPrice(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toEditPriceSection(priceSection.getSectionId(), modelMap);
         }
         return "redirect:../common/success.do?reurl=commodity/priceSections.do";

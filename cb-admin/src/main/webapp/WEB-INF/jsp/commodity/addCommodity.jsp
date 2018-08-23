@@ -134,6 +134,9 @@
                             $(specTr).find("input[name='specValue']").val(data[key]);
                         }
                     }
+                    commonNotify("配置已自动填充完成","success");
+                }else{
+                    bootbox.alert(json.message);
                 }
             });
         }
@@ -562,10 +565,10 @@
                                                         bootbox.alert("请填写商品配置内容!");
                                                         return false;
                                                     }*/
-                                                    if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
+                                                    /*if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
                                                         bootbox.alert("请填写商品说明内容!");
                                                         return false;
-                                                    }
+                                                    }*/
                                                     if ($("#editorContent").val().length > 4098) {
                                                         bootbox.alert("商品详情内容过长，请输入小于4098个字符!");
                                                         return false;
@@ -684,7 +687,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>商品说明内容：</label>
+                                <label>商品说明内容：</label>
                             </div>
                             <div class="col-sm-9">
                                 <form:textarea cssClass=" form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>

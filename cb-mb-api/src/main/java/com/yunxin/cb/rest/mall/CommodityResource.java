@@ -63,14 +63,20 @@ public class CommodityResource extends BaseResource {
     @ApiVersion(1)
     @IgnoreAuthentication
     public ResponseResult<CommodityVo> getCommdityDetail(@PathVariable int productId){
-        CommodityVo commodityVo= null;
+        ResponseResult result=new ResponseResult(Result.FAILURE);
         try {
             int customerId=getCustomerId();
-            commodityVo = commodityService.getCommdityDetail(productId,customerId);
+            CommodityVo commodityVo = commodityService.getCommdityDetail(productId,customerId);
+            result.setData(commodityVo);
+            if(LogicUtils.isNull(commodityVo)){
+                result.setMessage("商品或货品未上架");
+            }else{
+                result.setResult(Result.SUCCESS);
+            }
         } catch (Exception e) {
             logger.error("Exception is "+e);
         }
-        return new ResponseResult(commodityVo);
+        return result;
     }
 
     /**
