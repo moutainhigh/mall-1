@@ -160,7 +160,8 @@ public class OrderResource extends BaseResource {
             @ApiImplicitParam(name = "cancelReason", value = "取消原因", required = true, paramType = "form", dataType = "String")})
     @ApiVersion(1)
     @PutMapping(value = "order/cancelOrder")
-    public ResponseResult cancelOrder(@RequestParam("orderId") int orderId,
+    public ResponseResult cancelOrder(
+            @RequestParam("orderId") int orderId,
                                       @NotBlank(message = "取消原因不能为空")
                                       @RequestParam("cancelReason") String cancelReason) {
         try {
