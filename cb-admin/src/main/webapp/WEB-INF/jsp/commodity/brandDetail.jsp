@@ -361,16 +361,16 @@
               <div class="row">
                 <div class="inline-labels">
                   <div class="col-sm-1">
-                    <label>品牌编码：</label>
+                    <label><span class="asterisk"></span>品牌编码：</label>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-4 col-label">
                     ${brand.brandNo}
                   </div>
                   <div class="col-sm-1"></div>
                   <div class="col-sm-1">
-                    <label>品牌名称：</label>
+                    <label><span class="asterisk"></span>品牌名称：</label>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-4 col-label">
                     ${brand.brandName}
                   </div>
                   <div class="col-sm-1"></div>
@@ -448,9 +448,9 @@
 
               <div class="row">
                 <div class="col-sm-1">
-                  <label>品牌分类：</label>
+                  <label><span class="asterisk"></span>品牌分类：</label>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 col-label">
                   ${brand.category.categoryName}
                 </div>
                 <div class="col-sm-1"></div>
@@ -461,9 +461,9 @@
               <div class="row">
                 <div class="inline-labels">
                   <div class="col-sm-1">
-                    <label>是否显示：</label>
+                    <label><span class="asterisk"></span>是否显示：</label>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-4 col-label">
                     <div class="inline-labels">
                       <c:if test="${brand.display == true}">是</c:if>
                       <c:if test="${brand.display == false}">否</c:if>
@@ -471,9 +471,9 @@
                   </div>
                   <div class="col-sm-1"></div>
                   <div class="col-sm-1">
-                    <label>是否热门：</label>
+                    <label><span class="asterisk"></span>是否热门：</label>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-4 col-label">
                     <div class="inline-labels">
                       <c:if test="${brand.hot == true}">是</c:if>
                       <c:if test="${brand.hot == false}">否</c:if>

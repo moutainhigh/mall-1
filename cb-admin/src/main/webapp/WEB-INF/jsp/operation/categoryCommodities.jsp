@@ -45,6 +45,17 @@
                 });
             }
         }
+
+        function formatPublishState(publishState) {
+            switch (publishState) {
+                case "WAIT_UP_SHELVES":
+                    return "待上架";
+                case "UP_SHELVES":
+                    return "上架";
+                case "DOWN_SHELVES":
+                    return "下架";
+            }
+        }
     </script>
 </head>
 <body>
@@ -207,6 +218,7 @@
                             <kendo:grid-column title="销售价" field="commodity.sellPrice" width="80" sortable="false" filterable="false"/>
                             <kendo:grid-column title="市场价格" field="commodity.marketPrice" width="80" sortable="false" filterable="false"/>
                             <kendo:grid-column title="创建时间" field="commodity.createTime" width="130" format="{0:yyyy-MM-dd HH:mm}" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="上下架状态" field="commodity.publishState" template="#=formatPublishState(commodity.publishState)#" width="130"/>
                             <kendo:grid-column title="备注" field="commodity.remark" width="150" sortable="false" filterable="false"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
