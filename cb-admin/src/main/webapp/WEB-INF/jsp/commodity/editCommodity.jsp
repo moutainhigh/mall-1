@@ -65,6 +65,8 @@
 
             $("#brandId").select2();
 
+            $("#priceSection").val(${commodity.priceSection.sectionId});
+
             $.citySelector.init({
                 province: "province",
                 city: "city",
@@ -157,26 +159,29 @@
 
         function specAuto() {
             var keyword = $("#commodityTitle").val();
-            if(keyword == null || keyword == ""){
-                bootbox.alert("请先填写商品标题");
+            var specUrl = $("#specUrl").val();
+            if(keyword != ""|| specUrl != ""){
+                $.getJSON("../commodity/specAuto/yicheSpecs.do", {
+                    keyword: keyword,
+                    specUrl:specUrl
+                }, function (json) {
+                    if(json.resultType=="SUCCESS"){
+                        var data = json.data;
+                        for(var key in data){
+                            var specTr = $("#specTable tr[tag='"+key+"']");
+                            if(specTr != null){
+                                $(specTr).find("input[name='specValue']").val(data[key]);
+                            }
+                        }
+                        commonNotify("配置已自动填充完成","success");
+                    }else{
+                        bootbox.alert(json.message);
+                    }
+                });
+            }else{
+                bootbox.alert("请先填写商品标题或者汽车配置网址");
                 return;
             }
-            $.getJSON("../commodity/specAuto/yicheSpecs.do", {
-                keyword: keyword
-            }, function (json) {
-                if(json.resultType=="SUCCESS"){
-                    var data = json.data;
-                    for(var key in data){
-                        var specTr = $("#specTable tr[tag='"+key+"']");
-                        if(specTr != null){
-                            $(specTr).find("input[name='specValue']").val(data[key]);
-                        }
-                    }
-                    commonNotify("配置已自动填充完成","success");
-                }else{
-                    bootbox.alert(json.message);
-                }
-            });
         }
 
         function selectSeller() {
@@ -276,7 +281,7 @@
                                 <label><span class="asterisk">*</span> 商品价格段：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="priceSection.sectionId" id="priceSection" cssClass="form-control simpleselect validate[required]">
+                                <form:select path="priceSection.sectionId" id="priceSection" cssClass="form-control validate[required]">
                                     <c:forEach items="${priceSections}" var="section">
                                         <option value="${section.sectionId}" option-startPrice="${section.startPrice}" option-endPrice="${section.endPrice}">${section.startPrice} - ${section.endPrice}</option>
                                     </c:forEach>
@@ -488,6 +493,23 @@
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>汽车配置地址：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" id="specUrl" placeholder="&nbsp;输入汽车网址或商品标题搜索汽车配置" style="width: 320px;line-height: 28px"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" onclick="specAuto()" class="btn btn-default">搜索</button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
 
                         <div class="row">
                             <div class="col-sm-2">
@@ -510,9 +532,6 @@
                                     </c:forEach>
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="col-sm-2">
-                                <button type="button" class="btn btn-default" onclick="specAuto()"><i class="fa fa-search"></i>搜索汽车配置</button>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
