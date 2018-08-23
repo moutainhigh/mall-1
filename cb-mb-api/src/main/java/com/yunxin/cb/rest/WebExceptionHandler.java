@@ -74,14 +74,15 @@ public class WebExceptionHandler {
         if (e instanceof CommonException) {
             return new ResponseResult(Result.FAILURE, e.getMessage());
         }
-        if (e instanceof MethodArgumentNotValidException) {
-            MethodArgumentNotValidException be = (MethodArgumentNotValidException) e;
-            //随机返回一个对象属性的异常信息。
-            FieldError fieldError = be.getBindingResult().getFieldError();
-            return new ResponseResult(Result.FAILURE, fieldError.getDefaultMessage());
-        }
         logger.error("服务运行异常", e);
         return new ResponseResult(Result.FAILURE, "系统繁忙，请稍后重试");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseResult MethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        FieldError fieldError = e.getBindingResult().getFieldError();
+        return new ResponseResult(Result.FAILURE, fieldError.getDefaultMessage());
     }
 
     /**
@@ -89,7 +90,7 @@ public class WebExceptionHandler {
      * @param ex
      * @return
      */
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseResult handleApiConstraintViolationException(ConstraintViolationException ex) {
         String message = "";
