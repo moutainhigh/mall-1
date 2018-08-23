@@ -61,6 +61,9 @@ public class FloorService implements IFloorService {
         int[] commodityId = homeFloor.getCommodityId();
         int[] commodityOrder = homeFloor.getCommodityOrder();
         int[] brandId = homeFloor.getBrandId();
+        if(brandId.length != 7){
+            throw new EntityExistException("品牌数量只能有7个");
+        }
         int[] brandOrder = homeFloor.getBrandOrder();
         int[] advertId = homeFloor.getAdvertId();
         int[] advertOrder = homeFloor.getAdvertOrder();
@@ -157,6 +160,9 @@ public class FloorService implements IFloorService {
         int[] commodityId = homeFloor.getCommodityId();
         int[] commodityOrder = homeFloor.getCommodityOrder();
         int[] brandId = homeFloor.getBrandId();
+        if(brandId.length != 7){
+            throw new EntityExistException("品牌数量只能有7个");
+        }
         int[] brandOrder = homeFloor.getBrandOrder();
         int[] advertId = homeFloor.getAdvertId();
         int[] advertOrder = homeFloor.getAdvertOrder();

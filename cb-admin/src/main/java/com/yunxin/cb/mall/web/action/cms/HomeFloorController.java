@@ -141,6 +141,7 @@ public class HomeFloorController implements ServletContextAware {
             HomeFloor homeFloor1 = floorService.updateHomeFloor(homeFloor);
         } catch (EntityExistException e) {
             result.addError(new FieldError("homeFloor", "floorName", homeFloor.getFloorName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toEditHomeFloor(homeFloor.getFloorId(), modelMap, locale);
         }
         return "redirect:../common/success.do?reurl=cms/homeFloors.do";

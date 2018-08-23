@@ -38,7 +38,7 @@ public class BrandService implements IBrandService {
     @Override
     public Brand addBrand(Brand brand) throws EntityExistException {
         if (!brandDao.isOrUnique(brand, Brand_.brandNo, Brand_.brandName)) {
-            throw new EntityExistException("品牌编号或品牌中文名称已存在");
+            throw new EntityExistException("品牌中文名称已存在");
         }
 //        brand.setEnabled(true);
         brand.setCreateTime(new Date());
@@ -89,7 +89,7 @@ public class BrandService implements IBrandService {
     @Override
     public Brand updateBrand(Brand brand) throws EntityExistException {
         if (!brandDao.isOrUnique(brand, Brand_.brandNo, Brand_.brandName)) {
-            throw new EntityExistException("品牌编号或品牌中文名称已存在");
+            throw new EntityExistException("品牌中文名称已存在");
         }
         Brand oldBrand = brandDao.findOne(brand.getBrandId());
         AttributeReplication.copying(brand, oldBrand, Brand_.brandNo, Brand_.brandName, Brand_.brandEnName, Brand_.brandTitle, Brand_.brandKey
