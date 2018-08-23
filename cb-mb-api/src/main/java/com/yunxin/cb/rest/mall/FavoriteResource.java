@@ -15,9 +15,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -70,7 +72,8 @@ public class FavoriteResource extends BaseResource {
             @ApiImplicitParam(name = "salePrice", value = "销售价", required = true, paramType = "post", dataType = "int")})
     @PostMapping(value = "addFavorite")
     @ApiVersion(1)
-    public ResponseResult<FavoriteVo> addFavorite(@RequestBody FavoriteVo favoriteVo) {
+    public ResponseResult<FavoriteVo> addFavorite(@Validated @RequestBody FavoriteVo favoriteVo) {
+        ResponseResult result=new ResponseResult(Result.FAILURE);
         try {
             logger.info("input Parameter favoriteVo:" + favoriteVo.toString());
             Favorite favorite = new Favorite();
@@ -79,16 +82,14 @@ public class FavoriteResource extends BaseResource {
             favorite = favoriteService.addFavorite(favorite);
             if (favorite != null) {
                 BeanUtils.copyProperties(favoriteVo, favorite);
-                return new ResponseResult(favoriteVo);//成功
-            } else {
-                return new ResponseResult(Result.FAILURE);//失败
+                result.setResult(Result.SUCCESS);
             }
         } catch (IllegalAccessException e) {
             logger.error("IllegalAccessException is "+e);
         } catch (InvocationTargetException e) {
             logger.error("InvocationTargetException is "+e);
         }
-        return new ResponseResult(Result.SUCCESS);//成功
+        return result;
     }
 
     /**
@@ -104,19 +105,16 @@ public class FavoriteResource extends BaseResource {
     @PostMapping(value = "delFavorites")
     @ApiVersion(1)
     public ResponseResult delFavorites(@RequestBody List<Integer> favoriteIds){
+        ResponseResult result=new ResponseResult(Result.FAILURE);
         try {
             if(LogicUtils.isNullOrEmpty(favoriteIds)){
                 return new ResponseResult(Result.FAILURE,"参数为空");//失败
             }
-            int result=favoriteService.removeFavoriteBatch(favoriteIds, getCustomerId());
-            if(result>0){
-                return new ResponseResult(Result.SUCCESS);//成功
-            }else{
-                return new ResponseResult(Result.FAILURE);//失败
-            }
+            favoriteService.removeFavoriteBatch(favoriteIds, getCustomerId());
+            result.setResult(Result.SUCCESS);
         }catch (Exception e){
             logger.error("Exception is "+e);
         }
-        return new ResponseResult(Result.FAILURE);//失败
+        return result;
     }
 }

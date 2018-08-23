@@ -1,11 +1,17 @@
 package com.yunxin.test.rb;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.yunxin.cb.Application;
+import com.yunxin.cb.jwt.JwtUtil;
+import com.yunxin.cb.mall.vo.FavoriteVo;
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.mall.CommodityResource;
 import com.yunxin.cb.rest.mall.FavoriteResource;
+import com.yunxin.cb.util.LogicUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +32,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Title:收藏夹测试类
@@ -38,72 +46,59 @@ import java.util.List;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-public class FavoriteTest {
+public class FavoriteTest extends MockHttpUtils {
 
     private static final Logger log = LoggerFactory.getLogger(HistoryRecordTest.class);
     @Autowired
-    private MockMvc mvc;
-    @Autowired
     private WebApplicationContext context;
-    @Autowired
-    private FavoriteResource favoriteResource;
     @Before
     public void setUp() throws Exception {
-//        mvc = MockMvcBuilders.standaloneSetup(favoriteResource).build();
         //MockMvcBuilders使用构建MockMvc对象   （项目拦截器有效）
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
     @Test
     public void getCustomerFavoriteTest() throws Exception {
-        log.info("获取用户收藏夹 V1 start");
-        MvcResult mvcResult = mvc.perform(
-                MockMvcRequestBuilders.post("/v1/mall/favorite/getCustomerFavorite")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .param("pageNo","1").param("pageSize","10"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("获取用户收藏夹 V1 end result : " + content);
+        log.info("获取用户收藏夹 start");
+        String url="/v1/mall/favorite/getCustomerFavorite";
+        String content="";
+        String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        Map<String,Object> map=new HashMap<>();
+        map.put("pageNo",1);
+        map.put("pageSize",10);
+        commonMvcPerFormPost(url,content,contentType,acceptStatus,map);
+        log.info("获取用户收藏夹 end ");
     }
 
     @Test
     public void addFavoriteTest() throws Exception {
-        log.info("商品添加收藏夹 V1 start");
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("productId",546);
-        jsonObject.put("salePrice",288888);
-        MvcResult mvcResult = mvc.perform(
-                MockMvcRequestBuilders.post("/v1/mall/favorite/addFavorite")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .content(jsonObject.toJSONString()))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("商品添加收藏夹 V1 end result : " + content);
+        log.info("商品添加收藏夹 start");
+        FavoriteVo favoriteVo=new FavoriteVo();
+        favoriteVo.setProductId(546);
+        favoriteVo.setSalePrice(2000.88f);
+        ObjectMapper objectMapper = new ObjectMapper()
+                .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+        String url="/v1/mall/favorite/addFavorite";
+        String content=objectMapper.writeValueAsString(favoriteVo);
+        String contentType=MediaType.APPLICATION_JSON_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        commonMvcPerFormPost(url,content,contentType,acceptStatus,null);
+        log.info("商品添加收藏夹 end ");
     }
 
     @Test
     public void delFavoritesTest() throws Exception {
-        log.info("商品移出收藏夹(批量) V1 start");
+        log.info("商品删除收藏夹 start");
         List<Integer> favoriteIds=new ArrayList<>();
         favoriteIds.add(415);
-        MvcResult mvcResult = mvc.perform(
-                MockMvcRequestBuilders.post("/v1/mall/favorite/delFavorites")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .content(JSONObject.toJSONString(favoriteIds)))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("商品移出收藏夹(批量) V1 end result : " + content);
+        String url="/v1/mall/favorite/delFavorites";
+        String content=JSONObject.toJSONString(favoriteIds);
+        String contentType=MediaType.APPLICATION_JSON_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        commonMvcPerFormPost(url,content,contentType,acceptStatus,null);
+        log.info("商品删除收藏夹 end ");
     }
+
+
 }

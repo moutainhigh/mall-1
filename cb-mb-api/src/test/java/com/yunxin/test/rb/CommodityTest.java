@@ -1,6 +1,8 @@
 package com.yunxin.test.rb;
 
 import com.yunxin.cb.Application;
+import com.yunxin.cb.jwt.JwtUtil;
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.mall.CommodityResource;
 import com.yunxin.cb.rest.mall.HistoryRecordResource;
 import org.junit.Assert;
@@ -22,6 +24,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Title:商品测试类
  * @Auther: eleven
@@ -32,62 +37,46 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-public class CommodityTest {
+public class CommodityTest extends MockHttpUtils {
 
     private static final Logger log = LoggerFactory.getLogger(HistoryRecordTest.class);
     @Autowired
-    private MockMvc mvc;
-    @Autowired
     private WebApplicationContext context;
-    @Autowired
-    private CommodityResource commodityResource;
     @Before
     public void setUp() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(commodityResource).build();
+        mvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
     @Test
     public void getCommdityDetailTest() throws Exception {
-        log.info("通过货品ID查询商品详情 V1 start");
-        MvcResult mvcResult = mvc.perform(
-                MockMvcRequestBuilders.get("/v1/mall/commodity/getCommdityDetail/"+546)
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("通过货品ID查询商品详情 V1 end result : " + content);
+        log.info("通过货品ID查询商品详情 start");
+        String url="/v1/mall/commodity/getCommdityDetail/"+546;
+        String content="";
+        String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        commonMvcPerFormGet(url,content,contentType,acceptStatus,null);
+        log.info("通过货品ID查询商品详情 end ");
     }
 
     @Test
     public void getProductsByCommodityIdTest() throws Exception {
-        log.info("通过商品ID查询所有货品属性 V1 start");
-        MvcResult mvcResult = mvc.perform(
-                MockMvcRequestBuilders.get("/v1/mall/commodity/getProductsByCommodityId/"+457)
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("通过商品ID查询所有货品属性 V1 end result : " + content);
+        log.info("通过商品ID查询所有货品属性 start");
+        String url="/v1/mall/commodity/getProductsByCommodityId/"+457;
+        String content="";
+        String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        commonMvcPerFormGet(url,content,contentType,acceptStatus,null);
+        log.info("通过商品ID查询所有货品属性 end ");
     }
 
     @Test
     public void hotCityTest() throws Exception {
-        log.info("查询热门城市 V1 start");
-        MvcResult mvcResult = mvc.perform(
-                MockMvcRequestBuilders.get("/v1/mall/commodity/hotCity/")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("查询热门城市 V1 end result : " + content);
+        log.info("查询热门城市 start");
+        String url="/v1/mall/commodity/hotCity/";
+        String content="";
+        String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        commonMvcPerFormGet(url,content,contentType,acceptStatus,null);
+        log.info("查询热门城市 end ");
     }
 }

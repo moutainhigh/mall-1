@@ -1,7 +1,11 @@
 package com.yunxin.test.rb;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yunxin.cb.Application;
+import com.yunxin.cb.jwt.JwtUtil;
+import com.yunxin.cb.meta.Result;
+import com.yunxin.cb.util.LogicUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
@@ -31,6 +35,8 @@ import java.util.Map;
 public class MockHttpUtils {
 
     private static final Logger log = LoggerFactory.getLogger(MockHttpUtils.class);
+
+    private final String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxODA4NjQ2MDAwMyIsImV4cCI6MTUzNTQ1MDY4NCwianRpIjoiNTMzIn0.FK3d6ofCa1kgr8wB1uyO50Xs7LqYmfLfLnvXnzSdA8TkMcLYl6CFaIPbG8q98W8fnYsiHm0zyr5m8fN9DSIfAg";
 
     protected MockMvc mvc;
 
@@ -107,11 +113,11 @@ public class MockHttpUtils {
                                      String content,String contentType,Object acceptStatus,Map<String,Object>map)throws Exception{
 
         MockHttpServletRequestBuilder requestBuilder;
-        if(StringUtils.isEmpty(perFormType) || "post".equals(perFormType)){
+        if(!StringUtils.isEmpty(perFormType) && "post".equals(perFormType)){
             requestBuilder = MockMvcRequestBuilders.post(url);
-        }else if(StringUtils.isEmpty(perFormType) || "get".equals(perFormType)){
+        }else if(!StringUtils.isEmpty(perFormType) && "get".equals(perFormType)){
             requestBuilder = MockMvcRequestBuilders.get(url);
-        }else if(StringUtils.isEmpty(perFormType) || "put".equals(perFormType)){
+        }else if(!StringUtils.isEmpty(perFormType) && "put".equals(perFormType)){
             requestBuilder = MockMvcRequestBuilders.put(url);
         }else{
             requestBuilder = MockMvcRequestBuilders.delete(url);
@@ -119,10 +125,11 @@ public class MockHttpUtils {
         if(!StringUtils.isEmpty(content) || !"".equals(content)){
             requestBuilder.content(content);
         }
+        requestBuilder.header(JwtUtil.HEADER_STRING,token);
         requestBuilder.contentType(contentType);
         if(null != map && !map.isEmpty()){
             for (String paramName:map.keySet()){
-                requestBuilder.header(paramName,map.get(paramName));
+                requestBuilder.param(paramName,String.valueOf(map.get(paramName)));
             }
         }
         MvcResult mvcResult = mvc.perform(requestBuilder)
