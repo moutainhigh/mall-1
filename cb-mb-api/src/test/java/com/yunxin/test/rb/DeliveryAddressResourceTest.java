@@ -1,56 +1,27 @@
 package com.yunxin.test.rb;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yunxin.cb.Application;
 import com.yunxin.cb.mall.entity.meta.AddressType;
 import com.yunxin.cb.mall.vo.DeliveryAddressVO;
-import com.yunxin.cb.rest.mall.DeliveryAddressResource;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 
 public class DeliveryAddressResourceTest extends MockHttpUtils {
-    private static final Logger log = LoggerFactory.getLogger(DeliveryAddressResourceTest.class);
-    @Autowired
-    private WebApplicationContext context;
-    @Before
-    public void setUp() throws Exception {
-        mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
-    }
+
     @Test
     public void getDeliveryAddress() throws Exception {
         log.info("查询收货地址列表 V1 start");
         String url = "/v1/mall/deliveryAddress/list";
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",map);
+        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",null);
     }
     @Test
     public void getDeliveryAddressDetail() throws Exception{
         log.info("查询收货地址详情 V1 start");
         String url = "/v1/mall/deliveryAddress/96";
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",map);
+        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",null);
     }
     @Test
     public void addDeliveryAddress_notNull()throws Exception{
@@ -67,9 +38,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         deliveryAddressVO.setProvince("110000");
         deliveryAddressVO.setPostCode("335500");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",null);
     }
 
     @Test
@@ -88,9 +57,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         deliveryAddressVO.setPostCode("335500");
         deliveryAddressVO.setDefaultAddress(true);
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",null);
     }
 
     @Test
@@ -107,9 +74,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         deliveryAddressVO.setDistrict("");
         deliveryAddressVO.setProvince("");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",null);
     }
 
     @Test
@@ -128,17 +93,14 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         deliveryAddressVO.setPostCode("335500");
         deliveryAddressVO.setDefaultAddress(true);
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",null);
     }
 
     @Test
     public void deleteDeliveryAddress() throws Exception{
         log.info("删除收货地址 V1 start");
         String url = "/v1/mall/deliveryAddress/96";
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
         commonMvcPerFormDelete(url,"",MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 
@@ -157,9 +119,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         deliveryAddressVO.setProvince("110000");
         deliveryAddressVO.setPostCode("335500");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
+        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",null);
     }
 
     @Test
@@ -177,9 +137,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         deliveryAddressVO.setProvince("110000");
         deliveryAddressVO.setPostCode("335500");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
+        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",null);
     }
 
     @Test
@@ -197,9 +155,7 @@ public class DeliveryAddressResourceTest extends MockHttpUtils {
         deliveryAddressVO.setProvince("110000");
         deliveryAddressVO.setPostCode("");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        Map<String,Object> map = new HashMap<>();
-        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
-        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
+        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",null);
     }
 
 }
