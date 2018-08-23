@@ -110,6 +110,11 @@
 
         function upOrDownShelvesProduct(pid,pState){
             var state="${commodity.publishState}";
+            var commodityState = "${commodity.commodityState}";
+            if(commodityState != 'AUDITED'){
+                bootbox.alert("失败,商品未审核通过!");
+                return false;
+            }
             if(pState=='DOWN_SHELVES'&&state=='UP_SHELVES'){
                 bootbox.alert("失败,请先下架商品!");
                 return false;

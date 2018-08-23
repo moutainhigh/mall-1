@@ -59,7 +59,6 @@ public class HistoryRecordTest extends MockHttpUtils{
         String url="/v1/mall/history/delHistoryRecords";
         String content="";
         String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
-        String acceptStatus=Result.SUCCESS.name();
         List<Integer> historyRecordIds = new ArrayList<>();
         historyRecordIds.add(1);
         content = JSONObject.toJSONString(historyRecordIds);
