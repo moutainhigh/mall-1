@@ -40,7 +40,7 @@ public class MockHttpUtils {
     @Autowired
     protected WebApplicationContext context;
 
-    private final String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxODA4NjQ2MDAwMyIsImV4cCI6MTUzNTQ1MDY4NCwianRpIjoiNTMzIn0.FK3d6ofCa1kgr8wB1uyO50Xs7LqYmfLfLnvXnzSdA8TkMcLYl6CFaIPbG8q98W8fnYsiHm0zyr5m8fN9DSIfAg";
+    private final String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ";
 
     protected MockMvc mvc;
 
@@ -149,11 +149,10 @@ public class MockHttpUtils {
         MvcResult mvcResult = mvc.perform(requestBuilder)
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
-        String result = mvcResult.getResponse().getContentAsString();
-        JSONObject resultJson =  JSONObject.parseObject(result);
+        JSONObject resultJson =  JSONObject.parseObject(mvcResult.getResponse().getContentAsString());
+        resultJson.get("data");
         Assert.assertEquals(acceptStatus, resultJson.get("result"));
         log.info("响应内容：" + mvcResult.getResponse().getContentAsString());
-
     }
 
 }
