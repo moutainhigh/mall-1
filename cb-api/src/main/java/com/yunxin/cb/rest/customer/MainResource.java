@@ -352,7 +352,7 @@ public class MainResource extends BaseResource {
                     responseResult.setMessage("短信发送失败，请确认手机号或稍后再试!");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("sendMobileValidCode failed", e);
                 responseResult.setMessage("服务器出错！");
             }
         }

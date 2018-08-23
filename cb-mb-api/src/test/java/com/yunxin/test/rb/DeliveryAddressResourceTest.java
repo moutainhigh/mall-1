@@ -24,14 +24,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = Application.class)
-@WebAppConfiguration
-@AutoConfigureMockMvc
-public class DeliveryAddressResourceTest {
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class DeliveryAddressResourceTest extends MockHttpUtils {
     private static final Logger log = LoggerFactory.getLogger(DeliveryAddressResourceTest.class);
-    @Autowired
-    private MockMvc mvc;
     @Autowired
     private WebApplicationContext context;
     @Before
@@ -41,30 +39,23 @@ public class DeliveryAddressResourceTest {
     @Test
     public void getDeliveryAddress() throws Exception {
         log.info("查询收货地址列表 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/deliveryAddress/list")
-                .contentType(MediaType.APPLICATION_JSON_UTF8).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("查询收货地址列表 V1 end result : " + content);
+        String url = "/v1/mall/deliveryAddress/list";
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",map);
     }
     @Test
     public void getDeliveryAddressDetail() throws Exception{
         log.info("查询收货地址详情 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/deliveryAddress/36")
-                .contentType(MediaType.APPLICATION_JSON_UTF8).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("查询收货地址详情 V1 end result : " + content);
+        String url = "/v1/mall/deliveryAddress/96";
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",map);
     }
     @Test
     public void addDeliveryAddress_notNull()throws Exception{
         log.info("新增收货地址 V1 start");
+        String url = "/v1/mall/deliveryAddress";
         DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
         deliveryAddressVO.setAddressType(AddressType.COMPANY);
         deliveryAddressVO.setCity("110100");
@@ -76,20 +67,15 @@ public class DeliveryAddressResourceTest {
         deliveryAddressVO.setProvince("110000");
         deliveryAddressVO.setPostCode("335500");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/deliveryAddress")
-                .contentType(MediaType.APPLICATION_JSON).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ")
-                .content(deadVO))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("新增收货地址 V1 end result : " + content);
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 
     @Test
     public void addDeliveryAddress_defaultAddress()throws Exception{
         log.info("新增收货地址 V1 start");
+        String url = "/v1/mall/deliveryAddress";
         DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
         deliveryAddressVO.setAddressType(AddressType.COMPANY);
         deliveryAddressVO.setCity("110100");
@@ -102,44 +88,34 @@ public class DeliveryAddressResourceTest {
         deliveryAddressVO.setPostCode("335500");
         deliveryAddressVO.setDefaultAddress(true);
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/deliveryAddress")
-                .contentType(MediaType.APPLICATION_JSON).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ")
-                .content(deadVO))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("新增收货地址 V1 end result : " + content);
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 
     @Test
     public void addDeliveryAddress_otherNull()throws Exception{
         log.info("新增收货地址 V1 start");
+        String url = "/v1/mall/deliveryAddress";
         DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
         deliveryAddressVO.setAddressType(AddressType.COMPANY);
         deliveryAddressVO.setCity("");
         deliveryAddressVO.setConsigneeAddress("");
-        deliveryAddressVO.setConsigneeMobile("");
+        deliveryAddressVO.setConsigneeMobile("18679307314");
         deliveryAddressVO.setConsigneeTelephone("");
         deliveryAddressVO.setConsigneeName("");
         deliveryAddressVO.setDistrict("");
         deliveryAddressVO.setProvince("");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/deliveryAddress")
-                .contentType(MediaType.APPLICATION_JSON).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ")
-                .content(deadVO))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("新增收货地址 V1 end result : " + content);
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
     }
 
     @Test
     public void addDeliveryAddress_mobile()throws Exception{
         log.info("新增收货地址 V1 start");
+        String url = "/v1/mall/deliveryAddress";
         DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
         deliveryAddressVO.setAddressType(AddressType.COMPANY);
         deliveryAddressVO.setCity("110100");
@@ -152,33 +128,24 @@ public class DeliveryAddressResourceTest {
         deliveryAddressVO.setPostCode("335500");
         deliveryAddressVO.setDefaultAddress(true);
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/deliveryAddress")
-                .contentType(MediaType.APPLICATION_JSON).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ")
-                .content(deadVO))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("新增收货地址 V1 end result : " + content);
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
     }
 
     @Test
     public void deleteDeliveryAddress() throws Exception{
         log.info("删除收货地址 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.delete("/v1/mall/deliveryAddress/36")
-                .contentType(MediaType.APPLICATION_JSON_UTF8).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("删除收货地址 V1 end result : " + content);
+        String url = "/v1/mall/deliveryAddress/96";
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormDelete(url,"",MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 
     @Test
     public void putDeliveryAddress()throws Exception{
         log.info("修改收货地址 V1 start");
+        String url = "/v1/mall/deliveryAddress/95";
         DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
         deliveryAddressVO.setAddressType(AddressType.COMPANY);
         deliveryAddressVO.setCity("110100");
@@ -190,20 +157,15 @@ public class DeliveryAddressResourceTest {
         deliveryAddressVO.setProvince("110000");
         deliveryAddressVO.setPostCode("335500");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/v1/mall/deliveryAddress/80")
-                .contentType(MediaType.APPLICATION_JSON).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ")
-                .content(deadVO))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("修改收货地址 V1 end result : " + content);
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"SUCCESS",map);
     }
 
     @Test
     public void putDeliveryAddress_mobile()throws Exception{
         log.info("修改收货地址 V1 start");
+        String url = "/v1/mall/deliveryAddress/95";
         DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
         deliveryAddressVO.setAddressType(AddressType.COMPANY);
         deliveryAddressVO.setCity("110100");
@@ -215,20 +177,15 @@ public class DeliveryAddressResourceTest {
         deliveryAddressVO.setProvince("110000");
         deliveryAddressVO.setPostCode("335500");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/v1/mall/deliveryAddress/80")
-                .contentType(MediaType.APPLICATION_JSON).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ")
-                .content(deadVO))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("修改收货地址 V1 end result : " + content);
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
     }
 
     @Test
     public void putDeliveryAddress_postCode()throws Exception{
         log.info("修改收货地址 V1 start");
+        String url = "/v1/mall/deliveryAddress/95";
         DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
         deliveryAddressVO.setAddressType(AddressType.COMPANY);
         deliveryAddressVO.setCity("110100");
@@ -240,15 +197,9 @@ public class DeliveryAddressResourceTest {
         deliveryAddressVO.setProvince("110000");
         deliveryAddressVO.setPostCode("");
         String deadVO = JSONObject.toJSONString(deliveryAddressVO);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/v1/mall/deliveryAddress/80")
-                .contentType(MediaType.APPLICATION_JSON).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ")
-                .content(deadVO))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("修改收货地址 V1 end result : " + content);
+        Map<String,Object> map = new HashMap<>();
+        map.put("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzQwNzE1MTUwNiIsImV4cCI6MTUzNTQzNzAyMCwianRpIjoiMzA2In0.0FPUMt6pw9v0LGXvMYgPb2F2Aji0DxXskDZZ3rxKQm-w3RmgYSqDYGYOys6fZxNxpItSpH-7eThdkwAHdhB5iQ");
+        commonMvcPerFormPut(url,deadVO,MediaType.APPLICATION_JSON_VALUE,"FAILURE",map);
     }
 
 }
