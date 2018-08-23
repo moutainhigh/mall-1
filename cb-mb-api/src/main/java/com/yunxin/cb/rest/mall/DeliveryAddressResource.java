@@ -110,7 +110,7 @@ public class DeliveryAddressResource extends BaseResource {
     })
     @PutMapping(value = "deliveryAddress/{addressId}")
     @ApiVersion(1)
-    public ResponseResult updateDeliveryAddress(@PathVariable(value = "addressId") int addressId, @Valid @RequestBody DeliveryAddressVO deliveryAddressVO) {
+    public ResponseResult updateDeliveryAddress(@PathVariable(value = "addressId") int addressId, @Valid @RequestBody DeliveryAddressVO deliveryAddressVO)
         try {
             logger.info("input Parameter deliveryAddressVO:" + deliveryAddressVO.toString());
             deliveryAddressService.updateByPrimaryKey(addressId,deliveryAddressVO);
