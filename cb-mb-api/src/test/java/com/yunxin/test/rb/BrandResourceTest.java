@@ -1,6 +1,9 @@
 package com.yunxin.test.rb;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yunxin.cb.Application;
+import com.yunxin.cb.mall.entity.meta.AddressType;
+import com.yunxin.cb.mall.vo.DeliveryAddressVO;
 import com.yunxin.cb.rest.mall.BrandResource;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,14 +23,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = Application.class)
-@WebAppConfiguration
-@AutoConfigureMockMvc
-public class BrandResourceTest {
+import java.util.HashMap;
+import java.util.Map;
+
+public class BrandResourceTest extends MockHttpUtils{
     private static final Logger log = LoggerFactory.getLogger(BrandResourceTest.class);
-    @Autowired
-    private MockMvc mvc;
     @Autowired
     private BrandResource brandResource;
     @Before
@@ -37,25 +37,17 @@ public class BrandResourceTest {
     @Test
     public void getBrand() throws Exception {
         log.info("查询所有品牌 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/brand/list")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("查询所有品牌 V1 end result : " + content);
+        String url = "/v1/mall/brand/list";
+        Map<String,Object> map = new HashMap<>();
+        commonMvcPerFormGet(url,"",MediaType.APPLICATION_JSON_VALUE,200,map);
+
     }
     @Test
     public void getHotBrand() throws Exception {
         log.info("查询所有品牌 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/mall/brand/list")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("查询所有品牌 V1 end result : " + content);
+        String url = "/v1/mall/brand/list";
+        Map<String,Object> map = new HashMap<>();
+        commonMvcPerFormPost(url,"",MediaType.APPLICATION_JSON_VALUE,200,map);
+
     }
 }
