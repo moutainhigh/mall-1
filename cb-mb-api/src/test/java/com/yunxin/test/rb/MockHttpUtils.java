@@ -37,25 +37,10 @@ public class MockHttpUtils {
      * 功能描述: POST请求
      *
      * @param url 请求路径
-     * @param paramMap 输入参数
-     * @param contentType 数据格式
-     * @param acceptStatus 期望请求结果码
-     * @return:
-     * @auther: yangzhen
-     * @date: 2018/8/22 17:47
-     */
-/*    public void commonMvcPerFormPost(String url,
-                                     Map<String,String> paramMap, String contentType, int acceptStatus,Map<String,Object>map)throws Exception{
-        commonMvcPerForm("post",url,paramMap,contentType,acceptStatus,map);
-    }*/
-
-    /**
-     * 功能描述: POST请求
-     *
-     * @param url 请求路径
      * @param content 输入参数
      * @param contentType 数据格式
      * @param acceptStatus 期望请求结果码
+     * @param map token
      * @return:
      * @auther: yangzhen
      * @date: 2018/8/22 17:47
@@ -72,6 +57,7 @@ public class MockHttpUtils {
      * @param content 输入参数
      * @param contentType 数据格式
      * @param acceptStatus 期望请求结果码
+     * @param map token
      * @return:
      * @auther: yangzhen
      * @date: 2018/8/22 17:47
@@ -87,6 +73,7 @@ public class MockHttpUtils {
      * @param content 输入参数
      * @param contentType 数据格式
      * @param acceptStatus 期望请求结果码
+     * @param map token
      * @return:
      * @auther: yangzhen
      * @date: 2018/8/22 17:47
@@ -103,6 +90,7 @@ public class MockHttpUtils {
      * @param content 输入参数
      * @param contentType 数据格式
      * @param acceptStatus 期望请求结果码
+     * @param map token
      * @return:
      * @auther: yangzhen
      * @date: 2018/8/22 17:47
@@ -113,31 +101,6 @@ public class MockHttpUtils {
 
     }
 
-    /*public void commonMvcPerForm(String perFormType,String url,
-                                 Map<String,String> paramMap,String contentType,int acceptStatus,Map<String,Object>map)throws Exception {
-        MockHttpServletRequestBuilder requestBuilder;
-        if(StringUtils.isEmpty(perFormType) || "post".equals(perFormType)){
-            requestBuilder = MockMvcRequestBuilders.post(url);
-        }else{
-            requestBuilder = MockMvcRequestBuilders.get(url);
-        }
-        if (null != paramMap && !paramMap.isEmpty()){
-            for (String paramName:paramMap.keySet()){
-                requestBuilder.param(paramName,paramMap.get(paramName));
-            }
-        }
-        requestBuilder.contentType(contentType);
-        if(null != map && !map.isEmpty()){
-            for (String paramName:map.keySet()){
-                requestBuilder.header(paramName,map.get(paramName));
-            }
-        }
-        MvcResult mvcResult = mvc.perform(requestBuilder)
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        Assert.assertEquals(acceptStatus, mvcResult.getResponse().getStatus());
-        log.info("响应内容：" + mvcResult.getResponse().getContentAsString());
-    }*/
 
     public void commonMvcPerForm(String perFormType,String url,
                                      String content,String contentType,int acceptStatus,Map<String,Object>map)throws Exception{
