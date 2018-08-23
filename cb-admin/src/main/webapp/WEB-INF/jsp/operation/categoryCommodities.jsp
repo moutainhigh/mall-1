@@ -197,17 +197,17 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="商品分类" field="commodity.catalog.catalogName" width="80"/>
-                            <kendo:grid-column title="商品品牌" field="commodity.brand.brandName" width="80"/>
+                            <kendo:grid-column title="商品分类" field="commodity.catalog.catalogName" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="商品品牌" field="commodity.brand.brandName" width="80" sortable="false" filterable="false"/>
                             <kendo:grid-column title="商品图片" field="commodity.defaultPicPath" width="80" template="<img src='#=commodity.defaultPicPath#'  width='51px' height='55px'/>" sortable="false" filterable="false"/>
-                            <kendo:grid-column title="商品编码" field="commodity.commodityCode" width="80"/>
-                            <kendo:grid-column title="商品名称" field="commodity.commodityName" width="80"/>
+                            <kendo:grid-column title="商品编码" field="commodity.commodityCode" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="商品名称" field="commodity.commodityName" width="80" sortable="false" filterable="false"/>
                             <%--<kendo:grid-column title="推荐值排序" field="recommendValue" width="70"/>--%>
-                            <kendo:grid-column title="成本价" field="commodity.costPrice" width="80"/>
-                            <kendo:grid-column title="销售价" field="commodity.sellPrice" width="80"/>
-                            <kendo:grid-column title="市场价格" field="commodity.marketPrice" width="80"/>
-                            <kendo:grid-column title="创建时间" field="commodity.createTime" width="130" format="{0:yyyy-MM-dd HH:mm}"/>
-                            <kendo:grid-column title="备注" field="commodity.remark" width="150" filterable="false"/>
+                            <kendo:grid-column title="成本价" field="commodity.costPrice" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="销售价" field="commodity.sellPrice" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="市场价格" field="commodity.marketPrice" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="创建时间" field="commodity.createTime" width="130" format="{0:yyyy-MM-dd HH:mm}" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="备注" field="commodity.remark" width="150" sortable="false" filterable="false"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
@@ -324,7 +324,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">选择商品分类</h4>
+                <h4 class="modal-title">选择商品</h4>
             </div>
             <div class="modal-body">
                     <input type="hidden" name="categoryId" value="${category.categoryId}"/>
