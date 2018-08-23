@@ -108,7 +108,7 @@ public class DeliveryAddressResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "addressId", value = "地址ID", required = true, paramType = "path", dataType = "Integer")
     })
-    @PutMapping(value = "deliveryAddress/{addressId}")
+    @PutMapping(value = "deliveryAddress/{addressId})
     @ApiVersion(1)
     public ResponseResult updateDeliveryAddress(@PathVariable(value = "addressId") int addressId, @Valid @RequestBody DeliveryAddressVO deliveryAddressVO) {
         try {
