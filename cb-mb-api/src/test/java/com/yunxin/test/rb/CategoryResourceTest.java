@@ -1,6 +1,7 @@
 package com.yunxin.test.rb;
 
 import com.yunxin.cb.Application;
+import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.mall.HistoryRecordResource;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,6 +20,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -30,57 +33,38 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-public class CategoryResourceTest {
-
-    private static final Logger log = LoggerFactory.getLogger(HistoryRecordTest.class);
-    @Autowired
-    private MockMvc mvc;
-    @Autowired
-    private WebApplicationContext context;
-    @Before
-    public void setUp() throws Exception {
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+public class CategoryResourceTest extends MockHttpUtils{
 
     @Test
     public void carBrandTest() throws Exception {
-        log.info("查询汽车品牌 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/category/list/carBrand")
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("查询汽车品牌 V1 end result : " + content);
+        log.info("查询汽车品牌 start");
+        String url="/v1/mall/category/list/carBrand";
+        String content="";
+        String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        commonMvcPerFormGet(url,content,contentType,acceptStatus,null);
+        log.info("查询汽车品牌 end ");
     }
 
     @Test
     public void getCategoryByIdTest() throws Exception {
-        log.info("根据汽车品牌分类查询车系 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/category/getCategoryById/1")
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("根据汽车品牌分类查询车系 V1 end result : " + content);
+        log.info("根据汽车品牌分类查询车系 start");
+        String url="/v1/mall/category/getCategoryById/1";
+        String content="";
+        String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        commonMvcPerFormGet(url,content,contentType,acceptStatus,null);
+        log.info("根据汽车品牌分类查询车系 end ");
     }
 
     @Test
     public void getCategoryByBrandIdTest() throws Exception {
-        log.info("根据汽车品牌ID查询车系 V1 start");
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/v1/mall/category/getCategoryByBrandId/279")
-                .header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiI4ODg4ODgiLCJleHAiOjE1MzU0MjcyMTMsImp0aSI6IjEifQ.NskhiSw4EO_JlWBqEkQJmXTHiFwQLXHy8GUZsouSpfUAGl5VXH4MhHbXgPbqvurk2AUuDk0az0wHcZhNbhTQpg")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-        int status = mvcResult.getResponse().getStatus();                 //得到返回代码
-        String content = mvcResult.getResponse().getContentAsString();    //得到返回结果
-        Assert.assertEquals(200, status);                        //断言，判断返回代码是否正确
-        log.info("根据汽车品牌ID查询车系 V1 end result : " + content);
+        log.info("根据汽车品牌ID查询车系 start");
+        String url="/v1/mall/category/getCategoryByBrandId/279";
+        String content="";
+        String contentType=MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+        String acceptStatus=Result.SUCCESS.name();
+        commonMvcPerFormGet(url,content,contentType,acceptStatus,null);
+        log.info("根据汽车品牌ID查询车系 end ");
     }
 }
