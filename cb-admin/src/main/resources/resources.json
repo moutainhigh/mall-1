@@ -229,6 +229,33 @@
         "name": "参数配置", "code": "171", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"
       }
     ]
+  },
+  {
+    "name": "资金池管理", "code": "18", "type": "MENU", "cssClass": "fa fa-cogs", "value": "fundspool", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "资金池列表", "code": "181", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../fundsPool/fundsPools.do"
+      },{
+        "name": "资金池明细", "code": "182", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../fundsPool/fundsPoolLogs.do"
+      }
+    ]
+  },
+  {
+    "name": "财务管理", "code": "19", "type": "MENU", "cssClass": "fa fa-cogs", "value": "finance", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "提现管理", "code": "191", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../withdraw/withdrawList.do"
+      },
+      {
+        "name": "报账管理", "code": "192", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursements.do"
+      },
+      {
+        "name": "报账财务审批", "code": "193", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursementEa.do"
+      },
+      {
+        "name": "报账财务主管审批", "code": "194", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../reimbursement/reimbursementEam.do"
+      }
+    ]
   }
 
 ]

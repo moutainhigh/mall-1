@@ -8,7 +8,7 @@ package com.yunxin.cb.mall.entity.meta;
  */
 public enum LoanType {
 
-    INSURANCE_LOAN("保险贷"), CREDIT_LOAN("信用贷");
+    LOAN("正常贷款");
 
     private String name;
 

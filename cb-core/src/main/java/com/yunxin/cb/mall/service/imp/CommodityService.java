@@ -34,6 +34,7 @@ import retrofit2.Call;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -113,12 +114,33 @@ public class CommodityService implements ICommodityService {
             throw new EntityExistException("商品编码或商品名已存在");
         }
         Commodity dbCommodity = commodityDao.findOne(commodity.getCommodityId());
+        //S add by lxc    2018-08-09 15:51      根据比例配置更新货品销售价
+        float ratio = 1.0f;
+        boolean updateProductSalePrice = true;
+        if( commodity.getRatio() != null) {
+            ratio = commodity.getRatio().floatValue();
+            if(dbCommodity.getRatio() != null ){
+                if(commodity.getRatio().compareTo(dbCommodity.getRatio()) == 0) {
+                    updateProductSalePrice = false;
+                }
+            }
+        }else{
+            ratio = commodity.getCatalog().getRatio().floatValue();
+        }
+        if(updateProductSalePrice) {
+            int j = productDao.updateSalePriceByCommodityId(ratio, dbCommodity.getCommodityId());
+            if(j > 0){
+                logger.info("更新货品的销售价成功....");
+            }
+        }
+        //E
+
         AttributeReplication.copying(commodity, dbCommodity, Commodity_.catalog, Commodity_.priceSection, Commodity_.brand,
                 Commodity_.commodityCode, Commodity_.commodityName, Commodity_.commodityPYName, Commodity_.shortName, Commodity_.commodityTitle,
                 Commodity_.costPrice, Commodity_.sellPrice, Commodity_.marketPrice, Commodity_.unit, Commodity_.province, Commodity_.city, Commodity_.seoKey,
                 Commodity_.seoTitle, Commodity_.seoDescription, Commodity_.popular, Commodity_.special, Commodity_.recommend, Commodity_.giveaway,
                 Commodity_.barter, Commodity_.preSell, Commodity_.content, Commodity_.deliveryType, Commodity_.weight, Commodity_.volume, Commodity_.defaultPicPath, Commodity_.explainContent,
-                Commodity_.settingContent);
+                Commodity_.settingContent, Commodity_.ratio);
         List<CommoditySpec> commoditySpecs = commoditySpecDao.getCommoditySpecsByCommodityId(commodity.getCommodityId());
         for (CommoditySpec cSpec : commoditySpecs) {
             commoditySpecDao.delete(cSpec);
@@ -138,6 +160,9 @@ public class CommodityService implements ICommodityService {
             }
         }
         // 删除未选中的图
+
+
+
         return dbCommodity;
     }
 

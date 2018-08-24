@@ -84,14 +84,16 @@ public class FiaciaWalletResource {
     @ApiOperation(value = "返现接口")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "customerId", value = "用户ID", required = true, paramType = "path", dataType = "string"),
-            @ApiImplicitParam(name = "money", value = "金额", required = true, paramType = "path", dataType = "bigdecimal")
+            @ApiImplicitParam(name = "money", value = "金额", required = true, paramType = "path", dataType = "bigdecimal"),
+            @ApiImplicitParam(name = "remark", value = "预留字段（可填保单号）", required = true, paramType = "path", dataType = "string")
     })
     @ApiVersion(1)
-    @PostMapping(value = "processCustomerMoney/{customerId}/{money}/{type}")
-    public com.yunxin.cb.mall.restful.ResponseResult processCustomerMoney(@PathVariable Integer customerId, @PathVariable BigDecimal money, @PathVariable WithdrawType type){
+    @PostMapping(value = "processCustomerMoney/{customerId}/{money}/{type}/{remark}")
+    public com.yunxin.cb.mall.restful.ResponseResult processCustomerMoney(@PathVariable Integer customerId, @PathVariable BigDecimal money,
+                                                                          @PathVariable WithdrawType type, @PathVariable String remark){
         com.yunxin.cb.mall.restful.ResponseResult result=new com.yunxin.cb.mall.restful.ResponseResult(Result.FAILURE);
         try {
-            result=finacialWalletService.processCustomerMoney(customerId,money,type);
+            result=finacialWalletService.processCustomerMoney(customerId,money,type,remark);
         } catch (Exception e) {
             log.info("get failed", e);
         }

@@ -45,7 +45,7 @@ public class ProductReturnResource extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "path", dataType = "int")})
     @ApiVersion(1)
-    @PostMapping(value = "productReturn/apply/{orderId}")
+    @GetMapping(value = "productReturn/apply/{orderId}")
     public ResponseResult<ProductReturnApplyDataVO> getProductReturnData(@PathVariable(value = "orderId")int orderId) {
         try {
             ProductReturnApplyDataVO productReturnApplyDataVO = new ProductReturnApplyDataVO();

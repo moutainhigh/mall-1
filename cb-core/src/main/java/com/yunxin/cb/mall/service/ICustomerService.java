@@ -55,11 +55,37 @@ public interface ICustomerService {
     public void removeCustomerById(int customerId);
 
     /**
+     * 重置等级编码
+     */
+    public void resetLevelCodeCode();
+    /**
+     * 重置邀请码
+     */
+    public void resetInvitationCode();
+    /**
+     * 重置重复邀请码
+     */
+    public List<Customer>  resetRepeatInvitationCode(List<Customer> customerRepeat);
+
+    /**
+     * 重置
+     * @param customerRepeat
+     * @return
+     */
+    public List<Customer>  resetRepeatLevelCode(List<Customer> customerRepeat);
+    /**
      * 生成邀请码跟等级编码
      * @param invitationCode
      * @return
      */
     public Customer  generateCode(String invitationCode);
+
+    /**
+     * 根据邀请人生成等级编码
+     * @param recommendCustomer
+     * @return
+     */
+    public Customer generateCodeByRecommendCustomer(Customer recommendCustomer) throws  Exception;
 
     /**
      * 根据等级编码获取上级用户
@@ -198,5 +224,7 @@ public interface ICustomerService {
     CustomerGratitudeVo findCustomerGratitude(int customerId);
 
     List<CustomerGratitudeDataVo> findCustomerGratitudeData(int customerId,GratitudeType gratitudeType);
+
+    void enableCustomerById(int customerId,boolean enabled);
 
 }

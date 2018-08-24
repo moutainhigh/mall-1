@@ -379,6 +379,18 @@ public class CalendarUtils {
         return str1.equals(str2);
     }
 
+    /**
+     * 时间加上月份
+     *
+     * @param date
+     * @return
+     */
+    public static Date addMonth(Date date, int month) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, month);
+        return cal.getTime();
+    }
+
     public static SimpleDateFormat getSimpleDateFormat(String pattern) {
         return new SimpleDateFormat(pattern);
     }
@@ -464,5 +476,8 @@ public class CalendarUtils {
         return date;
     }
 
+    public static void main(String[] args) {
+        System.out.print(formatDate(addMonth(new Date(), 6)));
+    }
 
 }

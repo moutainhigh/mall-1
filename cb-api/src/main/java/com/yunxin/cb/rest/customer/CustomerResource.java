@@ -113,7 +113,7 @@ public class CustomerResource extends BaseResource {
             customerService.addTwoWayFriend(customer,myself);
             return new ResponseResult(Result.SUCCESS);
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.error("addFriend failed", ex);
             return new ResponseResult(Result.FAILURE,"好友添加失败");
         }
     }
@@ -180,7 +180,7 @@ public class CustomerResource extends BaseResource {
         try{
             customerFriendRequestService.deleteCustomerFriendRequestById(friendId,getCustomerId());
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.error("removeFriendRequest failed", ex);
             return new ResponseResult(Result.FAILURE,"删除失败");
         }
         return new ResponseResult(Result.SUCCESS);
@@ -197,7 +197,7 @@ public class CustomerResource extends BaseResource {
             customerService.delFriendById(customerId, friendId);
             customerFriendRequestService.deleteCustomerFriendRequestById(friendId,customerId);
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.error("removeFriend failed", ex);
             return new ResponseResult(Result.FAILURE,"好友删除失败");
         }
         return new ResponseResult(Result.SUCCESS);
@@ -364,7 +364,7 @@ public class CustomerResource extends BaseResource {
             else
                 return new ResponseResult(Result.FAILURE,"请先购买保险才能感恩推荐人");
         }catch (Exception e){
-            logger.error(e.getMessage(),e);
+            logger.error("praise failed", e);
             return new ResponseResult(Result.FAILURE,"服务器异常,请稍后重试");
         }
 
@@ -387,7 +387,7 @@ public class CustomerResource extends BaseResource {
         try{
             return new ResponseResult(customerService.updateCustomerMsg(getCustomerId(),customerUpdateVo));
         }catch (Exception e){
-            logger.error(e.getMessage());
+            logger.error("updateCustomer failed", e);
             return new ResponseResult(Result.FAILURE,"服务器异常");
         }
     }

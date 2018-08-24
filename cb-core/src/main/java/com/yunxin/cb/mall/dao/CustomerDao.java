@@ -26,6 +26,16 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Query("select c from Customer c where c.accountName=?1 and c.mobile=?2 and c.enabled=?3")
     public Customer findByAccountNameAndMobileAndEnabled(String accountName, String mobile, boolean enabled);
 
+    @Query("select c from Customer c where c.invitationCode is null or c.invitationCode='' ")
+    public List<Customer> findByInvitationCodeIsNulls();
+
+
+    @Query("select c from Customer c group by c.invitationCode having count(c.invitationCode)>1 ORDER BY c.createTime desc ")
+    public List<Customer> findInvitationCodeByRepeat();
+
+    @Query("select c from Customer c where c.levelCode is null or c.levelCode='' ")
+    public List<Customer> findByLevelCodeIsNulls();
+
     @Query("select c from Customer c where c.mobile=?1 and c.enabled=?2")
     public Customer findByMobileAndEnabled(String mobile, boolean enabled);
     @Query("select c from Customer c left join fetch c.recommendCustomer where c.customerId=?1")
@@ -67,6 +77,14 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Modifying
     public void enableCustomerById(boolean enabled, int customerId);
 
+    @Query("update Customer c set c.invitationCode=?1 where c.customerId=?2")
+    @Modifying
+    public void updateInvitationCode(String invitationCode,int customerId);
+
+    @Query("update Customer c set c.levelCode=?1,c.customerLevel=?2 where c.customerId=?3")
+    @Modifying
+    public void updateLevelCode(String LevelCode,int level,int customerId);
+
     @Query("update Customer c set c.integral=?1 where c.customerId=?2")
     @Modifying
     public void updateIntegralById(int integral, int customerId);
@@ -99,6 +117,10 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     long countByQqOpenId(String qqOpenId);
 
     List<Customer> findByRecommendCustomer_CustomerIdAndPraise(int customerId, boolean paraise);
+
+    @Modifying
+    @Query("update Customer c set c.enabled =?2 where c.customerId=?1")
+    public void enableCustomerById(int customerId,boolean enabled);
 }
 
 interface CustomerPlusDao {

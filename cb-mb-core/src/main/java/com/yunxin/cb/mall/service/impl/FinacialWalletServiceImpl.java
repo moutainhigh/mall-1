@@ -1,15 +1,10 @@
 package com.yunxin.cb.mall.service.impl;
 
-import com.yunxin.cb.mall.entity.BankInfo;
-import com.yunxin.cb.mall.entity.FinacialWallet;
-import com.yunxin.cb.mall.entity.FinacialWalletLog;
-import com.yunxin.cb.mall.entity.FinacialWithdraw;
+import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.meta.CashbackLogState;
 import com.yunxin.cb.mall.entity.meta.WithdrawState;
 import com.yunxin.cb.mall.entity.meta.WithdrawType;
-import com.yunxin.cb.mall.mapper.BankInfoMapper;
-import com.yunxin.cb.mall.mapper.FinacialWalletLogMapper;
-import com.yunxin.cb.mall.mapper.FinacialWalletMapper;
-import com.yunxin.cb.mall.mapper.FinacialWithdrawMapper;
+import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.restful.meta.Result;
 import com.yunxin.cb.mall.service.FinacialWalletService;
@@ -39,6 +34,10 @@ public class FinacialWalletServiceImpl implements FinacialWalletService {
     private BankInfoMapper bankInfoMapper;
     @Resource
     private FinacialWithdrawMapper finacialWithdrawMapper;
+    @Resource
+    private FinacialInsuCashbackLogMapper finacialInsuCashbackLogMapper;
+    @Resource
+    private CustomerMapper customerMapper;
 
     /**
      * 添加钱包信息
@@ -108,7 +107,7 @@ public class FinacialWalletServiceImpl implements FinacialWalletService {
     }
 
     @Override
-    public ResponseResult processCustomerMoney(Integer customerId, BigDecimal money, WithdrawType type) throws RuntimeException {
+    public ResponseResult processCustomerMoney(Integer customerId, BigDecimal money, WithdrawType type,String remark) throws RuntimeException {
         //成功标识
         ResponseResult result=new ResponseResult(Result.FAILURE);
         //获取用户钱包
@@ -128,6 +127,19 @@ public class FinacialWalletServiceImpl implements FinacialWalletService {
         //如果是保险返利，则扣减预期收益
         if(type.getValue()==WithdrawType.BX.getValue()){
             finacialWallet.setExpectedAmount(finacialWallet.getExpectedAmount().subtract(money));
+            //加入返现日志记录
+            Customer customer=customerMapper.selectByPrimaryKey(customerId);
+            FinacialInsuCashbackLog finacialInsuCashbackLog=new FinacialInsuCashbackLog();
+            finacialInsuCashbackLog.setCustomerId(customerId);
+            if(LogicUtils.isNotNull(customer)){
+                finacialInsuCashbackLog.setCustomerName(customer.getRealName());
+                finacialInsuCashbackLog.setMobile(customer.getMobile());
+            }
+            finacialInsuCashbackLog.setAmount(money);
+            finacialInsuCashbackLog.setState(CashbackLogState.FINISHED.getValue());
+            finacialInsuCashbackLog.setOrderNo(remark);
+            finacialInsuCashbackLog.setCreateTime(new Date());
+            finacialInsuCashbackLogMapper.insert(finacialInsuCashbackLog);
         }
         //是否有负债，先还负债
         if(debtTotal.compareTo(BigDecimal.ZERO)>0){

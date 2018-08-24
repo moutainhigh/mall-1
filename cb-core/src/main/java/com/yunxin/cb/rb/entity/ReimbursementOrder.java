@@ -10,6 +10,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -24,6 +25,12 @@ public class ReimbursementOrder implements java.io.Serializable {
     private int reimbursementOrderId;
     private OrderItem orderItem;
     private Reimbursement reimbursement;
+    private BigDecimal amount;
+    private BigDecimal tax;
+    private BigDecimal productPrice;
+    private String imgPath;
+    private String productName;
+    private String orderCode;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
     @Id
@@ -72,5 +79,54 @@ public class ReimbursementOrder implements java.io.Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 11)
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 11)
+    public BigDecimal getTax() {
+        return tax;
+    }
+
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
+    }
+    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 11)
+    public BigDecimal getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
+    }
+    @Transient
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+    @Transient
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+    @Transient
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
     }
 }

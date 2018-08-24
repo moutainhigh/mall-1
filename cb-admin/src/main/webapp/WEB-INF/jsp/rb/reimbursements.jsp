@@ -61,45 +61,7 @@
             }
         }
 
-        function approval(){
-            var dataItem = getSelectedGridItem("grid");
-            if(dataItem){
-                $('#auditDialogSp').modal();
 
-
-                $.get("reimbursementDetil.do?reimbursementId="+dataItem.reimbursementId,$("#tables").serialize(),function(result){
-                    debugger;
-                    var data=result.data;
-                    var reimbursement=result.reimbursement;
-                    $("#reimbursement").html(" <div class='ceilTitle' >报账总金额：</div>\n" +
-                        "               <div class='reimbursementDetail'>\n" +
-                        "                    <div>订单金额${reimbursement.amount}</div>\n" +
-                        "                    <div>缴纳税点：${reimbursement.tax}，税${reimbursement.tax}</div>\n" +
-                        "                    <div>实际到账总金额：28.22万</div>\n" +
-                        "               </div>\n" +
-                        "\n" +
-                        "               <div class='ceilTitle' >基本信息</div>\n" +
-                        "               <div class='reimbursementDetail'>\n" +
-                        "                    <div>报账订单号：123456789</div>\n" +
-                        "                    <div>申报时间：2018-07-04 15：00：00</div>\n" +
-                        "                    <div>申报人：张三&nbsp;&nbsp;账号：18680319434</div>\n" +
-                        "                    <div>状态：财务主管审批中</div>\n" +
-                        "                    <div class='approvalOpinions clearfix'>\n" +
-                        "                        <div class='left'>财务审批意见:</div>\n" +
-                        "                        <div class='right'>审批意见 通过 意见（资料核实审核通过）<br>审核时间：2018-07-24 15：00：00<span class='approver'>审批人：张某某</span></div>\n" +
-                        "                    </div>\n" +
-                        "               </div>\n" +
-                        "               <div class='ceilTitle' >审批意见：</div>\n" +
-                        "               <textarea name=\"\" id=\"\"  style='margin-top:10px;width:100%;height: 60px;border-color:#e7e5e5;' placeholder=\"请输入审批意见（必填）\"></textarea>")
-                });
-
-            }
-
-            // if (dataItem) {
-            //     window.location.href = "reimbursementOrders.do?reimbursementId=" + dataItem.reimbursementId;
-            // }
-
-        }
     </script>
 </head>
 <body>
@@ -248,7 +210,7 @@
 
                             <div class="btn-group">
                                 <a href="javascript:void(0);" onclick="approval()" class="btn btn-default"><i
-                                        class="fa fa-info-circle"></i>&nbsp;审批</a>
+                                        class="fa fa-info-circle"></i>&nbsp;查看</a>
                             </div>
                         </div>
 
@@ -281,12 +243,14 @@
                                                 width="100"/>
                             <%--<kendo:grid-column title="报账订单" filterable="false"--%>
                                                <%--width="100" template="<a href='reimbursementOrders.do?reimbursementId=#= reimbursementId#' style='color:blue'>查看</a>" />--%>
-                            <kendo:grid-column title="报账订单" filterable="false"
-                                               width="100" template="<a href=javascript:void(0)' onclick='auditItem(#= reimbursementId#)' style='color:blue'>查看</a>" />
+                            <kendo:grid-column title="报账订单" filterable="false" field="orderCodes"
+                                               width="100" />
                             <kendo:grid-column title="申报时间" filterable="false" field="createTime"
                                                format="{0:yyyy-MM-dd HH:mm}" width="100"/>
                             <kendo:grid-column title="状态" filterable="false" field="orderState"
                                                template="#=formatOrderState(orderState)#" width="100"/>
+                            <kendo:grid-column title="系统分析" filterable="false" field="fundsPoolRemark"
+                                               width="100"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
@@ -297,7 +261,7 @@
                                 </kendo:dataSource-schema-model>
                             </kendo:dataSource-schema>
                             <kendo:dataSource-transport>
-                                <kendo:dataSource-transport-read url="pageReimbursement.do" type="POST"
+                                <kendo:dataSource-transport-read url="pageReimbursement.do?orderState=0" type="POST"
                                                                  contentType="application/json"/>
                                 <kendo:dataSource-transport-parameterMap>
                                     <script>
@@ -360,60 +324,36 @@
 
 
 <div class="modal fade" id="auditDialogSp" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
+    <div class="modal-dialog" style="width: 620px;">
+        <div class="modal-content" style="width: 620px;">
+            <div class="modal-header" >
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">订单详情</h4>
             </div>
             <div class="modal-body clearfix" >
                 <div class='ceilTitle'>报账订单：</div>
-               <div id='orderBox ' class='clearfix'>
-                   <div class='orderItem '>
-                       <div class="orderNo">订单号：123456</div>
-                       <div class='orderImg'>
-                            <img src="../images/users/user-1.jpg" alt="">
-                            <div class='orderDtail'><span class='orderDes'>2018款C200L运动版</span><span class='orderMoney'>+&nbsp;28.22万</span></div>
-                       </div>
-                       <div class='orderMoney'>订单金额：28.22万，应缴纳税：7.07万</div>
-                   </div>
-                   <div class='orderItem'>
-                        <div class="orderNo">订单号：123456</div>
-                        <div class='orderImg'>
-                             <img src="../images/users/user-1.jpg" alt="">
-                             <div class='orderDtail'><span class='orderDes'>2018款C200L运动版</span><span class='orderMoney'>+&nbsp;28.22万</span></div>
-                        </div>
-                        <div class='orderMoney'>订单金额：28.22万，应缴纳税：7.07万</div>
-                    </div>
-                    <div class='orderItem'>
-                            <div class="orderNo">订单号：123456</div>
-                            <div class='orderImg'>
-                                 <img src="../images/users/user-1.jpg" alt="">
-                                 <div class='orderDtail'><span class='orderDes'>2018款C200L运动版</span><span class='orderMoney'>+&nbsp;28.22万</span></div>
-                            </div>
-                            <div class='orderMoney'>订单金额：28.22万，应缴纳税：7.07万</div>
-                    </div>
-                    <div class='orderItem'>
-                            <div class="orderNo">订单号：123456</div>
-                            <div class='orderImg'>
-                                 <img src="../images/users/user-1.jpg" alt="">
-                                 <div class='orderDtail'><span class='orderDes'>2018款C200L运动版</span><span class='orderMoney'>+&nbsp;28.22万</span></div>
-                            </div>
-                            <div class='orderMoney'>订单金额：28.22万，应缴纳税：7.07万</div>
-                    </div>
-                        
+               <div id='orderBox' class='clearfix'>&nbsp;
+                   <%--<div class='orderItem '>--%>
+                       <%--<div class="orderNo">订单号：123456</div>--%>
+                       <%--<div class='orderImg'>--%>
+                           <%--<img src="../images/users/user-1.jpg" alt="">--%>
+                           <%--<div class='orderDtail'><span class='orderDes'>2018款C200L运动版</span><span class='orderMoney'>+&nbsp;28.22万</span></div>--%>
+                       <%--</div>--%>
+                       <%--<div class='orderMoney'>订单金额：28.22万，应缴纳税：7.07万</div>--%>
+                   <%--</div>--%>
 
                </div>
+                <form name="auditForm" id="auditForm">
+                    <input type="hidden" name="reimbursementId" id="reimbursementId"/>
+                    <input type="hidden" id="reimbursementType" name="reimbursementType">
                 <div id="reimbursement">
 
                 </div>
-               
+                </form>
 
             </div>
-            <div class="modal-footer" style='padding-left:200px'>
-                <button class="btn btn-success" data-dismiss="modal">通过</button>
-                <button class="btn btn-danger" data-dismiss="modal">不通过</button>
-                <button class="btn btn-default" data-dismiss="modal">取消</button>
+            <div class="modal-footer" style='padding-left:200px' id="submitAudits">&nbsp;
+
                 <%--<button class="btn btn-primary pull-right" onclick="submitAudit();" id="btnComfrim">确认</button>--%>
             </div>
         </div>
@@ -422,6 +362,113 @@
 <!-- End #main -->
 
 <script type="text/javascript">
+
+    function approval(){
+        var dataItem = getSelectedGridItem("grid");
+        if(dataItem){
+            $('#auditDialogSp').modal();
+
+
+            $.get("reimbursementDetil.do?reimbursementId="+dataItem.reimbursementId,$("#tables").serialize(),function(result){
+
+                var data=result.data;
+                var reimbursement=result.reimbursement;
+                var reimbursementProcess=result.reimbursementProcess;
+                var orderState=reimbursement.orderState;
+                $("#reimbursementId").val(dataItem.reimbursementId);
+                $("#reimbursementType").val(orderState);
+                var state="";
+                switch (orderState) {
+                    case "FINANCE_IN_APPROVAL":
+                        state="财务员审批中";
+                        break;
+                    case "DIRECTOR_IN_APPROVAL":
+                        state= "财务主管审批中";
+                        break;
+                    case "ALREADY_TO_ACCOUNT":
+                        state= "已到账";
+                        break;
+                    case "NOT_PASS_THROUGH":
+                        state= "审批不通过";
+                        break;
+                    case "CANCEL_REIMBURSEMENT":
+                        state= "取消报账";
+                        break;
+
+                }
+                $("#orderBox").html("&nbsp;");
+                for(var i=0;i<data.length;i++){
+                    debugger;
+                    var taxMoney=data[i].productPrice*data[i].tax;
+                    taxMoney = taxMoney.toFixed(2);
+                    $("#orderBox").append("<div class='orderItem '>\n" +
+                        "                       <div class=\"orderNo\">订单号："+data[i].orderCode+"</div>\n" +
+                        "                       <div class='orderImg'>\n" +
+                        "                            <img src='"+data[i].imgPath+"' alt=\"\">\n" +
+                        "                            <div class='orderDtail'><span class='orderDes' style='position: absolute'>"+data[i].productName+"</span><span class='orderMoney' style='position: absolute;margin-left: 130px;margin-top: 0px'>+&nbsp;"+data[i].productPrice+"</span></div>\n" +
+                        "                       </div>\n" +
+                        "                       <div class='orderMoney'>订单金额："+data[i].productPrice+"，应缴纳税："+taxMoney+"</div>\n" +
+                        "                   </div>");
+                }
+                var allTaxMoney=reimbursement.tax*reimbursement.amount;
+                $("#reimbursement").html(" <div class='ceilTitle' >报账总金额：</div>\n" +
+                    "               <div class='reimbursementDetail' style='width: 580px'>\n" +
+                    "                    <div>订单金额: "+reimbursement.amount+"</div>\n" +
+                    "                    <div>缴纳税点："+reimbursement.taxRate+"，税:"+reimbursement.tax+"</div>\n" +
+                    "                    <div>实际到账总金额："+reimbursement.orderAmount+"</div>\n" +
+                    "               </div>\n" +
+                    "\n" +
+                    "               <div class='ceilTitle' >基本信息</div>\n" +
+                    "               <div class='reimbursementDetail'>\n" +
+                    "                    <div>报账订单号："+reimbursement.reimbursementNo+"</div>\n" +
+                    "                    <div>申报时间："+reimbursement.createTime+"</div>\n" +
+                    "                    <div>申报人："+reimbursement.customer.realName+"&nbsp;&nbsp;账号："+reimbursement.customer.mobile+"</div>\n" +
+                    "                    <div>状态："+state+"</div>\n" +
+                    "                   ");
+
+
+                if(reimbursementProcess.length>0){
+                    for (var j=0;j<reimbursementProcess.length;j++){
+                        var process=reimbursementProcess[j].orderState;
+                        if(process=="FINANCE_IN_APPROVAL"||process=="FINANCE_NOT_PASS_THROUGH"){
+                            process="财务审批意见";
+                        }
+                        else {
+                            process="财务主管审批意见";
+                        }
+                        $("#reimbursement").append(" <div class='approvalOpinions clearfix'>\n" +
+                            "                        <div class='left'>"+process+":</div>\n" +
+                            "                        <div class='right'>审批意见 ：<span style='color: red'>"+reimbursementProcess[j].remarks+"</span><br>审核时间："+reimbursementProcess[j].createTime+"<span class='approver'>审批人："+reimbursementProcess[j].user.userName+"</span></div>\n" +
+                            "                    </div>");
+                    }
+                }
+
+                $("#reimbursement").append("</div>");
+
+            });
+
+        }
+
+    }
+
+
+    function submitAudit(operType){
+        if($("#remarks").val() == ""){
+            bootbox.alert("请填写审核原因!");
+            return false;
+        }
+        $.get("reimbursementAuditing.do?operType="+operType,$("#auditForm").serialize(),function(result){
+            if(result){
+                $("#auditForm")[0].reset();
+                $('#auditDialog').modal("hide");
+                $("#grid").data("kendoGrid").dataSource.read();
+            }else{
+                alert("审核失败！");
+            }
+        });
+    }
+
+
     $(document).ready(function () {
         $("#commodityAuditForm").validationEngine({
             autoHidePrompt: true, scroll: false, showOneMessage: true

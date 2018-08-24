@@ -10,8 +10,8 @@ import java.util.List;
 public class FinacialLoanInitDateVO {
     private static final long serialVersionUID = -2695946271501714063L;
 
-    @ApiModelProperty(value = "可贷额度", name = "amount", example = "100")
-    private BigDecimal amount;
+    @ApiModelProperty(value = "可贷额度", name = "totalAmount", example = "100")
+    private BigDecimal totalAmount;
 
     @ApiModelProperty(value = "借款期限列表", name = "finacialLoanConfigVOList", example = "finacialLoanConfigVOList")
     private List<FinacialLoanConfigVO> finacialLoanConfigVOList;
@@ -19,12 +19,12 @@ public class FinacialLoanInitDateVO {
     @ApiModelProperty(value = "用户绑定的银行卡", name = "bankInfoVO", example = "bankInfoVO")
     private BankInfoVO bankInfoVO;
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setTotalAmount(BigDecimal amount) {
+        this.totalAmount = amount;
     }
 
     public List<FinacialLoanConfigVO> getFinacialLoanConfigVOList() {
@@ -46,7 +46,7 @@ public class FinacialLoanInitDateVO {
     @Override
     public String toString() {
         return "FinacialLoanInitDateVO{" +
-                "amount=" + amount +
+                "amount=" + totalAmount +
                 ", finacialLoanConfigVOList=" + finacialLoanConfigVOList +
                 ", bankInfoVO=" + bankInfoVO +
                 '}';

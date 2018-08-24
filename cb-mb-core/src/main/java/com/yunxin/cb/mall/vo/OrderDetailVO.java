@@ -70,6 +70,10 @@ public class OrderDetailVO implements java.io.Serializable{
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date paymentTime;
 
+    /** 商家名 */
+    @ApiModelProperty(value="商家名",name="sellerName",example="4s店")
+    private String sellerName;
+
     /** 商家地址 */
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市")
     private String sellerAddress;
@@ -148,6 +152,14 @@ public class OrderDetailVO implements java.io.Serializable{
 
     public void setSellerAddress(String sellerAddress) {
         this.sellerAddress = sellerAddress;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
     }
 
     public Set<OrderItemDetailVO> getOrderItemDetails() {
@@ -236,6 +248,7 @@ public class OrderDetailVO implements java.io.Serializable{
         //商家地址信息
         if (model.getSeller() != null) {
             orderDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+            orderDetailVO.setSellerName(model.getSeller().getSellerName());
         }
         if (model.getOrderItems() != null && !model.getOrderItems().isEmpty()) {
             Set<OrderItemDetailVO> orderItemDetails = new HashSet<OrderItemDetailVO>();
@@ -245,6 +258,7 @@ public class OrderDetailVO implements java.io.Serializable{
                 //商家地址信息
                 if (model.getSeller() != null) {
                     oderItemDetailVO.setSellerAddress(model.getSeller().getSellerAddress());
+                    oderItemDetailVO.setSellerName(model.getSeller().getSellerName());
                 }
                 //货品信息
                 if (orderItem.getProduct() != null) {
