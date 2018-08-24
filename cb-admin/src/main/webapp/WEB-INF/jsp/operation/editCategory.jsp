@@ -10,6 +10,12 @@
     <title>编辑运营分类</title>
     <script type="text/javascript">
         $(function () {
+
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true,//自动隐藏提示信息
                 scroll: false,

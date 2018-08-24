@@ -9,7 +9,13 @@
 
     <title>新增运营分类</title>
     <script type="text/javascript">
+        $(document).ready(function () {
 
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+        })
     </script>
 </head>
 <body>

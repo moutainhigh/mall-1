@@ -76,7 +76,7 @@ public class CategoryController implements ServletContextAware {
     }
 
     @RequestMapping(value = "addCategory",method = RequestMethod.POST)
-    public String addCategory(@Valid @ModelAttribute("category") Category category,HttpServletRequest request, BindingResult result, Locale locale,  ModelMap modelMap) {
+    public String addCategory(@Valid @ModelAttribute("category") Category category,HttpServletRequest request, BindingResult result, Locale locale,  ModelMap modelMap)  throws Exception {
         if (result.hasErrors()) {
             return toAddCategory(category, modelMap);
         }
@@ -92,9 +92,12 @@ public class CategoryController implements ServletContextAware {
                 }
             }
         } catch (EntityExistException e) {
-            e.printStackTrace();
+            /*e.printStackTrace();
             result.addError(new FieldError("category", "categoryName", category.getCategoryName(), true, null, null,
-                    messageSource.getMessage(e.getMessage(), null, locale)));
+                    messageSource.getMessage(e.getMessage(), null, locale)));*/
+            result.addError(new FieldError("category", "categoryName", category.getCategoryName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
+            return toAddCategory(category, modelMap);
         }
         return "redirect:../common/success.do?reurl=operation/categories.do";
     }
@@ -116,7 +119,7 @@ public class CategoryController implements ServletContextAware {
 
     @RequestMapping(value = "editCategory",method = RequestMethod.POST)
     public String editCategory(@Valid @ModelAttribute("category") Category category,HttpServletRequest request, BindingResult result,Locale locale,
-                               ModelMap modelMap) {
+                               ModelMap modelMap )  throws Exception  {
         if (result.hasErrors()) {
             return toEditCategory(modelMap);
         }
@@ -134,9 +137,12 @@ public class CategoryController implements ServletContextAware {
                 }
             }
         } catch (EntityExistException e) {
-            e.printStackTrace();
+            /*e.printStackTrace();
             result.addError(new FieldError("category", "categoryName", category.getCategoryName(), true, null, null,
-                    messageSource.getMessage(e.getMessage(), null, locale)));
+                    messageSource.getMessage(e.getMessage(), null, locale)));*/
+            result.addError(new FieldError("category", "categoryName", category.getCategoryName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
+            return toEditCategory(category.getCategoryId(), modelMap);
         }
         return "redirect:../common/success.do?reurl=operation/categories.do";
     }
