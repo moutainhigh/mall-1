@@ -18,6 +18,10 @@
         function removeItem() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
+                if(dataItem.userId==1&&dataItem.userName=='admin'){
+                    bootbox.alert("admin不能被删除!");
+                    return false;
+                }
                 bootbox.confirm("确定删除吗？", function (result) {
                     if (result) {
                         $.get("removeUserById.do", {
