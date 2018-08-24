@@ -124,7 +124,7 @@ public class OrderResourceTest extends MockHttpUtils{
     public void getOrderTest() throws Exception {
         log.info("根据订单id查询订单详情 V1 start");
         //mock进行模拟
-        String url = "/v1/mall/order/372";
+        String url = "/v1/mall/order/404";
         String content = "";
         String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
         String acceptStatus = Result.SUCCESS.name();
@@ -141,7 +141,7 @@ public class OrderResourceTest extends MockHttpUtils{
         String contentType = MediaType.APPLICATION_FORM_URLENCODED_VALUE;
         String acceptStatus = Result.SUCCESS.name();
         MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-        map.add("orderId","403");
+        map.add("orderId","404");
         map.add("cancelReason","取消测试");
         commonMvcPerFormPut(url, content, contentType, acceptStatus, map);
         log.info("根据订单id取消订单 V1 end result : " + content);
