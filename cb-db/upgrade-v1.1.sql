@@ -912,3 +912,7 @@ MODIFY COLUMN `message_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unico
 #add by yangzhen 2018-8-22
 ALTER TABLE `crystal_ball`.`message`
 ADD COLUMN `message_despatcher` varchar(15) COMMENT '消息作者' AFTER `push_status`;
+
+#add by lxc 2018-08-24
+ALTER TABLE `crystal_ball`.`product`
+MODIFY COLUMN `PRODUCT_NAME` varchar(640) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL AFTER `MARKET_PRICE`;

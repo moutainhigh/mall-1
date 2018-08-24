@@ -149,6 +149,7 @@
 
             <div class="inner-padding">
                 <form:form id="validateSubmitForm" action="editAttributeGroup.do" method="post" commandName="attributeGroup">
+                    <form:hidden path="commodity.commodityId"/>
                     <form:hidden path="groupId"/>
                     <fieldset>
                         <legend>编辑属性组</legend>
@@ -198,6 +199,7 @@
                                     <c:forEach var="attribute" items="${attributeGroup.attributes}">
                                         <tr id="attribute${attribute.attributeId}">
                                             <td><input type="hidden" name="attributeId" value="${attribute.attributeId}">
+                                                <input type="hidden" name="commodity.commodityId" value="${attributeGroup.commodity.commodityId}">
                                                 <input type='text' name='attributeName' value="${attribute.attributeName}" class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
                                             <%--<c:choose>
                                                 <c:when test="${!empty attribute.imagePath}">

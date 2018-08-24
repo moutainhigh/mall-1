@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -250,7 +251,13 @@ public class AttributeService implements IAttributeService {
 
     @Override
     public AttributeGroup addAttributeGroup(AttributeGroup attributeGroup) throws EntityExistException {
-        if (!attributeGroupDao.isUnique(attributeGroup, AttributeGroup_.groupName)) {
+        List<AttributeGroup> list  = attributeGroupDao.findAttributeGroupName(attributeGroup.getCommodity().getCommodityId());
+        List<String> listStr = new ArrayList<>();
+        list.stream().forEach( p ->{
+                        listStr.add(p.getGroupName());
+                }
+        );
+        if(listStr.contains(attributeGroup.getGroupName())){
             throw new EntityExistException("属性组名称已存在");
         }
         attributeGroup.setCreateTime(new Date());
@@ -278,10 +285,18 @@ public class AttributeService implements IAttributeService {
 
     @Override
     public AttributeGroup updateAttributeGroup(AttributeGroup attributeGroup) throws EntityExistException {
-        if (!attributeGroupDao.isUnique(attributeGroup, AttributeGroup_.groupName)) {
+        AttributeGroup oldAttributeGroup = attributeGroupDao.findByGroupId(attributeGroup.getGroupId());
+        List<AttributeGroup> list  = attributeGroupDao.findAttributeGroupName(oldAttributeGroup.getCommodity().getCommodityId());
+        List<String> listStr = new ArrayList<>();
+        list.stream().forEach( p ->{
+                    if(p.getGroupId()!=attributeGroup.getGroupId()){
+                        listStr.add(p.getGroupName());
+                    }
+                }
+        );
+        if(listStr.contains(attributeGroup.getGroupName())){
             throw new EntityExistException("属性组名称已存在");
         }
-        AttributeGroup oldAttributeGroup = attributeGroupDao.findByGroupId(attributeGroup.getGroupId());
         AttributeReplication.copying(attributeGroup, oldAttributeGroup, AttributeGroup_.groupName, AttributeGroup_.showAsImage);
         int[] attributeId = attributeGroup.getAttributeId();
         Set<Attribute> attributes = oldAttributeGroup.getAttributes();

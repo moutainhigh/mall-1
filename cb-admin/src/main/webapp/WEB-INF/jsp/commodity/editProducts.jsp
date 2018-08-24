@@ -10,7 +10,6 @@
 
     <script type="application/javascript">
         $(document).ready(function () {
-
             var oppMsg = '${oppMsg}';
             if(oppMsg){
                 commonNotify(oppMsg, "success");
