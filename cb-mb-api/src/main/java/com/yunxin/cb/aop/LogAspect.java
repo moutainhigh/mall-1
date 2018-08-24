@@ -1,31 +1,26 @@
 package com.yunxin.cb.aop;
 
 import com.alibaba.fastjson.JSON;
-import com.yunxin.cb.meta.Result;
-import com.yunxin.cb.vo.ResponseResult;
+import com.yunxin.cb.rest.WebExceptionHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 
 /**
- * 
+ *
  * @ClassName: LogAspect
  * @Description: 日志记录AOP实现
  * @author lxc
@@ -36,6 +31,9 @@ import java.util.Set;
 public class LogAspect {
 
 	private static Logger log = LoggerFactory.getLogger(LogAspect.class);
+
+	@Autowired
+	private WebExceptionHandler webExceptionHandler;
 	/**
 	 * @Title: doAround
 	 *
@@ -86,7 +84,7 @@ public class LogAspect {
 				if (paramValues.length > 0) {
 					String paramValue = paramValues[0];
 					System.err.println("paramValue:"+paramValue);
-						map.put(paramName, paramValue);
+					map.put(paramName, paramValue);
 				}
 			}
 
@@ -110,22 +108,8 @@ public class LogAspect {
 					+ isJson(outputParam) + "执行时间:" + excTime+ "\n "
 			);
 		} catch (Throwable e) {
-			if (e instanceof ConstraintViolationException) {
-				String message = "";
-				ConstraintViolationException ex = (ConstraintViolationException) e;
-				Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
-				for (ConstraintViolation<?> violation : violations) {
-					message = violation.getMessage();
-					break;
-				}
-				return new ResponseResult(Result.FAILURE, message);
-			}
-			e.printStackTrace();
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw, true));
-			String str = sw.toString();
-			log.error(str + "类名称" + joinPoint.getSignature().getDeclaringTypeName() + ",方法名称:" + methodName);
-			return new ResponseResult(Result.FAILURE,"系统繁忙，请稍后重试...");
+			log.error("类名称" + joinPoint.getSignature().getDeclaringTypeName() + ",方法名称:" + methodName);
+			return webExceptionHandler.handleThrowable(e); //异常同意处理
 		}
 		return outputParam;
 	}
