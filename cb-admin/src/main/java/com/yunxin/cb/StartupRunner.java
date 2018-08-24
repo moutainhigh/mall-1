@@ -43,7 +43,7 @@ public class StartupRunner implements CommandLineRunner {
         //初始化后台管理员账号
 //        initAdminAccountIfNecessary();
         batchPwdEncode();
-        //全局 加载资源表
+        //全局加载资源表
         loadPrivileges();
         //加载系统配置
         loadProfile();
