@@ -49,7 +49,7 @@ public class AttributeGroupController implements ServletContextAware {
             return toAddAttributeGroup(attributeGroup.getCommodity().getCommodityId(), attributeGroup, modelMap);
         }
         try {
-            attributeGroup=attributeService.addAttributeGroup(attributeGroup);
+            attributeService.addAttributeGroup(attributeGroup);
         } catch (EntityExistException e) {
             e.printStackTrace();
         }
@@ -75,10 +75,9 @@ public class AttributeGroupController implements ServletContextAware {
             return toEditAttributeGroup(attributeGroup, modelMap);
         }
         try {
-            attributeGroup = attributeService.updateAttributeGroup(attributeGroup);
+            attributeService.updateAttributeGroup(attributeGroup);
         } catch (EntityExistException e) {
             e.printStackTrace();
-            return toEditAttributeGroup(attributeGroup, modelMap);
         }
         return "redirect:editProducts.do?commodityId=" + attributeGroup.getCommodity().getCommodityId();
     }

@@ -149,6 +149,7 @@
 
             <div class="inner-padding">
                 <form:form id="validateSubmitForm" action="editAttributeGroup.do" method="post" commandName="attributeGroup">
+                    <form:hidden path="commodity.commodityId"/>
                     <form:hidden path="groupId"/>
                     <fieldset>
                         <legend>编辑属性组</legend>
