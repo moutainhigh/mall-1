@@ -40,20 +40,20 @@ public class ProfileService implements IProfileService {
     @Override
     public AppCheckUpdate getAppCheckUpdate(MobileOSType mobileOSType) {
         if (mobileOSType == MobileOSType.ANDROID) {
-            String v = getRedis(profileDao.getProfileByProfileName(ProfileName.ANDROID_VERSION_CODE).getFileValue(), ProfileName.ANDROID_VERSION_CODE.toString());
+            String v = getRedis( ProfileName.ANDROID_VERSION_CODE.toString());
             int versionCode = StringUtils.isNotBlank(v) ? Integer.parseInt(v) : 0;
-            String versionName = getRedis(profileDao.getProfileByProfileName(ProfileName.ANDROID_VERSION_NAME).getFileValue(), ProfileName.ANDROID_VERSION_NAME.toString());
-            String appName = getRedis(profileDao.getProfileByProfileName(ProfileName.ANDROID_APP_NAME).getFileValue(), ProfileName.ANDROID_APP_NAME.toString());
-            String url = getRedis(profileDao.getProfileByProfileName(ProfileName.ANDROID_URL).getFileValue(), ProfileName.ANDROID_URL.toString());
-            String description = getRedis(profileDao.getProfileByProfileName(ProfileName.ANDROID_DESCRIPTION).getFileValue(), ProfileName.ANDROID_DESCRIPTION.toString());
+            String versionName = getRedis(ProfileName.ANDROID_VERSION_NAME.toString());
+            String appName = getRedis( ProfileName.ANDROID_APP_NAME.toString());
+            String url = getRedis( ProfileName.ANDROID_URL.toString());
+            String description = getRedis(ProfileName.ANDROID_DESCRIPTION.toString());
             return new AppCheckUpdate(versionCode, versionName, appName, url, description);
         }else if(mobileOSType == MobileOSType.IOS){
-            String v = getRedis(profileDao.getProfileByProfileName(ProfileName.IOS_VERSION_CODE).getFileValue(), ProfileName.IOS_VERSION_CODE.toString());
+            String v = getRedis( ProfileName.IOS_VERSION_CODE.toString());
             int versionCode = StringUtils.isNotBlank(v) ? Integer.parseInt(v) : 0;
-            String versionName = getRedis(profileDao.getProfileByProfileName(ProfileName.IOS_VERSION_NAME).getFileValue(), ProfileName.IOS_VERSION_NAME.toString());
-            String appName = getRedis(profileDao.getProfileByProfileName(ProfileName.IOS_APP_NAME).getFileValue(), ProfileName.IOS_APP_NAME.toString());
-            String url = getRedis(profileDao.getProfileByProfileName(ProfileName.IOS_URL).getFileValue(), ProfileName.IOS_URL.toString());
-            String description = getRedis(profileDao.getProfileByProfileName(ProfileName.IOS_DESCRIPTION).getFileValue(), ProfileName.IOS_DESCRIPTION.toString());
+            String versionName = getRedis( ProfileName.IOS_VERSION_NAME.toString());
+            String appName = getRedis( ProfileName.IOS_APP_NAME.toString());
+            String url = getRedis( ProfileName.IOS_URL.toString());
+            String description = getRedis(ProfileName.IOS_DESCRIPTION.toString());
             return new AppCheckUpdate(versionCode, versionName, appName, url, description);
         }
         return null;
@@ -61,24 +61,23 @@ public class ProfileService implements IProfileService {
 
     /**
      * 获取redis信息
-     * @param daoVal
      * @param key
      * @return
      */
-    public String getRedis(String daoVal,String key){
-           if(redisService.getKey(key)!=null&&!redisService.getKey(key).toString().equals("")){
-              return redisService.getKey(key).toString();
-           }else{
-              return daoVal;
-           }
+    public String getRedis(String key){
+        if(redisService.getKey(key)!=null&&!redisService.getKey(key).toString().equals("")){
+            return redisService.getKey(key).toString();
+        }else{
+            return profileDao.getProfileByProfileName(ProfileName.valueOf(key)).getFileValue();
+        }
     }
 
     public ShareInfo getShareInfo(String invitationCode){
-        String sharePath =getRedis(profileDao.getProfileByProfileName(ProfileName.SHARE_PATH).getFileValue(),ProfileName.SHARE_PATH.toString())+invitationCode;
-        String shareTitle =getRedis(profileDao.getProfileByProfileName(ProfileName.SHARE_TITLE).getFileValue(),ProfileName.SHARE_TITLE.toString());
-        String shareIcon =getRedis(profileDao.getProfileByProfileName(ProfileName.SHARE_ICON).getFileValue(),ProfileName.SHARE_ICON.toString());
-        String shareDescription =getRedis(profileDao.getProfileByProfileName(ProfileName.SHARE_DESCRIPTION).getFileValue(),ProfileName.SHARE_DESCRIPTION.toString());
-        String shareShortmessageContent =getRedis( profileDao.getProfileByProfileName(ProfileName.SHARE_SHORTMESSAGE_CONTENT).getFileValue(),ProfileName.SHARE_SHORTMESSAGE_CONTENT.toString());
+        String sharePath =getRedis(ProfileName.SHARE_PATH.toString())+invitationCode;
+        String shareTitle =getRedis(ProfileName.SHARE_TITLE.toString());
+        String shareIcon =getRedis(ProfileName.SHARE_ICON.toString());
+        String shareDescription =getRedis(ProfileName.SHARE_DESCRIPTION.toString());
+        String shareShortmessageContent =getRedis(ProfileName.SHARE_SHORTMESSAGE_CONTENT.toString());
         return new ShareInfo(sharePath,shareTitle,shareIcon,shareDescription,shareShortmessageContent);
     }
 
