@@ -9,11 +9,7 @@
     <title>新增用户</title>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            $.validationEngineLanguage.allRules.specialChar = {
-                "regex": /[a-zA-Z\d\u4e00-\u9fa5]/,
-                "alertText": "包含特殊字符"
-            }
+            $(document).ready(function() {
             $("#roleIds").select2();
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
@@ -105,14 +101,14 @@
                                 <label><span class="asterisk">*</span>用户名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2],custom[specialChar]]" path="userName" maxlength="32"/>
+                                <form:input onkeyup="this.value=this.value.replace(/[^a-zA-Z\d\u4e00-\u9fa5]/g,'')" cssClass="form-control validate[required,minSize[2],funcCall[specialChar]]" path="userName" maxlength="32"/>
                                 <form:errors path="userName" cssClass="Validform_checktip"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>真实姓名：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input id="realName" onkeyup="this.value=this.value.replace(/[^\u4E00-\u9FA5]/g,'')" cssClass="form-control validate[required,minSize[2],custom[specialChar]]" path="realName" maxlength="32"/>
+                                <form:input id="realName" onkeyup="this.value=this.value.replace(/[^\u4E00-\u9FA5]/g,'')" cssClass="form-control validate[required,minSize[2]]" path="realName" maxlength="32"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
