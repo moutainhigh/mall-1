@@ -916,3 +916,9 @@ ADD COLUMN `message_despatcher` varchar(15) COMMENT '消息作者' AFTER `push_s
 #add by lxc 2018-08-24
 ALTER TABLE `crystal_ball`.`product`
 MODIFY COLUMN `PRODUCT_NAME` varchar(640) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL AFTER `MARKET_PRICE`;
+
+-- --------------------------
+-- spec_filter 规格过滤配置表  排序字段类型更新 add by chenpeng 2018年8月20日
+-- -------------------------
+ALTER TABLE `crystal_ball`.`spec_filter`
+MODIFY COLUMN `SORT_ORDER` smallint(6) NOT NULL DEFAULT 0 COMMENT '排序' AFTER `FILTER_NAME`;
