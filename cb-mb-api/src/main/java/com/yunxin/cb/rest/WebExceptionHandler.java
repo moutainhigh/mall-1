@@ -78,28 +78,47 @@ public class WebExceptionHandler {
         return new ResponseResult(Result.FAILURE, "系统繁忙，请稍后重试");
     }
 
+    /**
+     * VO参数验证异常
+     * @param e
+     * @return
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseResult MethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ResponseResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        logger.error("VO对象参数验证失败", e);
         FieldError fieldError = e.getBindingResult().getFieldError();
         return new ResponseResult(Result.FAILURE, fieldError.getDefaultMessage());
     }
 
     /**
-     * 如果aop日志拦截不抛异常就会执行该方法
-     * @param ex
+     * 方法参数验证错误异常
+     * @param e
      * @return
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseResult handleApiConstraintViolationException(ConstraintViolationException ex) {
+    public ResponseResult handleConstraintViolationException(ConstraintViolationException e) {
+        logger.error("方法参数验证失败", e);
         String message = "";
-        Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         for (ConstraintViolation<?> violation : violations) {
             message = violation.getMessage();
             break;
         }
         return new ResponseResult(Result.FAILURE, message);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Throwable.class)
+    public ResponseResult handleThrowable(Throwable e) throws Throwable {
+        //LogAspect aop异常处理
+        if (e instanceof ConstraintViolationException) {
+            ConstraintViolationException ex = (ConstraintViolationException)e;
+            return handleConstraintViolationException(ex);
+        }
+        logger.error("服务运行异常", e);
+        return new ResponseResult(Result.FAILURE, "系统繁忙，请稍后重试");
     }
 
 

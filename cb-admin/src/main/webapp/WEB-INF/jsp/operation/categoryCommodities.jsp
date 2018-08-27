@@ -9,7 +9,6 @@
 
     <title>商品管理</title>
     <script type="text/javascript">
-
         function editItemFilters() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
@@ -340,6 +339,8 @@
             </div>
             <div class="modal-body">
                     <input type="hidden" name="categoryId" value="${category.categoryId}"/>
+                <input type="hidden" value="${category.lowestPrice *10000}" id="startPrice" min="0" step="0.0001" data-filter="sellPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px"/></td>
+                <input type="hidden" value="${category.highestPrice *10000}" id="endPrice" min="0" step="0.0001" data-filter="sellPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px"/></td>
                 <jsp:include page="../commodity/chooseCommodities.jsp"/>
 
             </div>

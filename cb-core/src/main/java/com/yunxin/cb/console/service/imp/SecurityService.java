@@ -93,7 +93,7 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         }
         Date date = new Date();
         user.setCreateTime(date);
-        user.setLastTime(date);
+        //user.setLastTime(date);
         user.setPassword(PasswordHash.createHash(user.getPassword()));
         return userDao.save(user);
     }

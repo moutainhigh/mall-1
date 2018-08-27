@@ -99,7 +99,12 @@
                                 <label><span class="asterisk">*</span>用户名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32"/>
+                                <c:if test="${user.userId==1&&user.userName=='admin'}">
+                                    <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" disabled="true" cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32" />
+                                </c:if>
+                                <c:if test="${user.userId!=1}">
+                                    <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32" />
+                                </c:if>
                                 <form:errors path="userName" cssClass="Validform_checktip"/>
                             </div>
                             <div class="col-sm-2">
@@ -158,7 +163,7 @@
                                             <c:set var="choose" value="true"></c:set>
                                         </c:if>
                                     </c:forEach>
-                                    <input type="radio" name="roldIds" value="${role.roleId}" <c:if test="${choose}">checked</c:if>/>${role.roleName}
+                                    <input type="radio" name="roldIds" value="${role.roleId}" <c:if test="${user.userId==1&&user.userName=='admin'}">disabled</c:if> <c:if test="${choose}">checked</c:if>/>${role.roleName}
                                 </c:forEach>
                             </div>
                         </div>

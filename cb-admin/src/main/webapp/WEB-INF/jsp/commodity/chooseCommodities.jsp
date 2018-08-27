@@ -77,6 +77,8 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        reloadGridFilters('commodityGrid');
+
         $("#checkall").click(function(){
             if(this.checked){
                 $("#commodityGrid input[type='checkbox'][name='selectedCommodityId']").each(function() {
