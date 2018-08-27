@@ -187,3 +187,16 @@ CHANGE COLUMN `CATEGORY_ID` `CATALOG_ID` int(11) NOT NULL COMMENT '分类ID' AFT
 
 ----初始化数据应该就要有的
 INSERT INTO `store` VALUES (1, '富德生命大厦507', '440300', '440304', b'0', 518000, '440000', '', 'NO0001', '福田仓库');
+
+
+#add by yangzhen 2018-8-21
+ALTER TABLE `crystal_ball`.`message`
+MODIFY COLUMN `message_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '消息内容' AFTER `digest_pic`;
+
+#add by yangzhen 2018-8-22
+ALTER TABLE `crystal_ball`.`message`
+ADD COLUMN `message_despatcher` varchar(15) COMMENT '消息作者' AFTER `push_status`;
+
+#add by lxc 2018-08-24
+ALTER TABLE `crystal_ball`.`product`
+MODIFY COLUMN `PRODUCT_NAME` varchar(640) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL AFTER `MARKET_PRICE`;
