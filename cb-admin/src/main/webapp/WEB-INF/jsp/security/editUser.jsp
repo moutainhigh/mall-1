@@ -12,7 +12,10 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
+            $.validationEngineLanguage.allRules.specialChar = {
+                "regex": /[`~!@#$^&*()=|{}':;',\[\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]/,
+                "alertText": "包含特殊字符"
+            }
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
@@ -100,10 +103,10 @@
                             </div>
                             <div class="col-sm-3">
                                 <c:if test="${user.userId==1&&user.userName=='admin'}">
-                                    <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" disabled="true" cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32" />
+                                    <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" disabled="true" cssClass="form-control validate[required,minSize[2],custom[specialChar]]" path="userName" maxlength="32" />
                                 </c:if>
                                 <c:if test="${user.userId!=1}">
-                                    <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32" />
+                                    <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2],custom[specialChar]]" path="userName" maxlength="32" />
                                 </c:if>
                                 <form:errors path="userName" cssClass="Validform_checktip"/>
                             </div>
