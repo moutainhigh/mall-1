@@ -9,13 +9,14 @@
     <title>新增用户</title>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+            $(document).ready(function() {
             $("#roleIds").select2();
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
 
         });
+
 
         /**
          * 手机验证
@@ -100,7 +101,7 @@
                                 <label><span class="asterisk">*</span>用户名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32"/>
+                                <form:input onkeyup="this.value=this.value.replace(/[^a-zA-Z\d\u4e00-\u9fa5]/g,'')" cssClass="form-control validate[required,minSize[2],funcCall[specialChar]]" path="userName" maxlength="32"/>
                                 <form:errors path="userName" cssClass="Validform_checktip"/>
                             </div>
                             <div class="col-sm-2">

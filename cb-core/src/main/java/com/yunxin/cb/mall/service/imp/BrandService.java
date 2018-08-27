@@ -38,7 +38,7 @@ public class BrandService implements IBrandService {
     @Override
     public Brand addBrand(Brand brand) throws EntityExistException {
         if (!brandDao.isOrUnique(brand, Brand_.brandNo, Brand_.brandName)) {
-            throw new EntityExistException("品牌中文名称已存在");
+            throw new EntityExistException("品牌名称已存在");
         }
 //        brand.setEnabled(true);
         brand.setCreateTime(new Date());

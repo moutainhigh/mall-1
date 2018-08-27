@@ -64,26 +64,32 @@ public class LogAspect {
 		try {
 			long startTime = System.currentTimeMillis();
 			methodName = joinPoint.getSignature().toLongString();
-//			inputParam = joinPoint.getArgs();
-			// 每个请求的方法第一个参数都必须为HttpServletRequest
-//			HttpServletRequest request = (HttpServletRequest) inputParam[0];
+			inputParam = joinPoint.getArgs();
+            HttpServletRequest request = null ;
+            //获取所有requestBody参数
+            Map<Integer, Object> requestBodyMap = new HashMap<>();
+            for (int i = 0 ; i < inputParam.length ; i++){
+                if(inputParam[i] instanceof HttpServletRequest){
+                    request = (HttpServletRequest) inputParam[i];
+                }else {
+                    requestBodyMap.put(i,inputParam[i]);
+                }
+            }
 
-			//获取request的另一种方案
-			RequestAttributes ra = RequestContextHolder.getRequestAttributes();
-			ServletRequestAttributes sra = (ServletRequestAttributes) ra;
-			HttpServletRequest request = sra.getRequest();
-
+            if(request == null) {
+                //获取request的另一种方案
+                RequestAttributes ra = RequestContextHolder.getRequestAttributes();
+                ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+                request = sra.getRequest();
+            }
 			Map<String, Object> map = new HashMap<>();
 			@SuppressWarnings("rawtypes")
 			Enumeration<String> paramNames = request.getParameterNames();
-			System.err.println("paramNames:"+paramNames);
 			while (paramNames.hasMoreElements()) {
 				String paramName = (String) paramNames.nextElement();
 				String[] paramValues = request.getParameterValues(paramName);
-				System.err.println("paramName:"+paramName+",paramValues:"+paramValues);
 				if (paramValues.length > 0) {
 					String paramValue = paramValues[0];
-					System.err.println("paramValue:"+paramValue);
 					map.put(paramName, paramValue);
 				}
 			}
@@ -104,7 +110,7 @@ public class LogAspect {
 			outputParam = joinPoint.proceed();
 			long endTime = System.currentTimeMillis();
 			float excTime = (float) (endTime - startTime) / 1000;
-			log.info("methodName：" + methodName + ", param:" + map + ";" + ",headermap:" + headermap + "\n result："
+			log.info("methodName：" + methodName + ",\n param:" + map + ";" +", requestBodyMap:" + requestBodyMap + ",\n headermap:" + headermap + "\n result："
 					+ isJson(outputParam) + "执行时间:" + excTime+ "\n "
 			);
 		} catch (Throwable e) {

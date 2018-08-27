@@ -166,6 +166,7 @@
                         <kendo:treeList name="treelist" height="450" selectable="true">
                             <kendo:treeList-columns>
                                 <kendo:treeList-column field="categoryName" title="分类名称" template="<div class='employee-photo' style='background-image: url(../images/#:iconPath#);'></div><div class='employee-name'>#: categoryName #</div>"/>
+                                <kendo:treeList-column field="sortOrder" title="排序编号"/>
                                 <kendo:treeList-column field="categoryKey" title="分类关键字"/>
                                 <kendo:treeList-column field="createTime" title="创建时间" format="{0:yyyy-MM-dd HH:mm}"/>
                                 <%--<kendo:treeList-column field="recommend" title="是否推荐" template="#=(recommend==true?'是':'否')#"/>--%>

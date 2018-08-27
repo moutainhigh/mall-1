@@ -34,6 +34,10 @@ public interface ProductDao extends ProductPlusDao, JpaRepository<Product, Integ
     @Query("update Product p set p.storeNum=?1 where p.productId=?2")
     public void updateProductByProductId(int depositoryNum, int productId);
 
+    @Modifying
+    @Query("update Product p set p.defaultPicPath=?1 where p.commodity.commodityId=?2")
+    public void updateDefaultPicPathByCommodityId(String defaultPicPath, int commodityId);
+
     @Query("select p.storeNum from Product p where p.productId=?1")
     int checkStoreNumByProductId(int productId);
 

@@ -194,13 +194,13 @@ public class ProductController {
     public ResponseResult defaultProductById(@RequestParam("productId") int productId,@RequestParam("commodityId") int commodityId) {
         ResponseResult responseResult = new ResponseResult();
         try {
-            Product product=productService.findOne(productId);
-            if (product.getPublishState() == PublishState.UP_SHELVES){
+            Product product=productService.getProductById(productId);
+            if (product.getCommodity().getPublishState() == PublishState.DOWN_SHELVES){
                 commodityService.updateCommodityStatus(product,commodityId);
                 responseResult.setResultType(ResultType.SUCCESS);
             }else {
                 responseResult.setResultType(ResultType.FAILURE);
-                responseResult.setData("请先上架货品");
+                responseResult.setData("请先下架商品");
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
