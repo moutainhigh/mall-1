@@ -29,5 +29,5 @@ public interface IFloorService {
 
     void removeHomeFloorById(int floorId);
 
-    void enableHomeFloorById(int floorId, boolean enabled);
+    void enableHomeFloorById(int floorId, boolean enabled) throws EntityExistException;
 }
