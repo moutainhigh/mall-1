@@ -65,13 +65,22 @@ public class LogAspect {
 			long startTime = System.currentTimeMillis();
 			methodName = joinPoint.getSignature().toLongString();
 			inputParam = joinPoint.getArgs();
-//			 每个请求的方法第一个参数都必须为HttpServletRequest
-//			HttpServletRequest request = (HttpServletRequest) inputParam[0];
-			//获取request的另一种方案
-			RequestAttributes ra = RequestContextHolder.getRequestAttributes();
-			ServletRequestAttributes sra = (ServletRequestAttributes) ra;
-			HttpServletRequest request = sra.getRequest();
-
+			HttpServletRequest request = null ;
+			//获取所有requestBody参数
+			Map<Integer, Object> requestBodyMap = new HashMap<>();
+			for (int i = 0 ; i < inputParam.length ; i++){
+				if(inputParam[i] instanceof HttpServletRequest){
+					request = (HttpServletRequest) inputParam[i];
+				}else {
+					requestBodyMap.put(i,inputParam[i]);
+				}
+			}
+			if(request == null) {
+				//获取request的另一种方案
+				RequestAttributes ra = RequestContextHolder.getRequestAttributes();
+				ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+				request = sra.getRequest();
+			}
 			Map<String, Object> map = new HashMap<String, Object>();
 			@SuppressWarnings("rawtypes")
 			Enumeration paramNames = request.getParameterNames();
@@ -100,8 +109,10 @@ public class LogAspect {
 			outputParam = joinPoint.proceed();
 			long endTime = System.currentTimeMillis();
 			float excTime = (float) (endTime - startTime) / 1000;
-			log.info("\n 完整路径：" +getFullUrlIsTrue(request,true) + ",headermap:" + headermap + ",methodName:" + methodName + ";" + "\n result:"
-					+ isJson(outputParam) + "执行时间:" + excTime
+			log.info("\n 完整路径：" +getFullUrlIsTrue(request,true)
+					+",\n requestBodyMap:" + requestBodyMap
+					+ ",\n headermap:" + headermap + ",methodName:" + methodName + ";"
+					+ "\n result:"+ isJson(outputParam) + "执行时间:" + excTime
 			);
 		} catch (Throwable e) {
 			e.printStackTrace();
