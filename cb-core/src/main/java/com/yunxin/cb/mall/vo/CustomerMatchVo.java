@@ -21,6 +21,8 @@ public class CustomerMatchVo implements Serializable {
     private String nickName;
     @ApiModelProperty(value = "头像", name = "avatarUrl", example = "http://www.baidu.com")
     private String avatarUrl;
+    @ApiModelProperty(value = "用户名", name = "accountName", example = "fcgvxpwza4")
+    private String accountName;
 
     public CustomerMatchVo(){
 
@@ -64,5 +66,13 @@ public class CustomerMatchVo implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 }
