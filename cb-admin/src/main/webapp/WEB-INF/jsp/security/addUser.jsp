@@ -167,8 +167,8 @@
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>角色：</label>
                             </div>
-                            <div class="col-sm-8">
-                                <form:select cssClass="simpleselect validate[groupRequired[roleIds]]" id="roleIds" path="roldIds" items="${roles}" itemLabel="roleName" itemValue="roleId"/>
+                            <div class="col-sm-3">
+                                <form:select cssClass="simpleselect validate[groupRequired[roleIds]]" id="roleIds" path="roldIds" items="${roles}" itemLabel="roleName" itemValue="roleId" multiple="false"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>

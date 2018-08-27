@@ -17,7 +17,6 @@
                     if (valid) {
                         var roleCode = $('#roleCode').val();
                         var roleName = $('#roleName').val();
-                        alert(roleCode)
                         if (roleCode=='') {
                             bootbox.alert("角色编码不能为空!");
                             return false;

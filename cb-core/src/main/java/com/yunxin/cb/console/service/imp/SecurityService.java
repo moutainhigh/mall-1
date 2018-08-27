@@ -5,6 +5,8 @@ import com.yunxin.cb.console.dao.RoleDao;
 import com.yunxin.cb.console.dao.UserDao;
 import com.yunxin.cb.console.entity.*;
 import com.yunxin.cb.console.service.ISecurityService;
+import com.yunxin.cb.mall.entity.Feedback;
+import com.yunxin.cb.mall.entity.Feedback_;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.entity.Seller_;
 import com.yunxin.cb.security.IPermission;
@@ -404,5 +406,20 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         } else {
             return null;
         }
+    }
+
+    public Page<Role> pageRole(final PageSpecification<Role> queryRequest){
+        queryRequest.setCustomSpecification(new CustomSpecification<Role>() {
+            @Override
+            public void buildFetch(Root<Role> root) {
+            }
+            @Override
+            public void addConditions(Root<Role> root, CriteriaQuery<?> query,
+                                      CriteriaBuilder builder, List<Predicate> predicates) {
+                query.orderBy(builder.desc(root.get(Role_.createTime)));
+            }
+        });
+        Page<Role> page = roleDao.findAll(queryRequest, queryRequest.getPageRequest());
+        return page;
     }
 }
