@@ -27,4 +27,7 @@ public interface HomeFloorDao extends JpaRepository<HomeFloor, Integer>, JpaSpec
     @Query("select distinct s from HomeFloor s left join fetch s.floorCommodities fc left join fetch fc.commodity c left join fetch s.floorCategories fcat left join fetch fcat.category where s.enabled=true and c.commodityState=1 and c.publishState=1 order by s.sortOrder asc")
     public List<HomeFloor> findEnabledHomeFloors();
 
+    //根据楼层和状态查询
+    public HomeFloor findHomeFloorByEnabledAndSortOrder(boolean enabled,int sortOrder);
+
 }

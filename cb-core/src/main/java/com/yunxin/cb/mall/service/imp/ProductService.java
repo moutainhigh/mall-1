@@ -138,6 +138,15 @@ public class ProductService implements IProductService {
 
     @Override
     public void removeProductById(int productId) {
+        //判断删除的货品是否属于默认货品，如果是则删除商品的默认货品
+        Product product = productDao.findProductDetail(productId);
+        if(LogicUtils.isNotNull(product)){
+            Commodity commodity=product.getCommodity();
+            if(LogicUtils.isNotNull(commodity)&&LogicUtils.isNotNull(commodity.getDefaultProduct())&&
+                commodity.getDefaultProduct().getProductId()==productId){
+                commodityDao.updateDefaultProductById(null,commodity.getCommodityId());
+            }
+        }
         productDao.delete(productId);
     }
 

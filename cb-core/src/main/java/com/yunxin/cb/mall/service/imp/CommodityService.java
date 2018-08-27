@@ -164,7 +164,8 @@ public class CommodityService implements ICommodityService {
                 commoditySpecDao.save(commoditySpec);
             }
         }
-        // 删除未选中的图
+        //更新货品的默认图片
+        productDao.updateDefaultPicPathByCommodityId(commodity.getDefaultPicPath(),commodity.getCommodityId());
 
 
 

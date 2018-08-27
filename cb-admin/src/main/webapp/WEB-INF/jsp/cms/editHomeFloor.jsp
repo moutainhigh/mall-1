@@ -22,25 +22,26 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if(valid){
-                        debugger;
-                        var arr =  document.getElementsByName("brandOrder");
-                        var myArray = new Array();
-                        if(arr.length != 7){
-                            bootbox.alert("品牌只能添加7个!");
-                            return false;
-                        }
-                        for(var i=0;i<arr.length;i++){
-                            var a = arr[i].value;
-                            myArray.push(a);
-                        }
-                        var nary = myArray.sort();
-                        for(var j=0;j<arr.length;j++){
-                            if (myArray[j]==nary[j+1]){
-                                bootbox.alert("排序不能重复!");
+                        var sortOrder = $("#sortOrder").val();
+                        if(sortOrder ==2){
+                            var arr =  document.getElementsByName("brandOrder");
+                            var myArray = new Array();
+                            if(arr.length != 7){
+                                bootbox.alert("品牌只能添加7个!");
                                 return false;
                             }
+                            for(var i=0;i<arr.length;i++){
+                                var a = arr[i].value;
+                                myArray.push(a);
+                            }
+                            var nary = myArray.sort();
+                            for(var j=0;j<arr.length;j++){
+                                if (myArray[j]==nary[j+1]){
+                                    bootbox.alert("排序不能重复!");
+                                    return false;
+                                }
+                            }
                         }
-
                         var defaultPicPath = $('input[name="imgurl"]');
                         var defaultPicPath1 = $('input[name="imgurl1"]');
                         if (defaultPicPath.size()==0) {

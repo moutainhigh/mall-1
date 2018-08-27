@@ -384,7 +384,7 @@
                   <div class="col-sm-1">
                     <label>品牌关键字：</label>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-4 col-label">
                     ${brand.brandKey}
                   </div>
                   <div class="col-sm-1"></div>
