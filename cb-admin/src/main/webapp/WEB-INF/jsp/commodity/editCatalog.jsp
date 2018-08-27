@@ -139,14 +139,15 @@
                             <div class="col-sm-3">
                                 <form:input cssClass="form-control validate[required],custom[number]" path="sortOrder" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
                             </div>
-                            <c:if test="${catalog.parentCatalog.catalogId == 1}">
+
+                            <span id = "hidd" <c:if test="${catalog.parentCatalog.catalogId != 1}">style="display: none" </c:if> >
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input cssClass="form-control validate[required],custom[eqOne]" path="ratio" maxlength="10" />
                             </div>
-                            </c:if>
+                            </span>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
@@ -249,9 +250,22 @@
                 $('#catalogDialog').modal("hide");
                 $("#parentCatalogId").val(catalogId);
                 $("#parentCatalogName").val(catalogName);
+                if(catalogId !=1){
+                    $('#hidd').hide();
+                    $('#ratio').removeClass();
+                }else{
+                    $('#hidd').show();
+                    $('#ratio').addClass("form-control validate[required],custom[eqOne]");
+                }
+                $('#ratio').val("");
             }
             var ratio = $('#ratio').val();      //商品比例设置
-            $('#ratio').val(parseFloat(ratio)) //去掉多余的零
+            if(typeof(ratio) == undefined || isNaN(ratio)) {
+                $('#ratio').val("");
+            }else{
+                $('#ratio').val(parseFloat(ratio)) //去掉多余的零
+            }
+
         </script>
     </div>
 </div>
