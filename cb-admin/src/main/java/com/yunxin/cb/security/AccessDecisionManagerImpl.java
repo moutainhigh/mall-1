@@ -28,16 +28,13 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
             // 请求的资源不需要任何权限，放行
             return;
         }
-
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-
         for (GrantedAuthority authority : authorities) {
             if (SecurityConstants.SUPER_ROLE.equals(authority.getAuthority())) {
                 // 如果是系统默认超级管理员角色，则放行
                 return;
             }
         }
-
         boolean allow = configAttributes.stream()
                 .anyMatch(configAttribute -> authorities.stream()
                         .anyMatch(grantedAuthority ->

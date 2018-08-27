@@ -200,3 +200,9 @@ ADD COLUMN `message_despatcher` varchar(15) COMMENT '消息作者' AFTER `push_s
 #add by lxc 2018-08-24
 ALTER TABLE `crystal_ball`.`product`
 MODIFY COLUMN `PRODUCT_NAME` varchar(640) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL AFTER `MARKET_PRICE`;
+
+##add by lxc 2018-08-27 17:20
+ALTER TABLE `crystal_ball`.`rb_funds_pool` DROP FOREIGN KEY `fk_fund_pool_category_id`;
+
+ALTER TABLE `crystal_ball`.`rb_funds_pool`
+ADD CONSTRAINT `fk_funds_pool_catalog_id` FOREIGN KEY (`CATALOG_ID`) REFERENCES `crystal_ball`.`catalog` (`CATALOG_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
