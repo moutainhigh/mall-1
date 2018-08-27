@@ -1,6 +1,7 @@
 package com.yunxin.cb.im;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yunxin.cb.im.RongCloudUtils;
 import com.yunxin.cb.mall.entity.Customer;
 import io.rong.RongCloud;
 import io.rong.messages.CmdMsgMessage;
@@ -20,17 +21,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class RongCloudService {
 
     private static Logger logger = LoggerFactory.getLogger(RongCloudService.class);
 
     @Value("${rongcloud.appKey}")
-    private String appKey = "z3v5yqkbz1jp0";
+    private String appKey;
 
     @Value("${rongcloud.appSecret}")
-    private String appSecret = "AUUwTO6vXg7y7P";
+    private String appSecret;
 
     public String register(Customer customer) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
