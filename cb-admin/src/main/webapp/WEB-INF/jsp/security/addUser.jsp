@@ -11,7 +11,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $.validationEngineLanguage.allRules.specialChar = {
-                "regex": /[`~!@#$^&*()=|{}':;',\[\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]/,
+                "regex": /[a-zA-Z\d\u4e00-\u9fa5]/,
                 "alertText": "包含特殊字符"
             }
             $("#roleIds").select2();
