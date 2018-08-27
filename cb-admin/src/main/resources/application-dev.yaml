@@ -8,7 +8,7 @@ spring:
      store-type: redis
   redis:
        database: 0
-       host: 192.168.0.104
+       host: 192.168.0.36
        port: 6379
        password:
        timeout: 0
