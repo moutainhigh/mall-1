@@ -161,7 +161,7 @@ public class FloorService implements IFloorService {
         }
         if(homeFloor.isEnabled()){
             HomeFloor homeFloor1 =  homeFloorDao.findHomeFloorByEnabledAndSortOrder(homeFloor.isEnabled(),homeFloor.getSortOrder());
-            if(null != homeFloor1){
+            if(null != homeFloor1 && homeFloor.getFloorId() != homeFloor1.getFloorId()){
                 throw new EntityExistException("该状态的楼层已存在,不能更改状态");
             }
         }
