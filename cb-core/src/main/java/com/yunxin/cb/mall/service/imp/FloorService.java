@@ -56,17 +56,21 @@ public class FloorService implements IFloorService {
         if (!homeFloorDao.isOrUnique(homeFloor, HomeFloor_.floorName)) {
             throw new EntityExistException("楼层名称已存在");
         }
-        HomeFloor homeFloor1 =  homeFloorDao.findHomeFloorByEnabledAndSortOrder(homeFloor.isEnabled(),homeFloor.getSortOrder());
-        if(null != homeFloor1){
-            throw new EntityExistException("楼层已存在,不能重复添加");
+        if(homeFloor.isEnabled()){
+            HomeFloor homeFloor1 =  homeFloorDao.findHomeFloorByEnabledAndSortOrder(homeFloor.isEnabled(),homeFloor.getSortOrder());
+            if(null != homeFloor1){
+                throw new EntityExistException("该状态的楼层已存在,不能重复添加");
+            }
         }
         int[] categoryId = homeFloor.getCategoryId();
         int[] categoryOrder = homeFloor.getCategoryOrder();
         int[] commodityId = homeFloor.getCommodityId();
         int[] commodityOrder = homeFloor.getCommodityOrder();
         int[] brandId = homeFloor.getBrandId();
-        if(brandId.length != 7){
-            throw new EntityExistException("品牌数量只能有7个");
+        if(homeFloor.getSortOrder() == 2){
+            if(brandId.length != 7){
+                throw new EntityExistException("品牌数量只能有7个");
+            }
         }
         int[] brandOrder = homeFloor.getBrandOrder();
         int[] advertId = homeFloor.getAdvertId();
@@ -155,6 +159,12 @@ public class FloorService implements IFloorService {
         if (!homeFloorDao.isUnique(homeFloor, HomeFloor_.floorName)) {
             throw new EntityExistException("楼层名称已存在！");
         }
+        if(homeFloor.isEnabled()){
+            HomeFloor homeFloor1 =  homeFloorDao.findHomeFloorByEnabledAndSortOrder(homeFloor.isEnabled(),homeFloor.getSortOrder());
+            if(null != homeFloor1 && homeFloor.getFloorId() != homeFloor1.getFloorId()){
+                throw new EntityExistException("该状态的楼层已存在,不能更改状态");
+            }
+        }
         HomeFloor dbhomeFloor = homeFloorDao.findOne(homeFloor.getFloorId());
 
         AttributeReplication.copying(homeFloor, dbhomeFloor, HomeFloor_.categoryAmount, HomeFloor_.commodityAmount,HomeFloor_.advertAmount,HomeFloor_.brandAmount, HomeFloor_.enabled, HomeFloor_.floorName,
@@ -164,8 +174,11 @@ public class FloorService implements IFloorService {
         int[] commodityId = homeFloor.getCommodityId();
         int[] commodityOrder = homeFloor.getCommodityOrder();
         int[] brandId = homeFloor.getBrandId();
-        if(brandId.length != 7){
-            throw new EntityExistException("品牌数量只能有7个");
+
+        if(homeFloor.getSortOrder() == 2){
+            if(brandId.length != 7){
+                throw new EntityExistException("品牌数量只能有7个");
+            }
         }
         int[] brandOrder = homeFloor.getBrandOrder();
         int[] advertId = homeFloor.getAdvertId();
@@ -184,9 +197,17 @@ public class FloorService implements IFloorService {
     }
 
     @Override
-    public void enableHomeFloorById(int floorId, boolean enabled) {
-        homeFloorDao.enableHomeFloorById(enabled, floorId);
+    public void enableHomeFloorById(int floorId, boolean enabled) throws EntityExistException {
+        if(enabled){
+            HomeFloor homeFloor = homeFloorDao.findById(floorId);
+            HomeFloor homeFloor1 = homeFloorDao.findHomeFloorByEnabledAndSortOrder(enabled,homeFloor.getSortOrder());
+            if(null == homeFloor1){
+                homeFloorDao.enableHomeFloorById(enabled, floorId);
+            }else {
+                throw new EntityExistException("该楼层只能启用一个");
+            }
+        }else {
+            homeFloorDao.enableHomeFloorById(enabled, floorId);
+        }
     }
-
-
 }
