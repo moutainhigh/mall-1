@@ -56,6 +56,10 @@ public class FloorService implements IFloorService {
         if (!homeFloorDao.isOrUnique(homeFloor, HomeFloor_.floorName)) {
             throw new EntityExistException("楼层名称已存在");
         }
+        HomeFloor homeFloor1 =  homeFloorDao.findHomeFloorByEnabledAndSortOrder(homeFloor.isEnabled(),homeFloor.getSortOrder());
+        if(null != homeFloor1){
+            throw new EntityExistException("楼层已存在,不能重复添加");
+        }
         int[] categoryId = homeFloor.getCategoryId();
         int[] categoryOrder = homeFloor.getCategoryOrder();
         int[] commodityId = homeFloor.getCommodityId();
