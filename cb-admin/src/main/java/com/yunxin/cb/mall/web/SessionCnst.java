@@ -12,5 +12,6 @@ public class SessionCnst {
     public static final String USER_CREATE_TIME = "createTime";
     public static final String USER_LAST_TIME = "lastTime";
     public static final String USER_IP = "ip";
+    public static final String LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
 }

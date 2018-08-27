@@ -34,6 +34,9 @@ public class MessageCenterController {
     @Resource
     private AttachmentService attachmentService;
 
+    @Resource
+    private RongCloudService rongCloudService;
+
     @RequestMapping(value = "message")
     public String message( ModelMap modelMap) {
         return "message/messageCenter";
@@ -122,7 +125,6 @@ public class MessageCenterController {
             Message message = messageService.getMessage(messageId);
             if(null != message && message.getMessageId() > 0){
                 //消息推送
-                RongCloudService rongCloudService = new RongCloudService();
                 if(rongCloudService.pushMessageToAll(message.getPushTitle())){
                     //状态更新
                     message.setPushStatus(PushStatus.HAVE_PUSHED);

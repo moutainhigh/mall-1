@@ -9,6 +9,7 @@ import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.entity.Feedback_;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.entity.Seller_;
+import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.security.IPermission;
 import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import com.yunxin.cb.security.SecurityProvider;
@@ -58,6 +59,7 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
 
     @Resource
     private PermissionDao permissionDao;
+
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

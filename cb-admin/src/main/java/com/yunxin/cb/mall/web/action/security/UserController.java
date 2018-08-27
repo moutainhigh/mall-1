@@ -4,6 +4,7 @@ import com.yunxin.cb.console.entity.Role;
 import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.console.service.ISecurityService;
 import com.yunxin.cb.mall.entity.Seller;
+import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
@@ -15,14 +16,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.yunxin.cb.mall.web.SessionCnst.LOGIN_SUCCESS;
 
 /**
  * @author z001075
@@ -35,6 +35,10 @@ public class UserController {
 
     @Resource
     private ISecurityService securityService;
+
+    @Resource
+    private RedisService redisService ;
+
 
     @RequestMapping(value = "users",method = RequestMethod.GET)
     public String users(ModelMap modelMap) {
@@ -128,6 +132,15 @@ public class UserController {
     public boolean removeUserById(@RequestParam("userId") int userId) {
         try{
             securityService.removeUserById(userId);
+            /**删除用户清除redis信息*/
+            List<Integer> list = (List<Integer>)redisService.getKey(LOGIN_SUCCESS);
+            List<Integer> relist = new ArrayList<>();
+            list.stream().forEach(p->{
+                if(p!=userId){
+                    relist.add(p);
+                }
+            });
+            redisService.updateRedisByKey(LOGIN_SUCCESS,relist);
             return true;
         }catch (Exception e){
             return false;
