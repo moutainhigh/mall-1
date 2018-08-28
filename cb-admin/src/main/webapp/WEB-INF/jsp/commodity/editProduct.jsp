@@ -204,7 +204,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
-                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                                     <span class="input-group-addon">Kg</span>
                                 </div>
                             </div>
@@ -213,7 +213,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
-                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                                     <span class="input-group-addon">m3</span>
                                 </div>
 
