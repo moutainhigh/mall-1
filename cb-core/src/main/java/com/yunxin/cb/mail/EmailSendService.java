@@ -24,9 +24,9 @@ public class EmailSendService {
     public static final String SMTPSERVER = "smtp.163.com";
     public static final String SMTPPORT = "465";
     //发送邮箱
-    public static final String ACCOUT = "wangteng1027@163.com";
+    public static final String ACCOUT = "wangteng@163.com";
     //发送邮箱密码
-    public static final String PWD = "wangteng@911027";
+    public static final String PWD = "wangteng";
     //发送邮箱名称
     public static final String ACCOUTNAME="Brad Pitt";
 

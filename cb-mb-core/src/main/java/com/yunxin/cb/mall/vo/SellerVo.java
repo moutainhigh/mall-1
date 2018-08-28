@@ -36,6 +36,10 @@ public class SellerVo implements java.io.Serializable {
     @ApiModelProperty(value="手机",name="mobile",example="13588565598")
     private String mobile;
 
+    /** 固定电话 */
+    @ApiModelProperty(value="固定电话",name="telePhone",example="0755-82573921")
+    private String telePhone;
+
     /** 备注 */
     @ApiModelProperty(value="备注",name="remark",example="无")
     private String remark;
@@ -114,6 +118,14 @@ public class SellerVo implements java.io.Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getTelePhone() {
+        return telePhone;
+    }
+
+    public void setTelePhone(String telePhone) {
+        this.telePhone = telePhone;
     }
 
     public String getRemark() {
@@ -220,10 +232,14 @@ public class SellerVo implements java.io.Serializable {
                 ", introduction='" + introduction + '\'' +
                 ", linkman='" + linkman + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", telePhone='" + telePhone + '\'' +
                 ", remark='" + remark + '\'' +
                 ", province='" + province + '\'' +
+                ", provinceName='" + provinceName + '\'' +
                 ", city='" + city + '\'' +
+                ", cityName='" + cityName + '\'' +
                 ", district='" + district + '\'' +
+                ", districtName='" + districtName + '\'' +
                 ", sellerAddress='" + sellerAddress + '\'' +
                 ", sellerCode='" + sellerCode + '\'' +
                 ", sellerName='" + sellerName + '\'' +

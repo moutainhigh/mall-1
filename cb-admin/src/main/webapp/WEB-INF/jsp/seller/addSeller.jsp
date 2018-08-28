@@ -219,10 +219,10 @@
                 <form:input cssClass="form-control validate[required]" path="linkman" maxlength="32"/>
               </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 手机：</label>
+                <label> 手机：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="form-control validate[required,custom[phone]]" path="mobile" id="mobile" maxlength="11"/>
+                <form:input cssClass="form-control validate[custom[phone]]" path="mobile" id="mobile" maxlength="11"/>
               </div>
             </div>
 

@@ -114,16 +114,38 @@ public class CatalogService implements ICatalogService {
         if (!catalogDao.isOrUnique(catalog, Catalog_.catalogName)) {
             throw new EntityExistException("商品分类名称已存在");
         }
+        if(catalog.getCatalogId() == catalog.getParentCatalogId()){
+            throw new EntityExistException("上级分类不可以选择自己");
+        }
 
         Catalog dbCatalog = catalogDao.findOne(catalog.getCatalogId());
+        catalog.setCatalogCode(dbCatalog.getCatalogCode());//修改时在AttributeReplication.copying方法中赋值了,因此需要加上这句代码
         BigDecimal db_ratio = dbCatalog.getRatio();//数据库的比例配置
-        AttributeReplication.copying(catalog, dbCatalog, Catalog_.catalogName, Catalog_.enabled, Catalog_.supportAddedTax, Catalog_.leaf, Catalog_.sortOrder, Catalog_.remark, Catalog_.parentCatalog, Catalog_.ratio);
+        Integer db_parentCatalogId = dbCatalog.getParentCatalogId();//数据库的父分类id
+        List<Catalog> catalogByLikeCatalogCode = null;
+        if(!db_parentCatalogId.equals(catalog.getParentCatalogId())){
+            catalogByLikeCatalogCode = catalogDao.findCatalogByCatalogCodeStartingWith(dbCatalog.getCatalogCode());
+            if((catalogByLikeCatalogCode.size() - 1) > 0){
+                throw new EntityExistException("商品分类下已有分类信息");
+            }
+            List<Commodity> commoditiesByCatalog = commodityDao.findCommoditiesByCatalog(dbCatalog);
+            if(commoditiesByCatalog.size()>0){
+                throw new EntityExistException("商品分类下已有产品信息");
+            }
+            //重新选择父类后,编码需要重新编码
+            Catalog pCatalog = catalogDao.findOne(catalog.getParentCatalogId());
+            int tcode = calParentCategoryCode(pCatalog);
+            catalog.setCatalogCode(pCatalog.getCatalogCode()
+                    + decimalFormat.format(tcode));
+        }
+         AttributeReplication.copying(catalog, dbCatalog, Catalog_.catalogName, Catalog_.enabled, Catalog_.supportAddedTax, Catalog_.leaf, Catalog_.sortOrder, Catalog_.remark, Catalog_.parentCatalog, Catalog_.ratio,Catalog_.catalogCode);
         //S     add by lxc  2018-08-07
         if (dbCatalog != null ){
-            System.err.println(decimalFormat.format(5));
             //当一级分类比例设置有改变,则需要修改货品销售价
-            if(dbCatalog.getParentCatalogId()==1 && catalog.getRatio().compareTo(db_ratio) !=0 ){
-                List<Catalog> catalogByLikeCatalogCode = catalogDao.findCatalogByCatalogCodeStartingWith(dbCatalog.getCatalogCode());
+            if(dbCatalog.getParentCatalogId()==1 && db_ratio != null && catalog.getRatio().compareTo(db_ratio) !=0 ){
+                if(catalogByLikeCatalogCode == null) {
+                    catalogByLikeCatalogCode = catalogDao.findCatalogByCatalogCodeStartingWith(dbCatalog.getCatalogCode());
+                }
                 catalogByLikeCatalogCode.stream().forEach(c -> {
                     List<Commodity> commoditiesByCatalog = commodityDao.findCommoditiesByCatalog(c);
                     commoditiesByCatalog.stream().forEach(o ->{

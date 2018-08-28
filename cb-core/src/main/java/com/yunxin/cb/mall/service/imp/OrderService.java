@@ -566,6 +566,17 @@ public class OrderService implements IOrderService {
                 orderLog.setHandler("后台定时任务");
                 orderLog.setRemark("订单定时完成");
                 orderLogDao.save(orderLog);
+                //商品增加销售量
+                if (order.getOrderItems()!= null && order.getOrderItems().size() > 0) {
+                    for (OrderItem orderItem : order.getOrderItems()) {
+                        Product product = orderItem.getProduct();
+                        Commodity commodity = product.getCommodity();
+                        if (commodity != null) {
+                            int num = commodity.getSaleNum();
+                            commodity.setSaleNum(num + orderItem.getProductNum());
+                        }
+                    }
+                }
                 //资金如资金池
                 fundsPoolService.updateAndCountOrderAmout(order.getOrderId());
             }

@@ -119,6 +119,19 @@ public class AttributeGroupVO implements java.io.Serializable{
                     }
                     groupVOs.add(groupVO);
                 }
+                //根据groupId排序
+                Collections.sort(groupVOs, new Comparator<AttributeGroupVO>() {
+                    @Override
+                    public int compare(AttributeGroupVO o1, AttributeGroupVO o2) {
+                        if( o1.getGroupId()>o2.getGroupId()){
+                            return 1;
+                        }else if( o1.getGroupId()<o2.getGroupId()){
+                            return -1;
+                        }else{
+                            return 0;
+                        }
+                    }
+                });
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();

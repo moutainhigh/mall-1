@@ -203,4 +203,15 @@ public interface ICommodityService {
 
     public void syncESCommodity();
 
+    /**
+     *
+     * @Description 修改商品的销售数量
+     *
+     * @Author gws
+     * @Param [commodityId, saleNum]
+     * @return com.yunxin.cb.mall.entity.Commodity
+     * @Date
+     **/
+    public Commodity updateSaleNum(int commodityId, int saleNum);
+
 }
