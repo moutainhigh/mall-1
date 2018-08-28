@@ -150,7 +150,7 @@
             }, function (json) {
                 $("#specTable  tr:not(:first)").empty()
                 $.each(json, function (date, value) {
-                    var newRow = "<tr><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control'  maxlength='255'/></td></tr>";
+                    var newRow = "<tr tag='"+value.specName+"'><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control' maxlength='255'/></td></tr>";
                     $("#specTable tr:last").after(newRow);
 
                 });
@@ -525,7 +525,7 @@
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${currentSpecs}" var="cSpec">
-                                        <tr>
+                                        <tr tag="${cSpec.spec.specName}">
                                             <td><input type='hidden' name='specId' value='${cSpec.spec.specId}'/>${cSpec.spec.specName}</td>
                                             <td><input type='text' name='specValue' class='form-control' value="${cSpec.value}"/></td>
                                         </tr>
