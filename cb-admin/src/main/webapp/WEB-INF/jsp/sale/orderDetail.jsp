@@ -49,6 +49,11 @@
                 return;
             }
 
+            if (name.length < 2) {
+                alert("请填写收货人名称至少两个字符");
+                return;
+            }
+
             var province = $("#province").val();
             if ($("#province").find("option:selected").index() == 0 || undefined == province) {
                 alert("请选择省份");
@@ -79,6 +84,10 @@
             var mobile = $("#consigneeMobile").val();
             if (null == mobile || "" == mobile || undefined == mobile) {
                 alert("请填写收货人手机号码");
+                return;
+            }
+            if (mobile.length != 11) {
+                alert("请填写收货人为11数字的手机号码");
                 return;
             }
             $.post("changeDelivery.do", {
