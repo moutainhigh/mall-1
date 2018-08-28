@@ -194,7 +194,7 @@
                                 <label><span class="asterisk">*</span>库存数量：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[checkPositive]]" path="storeNum" maxlength="12" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                                <form:input cssClass="form-control validate[required,custom[checkPositive]]" path="storeNum" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
