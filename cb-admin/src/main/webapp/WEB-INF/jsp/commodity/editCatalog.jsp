@@ -124,9 +124,11 @@
                             <div class="col-sm-3">
                                 <form:hidden id="parentCatalogId" path="parentCatalog.catalogId"/>
                                 <div class="input-group">
-                                    <form:input id="parentCatalogName" readonly="true" cssClass="form-control validate[required]" path="parentCatalog.catalogName" maxlength="32" data-errormessage="请选择上级分类"/>
+                                    <form:input id="parentCatalogName" readonly="true" cssClass="form-control validate[required]" path="parentCatalog.catalogName" maxlength="32" data-errormessage="请选择上级分类" title="一级分类不可修改"/>
                                     <span class="input-group-btn">
-                                        <button id="parentCatalogNameBtn" class="btn btn-default" type="button">选择</button>
+                                        <c:if test="${catalog.parentCatalog.catalogId != 1}">
+                                            <button id="parentCatalogNameBtn" class="btn btn-default" type="button">选择</button>
+                                        </c:if>
                                     </span>
                                 </div>
                             </div>
