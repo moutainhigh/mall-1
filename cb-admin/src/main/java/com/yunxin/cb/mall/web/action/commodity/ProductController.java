@@ -195,7 +195,7 @@ public class ProductController {
         ResponseResult responseResult = new ResponseResult();
         try {
             Product product=productService.getProductById(productId);
-            if (product.getCommodity().getPublishState() == PublishState.DOWN_SHELVES){
+            if (product.getCommodity().getPublishState() != PublishState.UP_SHELVES){
                 commodityService.updateCommodityStatus(product,commodityId);
                 responseResult.setResultType(ResultType.SUCCESS);
             }else {

@@ -38,10 +38,13 @@
           autoHidePrompt: true, scroll: false, showOneMessage: true,
           onValidationComplete: function (form, valid) {
               if (valid) {
-                  var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
-                  if (!myreg.test($('#mobile').val())) {
-                      bootbox.alert("手机格式不正确!");
-                      return false;
+                  var mobile=$('#mobile').val();
+                  if(mobile!=null&&mobile!=''){
+                      var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                      if (!myreg.test($('#mobile').val())) {
+                          bootbox.alert("手机格式不正确!");
+                          return false;
+                      }
                   }
 
                   var province = $("#province").val();
@@ -196,10 +199,10 @@
             <div class="row">
 
               <div class="col-sm-2">
-                <label> 联系电话：</label>
+                <label><span class="asterisk">*</span> 联系电话：</label>
               </div>
               <div class="col-sm-3">
-                <form:input cssClass="form-control" path="telephone" maxlength="16"/>
+                <form:input cssClass="form-control validate[required,minSize[2]]" path="telephone" maxlength="16"/>
               </div>
               <div class="col-sm-2">
                 <label><span class="asterisk">*</span> 商家类型：</label>

@@ -37,8 +37,8 @@ public class SellerVo implements java.io.Serializable {
     private String mobile;
 
     /** 固定电话 */
-    @ApiModelProperty(value="固定电话",name="telePhone",example="0755-82573921")
-    private String telePhone;
+    @ApiModelProperty(value="固定电话",name="telephone",example="0755-82573921")
+    private String telephone;
 
     /** 备注 */
     @ApiModelProperty(value="备注",name="remark",example="无")
@@ -120,12 +120,12 @@ public class SellerVo implements java.io.Serializable {
         this.mobile = mobile;
     }
 
-    public String getTelePhone() {
-        return telePhone;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setTelePhone(String telePhone) {
-        this.telePhone = telePhone;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String getRemark() {
@@ -232,7 +232,7 @@ public class SellerVo implements java.io.Serializable {
                 ", introduction='" + introduction + '\'' +
                 ", linkman='" + linkman + '\'' +
                 ", mobile='" + mobile + '\'' +
-                ", telePhone='" + telePhone + '\'' +
+                ", telephone='" + telephone + '\'' +
                 ", remark='" + remark + '\'' +
                 ", province='" + province + '\'' +
                 ", provinceName='" + provinceName + '\'' +
