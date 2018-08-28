@@ -43,7 +43,7 @@
         }
 
         function comfrimChangeDelivery() {
-            var name = $("#consigneeName").val();
+            var name = $.trim($("#consigneeName").val());
             if (null == name || "" == name || undefined == name) {
                 alert("请填写收货人名称");
                 return;
@@ -54,7 +54,7 @@
                 return;
             }
 
-            var mobile = $("#consigneeMobile").val();
+            var mobile = $.trim($("#consigneeMobile").val());
             if (null == mobile || "" == mobile || undefined == mobile) {
                 alert("请填写收货人手机号码");
                 return;
@@ -80,7 +80,7 @@
                 alert("请选择区域");
                 return;
             }
-            var address = $("#consigneeAddress").val();
+            var address = $.trim($("#consigneeAddress").val());
             if (null == address || "" == address || undefined == address) {
                 alert("请填写收货人地址");
                 return;
@@ -99,7 +99,7 @@
                 if (result) {
                     window.location.href = "getOrderDetailById.do?orderId=" + $("#orderId").val();
                 } else {
-                    alert("调价失败！");
+                    alert("修改失败！");
                 }
             });
         }
