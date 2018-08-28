@@ -37,7 +37,7 @@ public class SellerVo implements java.io.Serializable {
     private String mobile;
 
     /** 固定电话 */
-    @ApiModelProperty(value="固定电话",name="telephone",example="0755-82573921")
+    @ApiModelProperty(value="固定电话",name="telePhone",example="0755-82573921")
     private String telePhone;
 
     /** 备注 */
