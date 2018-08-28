@@ -43,9 +43,24 @@
         }
 
         function comfrimChangeDelivery() {
-            var name = $("#consigneeName").val();
+            var name = $.trim($("#consigneeName").val());
             if (null == name || "" == name || undefined == name) {
                 alert("请填写收货人名称");
+                return;
+            }
+
+            if (name.length < 2) {
+                alert("收货人姓名不得少于两位字符");
+                return;
+            }
+
+            var mobile = $.trim($("#consigneeMobile").val());
+            if (null == mobile || "" == mobile || undefined == mobile) {
+                alert("请填写收货人手机号码");
+                return;
+            }
+            if (mobile.length != 11) {
+                alert("手机号不满足11位数字");
                 return;
             }
 
@@ -65,7 +80,7 @@
                 alert("请选择区域");
                 return;
             }
-            var address = $("#consigneeAddress").val();
+            var address = $.trim($("#consigneeAddress").val());
             if (null == address || "" == address || undefined == address) {
                 alert("请填写收货人地址");
                 return;
@@ -76,11 +91,7 @@
             //     return;
             // }
             var telephone = $("#consigneeTelephone").val();
-            var mobile = $("#consigneeMobile").val();
-            if (null == mobile || "" == mobile || undefined == mobile) {
-                alert("请填写收货人手机号码");
-                return;
-            }
+
             $.post("changeDelivery.do", {
                 orderId: $("#orderId").val(), consigneeName: name, province: province, city: city, district: district,
                 consigneeAddress: address, postCode: postCode, consigneeTelephone: telephone, consigneeMobile: mobile
@@ -88,7 +99,7 @@
                 if (result) {
                     window.location.href = "getOrderDetailById.do?orderId=" + $("#orderId").val();
                 } else {
-                    alert("调价失败！");
+                    alert("修改失败！");
                 }
             });
         }

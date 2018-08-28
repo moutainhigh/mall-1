@@ -552,7 +552,7 @@ public class OrderService implements IOrderService {
         //c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
         c.add(Calendar.MINUTE ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
         //orderDao.taskCollectTimeOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
-        List<Order> orders = orderDao.findOrderByOrderStateAndCollectTime(OrderState.RECEIVED, c.getTime());
+        List<Order> orders = orderDao.findOrderByOrderStateAndCollectTime(OrderState.REFUSE, c.getTime());
         if (orders != null && !orders.isEmpty()) {
             Date now = new Date();
             for (Order order : orders) {
@@ -566,6 +566,17 @@ public class OrderService implements IOrderService {
                 orderLog.setHandler("后台定时任务");
                 orderLog.setRemark("订单定时完成");
                 orderLogDao.save(orderLog);
+                //商品增加销售量
+                if (order.getOrderItems()!= null && order.getOrderItems().size() > 0) {
+                    for (OrderItem orderItem : order.getOrderItems()) {
+                        Product product = orderItem.getProduct();
+                        Commodity commodity = product.getCommodity();
+                        if (commodity != null) {
+                            int num = commodity.getSaleNum();
+                            commodity.setSaleNum(num + orderItem.getProductNum());
+                        }
+                    }
+                }
                 //资金如资金池
                 fundsPoolService.updateAndCountOrderAmout(order.getOrderId());
             }

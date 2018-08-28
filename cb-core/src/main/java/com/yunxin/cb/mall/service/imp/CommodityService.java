@@ -887,4 +887,14 @@ public class CommodityService implements ICommodityService {
             logger.error("syncESCommodity failed", e);
         }
     }
+
+    @Override
+    public Commodity updateSaleNum(int commodityId, int saleNum) {
+        Commodity commodity = commodityDao.findOne(commodityId);
+        if (commodity != null) {
+            int num = commodity.getSaleNum();
+            commodity.setSaleNum(num + saleNum);
+        }
+        return commodity;
+    }
 }
