@@ -50,7 +50,17 @@
             }
 
             if (name.length < 2) {
-                alert("请填写收货人名称至少两个字符");
+                alert("收货人姓名不得少于两位字符");
+                return;
+            }
+
+            var mobile = $("#consigneeMobile").val();
+            if (null == mobile || "" == mobile || undefined == mobile) {
+                alert("请填写收货人手机号码");
+                return;
+            }
+            if (mobile.length != 11) {
+                alert("手机号不满足11位数字");
                 return;
             }
 
@@ -81,15 +91,7 @@
             //     return;
             // }
             var telephone = $("#consigneeTelephone").val();
-            var mobile = $("#consigneeMobile").val();
-            if (null == mobile || "" == mobile || undefined == mobile) {
-                alert("请填写收货人手机号码");
-                return;
-            }
-            if (mobile.length != 11) {
-                alert("请填写收货人为11数字的手机号码");
-                return;
-            }
+
             $.post("changeDelivery.do", {
                 orderId: $("#orderId").val(), consigneeName: name, province: province, city: city, district: district,
                 consigneeAddress: address, postCode: postCode, consigneeTelephone: telephone, consigneeMobile: mobile
