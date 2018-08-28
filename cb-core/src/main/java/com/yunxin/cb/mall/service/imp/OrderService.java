@@ -552,7 +552,7 @@ public class OrderService implements IOrderService {
         //c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
         c.add(Calendar.MINUTE ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
         //orderDao.taskCollectTimeOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
-        List<Order> orders = orderDao.findOrderByOrderStateAndCollectTime(OrderState.REFUSE, c.getTime());
+        List<Order> orders = orderDao.findOrderByOrderStateAndCollectTime(OrderState.RECEIVED, c.getTime());
         if (orders != null && !orders.isEmpty()) {
             Date now = new Date();
             for (Order order : orders) {
