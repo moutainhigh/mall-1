@@ -24,8 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Map;
-
 /**
  * @Auther: yangzhen
  * @Date: 2018/8/22 16:26
@@ -58,15 +56,15 @@ public class MockHttpUtils {
      * @param url 请求路径
      * @param content json参数
      * @param contentType 数据格式
-     * @param acceptStatus 期望请求结果码
+     * @param assertExpected 断言期望值
      * @param params 表单参数
      * @return:
      * @auther: yangzhen
      * @date: 2018/8/22 17:47
      */
     public void commonMvcPerFormPost(String url,
-                                     String content, String contentType, Object acceptStatus, MultiValueMap<String, String> params)throws Exception{
-        commonMvcPerForm(HttpMethod.POST, url, content, contentType, acceptStatus, params);
+                                     String content, String contentType, Object assertExpected, MultiValueMap<String, String> params)throws Exception{
+        commonMvcPerForm(HttpMethod.POST, url, content, contentType, assertExpected, params);
     }
 
     /**
@@ -75,15 +73,15 @@ public class MockHttpUtils {
      * @param url 请求路径
      * @param content json参数
      * @param contentType 数据格式
-     * @param acceptStatus 期望请求结果码
+     * @param assertExpected 断言期望值
      * @param params 表单参数
      * @return:
      * @auther: yangzhen
      * @date: 2018/8/22 17:47
      */
     public void commonMvcPerFormGet(String url,
-                                    String content,String contentType,Object acceptStatus,MultiValueMap<String, String> params)throws Exception{
-        commonMvcPerForm(HttpMethod.GET, url, content, contentType, acceptStatus, params);
+                                    String content,String contentType,Object assertExpected,MultiValueMap<String, String> params)throws Exception{
+        commonMvcPerForm(HttpMethod.GET, url, content, contentType, assertExpected, params);
     }
     /**
      * 功能描述: PUT请求
@@ -91,15 +89,15 @@ public class MockHttpUtils {
      * @param url 请求路径
      * @param content json参数
      * @param contentType 数据格式
-     * @param acceptStatus 期望请求结果码
+     * @param assertExpected 断言期望值
      * @param params 表单参数
      * @return:
      * @auther: yangzhen
      * @date: 2018/8/22 17:47
      */
     public void commonMvcPerFormPut(String url,
-                                    String content,String contentType,Object acceptStatus,MultiValueMap<String, String> params)throws Exception{
-        commonMvcPerForm(HttpMethod.PUT, url, content, contentType, acceptStatus, params);
+                                    String content,String contentType,Object assertExpected,MultiValueMap<String, String> params)throws Exception{
+        commonMvcPerForm(HttpMethod.PUT, url, content, contentType, assertExpected, params);
 
     }
     /**
@@ -108,15 +106,15 @@ public class MockHttpUtils {
      * @param url 请求路径
      * @param content json参数
      * @param contentType 数据格式
-     * @param acceptStatus 期望请求结果码
+     * @param assertExpected 断言期望值
      * @param params 表单参数
      * @return:
      * @auther: yangzhen
      * @date: 2018/8/22 17:47
      */
     public void commonMvcPerFormDelete(String url,
-                                       String content,String contentType,Object acceptStatus, MultiValueMap<String, String> params)throws Exception{
-        commonMvcPerForm(HttpMethod.DELETE, url, content, contentType, acceptStatus, params);
+                                       String content,String contentType,Object assertExpected, MultiValueMap<String, String> params)throws Exception{
+        commonMvcPerForm(HttpMethod.DELETE, url, content, contentType, assertExpected, params);
 
     }
 
@@ -126,14 +124,14 @@ public class MockHttpUtils {
      * @param url 请求路径
      * @param content json参数
      * @param contentType 数据格式
-     * @param acceptStatus 期望请求结果码
+     * @param assertExpected 断言期望值
      * @param params 表单参数
      * @return:
      * @auther: yangzhen
      * @date: 2018/8/22 17:47
      */
     public void commonMvcPerForm(HttpMethod httpMethod, String url,
-                                 String content, String contentType, Object acceptStatus, MultiValueMap<String, String> params)throws Exception{
+                                 String content, String contentType, Object assertExpected, MultiValueMap<String, String> params)throws Exception{
         MockHttpServletRequestBuilder requestBuilder;
         if(httpMethod != null){
             requestBuilder = MockMvcRequestBuilders.request(httpMethod, url);
@@ -152,7 +150,7 @@ public class MockHttpUtils {
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         JSONObject resultJson =  JSONObject.parseObject(mvcResult.getResponse().getContentAsString());
-        Assert.assertEquals(acceptStatus, resultJson.get("result"));
+        Assert.assertEquals(assertExpected, resultJson.get("result"));
         log.info("响应内容：" + mvcResult.getResponse().getContentAsString());
     }
 
