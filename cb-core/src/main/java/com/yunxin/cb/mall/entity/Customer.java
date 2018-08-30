@@ -281,6 +281,13 @@ public class Customer implements java.io.Serializable {
      * 备注名
      */
     private String aliasName;
+
+    /**
+     * 是否实名认证 0:未认证 1:已认证
+     */
+    @ApiModelProperty(value="是否实名认证 0:未认证 1:已认证 ",name="authFlag",example="1")
+    private Integer authFlag;
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)
@@ -754,5 +761,14 @@ public class Customer implements java.io.Serializable {
             return null;
         }
         return recommendCustomer.getCustomerId();
+    }
+
+    @Column(length = 12, nullable = true)
+    public Integer getAuthFlag() {
+        return authFlag;
+    }
+
+    public void setAuthFlag(Integer authFlag) {
+        this.authFlag = authFlag;
     }
 }
