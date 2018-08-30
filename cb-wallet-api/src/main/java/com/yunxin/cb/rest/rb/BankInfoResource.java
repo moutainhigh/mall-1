@@ -116,7 +116,7 @@ public class BankInfoResource extends BaseResource {
                 responseResult.setMessage(checkStr);
                 return responseResult;
             }
-            //验证通过，修改用户为已认证
+            //验证通过，修改用户为认证完成
             int count=bankInfoService.submitAuth(bankInfoVO,getCustomerId());
             if(count>0){
                 responseResult.setMessage("实名认证成功");
