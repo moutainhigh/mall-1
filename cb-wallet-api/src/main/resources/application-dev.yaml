@@ -44,6 +44,6 @@ validateBank:
   host: https://yunyidata.market.alicloudapi.com
   path: /bankAuthenticate4
   method: POST
-  appcode: 6e608e95d6b3420b89255b7b423e424b
+  appcode: 1720f00f071645818670b0683846c4a2
 
 
