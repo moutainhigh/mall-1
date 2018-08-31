@@ -47,7 +47,7 @@ public class ValidateBankUtils {
             result = EntityUtils.toString(response.getEntity());
             log.info("response body is "+result);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("error is "+e);
         }
         return result;
     }

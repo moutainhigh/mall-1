@@ -93,6 +93,24 @@
             });
         }
     }
+
+    function CancellationCustomerById(ynDelete) {
+        var dataItem = getSelectedGridItem("grid");
+        if (dataItem) {
+            $.get("CancellationCustomerById.do", {
+                customerId: dataItem.customerId,
+                ynDelete: ynDelete,
+                rad: Math.random()
+            }, function (data) {
+                if (true == data) {
+                    commonNotify("操作成功！", "success");
+                    $("#grid").data("kendoGrid").dataSource.read();
+                } else {
+                    commonNotify("操作失败!", "error");
+                }
+            });
+        }
+    }
   </script>
 </head>
 <body>
@@ -170,25 +188,25 @@
         <!-- End .actionbar-->
         <div class="inner-padding">
           <div class="toolbar responsive-helper">
-            <form>
+            <form style="width: 100%">
               <div class="pull-left">
                 <div class="toolbar-field">
                   <strong>账户名:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" data-filter="accountName" data-operator="contains" class="form-control grid-filter" placeholder="请输入账户名"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="accountName" data-operator="contains" class="form-control grid-filter" placeholder="请输入账户名"/>
                 </div>
                 <div class="toolbar-field">
-                  <strong>姓名:</strong>
+                  <strong>真实姓名:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" data-filter="realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入姓名"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入姓名"/>
                 </div>
                 <div class="toolbar-field">
                   <strong>手机号:</strong>
                 </div>
                 <div class="toolbar-field">
-                  <input type="text" data-filter="mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
+                  <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入手机号"/>
                 </div>
               </div><!-- End .pull-left -->
               <div class="pull-right">
@@ -212,18 +230,14 @@
                 <div class="btn-group">
                   <a href="javascript:void(0);" onclick="addItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;新增</a>
                   <a href="javascript:void(0);" onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;详情</a>
-                  <%--<a href="toAddCustomer.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>--%>
-                  <%--<a href="javascript:editItem();"  class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>--%>
-                  <%--<a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>--%>
                 </div>
                 <div class="btn-group">
                   <a href="javascript:void(0);" onclick="enabledItem(true)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
                   <a href="javascript:void(0);" onclick="enabledItem(false)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
                 </div>
-                <!--
                 <div class="btn-group">
-                  <a href="javascript:resetPwd();" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;重置密码</a>
-                </div>-->
+                  <a href="javascript:void(0);" onclick="CancellationCustomerById(true)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;注销</a>
+                </div>
               </div>
             </header>
           </div>
@@ -241,10 +255,11 @@
                 <kendo:grid-column  field="customerId" width="350px" hidden="true"/>
                 <kendo:grid-column title="账户名" field="accountName" width="150px" />
                 <kendo:grid-column title="真实姓名" field="realName" width="100px"/>
-                <kendo:grid-column title="手机号" field="mobile" width="100px"/>
+                <kendo:grid-column title="手机号" field="mobile" width="150px"/>
                 <kendo:grid-column title="Email" field="email" width="100px"/>
                 <kendo:grid-column filterable="false" title="性别" field="sex" width="100px" template="#=formatSex(sex)#"/>
                 <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="100px"/>
+                <kendo:grid-column title="是否注销" filterable="false" field="ynDelete" template="#= ynDelete ? '是' : '否' #"  width="100px"/>
                 <kendo:grid-column title="创建时间" field="createTime" width="150px" format="{0:yyyy-MM-dd HH:mm}" filterable="false"/>
               </kendo:grid-columns>
               <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">

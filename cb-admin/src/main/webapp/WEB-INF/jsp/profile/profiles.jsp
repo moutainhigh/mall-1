@@ -25,7 +25,7 @@
         function getprofileName(state){
             switch (state){
                 case "ANDROID_VERSION_CODE":{
-                    return "安卓版本编码";
+                    return "安卓版本编号";
                 }
                 case "ANDROID_VERSION_NAME":{
                     return "安卓版本名称";
@@ -93,6 +93,25 @@
                 case "IOS_FORCE_UPGRADE":{
                     return "苹果APP是否强制更新";
                 }
+                case "HOT_SEARCH":{
+                    return "热门搜索";
+                }
+
+                case "HOT_CITY":{
+                    return "热门城市";
+                }
+                case "HOT_SEARCH":{
+                    return "热门搜索";
+                }
+                case "INSURANCE_CODE_RECEIVE_EMAIL":{
+                    return "保单合同编号接收邮箱";
+                }
+                case "INSURANCE_CODE_RECEIVE_CONTEXT":{
+                    return "保单合同编号发送内容";
+                }
+                case "CAR_CLASS_CONFIG":{
+                    return "汽车根分类配置";
+                }
             }
             return state;
         }
@@ -142,7 +161,7 @@
                     <h2>参数配置 </h2>
                 </div>
                 <div class="pull-right">
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -152,7 +171,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <!-- End .inner-padding -->
@@ -189,9 +208,6 @@
                             <div class="btn-group">
                                 <a href="toAddProfileAndroid.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;安卓版本更新</a>
                             </div>
-                            <div class="btn-group">
-                                <a href="toAddProfileIos.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;苹果版本更新</a>
-                            </div>
                         </div>
                     </header>
                 </div>
@@ -207,8 +223,8 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="ID" field="fileId" width="30px"/>
-                            <kendo:grid-column title="名称" field="profileName" template="#=getprofileName(profileName)#" width="200px"/>
+                            <kendo:grid-column title="ID" filterable="false" field="fileId" width="30px"/>
+                            <kendo:grid-column title="名称"  filterable="false" field="profileName" template="#=getprofileName(profileName)#" width="200px"/>
                             <kendo:grid-column title="值" field="fileValue" template="#=getprofileValue(fileValue,isPicture)#" width="200px"/>
                             <kendo:grid-column title="备注" field="remarks"  width="200px"/>
                         </kendo:grid-columns>

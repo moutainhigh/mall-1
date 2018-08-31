@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lte9 lte8 lte7 no-js"> <![endif]-->
@@ -16,6 +17,12 @@
     <title>编辑商品分类</title>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             $('#catalogTrigger').focusin(function (e) {
                 $('#catalogDialog').modal();
                 e.preventDefault();
@@ -109,7 +116,7 @@
                                 <label><span class="asterisk">*</span>商品分类名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="catalogName" maxlength="64"/>
+                                <form:input cssClass="form-control validate[required,minSize[2],maxSize[20]]" path="catalogName" maxlength="20"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>上级分类：</label>
@@ -117,9 +124,11 @@
                             <div class="col-sm-3">
                                 <form:hidden id="parentCatalogId" path="parentCatalog.catalogId"/>
                                 <div class="input-group">
-                                    <form:input id="parentCatalogName" readonly="true" cssClass="form-control validate[required]" path="parentCatalog.catalogName" maxlength="32" data-errormessage="请选择上级分类"/>
+                                    <form:input id="parentCatalogName" readonly="true" cssClass="form-control validate[required]" path="parentCatalog.catalogName" maxlength="32" data-errormessage="请选择上级分类" title="一级分类不可修改"/>
                                     <span class="input-group-btn">
-                                        <button id="parentCatalogNameBtn" class="btn btn-default" type="button">选择</button>
+                                        <c:if test="${catalog.parentCatalog.catalogId != 1}">
+                                            <button id="parentCatalogNameBtn" class="btn btn-default" type="button">选择</button>
+                                        </c:if>
                                     </span>
                                 </div>
                             </div>
@@ -130,14 +139,17 @@
                                 <label><span class="asterisk">*</span>排序：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required],custom[number]" path="sortOrder" maxlength="3"/>
+                                <form:input cssClass="form-control validate[required],custom[number]" path="sortOrder" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
                             </div>
+
+                            <span id = "hidd" <c:if test="${catalog.parentCatalog.catalogId != 1}">style="display: none" </c:if> >
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required],custom[gtOne]" path="ratio" maxlength="10" />
+                                <form:input cssClass="form-control validate[required],custom[eqOne]" path="ratio" maxlength="10" />
                             </div>
+                            </span>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
@@ -205,6 +217,9 @@
                     </div>
                 </div>
             </div>
+            <div class="alert alert-warning" id="modalMsg" style="display: none;">
+                <strong>提示：</strong>商品分类最多可新建三级！
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button class="btn btn-primary pull-right" onclick="chooseCatalog();">确认</button>
@@ -213,8 +228,10 @@
         <script type="application/javascript">
             var catalogId = 0;
             var catalogName = "";
+            var treeLevel = "";
             $('#parentCatalogNameBtn').focusin(function (e) {
                 $('#catalogDialog').modal();
+                $('#modalMsg').hide();
                 e.preventDefault();
             });
 
@@ -223,13 +240,34 @@
                 var data = $('#treeview').data('kendoTreeView').dataItem(e.node);
                 catalogId = data.id;
                 catalogName = data.text;
+                treeLevel = data.treeLevel;
             }
 
             function chooseCatalog() {
+                if(treeLevel >= 3){
+                    $('#modalMsg').show();
+                    return;
+                }
+                $('#modalMsg').hide();
                 $('#catalogDialog').modal("hide");
                 $("#parentCatalogId").val(catalogId);
                 $("#parentCatalogName").val(catalogName);
+                if(catalogId !=1){
+                    $('#hidd').hide();
+                    $('#ratio').removeClass();
+                }else{
+                    $('#hidd').show();
+                    $('#ratio').addClass("form-control validate[required],custom[eqOne]");
+                }
+                $('#ratio').val("");
             }
+            var ratio = $('#ratio').val();      //商品比例设置
+            if(typeof(ratio) == undefined || isNaN(ratio)) {
+                $('#ratio').val("");
+            }else{
+                $('#ratio').val(parseFloat(ratio)) //去掉多余的零
+            }
+
         </script>
     </div>
 </div>

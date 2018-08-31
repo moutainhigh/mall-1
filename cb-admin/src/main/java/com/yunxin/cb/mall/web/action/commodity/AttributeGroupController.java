@@ -2,19 +2,12 @@ package com.yunxin.cb.mall.web.action.commodity;
 
 import com.yunxin.cb.mall.entity.AttributeGroup;
 import com.yunxin.cb.mall.entity.Commodity;
-import com.yunxin.cb.mall.entity.meta.ObjectType;
-import com.yunxin.cb.mall.service.*;
-import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.core.util.ImageConverter;
-import com.yunxin.core.util.LogicUtils;
-import com.yunxin.cb.mall.entity.AttributeGroup;
-import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.service.IAttributeService;
-import com.yunxin.cb.mall.service.ICatalogService;
-import com.yunxin.cb.mall.web.action.MediaPather;
 import com.yunxin.cb.mall.web.vo.ResponseResult;
 import com.yunxin.cb.mall.web.vo.ResultType;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
+import com.yunxin.core.exception.EntityExistException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,7 +17,6 @@ import org.springframework.web.context.ServletContextAware;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -57,7 +49,7 @@ public class AttributeGroupController implements ServletContextAware {
             return toAddAttributeGroup(attributeGroup.getCommodity().getCommodityId(), attributeGroup, modelMap);
         }
         try {
-            attributeGroup=attributeService.addAttributeGroup(attributeGroup);
+            attributeService.addAttributeGroup(attributeGroup);
         } catch (EntityExistException e) {
             e.printStackTrace();
         }
@@ -83,10 +75,9 @@ public class AttributeGroupController implements ServletContextAware {
             return toEditAttributeGroup(attributeGroup, modelMap);
         }
         try {
-            attributeGroup = attributeService.updateAttributeGroup(attributeGroup);
+            attributeService.updateAttributeGroup(attributeGroup);
         } catch (EntityExistException e) {
             e.printStackTrace();
-            return toEditAttributeGroup(attributeGroup, modelMap);
         }
         return "redirect:editProducts.do?commodityId=" + attributeGroup.getCommodity().getCommodityId();
     }

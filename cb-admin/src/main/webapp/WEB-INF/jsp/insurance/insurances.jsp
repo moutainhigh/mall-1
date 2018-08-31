@@ -128,6 +128,19 @@
             </div>
         </div>
         <!-- End #header-main-top -->
+        <div class="header-main-bottom">
+            <div class="pull-left">
+                <ul class="breadcrumb">
+                    <li><a href="#">首页 </a></li>
+                    <li><a href="#">保单管理 </a></li>
+                    <li><a href="#" class="active">保单列表</a></li>
+                </ul>
+                <!-- End .breadcrumb -->
+            </div>
+            <div class="pull-right">
+                <p>Version 1.0.0</p>
+            </div>
+        </div>
         <!-- End #header-main-bottom -->
     </header>
     <!-- End #header-main -->
@@ -136,28 +149,28 @@
 
 
         <header id="header-sec">
+            <!-- End .inner-padding -->
+
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>保单</h2>
+                    <h2>保单列表</h2>
                 </div>
-                <div class="pull-right">
 
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="#">
-                            <i class="fa fa-star"></i>
-                        </a>
-                        <a class="btn btn-default" href="#" id="modal-update-trigger">
-                            Modal
-                        </a>
-                        <a class="btn btn-default" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                    </div>
-                    <!-- End .btn-group -->
+            <%--<div class="header-main-bottom">--%>
 
-                </div>
-            </div>
-            <!-- End .inner-padding -->
+                <%--<div class="pull-left">--%>
+                    <%--<ul class="breadcrumb">--%>
+                        <%--<li><a href="#">首页 </a></li>--%>
+                        <%--<li><a href="#">保单管理 </a></li>--%>
+                        <%--<li><a class="active">保单列表</a></li>--%>
+                    <%--</ul>--%>
+                    <%--<!-- End .breadcrumb -->--%>
+                <%--</div>--%>
+
+                <%--<div class="pull-right">--%>
+                    <%--<p>Version 1.0.0</p>--%>
+                <%--</div>--%>
+            <%--</div>--%>
         </header>
         <!-- End #header-sec -->
 
@@ -183,7 +196,7 @@
                                 <strong>保单编号:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="orderCode" data-operator="contains"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="orderCode" data-operator="contains"
                                        class="form-control grid-filter" placeholder="请输入保单编号"/>
                             </div>
                             <div class="toolbar-field">
@@ -230,7 +243,7 @@
                                 <strong>合同编号:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="contractNo" data-operator="contains"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="contractNo" data-operator="contains"
                                        class="form-control grid-filter" placeholder="请输入合同编号"/>
                             </div>
 
@@ -238,7 +251,7 @@
                                 <strong>投保人&nbsp;&nbsp;&nbsp;:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="insuranceOrderPolicyholder.policyholderName"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="insuranceOrderPolicyholder.policyholderName"
                                        style="width:165px;" data-operator="contains" class="form-control grid-filter"
                                        placeholder="请输入投保人"/>
                             </div>
@@ -247,7 +260,7 @@
                                 <strong>被保人&nbsp;&nbsp;:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="insuranceOrderInsured.insuredName"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')"  type="text" data-filter="insuranceOrderInsured.insuredName"
                                        data-operator="contains" class="form-control grid-filter" placeholder="请输入被保人"/>
                             </div>
 
@@ -255,7 +268,7 @@
                                 <strong>投保人手机号:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="insuranceOrderPolicyholder.policyholderMobile"
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="insuranceOrderPolicyholder.policyholderMobile"
                                        data-operator="contains" class="form-control grid-filter"
                                        placeholder="请输入投保人手机号"/>
                             </div>

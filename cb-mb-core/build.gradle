@@ -24,6 +24,8 @@ dependencies {
             "com.fasterxml.uuid:java-uuid-generator:3.1.4",
             'com.alibaba:fastjson:1.2.36',
             "javax.validation:validation-api:1.1.0.Final",
+            //"org.hibernate.validator:hibernate-validator:6.0.10.Final",
+            "org.hibernate:hibernate-validator:5.4.1.Final",
             "javax.servlet:javax.servlet-api:3.1.0",
             "javax.servlet.jsp:jsp-api:2.2",
             "javax.servlet:jstl:1.2",
@@ -65,7 +67,7 @@ dependencies {
             'com.squareup.okhttp3:logging-interceptor:3.8.1'
     )
 
-    //IJPay支付
+    //IJPay 支付
     compile('com.github.javen205:IJPay:1.1.4')
     //支付宝
     compile(
@@ -87,8 +89,8 @@ dependencies {
 
 compileJava {
     dependsOn clean
-    println("setting options.bootClasspath = $System.env.JAVA_HOME/jre/lib/rt.jar")
-    options.bootClasspath = "$System.env.JAVA_HOME/jre/lib/rt.jar;$System.env.JAVA_HOME/jre/lib/jce.jar"
+//    println("setting options.bootClasspath = $System.env.JAVA_HOME/jre/lib/rt.jar")
+//    options.bootClasspath = "$System.env.JAVA_HOME/jre/lib/rt.jar;$System.env.JAVA_HOME/jre/lib/jce.jar"
 //    options.bootClasspath = "/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/jce.jar"
 }
 

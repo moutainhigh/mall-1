@@ -6,16 +6,17 @@ import com.yunxin.cb.console.entity.Permission;
 import com.yunxin.cb.console.entity.Role;
 import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.console.service.ISecurityService;
+import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.cb.mall.web.vo.TreeNode;
-import com.yunxin.cb.security.IPermission;
 import com.yunxin.cb.security.Privilege;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.cb.security.SecurityProvider;
 import com.yunxin.core.exception.EntityExistException;
-import org.apache.commons.collections.CollectionUtils;
+import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.IdGenerate;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -60,33 +61,51 @@ public class RoleController  implements ServletContextAware {
 
 	@RequestMapping(value = "roles",method = RequestMethod.GET)
 	public String roles(ModelMap modelMap,HttpSession session) {
-		try {
-			User user =(User)session.getAttribute(SecurityConstants.LOGIN_SESSION);
-			Seller seller =(Seller)session.getAttribute(SecurityConstants.LOGIN_SELLER);
-			boolean flag=false;
-			for (Role role : user.getRoles()) {
-				if(role.getRoleCode().equals("SUPER_ROLE")){
-					flag=true;
-					break;
-				}
-			}
-			if(flag){
-				modelMap.addAttribute("roles", securityService.getAllRoles());
-			}else{
-				modelMap.addAttribute("roles", securityService.getRolesBySeller(seller));
-			}
-		} catch (Exception e) {
-			return "redirect:../common/failure.do?reurl=security/roles.do&msgTitle=获取角色失败&msgContent="+e.getMessage();
-		}
+//		try {
+//			User user =(User)session.getAttribute(SecurityConstants.LOGIN_SESSION);
+//			Seller seller =(Seller)session.getAttribute(SecurityConstants.LOGIN_SELLER);
+//			boolean flag=false;
+//			for (Role role : user.getRoles()) {
+//				if(role.getRoleCode().equals("SUPER_ROLE")){
+//					flag=true;
+//					break;
+//				}
+//			}
+//			if(flag){
+//				modelMap.addAttribute("roles", securityService.getAllRoles());
+//			}else{
+//				modelMap.addAttribute("roles", securityService.getRolesBySeller(seller));
+//			}
+//		} catch (Exception e) {
+//			return "redirect:../common/failure.do?reurl=security/roles.do&msgTitle=获取角色失败&msgContent="+e.getMessage();
+//		}
 		return "security/roles";
 	}
-	
+
+
+	/**
+	 * 分页
+	 * @author      likang
+	 * @param roleBackQuery
+	 * @return      org.springframework.data.domain.Page<com.yunxin.cb.mall.entity.Feedback>
+	 * @exception
+	 * @date        2018/7/17 19:48
+	 */
+	@RequestMapping(value = "pageRole",method = RequestMethod.POST)
+	@ResponseBody
+	public Page<Role> pageRole(@RequestBody PageSpecification<Role> roleBackQuery) {
+		List<PageSpecification.FilterDescriptor> list = roleBackQuery.getFilter().getFilters();
+		return securityService.pageRole(roleBackQuery);
+	}
+
 	@RequestMapping(value = "toAddRole", method = RequestMethod.GET)
 	public String toAddRole(@ModelAttribute("role") Role role,@ModelAttribute(SecurityConstants.LOGIN_SELLER) Seller seller,ModelMap modelMap) throws Exception {
 		Set<Permission> roleRescs = new HashSet<>();
 		List<Privilege> resources = loadPrivileges();
 		List<TreeViewItem> viewItems = buildResourceTree(resources, roleRescs);
+		role.setRoleCode(IdGenerate.genRoleID());
 		modelMap.addAttribute("roleRescTree", viewItems);
+		modelMap.addAttribute("role", role);
 		return "security/addRole";
 	}
 
@@ -144,7 +163,7 @@ public class RoleController  implements ServletContextAware {
 	public List<TreeViewItem> buildResourceTree(List<com.yunxin.cb.security.Privilege> resources, Set<Permission> roleRescs) {
 		List<TreeViewItem> viewItems = new ArrayList<>();
 		for (com.yunxin.cb.security.Privilege resource : resources) {
-			TreeViewItem viewItem = new TreeViewItem(resource.getCode(), resource.getName(), true, resource.getType().toString(), true, true);
+			TreeViewItem viewItem = new TreeViewItem(resource.getCode(), resource.getName(),null, true, resource.getType().toString(), true, true);
 			List<com.yunxin.cb.security.Privilege> children = resource.getChildren();
 			if (children != null && children.size() > 0) {
 				List<TreeViewItem> childItems = buildResourceTree(children, roleRescs);

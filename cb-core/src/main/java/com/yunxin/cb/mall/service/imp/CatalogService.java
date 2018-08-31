@@ -17,8 +17,6 @@ import com.yunxin.cb.rb.entity.FundsPool;
 import com.yunxin.common.ConstantsCB;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
-import com.yunxin.core.util.CommonUtils;
-import com.yunxin.core.util.DmSequenceFourUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
@@ -26,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,7 +75,7 @@ public class CatalogService implements ICatalogService {
 
 
     @Override
-    public Catalog addCatalog(Catalog catalog) throws EntityExistException, CommonException {
+    public Catalog addCatalog(Catalog catalog) throws EntityExistException {
         if (!catalogDao.isOrUnique(catalog, Catalog_.catalogName)) {
             throw new EntityExistException("商品分类名称已存在");
         }
@@ -95,7 +92,7 @@ public class CatalogService implements ICatalogService {
                 .getCatalogId());
         // 兼容旧数据,旧数据中有商品分类编码为空
         if (StringUtils.isBlank(pCatalog.getCatalogCode())) {
-            throw new CommonException("父商品分类编码为空!");
+            throw new EntityExistException("商品分类名称已存在");
         }
         int tcode = calParentCategoryCode(pCatalog);
         catalog.setParentCatalog(pCatalog);
@@ -117,23 +114,50 @@ public class CatalogService implements ICatalogService {
         if (!catalogDao.isOrUnique(catalog, Catalog_.catalogName)) {
             throw new EntityExistException("商品分类名称已存在");
         }
+        if(catalog.getCatalogId() == catalog.getParentCatalogId()){
+            throw new EntityExistException("上级分类不可以选择自己");
+        }
 
         Catalog dbCatalog = catalogDao.findOne(catalog.getCatalogId());
+        catalog.setCatalogCode(dbCatalog.getCatalogCode());//修改时在AttributeReplication.copying方法中赋值了,因此需要加上这句代码
         BigDecimal db_ratio = dbCatalog.getRatio();//数据库的比例配置
-        AttributeReplication.copying(catalog, dbCatalog, Catalog_.catalogName, Catalog_.enabled, Catalog_.supportAddedTax, Catalog_.leaf, Catalog_.sortOrder, Catalog_.remark, Catalog_.parentCatalog, Catalog_.ratio);
+        Integer db_parentCatalogId = dbCatalog.getParentCatalogId();//数据库的父分类id
+        List<Catalog> catalogByLikeCatalogCode = null;
+        if(!db_parentCatalogId.equals(catalog.getParentCatalogId())){
+            catalogByLikeCatalogCode = catalogDao.findCatalogByCatalogCodeStartingWith(dbCatalog.getCatalogCode());
+            if((catalogByLikeCatalogCode.size() - 1) > 0){
+                throw new EntityExistException("商品分类下已有分类信息");
+            }
+            List<Commodity> commoditiesByCatalog = commodityDao.findCommoditiesByCatalog(dbCatalog);
+            if(commoditiesByCatalog.size()>0){
+                throw new EntityExistException("商品分类下已有产品信息");
+            }
+            //重新选择父类后,编码需要重新编码
+            Catalog pCatalog = catalogDao.findOne(catalog.getParentCatalogId());
+            int tcode = calParentCategoryCode(pCatalog);
+            catalog.setCatalogCode(pCatalog.getCatalogCode()
+                    + decimalFormat.format(tcode));
+        }
+         AttributeReplication.copying(catalog, dbCatalog, Catalog_.catalogName, Catalog_.enabled, Catalog_.supportAddedTax, Catalog_.leaf, Catalog_.sortOrder, Catalog_.remark, Catalog_.parentCatalog, Catalog_.ratio,Catalog_.catalogCode);
         //S     add by lxc  2018-08-07
         if (dbCatalog != null ){
-            //当分类比例设置有改变,则需要修改货品销售价
-            if(catalog.getRatio().compareTo(db_ratio) !=0){
-                List<Commodity> commoditiesByCatalog = commodityDao.findCommoditiesByCatalog(catalog);
-                commoditiesByCatalog.stream().forEach(o ->{
-                    if(null == o.getRatio()){//商品比例配置为null,货品的销售价=货品成本价*分类比例配置
-                        float ratio = catalog.getRatio().floatValue();
-                        int j = productDao.updateSalePriceByCommodityId(ratio, o.getCommodityId());
-                        if(j > 0){
-                            logger.info("更新货品的销售价成功....");
+            //当一级分类比例设置有改变,则需要修改货品销售价
+            if(dbCatalog.getParentCatalogId()==1 && db_ratio != null && catalog.getRatio().compareTo(db_ratio) !=0 ){
+                if(catalogByLikeCatalogCode == null) {
+                    catalogByLikeCatalogCode = catalogDao.findCatalogByCatalogCodeStartingWith(dbCatalog.getCatalogCode());
+                }
+                catalogByLikeCatalogCode.stream().forEach(c -> {
+                    List<Commodity> commoditiesByCatalog = commodityDao.findCommoditiesByCatalog(c);
+                    commoditiesByCatalog.stream().forEach(o ->{
+                        if(null == o.getRatio()){//商品比例配置为null,货品的销售价=货品成本价*分类比例配置
+                            float ratio = catalog.getRatio().floatValue();
+                            o.setSellPrice(ratio * o.getCostPrice());//当一级分类比例设置有改变,则需要修改商品销售价
+                            int j = productDao.updateSalePriceByCommodityId(ratio, o.getCommodityId());
+                            if(j > 0){
+                                logger.info("更新货品的销售价成功....");
+                            }
                         }
-                    }
+                    });
                 });
             }
             FundsPool fundsPool = fundsPoolDao.findByCatalog_CatalogId(catalog.getCatalogId());
@@ -195,7 +219,7 @@ public class CatalogService implements ICatalogService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Catalog> getAllCatalogs() {
-        return catalogDao.findAll(new Sort(Direction.ASC, "sortOrder"));
+        return catalogDao.findAll(new Sort(Direction.ASC, "CatalogId"));
     }
 
     @Override
@@ -377,7 +401,48 @@ public class CatalogService implements ICatalogService {
     }
 
     @Override
+    @Transactional
     public void enableCatalogById(int catalogId, boolean enabled) {
-        catalogDao.enableCatalogById(enabled, catalogId);
+        Catalog catalog = catalogDao.getOne(catalogId);
+        if(catalog.getCatalogCode().length() == 3){
+            //根节点禁止进行停用/启用操作
+            return;
+        }
+
+        List<String> catalogCodedList = new ArrayList<>();
+        if(enabled){
+            //启用时，当前操作节点以及所有上级节点进行同步更新
+            int catalogLevelNum = catalog.getCatalogCode().length()/3;
+            if(catalogLevelNum > 1){//当前分类节点有上级分类（非根分类）
+                for(int i = 1;i < catalogLevelNum;i++){
+                    catalogCodedList.add(catalog.getCatalogCode().substring(0,3*(i + 1)));
+                }
+            }
+        }else{
+            //禁用时，当前操作节点以及其所有下级节点进行同步更新
+            List<Catalog> catalogList = catalogDao.findCatalogByCatalogCodeStartingWith(catalog.getCatalogCode());
+            if(null != catalogList && catalogList.size() > 0){
+                for (Catalog c : catalogList){
+                    catalogCodedList.add(c.getCatalogCode());
+                }
+            }
+        }
+        catalogDao.batchEnableCatalogByCatalogCode(enabled, catalogCodedList);
+    }
+
+    public static void main(String[] args){
+        String s = "000002";
+        int catalogLevelNum = s.length()/3;
+        if(catalogLevelNum > 1){//当前分类节点有上级分类（非根分类）
+            for(int i = 1;i < catalogLevelNum;i++){
+                System.out.println(s.substring(0,3*(i + 1)));
+            }
+        }
+    }
+
+    @Override
+    public Catalog findOneLevelCatalogByCatalogCode(String catalogCode) {
+        catalogCode = catalogCode.substring(0,6);
+        return catalogDao.findCatalogByCatalogCode(catalogCode);
     }
 }

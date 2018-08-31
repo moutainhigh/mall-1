@@ -90,7 +90,7 @@ public interface FloorBrandMapper {
             "select",
             "BRAND_ID, FLOOR_ID, SORT_ORDER",
             "from floor_brand",
-            "where FLOOR_ID = #{floorId,jdbcType=INTEGER}"
+            "where FLOOR_ID = #{floorId,jdbcType=INTEGER} ORDER BY SORT_ORDER"
     })
     @Results({
             @Result(column="BRAND_ID", property="brandId", jdbcType=JdbcType.INTEGER, id=true),

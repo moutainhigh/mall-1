@@ -66,7 +66,7 @@ public class AliPayServiceImpl implements PayService {
             paymentMapper.insert(payment);
             return result;
         } catch (AlipayApiException e) {
-            e.printStackTrace();
+            logger.error("error is "+e);
             result.addError("system error:"+e.getMessage());
             return result;
         }
@@ -125,7 +125,7 @@ public class AliPayServiceImpl implements PayService {
 
                         order.setOrderState(OrderState.PAID_PAYMENT);
                         order.setUpdateTime(curDate);
-                        order.setPaymentType(PaymentType.ALIPAY);
+                        //order.setPaymentType(PaymentType.ALIPAY);
                         order.setPaymentSequence(trade_no);
                         order.setPaymentTime(curDate);
                         //找到当前用户，更新用户积分，根据当前积分，更新用户等级 并在积分记录表插入数据
@@ -148,7 +148,7 @@ public class AliPayServiceImpl implements PayService {
                 return "failure";
             }
         } catch (AlipayApiException e) {
-            e.printStackTrace();
+            logger.error("error is "+e);
             return "failure";
         }
     }
@@ -163,7 +163,7 @@ public class AliPayServiceImpl implements PayService {
             model.setRefundReason("正常退款");
             return AliPayApi.tradeRefund(model);
         } catch (AlipayApiException e) {
-            e.printStackTrace();
+            logger.error("error is "+e);
         }
         paymentMapper.insert(payment);
         return null;
@@ -186,7 +186,7 @@ public class AliPayServiceImpl implements PayService {
                 return "failure";
             }
         } catch (AlipayApiException e) {
-            e.printStackTrace();
+            logger.error("error is "+e);
             return "failure";
         }
         return null;

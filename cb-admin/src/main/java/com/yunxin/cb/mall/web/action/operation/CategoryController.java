@@ -7,12 +7,8 @@ import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.service.ICategoryService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.core.util.ImageConverter;
-import com.yunxin.cb.mall.entity.Category;
 import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.cb.mall.service.ICategoryService;
-import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.cb.mall.web.action.MediaPather;
+import com.yunxin.core.util.IdGenerate;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -73,12 +69,14 @@ public class CategoryController implements ServletContextAware {
     @RequestMapping(value = "toAddCategory",method = RequestMethod.GET)
     public String toAddCategory(@ModelAttribute("category") Category category, ModelMap modelMap) {
         TreeViewItem categoryTree = categoryService.getCategoryTree();
+        category.setCategoryNo(IdGenerate.genCatalogID());
         modelMap.addAttribute("categoryTree", Arrays.asList(categoryTree));
+        modelMap.addAttribute("category", category);
         return "operation/addCategory";
     }
 
     @RequestMapping(value = "addCategory",method = RequestMethod.POST)
-    public String addCategory(@Valid @ModelAttribute("category") Category category,HttpServletRequest request, BindingResult result, Locale locale,  ModelMap modelMap) {
+    public String addCategory(@Valid @ModelAttribute("category") Category category,HttpServletRequest request, BindingResult result, Locale locale,  ModelMap modelMap)  throws Exception {
         if (result.hasErrors()) {
             return toAddCategory(category, modelMap);
         }
@@ -94,9 +92,12 @@ public class CategoryController implements ServletContextAware {
                 }
             }
         } catch (EntityExistException e) {
-            e.printStackTrace();
+            /*e.printStackTrace();
             result.addError(new FieldError("category", "categoryName", category.getCategoryName(), true, null, null,
-                    messageSource.getMessage(e.getMessage(), null, locale)));
+                    messageSource.getMessage(e.getMessage(), null, locale)));*/
+            result.addError(new FieldError("category", "categoryName", category.getCategoryName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
+            return toAddCategory(category, modelMap);
         }
         return "redirect:../common/success.do?reurl=operation/categories.do";
     }
@@ -118,7 +119,7 @@ public class CategoryController implements ServletContextAware {
 
     @RequestMapping(value = "editCategory",method = RequestMethod.POST)
     public String editCategory(@Valid @ModelAttribute("category") Category category,HttpServletRequest request, BindingResult result,Locale locale,
-                               ModelMap modelMap) {
+                               ModelMap modelMap )  throws Exception  {
         if (result.hasErrors()) {
             return toEditCategory(modelMap);
         }
@@ -136,9 +137,12 @@ public class CategoryController implements ServletContextAware {
                 }
             }
         } catch (EntityExistException e) {
-            e.printStackTrace();
+            /*e.printStackTrace();
             result.addError(new FieldError("category", "categoryName", category.getCategoryName(), true, null, null,
-                    messageSource.getMessage(e.getMessage(), null, locale)));
+                    messageSource.getMessage(e.getMessage(), null, locale)));*/
+            result.addError(new FieldError("category", "categoryName", category.getCategoryName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
+            return toEditCategory(category.getCategoryId(), modelMap);
         }
         return "redirect:../common/success.do?reurl=operation/categories.do";
     }

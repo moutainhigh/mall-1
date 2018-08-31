@@ -7,6 +7,7 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.CommodityState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.query.CommodityQuery;
+import com.yunxin.cb.search.vo.ResponseResult;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
@@ -150,7 +151,9 @@ public interface ICommodityService {
     List<CommoditySpec> getCommoditySpecsByCatalogId(int catalogId);
 
 
-    void removeSpecById(int catalogId);
+    void cloneSpec(int cloneCatalogId, int catalogId);
+
+    int removeSpecById(int catalogId);
 
     /**
      * 商品上下架
@@ -159,7 +162,7 @@ public interface ICommodityService {
      * @param publishState
      * @return
      */
-    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception;
+    public ResponseResult upOrDownShelvesCommodity(int commodityId, PublishState publishState,Integer productId) throws Exception;
 
     void removeCombinationById(int combinationId);
 
@@ -199,4 +202,16 @@ public interface ICommodityService {
     public List<Commodity> getCommoditySellerByCommodityCode(List<String> commodityCodes);
 
     public void syncESCommodity();
+
+    /**
+     *
+     * @Description 修改商品的销售数量
+     *
+     * @Author gws
+     * @Param [commodityId, saleNum]
+     * @return com.yunxin.cb.mall.entity.Commodity
+     * @Date
+     **/
+    public Commodity updateSaleNum(int commodityId, int saleNum);
+
 }

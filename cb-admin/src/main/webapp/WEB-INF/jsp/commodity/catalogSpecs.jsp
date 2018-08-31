@@ -12,9 +12,31 @@
     <script type="application/javascript">
 
         $(document).ready(function () {
+
+            var oppMsg = '${oppMsg}';
+            if(oppMsg){
+                commonNotify(oppMsg,"success");
+            }
+
+
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             $("#storeId").select2();
             $("#attributeIds").select2({
                 placeholder: "请选择货品属性"
+            });
+            $("#cloneValidateSubmitForm").validationEngine({
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if(valid){
+                        form.submit();
+                        return true;
+                    }
+                    return false;
+                }
             });
 
             $("#validateSubmitForm").validationEngine({
@@ -24,9 +46,9 @@
                         var form=null;
                         var sId = $("#specId").val();
                         if(sId == "" || sId == undefined || sId==null || sId==0){
-                            form =$("#validateSubmitForm").attr("action","addSpec.do");
+                            $("#validateSubmitForm").attr("action","addSpec.do");
                         }else{
-                            form =$("#validateSubmitForm").attr("action","editSpec.do");
+                            $("#validateSubmitForm").attr("action","editSpec.do");
                         }
                         form.submit();
                         return true;
@@ -34,7 +56,6 @@
                     return false;
                 }
             });
-
         });
 
         function removeItem(specId){
@@ -49,7 +70,7 @@
                             });
 
                         } else {
-                            bootbox.alert("失败");
+                            bootbox.alert("删除失败，该数据已经使用，不能删除");
                         }
                     });
                 }
@@ -155,7 +176,7 @@
                             <tbody>
                             <c:forEach items="${specs}" var="spec">
                                 <tr>
-                                    <td><input type='hidden' name='specId' value='${spec.specId}'/>${spec.specName}</td>
+                                    <td style="width:100%;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"><input type='hidden' name='specId' value='${spec.specId}'/>${spec.specName}</td>
                                     <td><a href="javascript:void(0);" onclick="editItem(${spec.specId},'${spec.specName}','${spec.remark}')">编辑</a>&nbsp;&nbsp;<a href="javascript:void(0);" onclick="removeItem(${spec.specId})">删除</a> </td>
                                 </tr>
                             </c:forEach>
@@ -163,44 +184,67 @@
                         </table>
                     </div>
                     <div class="col-sm-7">
-                        <form:form id="validateSubmitForm" cssClass="form-horizontal" method="post" commandName="spec">
-                            <form:hidden path="catalog.catalogId" id="catalogId"/>
-                            <form:hidden path="specId" id="specId"/>
-                            <fieldset>
-                                <legend>商品规格</legend>
-                                <div class="spacer-10"></div>
+                        <fieldset>
+                            <legend>复制商品规格</legend>
+                            <form id="cloneValidateSubmitForm" class="form-horizontal" method="post" action="cloneSpec.do">
+                                <input type="hidden" name="catalogId" value="${catalog.catalogId}"/>
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <label><span class="asterisk">*</span>商品规格名称：</label>
+                                        <label><span class="asterisk">*</span>选择分类：</label>
                                     </div>
-                                    <div class="col-sm-7">
-                                        <form:input cssClass="form-control validate[required,minSize[2]]" path="specName" maxlength="64"/>
-                                    </div>
-                                </div>
-                                <div class="spacer-10"></div>
-
-                                <div class="row">
                                     <div class="col-sm-4">
-                                        <label>备注：</label>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <form:textarea cssClass="form-control" path="remark" maxlength="255"></form:textarea>
-                                    </div>
-                                </div>
-
-                                <div class="spacer-30"></div>
-                                <hr>
-                                <div class="spacer-30"></div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="btn-group pull-right">
-                                            <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                            <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                        <input type="hidden" id="cloneCatalogId" name="cloneCatalogId"/>
+                                        <div class="input-group">
+                                            <input id="cloneCatalogName" readonly="true" class=" form-control validate[required]" id="cloneCatalogName" name="cloneCatalogName" maxlength="32" placeholder="仅可选择第三级商品分类"/>
+                                            <span class="input-group-btn">
+                                            <button id="catalogNameBtn" class="btn btn-default" type="button">选择</button>
+                                        </span>
                                         </div>
                                     </div>
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-default" type="submit" ><i class="fa fa-save"></i>&nbsp;复&nbsp;制&nbsp;</button>
+                                    </div>
                                 </div>
-                            </fieldset>
-                        </form:form>
+                            </form>
+                        </fieldset>
+                        <fieldset>
+                            <legend>商品规格</legend>
+                            <form:form id="validateSubmitForm" cssClass="form-horizontal" method="post" commandName="spec">
+                            <form:hidden path="catalog.catalogId" id="catalogId"/>
+                            <form:hidden path="specId" id="specId"/>
+                            <div class="spacer-10"></div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label><span class="asterisk">*</span>商品规格名称：</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <form:input cssClass="form-control validate[required,minSize[1],maxSize[30]]" path="specName" maxlength="30"/>
+                                </div>
+                            </div>
+                            <div class="spacer-10"></div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>备注：</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <form:textarea cssClass="form-control" path="remark" maxlength="255"></form:textarea>
+                                </div>
+                            </div>
+
+                            <div class="spacer-30"></div>
+                            <hr>
+                            <div class="spacer-30"></div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="btn-group pull-right">
+                                        <button id="saveBtn" class="btn btn-default" type="submit" ><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
+                                        <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </form:form>
+                        </fieldset>
                     </div>
                 </div>
             </div>
@@ -216,7 +260,71 @@
     <!-- End #content -->
 </div>
 <!-- End #main -->
+<div class="modal fade" id="catalogDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择商品分类</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-top:-20px;margin-bottom:-20px">
+                    <div class="sidebar-module">
+                        <kendo:treeView name="treeview" select="onSelect">
+                            <kendo:dataSource data="${catalogTree}">
+                            </kendo:dataSource>
+                        </kendo:treeView>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-warning" id="modalMsg" style="display: none;">
+                <strong>提示：</strong>仅可选择第三级商品分类进行规格复制！
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary pull-right" onclick="chooseCatalog();">确认</button>
+            </div>
+        </div>
+        <script type="application/javascript">
+            var catalogId = 0;
+            var catalogName = "";
+            var RATIO = 1;//分类比例配置
+            var treeLevel = "";
+            $('#catalogNameBtn').click(function (e) {
+                $('#catalogDialog').modal();
+                $('#modalMsg').hide();
+                e.preventDefault();
+            });
 
+            function onSelect(e) {
+                var data = $('#treeview').data('kendoTreeView').dataItem(e.node);
+                catalogId = data.id;
+                catalogName = data.text;
+                RATIO = data.ratio;
+                treeLevel = data.treeLevel;
+            }
+
+            function chooseCatalog() {
+                if(treeLevel != 3){
+                    $('#modalMsg').show();
+                    $('#modalMsg').html("<strong>提示：</strong>仅可选择第三级商品分类进行规格复制！");
+                    return;
+                }
+                if($("#catalogId").val()){
+                    if(Number(catalogId) == Number($("#catalogId").val())){
+                        $('#modalMsg').show();
+                        $('#modalMsg').html("<strong>提示：</strong>当前操作的商品分类无法选择！");
+                        return;
+                    }
+                }
+                $('#modalMsg').hide();
+                $('#catalogDialog').modal("hide");
+                $("#cloneCatalogId").val(catalogId);
+                $("#cloneCatalogName").val(catalogName);
+            }
+        </script>
+    </div>
+</div>
 
 </body>
 </html>

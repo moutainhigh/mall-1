@@ -4,7 +4,6 @@ import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.rest.BaseResource;
-import com.yunxin.cb.rest.customer.MainResource;
 import com.yunxin.cb.system.service.IProfileService;
 import com.yunxin.cb.system.vo.ShareInfo;
 import com.yunxin.cb.vo.ResponseResult;

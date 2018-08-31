@@ -28,6 +28,10 @@
         function editItem() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
+                if(dataItem.publishState=='UP_SHELVES'){
+                    bootbox.alert("失败,请先下架商品!");
+                    return false;
+                }
                 window.location.href = "toEditCommodity.do?commodityId=" + dataItem.commodityId;
             }
         }
@@ -35,6 +39,10 @@
         function removeItem() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
+                if(dataItem.publishState=="UP_SHELVES"){
+                    bootbox.alert("失败,请先下架商品!");
+                    return false;
+                }
                 bootbox.confirm("确认删除吗？", function (result) {
                     if (result) {
                         $.get("removeCommodityById.do", {
@@ -61,11 +69,11 @@
                             commodityId: dataItem.commodityId,
                             publishState : pState
                         }, function (data) {
-                            if (data) {
+                            if (data.result=="SUCCESS") {
                                 bootbox.alert("成功");
                                 $("#grid").data("kendoGrid").dataSource.read();
                             } else {
-                                bootbox.alert("失败,商品未通过审核或没有货品信息");
+                                bootbox.alert(data.message);
                             }
                         });
                     }
@@ -104,7 +112,17 @@
                     return "下架";
             }
         }
-
+        $(function() {
+            $("#commodityQuery").submit(function() {
+                reloadGridFilters('grid');
+            });
+        });
+        function checkPrice() {
+            if(''!=$('#endPrice').val()&&'0'!=$('#endPrice').val()&&parseInt($('#startPrice').val())>parseInt($('#endPrice').val())){
+                bootbox.alert("最大价格不能小于最小价格!");
+                $('#endPrice').val('')
+            }
+        }
     </script>
 </head>
 <body>
@@ -142,7 +160,7 @@
                     <h2>商品管理</h2>
                 </div>
                 <div class="pull-right">
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -152,7 +170,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </header>
@@ -172,19 +190,19 @@
             <!-- End .actionbar-->
             <div class="inner-padding">
                 <div class="toolbar responsive-helper">
-                    <form style="width: 100%">
+                    <form style="width: 100%" id="commodityQuery" onsubmit="return false">
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>商品编码:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="commodityCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入商品编码"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="commodityCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入商品编码"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>商品名称:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="commodityName" data-operator="contains" class="form-control grid-filter" placeholder="请输入商品名称"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="commodityName" data-operator="contains" class="form-control grid-filter" placeholder="请输入商品名称"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>商品状态:</strong>
@@ -204,16 +222,16 @@
                             <div class="toolbar-field">
                                 <table>
                                     <tr>
-                                        <td><input type="number" data-filter="sellPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px"/></td>
+                                        <td><input type="number" id="startPrice" onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()"  min="0" step="0.0001" data-filter="sellPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px"/></td>
                                         <td>-</td>
-                                        <td><input type="number" data-filter="sellPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px"/></td>
+                                        <td><input type="number" id="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')" onchange="checkPrice()"  min="0" step="0.0001" data-filter="sellPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px"/></td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="pull-right">
                             <div class="toolbar-field">
-                                <button type="button" class="btn btn-default" onclick="reloadGridFilters('grid')"><i class="fa fa-search"></i>查询</button>
+                                <button type="submit" id="commodityQuerySubmit" class="btn btn-default"><i class="fa fa-search"></i>查询</button>
                                 &nbsp;&nbsp;&nbsp;
                                 <button type="button" class="btn btn-default" onclick="clearFilters('grid')">清空</button>
                             </div>
@@ -244,7 +262,7 @@
 
                             <div class="btn-group">
                                 <a href="javascript:void(0);" onclick="toProducts()" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;货品</a>
-                                <a href="javascript:void(0);" onclick="toCombinations()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 组合</a>
+                                <%--<a href="javascript:void(0);" onclick="combicombi()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 组合</a>--%>
                             </div>
                         </div>
                     </header>
@@ -276,9 +294,6 @@
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
                             </kendo:dataSource-schema>
-                            <kendo:dataSource-filter>
-                                <kendo:dataSource-filterItem field="seller.sellerId" value="${seller.sellerType=='SELF_OPERATION'?null:seller.sellerId}" operator="eq"/>
-                            </kendo:dataSource-filter>
                             <kendo:dataSource-transport>
                                 <kendo:dataSource-transport-read url="pageCommodities.do" type="POST" contentType="application/json"/>
                                 <kendo:dataSource-transport-parameterMap>

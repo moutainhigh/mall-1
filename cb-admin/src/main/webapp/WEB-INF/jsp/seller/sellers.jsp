@@ -28,7 +28,7 @@
                 commonNotify("删除成功！", "success");
                 $("#grid").data("kendoGrid").dataSource.read();
               } else {
-                commonNotify("删除失败!", "error");
+                commonNotify("删除失败,商家下面有商品!", "error");
               }
             });
           }
@@ -116,7 +116,7 @@
         </div>
         <div class="pull-right">
 
-          <div class="btn-group">
+          <%--<div class="btn-group">
             <a class="btn btn-default" href="#">
               <i class="fa fa-star"></i>
             </a>
@@ -126,7 +126,7 @@
             <a class="btn btn-default" href="#">
               <i class="fa fa-cog"></i>
             </a>
-          </div>
+          </div>--%>
           <!-- End .btn-group -->
 
         </div>
@@ -151,19 +151,19 @@
       <!-- End .actionbar-->
       <div class="inner-padding">
         <div class="toolbar responsive-helper">
-          <form>
+          <form style="width: 100%">
             <div class="pull-left">
               <div class="toolbar-field">
                 <strong>商家编码:</strong>
               </div>
               <div class="toolbar-field">
-                <input type="text" data-filter="sellerCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入商家编码"/>
+                <input type="text" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" data-filter="sellerCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入商家编码"/>
               </div>
               <div class="toolbar-field">
                 <strong>商家名称:</strong>
               </div>
               <div class="toolbar-field">
-                <input type="text" data-filter="sellerName" data-operator="contains" class="form-control grid-filter" placeholder="请输入商家名称"/>
+                <input type="text" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" data-filter="sellerName" data-operator="contains" class="form-control grid-filter" placeholder="请输入商家名称"/>
               </div>
               <div class="spacer-10"></div>
             </div>
@@ -212,7 +212,7 @@
               <kendo:grid-column title="QQ" field="qq" width="100"/>
               <kendo:grid-column title="商家微信" field="wechat" width="100"/>
               <kendo:grid-column title="商家支付平台类型" field="channelType" width="120" template="#=formatChannelType(channelType)#"/>
-              <kendo:grid-column title="创建时间" field="createTime" width="120" format="{0:yyyy-MM-dd HH:mm}"/>
+              <kendo:grid-column title="创建时间" field="createTime" width="120" format="{0:yyyy-MM-dd HH:mm:ss}"/>
             </kendo:grid-columns>
             <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
               <kendo:dataSource-schema data="content" total="totalElements">

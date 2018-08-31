@@ -76,6 +76,21 @@ public class Seller {
 
     /** 备注 */
     private String remark;
+    /**
+     * 省
+     */
+    private String province;
+    private String provinceName;
+    /**
+     * 市
+     */
+    private String city;
+    private String cityName;
+    /**
+     * 区
+     */
+    private String district;
+    private String districtName;
 
     /** 商家地址 */
     private String sellerAddress;
@@ -94,6 +109,12 @@ public class Seller {
 
     /** 商家微信 */
     private String wechat;
+
+    /** 商家X轴坐标：经度 */
+    private String positionX;
+
+    /** 商家Y轴坐标：纬度*/
+    private String positionY;
 
     public Integer getSellerId() {
         return sellerId;
@@ -325,5 +346,69 @@ public class Seller {
 
     public void setWechat(String wechat) {
         this.wechat = wechat == null ? null : wechat.trim();
+    }
+
+    public String getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(String positionX) {
+        this.positionX = positionX;
+    }
+
+    public String getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(String positionY) {
+        this.positionY = positionY;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 }

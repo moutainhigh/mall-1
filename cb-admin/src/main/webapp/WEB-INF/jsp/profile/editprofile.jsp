@@ -88,6 +88,22 @@
                 case "IOS_FORCE_UPGRADE":{
                     return "苹果APP是否强制更新";
                 }
+
+                case "HOT_CITY":{
+                    return "热门城市";
+                }
+                case "HOT_SEARCH":{
+                    return "热门搜索";
+                }
+                case "INSURANCE_CODE_RECEIVE_EMAIL":{
+                    return "保单合同编号接收邮箱";
+                }
+                case "INSURANCE_CODE_RECEIVE_CONTEXT":{
+                    return "保单合同编号发送内容";
+                }
+                case "CAR_CLASS_CONFIG":{
+                    return "汽车根分类配置";
+                }
             }
             return state;
         }
@@ -96,7 +112,17 @@
         });
         $(document).ready(function () {
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if(valid){
+                        if ($('#fileValue').val()=='') {
+                            bootbox.alert("参数值不能为空!");
+                            return false;
+                        }else{
+                            return true;
+                        }
+                    }
+                }
             });
             $('#serNo').val("")
         });
@@ -130,8 +156,8 @@
             <div class="pull-left">
                 <ul class="breadcrumb">
                     <li><a href="#">首页 </a></li>
-                    <li><a href="#">保单管理 </a></li>
-                    <li><a href="#">事项组</a></li>
+                    <li><a href="#">系统配置</a></li>
+                    <li><a href="#">参数配置</a></li>
                 </ul>
                 <!-- End .breadcrumb -->
             </div>
@@ -148,7 +174,10 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>事项组</h2>
+                    <h2>参数配置</h2>
+                </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="profiles.do"><i class="fa fa-reply"></i></a>
                 </div>
             </div>
             <!-- End .inner-padding -->
@@ -170,7 +199,7 @@
             <div class="inner-padding">
                 <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                 <fieldset>
-                    <legend>事项组</legend>
+                    <legend>参数配置</legend>
                     <form:form id="validateSubmitForm" action="updateProfile.do" cssClass="form-horizontal" method="post"
                                commandName="profile">
                         <form:hidden path="fileId"/>
@@ -187,7 +216,7 @@
                         <div class="spacer-10"></div>
                         <div class="row" style="display: none;">
                             <div class="col-sm-2">
-                                <label>是否图片：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>是否图片：</label>
                             </div>
                             <div class="col-sm-3">
                                 <div class="inline-labels">
@@ -264,30 +293,30 @@
                         <div class="spacer-10"></div>
                         <div id="fileValeDiv" class="row">
                             <div class="col-sm-2">
-                                <label>参数值：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>参数值：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea id="fileValue"    path="fileValue" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:textarea id="fileValue"    path="fileValue" cssClass="formClear form-control validate[required,minSize[1]]"/>
                             </div>
                         </div>
                         <div id="fileValeImg" class="row" style="display: none">
                             <div class="col-sm-2">
-                                <label>参数值：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>参数值：</label>
                             </div>
                             <div class="col-sm-3">
                                 <img id="headPic" src="${profile.fileValue}" width="350px" height="350px"
                                      style="padding: 5px">
                                 <input id="upload" onchange="onchangeImg('fileValue')" name="file" multiple="multiple" accept="image/*" type="file"
-                                       style="display: none"/>
+                                       style="display: none" />
                             </div>
                         </div>
                         <div class="spacer-10"></div>
                         <div  class="row">
                             <div class="col-sm-2">
-                                <label>备注：<span class="asterisk">*</span></label>
+                                <label>备注：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea id="remarks"    path="remarks" cssClass="form-control"/>
+                                <form:textarea id="remarks"  maxlength="100"   path="remarks" cssClass="formClear form-control"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -297,7 +326,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button type="button" onclick="clearInput('formClear')" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>

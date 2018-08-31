@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>品牌管理</title>
+    <title>保险合同编号管理</title>
 
     <script type="text/javascript">
 
@@ -21,6 +21,13 @@
                 parseFormats: ["yyyy-MM-dd"]
             });
         });
+
+        function checkTime() {
+            if ($('#createTime').val() > $('#createTimes').val() && '' != $('#createTimes').val()) {
+                alert("开始时间不能大于结束时间")
+                $('#createTimes').val('')
+            }
+        }
 
 
     </script>
@@ -71,7 +78,7 @@
                     <h2>保险合同编号管理</h2>
                 </div>
                 <div class="pull-right">
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -81,7 +88,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <!-- End .inner-padding -->
@@ -116,7 +123,8 @@
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime"
+                                <input name="createTime" id="createTime"  onchange="checkTime()"
+                                       onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="createTime" placeholder="请选择开始时间" data-filter="createTime"
                                        data-operator="gte" class="form-control grid-filter"/>
                             </div>
 
@@ -124,7 +132,8 @@
                                 <strong>-</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" id="createTimes" placeholder="请选择结束时间" data-filter="createTime"
+                                <input name="createTime" id="createTimes"  onchange="checkTime()"
+                                       onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="createTimes" placeholder="请选择结束时间" data-filter="createTime"
                                        data-operator="lte" class="form-control grid-filter"/>
                             </div>
                         </div>
@@ -217,15 +226,48 @@
                         <h4 class="modal-title">选择EXCEL</h4>
                     </div>
                     <div class="modal-body" style="padding-bottom: 80px">
-                        <form id="uploadForm" action="uploadPayerCreditInfoExcel.do" enctype="multipart/form-data"
-                              method="post">
+                        <script type="text/javascript">
+                        function upload(){
+                            var upfile=$("#upfile").val();
+                            if(upfile==""){
+                                bootbox.alert("请先选择文件");
+                                return false;
+                            }
+                            var suffixName=upfile.toLowerCase().split('.').splice(-1);
+
+                            if(suffixName!='xls'&&suffixName!='xlsx'){
+                                bootbox.alert("上传失败，请检查文件格式");
+                                return false;
+                            }
+
+                            var formData = new FormData();
+                            formData.append("file", $('#upfile')[0].files[0]);
+                            $.ajax({
+                                url: "/admin/insuranceordercode/uploadPayerCreditInfoExcel.do",
+                                type: 'POST',
+                                cache: false,
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                beforeSend : function(){     //请求成功前触发的局部事件
+                            },
+                            success: function (result) {
+                                bootbox.alert("上传成功！");
+                                setTimeout("window.location.reload()",500);
+                            },
+                            error: function (err) {
+                                bootbox.alert("上传失败，请检查文件格式");
+                            }
+                            });
+                        }
+                        </script>
                             <div style="float: left">
                                 <input id="upfile" type="file" name="upfile">
                             </div>
                             <div style="float: left;margin-left: 50px">
-                                <button class="btn btn-primary" type="submit">导入</button>
+                                <button class="btn btn-primary" onclick="upload()">导入</button>
+                                <a class="btn btn-primary" href="../templates/excel/insurance.xlsx">模板下载</a>
                             </div>
-                        </form>
                     </div>
                 </div>
                 <script type="application/javascript">

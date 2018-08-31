@@ -93,6 +93,9 @@ public class Order {
     /** 支付时间 */
     private Date paymentTime;
 
+    /** 支付状态 */
+    private PaymentState paymentState;
+
     /** 付款方式 */
     private PaymentType paymentType;
 
@@ -143,6 +146,15 @@ public class Order {
 
     /** 审核时间 */
     private Date auditTime;
+    /**
+     * 发货时间
+     */
+    private Date deliverTime;
+
+    /**
+     * 收货时间
+     */
+    private Date collectTime;
 
     /** 卖家id */
     private Integer sellerId;
@@ -565,5 +577,29 @@ public class Order {
 
     public void setAuditTime(Date auditTime) {
         this.auditTime = auditTime;
+    }
+
+    public Date getDeliverTime() {
+        return deliverTime;
+    }
+
+    public void setDeliverTime(Date deliverTime) {
+        this.deliverTime = deliverTime;
+    }
+
+    public Date getCollectTime() {
+        return collectTime;
+    }
+
+    public void setCollectTime(Date collectTime) {
+        this.collectTime = collectTime;
+    }
+
+    public PaymentState getPaymentState() {
+        return paymentState;
+    }
+
+    public void setPaymentState(PaymentState paymentState) {
+        this.paymentState = paymentState;
     }
 }

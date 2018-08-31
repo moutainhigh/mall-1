@@ -37,7 +37,6 @@
             window.location.href = "toEditInsuranceOrderOffsite.do?orderId=" + orderId;
         }
         $(document).ready(function () {
-            debugger;
             var province=$.citySelector.getAddress('${insuranceOrder.insuranceOrderPolicyholderBank.bankProvince}');
            $("#province").html(province);
            var city=  $.citySelector.getAddress('${insuranceOrder.insuranceOrderPolicyholderBank.bankCity}');
@@ -929,11 +928,17 @@
                             <hr>
                             <div class="spacer-30">
                                 6、是否有其他需要说明事项：
-                                <input type="radio"  name="otherMatter" value="true" <c:if test="${not empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> checked</c:if> onclick="changeOtherMatter(true);"/> 是&nbsp;&nbsp;
-                                <input type="radio"  name="otherMatter" value="false" <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}" > checked </c:if> onclick="changeOtherMatter(false);"/> 否
+                                <c:choose>
+                                    <c:when test="${not empty insuranceOrder.insuranceOrderOffsite.otherMatter}">
+                                        是
+                                    </c:when>
+                                    <c:otherwise>否</c:otherwise>
+                                </c:choose>
+                                <%--<input type="radio"  name="otherMatter" value="true" <c:if test="${not empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> checked</c:if> onclick="changeOtherMatter(true);"/> 是&nbsp;&nbsp;--%>
+                                <%--<input type="radio"  name="otherMatter" value="false" <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}" > checked </c:if> onclick="changeOtherMatter(false);"/> 否--%>
                             </div>
                                     <div id="otherMatterDiv" style='float: left;margin-left: 10px; <c:if test="${empty insuranceOrder.insuranceOrderOffsite.otherMatter}"> display:none;</c:if>' >
-                                            <%--<label><span class="asterisk"></span>${otherMatter}</label>--%>
+                                            <%--<label><span class="asterisk"></span>${insuranceOrder.insuranceOrderOffsite.otherMatter}</label>--%>
                                         <form:textarea id="insuranceOrderOffsite_otherMatter" rows="10" cols="101" path="insuranceOrderOffsite.otherMatter" maxlength="255"  readonly="true"></form:textarea>
                                             <%--<label><textarea>${insuranceOrder.otherMatter}</textarea></label>--%>
                                     </div>

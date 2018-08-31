@@ -146,7 +146,7 @@
                     <h2>活动管理</h2>
                 </div>
                 <div class="pull-right">
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -156,7 +156,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                     <!-- End .btn-group -->
                 </div>
             </div>
@@ -179,7 +179,7 @@
             <!-- End .actionbar-->
             <div class="inner-padding">
                 <div class="toolbar responsive-helper">
-                    <form>
+                    <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>活动编码:</strong>

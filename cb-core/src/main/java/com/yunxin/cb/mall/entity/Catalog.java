@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.core.web.json.serializer.JsonDateSerializer;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -16,7 +17,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
-
 /**
  * 商品目录（商品分类）
  */
@@ -143,7 +143,7 @@ public class Catalog implements java.io.Serializable {
     }
 
     public void setSortOrder(int seqNum) {
-        this.sortOrder = seqNum;
+            this.sortOrder = seqNum;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -234,6 +234,7 @@ public class Catalog implements java.io.Serializable {
         TreeViewItem catalog = new TreeViewItem();
         catalog.setId(String.valueOf(catalogId));
         catalog.setText(catalogName);
+        catalog.setTreeLevel(!StringUtils.isEmpty(catalogCode) ? String.valueOf((catalogCode.length()/3) - 1) : null);
         catalog.setRatio(ratio);
         return catalog;
     }

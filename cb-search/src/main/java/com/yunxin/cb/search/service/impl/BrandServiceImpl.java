@@ -1,11 +1,6 @@
 package com.yunxin.cb.search.service.impl;
 
-import com.yunxin.cb.search.repository.BrandDao;
 import com.yunxin.cb.search.service.BrandService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 
 //@Service
 public class BrandServiceImpl implements BrandService {

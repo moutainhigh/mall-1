@@ -9,6 +9,7 @@ import com.yunxin.cb.mall.service.IAdvertisementService;
 import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.IdGenerate;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -55,9 +56,23 @@ public class AdvertisementController {
         return page;
     }
 
+    /**
+     *
+     * @param query
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "chooseAdvertment",method = RequestMethod.POST)
+    public Page<Advertisement> chooseAdvertment(@RequestBody PageSpecification<Advertisement> query, HttpServletRequest request) {
+        Page<Advertisement> page = advertisementService.pageAdvertisements(query);
+        return page;
+    }
+
     @RequestMapping(value = "toAddAdvertisement", method = RequestMethod.GET)
     public String toAddAdvertisement(@ModelAttribute("advertisement") Advertisement advertisement, ModelMap modelMap) {
-
+        advertisement.setAdvertCode(IdGenerate.genAdvID());
+        modelMap.addAttribute("advertisement", advertisement);
         return "cms/addAdvertisement";
     }
 
@@ -79,8 +94,10 @@ public class AdvertisementController {
             }
         } catch (EntityExistException e) {
             result.addError(new FieldError("advertisement", "advertTitle", advertisement.getAdvertTitle(), true, null, null,
-                    messageSource.getMessage("advertisement", null, locale)));
-            return "redirect:../common/failure.do?reurl=cms/addAdvertisement.do";
+                    e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
+            return toAddAdvertisement(advertisement, modelMap);
+//            return "redirect:../common/failure.do?reurl=cms/addAdvertisement.do";
         }
         return "redirect:../common/success.do?reurl=cms/advertisements.do";
 

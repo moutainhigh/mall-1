@@ -9,15 +9,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
+import org.elasticsearch.common.geo.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.websocket.server.PathParam;
 import java.util.*;
 
 @Api(description = "商城商品搜索接口")
@@ -33,17 +35,25 @@ public class SearchResource extends BaseResource {
 
     @ApiOperation(value = "关键字搜索")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "keyword", value = "搜索关键字", required = true, paramType = "post", dataType = "String"),
-            @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "post", dataType = "int")
+            @ApiImplicitParam(name = "keyword", value = "搜索关键字", required = true, paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "lat", value = "地理纬度", paramType = "query", dataType = "Double"),
+            @ApiImplicitParam(name = "lon", value = "地理经度", paramType = "query", dataType = "Double")
     })
     @PostMapping(value = "keywordSearch")
-    public ResponseResult<SearchResultVo> keywordSearch(@RequestParam(value = "keyword") String keyword, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+    public ResponseResult<SearchResultVo> keywordSearch(@RequestParam String keyword, @RequestParam int page, @RequestParam int size,
+                                                        Double lat, Double lon) {
         try {
-            Page<Commodity> result = commodityService.keywordSearch(keyword, PageRequest.of(page, size));
+            Pageable pageable = PageRequest.of(page, size);
+            GeoPoint geoPoint = null;
+            if (lat != null && lon != null) {
+                geoPoint = new GeoPoint(lat, lon);
+            }
+            Page<Commodity> result = commodityService.keywordSearch(keyword, geoPoint, pageable);
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
             SearchResultVo searchResultVo = new SearchResultVo();
-            dealResult(page, result, pageFinder, searchResultVo);
+            dealResult(result, pageFinder, searchResultVo);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("keywordSearch excption", e);
@@ -55,8 +65,6 @@ public class SearchResource extends BaseResource {
 
     @ApiOperation(value = "分类搜索")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "size", value = "返回行数", required = true, paramType = "post", dataType = "int")
     })
     @PostMapping(value = "categorySearch")
     public ResponseResult<SearchResultVo> categorySearch(@RequestBody SearchVo searchVo) {
@@ -64,7 +72,7 @@ public class SearchResource extends BaseResource {
             Page<Commodity> result = commodityService.categorySearch(searchVo, PageRequest.of(searchVo.getPage(), searchVo.getSize()));
             PageFinder<CommodityVO> pageFinder = new PageFinder<>();
             SearchResultVo searchResultVo = new SearchResultVo();
-            dealResult(searchVo.getPage(), result, pageFinder, searchResultVo);
+            dealResult(result, pageFinder, searchResultVo);
             return new ResponseResult(searchResultVo);
         } catch (Exception e) {
             logger.info("categorySearch excption", e);
@@ -79,6 +87,8 @@ public class SearchResource extends BaseResource {
     public ResponseResult addCommodity(@RequestBody CommodityVO commodityVO) {
         Commodity commodity = new Commodity();
         BeanUtils.copyProperties(commodityVO, commodity);
+        commodity.setId(String.valueOf(commodityVO.getCommodityId()));
+        setLocation(commodity, commodityVO.getSeller());
         commodityService.addCommodity(commodity);
         return new ResponseResult(Result.SUCCESS);
     }
@@ -99,10 +109,12 @@ public class SearchResource extends BaseResource {
     @PostMapping(value = "bulkIndex")
     public ResponseResult bulkIndex(@RequestBody List<CommodityVO> voList) {
         try {
-            List<Commodity> list = new ArrayList();
+            List<Commodity> list = new ArrayList<>();
             for (CommodityVO commodityVO : voList) {
                 Commodity commodity = new Commodity();
                 BeanUtils.copyProperties(commodityVO, commodity);
+                commodity.setId(String.valueOf(commodityVO.getCommodityId()));
+                setLocation(commodity, commodityVO.getSeller());
                 list.add(commodity);
             }
             commodityService.bulkIndex(list);
@@ -112,7 +124,16 @@ public class SearchResource extends BaseResource {
         return new ResponseResult(Result.SUCCESS);
     }
 
-    private void dealResult( int page, Page<Commodity> result, PageFinder<CommodityVO> pageFinder, SearchResultVo searchResultVo) {
+    private void setLocation(Commodity commodity, Seller seller) {
+        if (seller == null || StringUtils.isBlank(seller.getPositionX())
+                || StringUtils.isBlank(seller.getPositionY())) {
+            return;
+        }
+        commodity.setLocation(new org.springframework.data.elasticsearch.core.geo.GeoPoint(Double.valueOf(seller.getPositionY()),
+                Double.valueOf(seller.getPositionX())));
+    }
+
+    private void dealResult(Page<Commodity> result, PageFinder<CommodityVO> pageFinder, SearchResultVo searchResultVo) {
         if (result.getTotalElements() > 0) {
             List<Commodity> list = result.getContent();
             List<CommodityVO> voList = new ArrayList<>();
@@ -123,8 +144,9 @@ public class SearchResource extends BaseResource {
             }
             pageFinder.setData(voList);
             pageFinder.setPageCount(result.getTotalPages());
-            pageFinder.setRowCount(result.getNumber());
-            pageFinder.setPageNo(page);
+            pageFinder.setRowCount(result.getTotalElements());
+            pageFinder.setPageNo(result.getNumber());
+            pageFinder.setPageSize(result.getSize());
             searchResultVo.setPageFinder(pageFinder);
         }
     }
@@ -135,6 +157,8 @@ public class SearchResource extends BaseResource {
     public ResponseResult updateCommodity(@RequestBody CommodityVO commodityVO){
         Commodity commodity = new Commodity();
         BeanUtils.copyProperties(commodityVO, commodity);
+        commodity.setId(String.valueOf(commodityVO.getCommodityId()));
+        setLocation(commodity, commodityVO.getSeller());
         commodityService.updateCommodity(commodity);
         return new ResponseResult(Result.SUCCESS);
     }
@@ -152,19 +176,27 @@ public class SearchResource extends BaseResource {
     }
 
     /**
-     * 查询所有ES中所有商品
+     * 查询所有ES中所有商品,查询条件
      */
     @ApiOperation(value = "查询ES对象")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "keyword", value = "搜索关键字", paramType = "query", dataType = "String"),
+    })
     @GetMapping(value = "commodity")
-    public ResponseResult<CombinationVO> selectAll(){
+    public ResponseResult getSearchParam(String keyword){
         try{
-            List<Commodity> list = commodityService.findByAll();
-            Map<String, List<Object>> condition = new HashMap<>();
-            CombinationVO combinationVO = new CombinationVO();
-            List<PriceSection> priceSection = new ArrayList<>();
-            Set<Category> categories = new HashSet<>();
-            assemblingResult(list,combinationVO,condition,priceSection,categories);
-            return new ResponseResult(combinationVO);
+
+            CombinationVO combinationVO = commodityService.getCombination(keyword);
+            return new ResponseResult<>(combinationVO);
+
+//            List<Commodity> list = commodityService.findByAll();
+//            Map<String, List<Object>> condition = new HashMap<>();
+//            CombinationVO combinationVO = new CombinationVO();
+//            List<PriceSection> priceSection = new ArrayList<>();
+//            Set<Category> categories = new HashSet<>();
+//            assemblingResult(list,combinationVO,condition,priceSection,categories);
+//            return new ResponseResult(combinationVO);
+
         }catch (Exception e){
             logger.info("categorySearch excption", e);
             return new ResponseResult(Result.FAILURE);

@@ -24,11 +24,7 @@
         function queryCommodity(){
             var dataItem=getSelectedTreeListItem("treelist");
             if(dataItem){
-                if(dataItem.level==3){
-                    window.location.href = "categoryCommodities.do?categoryId=" + dataItem.categoryId;
-                }else{
-                    commonNotify('第三级运营分类才能关联商品',"warning");
-                }
+                window.location.href = "categoryCommodities.do?categoryId=" + dataItem.categoryId;
             }
         }
 
@@ -122,7 +118,7 @@
                     <div class="pull-right">
 
                         <!-- End .dropdown -->
-                        <div class="btn-group">
+                        <%--<div class="btn-group">
                             <a class="btn btn-default" href="#">
                                 <i class="fa fa-star"></i>
                             </a>
@@ -132,7 +128,7 @@
                             <a class="btn btn-default" href="#">
                                 <i class="fa fa-cog"></i>
                             </a>
-                        </div>
+                        </div>--%>
                     </div>
                 </div>
             </header>
@@ -170,9 +166,10 @@
                         <kendo:treeList name="treelist" height="450" selectable="true">
                             <kendo:treeList-columns>
                                 <kendo:treeList-column field="categoryName" title="分类名称" template="<div class='employee-photo' style='background-image: url(../images/#:iconPath#);'></div><div class='employee-name'>#: categoryName #</div>"/>
+                                <kendo:treeList-column field="sortOrder" title="排序编号"/>
                                 <kendo:treeList-column field="categoryKey" title="分类关键字"/>
                                 <kendo:treeList-column field="createTime" title="创建时间" format="{0:yyyy-MM-dd HH:mm}"/>
-                                <kendo:treeList-column field="recommend" title="是否推荐" template="#=(recommend==true?'是':'否')#"/>
+                                <%--<kendo:treeList-column field="recommend" title="是否推荐" template="#=(recommend==true?'是':'否')#"/>--%>
                                 <kendo:treeList-column field="enabled" title="是否启用" template="#= enabled ? '是' : '否' #"/>
                                 <kendo:treeList-column field="remark" title="备注"/>
                             </kendo:treeList-columns>

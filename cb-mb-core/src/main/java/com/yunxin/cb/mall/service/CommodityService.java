@@ -3,6 +3,7 @@ package com.yunxin.cb.mall.service;
 import com.yunxin.cb.mall.entity.Commodity;
 import com.yunxin.cb.mall.entity.Product;
 import com.yunxin.cb.mall.vo.CommodityVo;
+import com.yunxin.cb.mall.vo.SellerVo;
 
 import java.util.List;
 
@@ -46,4 +47,8 @@ public interface CommodityService {
      * @return
      */
     List<Commodity> selectByBrandId(Integer brandId);
+
+    List<SellerVo> getAllSellerAddress();
+
+
 }

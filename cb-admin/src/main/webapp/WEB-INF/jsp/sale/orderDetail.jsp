@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie ie6 lte9 lte8 lte7 no-js"> <![endif]-->
@@ -17,18 +18,18 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#pcdAddress").html($.citySelector.getPCDNames(${order.province}, ${order.city}, ${order.district}));
             $("#comfrimDiv").hide();
+            $("#pcdAddress").html($.citySelector.getPCDNames(${order.province}, ${order.city}, ${order.district}));
 
         });
 
         function changeDelivery() {
             $("#comfrimDiv").show();
             $("#conNameDiv").empty().append("<input type='text' id='consigneeName' maxlength='32'/>");
-            $("#conMobileDiv").empty().append("<input type='text' id='consigneeMobile' maxlength='11'/>");
-            $("#conPCDDiv").empty().append("<select id='province'></select>")
-                    .append("<select id='city'></select>")
-                    .append("<select id='district'></select>");
+            $("#conMobileDiv").empty().append("<input type='number' min='0' id='consigneeMobile' maxlength='11'/>");
+            $("#conPCDDiv").empty().append("<select class='form-control' style='width:auto;display: initial;' id='province'></select>")
+                    .append("<select class='form-control' style='width:auto;display: initial;' id='city'></select>")
+                    .append("<select class='form-control' style='width:auto;display: initial;' id='district'></select>");
             $.citySelector.init({
                 province: "province",
                 city: "city",
@@ -42,9 +43,24 @@
         }
 
         function comfrimChangeDelivery() {
-            var name = $("#consigneeName").val();
+            var name = $.trim($("#consigneeName").val());
             if (null == name || "" == name || undefined == name) {
                 alert("请填写收货人名称");
+                return;
+            }
+
+            if (name.length < 2) {
+                alert("收货人姓名不得少于两位字符");
+                return;
+            }
+
+            var mobile = $.trim($("#consigneeMobile").val());
+            if (null == mobile || "" == mobile || undefined == mobile) {
+                alert("请填写收货人手机号码");
+                return;
+            }
+            if (mobile.length != 11) {
+                alert("手机号不满足11位数字");
                 return;
             }
 
@@ -64,22 +80,18 @@
                 alert("请选择区域");
                 return;
             }
-            var address = $("#consigneeAddress").val();
+            var address = $.trim($("#consigneeAddress").val());
             if (null == address || "" == address || undefined == address) {
                 alert("请填写收货人地址");
                 return;
             }
             var postCode = $("#postCode").val();
-            if (null == postCode || "" == postCode || undefined == postCode) {
-                alert("请填写邮编");
-                return;
-            }
+            // if (null == postCode || "" == postCode || undefined == postCode) {
+            //     alert("请填写邮编");
+            //     return;
+            // }
             var telephone = $("#consigneeTelephone").val();
-            var mobile = $("#consigneeMobile").val();
-            if (null == mobile || "" == mobile || undefined == mobile) {
-                alert("请填写收货人手机号码");
-                return;
-            }
+
             $.post("changeDelivery.do", {
                 orderId: $("#orderId").val(), consigneeName: name, province: province, city: city, district: district,
                 consigneeAddress: address, postCode: postCode, consigneeTelephone: telephone, consigneeMobile: mobile
@@ -87,7 +99,7 @@
                 if (result) {
                     window.location.href = "getOrderDetailById.do?orderId=" + $("#orderId").val();
                 } else {
-                    alert("调价失败！");
+                    alert("修改失败！");
                 }
             });
         }
@@ -292,7 +304,7 @@
                                 <label>下单时间：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                ${order.createTime}
+                                <fmt:formatDate value="${order.createTime}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -303,13 +315,16 @@
                                 <label>订单金额：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                <span>${order.totalPrice}</span>
+                                <span>
+                                <fmt:formatNumber value="${order.totalPrice}" pattern="#.##" minFractionDigits="2" > </fmt:formatNumber> </span>
                             </div>
                             <div class="col-sm-2">
                                 <label>运费金额：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                <span>${order.deliveryFeeTotal}</span>
+                                <span>
+                                    <fmt:formatNumber value="${order.deliveryFeeTotal}" pattern="#.##" minFractionDigits="2" > </fmt:formatNumber>
+                                </span>
                             </div>
                         </div>
 
@@ -319,7 +334,9 @@
                                 <label>订单总金额：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                <span>${order.feeTotal}</span>
+                                <span>
+                                      <fmt:formatNumber value="${order.feeTotal}" pattern="#.##" minFractionDigits="2" > </fmt:formatNumber>
+                                </span>
                             </div>
                             <div class="col-sm-2">
                                 <label>订单状态：</label>
@@ -389,7 +406,7 @@
                         </div>
                         <div class="spacer-10"></div>
 
-                        <div class="row">
+                       <!--<div class="row">
                             <div class="col-sm-2">
                                 <label>电话：</label>
                             </div>
@@ -402,7 +419,7 @@
                             <div class="col-sm-3 col-label" id="conPostCodeDiv">
                                 <span>${order.postCode}</span>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="spacer-10"></div>
 
                         <div class="row">
@@ -416,10 +433,10 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>详细地址：</label>
+                                <label>自提地址：</label>
                             </div>
                             <div class="col-sm-7 col-label" id="conAddressDiv">
-                                <span>${order.consigneeAddress}</span>
+                                <span style="white-space:normal; word-break:break-all;">${order.consigneeAddress}</span>
                             </div>
                         </div>
 
@@ -593,12 +610,16 @@
                         <tbody>
                         <c:forEach items="${order.orderItems}" var="item">
                             <tr>
-                                <td><a><img src="../images/${item.product.commodity.defaultPicPath}_64_69.jpg"/></a></td>
+                                <td><a><img src="${item.product.commodity.defaultPicPath}?imageView/1/w/64/h/69"/></a></td>
                                 <td>${item.product.commodity.commodityName}</td>
                                 <td>${item.product.productName}</td>
-                                <td>${item.product.salePrice}</td>
+                                <td>
+                                    <fmt:formatNumber value="${item.product.salePrice}" pattern="#.##" minFractionDigits="2" ></fmt:formatNumber>
+                                </td>
                                 <td>${item.productNum}</td>
-                                <td><span class="btn brand-pinterest">${item.product.salePrice * item.productNum}</span></td>
+                                <td><span class="btn brand-pinterest">
+                                         <fmt:formatNumber value="${item.product.salePrice * item.productNum}" pattern="#.##" minFractionDigits="2" ></fmt:formatNumber>
+                                    </span></td>
                             </tr>
                         </c:forEach>
 

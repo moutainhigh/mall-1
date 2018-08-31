@@ -1,19 +1,17 @@
 package com.yunxin.cb.system.service;
 
 import com.yunxin.cb.system.entity.Message;
-import com.yunxin.cb.system.meta.PushStatus;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 
 public interface IMessageService {
 
-    public Page<Message> pageMessage(PageSpecification<Message> query);
+    Page<Message> pageMessage(PageSpecification<Message> query);
 
-    public Message addMessage(Message message);
+    Message addMessage(Message message);
 
-    public Message getMessage(int fileId);
+    Message getMessage(int messageId);
 
-    public Message getMessageByPushStatus(PushStatus pushStatus);
+    void removeMessageById(int messageId);
 
-    public void addMessageByMessageIsExit();
 }

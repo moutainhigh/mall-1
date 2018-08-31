@@ -58,8 +58,8 @@
     </script>
     <script id="attributeImgTr" type="text/x-jquery-tmpl">
         <tr id='attribute{{= idIndex}}'>
-            <td><input type='text' name='attributeName' class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
-            <td><input id="imagePath{{= idIndex}}" type='hidden' name='imagePath' value=""/><a class='btn btn-default' href="javascript:chooseImage({{= idIndex}})">选择图片</a><img id="img{{= idIndex}}" src="" style="max-height:60px"/></td>
+            <td><input type='text' name='attributeName' class='form-control validate[required,minSize[1]]' maxlength='20'/></td>
+            <%--<td><input id="imagePath{{= idIndex}}" type='hidden' name='imagePath' value=""/><a class='btn btn-default' href="javascript:chooseImage({{= idIndex}})">选择图片</a><img id="img{{= idIndex}}" src="" style="max-height:60px"/></td>--%>
             <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2'/></td>
             <td class="text-center"><a class='btn btn-default' href='javascript:removeAttribute({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
         </tr>
@@ -67,7 +67,7 @@
     <script id="attributeTr" type="text/x-jquery-tmpl">
         <tr id='attribute{{= idIndex}}'>
             <td><input type='text' name='attributeName' class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
-            <td><input id='imagePath{{= idIndex}}' type='hidden' name='imagePath' value=""/></td>
+            <%--<td><input id='imagePath{{= idIndex}}' type='hidden' name='imagePath' value=""/></td>--%>
             <td><input type='text' name='sortOrder' value='{{= idIndex}}' class='form-control validate[required,custom[number]]' maxlength='2'/></td>
             <td class="text-center"><a class='btn btn-default' href='javascript:removeAttribute({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
         </tr>
@@ -145,14 +145,14 @@
                                 <label><span class="asterisk">*</span>属性组名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[1]]" path="groupName" maxlength="64"/>
+                                <form:input cssClass="form-control validate[required,minSize[1]]" path="groupName" maxlength="20"/>
                             </div>
-                            <div class="col-sm-2">
+                            <%--<div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 显示方式：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:checkbox id="onlyWord" path="showAsImage" onchange="changeGroupType()"/>&nbsp;以图片方式显示
-                            </div>
+                            </div>--%>
                         </div>
                         <div class="spacer-10"></div>
                         <div class="row">
@@ -175,7 +175,7 @@
                                     <thead id="attribute-table-th">
                                     <tr>
                                         <td scope="col">属性名</td>
-                                        <td scope="col" width="250">图片</td>
+                                        <%--<td scope="col" width="250">图片</td>--%>
                                         <td scope="col" width="110">排序</td>
                                         <td scope="col" width="70" class="text-center">操作</td>
                                     </tr>

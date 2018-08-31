@@ -125,7 +125,7 @@
                                 <label><span class="asterisk">*</span>事项组描述：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:textarea path="description" cssClass="form-control validate[required,minSize[1]]"/>
+                                <form:textarea path="description" cssClass="form-control validate[required,minSize[1]]" maxlength="200"/>
                             </div>
                         </div>
 

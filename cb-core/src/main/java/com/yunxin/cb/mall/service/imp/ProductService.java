@@ -7,6 +7,7 @@ import com.yunxin.cb.mall.dao.*;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
+import com.yunxin.cb.mall.service.ICommodityService;
 import com.yunxin.cb.mall.service.IProductService;
 import com.yunxin.cb.search.restful.RestfulFactory;
 import com.yunxin.cb.search.service.SearchRestService;
@@ -61,12 +62,16 @@ public class ProductService implements IProductService {
     @Resource
     private AttributeDao attributeDao;
 
+    @Resource
+    private ICommodityService commodityService;
+
     @Override
     public Product addProduct(Product product) {
         product.setCreateTime(new Date());
         product.setProductName("");
         product.setProductState(ProductState.AUDITED);
         product.setPublishState(PublishState.WAIT_UP_SHELVES);
+        product.setReservedStoreNum(0);//初始化给0
         product = productDao.save(product);
         int[] attributeIds = product.getAttributeIds();
         StringBuilder sb = new StringBuilder();
@@ -133,6 +138,15 @@ public class ProductService implements IProductService {
 
     @Override
     public void removeProductById(int productId) {
+        //判断删除的货品是否属于默认货品，如果是则删除商品的默认货品
+        Product product = productDao.findProductDetail(productId);
+        if(LogicUtils.isNotNull(product)){
+            Commodity commodity=product.getCommodity();
+            if(LogicUtils.isNotNull(commodity)&&LogicUtils.isNotNull(commodity.getDefaultProduct())&&
+                commodity.getDefaultProduct().getProductId()==productId){
+                commodityDao.updateDefaultProductById(null,commodity.getCommodityId());
+            }
+        }
         productDao.delete(productId);
     }
 
@@ -316,14 +330,31 @@ public class ProductService implements IProductService {
         if (product.getProductState() != ProductState.AUDITED) {
             return false;
         }
-        Commodity commodity = product.getCommodity();
+        //Commodity commodity = product.getCommodity();
+        Commodity commodity = commodityDao.findDefaultProductById(product.getCommodity().getCommodityId());
         if ((product.getPublishState() == PublishState.WAIT_UP_SHELVES || product.getPublishState() == PublishState.DOWN_SHELVES)
                 && publishState == PublishState.UP_SHELVES) {
             productDao.updateUpOrDownShelvesInProductId(PublishState.UP_SHELVES, new Integer[]{productId});
             //给商品设置默认货品
-            if (commodity.getDefaultProduct().getPublishState()!=PublishState.UP_SHELVES) {
-                commodity.setDefaultProduct(product);
-                commodityDao.updateDefaultProductById(product, product.getCommodity().getCommodityId());
+            if (commodity.getDefaultProduct()==null||commodity.getDefaultProduct().getPublishState()!=PublishState.UP_SHELVES) {
+                    commodity.setDefaultProduct(product);
+                    commodityDao.updateDefaultProductById(product, product.getCommodity().getCommodityId());
+            }
+            boolean flag=true;
+            for(Product pro:commodity.getProducts()){//遍历所有货品,如果所有货品都商家，商品自动上架
+                if(pro.getProductId()!=productId){//默认取该商品还在上架的第一个货品为默认货品
+                    if(pro.getPublishState()==PublishState.DOWN_SHELVES){
+                        flag=false;
+                        break;
+                    }
+                }
+            }
+            if(flag){
+                try {
+                    commodityService.upOrDownShelvesCommodity(commodity.getCommodityId(), publishState,productId);
+                } catch (Exception e) {
+                    logger.error("auto up commodity result flag is = "+e);
+                }
             }
             return true;
         } else if ((product.getPublishState() == PublishState.WAIT_UP_SHELVES || product.getPublishState() == PublishState.UP_SHELVES)

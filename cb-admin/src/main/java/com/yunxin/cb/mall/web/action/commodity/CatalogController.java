@@ -27,6 +27,7 @@ import java.util.Locale;
 /**
  * @author gonglei
  */
+
 @Controller
 @RequestMapping(value = "/commodity")
 public class CatalogController {
@@ -62,29 +63,32 @@ public class CatalogController {
 
     @RequestMapping(value = "addCatalog",method = RequestMethod.POST)
     public String addCatalog(@Valid @ModelAttribute("catalog") Catalog catalog,
-                             BindingResult result, ModelMap modelMap, HttpServletRequest request, Locale locale) {
+                             BindingResult result, ModelMap modelMap, HttpServletRequest request, Locale locale)  throws Exception {
         if (result.hasErrors()) {
             return toAddCatalog(catalog, modelMap);
         }
         try {
             catalogService.addCatalog(catalog);
         } catch (EntityExistException e) {
-            e.printStackTrace();
+            /*e.printStackTrace();
             result.addError(new FieldError("catalog", "catalogCode", catalog.getCatalogCode(), true, null, null,
                     messageSource.getMessage(e.getMessage(), null, locale)));
             return BuildCommonURL.buildFailureURL("commodity/toAddCatalog.do", "新增商品分类失败", e.getMessage());
         } catch (CommonException e) {
             e.printStackTrace();
             result.addError(new FieldError("catalog", "catalogCode", catalog.getCatalogCode(), true, null, null,
-                    messageSource.getMessage(e.getMessage(), null, locale)));
-            return BuildCommonURL.buildFailureURL("commodity/toAddCatalog.do", "新增商品分类失败", e.getMessage());
+                    messageSource.getMessage(e.getMessage(), null, locale)));*//*
+            return BuildCommonURL.buildFailureURL("commodity/toAddCatalog.do", "新增商品分类失败", e.getMessage());*/
+            result.addError(new FieldError("commodity", "catalogCode", catalog.getCatalogCode(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
+            return toAddCatalog(catalog, modelMap);
         }
         return BuildCommonURL.buildSuccessURL("commodity/catalogs.do");
     }
 
     @RequestMapping(value = "toEditCatalog",method = RequestMethod.GET)
     public String toEditCatalog(@RequestParam("catalogId") int catalogId,
-                                ModelMap modelMap, HttpServletRequest request) {
+                                ModelMap modelMap) {
         Catalog catalog = catalogService.getCategoryById(catalogId);
         modelMap.addAttribute("catalog", catalog);
         return toEditCatalog(catalog, modelMap);
@@ -98,17 +102,20 @@ public class CatalogController {
 
     @RequestMapping(value = "editCatalog",method = RequestMethod.POST)
     public String editCatalog(@Valid @ModelAttribute("catalog") Catalog catalog,
-                              BindingResult result, ModelMap modelMap, Locale locale) {
+                              BindingResult result, ModelMap modelMap, Locale locale)  throws Exception  {
         if (result.hasErrors()) {
             return toEditCatalog(catalog, modelMap);
         }
         try {
             catalogService.updateCatalog(catalog);
         } catch (EntityExistException e) {
-            e.printStackTrace();
+            /*e.printStackTrace();
             result.addError(new FieldError("catalog", "catalogCode", catalog.getCatalogCode(), true, null, null,
                     messageSource.getMessage(e.getMessage(), null, locale)));
-            return BuildCommonURL.buildFailureURL("commodity/toEditCatalog.do?catalogId="+catalog.getCatalogId(), "修改商品分类失败", e.getMessage());
+            return BuildCommonURL.buildFailureURL("commodity/toEditCatalog.do?catalogId="+catalog.getCatalogId(), "修改商品分类失败", e.getMessage());*/
+            result.addError(new FieldError("commodity", "catalogCode", catalog.getCatalogCode(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
+            return toEditCatalog(catalog.getCatalogId(), modelMap);
         }
         return BuildCommonURL.buildSuccessURL("commodity/catalogs.do");
     }

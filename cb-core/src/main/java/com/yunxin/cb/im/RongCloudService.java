@@ -1,5 +1,7 @@
 package com.yunxin.cb.im;
 
+import com.alibaba.fastjson.JSONObject;
+import com.yunxin.cb.im.RongCloudUtils;
 import com.yunxin.cb.mall.entity.Customer;
 import io.rong.RongCloud;
 import io.rong.messages.CmdMsgMessage;
@@ -19,17 +21,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class RongCloudService {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static Logger logger = LoggerFactory.getLogger(RongCloudService.class);
 
     @Value("${rongcloud.appKey}")
-    private String appKey = "appKey";
+    private String appKey;
 
     @Value("${rongcloud.appSecret}")
-    private String appSecret = "appSecret";
+    private String appSecret;
 
     public String register(Customer customer) throws Exception {
         RongCloud rongCloud = RongCloud.getInstance(appKey, appSecret);
@@ -169,21 +172,25 @@ public class RongCloudService {
      * 推送消息（向应用内所有用户推送消息）
      * @param content
      */
-    public static void pushMessageToAll(String content){
+    public boolean pushMessageToAll(String content){
+        boolean oppStatus = false;
         if(StringUtils.isEmpty(content)){
-            return;
+            return oppStatus;
         }
         String url = "https://api.cn.ronghub.com/push.json";
         //{"platform":["ios","android"],"audience":{"is_to_all":true},"notification":{"alert":"this is a push"}}
         String jsonParam = "{\"platform\":[\"ios\",\"android\"],\"audience\":{\"is_to_all\":true},\"notification\":{\"alert\":\"" + content + "\"}}";
         try {
-            RongCloudUtils.post("z3v5yqkbz1jp0","AUUwTO6vXg7y7P",url, jsonParam, "UTF-8", 20000);
+            String jsonResult = RongCloudUtils.post(appKey,appSecret,url, jsonParam, "UTF-8", 20000);
+            if(!StringUtils.isEmpty(jsonResult)){
+                if(200 == JSONObject.parseObject(jsonResult).getIntValue("code")){
+                    oppStatus = true;
+                }
+            }
         } catch (Exception e) {
-            System.out.println("广播发送异常");
+            logger.error("推送消息异常",e);
         }
+        return oppStatus;
     }
 
-    public static void main(String[] agrs){
-        pushMessageToAll("yunxintest");
-    }
 }

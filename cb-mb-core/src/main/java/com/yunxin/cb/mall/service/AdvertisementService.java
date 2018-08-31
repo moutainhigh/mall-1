@@ -10,5 +10,23 @@ public interface AdvertisementService {
     /**
      * 查询banner
      */
-    List<Advertisement> selectByPlace(AdvertisementPlace advertisementPlace,Boolean enabled);
+    List<Advertisement> selectByPlace(String advertisementPlace,Boolean enabled);
+
+    /**
+     *
+     * @param
+     * @param enabled
+     * @return
+     */
+    List<Advertisement> select(Boolean enabled);
+
+    /**
+     * 查询banner
+     */
+    List<Advertisement> selectByAdvertisementPlace(AdvertisementPlace advertisementPlace,Boolean enabled);
+
+    /**
+     * 根据ID查询
+     */
+    Advertisement selectByAdvertId(int advertId);
 }

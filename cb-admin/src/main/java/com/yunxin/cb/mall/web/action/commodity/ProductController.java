@@ -4,13 +4,11 @@ import com.yunxin.cb.console.service.ILogsService;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
-import com.yunxin.cb.mall.service.IAttributeService;
-import com.yunxin.cb.mall.service.ICommodityService;
-import com.yunxin.cb.mall.service.IProductService;
-import com.yunxin.cb.mall.service.IStoreService;
+import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.web.vo.ResponseResult;
 import com.yunxin.cb.mall.web.vo.ResultType;
 import com.yunxin.core.exception.EntityExistException;
+import com.yunxin.core.util.IdGenerate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -19,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +50,8 @@ public class ProductController {
 
     @Resource
     private MessageSource messageSource;
-
+    @Resource
+    private ICatalogService catalogService;
 
     @RequestMapping(value = "editProducts")
     public String editProducts(@RequestParam("commodityId") int commodityId, @ModelAttribute("product") Product product, ModelMap modelMap) {
@@ -60,6 +60,7 @@ public class ProductController {
         modelMap.addAttribute("commodity", commodity);
         modelMap.addAttribute("products", products);
         product.setCommodity(commodity);
+        product.setProductNo(IdGenerate.genProductID());
 
         List<AttributeGroup> attributeGroups = attributeService.getAttributeGroupsByCommodityId(commodity.getCommodityId());
         modelMap.addAttribute("attributeGroups", attributeGroups);
@@ -70,6 +71,10 @@ public class ProductController {
         List<Store> stores = storeService.getAllStores();
         modelMap.addAttribute("stores", stores);
 
+        //S 获得一级分类对象  2018-08-14    LXC
+        Catalog oneLevelCatalog = catalogService.findOneLevelCatalogByCatalogCode(commodity.getCatalog().getCatalogCode());
+        modelMap.addAttribute("oneLevelCatalog",oneLevelCatalog);
+        //E
         return "commodity/editProducts";
     }
 
@@ -87,7 +92,7 @@ public class ProductController {
 
 
     @RequestMapping(value = "addProduct", method = RequestMethod.POST)
-    public String addProduct(@ModelAttribute("product") Product product, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String addProduct(@ModelAttribute("product") Product product, BindingResult result, ModelMap modelMap, Locale locale, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             editProducts(product.getCommodity().getCommodityId(), product, modelMap);
         }
@@ -109,6 +114,7 @@ public class ProductController {
         Commodity commodity = commodityService.getCommodityDetailById(product.getCommodity().getCommodityId());
         product.setDefaultPicPath(commodity.getDefaultPicPath());
         product = productService.addProduct(product);
+        redirectAttributes.addFlashAttribute("oppMsg","货品新增成功！");
         return "redirect:editProducts.do?commodityId=" + product.getCommodity().getCommodityId();
     }
 
@@ -146,6 +152,10 @@ public class ProductController {
         modelMap.addAttribute("productAttributes", productAttributes);
         List<Store> stores = storeService.getAllStores();
         modelMap.addAttribute("stores", stores);
+        //S 获得一级分类对象  2018-08-14    LXC
+        Catalog oneLevelCatalog = catalogService.findOneLevelCatalogByCatalogCode(commodity.getCatalog().getCatalogCode());
+        modelMap.addAttribute("oneLevelCatalog",oneLevelCatalog);
+        //E
         return "commodity/editProduct";
     }
 
@@ -184,13 +194,13 @@ public class ProductController {
     public ResponseResult defaultProductById(@RequestParam("productId") int productId,@RequestParam("commodityId") int commodityId) {
         ResponseResult responseResult = new ResponseResult();
         try {
-            Product product=productService.findOne(productId);
-            if (product.getPublishState() == PublishState.UP_SHELVES){
+            Product product=productService.getProductById(productId);
+            if (product.getCommodity().getPublishState() != PublishState.UP_SHELVES){
                 commodityService.updateCommodityStatus(product,commodityId);
                 responseResult.setResultType(ResultType.SUCCESS);
             }else {
                 responseResult.setResultType(ResultType.FAILURE);
-                responseResult.setData("请先上架货品");
+                responseResult.setData("请先下架商品");
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

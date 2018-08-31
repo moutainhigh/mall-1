@@ -12,8 +12,8 @@ public enum ProfileName {
     ANDROID_VERSION_CODE("1"),//安卓版本编码
     ANDROID_VERSION_NAME("v1.0.0"),//安卓版本名称
     ANDROID_APP_NAME("云信"),//安卓APP名称
-    ANDROID_URL(""),//安卓APP下载地址
-    ANDROID_DESCRIPTION(""),//安卓APP更新描述
+    ANDROID_URL("123"),//安卓APP下载地址
+    ANDROID_DESCRIPTION("123"),//安卓APP更新描述
     ANDROID_FORCE_UPGRADE("false"),//安卓APP是否强制更新
     GIVE_THE_THUMBS_UP("0.05"),//点赞推荐人及所有上级加5%的授信额度
     LOAN_EXPECTED_RETURN_FIFTY("0.5"),//下单推荐人增加50%的贷款预期收益
@@ -31,6 +31,11 @@ public enum ProfileName {
     IOS_URL(""),//苹果APP下载地址
     IOS_DESCRIPTION(""),//苹果APP更新描述
     IOS_FORCE_UPGRADE("false"),//苹果PP是否强制更新
+    INSURANCE_CODE_RECEIVE_EMAIL(""),//保单合同编号接收邮箱
+    INSURANCE_CODE_RECEIVE_CONTEXT(""),//保单合同编号发送内容
+    HOT_SEARCH("昂克赛拉,卡罗拉,福克斯,思域,凯美瑞,迈腾,雷克萨斯CT"),//热门搜索
+    HOT_CITY("北京市&110000,上海市&310000,广州市&440100,深圳市&440300"),//热门城市
+    CAR_CLASS_CONFIG("NO01"),//汽车根分类配置
     ;
 
     private String i18nName;

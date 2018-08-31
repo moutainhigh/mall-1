@@ -5,6 +5,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
+import java.util.Objects;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -29,6 +31,13 @@ public class Spec implements java.io.Serializable {
     private String remark;
 
     public Spec() {
+    }
+
+    public Spec(String specName, int catalog) {
+        this.specName = specName;
+        Catalog cata = new Catalog();
+        cata.setCatalogId(catalog);
+        this.catalog = cata;
     }
 
     public Spec(int specId) {
@@ -72,5 +81,19 @@ public class Spec implements java.io.Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Spec spec = (Spec) o;
+        return Objects.equals(specName, spec.specName);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(specName);
     }
 }

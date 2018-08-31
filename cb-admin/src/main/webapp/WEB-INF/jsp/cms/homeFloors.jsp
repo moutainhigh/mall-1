@@ -98,7 +98,7 @@
                 </div>
                 <div class="pull-right">
 
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -109,7 +109,7 @@
                             <i class="fa fa-cog"></i>
                         </a>
                     </div>
-
+--%>
                 </div>
             </div>
         </header>
@@ -129,19 +129,19 @@
             </div>
             <div class="inner-padding">
                 <div class="toolbar responsive-helper">
-                    <form>
+                    <form style="width: 100%" >
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>楼层名称:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="floorName" data-operator="contains" class="form-control grid-filter" placeholder="请输入楼层名称"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="floorName" data-operator="contains" class="form-control grid-filter" placeholder="请输入楼层名称"/>
                             </div>
                             <div class="toolbar-field">
                                 <strong>状态:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <select data-filter="enabled" data-operator="eq" class="form-control simpleselect grid-filter">
+                                <select data-filter="enabled" data-operator="eq" class="form-control  grid-filter">
                                     <option value="">全部</option>
                                     <option value="true">启用</option>
                                     <option value="false">停用</option>
@@ -187,14 +187,15 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="楼层名称" field="floorName" width="150px"/>
-                            <kendo:grid-column title="排序" field="sortOrder" width="100px"/>
-                            <kendo:grid-column title="品牌数量" field="brandAmount" width="100px"/>
-                            <kendo:grid-column title="类别数量" field="categoryAmount" width="100px"/>
-                            <kendo:grid-column title="商品数量" field="commodityAmount" width="100px"/>
+                            <kendo:grid-column title="楼层名称" filterable="false" field="floorName" width="150px"/>
+                            <kendo:grid-column title="排序" filterable="false" field="sortOrder" width="100px"/>
+                            <kendo:grid-column title="品牌数量" filterable="false" field="brandAmount" width="100px"/>
+                            <kendo:grid-column title="类别数量" filterable="false" field="categoryAmount" width="100px"/>
+                            <kendo:grid-column title="商品数量" filterable="false" field="commodityAmount" width="100px"/>
+                            <kendo:grid-column title="广告数量" filterable="false" field="advertAmount" width="100px"/>
                             <%--<kendo:grid-column title="模板" field="templateId" width="100px"/>--%>
                             <kendo:grid-column title="备注" field="remark" filterable="false" width="200px"/>
-                            <kendo:grid-column title="状态" field="enabled" template="#= enabled ? '启用' : '停用' #" width="80"/>
+                            <kendo:grid-column title="状态" field="enabled" filterable="false" template="#= enabled ? '启用' : '停用' #" width="80"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">

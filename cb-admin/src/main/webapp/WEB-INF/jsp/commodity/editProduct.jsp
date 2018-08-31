@@ -14,12 +14,33 @@
             });
 
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var startPrice = '${commodity.priceSection.startPrice}';
+                        var endPrice = '${commodity.priceSection.endPrice}';
+                        if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#costPrice").val())){
+                            bootbox.alert("成本价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        if(Number($("#salePrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#salePrice").val())){
+                            bootbox.alert("销售价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
+                            bootbox.alert("市场价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        return true;
+                    }
+                }
             });
         });
 
-
+        $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
     </script>
+    <%--后台页面共用的js--%>
+    <script src="../js/common/fixed_common.js"></script>
 </head>
 <body>
 <jsp:include page="../layouts/left.jsp"/>
@@ -97,10 +118,25 @@
                         <legend>编辑货品</legend>
                         <div class="row">
                             <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>一级分类比例配置：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input cssClass="form-control"  path="" id="oneLevelCatalog" readonly="true"  maxlength="32"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>商品比例配置：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input cssClass="form-control " path="commodity.ratio" id="ratio" readonly="true" placeholder="默认取一级分类比例配置"  title="默认取一级分类比例配置" maxlength="11"/>
+                            </div>
+                        </div>
+                        <div class="spacer-10"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>货品编号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="productNo" maxlength="32"/>
+                                <form:input cssClass="form-control validate[required,minSize[2]]" path="productNo" readonly="true" maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>货品名称：</label>
@@ -117,7 +153,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="11" />
                                 </div>
 
                             </div>
@@ -127,7 +163,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="salePrice" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" readonly="true" title="销售价等于成本价乘以比例配置"  path="salePrice" maxlength="11"/>
                                 </div>
                             </div>
                         </div>
@@ -158,7 +194,7 @@
                                 <label><span class="asterisk">*</span>库存数量：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[number]]" path="storeNum" maxlength="12"/>
+                                <form:input cssClass="form-control validate[required,custom[checkPositive]]" path="storeNum" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -168,7 +204,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
-                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                                     <span class="input-group-addon">Kg</span>
                                 </div>
                             </div>
@@ -177,7 +213,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
-                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="5" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                                     <span class="input-group-addon">m3</span>
                                 </div>
 
@@ -189,11 +225,12 @@
                             <div class="col-sm-2">
                                 <label>货品属性：</label>
                             </div>
-                            <div class="col-sm-8">
-                                <c:forEach var="proAttr" items="${productAttributes}">
-                                    <span>${proAttr.attribute.attributeName}</span>
-
-                                </c:forEach>
+                            <div class="col-sm-8" style="position:relative;">
+                                <span style="position: absolute;top:4px;">
+                                    <c:forEach var="proAttr" items="${productAttributes}">
+                                        ${proAttr.attribute.attributeName}&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </c:forEach>
+                                </span>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -224,6 +261,8 @@
 </div>
 <!-- End #main -->
 
-
+<script type="application/javascript">
+    $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
+</script>
 </body>
 </html>

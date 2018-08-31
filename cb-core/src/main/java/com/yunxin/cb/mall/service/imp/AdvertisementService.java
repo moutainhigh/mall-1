@@ -42,11 +42,12 @@ public class AdvertisementService implements IAdvertisementService {
             throw new EntityExistException("广告标题已存在");
         }
         advertisement.setCreateTime(new Date());
+        advertisement.setClientTypes("1");
         // 临时
         advertisement.setTemplatePath("");
 
 
-        String[] clientTypesTemporary = advertisement.getClientTypesTemporary();
+/*        String[] clientTypesTemporary = advertisement.getClientTypesTemporary();
         StringBuffer cTypeBuffer = new StringBuffer();
         for (int i = 0; i < clientTypesTemporary.length; i++) {
             if (0 != i) {
@@ -54,7 +55,7 @@ public class AdvertisementService implements IAdvertisementService {
             }
             cTypeBuffer.append(clientTypesTemporary[i]);
         }
-        advertisement.setClientTypes(cTypeBuffer.toString());
+        advertisement.setClientTypes(cTypeBuffer.toString());*/
         return advertisementDao.save(advertisement);
     }
 
@@ -81,8 +82,10 @@ public class AdvertisementService implements IAdvertisementService {
         AttributeReplication.copying(advertisement, oldAdvertisementDB, Advertisement_.advertTitle, Advertisement_.advertCode, Advertisement_.advertisementType,
                 Advertisement_.advertisementPlace, Advertisement_.videoPath, Advertisement_.advertisementURLType, Advertisement_.advertURL, Advertisement_.picPath,
                 Advertisement_.content, Advertisement_.remark,Advertisement_.enabled);
-
-        String[] clientTypesTemporary = advertisement.getClientTypesTemporary();
+        oldAdvertisementDB.setClientTypes("1");
+        // 临时
+        oldAdvertisementDB.setTemplatePath("");
+  /*      String[] clientTypesTemporary = advertisement.getClientTypesTemporary();
         StringBuffer cTypeBuffer = new StringBuffer();
         for (int i = 0; i < clientTypesTemporary.length; i++) {
             if (0 != i) {
@@ -90,7 +93,7 @@ public class AdvertisementService implements IAdvertisementService {
             }
             cTypeBuffer.append(clientTypesTemporary[i]);
         }
-        oldAdvertisementDB.setClientTypes(cTypeBuffer.toString());
+        oldAdvertisementDB.setClientTypes(cTypeBuffer.toString());*/
         return oldAdvertisementDB;
     }
 

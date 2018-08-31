@@ -7,7 +7,6 @@ import com.yunxin.cb.cms.service.IProgramaService;
 import com.yunxin.cb.mall.entity.Attachment;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.service.IAttachmentService;
-import com.yunxin.cb.mall.web.action.operation.CommonImageConverter;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.context.MessageSource;

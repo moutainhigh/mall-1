@@ -41,7 +41,7 @@ public class InsuranceProductResource {
 
     @ApiOperation(value = "根据id获取一个保险产品的事项")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "prodId", value = "保险产品Id", required = true, paramType = "form", dataType = "int")
+            @ApiImplicitParam(name = "prodId", value = "保险产品Id", required = true, paramType = "form", dataType = "Integer")
     })
     @PostMapping(value = "getResponseResultByProdId")
     public ResponseResult getResponseResultByProdId(int prodId){
@@ -53,7 +53,7 @@ public class InsuranceProductResource {
 
     @ApiOperation(value = "根据id获取一个保险产品详情图片")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "prodId", value = "保险产品Id", required = true, paramType = "form", dataType = "int")
+            @ApiImplicitParam(name = "prodId", value = "保险产品Id", required = true, paramType = "form", dataType = "Integer")
     })
     @GetMapping(value = "getImagesByProdId/{prodId}")
     public ResponseResult getImagesByProdId(@PathVariable int prodId){

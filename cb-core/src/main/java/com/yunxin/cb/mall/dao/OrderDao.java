@@ -96,7 +96,8 @@ public interface OrderDao extends JpaRepository<Order, Integer>, JpaSpecificatio
     /**
      * 查询已收货订单，并将其订单状态设为已完成
      */
-    @Query("select od from Order od where od.orderState=?1 and od.collectTime<=?2")
+    @Query("select od from Order od left join fetch od.orderItems odi " +
+            " left join fetch odi.product p left join fetch p.commodity c where od.orderState=?1 and od.collectTime<=?2")
     public List<Order> findOrderByOrderStateAndCollectTime(OrderState ofs, Date date);
 
 

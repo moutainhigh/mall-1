@@ -12,41 +12,51 @@
 
 
         $(document).ready(function () {
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if(valid){
+                        var sortOrder = $("#sortOrder").val();
+                        if(sortOrder ==2){
+                            var arr =  document.getElementsByName("brandOrder");
+                            var myArray = new Array();
+                            if(arr.length != 7){
+                                bootbox.alert("品牌只能添加7个!");
+                                return false;
+                            }
+                            for(var i=0;i<arr.length;i++){
+                                var a = arr[i].value;
+                                myArray.push(a);
+                            }
+                            var nary = myArray.sort();
+                            for(var j=0;j<arr.length;j++){
+                                if (myArray[j]==nary[j+1]){
+                                    bootbox.alert("排序不能重复!");
+                                    return false;
+                                }
+                            }
+                        }
                         var defaultPicPath = $('input[name="imgurl"]');
                         var defaultPicPath1 = $('input[name="imgurl1"]');
-                        if($("#sortOrder").val() == 2){
-                            if ($('input[name="brandId"]').length==0) {
-                                bootbox.alert("请至少添加一个品牌!");
-                                return false;
-                            }
-                        }else if($("#sortOrder").val() == 3){
-                            if ($('input[name="categoryId"]').length==0) {
-                                bootbox.alert("请至少添加一个分类!");
-                                return false;
-                            }
-                        }else if($("#sortOrder").val() == 5){
-                            if ($('input[name="categoryId"]').length==0) {
-                                bootbox.alert("请至少添加一个分类!");
-                                return false;
-                            }
-                        }else if (defaultPicPath.size()==0) {
+                        if (defaultPicPath.size()==0) {
                             bootbox.alert("请至少选择一张图片!");
                             return false;
                         }else if (defaultPicPath1.size()==0) {
                             bootbox.alert("请至少选择一张图片!");
                             return false;
-                        }else{
-                            bootbox.alert("请填写正确的序号!");
+                        }else if($('input[name="commodityId"]').length==0 && $('input[name="categoryId"]').length==0 && $('input[name="brandId"]').length==0){
+                            bootbox.alert("请至少添加商品或者分类或者品牌其中一条数据!");
                             return false;
+                        }else{
+                            return true;
                         }
                     }
                 }
             });
-
         });
         function removeCommodity(indx) {
             $("#commodity" + indx).remove();
@@ -136,7 +146,7 @@
                                 <form:radiobutton path="floorLayout" value="VERTICAL"/>&nbsp;&nbsp;左边(图片大小：423*611)
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 是否启用：</label>
+                                <label> 是否启用：</label>
                             </div>
                             <div class="col-sm-3">
                                 <form:checkbox path="enabled"/>
@@ -170,6 +180,7 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             allowedFileExtensions: ["jpg", "png", "gif"],
@@ -254,6 +265,7 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
@@ -305,7 +317,7 @@
                                         });
                                     })
                                 </script>
-                                <input id="picUrl1" name="file" type="file" class="file-loading" accept="image/*" multiple>
+                                <input  id="picUrl1" name="file" type="file" class="file-loading" accept="image/*" multiple>
                                 <div id="imgDiv1">
 
                                 </div>
@@ -318,7 +330,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品列表：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>商品列表：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="commodityTable" class="table table-bordered table-striped">
@@ -344,7 +356,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>分类列表：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>分类列表：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="categoryTable" class="table table-bordered table-striped">
@@ -370,7 +382,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>品牌列表：<span class="asterisk">*</span></label>
+                                <label><span class="asterisk">*</span>品牌列表：</label>
                             </div>
                             <div class="col-sm-8">
                                 <table id="brandTable" class="table table-bordered table-striped">
@@ -394,12 +406,38 @@
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
+                        <div class="row" style="display: none;">
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>广告列表：</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <table id="advertisementTable" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">广告标题</th>
+                                        <th scope="col" width="140">排序</th>
+                                        <th scope="col" width="80" class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="button" onclick="showAdvertisementDialog()"  title="添加" class="btn btn-default">
+                                    <i class="fa fa-plus-circle"></i>添加广告
+                                </button>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
                                 <label>备注：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea cssClass="form-control validate[maxSize[255]]" path="remark" ></form:textarea>
+                                <form:textarea cssClass=" form-control validate[maxSize[255]]" path="remark" ></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -409,7 +447,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>
@@ -582,12 +620,17 @@
                 alert("请选择商品");
                 return ;
             }
-            clearCheck();
+            clearCheck1();
             $('#commodityDialog').modal("hide");
         }
         function removeCommodity(indx) {
             $("#commodity" + indx).remove();
             idcIndex--;
+        }
+
+        function clearCheck1(){
+            $("#commodityFormId :checkbox").removeAttr("checked");
+            clearFilters('commodityGrid')
         }
     </script>
 </div>
@@ -616,7 +659,6 @@
         }
 
         function chooseBrand() {
-            debugger;
             var selectedBrandIds=$("#brandGrid input[type='checkbox'][name='selectedBrandId']:checked");
             if(selectedBrandIds!=null&&selectedBrandIds.length>0){
                 $.each(selectedBrandIds,function(n,selectedBox) {
@@ -624,9 +666,12 @@
                     var selectedBrandId=$(selectedBox).attr('value');
                     $.each(gridData.data(),function(i,dataItem){
                         if(dataItem.brandId==selectedBrandId){
-                            var newRow = "<tr id='brand" + idcIndex + "'><td><input type='hidden' name='brandId' value='"+selectedBrandId+"'/>"+dataItem.brandName+"</td><td><input type='text' name='brandOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
-                            $("#brandTable tr:last").after(newRow);
-                            idcIndex++;
+                            var idIn= $("#inp"+selectedBrandId).val();
+                            if(idIn==undefined||idIn==''){
+                                var newRow = "<tr id='brand" + idcIndex + "'><td><input type='hidden' id='inp"+selectedBrandId+"' name='brandId' value='"+selectedBrandId+"'/>"+dataItem.brandName+"</td><td><input type='text' name='brandOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeBrand(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
+                                $("#brandTable tr:last").after(newRow);
+                                idcIndex++;
+                            }
                             return ;
                         }
                     });
@@ -638,8 +683,70 @@
             clearCheck();
             $('#brandDialog').modal("hide");
         }
+
+        function clearCheck(){
+            $("#brandGrid :checkbox").removeAttr("checked");
+            clearFilters('brandGrid')
+        }
+
         function removeBrand(indx) {
             $("#brand" + indx).remove();
+            /*idcIndex--;*/
+        }
+    </script>
+</div>
+
+<div class="modal fade" id="showAdvertisementDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择广告</h4>
+            </div>
+            <div class="modal-body">
+                <jsp:include page="../commodity/chooseAdvertment.jsp"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary pull-right" onclick="chooseAdvertisement();">确认</button>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript">
+        var idcIndex = 0;
+
+        function showAdvertisementDialog() {
+            $('#showAdvertisementDialog').modal();
+        }
+
+        function chooseAdvertisement() {
+            var selectedAdvertIds=$("#advertGrid input[type='checkbox'][name='selectedAdvertId']:checked");
+            if(selectedAdvertIds!=null&&selectedAdvertIds.length>0){
+                $.each(selectedAdvertIds,function(n,selectedBox) {
+                    var gridData = $("#advertGrid").data("kendoGrid").dataSource;
+                    var selectedAdvertId=$(selectedBox).attr('value');
+                    $.each(gridData.data(),function(i,dataItem){
+                        if(dataItem.advertId==selectedAdvertId){
+                            var newRow = "<tr id='advertisement" + idcIndex + "'><td><input type='hidden' name='advertId' value='"+selectedAdvertId+"'/>"+dataItem.advertTitle+"</td><td><input type='text' name='advertOrder' class='form-control validate[required,custom[integer]]' value='"+idcIndex+"'/></td><td><a type='button' title='删除' class='btn btn-default' href='javascript:removeAdvertisement(" + idcIndex + ")'><i class='fa fa-minus-circle'></i></a></td></tr>";
+                            $("#advertisementTable tr:last").after(newRow);
+                            idcIndex++;
+                            return ;
+                        }
+                    });
+                });
+            }else{
+                alert("请选择广告");
+                return ;
+            }
+            clearCheck();
+            $('#showAdvertisementDialog').modal("hide");
+        }
+        function clearCheck(){
+            $("#brandGrid :checkbox").removeAttr("checked");
+            clearFilters('brandGrid')
+        }
+        function removeAdvertisement(indx) {
+            $("#advertisement" + indx).remove();
             idcIndex--;
         }
     </script>

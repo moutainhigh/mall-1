@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html class="no-js">                       <!--<![endif]-->
@@ -145,7 +146,9 @@
                                 <label>购买时间：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                <span>${productReturn.purchasingTime}</span>
+                                <span>
+                                    <fmt:formatDate value="${productReturn.purchasingTime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                </span>
                             </div>
                         </div>
 
@@ -155,7 +158,9 @@
                                 <label>退货申请时间：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                <span>${productReturn.applyTime}</span>
+                                <span>
+                                        <fmt:formatDate value="${productReturn.applyTime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                </span>
                             </div>
                             <div class="col-sm-2">
                                 <label>买家是否收货：</label>
@@ -189,7 +194,7 @@
                             </div>
                             <div class="col-sm-3 col-label">
                                     <span>
-                                        ${productReturn.order.feeTotal}
+                                        <fmt:formatNumber value="${productReturn.order.feeTotal}" pattern="#.##" minFractionDigits="2" ></fmt:formatNumber>
                                     </span>
                             </div>
 
@@ -220,7 +225,9 @@
                                 <label>退款金额：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                <span>${productReturn.refundPrice}</span>
+                                <span>
+                                <fmt:formatNumber value="${productReturn.refundPrice}" pattern="#.##" minFractionDigits="2" ></fmt:formatNumber>
+                                </span>
                             </div>
                         </div>
 
@@ -255,12 +262,12 @@
                         <tbody>
                         <c:set var="item" value="${productReturn.orderItem}"/>
                         <tr>
-                            <td><a><img src="../images/${item.product.commodity.defaultPicPath}_64_69.jpg"/></a></td>
+                            <td><a><img src="${item.product.commodity.defaultPicPath}_64_69.jpg"/></a></td>
                             <td>${item.product.commodity.commodityName}</td>
                             <td>${item.product.productName}</td>
-                            <td>${item.product.salePrice}</td>
+                            <td><fmt:formatNumber value="${item.product.salePrice}" pattern="#.##" minFractionDigits="2" ></fmt:formatNumber></td>
                             <td>${item.productNum}</td>
-                            <td>${item.product.salePrice * item.productNum}</td>
+                            <td><fmt:formatNumber value="${item.product.salePrice * item.productNum}" pattern="#.##" minFractionDigits="2" ></fmt:formatNumber></td>
                             <td>${item.product.commodity.packingList}</td>
                         </tr>
                         </tbody>
@@ -269,7 +276,7 @@
                 <div class="spacer-30"></div>
                 <hr>
                 <div class="spacer-30"></div>
-                <c:choose>
+                <!--<c:choose>
                     <c:when test="${productReturn.returnRefundState=='RETURNED_WAIT_REFUND'}">
                         <form:form id="validateReturnForm" cssClass="form-horizontal" action="../refund/submitRefund.do" method="post">
                             <input type="hidden" name="orderCode" value="${productReturn.order.orderCode}"/>
@@ -300,7 +307,7 @@
                                         <label>退款金额：</label>
                                     </div>
                                     <div class="col-sm-3 col-label">
-                                            ${productReturn.refundPrice}
+                                            <fmt:formatNumber value="${productReturn.refundPrice}" pattern="#.##" minFractionDigits="2" ></fmt:formatNumber>
                                     </div>
                                 </div>
 
@@ -392,7 +399,7 @@
 
                 <div class="spacer-40"></div>
                 <div class="hr-totop"><span>Top</span></div>
-                <div class="spacer-40"></div>
+                <div class="spacer-40"></div> -->
 
             </div>
             <!-- End .inner-padding -->
