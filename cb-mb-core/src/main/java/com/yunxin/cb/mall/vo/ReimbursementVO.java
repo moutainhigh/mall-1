@@ -7,12 +7,8 @@ import java.math.BigDecimal;
 @ApiModel(value="可报账对象",description="可报账对象 ReimbursementVO")
 public class ReimbursementVO implements Serializable {
     private static final long serialVersionUID = -6049036070415070775L;
-    @ApiModelProperty(value="订单ID",name="orderId",example="1")
-    private int orderId;
-    @ApiModelProperty(value="货品ID",name="productId",example="1")
-    private int productId;
-    @ApiModelProperty(value="商品ID",name="commodityId",example="1")
-    private int commodityId;
+    @ApiModelProperty(value="可报账ID",name="reimbursementQueryId",example="1")
+    private int reimbursementQueryId;
     @ApiModelProperty(value="货品数量",name="productNum",example="1")
     private int productNum;
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市福田区xxx号")
@@ -28,20 +24,12 @@ public class ReimbursementVO implements Serializable {
     @ApiModelProperty(value="税",name="tax",example="111")
     private BigDecimal tax;
 
-    public int getOrderId() {
-        return orderId;
+    public int getReimbursementQueryId() {
+        return reimbursementQueryId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setReimbursementQueryId(int reimbursementQueryId) {
+        this.reimbursementQueryId = reimbursementQueryId;
     }
 
     public int getProductNum() {
@@ -100,11 +88,4 @@ public class ReimbursementVO implements Serializable {
         this.tax = tax;
     }
 
-    public int getCommodityId() {
-        return commodityId;
-    }
-
-    public void setCommodityId(int commodityId) {
-        this.commodityId = commodityId;
-    }
 }

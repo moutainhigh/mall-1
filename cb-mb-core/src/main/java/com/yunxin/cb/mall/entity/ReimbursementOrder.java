@@ -46,6 +46,10 @@ public class ReimbursementOrder implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 可报账ID
+     */
+    private Integer reimbursementQueryId;
 
     public Integer getReimbursementOrderId() {
         return reimbursementOrderId;
@@ -124,5 +128,13 @@ public class ReimbursementOrder implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getReimbursementQueryId() {
+        return reimbursementQueryId;
+    }
+
+    public void setReimbursementQueryId(Integer reimbursementQueryId) {
+        this.reimbursementQueryId = reimbursementQueryId;
     }
 }

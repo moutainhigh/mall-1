@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.Reimbursement;
+import com.yunxin.cb.mall.entity.ReimbursementQuery;
 import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.util.page.PageFinder;
@@ -24,7 +25,7 @@ public interface ReimbursementQueryService {
      * @return
      * @throws Exception
      */
-    public ReimbursementSuccessVO addReimbursement(List<AddReimbursementRequestVO> list)throws Exception;
+    public ReimbursementSuccessVO addReimbursement(List<AddReimbursementRequestVO> list,Integer customerId)throws Exception;
 
     /**
      * 已报账列表查询
@@ -48,7 +49,7 @@ public interface ReimbursementQueryService {
      * @param reimbursementId
      * @throws Exception
      */
-    public ResponseResult cancelReimbursement(int reimbursementId)throws Exception;
+    public ResponseResult cancelReimbursement(int reimbursementId,int customerId)throws Exception;
 
     /**
      * 报账已完成列表
@@ -74,6 +75,13 @@ public interface ReimbursementQueryService {
      * @return
      */
     public Reimbursement selectByReimbursmentIdAndCustomer(int reimbursementId,int customerId);
+
+    /**
+     * 同步可报账货品
+     * @param reimbursementQuery
+     * @return
+     */
+    public int insert(ReimbursementQuery reimbursementQuery)throws Exception;
 
 
 }

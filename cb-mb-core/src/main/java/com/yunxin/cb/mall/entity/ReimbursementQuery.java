@@ -1,7 +1,6 @@
 package com.yunxin.cb.mall.entity;
 
-import com.yunxin.cb.mall.entity.meta.OrderState;
-import com.yunxin.cb.mall.entity.meta.ReimbursementState;
+import com.yunxin.cb.mall.entity.meta.ReimbursementQueryState;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,17 +8,17 @@ import java.util.Date;
 public class ReimbursementQuery implements Serializable {
     private static final long serialVersionUID = 6952797607210915461L;
     /**
+     * 可报账ID
+     */
+    private Integer reimbursementQueryId;
+    /**
      * 订单ID
      */
-    private int orderId;
+    private Integer itemId;
     /**
      * 货品ID
      */
-    private int productId;
-    /**
-     * 货品图片
-     */
-    private String productImg;
+    private Integer productId;
     /**
      * 货品售价
      */
@@ -27,7 +26,7 @@ public class ReimbursementQuery implements Serializable {
     /**
      * 货品数量
      */
-    private int productNum;
+    private Integer productNum;
     /**
      * 订单创建时间
      */
@@ -43,59 +42,46 @@ public class ReimbursementQuery implements Serializable {
     /**
      * 商品ID
      */
-    private int commodityId;
+    private Integer commodityId;
     /**
      * 商品属性
      */
     private String productName;
     /**
-     * 商品大类
-     */
-    private int categoryId;
-    /**
      * 用户ID
      */
-    private int customerId;
+    private Integer customerId;
     /**
      * 总售价
      */
     private float accountSalePrice;
     /**
-     * 订单状态
+     * 报账状态
      */
-    private OrderState orderState;
+    private ReimbursementQueryState reimbursementQueryState;
 
-    /**
-     * 审核不通过
-     */
-    private ReimbursementState reimbursementState;
-    /**
-     * 取消报账
-     */
-    private ReimbursementState reimbursement_state;
-
-    public int getOrderId() {
-        return orderId;
+    public Integer getReimbursementQueryId() {
+        return reimbursementQueryId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setReimbursementQueryId(Integer reimbursementQueryId) {
+        this.reimbursementQueryId = reimbursementQueryId;
     }
 
-    public int getProductId() {
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+
+    public Integer getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
-    }
-
-    public String getProductImg() {
-        return productImg;
-    }
-
-    public void setProductImg(String productImg) {
-        this.productImg = productImg;
     }
 
     public float getSalePrice() {
@@ -106,11 +92,11 @@ public class ReimbursementQuery implements Serializable {
         this.salePrice = salePrice;
     }
 
-    public int getProductNum() {
+    public Integer getProductNum() {
         return productNum;
     }
 
-    public void setProductNum(int productNum) {
+    public void setProductNum(Integer productNum) {
         this.productNum = productNum;
     }
 
@@ -138,11 +124,11 @@ public class ReimbursementQuery implements Serializable {
         this.defaultPicPath = defaultPicPath;
     }
 
-    public int getCommodityId() {
+    public Integer getCommodityId() {
         return commodityId;
     }
 
-    public void setCommodityId(int commodityId) {
+    public void setCommodityId(Integer commodityId) {
         this.commodityId = commodityId;
     }
 
@@ -154,19 +140,11 @@ public class ReimbursementQuery implements Serializable {
         this.productName = productName;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public int getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
@@ -178,27 +156,11 @@ public class ReimbursementQuery implements Serializable {
         this.accountSalePrice = accountSalePrice;
     }
 
-    public OrderState getOrderState() {
-        return orderState;
+    public ReimbursementQueryState getReimbursementQueryState() {
+        return reimbursementQueryState;
     }
 
-    public void setOrderState(OrderState orderState) {
-        this.orderState = orderState;
-    }
-
-    public ReimbursementState getReimbursementState() {
-        return reimbursementState;
-    }
-
-    public void setReimbursementState(ReimbursementState reimbursementState) {
-        this.reimbursementState = reimbursementState;
-    }
-
-    public ReimbursementState getReimbursement_state() {
-        return reimbursement_state;
-    }
-
-    public void setReimbursement_state(ReimbursementState reimbursement_state) {
-        this.reimbursement_state = reimbursement_state;
+    public void setReimbursementQueryState(ReimbursementQueryState reimbursementQueryState) {
+        this.reimbursementQueryState = reimbursementQueryState;
     }
 }

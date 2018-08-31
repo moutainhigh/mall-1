@@ -4,6 +4,7 @@ import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Reimbursement;
 import com.yunxin.cb.mall.entity.ReimbursementQuery;
 import com.yunxin.cb.mall.entity.meta.OrderState;
+import com.yunxin.cb.mall.entity.meta.ReimbursementQueryState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.service.ReimbursementQueryService;
@@ -39,9 +40,7 @@ public class ReimbursementQueryResource extends BaseResource {
             ReimbursementQuery reimbursementQuery = new ReimbursementQuery();
             Query q = new Query(pageNo, pageSize);
             reimbursementQuery.setCustomerId(getCustomerId());
-            reimbursementQuery.setOrderState(OrderState.SUCCESS);
-            reimbursementQuery.setReimbursementState(ReimbursementState.NOT_PASS_THROUGH);
-            reimbursementQuery.setReimbursement_state(ReimbursementState.CANCEL_REIMBURSEMENT);
+            reimbursementQuery.setReimbursementQueryState(ReimbursementQueryState.CAN_REIMBURSEMENT);
             q.setData(reimbursementQuery);
             PageFinder<ReimbursementVO> pageFinder = reimbursementQueryService.pageReimbursementQuery(q);
             return new ResponseResult(pageFinder);
@@ -60,7 +59,7 @@ public class ReimbursementQueryResource extends BaseResource {
     public ResponseResult<ReimbursementSuccessVO> addReimbursement(@RequestBody List<AddReimbursementRequestVO> list) {
         ReimbursementSuccessVO reimbursementSuccessVO;
         try {
-            reimbursementSuccessVO = reimbursementQueryService.addReimbursement(list);
+            reimbursementSuccessVO = reimbursementQueryService.addReimbursement(list,getCustomerId());
         } catch (Exception e) {
             logger.error("addReimbursement failed", e);
             return new ResponseResult(Result.FAILURE);
@@ -112,7 +111,7 @@ public class ReimbursementQueryResource extends BaseResource {
     })
     public ResponseResult cancelReimbursement(@PathVariable(value = "reimbursementId") int reimbursementId) {
         try {
-            ResponseResult result = reimbursementQueryService.cancelReimbursement(reimbursementId);
+            ResponseResult result = reimbursementQueryService.cancelReimbursement(reimbursementId,getCustomerId());
             return result;
         } catch (Exception e) {
             logger.error("cancelReimbursement failed", e);

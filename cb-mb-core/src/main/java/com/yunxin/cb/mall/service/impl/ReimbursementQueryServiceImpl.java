@@ -3,6 +3,7 @@ package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProfileState;
+import com.yunxin.cb.mall.entity.meta.ReimbursementQueryState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.restful.ResponseResult;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.yunxin.cb.orm.CustomerContextHolder.getCustomerId;
 
@@ -27,8 +29,6 @@ import static com.yunxin.cb.orm.CustomerContextHolder.getCustomerId;
 public class ReimbursementQueryServiceImpl implements ReimbursementQueryService {
 
     private static final Logger logger = LoggerFactory.getLogger(ReimbursementQueryService.class);
-
-
     @Resource
     private ReimbursementQueryMapper reimbursementQueryMapper;
     @Resource
@@ -50,69 +50,34 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
      * @return
      * @throws Exception
      */
-    //TODO 在订单表加报账状态
     @Override
     public PageFinder<ReimbursementVO> pageReimbursementQuery(Query q)throws Exception {
-        ReimbursementQuery reimbursement = (ReimbursementQuery)q.getData();
-        List<ReimbursementOrder> listMent = reimbursementOrderMapper.selectByOrderState(reimbursement.getReimbursement_state(),reimbursement.getReimbursementState(),getCustomerId());
-        if(listMent != null){
-            //调用dao查询满足条件的分页数据
-            List<ReimbursementQuery> list = reimbursementQueryMapper.selectReimbursementQuery(q);
-            //税点
-            Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
-            BigDecimal taxPoint = new BigDecimal(profile.getFileValue());
-            //组装返回数据
-            List<ReimbursementVO> listVO = new ArrayList<>();
-            for(ReimbursementQuery reimbursementQuery :list){
-                ReimbursementVO reimbursementVO = new ReimbursementVO();
-                BeanUtils.copyProperties(reimbursementQuery, reimbursementVO);
-                //税
-                BigDecimal tax = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).multiply(taxPoint);
-                //报账金额
-                BigDecimal accountAmount = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).subtract(tax);
-                reimbursementVO.setTax(tax);
-                reimbursementVO.setAccountAmount(accountAmount);
-//            String s = CalendarUtils.formatDateTime(reimbursementQuery.getCreateTime());
-                listVO.add(reimbursementVO);
-            }
-            //调用dao统计满足条件的记录总数
-            long rowCount = reimbursementQueryMapper.count(q);
-            //如list为null时，则改为返回一个空列表
-            listVO = listVO == null ? new ArrayList<ReimbursementVO>(0) : listVO;
-            //将分页数据和记录总数设置到分页结果对象中
-            PageFinder<ReimbursementVO> page = new PageFinder<ReimbursementVO>(q.getPageNo(), q.getPageSize(), rowCount);
-            page.setData(listVO);
-            return page;
-        }else {
-            //调用dao查询满足条件的分页数据
-            List<ReimbursementQuery> list = reimbursementQueryMapper.selectPageReimbursementQuery(q);
-            //税点
-            Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
-            BigDecimal taxPoint = new BigDecimal(profile.getFileValue());
-            //组装返回数据
-            List<ReimbursementVO> listVO = new ArrayList<>();
-            for(ReimbursementQuery reimbursementQuery :list){
-                ReimbursementVO reimbursementVO = new ReimbursementVO();
-                BeanUtils.copyProperties(reimbursementQuery, reimbursementVO);
-                //税
-                BigDecimal tax = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).multiply(taxPoint);
-                //报账金额
-                BigDecimal accountAmount = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).subtract(tax);
-                reimbursementVO.setTax(tax);
-                reimbursementVO.setAccountAmount(accountAmount);
-//            String s = CalendarUtils.formatDateTime(reimbursementQuery.getCreateTime());
-                listVO.add(reimbursementVO);
-            }
-            //调用dao统计满足条件的记录总数
-            long rowCount = reimbursementQueryMapper.countNum(q);
-            //如list为null时，则改为返回一个空列表
-            listVO = listVO == null ? new ArrayList<ReimbursementVO>(0) : listVO;
-            //将分页数据和记录总数设置到分页结果对象中
-            PageFinder<ReimbursementVO> page = new PageFinder<ReimbursementVO>(q.getPageNo(), q.getPageSize(), rowCount);
-            page.setData(listVO);
-            return page;
-        }
-
+        //调用dao查询满足条件的分页数据
+        List<ReimbursementQuery> list = reimbursementQueryMapper.selectReimbursementQuery(q);
+        //税点
+        Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
+        BigDecimal taxPoint = new BigDecimal(profile.getFileValue());
+        //组装返回数据
+        List<ReimbursementVO> listVO = list.stream()
+                .map(reimbursementQuery ->{
+                    ReimbursementVO reimbursementVO = new ReimbursementVO();
+                    BeanUtils.copyProperties(reimbursementQuery, reimbursementVO);
+                    //税
+                    BigDecimal tax = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).multiply(taxPoint);
+                    //报账金额
+                    BigDecimal accountAmount = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).subtract(tax);
+                    reimbursementVO.setTax(tax);
+                    reimbursementVO.setAccountAmount(accountAmount);
+                    return reimbursementVO;
+                }).collect(Collectors.toList());
+        //调用dao统计满足条件的记录总数
+        long rowCount = reimbursementQueryMapper.count(q);
+        //如list为null时，则改为返回一个空列表
+        listVO = listVO == null ? new ArrayList<ReimbursementVO>(0) : listVO;
+        //将分页数据和记录总数设置到分页结果对象中
+        PageFinder<ReimbursementVO> page = new PageFinder<ReimbursementVO>(q.getPageNo(), q.getPageSize(), rowCount);
+        page.setData(listVO);
+        return page;
     }
     /**
      * 报账
@@ -122,54 +87,47 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ReimbursementSuccessVO addReimbursement(List<AddReimbursementRequestVO> list) throws Exception {
-        //查询二级商品分类列表
-//        List<Catalog> catalogList = catalogMapper.selectAll();
+    public ReimbursementSuccessVO addReimbursement(List<AddReimbursementRequestVO> list,Integer customerId) throws Exception {
         //税点
         Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
         BigDecimal taxPoint = new BigDecimal(profile.getFileValue());
-        Map<Integer, List<OrderItem>> lotaLogMap = new HashMap<>();
+        Map<Integer, List<ReimbursementQuery>> lotaLogMap = new HashMap<>();
         //所有商品的总价
         BigDecimal allAccountSalePrice = new BigDecimal(0);
         //拆分订单
         for(AddReimbursementRequestVO addReimbursementRequestVO : list){
-            //根据orderId和productId查询 货品
-            OrderItem orderItem = orderItemMapper.selectByOrderIdAndProductId(addReimbursementRequestVO.getOrderId(),addReimbursementRequestVO.getProductId());
+            //根据ReimbursementQueryId查询
+            ReimbursementQuery reimbursementQuery = reimbursementQueryMapper.selectByPrimaryKeyAndCustomerId(addReimbursementRequestVO.getReimbursementQueryId(),customerId);
             //获取商品分类
-            Catalog catalog = catalogMapper.selectByCommodityId(addReimbursementRequestVO.getCommodityId());
+            Catalog catalog = catalogMapper.selectByCommodityId(reimbursementQuery.getCommodityId());
             //判断该订单属于哪一商品分类
             if(catalog.getParentCatalogId() == 1){
-                List<OrderItem> items = lotaLogMap.get(catalog.getCatalogId());
+                List<ReimbursementQuery> items = lotaLogMap.get(catalog.getCatalogId());
                 if(items == null){
                     items = new ArrayList<>();
                 }
-                items.add(orderItem);
+                items.add(reimbursementQuery);
                 lotaLogMap.put(catalog.getCatalogId(),items);
             }else{
                 Integer catalogId = isTwoFrool(catalog);
-                List<OrderItem> items = lotaLogMap.get(catalogId);
+                List<ReimbursementQuery> items = lotaLogMap.get(catalogId);
                 if(items == null){
                     items = new ArrayList<>();
                 }
-                items.add(orderItem);
+                items.add(reimbursementQuery);
                 lotaLogMap.put(catalogId,items);
             }
         }
-
         //合并同一商品大类的订单
-        for(Map.Entry<Integer, List<OrderItem>> entry : lotaLogMap.entrySet()){
+        for(Map.Entry<Integer, List<ReimbursementQuery>> entry : lotaLogMap.entrySet()){
             Reimbursement reimbursement = new Reimbursement();
             //总金额
             BigDecimal accountSalePrice = new BigDecimal(0);
-            //税
-//            BigDecimal tax;
-            //实际到账金额
-//            BigDecimal accountAmount;
             //合并同一类商品的订单
-            List<OrderItem> orderItemList = entry.getValue();
-            for(OrderItem orderItems : orderItemList){
-                accountSalePrice =  accountSalePrice.add(BigDecimal.valueOf(orderItems.getProductNum()*orderItems.getSalePrice()));
-                allAccountSalePrice = allAccountSalePrice.add(BigDecimal.valueOf(orderItems.getProductNum()*orderItems.getSalePrice()));
+            List<ReimbursementQuery> reimbursementQueryList = entry.getValue();
+            for(ReimbursementQuery reimbursementQueryLists : reimbursementQueryList){
+                accountSalePrice =  accountSalePrice.add(BigDecimal.valueOf(reimbursementQueryLists.getProductNum()*reimbursementQueryLists.getSalePrice()));
+                allAccountSalePrice = allAccountSalePrice.add(BigDecimal.valueOf(reimbursementQueryLists.getProductNum()*reimbursementQueryLists.getSalePrice()));
             }
             //税
             BigDecimal tax = accountSalePrice.multiply(taxPoint);
@@ -177,7 +135,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             BigDecimal accountAmount = accountSalePrice.subtract(tax);
             reimbursement.setAmount(accountAmount);
             reimbursement.setCreateTime(new Date());
-            reimbursement.setCustomerId(getCustomerId());
+            reimbursement.setCustomerId(customerId);
             reimbursement.setOrderAmount(accountSalePrice);
             reimbursement.setTax(tax);
             reimbursement.setReimbursementNo("RB"+UUIDGeneratorUtil.getUUCode());
@@ -186,17 +144,22 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             reimbursement.setTaxRate(taxPoint);
             reimbursementMapper.insert(reimbursement);
             //保存报账信息关联表
-            for(OrderItem orderItemes : orderItemList){
+            for(ReimbursementQuery reimbursementQueryLists : reimbursementQueryList){
                 ReimbursementOrder reimbursementOrder = new ReimbursementOrder();
-                BigDecimal oneAmount = BigDecimal.valueOf(orderItemes.getProductNum()*orderItemes.getSalePrice()).multiply(taxPoint);
-                reimbursementOrder.setAmount(BigDecimal.valueOf(orderItemes.getProductNum()*orderItemes.getSalePrice()).subtract(oneAmount));
+                BigDecimal oneAmount = BigDecimal.valueOf(reimbursementQueryLists.getProductNum()*reimbursementQueryLists.getSalePrice()).multiply(taxPoint);
+                reimbursementOrder.setAmount(BigDecimal.valueOf(reimbursementQueryLists.getProductNum()*reimbursementQueryLists.getSalePrice()).subtract(oneAmount));
                 reimbursementOrder.setCreateTime(new Date());
-                reimbursementOrder.setOrderItemId(orderItemes.getItemId());
-                reimbursementOrder.setProductId(orderItemes.getProductId());
-                reimbursementOrder.setProductPrice(BigDecimal.valueOf(orderItemes.getSalePrice()));
+                OrderItem orderItem = orderItemMapper.selectByPrimaryKey(reimbursementQueryLists.getItemId());
+                reimbursementOrder.setOrderItemId(orderItem.getItemId());
+                reimbursementOrder.setProductId(reimbursementQueryLists.getProductId());
+                reimbursementOrder.setProductPrice(BigDecimal.valueOf(reimbursementQueryLists.getSalePrice()));
                 reimbursementOrder.setReimbursementId(reimbursement.getReimbursementId());
                 reimbursementOrder.setTax(oneAmount);
+                reimbursementOrder.setReimbursementQueryId(reimbursementQueryLists.getReimbursementQueryId());
                 reimbursementOrderMapper.insert(reimbursementOrder);
+                //同时更新可报账表的状态
+                reimbursementQueryLists.setReimbursementQueryState(ReimbursementQueryState.CANNOT_REIMBURSEMENT);
+                reimbursementQueryMapper.updateByPrimaryKey(reimbursementQueryLists);
             }
         }
         //所有商品交的税
@@ -218,6 +181,8 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
      */
     @Override
     public PageFinder<AlreadyReimbursementVO> selectAlreadyReimbursementQuery(Query q) throws Exception {
+        //税点
+        Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
         //调用dao查询满足条件的分页数据
         List<Reimbursement> list = reimbursementMapper.selectAllByCustomerId(q);
         List<AlreadyReimbursementVO> listVO = new ArrayList<>();
@@ -233,6 +198,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             BeanUtils.copyProperties(reimbursement, alreadyReimbursementVO);
             alreadyReimbursementVO.setList(listProductVO);
             alreadyReimbursementVO.setSum(num);
+            alreadyReimbursementVO.setTaxPoint(profile.getFileValue());
             listVO.add(alreadyReimbursementVO);
         }
         //调用dao统计满足条件的记录总数
@@ -294,11 +260,19 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseResult cancelReimbursement(int reimbursementId)throws Exception{
-        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId, getCustomerId());
+    public ResponseResult cancelReimbursement(int reimbursementId,int customerId)throws Exception{
+        Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,customerId);
         if (reimbursement.getOrderState().ordinal() == ReimbursementState.FINANCE_IN_APPROVAL.ordinal()) {
+            //更新报账主表
             reimbursement.setOrderState(ReimbursementState.CANCEL_REIMBURSEMENT);
             reimbursementMapper.updateByPrimaryKey(reimbursement);
+            //更新可报账表
+            List<ReimbursementOrder> list = reimbursementOrderMapper.selectByReimbursementId(reimbursementId);
+            for(ReimbursementOrder reimbursementOrder : list){
+                ReimbursementQuery reimbursementQuery = reimbursementQueryMapper.selectByPrimaryKey(reimbursementOrder.getReimbursementQueryId());
+                reimbursementQuery.setReimbursementQueryState(ReimbursementQueryState.CAN_REIMBURSEMENT);
+                reimbursementQueryMapper.updateByPrimaryKey(reimbursementQuery);
+            }
             return new ResponseResult(Result.SUCCESS);
         } else {
             return new ResponseResult(Result.FAILURE, "该报账订单不能取消");
@@ -396,5 +370,11 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     public Reimbursement selectByReimbursmentIdAndCustomer(int reimbursementId,int customerId){
         Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,customerId);
         return reimbursement;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int insert(ReimbursementQuery reimbursementQuery) throws Exception {
+        return reimbursementQueryMapper.insert(reimbursementQuery);
     }
 }
