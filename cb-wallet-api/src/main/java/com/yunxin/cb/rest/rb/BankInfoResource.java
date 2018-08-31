@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.BankInfo;
+import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.service.BankInfoService;
 import com.yunxin.cb.mall.service.CustomerService;
 import com.yunxin.cb.mall.vo.BankInfoVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.util.Constant;
 import com.yunxin.cb.util.LogicUtils;
 import com.yunxin.cb.util.ValidateBankUtils;
 import com.yunxin.cb.vo.ResponseResult;
@@ -103,14 +105,21 @@ public class BankInfoResource extends BaseResource {
     public ResponseResult submitAuth(@RequestBody BankInfoVO bankInfoVO){
         ResponseResult responseResult=new ResponseResult(Result.FAILURE);
         try {
+            Customer customer=customerService.getCustomerById(getCustomerId());
+            if(customer.getAuthFlag()==Constant.AUTH_FLAG_OK){
+                responseResult.setMessage("用户已经实名认证过");
+                return responseResult;
+            }
             //校验验证码
             String checkStr = verificationCode(bankInfoVO.getMobile(), bankInfoVO.getCode());
             if (checkStr != null) {
-                return new ResponseResult(Result.FAILURE, checkStr);
+                responseResult.setMessage(checkStr);
+                return responseResult;
             }
-            //验证通过，修改用户为已认证
+            //验证通过，修改用户为认证完成
             int count=bankInfoService.submitAuth(bankInfoVO,getCustomerId());
             if(count>0){
+                responseResult.setMessage("实名认证成功");
                 responseResult.setResult(Result.SUCCESS);
             }
         } catch (Exception e) {
