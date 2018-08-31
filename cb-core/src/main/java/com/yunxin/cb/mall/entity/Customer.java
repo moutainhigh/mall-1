@@ -209,6 +209,9 @@ public class Customer implements java.io.Serializable {
     private String qqAccessToken;
 
     private int parentCustomerId;
+
+    @ApiModelProperty(value="是否注销",name="ynDelete",example="0")
+    private boolean ynDelete;
     /**
      * 用户账号类型
      */
@@ -538,6 +541,15 @@ public class Customer implements java.io.Serializable {
 
     public void setRank(Rank rank) {
         this.rank = rank;
+    }
+
+    @Column(length = 12)
+    public boolean isYnDelete() {
+        return ynDelete;
+    }
+
+    public void setYnDelete(boolean ynDelete) {
+        this.ynDelete = ynDelete;
     }
 
     @Column(length = 12)

@@ -17,7 +17,7 @@ public interface CustomerFriendDao extends JpaRepository<CustomerFriend, Custome
     @Query("select cf from CustomerFriend cf left join fetch cf.friend left join fetch cf.customer where cf.customer.customerId = ?1")
     List<CustomerFriend> findCustomerFriendByCustomerCustomerId(int customerId);
 
-    @Query("select cf from CustomerFriend cf left join fetch cf.friend left join fetch cf.customer where cf.customer.customerId = ?1 and cf.state=?2")
-    List<CustomerFriend> findCustomerFriendByCustomerCustomerIdAndState(int customerId,CustomerFriendState state);
+    @Query("select cf from CustomerFriend cf left join fetch cf.friend left join fetch cf.customer c where cf.customer.customerId = ?1 and c.ynDelete=?2 and cf.state=?3")
+    List<CustomerFriend> findCustomerFriendByCustomerCustomerIdAndState(int customerId,boolean ynDelete,CustomerFriendState state);
 
 }

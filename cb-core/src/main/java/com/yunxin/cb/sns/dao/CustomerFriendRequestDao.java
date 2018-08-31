@@ -13,8 +13,8 @@ import java.util.List;
  */
 public interface CustomerFriendRequestDao extends JpaRepository<CustomerFriendRequest, Integer>, JpaSpecificationExecutor<CustomerFriendRequest> {
 
-     @Query("select cr from CustomerFriendRequest cr left join fetch cr.friendCustomer fc left join fetch cr.customer c where fc.customerId = ?1 order by cr.createTime desc")
-     public List<CustomerFriendRequest> getCustomerFriendRequestByFriendId(int friendId);
+     @Query("select cr from CustomerFriendRequest cr left join fetch cr.friendCustomer fc left join fetch cr.customer c where fc.customerId = ?1 and c.ynDelete=?2 order by cr.createTime desc")
+     public List<CustomerFriendRequest> getCustomerFriendRequestByFriendId(int friendId,boolean ynDelete);
      @Query("select cr from CustomerFriendRequest cr left join fetch cr.friendCustomer fc left join fetch cr.customer c where fc.customerId = ?1 and c.customerId = ?2 and cr.state=0 order by cr.createTime desc")
      public List<CustomerFriendRequest> getCustomerFriendRequestByFriendIdAndCustomerId(int friendId,int customerId);
 

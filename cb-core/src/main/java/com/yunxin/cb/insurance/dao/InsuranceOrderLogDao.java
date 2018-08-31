@@ -23,11 +23,11 @@ public interface InsuranceOrderLogDao  extends JpaRepository<InsuranceOrderLog, 
      * @param orderState
      * @return
      */
-    @Query("select c from InsuranceOrderLog c left join c.customer d where d.recommendCustomer.customerId=?1 and c.orderState=?2 and d.praise=?3  GROUP BY c.customer.customerId  order by c.createTime")
-    List<InsuranceOrderLog> findOrderLogByLevelCode(int customerId,InsuranceOrderState orderState,boolean praise);
+    @Query("select c from InsuranceOrderLog c left join c.customer d where d.recommendCustomer.customerId=?1 and c.orderState=?2 and d.praise=?3 and d.ynDelete=?4 GROUP BY c.customer.customerId  order by c.createTime")
+    List<InsuranceOrderLog> findOrderLogByLevelCode(int customerId,InsuranceOrderState orderState,boolean praise,boolean ynDelete);
 
-    @Query("select c from InsuranceOrderLog c left join c.customer d where d.recommendCustomer.customerId = ?1 and c.orderState=?2 and d.policy=?3  GROUP BY c.customer.customerId  order by c.createTime")
-    List<InsuranceOrderLog> findInsuranceOrderLogByLevelCode(int customerId,InsuranceOrderState orderState, PolicyType policy);
+    @Query("select c from InsuranceOrderLog c left join c.customer d where d.recommendCustomer.customerId = ?1 and c.orderState=?2 and d.policy=?3 and d.ynDelete=?4 GROUP BY c.customer.customerId  order by c.createTime")
+    List<InsuranceOrderLog> findInsuranceOrderLogByLevelCode(int customerId,InsuranceOrderState orderState, PolicyType policy,boolean ynDelete);
 
 
 

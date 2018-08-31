@@ -31,7 +31,7 @@ public class CustomerFriendRequestService implements ICustomerFriendRequestServi
      * @date        2018/7/18 17:54
      */
     public List<CustomerFriendRequest> getCustomerFriendRequestByFriendId(int friendId){
-        return customerFriendRequestDao.getCustomerFriendRequestByFriendId(friendId);
+        return customerFriendRequestDao.getCustomerFriendRequestByFriendId(friendId,false);
     }
 
     /**

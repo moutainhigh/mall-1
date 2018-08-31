@@ -116,7 +116,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         if(null!=insuranceOrder.getCustomer()){
             int customerId=insuranceOrder.getCustomer().getCustomerId();
             //更新购买保单状态
-            Customer customer=customerDao.findRecommendCustomer(customerId);
+            Customer customer=customerDao.findRecommendCustomer(customerId,false);
             if(customer.getPolicy().equals(PolicyType.NOTPURCHASED))
                 customerDao.updatePolicy(PolicyType.UNPAID,insuranceOrder.getCustomer().getCustomerId());
 

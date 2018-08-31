@@ -20,8 +20,8 @@ import java.util.List;
  */
 public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecificationExecutor<Customer>, CustomerPlusDao, BaseDao<Customer> {
 
-    @Query("select c from Customer c left join fetch c.rank where (c.accountName=?1 or c.mobile=?1) and c.enabled=?2")
-    public Customer findByAccountNameAndEnabled(String accountName, boolean enabled);
+    @Query("select c from Customer c left join fetch c.rank where (c.accountName=?1 or c.mobile=?1) and c.enabled=?2 and c.ynDelete=?3")
+    public Customer findByAccountNameAndEnabled(String accountName, boolean enabled,boolean ynDelete);
 
     @Query("select c from Customer c where c.accountName=?1 and c.mobile=?2 and c.enabled=?3")
     public Customer findByAccountNameAndMobileAndEnabled(String accountName, String mobile, boolean enabled);
@@ -38,15 +38,15 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
 
     @Query("select c from Customer c where c.mobile=?1 and c.enabled=?2")
     public Customer findByMobileAndEnabled(String mobile, boolean enabled);
-    @Query("select c from Customer c left join fetch c.recommendCustomer where c.customerId=?1")
-    public Customer findRecommendCustomer(int customerId);
+    @Query("select c from Customer c left join fetch c.recommendCustomer where c.customerId=?1 and c.ynDelete=?2")
+    public Customer findRecommendCustomer(int customerId,boolean ynDelete);
 
-    @Query("select c from Customer c where c.mobile=:invitationCode or c.invitationCode=:invitationCode")
-    public Customer findByMobileOrInvitationCode(@Param("invitationCode") String invitationCode);
+    @Query("select c from Customer c where (c.mobile=:invitationCode or c.invitationCode=:invitationCode) and c.ynDelete=:ynDelete")
+    public Customer findByMobileOrInvitationCode(@Param("invitationCode") String invitationCode,@Param("ynDelete") boolean ynDelete);
     @Query("select c from Customer c where c.levelCode=?1")
     public Customer findByLevelCode(String levelCode);
 
-    public List<Customer> findByLevelCodeIn(List<String> levelCodes);
+    public List<Customer> findByLevelCodeInAndYnDelete(List<String> levelCodes,boolean ynDelete);
 
     @Query("select c from Customer c where c.email=?1 and c.enabled=?2")
     public Customer findByEmailAndEnabled(String email, boolean enabled);
@@ -61,11 +61,11 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Query("select c from Customer c left join fetch c.rank where c.customerId=?1")
     public Customer findByCustomerId(int customerId);
 
-    @Query("select count(c.customerId) from Customer c where c.recommendCustomer.customerId=?1 and c.policy=?2 and c.praise=?3")
-    public int getCustomerByRecommendCustomer(int customerId,PolicyType policy,boolean praise);
+    @Query("select count(c.customerId) from Customer c where c.recommendCustomer.customerId=?1 and c.policy=?2 and c.praise=?3 and c.ynDelete=?4")
+    public int getCustomerByRecommendCustomer(int customerId,PolicyType policy,boolean praise,boolean ynDelete);
 
-    @Query("select c from Customer c where c.recommendCustomer.customerId=?1 and c.policy=?2 and c.praise=?3")
-    public List<Customer> getCustomerByRecommendCustomers(int customerId,PolicyType policy,boolean praise);
+    @Query("select c from Customer c where c.recommendCustomer.customerId=?1 and c.policy=?2 and c.praise=?3 and c.ynDelete=?4")
+    public List<Customer> getCustomerByRecommendCustomers(int customerId,PolicyType policy,boolean praise,boolean ynDelete);
 
     public Customer findByEmail(String email);
 
@@ -94,8 +94,8 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     public void updatePolicy(PolicyType policy,int customerId);
     @Query("select c from Customer c left join fetch c.rank where c.accountName=?1 ")
     public Customer findByAccountName(String accountName);
-    @Query("select c from Customer c where c.accountName=?1")
-    public Customer getAccountName(String accountName);
+    @Query("select c from Customer c where c.accountName=?1 and c.ynDelete=?2")
+    public Customer getAccountName(String accountName,boolean ynDelete);
 
     @Query("select count(c.customerId) from Customer c left join  c.rank r where r.rankName=?1 ")
     public Long findCustomerNumberByRankName(String s);
@@ -112,11 +112,11 @@ public interface CustomerDao extends JpaRepository<Customer, Integer>, JpaSpecif
     @Query("select c from Customer c left join fetch c.recommendCustomer where c.levelCode like ?1")
     public List<Customer> findCustomerByLikeLevelCode(String levelCode);
 
-    @Query("select count(c.customerId) from Customer c where c.customerId <> ?1 and c.levelCode like ?2 and c.policy=?3")
-    public int findAllCustomerByLikeLevelCode(int customerId,String levelCode,PolicyType policy);
+    @Query("select count(c.customerId) from Customer c where c.customerId <> ?1 and c.levelCode like ?2 and c.policy=?3 and c.ynDelete=?4")
+    public int findAllCustomerByLikeLevelCode(int customerId,String levelCode,PolicyType policy,boolean ynDelete);
     long countByQqOpenId(String qqOpenId);
 
-    List<Customer> findByRecommendCustomer_CustomerIdAndPraise(int customerId, boolean paraise);
+    List<Customer> findByRecommendCustomer_CustomerIdAndPraiseAndYnDelete(int customerId, boolean paraise,boolean ynDelete);
 
     @Modifying
     @Query("update Customer c set c.enabled =?2 where c.customerId=?1")
