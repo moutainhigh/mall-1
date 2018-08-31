@@ -4,6 +4,7 @@ import com.yunxin.cb.mall.entity.PriceSection;
 import com.yunxin.core.orm.BaseDao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 
 import javax.persistence.QueryHint;
@@ -16,4 +17,7 @@ public interface PriceSectionDao extends JpaRepository<PriceSection, Integer>, J
 
     @QueryHints({@QueryHint(name = "org.hibernate.cacheable", value = "true")})
     List<PriceSection> findByEnabledOrderByStartPriceAsc(boolean enabled);
+
+    @Query("select ps from PriceSection ps where ps.enabled=1 order by ps.startPrice asc ")
+    List<PriceSection> findAllByEnabled();
 }

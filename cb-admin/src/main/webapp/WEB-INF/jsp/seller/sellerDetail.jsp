@@ -102,13 +102,13 @@
             <div class="spacer-10"></div>
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家名称：</label>
+                <label> 商家名称：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.sellerName}
               </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家编码：</label>
+                <label> 商家编码：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.sellerCode}
@@ -120,16 +120,16 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家地址：</label>
+                <label>商家地址：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.sellerAddress}
+                <span style="word-break:break-all">${seller.sellerAddress}</span>
               </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家类型：</label>
+                <label> 商家类型：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.sellerType}
+                ${seller.sellerType.name}
               </div>
             </div>
 
@@ -137,13 +137,13 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 联系人：</label>
+                <label> 联系人：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.linkman}
                 </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 手机：</label>
+                <label> 手机：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.mobile}
@@ -154,13 +154,13 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 联系电话：</label>
+                <label> 联系电话：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.telephone}
                 </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 邮箱：</label>
+                <label> 邮箱：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.email}
@@ -173,13 +173,13 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> QQ：</label>
+                <label> QQ：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.qq}
                 </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家微信：</label>
+                <label> 商家微信：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.wechat}
@@ -190,13 +190,13 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家支付平台类型：</label>
+                <label> 商家支付平台类型：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.channelType}
+                ${seller.channelType.name}
               </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 商家支付平台号：</label>
+                <label> 商家支付平台号：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.channelAccount}
@@ -207,17 +207,17 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 营业执照名称：</label>
+                <label> 营业执照名称：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.busName}
+                <span style="word-break:break-all">${seller.busName}</span>
               </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 营业执照注册号：</label>
+                <label> 营业执照注册号：</label>
               </div>
               <div class="col-sm-3">
-                ${seller.buslicenseNo}
-                </div>
+                <span style="word-break:break-all">${seller.buslicenseNo}</span>
+              </div>
             </div>
 
             <div class="spacer-30"></div>
@@ -226,13 +226,13 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 银行户口：</label>
+                <label> 银行户口：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.accountName}
                 </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 对公户名：</label>
+                <label> 对公户名：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.publicAccount}
@@ -243,13 +243,13 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 开户银行：</label>
+                <label> 开户银行：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.bankAccount}
                 </div>
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 开户银行地址：</label>
+                <label> 开户银行地址：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.bankAccountAddress}
@@ -260,7 +260,7 @@
 
             <div class="row">
               <div class="col-sm-2">
-                <label><span class="asterisk">*</span> 身份证号：</label>
+                <label> 身份证号：</label>
               </div>
               <div class="col-sm-3">
                 ${seller.idCardNum}
@@ -277,7 +277,7 @@
                 <label> 备注：</label>
               </div>
               <div class="col-sm-8">
-                ${seller.remark}
+                <span style="word-break:break-all">${seller.remark}</span>
                 </div>
             </div>
 

@@ -63,6 +63,8 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     private InsuranceOrderLogDao insuranceOrderLogDao;
     @Resource
     private InsuranceProductDao insuranceProductDao;
+    @Resource
+    private InsuranceOrderCodeDao insuranceOrderCodeDao;
     /**
      * 根据用户ID查询保险订单列表
      * @return
@@ -98,8 +100,15 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         if(insuranceOrder.getInsuranceOrderOffsite() != null){
             insuranceOrderOffsiteDao.save(insuranceOrder.getInsuranceOrderOffsite());
         }
+
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
-        insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
+        //加入合同编号
+        List<InsuranceOrderCode> list= insuranceOrderCodeDao.getInsuranceOrderCodeByUseed();
+        if(null!=list&&list.size()>0){
+            insuranceOrder.setContractNo(list.get(0).getCodeNo());
+            insuranceOrderCodeDao.updateInsuranceOrderCode(list.get(0).getCodeId());
+        }else
+            insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
 
         Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
         for (InsuranceOrderInformedMatter insuranceOrderInformedMatter : insuranceOrderInformedMatters) {

@@ -17,7 +17,8 @@ public interface SearchRestService {
      */
     @FormUrlEncoded
     @POST(value = "mall/search/keywordSearch")
-    Call<ResponseResult<SearchResultVo>> keywordSearch(@Field("keyword") String keyword, @Field("page") int page, @Field("size") int size);
+    Call<ResponseResult> keywordSearch(@Field("keyword") String keyword, @Field("page") int page, @Field("size") int size,
+                                       @Field("lat")Double lat, @Field("lon")Double lon);
     /**
      * 分类/条件搜索
      *
@@ -27,12 +28,12 @@ public interface SearchRestService {
      * @throws Exception
      */
     @POST(value = "mall/search/categorySearch")
-    Call <ResponseResult<SearchResultVo>> categorySearch(@Body SearchVo searchVo);
+    Call <ResponseResult> categorySearch(@Body SearchVo searchVo);
 
     /**
      * 查询所有规格属性等
      * @return
      */
     @GET(value = "mall/search/commodity")
-    Call<ResponseResult<CombinationVO>> selectAll();
+    Call<ResponseResult> selectAll();
 }

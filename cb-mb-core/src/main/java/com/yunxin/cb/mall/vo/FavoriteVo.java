@@ -6,7 +6,9 @@ import com.yunxin.cb.util.page.PageFinder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,12 +34,18 @@ public class FavoriteVo implements java.io.Serializable{
     private Date createTime;
 
     /** 销售价 */
-    @ApiModelProperty(value="销售价",name="salePrice",example="200.00")
+    @NotNull(message = "销售价不能为空")
+    @ApiModelProperty(value="销售价",name="salePrice",example="200.00", required = true)
     private Float salePrice;
 
     /** 商品id */
     @ApiModelProperty(value="商品id",name="commodityId",example="476")
     private Integer commodityId;
+
+    /** 货品id */
+    @NotNull(message = "货品id不能为空")
+    @ApiModelProperty(value="货品id",name="productId",example="476", required = true)
+    private Integer productId;
 
     @ApiModelProperty(value="商品",name="commodity",example="commodity")
     private CommodityVo commodityVo;
@@ -94,6 +102,14 @@ public class FavoriteVo implements java.io.Serializable{
         this.customerId = customerId;
     }
 
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
     @Override
     public String toString() {
         return "FavoriteVo{" +
@@ -101,7 +117,8 @@ public class FavoriteVo implements java.io.Serializable{
                 ", createTime=" + createTime +
                 ", salePrice=" + salePrice +
                 ", commodityId=" + commodityId +
-                ", commodity=" + commodityVo +
+                ", productId=" + productId +
+                ", commodityVo=" + commodityVo +
                 ", customerId=" + customerId +
                 '}';
     }
@@ -110,11 +127,10 @@ public class FavoriteVo implements java.io.Serializable{
      * 分页DO转换VO
      */
     public static PageFinder<FavoriteVo> dOconvertVOPage (PageFinder<Favorite> pageFinder){
-        PageFinder<FavoriteVo> page = new PageFinder<FavoriteVo> (pageFinder.getPageNo(), pageFinder.getPageSize());
+        List<FavoriteVo> volist = new ArrayList<>();
         if (pageFinder != null) {
             try {
                 List<Favorite> list = pageFinder.getData();
-                List<FavoriteVo> volist = new ArrayList<>();
                 for (Favorite fa:list){
                     SellerVo sellerVo=new SellerVo();
                     BeanUtils.copyProperties(sellerVo,fa.getCommodity().getSeller());
@@ -126,15 +142,14 @@ public class FavoriteVo implements java.io.Serializable{
                     favoriteVo.setCommodityVo(commodityVo);
                     volist.add(favoriteVo);
                 }
-                page.setData(volist);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
             }
         }
-        page.setRowCount(pageFinder.getRowCount());//记录总数
-        page.setPageCount(pageFinder.getPageCount());//总页数
+        PageFinder<FavoriteVo> page = new PageFinder<>(pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
+        page.setData(volist);
         return page;
     }
 }

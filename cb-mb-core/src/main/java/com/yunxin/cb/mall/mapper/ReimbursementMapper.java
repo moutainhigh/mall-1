@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.Reimbursement;
+import com.yunxin.cb.mall.entity.ReimbursementQuery;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
@@ -20,11 +21,11 @@ public interface ReimbursementMapper {
     @Insert({
             "insert into rb_reimbursement (REIMBURSEMENT_ID, REIMBURSEMENT_NO, ",
             "CUSTOMER_ID, AMOUNT, ",
-            "TAX, ORDER_AMOUNT, ",
+            "TAX, ORDER_AMOUNT, TAX_RATE,",
             "ORDER_STATE, CREATE_TIME,REPAYMENT_AMOUNT,REPAYMENT_TYPE,CATALOG_ID)",
             "values (#{reimbursementId,jdbcType=INTEGER}, #{reimbursementNo,jdbcType=VARCHAR}, ",
             "#{customerId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, ",
-            "#{tax,jdbcType=DECIMAL}, #{orderAmount,jdbcType=DECIMAL}, ",
+            "#{tax,jdbcType=DECIMAL}, #{orderAmount,jdbcType=DECIMAL}, #{taxRate,jdbcType=DECIMAL},",
             "#{orderState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{repaymentAmount,jdbcType=DECIMAL},#{repaymentType,jdbcType=INTEGER},#{catalogId,jdbcType=INTEGER})"
     })
     @Options(useGeneratedKeys=true, keyProperty="reimbursementId", keyColumn="REIMBURSEMENT_ID")
@@ -146,4 +147,5 @@ public interface ReimbursementMapper {
             @Result(column="CATALOG_ID", property="catalogId", jdbcType=JdbcType.INTEGER)
     })
     Reimbursement selectByPrimaryKeyAndCustomerId(@Param("reimbursementId") Integer reimbursementId, @Param("customerId") Integer customerId);
+
 }

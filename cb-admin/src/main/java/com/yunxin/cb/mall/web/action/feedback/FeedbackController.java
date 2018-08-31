@@ -55,6 +55,17 @@ public class FeedbackController {
     @RequestMapping(value = "pageFeedback",method = RequestMethod.POST)
     @ResponseBody
     public Page<Feedback> pageFeedback(@RequestBody PageSpecification<Feedback> feedBackQuery) {
+        /**查询时间格式化*/
+        List<PageSpecification.FilterDescriptor> list = feedBackQuery.getFilter().getFilters();
+        list.stream().forEach(p->{
+            if(p.getField().equals("createTime")){
+                if(p.getOperator().equals("gte")){
+                    p.setValue(p.getValue()+" 00:00:00");
+                }else{
+                    p.setValue(p.getValue()+" 23:59:59");
+                }
+            }
+        });
         return feedbackService.pageFeedback(feedBackQuery);
     }
 

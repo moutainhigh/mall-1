@@ -2,24 +2,15 @@ package com.yunxin.cb.mall.web.action.cms;
 
 import com.alibaba.fastjson.JSON;
 import com.yunxin.cb.mall.entity.Attachment;
+import com.yunxin.cb.mall.entity.HomeFloor;
+import com.yunxin.cb.mall.entity.meta.FloorLayout;
 import com.yunxin.cb.mall.entity.meta.ObjectType;
-import com.yunxin.cb.mall.service.*;
-import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.core.util.ImageConverter;
-import com.yunxin.cb.mall.entity.HomeFloor;
-import com.yunxin.cb.mall.entity.meta.FloorLayout;
-import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.core.util.ImageConverter;
-import com.yunxin.cb.mall.entity.HomeFloor;
-import com.yunxin.cb.mall.entity.meta.FloorLayout;
-import com.yunxin.core.exception.EntityExistException;
+import com.yunxin.cb.mall.service.IAttachmentService;
 import com.yunxin.cb.mall.service.ICategoryService;
 import com.yunxin.cb.mall.service.IFloorService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
-import com.yunxin.cb.mall.web.action.MediaPather;
-import org.springframework.context.MessageSource;
+import com.yunxin.core.exception.EntityExistException;
+import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,8 +23,6 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -84,13 +73,20 @@ public class HomeFloorController implements ServletContextAware {
     }
 
     @RequestMapping(value = "addHomeFloor", method = RequestMethod.POST)
-    public String addHomeFloor(@ModelAttribute HomeFloor homeFloor, HttpServletRequest request) {
+    public String addHomeFloor(@ModelAttribute HomeFloor homeFloor, HttpServletRequest request,BindingResult result, ModelMap modelMap) {
         String[] imgurl = request.getParameterValues("imgurl");
         String[] imgurl1 = request.getParameterValues("imgurl1");
         if(imgurl.length>0&&imgurl.length>0){
             homeFloor.setIconPath(imgurl[0].split(",")[0]);
             homeFloor.setImagePath(imgurl1[0].split(",")[0]);
-            homeFloor=floorService.addHomeFloor(homeFloor);
+            try {
+                homeFloor=floorService.addHomeFloor(homeFloor);
+            } catch (EntityExistException e) {
+                result.addError(new FieldError("homeFloor", "floorName", homeFloor.getFloorName(), true, null, null,e.getMessage()));
+                modelMap.put("errerMsg",e.getMessage());
+                return toAddHomeFloor(homeFloor, modelMap);
+//                e.printStackTrace();
+            }
             //保存图片路径
             attachmentService.deleteAttachmentPictures(ObjectType.HOMEFLOORICO,homeFloor.getFloorId());
             for (String imgpath:imgurl) {
@@ -145,6 +141,7 @@ public class HomeFloorController implements ServletContextAware {
             HomeFloor homeFloor1 = floorService.updateHomeFloor(homeFloor);
         } catch (EntityExistException e) {
             result.addError(new FieldError("homeFloor", "floorName", homeFloor.getFloorName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toEditHomeFloor(homeFloor.getFloorId(), modelMap, locale);
         }
         return "redirect:../common/success.do?reurl=cms/homeFloors.do";

@@ -17,6 +17,7 @@ public enum ObjectType {
     ACTIVITY,//活动
     INSURANCEPRODUCT,//产品图片
     INSURANCEPRODUCTDETAIL,//产品详情图片
+    MESSAGEDIGEST,//消息摘要图片
     OTHER//其它
     ;
 }

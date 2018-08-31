@@ -19,7 +19,7 @@ public interface IFloorService {
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     HomeFloor getHomeFloorFetchAllById(int floorId);
 
-    public HomeFloor addHomeFloor(HomeFloor homeFloor);
+    public HomeFloor addHomeFloor(HomeFloor homeFloor)throws EntityExistException;
 
     public HomeFloor updateHomeFloor(HomeFloor homeFloor) throws EntityExistException;
 
@@ -29,5 +29,5 @@ public interface IFloorService {
 
     void removeHomeFloorById(int floorId);
 
-    void enableHomeFloorById(int floorId, boolean enabled);
+    void enableHomeFloorById(int floorId, boolean enabled) throws EntityExistException;
 }

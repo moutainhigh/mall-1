@@ -8,11 +8,9 @@ import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.entity.meta.PaymentType;
 import com.yunxin.cb.mall.entity.meta.ProductState;
 import com.yunxin.cb.mall.entity.meta.PublishState;
-import com.yunxin.cb.mall.mapper.AttachmentMapper;
-import com.yunxin.cb.mall.mapper.CommodityMapper;
-import com.yunxin.cb.mall.mapper.FavoriteMapper;
-import com.yunxin.cb.mall.mapper.ProductMapper;
+import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.service.CommodityService;
+import com.yunxin.cb.mall.service.HistoryRecordService;
 import com.yunxin.cb.mall.vo.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
@@ -21,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -44,6 +43,12 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Resource
     private AttachmentMapper attachmentMapper;
+
+    @Resource
+    private HistoryRecordService historyRecordService;
+
+    @Resource
+    private SellerMapper sellerMap;
 
     @Override
     public Commodity selectByPrimaryKey(int commodityId) {
@@ -76,14 +81,22 @@ public class CommodityServiceImpl implements CommodityService {
         }
         Map paymentType=new HashMap();//支付方式
         for (PaymentType pay : PaymentType.values()){
-            paymentType.put(pay,pay.toString());
+            paymentType.put(pay,pay.getName());
         }
         Favorite favorite=null;
-        if(customerId>0){//用户存在则查询商品收藏夹
+        if(customerId>0){//用户存在则查询商品收藏夹和加入浏览历史
             favorite=new Favorite();
             favorite.setCustomerId(customerId);
+            favorite.setProductId(productId);
             favorite.setCommodityId(product.getCommodityId());
             favorite=favoriteMapper.findByCustomerAndCommodity(favorite);
+
+            HistoryRecord hr=new HistoryRecord();
+            hr.setCommodityId(product.getCommodityId());
+            hr.setProductId(productId);
+            hr.setCustomerId(customerId);
+            hr.setSalePrice(product.getSalePrice());
+            historyRecordService.addHistoryRecord(hr);
         }
         List<Attachment> attachments=attachmentMapper.selectByObjectTypeAndId(ObjectType.COMMODITY.name(),commodity.getCommodityId());//商品图片组
         Set imageSet=new HashSet<>();
@@ -150,4 +163,21 @@ public class CommodityServiceImpl implements CommodityService {
         return commodityMapper.selectByBrandId(brandId);
     }
 
+    @Override
+    public List<SellerVo> getAllSellerAddress() {
+        List<SellerVo> sellerVos=new ArrayList<>();
+        List<Seller> sellers=sellerMap.getAllSellerAddress();
+        sellers.stream().forEach(seller -> {
+            try {
+                SellerVo sellerVo=new SellerVo();
+                BeanUtils.copyProperties(sellerVo,seller);
+                sellerVos.add(sellerVo);
+            } catch (IllegalAccessException e) {
+                log.error("error "+e);
+            } catch (InvocationTargetException e) {
+                log.error("error "+e);
+            }
+        });
+        return sellerVos;
+    }
 }

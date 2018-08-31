@@ -83,7 +83,12 @@
             name: "已付款订单量",
             color: '#ff0000'
           }
-        ]
+        ],
+          navigation: {
+              buttonOptions: {
+                  enabled: false
+              }
+          }
 
       };
 
@@ -94,11 +99,11 @@
         var datasA = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasA.push([value.day, value.orderNum]);
+          datasA.push([value.day-1, value.orderNum]);
           categories.push(value.day);
         });
         options.series[0].data = datasA;
-        options.xAxis.categories = categories;
+        //options.xAxis.categories = categories;
         $('#chartContainer').highcharts(options);
       });
 
@@ -109,7 +114,7 @@
         var datasB = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasB.push([value.day, value.orderNum]);
+          datasB.push([value.day-1, value.orderNum]);
           categories.push(value.day);
         });
         options.series[1].data = datasB;
@@ -242,8 +247,8 @@
       <div class="header-main-bottom">
         <div class="pull-left">
           <ul class="breadcrumb">
-            <li><a href="#">首页</a></li>
-            <li><a href="#">统计分析</a></li>
+            <li>首页</li>
+            <li>统计分析</li>
             <li class="active"><a href="orderStatistics.do">订单统计</a></li>
           </ul>
           <!-- End .breadcrumb -->
@@ -294,7 +299,7 @@
           <div id="content-tab-1" class="tab-pane active">
             <div class="inner-padding">
               <div class="toolbar responsive-helper">
-                <form>
+                <form style="width: 100%">
                   <div class="pull-left">
                     <div class="toolbar-field">
                       <strong>时间:</strong>
@@ -303,13 +308,13 @@
                     <div class="toolbar-field">
                       <div class="row">
                         <div class="col-md-4">
-                          <select id="yearSelect" name="year" class="form-control input-sm">
+                          <select id="yearSelect" name="year" class="form-control input-sm" style="width: 80px;">
                             <c:forEach var="i" begin="2015" end="2050">
                               <option <c:if test="${year==i}"> selected="selected"</c:if> value="${i}"> ${i}</option>
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>年</strong></div>
+                        <div class="col-md-2" style="margin-top: 5px;"><strong>年</strong></div>
                         <div class="col-md-4">
                           <select id="monthSelect" name="month" class="form-control input-sm">
                             <c:forEach var="i" begin="1" end="12">
@@ -317,7 +322,7 @@
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>月</strong></div>
+                        <div class="col-md-2"  style="margin-top: 5px;"><strong>月</strong></div>
 
 
                       </div>
@@ -369,7 +374,7 @@
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>年</strong></div>
+                        <div class="col-md-2"  style="margin-top: 5px;"><strong>年</strong></div>
 
 
                       </div>

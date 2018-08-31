@@ -128,7 +128,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <form:textarea path="matterDescription"
-                                               cssClass="form-control validate[required,minSize[1]]"/>
+                                               cssClass="form-control validate[required,minSize[1]]" maxlength="500"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>

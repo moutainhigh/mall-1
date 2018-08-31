@@ -9,6 +9,19 @@
 
     <title>编辑运营分类</title>
     <script type="text/javascript">
+        $(function () {
+
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
+            $("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true,//自动隐藏提示信息
+                scroll: false,
+                showOneMessage: true
+            });
+        });
     </script>
 </head>
 <body>
@@ -122,14 +135,14 @@
                                 <label><span class="asterisk">*</span> 分类编号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required]" path="categoryNo" maxlength="32"/>
+                                <form:input cssClass="form-control validate[required]" readonly="true" path="categoryNo" maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 价格区间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="lowestPrice" maxlength="32"/>-
-                                <form:input path="highestPrice" maxlength="32"/>万
+                                <form:input id="lowestPrice" path="lowestPrice" maxlength="32" cssClass="validate[required,min[0],custom[number]]"/>-
+                                <form:input id="highestPrice" path="highestPrice" maxlength="32" cssClass="validate[required,min[0],custom[number]]"/>万
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -266,7 +279,7 @@
                                 <label>分类描述：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" path="description"  maxlength="512"></form:textarea>
+                                <form:textarea cssClass="form-control" path="description"  maxlength="10"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -381,6 +394,7 @@
                 $("#parentCategoryName").val(categoryName);
                 //loadSpecs(catalogId);
             }
+
         </script>
     </div>
 </div>

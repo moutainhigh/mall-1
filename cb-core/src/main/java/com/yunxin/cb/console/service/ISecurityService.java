@@ -8,6 +8,7 @@ import com.yunxin.cb.console.entity.Permission;
 import com.yunxin.cb.console.entity.Role;
 
 import com.yunxin.cb.console.entity.User;
+import com.yunxin.cb.mall.entity.Feedback;
 import com.yunxin.cb.mall.entity.Seller;
 
 import com.yunxin.core.exception.EntityExistException;
@@ -136,5 +137,8 @@ public interface ISecurityService extends UserDetailsService {
     void execute(String ...sql);
 
     UserDetails getUserDetailsByName(String userName);
+
+
+    public Page<Role> pageRole(final PageSpecification<Role> queryRequest);
 
 }

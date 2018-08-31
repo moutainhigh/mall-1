@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.entity.meta.ChannelType;
 import com.yunxin.cb.mall.entity.meta.SellerType;
-import com.yunxin.core.web.json.serializer.JsonDateSerializer;
+import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -36,6 +36,21 @@ public class Seller implements java.io.Serializable {
      * 商家名称
      **/
     private String sellerName;
+    /**
+     * 省
+     */
+    private String province;
+    private String provinceName;
+    /**
+     * 市
+     */
+    private String city;
+    private String cityName;
+    /**
+     * 区
+     */
+    private String district;
+    private String districtName;
     /**
      * 商家地址
      **/
@@ -146,6 +161,16 @@ public class Seller implements java.io.Serializable {
      * 商家平台账号
      **/
     private Set<User> users = new HashSet<>();
+
+    /**
+     * 商家地理位置经度 X轴坐标
+     **/
+    private String positionX;
+
+    /**
+     * 商家地理位置玮度 Y轴坐标
+     **/
+    private String positionY;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -414,12 +439,84 @@ public class Seller implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, length = 7)
-    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Column(length = 32)
+    public String getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(String positionX) {
+        this.positionX = positionX;
+    }
+
+    @Column(length = 32)
+    public String getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(String positionY) {
+        this.positionY = positionY;
+    }
+
+    @Column(length = 32)
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    @Column(length = 32)
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @Column(length = 32)
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    @Column(length = 32)
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    @Column(length = 32)
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    @Column(length = 32)
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 }

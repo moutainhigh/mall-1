@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 
+@ApiIgnore
 @Api(description = "商城订单支付接口")
 @RestController
 @RequestMapping(value = "{version}/mall")
@@ -36,8 +38,12 @@ public class PayResource extends BaseResource {
     public ResponseResult appPay(@RequestParam(value = "orderId") int orderId, @RequestParam(value = "channcelType") ChannelType channcelType){
         try {
             AjaxResult result = payService.pay(orderId, getCustomerId(), channcelType, TerminalType.APP);
-            if (result != null && result.getCode() == 0) {
-                return new ResponseResult(result.getData());
+            if (result != null) {
+                if (result.getCode() == 0) {
+                    return new ResponseResult(result.getData());
+                } else {
+                    return new ResponseResult(Result.FAILURE, result.getMessage());
+                }
             }
             return new ResponseResult(Result.FAILURE);
         } catch (Exception e) {

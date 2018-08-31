@@ -3,6 +3,10 @@ package com.yunxin.cb.mall.vo;
 import com.yunxin.cb.mall.entity.meta.AddressType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * create by dengchenggang
@@ -22,30 +26,36 @@ public class DeliveryAddressVO implements java.io.Serializable{
     /**
      * 收货地址类型
      */
+    @NotNull(message="地址类型不能为空")
     @ApiModelProperty(value="地址类型",name="addressType",example="枚举:HOME(\"家庭\"), COMPANY(\"公司\"), OTHER(\"其他\")")
     private AddressType addressType;
 
     /**
      * 市
      */
+    @NotBlank(message="市不能为空")
     @ApiModelProperty(value="市",name="city",example="深圳")
     private String city;
 
     /**
      * 收货人地址
      */
+    @NotBlank(message="收货人地址不能为空")
     @ApiModelProperty(value="详细地址",name="consigneeAddress",example="XX路XX小区")
     private String consigneeAddress;
 
     /**
      * 手机
      */
+    @NotBlank
+    @Pattern(regexp = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$",message="手机号码不正确")
     @ApiModelProperty(value="手机号码",name="consigneeMobile",example="13800138000")
     private String consigneeMobile;
 
     /**
      * 收货人姓名
      */
+    @NotBlank(message="收货人地址不能为空")
     @ApiModelProperty(value="收货人姓名",name="consigneeName",example="李白")
     private String consigneeName;
 
@@ -64,18 +74,21 @@ public class DeliveryAddressVO implements java.io.Serializable{
     /**
      * 区，县
      */
+    @NotBlank(message="区，县不能为空")
     @ApiModelProperty(value="区，县",name="city",example="福田")
     private String district;
 
     /**
      * 邮政编码
      */
+    @NotBlank(message="邮政编码不能为空")
     @ApiModelProperty(value="邮政编码",name="postCode",example="518000")
     private String postCode;
 
     /**
      * 省
      */
+    @NotBlank(message="省份不能为空")
     @ApiModelProperty(value="省",name="province",example="广东")
     private String province;
 

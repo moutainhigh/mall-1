@@ -66,7 +66,13 @@ public class ProfileController {
      */
     @RequestMapping(value = "toEditProfiles")
     public String toEditProfiles(ModelMap modelMap,@RequestParam("fileId") int fileId){
-        modelMap.addAttribute("profile", profileService.getProfile(fileId));
+        Profile profile = profileService.getProfile(fileId);
+        modelMap.addAttribute("profile", profile);
+        if(profile.getProfileName().name()==ProfileName.ANDROID_VERSION_CODE.toString()){
+            return "profile/editprofileVCODE";
+        }else if(profile.getProfileName().name()==ProfileName.ANDROID_VERSION_NAME.toString()){
+            return "profile/editprofileVNAME";
+        }
         return "profile/editprofile";
     }
 
@@ -143,7 +149,6 @@ public class ProfileController {
     @RequestMapping(value = "pageProfile", method = RequestMethod.POST)
     @ResponseBody
     public Page<Profile> pageProfile(@RequestBody PageSpecification<Profile> query) {
-        profileService.addProfileByProfileIsExit();
         Page<Profile> page = profileService.pageProfile(query);
         return page;
     }

@@ -17,7 +17,33 @@
   <title>编辑品牌</title>
 
   <script type="text/javascript">
+      $(document).ready(function() {
+          var errerMsg='${errerMsg}';
+          if(errerMsg!=null&&errerMsg!=""){
+              commonNotify(errerMsg,"error");
+          }
 
+          var flag=${brand.hot};
+          if(flag){
+              $("#sort").show();
+          }else {
+              $("#sort").hide();
+          }
+      });
+      function changeOtherMatter(flag) {
+          if(flag){
+              $("#sort").show();
+          }else {
+              $("#sort").hide();
+          }
+      }
+      function submitForm() {
+          var flag = $("input[name='otherMatter']:checked").val();
+          if(flag=="false"){
+              $("#hotSort").val(0);
+          }
+          return true;
+      }
 
   </script>
 </head>
@@ -128,7 +154,7 @@
       </div>
       <!-- End .actionbar-->
       <div class="inner-padding">
-        <form:form id="validateSubmitForm" cssClass="form-horizontal" action="editBrand.do" method="post" commandName="brand" >
+        <form:form id="validateSubmitForm" cssClass="form-horizontal" action="editBrand.do" method="post" commandName="brand" onsubmit="return submitForm();">
           <form:hidden path="brandId"/>
           <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
           <fieldset>
@@ -136,17 +162,17 @@
             <div class="row">
               <div class="inline-labels">
                 <div class="col-sm-2">
-                  <label>品牌编码：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>品牌编码：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input path="brandNo" type="text" cssClass="form-control validate[required,minSize[2]]" maxlength="32"/>
+                  <form:input path="brandNo" id="brandNo" type="text" readonly="true" cssClass=" form-control validate[required,minSize[2]]" maxlength="32"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
-                  <label>品牌名称：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>品牌名称：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="brandName" maxlength="128"/>
+                  <form:input type="text" id="brandName" cssClass=" form-control validate[required,minSize[2]]" path="brandName" maxlength="5"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -157,17 +183,17 @@
               <div class="inline-labels">
 
                 <div class="col-sm-2">
-                  <label>品牌关键字：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>品牌关键字：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="brandKey" maxlength="32"/>
+                  <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="brandKey" maxlength="32"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
-                  <label>品牌标题：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>品牌标题：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="brandTitle" maxlength="128"/>
+                  <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="brandTitle" maxlength="128"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -178,17 +204,17 @@
             <div class="row">
               <div class="inline-labels">
                 <div class="col-sm-2">
-                  <label>SEO关键字：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>SEO关键字：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control" path="seoKey" maxlength="255"/>
+                  <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="seoKey" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
-                  <label>SEO标题：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>SEO标题：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control" path="seoTitle" maxlength="255"/>
+                  <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="seoTitle" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -204,14 +230,14 @@
                   <label>品牌英文名称：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control" path="brandEnName" maxlength="128"/>
+                  <form:input type="text" cssClass=" form-control validate[custom[onlyLetterSp]]" path="brandEnName" maxlength="128" data-errormessage-custom-error="必须为英文字母"/>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
                   <label>品牌网址：</label>
                 </div>
                 <div class="col-sm-3">
-                  <form:input type="text" cssClass="form-control" path="website" maxlength="255"/>
+                  <form:input type="text" cssClass=" form-control validate[custom[url]]" path="website" maxlength="255"/>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -222,12 +248,12 @@
             <div class="row">
 
               <div class="col-sm-2">
-                <label>运营分类：<span class="asterisk">*</span></label>
+                <label><span class="asterisk">*</span>运营分类：</label>
               </div>
               <div class="col-sm-3">
                 <form:hidden id="categoryId" path="category.categoryId"/>
                 <div class="input-group">
-                  <form:input id="categoryName" readonly="true" cssClass="form-control validate[required]" path="category.categoryName" maxlength="32"/>
+                  <form:input id="categoryName" readonly="true" cssClass=" form-control validate[required]" path="category.categoryName" maxlength="32"/>
                   <span class="input-group-btn">
                       <button id="categoryNameBtn" class="btn btn-default" type="button">选择</button>
                   </span>
@@ -236,7 +262,7 @@
 
               <div class="col-sm-1"></div>
               <div class="col-sm-2">
-                <label>是否启用：<span class="asterisk">*</span></label>
+                <label><span class="asterisk">*</span>是否启用：</label>
               </div>
               <div class="col-sm-3">
                 <div class="inline-labels">
@@ -251,7 +277,7 @@
             <div class="row">
               <div class="inline-labels">
                 <div class="col-sm-2">
-                  <label>是否显示：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>是否显示：</label>
                 </div>
                 <div class="col-sm-3">
                   <div class="inline-labels">
@@ -261,18 +287,39 @@
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
-                  <label>是否热门：<span class="asterisk">*</span></label>
+                  <label><span class="asterisk">*</span>是否热门：</label>
                 </div>
                 <div class="col-sm-3">
                   <div class="inline-labels">
-                    <form:radiobutton path="hot" value="1"/>是
-                    <form:radiobutton path="hot" value="0"/>否
+                    <form:radiobutton path="hot" name="otherMatter" id="otherMatter" value="1" onclick="changeOtherMatter(true);"/>是
+                    <form:radiobutton path="hot" name="otherMatter" id="otherMatter" value="0" onclick="changeOtherMatter(false);"/>否
                   </div>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
             </div>
-
+            <div class="row" id="sort" style="display: none;">
+              <div class="inline-labels">
+                <div class="col-sm-2">
+                  <label>热门排序：<span class="asterisk"></span></label>
+                </div>
+                <div class="col-sm-3">
+                  <div>
+                    <form:select path="sort" cssClass=" form-control" id="hotSort">
+                      <form:option value="0">0</form:option>
+                      <form:option value="1">1</form:option>
+                      <form:option value="2">2</form:option>
+                      <form:option value="3">3</form:option>
+                      <form:option value="4">4</form:option>
+                      <form:option value="5">5</form:option>
+                      <form:option value="6">6</form:option>
+                      <form:option value="7">7</form:option>
+                      <form:option value="8">8</form:option>
+                    </form:select>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="spacer-30"></div>
             <hr>
             <div class="spacer-30"></div>
@@ -282,7 +329,7 @@
                 <label>品牌描述：</label>
               </div>
               <div class="col-sm-9">
-                <form:textarea cssClass="form-control" path="description" maxlength="512"></form:textarea>
+                <form:textarea cssClass=" form-control" path="description" maxlength="512"></form:textarea>
               </div>
               <div class="col-sm-1"></div>
             </div>
@@ -294,7 +341,7 @@
                 <label>SEO描述：</label>
               </div>
               <div class="col-sm-9">
-                <form:textarea cssClass="form-control" path="seoDescription" maxlength="512"></form:textarea>
+                <form:textarea cssClass=" form-control" path="seoDescription" maxlength="512"></form:textarea>
               </div>
               <div class="col-sm-1"></div>
             </div>
@@ -307,7 +354,7 @@
                 <label>备注</label>
               </div>
               <div class="col-sm-9">
-                <form:textarea cssClass="form-control" path="remark" maxlength="255"></form:textarea>
+                <form:textarea cssClass=" form-control" path="remark" maxlength="255"></form:textarea>
               </div>
               <div class="col-sm-1"></div>
             </div>
@@ -319,7 +366,7 @@
             <div class="spacer-30"></div>
             <div class="row">
               <div class="col-sm-2">
-                <label>图片</label>
+                <label><span class="asterisk">*</span>图片:</label>
               </div>
               <div class="col-sm-9">
                   <%--图片上传控件--%>
@@ -353,6 +400,7 @@
                             showUpload:true, //是否显示上传按钮
                             showRemove :false, //显示移除按钮
                             showPreview :true, //是否显示预览
+                            showClose: false,
                             showCaption:false,//是否显示标题
                             browseOnZoneClick: true,//是否显示点击选择文件
                             language: "zh" ,
@@ -388,6 +436,7 @@
                                 initialPreviewAsData: true
                             });
                             $(".btn-default").attr("disabled",false);
+
                         }).on("filepredelete", function(jqXHR) {
                             var abort = true;
                             if (confirm("确定要删除吗？(删除后不会恢复)")) {
@@ -441,7 +490,7 @@
               <div class="col-sm-12">
                 <div class="btn-group pull-right">
                   <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                  <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                  <button onclick="clearInput('form-control')" type="button" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                 </div>
               </div>
             </div>

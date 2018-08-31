@@ -1,15 +1,20 @@
 package com.yunxin.cb.config;
 
-import com.yunxin.cb.filter.Meshsite3Filter;
+import org.apache.tomcat.util.descriptor.web.LoginConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * @author gonglei
@@ -22,6 +27,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     private String uploadPath;
 
 
+
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:/index");
@@ -29,6 +36,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
 
+    @Bean
+    public LoginInterceptor loginInterceptor(){
+        return new LoginInterceptor();
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -36,6 +47,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
 //        registry.addInterceptor(new ErrorInterceptor()).addPathPatterns("/**");
+        //拦截规则：除了excludePathPatterns中地址，其他都拦截判断
+        registry.addInterceptor(loginInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login");
         super.addInterceptors(registry);
     }
 
@@ -44,5 +59,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/upload/**").addResourceLocations("file:" + uploadPath);
         super.addResourceHandlers(registry);
     }
+
+
+
 
 }

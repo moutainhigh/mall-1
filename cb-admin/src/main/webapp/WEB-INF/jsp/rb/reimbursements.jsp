@@ -102,7 +102,7 @@
                 </div>
                 <div class="pull-right">
 
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -112,7 +112,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                     <!-- End .btn-group -->
 
                 </div>
@@ -398,7 +398,6 @@
                 }
                 $("#orderBox").html("&nbsp;");
                 for(var i=0;i<data.length;i++){
-                    debugger;
                     var taxMoney=data[i].productPrice*data[i].tax;
                     taxMoney = taxMoney.toFixed(2);
                     $("#orderBox").append("<div class='orderItem '>\n" +

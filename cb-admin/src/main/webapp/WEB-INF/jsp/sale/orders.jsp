@@ -60,6 +60,9 @@
 
     function formatPayType(ptype){
       switch (ptype){
+        case "UNDER_LINE":{
+            return "线下支付";
+        }
         case "FULL_SECTION":{
             return "全款支付";
         }
@@ -143,7 +146,7 @@
             <h2>订单管理</h2>
           </div>
           <div class="pull-right">
-            <div class="btn-group">
+            <%--<div class="btn-group">
               <a class="btn btn-default" href="#">
                 <i class="fa fa-star"></i>
               </a>
@@ -153,7 +156,7 @@
               <a class="btn btn-default" href="#">
                 <i class="fa fa-cog"></i>
               </a>
-            </div>
+            </div>--%>
           </div>
         </div>
         <!-- End .inner-padding -->
@@ -174,38 +177,39 @@
         </div>
         <!-- End .actionbar-->
         <div class="inner-padding">
-          <div class="toolbar responsive-helper">
-            <form>
-              <div class="pull-left">
-                <div class="toolbar-field">
-                  <strong>订单编码:</strong>
+            <div class="toolbar responsive-helper">
+              <form style="width: 100%">
+                <div class="pull-left">
+                  <div class="toolbar-field">
+                    <strong>订单编码:</strong>
+                  </div>
+                  <div class="toolbar-field">
+                    <input type="text" data-filter="orderCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入订单编码"/>
+                  </div>
+                  <div class="toolbar-field">
+                    <strong>订单状态:</strong>
+                  </div>
+                  <div class="toolbar-field">
+                    <select class="form-control  grid-filter" data-filter="orderState" data-operator="eq">
+                      <option value="">全部</option>
+                      <option value="PENDING_PAYMENT">待付款</option>
+                      <option value="PAID_PAYMENT">待发货</option>
+                      <option value="OUT_STOCK">已发货</option>
+                      <option value="CANCELED">已取消</option>
+                      <option value="SUCCESS">交易成功</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="toolbar-field">
-                  <input type="text" data-filter="orderCode" data-operator="contains" class="form-control grid-filter" placeholder="请输入订单编码"/>
+                <!-- End .pull-left -->
+                <div class="pull-right">
+                  <div class="toolbar-field">
+                    <button type="button" class="btn btn-default" onclick="reloadGridFilters('grid')"><i class="fa fa-search"></i>查询</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-default" onclick="clearFilters('grid')">清空</button>
+                  </div>
                 </div>
-                <div class="toolbar-field">
-                  <strong>订单状态:</strong>
-                </div>
-                <div class="toolbar-field">
-                  <select class="form-control  grid-filter" data-filter="orderState" data-operator="eq">
-                    <option value="">全部</option>
-                    <option value="PENDING_PAYMENT">待付款</option>
-                    <option value="PAID_PAYMENT">待发货</option>
-                    <option value="OUT_STOCK">已发货</option>
-                    <option value="RECEIVED">已签收</option>
-                  </select>
-                </div>
-              </div>
-              <!-- End .pull-left -->
-              <div class="pull-right">
-                <div class="toolbar-field">
-                  <button type="button" class="btn btn-default" onclick="reloadGridFilters('grid')"><i class="fa fa-search"></i>查询</button>
-                  &nbsp;&nbsp;&nbsp;
-                  <button type="button" class="btn btn-default" onclick="clearFilters('grid')">清空</button>
-                </div>
-              </div>
-              <!-- End .pull-right -->
-            </form>
+                <!-- End .pull-right -->
+              </form>
           </div>
           <!-- End .toolbar -->
 
@@ -219,10 +223,10 @@
               <div class="pull-right">
                 <div class="btn-group">
                   <a href="javascript:viewItem()" class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;详情</a>
-                  <a href="javascript:changePriceItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;调价</a>
-                  <a href="javascript:initLogistic();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 设置物流</a>
+                  <!--<a href="javascript:changePriceItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp;调价</a>-->
+                  <!--<a href="javascript:initLogistic();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 设置物流</a>-->
                   <a href="javascript:auditItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 审核</a>
-                  <a href="javascript:cancelItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 取消订单</a>
+                  <!--<a href="javascript:cancelItem();"  class="btn btn-default"><i class="fa fa-edit"></i>&nbsp; 取消订单</a>-->
                 </div>
               </div>
             </header>
@@ -281,9 +285,9 @@
                     </kendo:dataSource-schema-model-fields>
                   </kendo:dataSource-schema-model>
                 </kendo:dataSource-schema>
-                <kendo:dataSource-filter>
+                <%--<kendo:dataSource-filter>
                   <kendo:dataSource-filterItem field="seller.sellerId" value="${seller.sellerType=='SELF_OPERATION'?null:seller.sellerId}" operator="eq"/>
-                </kendo:dataSource-filter>
+                </kendo:dataSource-filter>--%>
                 <kendo:dataSource-transport>
                   <kendo:dataSource-transport-read url="pageOrders.do" type="POST" contentType="application/json"/>
                   <kendo:dataSource-transport-parameterMap>
@@ -578,18 +582,21 @@
                 bootbox.alert("请选择待付款订单操作！");
                 return;
             }
-            if (dataItem.paymentType != "LOAN") {
-                bootbox.alert("请选择贷款支付订单操作！");
+            if (dataItem.paymentType != "UNDER_LINE") {
+                bootbox.alert("请选择线下支付订单操作！");
                 return;
             }
+            $('#auditDialog').modal();
+            $("#orderIdAuditHid").val(dataItem.orderId);
+            $("#orderCodeAuditSpan").html(dataItem.orderCode);
         }
-        $('#auditDialog').modal();
-        $("#orderIdAuditHid").val(dataItem.orderId);
-        $("#orderCodeAuditSpan").html(dataItem.orderCode);
     }
 
     function submitAudit(){
-        if($("input[name='auditState']:checked").val()=="NOT_AUDIT" && $("#auditRemark").val() == ""){
+        if (!$("#auditForm").validationEngine("validate")) {
+            return false;
+        }
+        if($("input[name='auditState']:checked").val()=="NOT_AUDIT" && $("#auditRemark").val().replace(/^\s+|\s+$/g,"") == ""){
             bootbox.alert("请填写审核不通过原因!");
             return false;
         }
@@ -611,12 +618,15 @@
                 bootbox.alert("请选择待付款订单操作！");
                 return;
             }
+            $('#cancelDialog').modal();
+            $("#orderIdCancelHid").val(dataItem.orderId);
+            $("#orderCodeCancelSpan").html(dataItem.orderCode);
         }
-        $('#cancelDialog').modal();
-        $("#orderIdCancelHid").val(dataItem.orderId);
-        $("#orderCodeCancelSpan").html(dataItem.orderCode);
     }
     function submitCancel() {
+        if (!$("#cancelForm").validationEngine("validate")) {
+            return false;
+        }
         var dataItem = getSelectedGridItem("grid");
         if($("#cancelRemark").val() == ""){
             bootbox.alert("请填写取消原因!");
@@ -628,10 +638,11 @@
                 $('#cancelDialog').modal("hide");
                 $("#grid").data("kendoGrid").dataSource.read();
             }else{
-                alert("取消失败！");
+                bootbox.alert("取消失败！");
             }
         });
     }
+
   </script>
 </body>
 </html>

@@ -9,7 +9,6 @@
 
     <title>商品管理</title>
     <script type="text/javascript">
-
         function editItemFilters() {
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
@@ -43,6 +42,17 @@
                         });
                     }
                 });
+            }
+        }
+
+        function formatPublishState(publishState) {
+            switch (publishState) {
+                case "WAIT_UP_SHELVES":
+                    return "待上架";
+                case "UP_SHELVES":
+                    return "上架";
+                case "DOWN_SHELVES":
+                    return "下架";
             }
         }
     </script>
@@ -179,8 +189,8 @@
                         <div class="pull-right">
                             <div class="btn-group">
                                 <a href="javascript:void(0);" onclick="showCommodityDialog();" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;添加商品</a>
-                                <a href="javascript:void(0);" onclick="editItemFilters()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 搜索条件</a>
-                                <a href="javascript:void(0);" onclick="showLogisticDialog()" class="btn btn-default"><i class="fa fa-truck"></i>&nbsp; 设置物流</a>
+                                <%--<a href="javascript:void(0);" onclick="editItemFilters()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 搜索条件</a>
+                                <a href="javascript:void(0);" onclick="showLogisticDialog()" class="btn btn-default"><i class="fa fa-truck"></i>&nbsp; 设置物流</a>--%>
                                 <a href="javascript:void(0);" onclick="removeItem()" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
                         </div>
@@ -197,17 +207,18 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="商品分类" field="commodity.catalog.catalogName" width="80"/>
-                            <kendo:grid-column title="商品品牌" field="commodity.brand.brandName" width="80"/>
-                            <kendo:grid-column title="商品图片" field="commodity.defaultPicPath" width="80" template="<img src='../images/#=commodity.defaultPicPath#_64_69.jpg'  width='51px' height='55px'/>" sortable="false" filterable="false"/>
-                            <kendo:grid-column title="商品编码" field="commodity.commodityCode" width="80"/>
-                            <kendo:grid-column title="商品名称" field="commodity.commodityName" width="80"/>
-                            <kendo:grid-column title="推荐值排序" field="recommendValue" width="70"/>
-                            <kendo:grid-column title="成本价" field="commodity.costPrice" width="80"/>
-                            <kendo:grid-column title="销售价" field="commodity.sellPrice" width="80"/>
-                            <kendo:grid-column title="市场价格" field="commodity.marketPrice" width="80"/>
-                            <kendo:grid-column title="创建时间" field="commodity.createTime" width="130" format="{0:yyyy-MM-dd HH:mm}"/>
-                            <kendo:grid-column title="备注" field="commodity.remark" width="150" filterable="false"/>
+                            <kendo:grid-column title="商品分类" field="commodity.catalog.catalogName" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="商品品牌" field="commodity.brand.brandName" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="商品图片" field="commodity.defaultPicPath" width="80" template="<img src='#=commodity.defaultPicPath#'  width='51px' height='55px'/>" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="商品编码" field="commodity.commodityCode" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="商品名称" field="commodity.commodityName" width="80" sortable="false" filterable="false"/>
+                            <%--<kendo:grid-column title="推荐值排序" field="recommendValue" width="70"/>--%>
+                            <kendo:grid-column title="成本价" field="commodity.costPrice" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="销售价" field="commodity.sellPrice" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="市场价格" field="commodity.marketPrice" width="80" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="创建时间" field="commodity.createTime" width="130" format="{0:yyyy-MM-dd HH:mm}" sortable="false" filterable="false"/>
+                            <kendo:grid-column title="上下架状态" field="commodity.publishState" template="#=formatPublishState(commodity.publishState)#" width="130"/>
+                            <kendo:grid-column title="备注" field="commodity.remark" width="150" sortable="false" filterable="false"/>
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
@@ -319,17 +330,19 @@
 </div>
 
 <div class="modal fade" id="commodityDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <form id="commodityFormId" style="float: inherit;">
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">选择商品分类</h4>
+                <h4 class="modal-title">选择商品</h4>
             </div>
             <div class="modal-body">
-                <form id="commodityFormId">
                     <input type="hidden" name="categoryId" value="${category.categoryId}"/>
+                <input type="hidden" value="${category.lowestPrice *10000}" id="startPrice" min="0" step="0.0001" data-filter="sellPrice" data-operator="gte" class="form-control grid-filter" style="width: 60px"/></td>
+                <input type="hidden" value="${category.highestPrice *10000}" id="endPrice" min="0" step="0.0001" data-filter="sellPrice" data-operator="lte" class="form-control grid-filter" style="width: 60px"/></td>
                 <jsp:include page="../commodity/chooseCommodities.jsp"/>
-                </form>
+
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -337,6 +350,7 @@
             </div>
         </div>
     </div>
+    </form>
     <script type="application/javascript">
         function showCommodityDialog() {
             $('#commodityDialog').modal();
@@ -358,6 +372,7 @@
                 }
             });
             clearCheck();
+            reloadGridFilters('grid');
             $('#commodityDialog').modal("hide");
         }
     </script>

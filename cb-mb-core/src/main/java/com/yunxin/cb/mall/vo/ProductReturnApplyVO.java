@@ -3,6 +3,9 @@ package com.yunxin.cb.mall.vo;
 import com.yunxin.cb.mall.entity.meta.ReturnReason;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 
 /**
 * @author gws
@@ -16,7 +19,8 @@ public class ProductReturnApplyVO implements java.io.Serializable{
     /**
      * 订单id
      */
-    @ApiModelProperty(value="订单id",name="orderId",example="1")
+    @NotNull(message = "订单id不能为空")
+    @ApiModelProperty(value="订单id",name="orderId",example="1", required = true)
     private Integer orderId;
     /**
      * 订单商品id
@@ -26,11 +30,13 @@ public class ProductReturnApplyVO implements java.io.Serializable{
     /**
      * 退货原因
      */
-    @ApiModelProperty(value="退货原因",name="returnReason",example="我不想买了")
+    @NotNull(message = "退货原因不能为空")
+    @ApiModelProperty(value="退货原因",name="returnReason",example="我不想买了", required = true)
     private ReturnReason returnReason;
 
     /** 原因 */
-    @ApiModelProperty(value="原因",name="reason",example="我不想买了")
+    @NotBlank(message = "原因不能为空")
+    @ApiModelProperty(value="原因",name="reason",example="我不想买了", required = true)
     private String reason;
 
     public Integer getOrderId() {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 /**
@@ -45,6 +46,17 @@ public class InsuranceController {
     @RequestMapping(value = "pageInsuranceOrder", method = RequestMethod.POST)
     @ResponseBody
     public Page<InsuranceOrder> pageInsuranceOrder(@RequestBody PageSpecification<InsuranceOrder> query) {
+        /**查询时间格式化*/
+        List<PageSpecification.FilterDescriptor> list = query.getFilter().getFilters();
+        list.stream().forEach(p->{
+            if(p.getField().equals("createTime")){
+                if(p.getOperator().equals("gte")){
+                    p.setValue(p.getValue()+" 00:00:00");
+                }else{
+                    p.setValue(p.getValue()+" 23:59:59");
+                }
+            }
+        });
         Page<InsuranceOrder> page = iInsuranceOrderService.pageInsuranceOrder(query);
         return page;
     }

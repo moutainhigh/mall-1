@@ -15,7 +15,7 @@ import java.util.Map;
 public interface ICatalogService {
 
 
-    Catalog addCatalog(Catalog catalog) throws EntityExistException, CommonException;
+    Catalog addCatalog(Catalog catalog) throws EntityExistException;
 
     public Catalog updateCatalog(Catalog catalog) throws EntityExistException;
 
@@ -90,4 +90,13 @@ public interface ICatalogService {
     public Catalog checkCategoryNameInSameParentCategoryForUpdate(int parentCategoryId, int categoryId, String categoryName);
 
     void enableCatalogById(int catalogId, boolean enabled);
+
+    /**
+     * @Description:            根据分类编码查询一级分类
+     * @author: lxc
+     * @param catalogCode       分类编码
+     * @Return com.yunxin.cb.mall.entity.Catalog:
+     * @DateTime: 2018/8/14 19:39
+     */
+    Catalog findOneLevelCatalogByCatalogCode(String catalogCode);
 }

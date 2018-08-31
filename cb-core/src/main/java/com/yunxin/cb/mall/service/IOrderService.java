@@ -103,7 +103,7 @@ public interface IOrderService {
     public OrderItem getOrderItemById(int itemId);
 
     /**
-     * 待付款订单超过24H未支付 则将其状态设为已取消
+     * 待付款订单超过6H未支付 则将其状态设为已取消
      */
     public void cancelTimeOutOrders();
 
@@ -183,22 +183,6 @@ public interface IOrderService {
      * @param itemId
      */
     public void updateOrderItemEvaluate(int itemId);
-
-    /***
-     * 贷款订单
-     * @param query
-     * @return
-     */
-    public Page<OrderLoanApply> pageLoanOrders(PageSpecification<OrderLoanApply> query);
-
-    /**
-     * 贷款审核
-    * @author gws
-    * @date 2018/7/25 15:14
-    * @param
-    * @return void
-    */
-    public boolean orderLoanApplyAudit(int loanId, AuditState auditState, String auditRemark);
 
     /**
      * 订单审核

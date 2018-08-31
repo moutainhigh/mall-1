@@ -18,11 +18,52 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                }
             });
         });
+/*        function gradeChange() {
+            var advertisementType = $("#advertisementType").val();
+            if(advertisementType == "VIDEO"){
+                $("#videoPath").show();
+            }else{
+                $("#videoPath").hide();
+            }
+        }*/
 
+        function submitForm() {
+            var advertisementType = $("#advertisementType").val();
+            if(advertisementType == "VIDEO"){
+                var videoPath = $("#videoPath").val();
+                if("" == videoPath || videoPath == null){
+                    bootbox.alert("当广告类型为视频时视频路径不能为空");
+                    return false;
+                }
+            }else if(advertisementType == "PTHOTO_AND_TEXT"){
+                var advertURL = $("#advertURL").val();
+                if("" == advertURL || advertURL == null){
+                    bootbox.alert("当广告类型为图文时广告URL不能为空");
+                    return false;
+                }
+
+            }
+        }
         function returns(){
             window.location.href = "advertisements.do";
         }
@@ -318,7 +359,7 @@
             </div>
             <!-- End .actionbar-->
             <div class="inner-padding">
-                <form:form id="validateSubmitForm" cssClass="form-horizontal" data-asf-expireafter="1" data-asf-time="10" action="addAdvertisement.do" method="post" commandName="advertisement">
+                <form:form id="validateSubmitForm" cssClass="form-horizontal" data-asf-expireafter="1" data-asf-time="10" action="addAdvertisement.do" method="post" commandName="advertisement" onsubmit="return submitForm();">
 
                     <!-- * data-asf-time = seconds, data-asf-expireafter = minutes * -->
                     <fieldset>
@@ -329,13 +370,13 @@
                                 <label><span class="asterisk">*</span>标题：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input  cssClass="form-control validate[required,minSize[2]]"  path="advertTitle" maxlength="512"/>
+                                <form:input  cssClass=" form-control validate[required,minSize[2]]"  path="advertTitle" maxlength="512"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="advertCode" maxlength="64"/>
+                                <form:input cssClass=" form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="advertCode" readonly="true"/>
                             </div>
                         </div>
 
@@ -346,18 +387,24 @@
                                 <label><span class="asterisk">*</span> 广告类型：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="advertisementType" cssClass="form-control simpleselect">
+                                <form:select path="advertisementType" cssClass=" form-control simpleselect" id="advertisementType">
                                     <form:options items="${advertisementType}" itemLabel="name"/>
                                 </form:select>
                             </div>
                             <div class="col-sm-2">
+                                <label> 广告URL：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input cssClass=" form-control validate[custom[url]]" path="advertURL" id="advertURL" maxlength="5121" data-errormessage-custom-error="无效的网址"/>
+                            </div>
+                            <%--<div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 客户端类型：</label>
                             </div>
                             <div class="col-sm-3">
                                 <input type="checkbox" name="clientTypesTemporary" value="PC" cssClass="form-control validate[minCheckbox[1]]"/>网站
                                 <input type="checkbox" name="clientTypesTemporary" value="PAD" cssClass="form-control validate[minCheckbox[1]]"/>平板
                                 <input type="checkbox" name="clientTypesTemporary" value="MOBILE" cssClass="form-control validate[minCheckbox[1]]"/>手机
-                            </div>
+                            </div>--%>
                         </div>
 
                         <div class="spacer-10"></div>
@@ -367,35 +414,37 @@
                                 <label><span class="asterisk">*</span> 广告位：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="advertisementPlace" cssClass="form-control simpleselect">
+                                <form:select path="advertisementPlace" cssClass=" form-control simpleselect">
                                     <form:options items="${advertisementPlace}" itemLabel="name"/>
                                 </form:select>
                             </div>
-                            <div class="col-sm-2">
-                                <label> 视频路径：</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <form:input cssClass="form-control" path="videoPath" maxlength="512"/>
+                            <div>
+                                <div class="col-sm-2">
+                                    <label> 视频路径：</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <form:input cssClass=" form-control" id="videoPath"  path="videoPath" maxlength="512"/>
+                                </div>
                             </div>
                         </div>
 
                         <div class="spacer-10"></div>
 
-                        <div class="row">
+                        <div class="row" style="display: none">
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 广告URL类型：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="advertisementURLType" cssClass="form-control simpleselect">
+                                <form:select path="advertisementURLType" cssClass=" form-control simpleselect">
                                     <form:options items="${advertisementURLType}" itemLabel="name"/>
                                 </form:select>
                             </div>
-                            <div class="col-sm-2">
+<%--                            <div class="col-sm-2">
                                 <label> 广告URL：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control" path="advertURL" maxlength="5121"/>
-                            </div>
+                                <form:input cssClass=" form-control" path="advertURL" maxlength="5121"/>
+                            </div>--%>
                         </div>
                         <div class="spacer-10"></div>
 
@@ -423,7 +472,7 @@
                                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
+                                        /*$("#validateSubmitForm").validationEngine({
                                             autoHidePrompt: true, scroll: false, showOneMessage: true,
                                             onValidationComplete: function (form, valid) {
                                                 if (valid) {
@@ -436,7 +485,7 @@
                                                     }
                                                 }
                                             }
-                                        });
+                                        });*/
                                         var initPreview = new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
@@ -451,16 +500,18 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
+                                            elCaptionText:"123",
                                             maxFileSize : 2000,
                                             allowedFileExtensions: ["jpg", "png", "gif"],
-                                            autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
-                                            overwriteInitial: false,//不覆盖已存在的图片
+                                            autoReplace : true,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                                            overwriteInitial: true,//不覆盖已存在的图片
                                             browseClass:"btn btn-primary", //按钮样式
                                             // layoutTemplates:{
                                             //     actionUpload:''    //设置为空可去掉上传按钮
                                             // },
-                                            maxFileCount: 10  //上传的个数
+                                            maxFileCount: 1  //上传的个数
                                         }).on("fileuploaded", function (event, data) {
                                             var response = data.response;
                                             //添加url到隐藏域
@@ -468,9 +519,9 @@
                                             $('#imgDiv').html($('#imgDiv').html()+html);
                                             //上传完成回调
                                             var index=0;
-                                            if(initPreview.length>0 ){
-                                                index=initPreview.length;
-                                            }
+                                            // if(initPreview.length>0 ){
+                                            //     index=initPreview.length;
+                                            // }
                                             initPreview[index]  = response.url;
                                             var config = new Object();
                                             config.caption = "";
@@ -482,7 +533,6 @@
                                                 initialPreviewConfig: initPreviewConfig,
                                                 initialPreviewAsData: true
                                             });
-                                            $(".btn-default").attr("disabled",false);
                                         }).on("filepredelete", function(jqXHR) {
                                             var abort = true;
                                             if (confirm("确定要删除吗？(删除后不会恢复)")) {
@@ -521,7 +571,7 @@
                                 <label>内容：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea  cssClass="form-control validate[maxSize[5000]]" path="content"></form:textarea>
+                                <form:textarea  cssClass=" form-control validate[maxSize[5000]]" path="content"></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -531,7 +581,7 @@
                                 <label>备注：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea cssClass="form-control validate[maxSize[5000]]" path="remark"></form:textarea>
+                                <form:textarea cssClass=" form-control validate[maxSize[255]]" path="remark"></form:textarea>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -541,7 +591,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>

@@ -36,9 +36,29 @@ public class SellerVo implements java.io.Serializable {
     @ApiModelProperty(value="手机",name="mobile",example="13588565598")
     private String mobile;
 
+    /** 固定电话 */
+    @ApiModelProperty(value="固定电话",name="telephone",example="0755-82573921")
+    private String telephone;
+
     /** 备注 */
     @ApiModelProperty(value="备注",name="remark",example="无")
     private String remark;
+
+    /**省*/
+    @ApiModelProperty(value="省",name="province",example="234443")
+    private String province;
+    @ApiModelProperty(value="省名",name="province",example="广东省")
+    private String provinceName;
+    /**市*/
+    @ApiModelProperty(value="市",name="city",example="234234")
+    private String city;
+    @ApiModelProperty(value="市名",name="city",example="深圳市")
+    private String cityName;
+    /**区*/
+    @ApiModelProperty(value="区",name="district",example="324344")
+    private String district;
+    @ApiModelProperty(value="区名",name="district",example="福田区")
+    private String districtName;
 
     /** 商家地址 */
     @ApiModelProperty(value="商家地址",name="sellerAddress",example="广东省深圳市富德大厦507")
@@ -51,6 +71,14 @@ public class SellerVo implements java.io.Serializable {
     /** 商家名称 */
     @ApiModelProperty(value="商家名称",name="sellerName",example="BMW4S店")
     private String sellerName;
+
+    /** 商家X轴坐标：经度 */
+    @ApiModelProperty(value="经度 ",name="positionX",example="5.55")
+    private String positionX;
+
+    /** 商家Y轴坐标：纬度*/
+    @ApiModelProperty(value="纬度",name="positionY",example="3.22")
+    private String positionY;
 
     public Integer getSellerId() {
         return sellerId;
@@ -92,6 +120,14 @@ public class SellerVo implements java.io.Serializable {
         this.mobile = mobile;
     }
 
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -124,6 +160,70 @@ public class SellerVo implements java.io.Serializable {
         this.sellerName = sellerName;
     }
 
+    public String getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(String positionX) {
+        this.positionX = positionX;
+    }
+
+    public String getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(String positionY) {
+        this.positionY = positionY;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
     @Override
     public String toString() {
         return "SellerVo{" +
@@ -132,10 +232,19 @@ public class SellerVo implements java.io.Serializable {
                 ", introduction='" + introduction + '\'' +
                 ", linkman='" + linkman + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", telephone='" + telephone + '\'' +
                 ", remark='" + remark + '\'' +
+                ", province='" + province + '\'' +
+                ", provinceName='" + provinceName + '\'' +
+                ", city='" + city + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", district='" + district + '\'' +
+                ", districtName='" + districtName + '\'' +
                 ", sellerAddress='" + sellerAddress + '\'' +
                 ", sellerCode='" + sellerCode + '\'' +
                 ", sellerName='" + sellerName + '\'' +
+                ", positionX='" + positionX + '\'' +
+                ", positionY='" + positionY + '\'' +
                 '}';
     }
 }

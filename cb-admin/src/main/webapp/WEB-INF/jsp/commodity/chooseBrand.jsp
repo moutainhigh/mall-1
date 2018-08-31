@@ -51,9 +51,9 @@
                 </kendo:grid-filterable-operators>
             </kendo:grid-filterable>
             <kendo:grid-columns>
-                <kendo:grid-column title="<input type='checkbox' id='checkall'>全选</input>" field="brandId" width="20" template="<input type='checkbox' id='#: brandId #' name='selectedBrandId' value='#: brandId #' />" sortable="false" filterable="false"/>
-                <kendo:grid-column title="品牌编码" field="brandNo" width="80"/>
-                <kendo:grid-column title="品牌名称" field="brandName" width="80"/>
+                <kendo:grid-column title="<input type='checkbox' id='checkallBrand'>全选</input>" field="brandId" width="20" template="<input type='checkbox' id='#: brandId #' name='selectedBrandId' value='#: brandId #' />" sortable="false" filterable="false"/>
+                <kendo:grid-column title="品牌编码" filterable="false" field="brandNo" width="80"/>
+                <kendo:grid-column title="品牌名称" filterable="false" field="brandName" width="80"/>
             </kendo:grid-columns>
             <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                 <kendo:dataSource-schema data="content" total="totalElements">
@@ -76,13 +76,13 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#checkall").click(function(){
+        $("#checkallBrand").click(function(){
             if(this.checked){
-                $("#brandGrid input[type='checkbox'][name='selectedBrandIdId']").each(function() {
+                $("#brandGrid input[type='checkbox'][name='selectedBrandId']").each(function() {
                     $(this).prop("checked","checked");
                 });
             }else{
-                $("#brandGrid input[type='checkbox'][name='selectedBrandIdId']").each(function() {
+                $("#brandGrid input[type='checkbox'][name='selectedBrandId']").each(function() {
                     $(this).removeAttr("checked");
                 });
             }

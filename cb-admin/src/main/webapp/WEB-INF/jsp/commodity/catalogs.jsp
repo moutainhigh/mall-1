@@ -13,6 +13,9 @@
 
         });
 
+        /**
+         * 修改
+         */
         function editItem(){
             var dataItem=getSelectedTreeListItem("treelist");
             if(dataItem){
@@ -20,9 +23,16 @@
             }
         }
 
+        /**
+         * 删除
+         */
         function removeItem() {
             var dataItem=getSelectedTreeListItem("treelist");
             if(dataItem){
+                if(dataItem.catalogCode && dataItem.catalogCode.length <= 3*2){
+                    commonNotify("根分类和一级分类禁止删除!", "error");
+                    return;
+                }
                 bootbox.confirm("确定删除吗？", function(result) {
                     if(result){
                         var catalogId=dataItem.catalogId;
@@ -41,9 +51,16 @@
             }
         }
 
+        /**
+         * 停用/启用
+         */
         function enabledItem(enabled) {
             var dataItem = getSelectedTreeListItem("treelist");
             if (dataItem) {
+                if(dataItem.catalogCode && dataItem.catalogCode.length == 3){
+                    commonNotify("根分类禁止进行停用/启用操作!", "error");
+                    return;
+                }
                 $.get("enableCatalogById.do", {
                     catalogId: dataItem.catalogId,
                     enabled: enabled,
@@ -57,6 +74,20 @@
                         commonNotify("操作失败!", "error");
                     }
                 });
+            }
+        }
+
+        /**
+         * 商品规格
+         */
+        function viewSpecifiction() {
+            var dataItem = getSelectedTreeListItem("treelist");
+            if(dataItem){
+                if(dataItem.catalogId && dataItem.catalogCode.length/3 != 4){
+                    commonNotify("仅第三级分类可进行商品属性操作!", "error");
+                    return;
+                }
+                window.location.href = "catalogSpecs.do?catalogId=" + dataItem.catalogId;
             }
         }
     </script>
@@ -106,7 +137,7 @@
                 <div class="pull-right">
 
                     <!-- End .dropdown -->
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -116,7 +147,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </header>
@@ -151,6 +182,9 @@
                                 <a href="javascript:void(0);" onclick="enabledItem(true)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
                                 <a href="javascript:void(0);" onclick="enabledItem(false)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
                             </div>
+                            <div class="btn-group">
+                                <a href="javascript:void(0);" onclick="viewSpecifiction()" class="btn btn-default">商品规格</a>
+                            </div>
                         </div>
                     </header>
                 </div>
@@ -158,11 +192,12 @@
                     <kendo:treeList name="treelist" height="450" selectable="true">
                         <kendo:treeList-columns>
                             <kendo:treeList-column field="catalogName" title="分类名称"></kendo:treeList-column>
+                            <kendo:treeList-column field="catalogCode" hidden="true" title="分类编码"></kendo:treeList-column>
                             <kendo:treeList-column field="ratio" title="分类比例配置"></kendo:treeList-column>
                             <kendo:treeList-column field="enabled" title="状态" template="#= enabled ? '启用' : '停用' #"></kendo:treeList-column>
                             <kendo:treeList-column field="supportAddedTax" title="增值税发票" template="#= supportAddedTax ? '支持' : '不支持' #"></kendo:treeList-column>
                             <kendo:treeList-column field="remark" title="备注"></kendo:treeList-column>
-                            <kendo:treeList-column title="操作" field="operate" width="160px">
+                            <%--<kendo:treeList-column title="操作" field="operate" width="160px">
                                 <kendo:treeList-column-command>
                                     <kendo:treeList-column-commandItem name="viewGallerys" text="商品规格" className="grid-button">
                                         <kendo:treeList-column-commandItem-click>
@@ -175,7 +210,7 @@
                                         </kendo:treeList-column-commandItem-click>
                                     </kendo:treeList-column-commandItem>
                                 </kendo:treeList-column-command>
-                            </kendo:treeList-column>
+                            </kendo:treeList-column>--%>
                         </kendo:treeList-columns>
                         <kendo:dataSource data="${catalogs}">
                             <kendo:dataSource-schema>

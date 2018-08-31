@@ -5,8 +5,11 @@ import com.yunxin.cb.console.dao.RoleDao;
 import com.yunxin.cb.console.dao.UserDao;
 import com.yunxin.cb.console.entity.*;
 import com.yunxin.cb.console.service.ISecurityService;
+import com.yunxin.cb.mall.entity.Feedback;
+import com.yunxin.cb.mall.entity.Feedback_;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.entity.Seller_;
+import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.security.IPermission;
 import com.yunxin.cb.security.PBKDF2PasswordEncoder;
 import com.yunxin.cb.security.SecurityProvider;
@@ -31,12 +34,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.persistence.criteria.*;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,6 +59,7 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
 
     @Resource
     private PermissionDao permissionDao;
+
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -96,7 +95,7 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         }
         Date date = new Date();
         user.setCreateTime(date);
-        user.setLastTime(date);
+        //user.setLastTime(date);
         user.setPassword(PasswordHash.createHash(user.getPassword()));
         return userDao.save(user);
     }
@@ -191,6 +190,7 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         }
         Role dbRole = roleDao.findOne(role.getRoleId());
         dbRole.setRoleName(role.getRoleName());
+        dbRole.setRoleCode(role.getRoleCode());
         dbRole.setRemark(role.getRemark());
         // 保存新的可访问资源
         permissionDao.deleteByRole_RoleId(dbRole.getRoleId());
@@ -221,6 +221,8 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         if (dbRole.getUsers().isEmpty()) {
             permissionDao.deleteByRole_RoleId(roleId);
             roleDao.delete(roleId);
+        }else{
+            throw new Exception("该角色下存在用户无法删除");
         }
     }
 
@@ -406,5 +408,20 @@ public class SecurityService extends SecurityProvider implements ISecurityServic
         } else {
             return null;
         }
+    }
+
+    public Page<Role> pageRole(final PageSpecification<Role> queryRequest){
+        queryRequest.setCustomSpecification(new CustomSpecification<Role>() {
+            @Override
+            public void buildFetch(Root<Role> root) {
+            }
+            @Override
+            public void addConditions(Root<Role> root, CriteriaQuery<?> query,
+                                      CriteriaBuilder builder, List<Predicate> predicates) {
+                query.orderBy(builder.desc(root.get(Role_.createTime)));
+            }
+        });
+        Page<Role> page = roleDao.findAll(queryRequest, queryRequest.getPageRequest());
+        return page;
     }
 }
