@@ -5,7 +5,7 @@ import com.yunxin.cb.mall.entity.meta.WithdrawType;
 import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.restful.meta.Result;
-import com.yunxin.cb.mall.service.FinacialWalletService;
+import com.yunxin.cb.mall.service.FinancialWalletService;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class FinacialWalletServiceImpl implements FinacialWalletService {
+public class FinancialWalletServiceImpl implements FinancialWalletService {
 
-    private static final Log log = LogFactory.getLog(FinacialWalletServiceImpl.class);
+    private static final Log log = LogFactory.getLog(FinancialWalletServiceImpl.class);
     @Resource
     private FinacialWalletMapper finacialWalletMapper;
     @Resource

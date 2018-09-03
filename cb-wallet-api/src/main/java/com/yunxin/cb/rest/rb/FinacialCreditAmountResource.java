@@ -40,7 +40,7 @@ public class FinacialCreditAmountResource extends BaseResource {
     private BankInfoService bankInfoService;
 
     @Resource
-    private FinacialWalletService finacialWalletService;
+    private FinancialWalletService financialWalletService;
 
     @Resource
     private FinacialLoanService finacialLoanService;
@@ -59,7 +59,7 @@ public class FinacialCreditAmountResource extends BaseResource {
     @ApiVersion(1)
     public ResponseResult<FinacialCreditLineVO> getCreditAmountInfo() {
         try {
-            FinancialWalletVO financialWalletVO = finacialWalletService.getFinancialWalletByCustomerId(getCustomerId());
+            FinancialWalletVO financialWalletVO = financialWalletService.getFinancialWalletByCustomerId(getCustomerId());
             FinacialCreditLineVO vo = new FinacialCreditLineVO();
             BeanUtils.copyProperties(financialWalletVO, vo);
             // 查询审核通过的我的借款次数
@@ -88,7 +88,7 @@ public class FinacialCreditAmountResource extends BaseResource {
             }
             FinacialLoanInitDateVO vo = new FinacialLoanInitDateVO();
             //最高可贷金额
-            FinancialWalletVO financialWalletVO = finacialWalletService.getFinancialWalletByCustomerId(getCustomerId());
+            FinancialWalletVO financialWalletVO = financialWalletService.getFinancialWalletByCustomerId(getCustomerId());
 //            vo.setTotalAmount(financialWalletVO.getTotalAmount());
             //期限
             List<FinacialLoanConfig> list = finacialLoanConfigService.getFinacilaLoanConfigs();
@@ -127,7 +127,7 @@ public class FinacialCreditAmountResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE, "请先绑定银行卡再申请贷款");
             }
             //最高可贷金额,判断额度是否满足贷款
-            FinancialWalletVO walletVO = finacialWalletService.getFinancialWalletByCustomerId(getCustomerId());
+            FinancialWalletVO walletVO = financialWalletService.getFinancialWalletByCustomerId(getCustomerId());
 //            BigDecimal totalAmount = walletVO.getTotalAmount();
 //            if (finacialLoanVO.getAmount().compareTo(totalAmount) > 0) {
 //                return new ResponseResult(Result.FAILURE, "您的可贷金额不足");

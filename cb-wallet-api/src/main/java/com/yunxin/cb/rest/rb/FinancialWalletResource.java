@@ -4,7 +4,7 @@ import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.meta.WithdrawType;
 import com.yunxin.cb.mall.service.CustomerService;
-import com.yunxin.cb.mall.service.FinacialWalletService;
+import com.yunxin.cb.mall.service.FinancialWalletService;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
@@ -21,10 +21,10 @@ import java.math.BigDecimal;
 @Api(description = "钱包接口")
 @RestController
 @RequestMapping(value = "/{version}/rb/wallet")
-public class FiaciaWalletResource extends BaseResource {
+public class FinancialWalletResource extends BaseResource {
 
     @Resource
-    private FinacialWalletService finacialWalletService;
+    private FinancialWalletService financialWalletService;
 
     @Resource
     private CustomerService customerService;
@@ -38,7 +38,7 @@ public class FiaciaWalletResource extends BaseResource {
 //    @PostMapping(value = "add")
 //    public ResponseResult<FinancialWalletVO> add(@RequestBody FinancialWalletVO vo){
 //        try {
-//            vo = finacialWalletService.addFinancialWallet(vo);
+//            vo = financialWalletService.addFinancialWallet(vo);
 //            return new ResponseResult(vo);
 //        } catch (Exception e) {
 //            logger.error("add failed", e);
@@ -53,7 +53,7 @@ public class FiaciaWalletResource extends BaseResource {
 //    @PostMapping(value = "update")
 //    public ResponseResult<FinancialWalletVO> update(@RequestBody FinancialWalletVO vo){
 //        try {
-//            vo = finacialWalletService.updateFinancialWallet(vo);
+//            vo = financialWalletService.updateFinancialWallet(vo);
 //            return new ResponseResult(vo);
 //        } catch (Exception e) {
 //            log.info("update failed", e);
@@ -72,7 +72,7 @@ public class FiaciaWalletResource extends BaseResource {
             if (customer == null) {
                 return new ResponseResult(Result.FAILURE, "未获取到用户信息");
             }
-            FinancialWalletVO vo=finacialWalletService.getFinancialWalletByCustomerId(customer.getCustomerId());
+            FinancialWalletVO vo= financialWalletService.getFinancialWalletByCustomerId(customer.getCustomerId());
             return new ResponseResult(vo);
         } catch (Exception e) {
             logger.info("get failed", e);
@@ -99,7 +99,7 @@ public class FiaciaWalletResource extends BaseResource {
                                                                           @PathVariable WithdrawType type, @PathVariable String remark){
         com.yunxin.cb.mall.restful.ResponseResult result=new com.yunxin.cb.mall.restful.ResponseResult(Result.FAILURE);
         try {
-            result=finacialWalletService.processCustomerMoney(customerId,money,type,remark);
+            result= financialWalletService.processCustomerMoney(customerId,money,type,remark);
         } catch (Exception e) {
             logger.info("get failed", e);
         }

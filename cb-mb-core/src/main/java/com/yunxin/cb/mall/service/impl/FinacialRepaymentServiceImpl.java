@@ -10,7 +10,7 @@ import com.yunxin.cb.mall.mapper.FinacialWalletMapper;
 import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
 import com.yunxin.cb.mall.service.FinacialLoanService;
 import com.yunxin.cb.mall.service.FinacialRepaymentService;
-import com.yunxin.cb.mall.service.FinacialWalletService;
+import com.yunxin.cb.mall.service.FinancialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
 import com.yunxin.cb.mall.vo.FinacialRepaymentVO;
@@ -43,7 +43,7 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
     private FinacialWalletMapper finacialWalletMapper;
 
     @Resource
-    private FinacialWalletService finacialWalletService;
+    private FinancialWalletService financialWalletService;
 
     private static final Log log = LogFactory.getLog(FinacialRepaymentServiceImpl.class);
 
@@ -120,7 +120,7 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
 //        financialWallet.setDebtTotal(financialWallet.getDebtTotal().subtract(totalAmount));
         FinancialWalletVO financialWalletVO = new FinancialWalletVO();
         BeanUtils.copyProperties(financialWalletVO, financialWallet);
-        finacialWalletService.updateFinancialWallet(financialWalletVO);
+        financialWalletService.updateFinancialWallet(financialWalletVO);
     }
 
     /**

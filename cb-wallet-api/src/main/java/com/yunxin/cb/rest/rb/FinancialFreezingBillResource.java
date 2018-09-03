@@ -27,7 +27,7 @@ public class FinancialFreezingBillResource extends BaseResource {
     @Resource
     private FinancialFreezingBillService financialFreezingBillService;
 
-    private static final Log log = LogFactory.getLog(FiaciaWalletResource.class);
+    private static final Log log = LogFactory.getLog(FinancialWalletResource.class);
 
     @ApiOperation(value = "获取预期收益交易信息")
     @ApiImplicitParams({

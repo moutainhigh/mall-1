@@ -6,7 +6,7 @@ import com.yunxin.cb.mall.vo.FinancialWalletVO;
 
 import java.math.BigDecimal;
 
-public interface FinacialWalletService {
+public interface FinancialWalletService {
 
     /**
      * 添加钱包信息

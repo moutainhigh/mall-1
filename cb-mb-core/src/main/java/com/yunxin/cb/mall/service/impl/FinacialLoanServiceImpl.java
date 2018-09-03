@@ -9,7 +9,7 @@ import com.yunxin.cb.mall.entity.meta.TransactionType;
 import com.yunxin.cb.mall.mapper.FinacialCreditLineBillMapper;
 import com.yunxin.cb.mall.mapper.FinacialLoanMapper;
 import com.yunxin.cb.mall.service.FinacialLoanService;
-import com.yunxin.cb.mall.service.FinacialWalletService;
+import com.yunxin.cb.mall.service.FinancialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import com.yunxin.cb.util.CalendarUtils;
@@ -34,7 +34,7 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
     @Resource
     private FinacialLoanMapper finacialLoanMapper;
     @Resource
-    private FinacialWalletService finacialWalletService;
+    private FinancialWalletService financialWalletService;
     @Resource
     private FinacialCreditLineBillMapper finacialCreditLineBillMapper;
 
@@ -70,7 +70,7 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
         FinacialLoan finacialLoan = new FinacialLoan();
         BeanUtils.copyProperties(finacialLoan, finacialLoanVO);
         //更新钱包额度
-        finacialWalletService.updateFinancialWallet(financialWalletVO);
+        financialWalletService.updateFinancialWallet(financialWalletVO);
         Date now = new Date();
         //添加借款记录
         finacialLoan.setCreateTime(now);

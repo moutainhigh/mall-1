@@ -4,7 +4,7 @@ import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Profile;
 import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.service.BankInfoService;
-import com.yunxin.cb.mall.service.FinacialWalletService;
+import com.yunxin.cb.mall.service.FinancialWalletService;
 import com.yunxin.cb.mall.service.ProfileService;
 import com.yunxin.cb.mall.vo.BankInfoVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
@@ -38,7 +38,7 @@ public class WithdrawResource extends BaseResource {
     private BankInfoService bankInfoService;
 
     @Resource
-    private FinacialWalletService finacialWalletService;
+    private FinancialWalletService financialWalletService;
 
     @Resource
     private ProfileService profileService;
@@ -58,7 +58,7 @@ public class WithdrawResource extends BaseResource {
     public ResponseResult<WithdrawInfoVO> getWithdrawInfo(){
         try {
             //查询用户的钱包余额
-            FinancialWalletVO financialWalletVO =finacialWalletService.getFinancialWalletByCustomerId(getCustomerId());
+            FinancialWalletVO financialWalletVO = financialWalletService.getFinancialWalletByCustomerId(getCustomerId());
             //查询用户所有银行卡
             List<BankInfoVO> bankInfoVOs=bankInfoService.selectAll(getCustomerId());
             //查询后台配置提现手续费率
