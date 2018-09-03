@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
-import com.yunxin.cb.mall.entity.FinacialLoan;
+import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.entity.meta.LoanType;
 import com.yunxin.cb.util.page.PageFinder;
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@ApiModel(value = "用户借款VO", description = "用户借款VO FinacialLoanVO")
-public class FinacialLoanVO {
+@ApiModel(value = "用户借款VO", description = "用户借款VO FinancialLoanVO")
+public class FinancialLoanVO {
     private static final long serialVersionUID = -2695946271501714063L;
 
     @ApiModelProperty(value = "借款ID", name = "loanId", example = "1")
@@ -230,7 +230,7 @@ public class FinacialLoanVO {
 
     @Override
     public String toString() {
-        return "FinacialLoanVO{" +
+        return "FinancialLoanVO{" +
                 "loanId=" + loanId +
                 ", customerId=" + customerId +
                 ", amount=" + amount +
@@ -256,11 +256,11 @@ public class FinacialLoanVO {
     /**
      * 分页DO转换VO
      */
-    public static List<FinacialLoanVO> dOconvertVOList (List<FinacialLoan> list) throws Exception{
+    public static List<FinancialLoanVO> dOconvertVOList (List<FinancialLoan> list) throws Exception{
         try {
-            List<FinacialLoanVO> volist = new ArrayList<>();
-            for (FinacialLoan model : list) {
-                FinacialLoanVO vo = new FinacialLoanVO();
+            List<FinancialLoanVO> volist = new ArrayList<>();
+            for (FinancialLoan model : list) {
+                FinancialLoanVO vo = new FinancialLoanVO();
                 org.springframework.beans.BeanUtils.copyProperties(model, vo);
                 volist.add(vo);
             }
@@ -274,10 +274,10 @@ public class FinacialLoanVO {
     /**
      * 分页DO转换VO
      */
-    public static PageFinder<FinacialLoanVO> dOconvertVOPage (PageFinder<FinacialLoan> pageFinder) throws Exception{
-        PageFinder<FinacialLoanVO> page = new PageFinder<FinacialLoanVO> (pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
+    public static PageFinder<FinancialLoanVO> dOconvertVOPage (PageFinder<FinancialLoan> pageFinder) throws Exception{
+        PageFinder<FinancialLoanVO> page = new PageFinder<FinancialLoanVO> (pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
         if (pageFinder != null) {
-            List<FinacialLoanVO> list = FinacialLoanVO.dOconvertVOList(pageFinder.getData());
+            List<FinancialLoanVO> list = FinancialLoanVO.dOconvertVOList(pageFinder.getData());
             page.setData(list);
         }
         page.setRowCount(pageFinder.getRowCount());//记录总数

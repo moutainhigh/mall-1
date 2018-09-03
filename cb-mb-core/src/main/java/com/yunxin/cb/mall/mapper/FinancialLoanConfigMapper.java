@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FinacialLoanConfig;
+import com.yunxin.cb.mall.entity.FinancialLoanConfig;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -10,12 +10,12 @@ import org.apache.ibatis.type.JdbcType;
 import java.util.List;
 
 @Mapper
-public interface FinacialLoanConfigMapper {
+public interface FinancialLoanConfigMapper {
 
     @Select({
             "SELECT",
             "LOAN_CONFIG_ID, TERM, INTEREST_RATE, TITLE, REMARK",
-            "FROM finacial_loan_config",
+            "FROM financial_loan_config",
             "ORDER BY TERM"
     })
     @Results({
@@ -25,12 +25,12 @@ public interface FinacialLoanConfigMapper {
             @Result(column="TITLE", property="title", jdbcType=JdbcType.VARCHAR),
             @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR)
     })
-    List<FinacialLoanConfig> selectAll();
+    List<FinancialLoanConfig> selectAll();
 
     @Select({
             "SELECT",
             "LOAN_CONFIG_ID, TERM, INTEREST_RATE, TITLE, REMARK",
-            "FROM finacial_loan_config",
+            "FROM financial_loan_config",
             "where LOAN_CONFIG_ID = #{loanConfigId,jdbcType=INTEGER}"
     })
     @Results({
@@ -40,5 +40,5 @@ public interface FinacialLoanConfigMapper {
             @Result(column="TITLE", property="title", jdbcType=JdbcType.VARCHAR),
             @Result(column="REMARK", property="remark", jdbcType=JdbcType.VARCHAR)
     })
-    FinacialLoanConfig selectByPrimaryKey(int loanConfigId);
+    FinancialLoanConfig selectByPrimaryKey(int loanConfigId);
 }

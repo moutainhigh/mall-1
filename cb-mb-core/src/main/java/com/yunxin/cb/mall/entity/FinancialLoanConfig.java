@@ -1,27 +1,25 @@
-package com.yunxin.cb.mall.vo;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+package com.yunxin.cb.mall.entity;
 
 import java.math.BigDecimal;
 
-@ApiModel(value = "借款期限VO", description = "借款期限VO FinacialLoanConfigVO")
-public class FinacialLoanConfigVO {
+public class FinancialLoanConfig {
     /**  */
-    @ApiModelProperty(value = "借款期限id", name = "loanConfigId", example = "1")
     private Integer loanConfigId;
 
     /** 还款期数 */
-    @ApiModelProperty(value = "还款期数", name = "term", example = "6")
     private Integer term;
 
     /** 贷款利率 */
-    @ApiModelProperty(value = "贷款利率 ", name = "interestRate", example = "0.3")
     private BigDecimal interestRate;
 
+    /** 贷款类型：1.信用贷款，2.预期收益贷 */
+//    private LoanType type;
+
     /** 贷款产品标题 */
-    @ApiModelProperty(value = "贷款期限标题 ", name = "title", example = "6个月")
     private String title;
+
+    /** 产品描述 */
+    private String remark;
 
     public Integer getLoanConfigId() {
         return loanConfigId;
@@ -47,6 +45,14 @@ public class FinacialLoanConfigVO {
         this.interestRate = interestRate;
     }
 
+//    public LoanType getType() {
+//        return type;
+//    }
+//
+//    public void setType(LoanType type) {
+//        this.type = type;
+//    }
+
     public String getTitle() {
         return title;
     }
@@ -55,4 +61,11 @@ public class FinacialLoanConfigVO {
         this.title = title;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }

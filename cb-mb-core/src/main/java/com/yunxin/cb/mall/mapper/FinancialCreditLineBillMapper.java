@@ -7,7 +7,7 @@ import org.apache.ibatis.type.JdbcType;
 import java.util.List;
 
 @Mapper
-public interface FinacialCreditLineBillMapper {
+public interface FinancialCreditLineBillMapper {
     @Delete({
         "delete from finacial_credit_line_bill",
         "where FINACIAL_CREDIT_LINE_ID = #{finacialCreditLineId,jdbcType=INTEGER}"

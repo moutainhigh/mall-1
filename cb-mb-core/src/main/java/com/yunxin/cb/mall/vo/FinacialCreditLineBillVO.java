@@ -8,11 +8,11 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@ApiModel(value = "用户信用额度交易VO", description = "用户信用额度交易VO FinacialExpectBillVO")
+@ApiModel(value = "用户信用额度交易VO", description = "用户信用额度交易VO FinancialFreezingBillVO")
 public class FinacialCreditLineBillVO implements java.io.Serializable{
     private static final long serialVersionUID = -2695946271501714063L;
     /**  */
-    private Integer finacialExpectId;
+    private Integer financialFreezingId;
 
     @ApiModelProperty(value = "客户ID", name = "customerId", example = "1")
     private Integer customerId;
@@ -32,12 +32,12 @@ public class FinacialCreditLineBillVO implements java.io.Serializable{
     @ApiModelProperty(value = "交易时间 ", name = "createTime", example = "2018-08-08")
     private Date createTime;
 
-    public Integer getFinacialExpectId() {
-        return finacialExpectId;
+    public Integer getFinancialFreezingId() {
+        return financialFreezingId;
     }
 
-    public void setFinacialExpectId(Integer finacialExpectId) {
-        this.finacialExpectId = finacialExpectId;
+    public void setFinancialFreezingId(Integer financialFreezingId) {
+        this.financialFreezingId = financialFreezingId;
     }
 
     public Integer getCustomerId() {

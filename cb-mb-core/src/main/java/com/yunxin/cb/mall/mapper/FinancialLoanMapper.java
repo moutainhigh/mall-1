@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FinacialLoan;
+import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
@@ -8,7 +8,7 @@ import org.apache.ibatis.type.JdbcType;
 import java.util.List;
 
 @Mapper
-public interface FinacialLoanMapper {
+public interface FinancialLoanMapper {
     @Delete({
             "delete from finacial_loan",
             "where LOAN_ID = #{loanId,jdbcType=INTEGER}"
@@ -36,7 +36,7 @@ public interface FinacialLoanMapper {
             "#{overdueNumer,jdbcType=INTEGER}, #{bankId,jdbcType=INTEGER},",
             "#{creditAmount,jdbcType=DECIMAL},#{insuranceAmount,jdbcType=DECIMAL})"
     })
-    int insert(FinacialLoan record);
+    int insert(FinancialLoan record);
 
     @Select({
             "select",
@@ -69,7 +69,7 @@ public interface FinacialLoanMapper {
             @Result(column="CREDIT_AMOUNT", property="creditAmount", jdbcType=JdbcType.DECIMAL),
             @Result(column="INSURANCE_AMOUNT", property="insuranceAmount", jdbcType=JdbcType.DECIMAL)
     })
-    FinacialLoan selectByPrimaryKey(Integer loanId);
+    FinancialLoan selectByPrimaryKey(Integer loanId);
 
     @Select({
             "select",
@@ -101,7 +101,7 @@ public interface FinacialLoanMapper {
             @Result(column="CREDIT_AMOUNT", property="creditAmount", jdbcType=JdbcType.DECIMAL),
             @Result(column="INSURANCE_AMOUNT", property="insuranceAmount", jdbcType=JdbcType.DECIMAL)
     })
-    List<FinacialLoan> selectByCustomerIdAndType(@Param("customerId") Integer customerId);
+    List<FinancialLoan> selectByCustomerIdAndType(@Param("customerId") Integer customerId);
 
     @Update({
             "update finacial_loan",
@@ -127,7 +127,7 @@ public interface FinacialLoanMapper {
             "BANK_ID = #{creditAmount,jdbcType=INTEGER}",
             "INSURANCE_AMOUNT LOAN_ID = #{insuranceAmount,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKey(FinacialLoan record);
+    int updateByPrimaryKey(FinancialLoan record);
 
     @Select({
             "<script>",
@@ -145,7 +145,7 @@ public interface FinacialLoanMapper {
             "</script>"
     })
     @ResultMap(value="finacialLoanMap")
-    List<FinacialLoan> pageList(Query q);
+    List<FinancialLoan> pageList(Query q);
 
     @Select({
             "<script>",

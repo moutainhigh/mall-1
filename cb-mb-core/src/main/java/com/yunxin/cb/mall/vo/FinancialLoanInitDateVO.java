@@ -6,15 +6,15 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.List;
 
-@ApiModel(value = "用户借款申请初始页面数据VO", description = "用户借款申请初始页面数据VO FinacialLoanVO")
-public class FinacialLoanInitDateVO {
+@ApiModel(value = "用户借款申请初始页面数据VO", description = "用户借款申请初始页面数据VO FinancialLoanInitDateVO")
+public class FinancialLoanInitDateVO {
     private static final long serialVersionUID = -2695946271501714063L;
 
     @ApiModelProperty(value = "可贷额度", name = "totalAmount", example = "100")
     private BigDecimal totalAmount;
 
-    @ApiModelProperty(value = "借款期限列表", name = "finacialLoanConfigVOList", example = "finacialLoanConfigVOList")
-    private List<FinacialLoanConfigVO> finacialLoanConfigVOList;
+    @ApiModelProperty(value = "借款期限列表", name = "financialLoanConfigVOList", example = "financialLoanConfigVOList")
+    private List<FinancialLoanConfigVO> financialLoanConfigVOList;
 
     @ApiModelProperty(value = "用户绑定的银行卡", name = "bankInfoVO", example = "bankInfoVO")
     private BankInfoVO bankInfoVO;
@@ -27,12 +27,12 @@ public class FinacialLoanInitDateVO {
         this.totalAmount = amount;
     }
 
-    public List<FinacialLoanConfigVO> getFinacialLoanConfigVOList() {
-        return finacialLoanConfigVOList;
+    public List<FinancialLoanConfigVO> getFinancialLoanConfigVOList() {
+        return financialLoanConfigVOList;
     }
 
-    public void setFinacialLoanConfigVOList(List<FinacialLoanConfigVO> finacialLoanConfigVOList) {
-        this.finacialLoanConfigVOList = finacialLoanConfigVOList;
+    public void setFinancialLoanConfigVOList(List<FinancialLoanConfigVO> financialLoanConfigVOList) {
+        this.financialLoanConfigVOList = financialLoanConfigVOList;
     }
 
     public BankInfoVO getBankInfoVO() {
@@ -45,9 +45,9 @@ public class FinacialLoanInitDateVO {
 
     @Override
     public String toString() {
-        return "FinacialLoanInitDateVO{" +
+        return "FinancialLoanInitDateVO{" +
                 "amount=" + totalAmount +
-                ", finacialLoanConfigVOList=" + finacialLoanConfigVOList +
+                ", financialLoanConfigVOList=" + financialLoanConfigVOList +
                 ", bankInfoVO=" + bankInfoVO +
                 '}';
     }
