@@ -150,64 +150,20 @@
       },
       {
         "name": "角色管理", "code": "132", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../security/roles.do"
-      },
-      {
-        "name": "七牛图片管理", "code": "133", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../securityattachment/attachments.do"
+//      },
+//      {
+//        "name": "七牛图片管理", "code": "133", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../securityattachment/attachments.do"
       }
     ]
   },
-  {
-    "name": "设备管理", "code": "14", "type": "MENU", "cssClass": "fa fa-phone", "value": "concent", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "PAD设备", "code": "141", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../concent/concents.do"
-      },
-      {
-        "name": "厨电设备", "code": "142", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../concent/devices.do"
-      }
-    ]
-  },
-  {
-    "name": "保单管理", "code": "15", "type": "MENU", "cssClass": "fa fa-phone", "value": "insurance", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "保单列表", "code": "151", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/insurances.do"
-      },
-      {
-        "name": "保险合同编号", "code": "152", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceordercode/insuranceordercodes.do"
-      },
-      {
-        "name": "事项组管理", "code": "153", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceInformedGroup/insuranceInformedGroups.do"
-      },{
-        "name": "事项管理", "code": "154", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceInformedMatter/insuranceInformedMatters.do"
-      },
-      {
-        "name": "产品管理", "code": "155", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insuranceproduct/insuranceproducts.do"
-      },
-      {
-        "name": "保单操作日志", "code": "156", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../insurance/insuranceLog.do"
-      }
-    ]
-  },
-  {
-    "name": "反馈信息", "code": "16", "type": "MENU", "cssClass": "fa fa-phone", "value": "feedback", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "用户反馈管理", "code": "161", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../feedback/feedbacks.do"
-      }
-    ]
-  },
-  {
-    "name": "系统配置", "code": "17", "type": "MENU", "cssClass": "fa fa-cogs", "value": "profile", "childrenCssClass": "children",
-    "children": [
-      {
-        "name": "参数配置", "code": "171", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../profile/profiles.do"
-      },
-      {
-        "name": "消息中心配置", "code": "172", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../message/message.do"
-      }
-    ]
-  },
+//  {
+//    "name": "反馈信息", "code": "16", "type": "MENU", "cssClass": "fa fa-phone", "value": "feedback", "childrenCssClass": "children",
+//    "children": [
+//      {
+//        "name": "用户反馈管理", "code": "161", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../feedback/feedbacks.do"
+//      }
+//    ]
+//  },
   {
     "name": "资金池管理", "code": "18", "type": "MENU", "cssClass": "fa fa-cogs", "value": "fundspool", "childrenCssClass": "children",
     "children": [
