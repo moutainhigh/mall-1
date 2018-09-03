@@ -1,7 +1,7 @@
 package com.yunxin.cb.mall.mapper;
 
 import com.yunxin.cb.mall.entity.FiaciaLog;
-import com.yunxin.cb.mall.vo.FiaciaLogVO;
+import com.yunxin.cb.mall.vo.FinancialLogVO;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface FinacialLogMapper {
+public interface FinancialLogMapper {
     @Delete({
         "delete from finacial_log",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
@@ -18,7 +18,7 @@ public interface FinacialLogMapper {
     int deleteByPrimaryKey(Integer logId);
 
     @Insert({
-        "insert into finacial_log (LOG_ID, CUSTOMER_ID, ",
+        "insert into financial_log_bill (LOG_ID, CUSTOMER_ID, ",
         "CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, ",
         "TYPE, TRANSACTION_TYPE, ",
         "PAY_TYPE, CREATE_TIME, ",
@@ -37,7 +37,7 @@ public interface FinacialLogMapper {
         "select",
         "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
         "CREATE_TIME, STATE, TRANSACTION_NO, TRANSACTION_DESC",
-        "from finacial_log",
+        "from financial_log_bill",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
     })
     @Results({
@@ -101,9 +101,9 @@ public interface FinacialLogMapper {
     @Select({
             "<script>",
             "select",
-            "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
-            "CREATE_TIME, STATE, TRANSACTION_NO, TRANSACTION_DESC",
-            "from finacial_log",
+            "LOG_ID, IMAGE, AMOUNT, TYPE, TRANSACTION_TYPE,",
+            "CREATE_TIME",
+            "from financial_log_bill",
             "where 1=1",
             "<if test='data.customerId!=null'>",
             "and CUSTOMER_ID = #{data.customerId}",
@@ -117,18 +117,12 @@ public interface FinacialLogMapper {
     })
     @Results({
             @Result(column="LOG_ID", property="logId", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
-            @Result(column="CUSTOMER_NAME", property="customerName", jdbcType=JdbcType.VARCHAR),
             @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
             @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
             @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
-            @Result(column="PAY_TYPE", property="payType", jdbcType=JdbcType.INTEGER),
-            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="STATE", property="state", jdbcType=JdbcType.INTEGER),
-            @Result(column="TRANSACTION_NO", property="transactionNo", jdbcType=JdbcType.VARCHAR),
-            @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR)
+            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<FiaciaLogVO> pageList(Query q);
+    List<FinancialLogVO> pageList(Query q);
 
     @Select({
             "<script>",
@@ -149,10 +143,34 @@ public interface FinacialLogMapper {
     @Select({
             "<script>",
             "SELECT ",
-            "(SELECT IFNULL(SUM(amount),0.00) FROM finacial_log WHERE TYPE=0 <if test='data.customerId!=null'> and CUSTOMER_ID = #{data.customerId} </if> <if test='data.yearMonth!=null'> and DATE_FORMAT(CREATE_TIME, '%Y%m') = ${data.yearMonth} </if>) AS addTotalAmount,",
-            "(SELECT IFNULL(SUM(amount),0.00) FROM finacial_log WHERE TYPE=1 <if test='data.customerId!=null'> and CUSTOMER_ID = #{data.customerId} </if> <if test='data.yearMonth!=null'> and DATE_FORMAT(CREATE_TIME, '%Y%m') = ${data.yearMonth} </if>) AS subTotalAmount ",
+            "(SELECT IFNULL(SUM(amount),0.00) FROM financial_log_bill WHERE TYPE=0 <if test='data.customerId!=null'> and CUSTOMER_ID = #{data.customerId} </if> <if test='data.yearMonth!=null'> and DATE_FORMAT(CREATE_TIME, '%Y%m') = ${data.yearMonth} </if>) AS addTotalAmount,",
+            "(SELECT IFNULL(SUM(amount),0.00) FROM financial_log_bill WHERE TYPE=1 <if test='data.customerId!=null'> and CUSTOMER_ID = #{data.customerId} </if> <if test='data.yearMonth!=null'> and DATE_FORMAT(CREATE_TIME, '%Y%m') = ${data.yearMonth} </if>) AS subTotalAmount ",
             "FROM DUAL",
             "</script>"
     })
     Map queryTotalAmount(Query q);
+
+    @Select({
+            "select",
+            "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
+            "CREATE_TIME, STATE, TRANSACTION_NO, TRANSACTION_DESC",
+            "from financial_log_bill",
+            "where LOG_ID = #{logId,jdbcType=INTEGER} and CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
+    })
+    @Results({
+            @Result(column="LOG_ID", property="logId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
+            @Result(column="CUSTOMER_NAME", property="customerName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="TITLE", property="title", jdbcType=JdbcType.VARCHAR),
+            @Result(column="IMAGE", property="image", jdbcType=JdbcType.VARCHAR),
+            @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
+            @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
+            @Result(column="PAY_TYPE", property="payType", jdbcType=JdbcType.INTEGER),
+            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="STATE", property="state", jdbcType=JdbcType.INTEGER),
+            @Result(column="TRANSACTION_NO", property="transactionNo", jdbcType=JdbcType.VARCHAR),
+            @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR)
+    })
+    FiaciaLog selectByPrimaryKeyAndCustomerId(@Param("logId")Integer logId,@Param("customerId")Integer customerId);
 }

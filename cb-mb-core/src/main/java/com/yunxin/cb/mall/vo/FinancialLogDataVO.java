@@ -11,11 +11,11 @@ import java.util.List;
  * @auther: eleven
  * @date: 2018/8/9 19:08
  */
-@ApiModel(value="账单数据VO",description="账单数据VO对象 FiaciaLogDataVO")
-public class FiaciaLogDataVO {
+@ApiModel(value="账单数据VO",description="账单数据VO对象 FinancialLogDataVO")
+public class FinancialLogDataVO {
 
-    @ApiModelProperty(value="账单数据",name="fiaciaLogVOS",example="fiaciaLogVOS")
-    private List<FiaciaLogVO> fiaciaLogVOS;
+    @ApiModelProperty(value="账单数据",name="financialLogVOS",example="financialLogVOS")
+    private List<FinancialLogVO> financialLogVOS;
 
     @ApiModelProperty(value="收入",name="addTotalAmount",example="100.00")
     private BigDecimal addTotalAmount;
@@ -23,12 +23,12 @@ public class FiaciaLogDataVO {
     @ApiModelProperty(value="支出",name="subTotalAmount",example="100.00")
     private BigDecimal subTotalAmount;
 
-    public List<FiaciaLogVO> getFiaciaLogVOS() {
-        return fiaciaLogVOS;
+    public List<FinancialLogVO> getFinancialLogVOS() {
+        return financialLogVOS;
     }
 
-    public void setFiaciaLogVOS(List<FiaciaLogVO> fiaciaLogVOS) {
-        this.fiaciaLogVOS = fiaciaLogVOS;
+    public void setFinancialLogVOS(List<FinancialLogVO> financialLogVOS) {
+        this.financialLogVOS = financialLogVOS;
     }
 
     public BigDecimal getAddTotalAmount() {
@@ -49,8 +49,8 @@ public class FiaciaLogDataVO {
 
     @Override
     public String toString() {
-        return "FiaciaLogDataVO{" +
-                "fiaciaLogVOS=" + fiaciaLogVOS +
+        return "FinancialLogDataVO{" +
+                "financialLogVOS=" + financialLogVOS +
                 ", addTotalAmount=" + addTotalAmount +
                 ", subTotalAmount=" + subTotalAmount +
                 '}';

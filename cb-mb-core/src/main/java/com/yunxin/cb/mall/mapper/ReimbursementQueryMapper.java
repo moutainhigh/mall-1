@@ -15,13 +15,13 @@ public interface ReimbursementQueryMapper {
             "insert into rb_reimbursement_query (REIMBURSEMENT_QUERY_ID, ITEM_ID, ",
             "PRODUCT_ID, SALE_PRICE, ",
             "PRODUCT_NUM, CREATE_TIME, ",
-            "SELLER_ADDRESS, DEFAULT_PIC_PATH, ",
+            "SELLER_NAME, COMMODITY_NAME,DEFAULT_PIC_PATH, ",
             "COMMODITY_ID, PRODUCT_NAME, ",
             "CUSTOMER_ID, REIMBURSEMENT_QUERY_STATE)",
             "values (#{reimbursementQueryId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, ",
             "#{productId,jdbcType=INTEGER}, #{salePrice,jdbcType=REAL}, ",
             "#{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, ",
-            "#{sellerAddress,jdbcType=VARCHAR}, #{defaultPicPath,jdbcType=VARCHAR}, ",
+            "#{sellerName,jdbcType=VARCHAR},#{commodityName,jdbcType=VARCHAR}, #{defaultPicPath,jdbcType=VARCHAR}, ",
             "#{commodityId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, ",
             "#{customerId,jdbcType=INTEGER}, #{reimbursementQueryState,jdbcType=INTEGER})"
     })

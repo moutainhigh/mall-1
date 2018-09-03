@@ -4,21 +4,14 @@ import com.yunxin.cb.mall.entity.meta.FiaciaLogPayType;
 import com.yunxin.cb.mall.entity.meta.FiaciaLogTransType;
 import com.yunxin.cb.mall.entity.meta.OperationType;
 import com.yunxin.cb.mall.entity.meta.PayState;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * @title: 账单VO
- * @auther: eleven
- * @date: 2018/8/9 17:19
- */
-@ApiModel(value="账单VO",description="账单VO对象 FiaciaLogVO")
-public class FiaciaLogVO implements java.io.Serializable{
+public class FinancialLogBillVO implements java.io.Serializable{
+    private static final long serialVersionUID = 2424480263032914367L;
 
-    private static final long serialVersionUID = 6237700512736618247L;
     /**  */
     @ApiModelProperty(value="账单Id",name="logId",example="1")
     private Integer logId;
@@ -71,10 +64,6 @@ public class FiaciaLogVO implements java.io.Serializable{
     @ApiModelProperty(value="交易描述",name="transactionDesc",example="描述")
     private String transactionDesc;
 
-    //查询使用字段：年月201808
-    @ApiModelProperty(value="查询使用字段：年月201808",name="yearMonth",example="描述")
-    private String yearMonth;
-
     public Integer getLogId() {
         return logId;
     }
@@ -89,6 +78,22 @@ public class FiaciaLogVO implements java.io.Serializable{
 
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getCustomerName() {
@@ -163,27 +168,22 @@ public class FiaciaLogVO implements java.io.Serializable{
         this.transactionDesc = transactionDesc;
     }
 
-    public String getYearMonth() {
-        return yearMonth;
-    }
-
-    public void setYearMonth(String yearMonth) {
-        this.yearMonth = yearMonth;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
+    @Override
+    public String toString() {
+        return "FinancialLogBillVO{" +
+                "logId=" + logId +
+                ", customerId=" + customerId +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", amount=" + amount +
+                ", type=" + type +
+                ", transactionType=" + transactionType +
+                ", payType=" + payType +
+                ", createTime=" + createTime +
+                ", state=" + state +
+                ", transactionNo='" + transactionNo + '\'' +
+                ", transactionDesc='" + transactionDesc + '\'' +
+                '}';
     }
 }
