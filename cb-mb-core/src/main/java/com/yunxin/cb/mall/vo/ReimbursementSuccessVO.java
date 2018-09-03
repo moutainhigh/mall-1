@@ -14,7 +14,7 @@ public class ReimbursementSuccessVO implements Serializable {
     private BigDecimal accountAmount;
     @ApiModelProperty(value="税",name="tax",example="111")
     private BigDecimal tax;
-    @ApiModelProperty(value="纳税点",name="taxPoint",example="111")
+    @ApiModelProperty(value="纳税点",name="taxPoint",example="0.11")
     private String taxPoint;
 
     public BigDecimal getAccountSalePrice() {

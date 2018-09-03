@@ -67,6 +67,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
                     BigDecimal accountAmount = BigDecimal.valueOf(reimbursementQuery.getAccountSalePrice()).subtract(tax);
                     reimbursementVO.setTax(tax);
                     reimbursementVO.setAccountAmount(accountAmount);
+                    reimbursementVO.setTaxPoint(profile.getFileValue());
                     return reimbursementVO;
                 }).collect(Collectors.toList());
         //调用dao统计满足条件的记录总数
@@ -175,8 +176,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
         //调用dao查询满足条件的分页数据
         List<Reimbursement> list = reimbursementMapper.selectAllByCustomerId(q);
-        List<AlreadyReimbursementVO> listVO = new ArrayList<>();
-        for(Reimbursement reimbursement : list){
+        List<AlreadyReimbursementVO> listVO = list.stream().map(reimbursement -> {
             //商品总数量
             int num = 0;
             AlreadyReimbursementVO alreadyReimbursementVO = new AlreadyReimbursementVO();
@@ -189,8 +189,8 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             alreadyReimbursementVO.setList(listProductVO);
             alreadyReimbursementVO.setSum(num);
             alreadyReimbursementVO.setTaxPoint(profile.getFileValue());
-            listVO.add(alreadyReimbursementVO);
-        }
+            return alreadyReimbursementVO;
+        }).collect(Collectors.toList());
         //调用dao统计满足条件的记录总数
         long rowCount = reimbursementQueryMapper.alreadyReimbursementCount(q);
         //如list为null时，则改为返回一个空列表

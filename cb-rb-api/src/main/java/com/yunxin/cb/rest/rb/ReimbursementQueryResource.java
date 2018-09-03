@@ -3,7 +3,6 @@ package com.yunxin.cb.rest.rb;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Reimbursement;
 import com.yunxin.cb.mall.entity.ReimbursementQuery;
-import com.yunxin.cb.mall.entity.meta.OrderState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementQueryState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
 import com.yunxin.cb.mall.restful.ResponseResult;

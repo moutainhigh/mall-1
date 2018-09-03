@@ -2,6 +2,7 @@ package com.yunxin.cb.mall.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 @ApiModel(value="可报账对象",description="可报账对象 ReimbursementVO")
@@ -25,6 +26,8 @@ public class ReimbursementVO implements Serializable {
     private BigDecimal accountAmount;
     @ApiModelProperty(value="税",name="tax",example="111")
     private BigDecimal tax;
+    @ApiModelProperty(value="纳税点",name="taxPoint",example="0.11")
+    private String taxPoint;
 
     public int getReimbursementQueryId() {
         return reimbursementQueryId;
@@ -96,5 +99,13 @@ public class ReimbursementVO implements Serializable {
 
     public void setCommodityName(String commodityName) {
         this.commodityName = commodityName;
+    }
+
+    public String getTaxPoint() {
+        return taxPoint;
+    }
+
+    public void setTaxPoint(String taxPoint) {
+        this.taxPoint = taxPoint;
     }
 }
