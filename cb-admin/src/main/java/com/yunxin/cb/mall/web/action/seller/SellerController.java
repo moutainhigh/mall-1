@@ -3,11 +3,9 @@ package com.yunxin.cb.mall.web.action.seller;
 import com.yunxin.cb.console.service.ISecurityService;
 import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.cb.mall.service.ISellerService;
-import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.cb.console.service.ISecurityService;
-import com.yunxin.cb.mall.entity.Seller;
 import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.cb.mall.service.ISellerService;
+import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.IdGenerate;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -53,11 +51,13 @@ public class SellerController {
 
     @RequestMapping(value = "toAddSeller",method = RequestMethod.GET)
     public String toAddSeller(@ModelAttribute("seller") Seller seller, ModelMap modelMap) {
+        seller.setSellerCode(IdGenerate.genSellerID());
+        modelMap.addAttribute("seller", seller);
         return "seller/addSeller";
     }
 
     @RequestMapping(value = "addSeller",method = RequestMethod.POST)
-    public String addSeller(@Valid @ModelAttribute("seller") Seller seller, BindingResult result, ModelMap modelMap, HttpServletRequest request, Locale locale) {
+    public String addSeller(@Valid @ModelAttribute("seller") Seller seller, BindingResult result, ModelMap modelMap, HttpServletRequest request, Locale locale) throws Exception  {
         if (result.hasErrors()) {
             return toAddSeller(seller, modelMap);
         }
@@ -65,8 +65,10 @@ public class SellerController {
             sellerService.addSeller(seller);
             return "redirect:../common/success.do?reurl=seller/sellers.do";
         } catch (EntityExistException e) {
-            result.addError(new FieldError("seller", "sellerName", seller.getSellerName(), true, null, null,
-                    messageSource.getMessage(e.getMessage(), null, locale)));
+//            result.addError(new FieldError("seller", "sellerName", seller.getSellerName(), true, null, null,
+//                    messageSource.getMessage(e.getMessage(), null, locale)));
+            result.addError(new FieldError("seller", "sellerName", seller.getSellerName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toAddSeller(seller, modelMap);
         }
     }
@@ -78,7 +80,7 @@ public class SellerController {
     }
 
     @RequestMapping(value = "editSeller",method = RequestMethod.POST)
-    public String editSeller(@Valid @ModelAttribute("seller") Seller seller, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String editSeller(@Valid @ModelAttribute("seller") Seller seller, BindingResult result, ModelMap modelMap, Locale locale) throws Exception {
         if (result.hasErrors()) {
             return sellers();
         }
@@ -86,8 +88,8 @@ public class SellerController {
             sellerService.updateSeller(seller);
             return "redirect:../common/success.do?reurl=seller/sellers.do";
         } catch (EntityExistException e) {
-            result.addError(new FieldError("seller", "sellerName", seller.getSellerName(), true, null, null,
-                    messageSource.getMessage(e.getMessage(), null, locale)));
+            result.addError(new FieldError("seller", "sellerName", seller.getSellerName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toEditSeller(seller.getSellerId(), modelMap);
         }
     }
@@ -116,6 +118,19 @@ public class SellerController {
             return false;
         }
 
+    }
+
+    /**
+     * @title: 查询自营是否已存在
+     * @param: []
+     * @return: boolean
+     * @auther: eleven
+     * @date: 2018/8/17 18:00
+     */
+    @RequestMapping(value = "queryIsExistsMgt",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean queryIsExistsMgt(@RequestParam("sellerId") Integer sellerId) {
+        return sellerService.queryIsExistsMgt(sellerId);
     }
 
 

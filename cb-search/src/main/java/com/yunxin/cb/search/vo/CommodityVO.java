@@ -3,6 +3,7 @@ package com.yunxin.cb.search.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @ApiModel(value="商品对象",description="商品对象 CommodityVO")
@@ -128,8 +129,11 @@ public class CommodityVO implements java.io.Serializable {
     @ApiModelProperty(value="默认货品id",name="defaultProduct",example="11")
     private int defaultProduct;
 
-
-
+    /**
+     * 距离
+     */
+    @ApiModelProperty(value="距离",name="distance",example="1.01")
+    private BigDecimal distance;
 
     public int getCommodityId() {
         return commodityId;
@@ -313,5 +317,13 @@ public class CommodityVO implements java.io.Serializable {
 
     public void setDefaultProduct(int defaultProduct) {
         this.defaultProduct = defaultProduct;
+    }
+
+    public BigDecimal getDistance() {
+        return distance;
+    }
+
+    public void setDistance(BigDecimal distance) {
+        this.distance = distance;
     }
 }

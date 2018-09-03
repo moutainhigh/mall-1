@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -112,7 +113,7 @@ public class AttributeService implements IAttributeService {
             }
             attribute.setSortOrder((short) sortOrder[i]);
             attribute=catalogAttributeDao.save(attribute);
-            if(imagePath[i]!=null&&!"".equals(imagePath[i])){
+            if(imagePath!=null&&imagePath[i]!=null&&!"".equals(imagePath[i])){
                 attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,oldAttributeGroup.getGroupId(),imagePath[i]+",0,0");
             }
         }
@@ -129,7 +130,7 @@ public class AttributeService implements IAttributeService {
 
     @Override
     public void removeCatalogAttributeGroupById(int groupId) {
-        attachmentService.deleteAttachmentPictures(ObjectType.ATTRIBUTE,groupId);
+        //attachmentService.deleteAttachmentPictures(ObjectType.ATTRIBUTE,groupId);
         catalogAttributeGroupDao.delete(groupId);
     }
 
@@ -250,7 +251,13 @@ public class AttributeService implements IAttributeService {
 
     @Override
     public AttributeGroup addAttributeGroup(AttributeGroup attributeGroup) throws EntityExistException {
-        if (!attributeGroupDao.isUnique(attributeGroup, AttributeGroup_.groupName)) {
+        List<AttributeGroup> list  = attributeGroupDao.findAttributeGroupName(attributeGroup.getCommodity().getCommodityId());
+        List<String> listStr = new ArrayList<>();
+        list.stream().forEach( p ->{
+                        listStr.add(p.getGroupName());
+                }
+        );
+        if(listStr.contains(attributeGroup.getGroupName())){
             throw new EntityExistException("属性组名称已存在");
         }
         attributeGroup.setCreateTime(new Date());
@@ -268,7 +275,7 @@ public class AttributeService implements IAttributeService {
             }
             attribute.setSortOrder((short) sortOrder[i]);
             attributeDao.save(attribute);
-            if(imagePath[i]!=null&&!"".equals(imagePath[i])){
+            if(imagePath!=null&&imagePath[i]!=null&&!"".equals(imagePath[i])){
                 attachmentService.addAttachmentPictures(ObjectType.ATTRIBUTE,attributeGroup.getGroupId(),imagePath[i]+",0,0");
             }
         }
@@ -278,10 +285,18 @@ public class AttributeService implements IAttributeService {
 
     @Override
     public AttributeGroup updateAttributeGroup(AttributeGroup attributeGroup) throws EntityExistException {
-        if (!attributeGroupDao.isUnique(attributeGroup, AttributeGroup_.groupName)) {
+        AttributeGroup oldAttributeGroup = attributeGroupDao.findByGroupId(attributeGroup.getGroupId());
+        List<AttributeGroup> list  = attributeGroupDao.findAttributeGroupName(oldAttributeGroup.getCommodity().getCommodityId());
+        List<String> listStr = new ArrayList<>();
+        list.stream().forEach( p ->{
+                    if(p.getGroupId()!=attributeGroup.getGroupId()){
+                        listStr.add(p.getGroupName());
+                    }
+                }
+        );
+        if(listStr.contains(attributeGroup.getGroupName())){
             throw new EntityExistException("属性组名称已存在");
         }
-        AttributeGroup oldAttributeGroup = attributeGroupDao.findByGroupId(attributeGroup.getGroupId());
         AttributeReplication.copying(attributeGroup, oldAttributeGroup, AttributeGroup_.groupName, AttributeGroup_.showAsImage);
         int[] attributeId = attributeGroup.getAttributeId();
         Set<Attribute> attributes = oldAttributeGroup.getAttributes();
@@ -300,12 +315,12 @@ public class AttributeService implements IAttributeService {
         String[] attributeName = attributeGroup.getAttributeName();
         String[] imagePath = attributeGroup.getImagePath();
         int[] sortOrder = attributeGroup.getSortOrder();
-        for (int i = 0; i < attributeId.length; i++) {
+        for (int i = 0; i < attributeName.length; i++) {
             String imgPath = "";
             if (LogicUtils.isNotNullAndEmpty(imagePath)) {
                 imgPath = imagePath[i];
             }
-            if (attributeId[i] > 0) {
+            if (attributeId.length>i&&attributeId[i] > 0) {
                 Attribute attribute = attributeDao.findOne(attributeId[i]);
                 attribute.setAttributeName(attributeName[i]);
                 attribute.setImagePath(imgPath);

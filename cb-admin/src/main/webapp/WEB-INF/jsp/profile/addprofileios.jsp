@@ -19,7 +19,29 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if(valid){
+                        if ($('#ANDROID_VERSION_CODE').val()=='') {
+                            bootbox.alert("安卓版本编号!");
+                            return false;
+                        }else if ($('#ANDROID_VERSION_NAME').val()=='') {
+                            bootbox.alert("安卓版本名称!");
+                            return false;
+                        }else if ($('#ANDROID_APP_NAME').val()=='') {
+                            bootbox.alert("安卓名称!");
+                            return false;
+                        }else if ($('#ANDROID_URL').val()=='') {
+                            bootbox.alert("安卓URL!");
+                            return false;
+                        }else if ($('#ANDROID_DESCRIPTION').val()=='') {
+                            bootbox.alert("安卓描述!");
+                            return false;
+                        }else{
+                            return true;
+                        }
+                    }
+                }
             });
             $('#serNo').val("")
         });
@@ -56,6 +78,9 @@
             <div class="inner-padding">
                 <div class="pull-left">
                     <h2>IOS导入</h2>
+                </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" href="profiles.do"><i class="fa fa-reply"></i></a>
                 </div>
             </div>
         </header>

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>品牌管理</title>
+    <title>事项组管理</title>
 
     <script type="text/javascript">
 
@@ -66,6 +66,16 @@
                 });
             }
         }
+
+
+        function checkTime() {
+            if ($('#createTime').val() > $('#createTimes').val() && '' != $('#createTimes').val()) {
+                alert("开始时间不能大于结束时间")
+                $('#createTimes').val('')
+            }
+        }
+
+
     </script>
 </head>
 <body>
@@ -111,7 +121,7 @@
                     <h2>事项组</h2>
                 </div>
                 <div class="pull-right">
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -121,7 +131,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <!-- End .inner-padding -->
@@ -150,7 +160,7 @@
                                 <strong>事项组描述:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text" data-filter="description" data-operator="contains" class="form-control grid-filter" placeholder="事项描述"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text" data-filter="description" data-operator="contains" class="form-control grid-filter" placeholder="事项描述"/>
                             </div>
                         </div>
 
@@ -159,14 +169,14 @@
                                 <strong>创建时间:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime" id="createTime" placeholder="请选择开始时间" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
+                                <input name="createTime" id="createTime" placeholder="请选择开始时间" onchange="checkTime()" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" data-filter="createTime" data-operator="gte" class="form-control grid-filter"/>
                             </div>
 
                             <div class="toolbar-field">
                                 <strong>-</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input name="createTime"  id="createTimes" placeholder="请选择结束时间" data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
+                                <input name="createTime"  id="createTimes" placeholder="请选择结束时间"  onchange="checkTime()" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')"  data-filter="createTime" data-operator="lte" class="form-control grid-filter"/>
                             </div>
                         </div>
                         <!-- End .pull-left -->
@@ -189,17 +199,17 @@
                         <div class="pull-left">
                             <h3>事项组列表</h3>
                         </div>
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <a href="toAddGroup.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
-                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
-                                <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
-                            </div>
-                            <div class="btn-group">
-                                <a href="javascript:void(0);" onclick="enabledItem(1)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
-                                <a href="javascript:void(0);" onclick="enabledItem(0)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
-                            </div>
-                        </div>
+                        <%--<div class="pull-right">--%>
+                            <%--<div class="btn-group">--%>
+                                <%--<a href="toAddGroup.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>--%>
+                                <%--<a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>--%>
+                                <%--<a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>--%>
+                            <%--</div>--%>
+                            <%--<div class="btn-group">--%>
+                                <%--<a href="javascript:void(0);" onclick="enabledItem(1)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>--%>
+                                <%--<a href="javascript:void(0);" onclick="enabledItem(0)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                     </header>
                 </div>
                 <div class="table-wrapper">
@@ -213,9 +223,9 @@
                             </kendo:grid-filterable-operators>
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="事项组ID" field="groupId" template="<a href='toEditGroup.do?groupId=#= groupId#' >#= groupId#</a>" width="25px"/>
-                            <kendo:grid-column title="事项组描述" template="<a href='toEditGroup.do?groupId=#= groupId#' >#= description#</a>"  field="description" width="150px"/>
-                            <kendo:grid-column title="排序" field="serNo" width="20px"/>
+                            <kendo:grid-column title="事项组ID" filterable="false" field="groupId"  width="25px"/>
+                            <kendo:grid-column title="事项组描述" filterable="false" field="description" width="150px"/>
+                            <kendo:grid-column title="排序" filterable="false"  field="serNo" width="20px"/>
                             <kendo:grid-column title="是否启用" filterable="false" field="enabled" template="#= enabled ? '是' : '否' #" width="30px"/>
                             <kendo:grid-column title="创建时间" filterable="false" field="createTime" format="{0:yyyy-MM-dd HH:mm}" width="30px"/>
                         </kendo:grid-columns>

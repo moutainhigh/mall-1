@@ -21,11 +21,11 @@ public interface ReimbursementOrderMapper {
     @Insert({
             "insert into rb_reimbursement_order (REIMBURSEMENT_ORDER_ID, ORDER_ITEM_ID, ",
             "PRODUCT_ID, AMOUNT, ",
-            "TAX, PRODUCT_PRICE, REIMBURSEMENT_QUERY_ID,",
+            "TAX, PRODUCT_PRICE, ",
             "REIMBURSEMENT_ID, CREATE_TIME)",
             "values (#{reimbursementOrderId,jdbcType=INTEGER}, #{orderItemId,jdbcType=INTEGER}, ",
             "#{productId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, ",
-            "#{tax,jdbcType=DECIMAL}, #{productPrice,jdbcType=DECIMAL}, #{reimbursementQueryId,jdbcType=INTEGER},",
+            "#{tax,jdbcType=DECIMAL}, #{productPrice,jdbcType=DECIMAL}, ",
             "#{reimbursementId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})"
     })
     int insert(ReimbursementOrder record);
@@ -94,24 +94,4 @@ public interface ReimbursementOrderMapper {
             @Result(column="ORDER_ITEM_ID", property="orderItemId", jdbcType=JdbcType.INTEGER)
     })
     List<ReimbursementOrder> selectByOrderState(@Param("reimbursement_state")ReimbursementState reimbursement_state, @Param("reimbursementState")ReimbursementState reimbursementState,@Param("customerId") int customerId);
-
-    @Select({
-            "select",
-            "REIMBURSEMENT_ORDER_ID, ORDER_ITEM_ID, PRODUCT_ID, AMOUNT, TAX, PRODUCT_PRICE, ",
-            "REIMBURSEMENT_ID, CREATE_TIME,REIMBURSEMENT_QUERY_ID",
-            "from rb_reimbursement_order",
-            "where REIMBURSEMENT_ID = #{reimbursementId,jdbcType=INTEGER}"
-    })
-    @Results({
-            @Result(column="REIMBURSEMENT_ORDER_ID", property="reimbursementOrderId", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="ORDER_ITEM_ID", property="orderItemId", jdbcType=JdbcType.INTEGER),
-            @Result(column="PRODUCT_ID", property="productId", jdbcType=JdbcType.INTEGER),
-            @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="TAX", property="tax", jdbcType=JdbcType.DECIMAL),
-            @Result(column="PRODUCT_PRICE", property="productPrice", jdbcType=JdbcType.DECIMAL),
-            @Result(column="REIMBURSEMENT_ID", property="reimbursementId", jdbcType=JdbcType.INTEGER),
-            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="REIMBURSEMENT_QUERY_ID", property="reimbursementQueryId", jdbcType=JdbcType.INTEGER)
-    })
-    List<ReimbursementOrder> selectByReimbursementId(Integer reimbursementId);
 }

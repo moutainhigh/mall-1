@@ -9,22 +9,31 @@
 
     <title>角色管理</title>
     <script type="text/javascript">
-        function removeItem(roleId) {
-            bootbox.confirm("确定删除吗？", function (result) {
-                if (result) {
-                    $.get("removeRoleById.do", {
-                        roleId: roleId,
-                        rad: Math.random()
-                    }, function (data) {
-                        if (data) {
-                            commonNotify("删除成功！", "success");
-                            $("#roleTr"+roleId).remove();
-                        } else {
-                            commonNotify("删除失败!", "error");
-                        }
-                    });
-                }
-            });
+        function removeItem() {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                bootbox.confirm("确认删除吗？", function (result) {
+                    if (result) {
+                        $.get("removeRoleById.do", {
+                            roleId: dataItem.roleId
+                        }, function (data) {
+                            if (data) {
+                                bootbox.alert("成功");
+                                $("#grid").data("kendoGrid").dataSource.read();
+                            } else {
+                                bootbox.alert("失败,角色下存在用户无法删除");
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        function detailItem(){
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                window.location.href = "toEditRole.do?roleId=" + dataItem.roleId;
+            }
         }
     </script>
 </head>
@@ -113,45 +122,48 @@
                         </div>
                         <div class="pull-right">
                                 <a href="toAddRole.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
+                                <a href="javascript:void(0);"  onclick="detailItem()" class="btn btn-default"><i class="fa fa-info-circle"></i>&nbsp;修改</a>
+                                <a href="javascript:removeItem();"  class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                         </div>
                     </header>
                 </div>
                 <div class="table-wrapper">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">
-                                编码
-                            </th>
-                            <th scope="col">
-                                名称
-                            <th scope="col">
-                                备注
-                            </th>
-                            <th scope="col" class="th-4-action-btn">
-                                操作
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="role" items="${roles}">
-                            <tr id="roleTr${role.roleId}">
-                                <td>${role.roleCode}</td>
-                                <td>${role.roleName}</td>
-                                <td>${role.remark}</td>
-                                <td>
-                                    <a href="toEditRole.do?roleId=${role.roleId}" class="btn-less"><i class="fa fa-pencil"></i></a>
-                                    <a href="javascript:void(0)" onclick="removeItem(${role.roleId})" class="btn-less"><i class="fa fa-trash-o"></i></a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-
+                    <kendo:grid name="grid" pageable="true" sortable="true" filterable="true" selectable="true" height="450" resizable="true">
+                        <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="10"/>
+                        <kendo:grid-filterable extra="false">
+                            <kendo:grid-filterable-messages filter="查询" clear="清除" info="请输入查询条件:"/>
+                            <kendo:grid-filterable-operators>
+                                <kendo:grid-filterable-operators-string contains="包含" eq="等于"/>
+                                <kendo:grid-filterable-operators-date gte="小于" eq="等于" lte="大于"/>
+                            </kendo:grid-filterable-operators>
+                        </kendo:grid-filterable>
+                        <kendo:grid-columns>
+                            <kendo:grid-column title="" field="roleId"  width="20px"/>
+                            <kendo:grid-column title="编码" field="roleCode"  width="20px"/>
+                            <kendo:grid-column title="名称" field="roleName"  width="50px"/>
+                            <kendo:grid-column title="备注" field="remark" width="50px"/>
+                        </kendo:grid-columns>
+                        <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
+                            <kendo:dataSource-schema data="content" total="totalElements">
+                                <kendo:dataSource-schema-model>
+                                    <kendo:dataSource-schema-model-fields>
+                                        <kendo:dataSource-schema-model-field name="createTime" type="date"/>
+                                    </kendo:dataSource-schema-model-fields>
+                                </kendo:dataSource-schema-model>
+                            </kendo:dataSource-schema>
+                            <kendo:dataSource-transport>
+                                <kendo:dataSource-transport-read url="pageRole.do" type="POST" contentType="application/json"/>
+                                <kendo:dataSource-transport-parameterMap>
+                                    <script>
+                                        function parameterMap(options, type) {
+                                            return JSON.stringify(options);
+                                        }
+                                    </script>
+                                </kendo:dataSource-transport-parameterMap>
+                            </kendo:dataSource-transport>
+                        </kendo:dataSource>
+                    </kendo:grid>
                 </div>
-
-            </div>
-
             <div class="spacer-40"></div>
             <div class="hr-totop"><span>Top</span></div>
             <div class="spacer-40"></div>

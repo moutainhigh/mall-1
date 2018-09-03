@@ -63,7 +63,6 @@ public class FinacialWalletService implements IFinaciaWalletService {
         logger.info("addFinaciaWallet:"+fw);
         Customer customer = fw.getCustomer();
         if(finacialWalletDao.findFinacialWalletByCustomerId(customer.getCustomerId())==null){
-//            FinacialWallet addfw=new FinacialWallet(customer);
             /**钱包:初始化钱包信息*/
             finacialWalletDao.save(fw);
             logger.info("addFinaciaWallet sucess");

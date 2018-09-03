@@ -17,6 +17,12 @@
         var curStep = 0;
 
         $(document).ready(function () {
+
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             KindEditor.ready(function (K) {
                 window.editor = K.create('#editorContent', {
                     uploadJson: '../upload/fileUpload.do',
@@ -59,20 +65,126 @@
                 province: "province",
                 city: "city"
             });
-        });
 
+            /*$("#validateSubmitForm").validationEngine({
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        }
+                        if (null == $("#editorContent").val() || "" == $("#editorContent").val()) {
+                            bootbox.alert("请填写商品详情内容!");
+                            return false;
+                        }
+                        if (null == $("#editorContent2").val() || "" == $("#editorContent2").val()) {
+                            bootbox.alert("请填写商品配置内容!");
+                            return false;
+                        }
+                        if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
+                            bootbox.alert("请填写商品说明内容!");
+                            return false;
+                        }
+                        if ($("#editorContent").val().length > 4098) {
+                            bootbox.alert("商品详情内容过长，请输入小于4098个字符!");
+                            return false;
+                        }
+                        if ($("#editorContent2").val().length > 4098) {
+                            bootbox.alert("商品配置内容过长，请输入小于4098个字符!");
+                            return false;
+                        }
+                        if ($("#editorContent1").val().length > 4098) {
+                            bootbox.alert("商品说明内容过长，请输入小于4098个字符!");
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            });*/
+        });
         function loadSpecs(catalogId) {
             $.getJSON("getSpecsByCatalogId.do", {
                 catalogId: catalogId
             }, function (json) {
-                $("#specTable  tr:not(:first)").empty()
+                $("#specTable  tr:not(:first)").empty();
                 $.each(json, function (date, value) {
-                    var newRow = "<tr><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control'/></td></tr>";
+                    var newRow = "<tr tag='"+value.specName+"'><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control' maxlength='255'/></td></tr>";
                     $("#specTable tr:last").after(newRow);
 
                 });
             });
         }
+
+        function specAuto() {
+            var keyword = $("#commodityTitle").val();
+            var specUrl = $("#specUrl").val();
+            if(keyword != ""|| specUrl != ""){
+                $.getJSON("../commodity/specAuto/yicheSpecs.do", {
+                    keyword: keyword,
+                    specUrl:specUrl
+                }, function (json) {
+                    if(json.resultType=="SUCCESS"){
+                        var data = json.data;
+                        for(var key in data){
+                            var specTr = $("#specTable tr[tag='"+key+"']");
+                            if(specTr != null){
+                                $(specTr).find("input[name='specValue']").val(data[key]);
+                            }
+                        }
+                        commonNotify("配置已自动填充完成","success");
+                    }else{
+                        bootbox.alert(json.message);
+                    }
+                });
+            }else{
+                bootbox.alert("请先填写商品标题或者汽车配置网址");
+                return;
+            }
+        }
+
+        function findSpecTr(specName){
+            var tr;
+            $.each($("#specTable tr"), function(index,element){
+                if(($(element).attr("tag")+"").indexOf(specName) > -1){
+                    console.info($(element).attr("tag"));
+                    tr = $(element);
+                    return;
+                }
+            });
+            return tr;
+        }
+
+        function selectSeller() {
+            $('#sellerDialog').modal();
+        }
+
+        function chooseSeller() {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                var sellerId=dataItem.sellerId;
+                $("#sellerId").val(dataItem.sellerId);
+                $("#sellerName").val(dataItem.sellerName);
+            }else{
+                $("#sellerId").val('');
+                $("#sellerName").val('');
+            }
+            $('#sellerDialog').modal("hide")
+        }
+
+            /**
+             *  根据分类id,返回一级分类的比例配置
+             *  @author lxc
+             * @param catalogId     分类id
+             */
+            function getOneLevelCatalog(catalogId) {
+                $.getJSON("getOneLevelCatalog.do", {
+                    catalogId: catalogId
+                }, function (json) {
+                    $("#oneLevelCatalog").val(json);
+                });
+            }
     </script>
 </head>
 <body>
@@ -153,9 +265,9 @@
                                 <label><span class="asterisk">*</span> 商品价格段：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="priceSection.sectionId" cssClass="form-control simpleselect validate[required]">
+                                <form:select path="priceSection.sectionId" id="priceSection" cssClass=" form-control simpleselect validate[required]">
                                     <c:forEach items="${priceSections}" var="section">
-                                        <option value="${section.sectionId}">${section.startPrice} - ${section.endPrice}</option>
+                                        <option value="${section.sectionId}" option-startPrice="${section.startPrice}" option-endPrice="${section.endPrice}">${section.startPrice} - ${section.endPrice}</option>
                                     </c:forEach>
                                 </form:select>
                             </div>
@@ -166,13 +278,13 @@
                                 <label><span class="asterisk">*</span> 商品编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
+                                <form:input type="text" readonly="true" cssClass=" form-control validate[required,minSize[2],custom[onlyLetterNumber]]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品简称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="shortName" maxlength="255"/>
+                                <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="shortName" maxlength="255"/>
                             </div>
 
                         </div>
@@ -183,13 +295,13 @@
                                 <label><span class="asterisk">*</span> 商品全称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityName" maxlength="255"/>
+                                <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="commodityName" maxlength="255"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品拼音名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityPYName" maxlength="64"/>
+                                <form:input type="text" cssClass=" form-control validate[required,minSize[2]]" path="commodityPYName" maxlength="64" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'')"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -197,16 +309,16 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk"></span> 分类比例配置：</label>
+                                <label><span class="asterisk"></span>一级分类比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control"  path="catalog.ratio" id="catalogRatio" readonly="true" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control"  path="" id="oneLevelCatalog" readonly="true" maxlength="12"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[custom[gtOne]]" path="ratio" onkeyup="salePrice_f();" placeholder="商品比例配置不填,则取分类比例配置" maxlength="12" />
+                                <form:input type="text" cssClass=" form-control validate[custom[gtOne]]" path="ratio" onkeyup="salePrice_f();" placeholder="默认取一级分类比例配置" maxlength="12" readonly="true"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -245,7 +357,7 @@
                                 <label><span class="asterisk">*</span> 商品单位：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select class="form-control simpleselect" path="unit">
+                                <form:select class=" form-control simpleselect" path="unit">
                                     <form:options items="${unit}" itemLabel="name"/>
                                 </form:select>
                             </div>
@@ -277,7 +389,7 @@
                                 <label><span class="asterisk">*</span> 产地省份：</label>
                             </div>
                             <div class="col-sm-3">
-                                <select class="form-control validate[required]" id="province" name="province">
+                                <select class=" form-control validate[required]" id="province" name="province">
                                 </select>
 
                             </div>
@@ -285,7 +397,7 @@
                                 <label><span class="asterisk">*</span> 产地市区：</label>
                             </div>
                             <div class="col-sm-3">
-                                <select class="form-control validate[required]" id="city" name="city">
+                                <select class=" form-control validate[required]" id="city" name="city">
                                 </select>
                             </div>
                         </div>
@@ -298,7 +410,7 @@
                                 <label>SEO关键字：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:input type="text" cssClass="form-control" path="seoKey" maxlength="255"/>
+                                <form:input type="text" cssClass=" form-control" path="seoKey" maxlength="255"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -307,7 +419,7 @@
                                 <label>SEO标题：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:input type="text" cssClass="form-control" path="seoTitle" maxlength="255"/>
+                                <form:input type="text" cssClass=" form-control" path="seoTitle" maxlength="255"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -316,7 +428,7 @@
                                 <label>SEO描述：</label>
                             </div>
                             <div class="col-sm-8">
-                                <form:textarea rows="10" cols="101" path="seoDescription" maxlength="255"></form:textarea>
+                                <form:textarea rows="10" cols="101" cssClass="" path="seoDescription" maxlength="255"></form:textarea>
                             </div>
                         </div>
 
@@ -326,19 +438,19 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 热门商品：</label>
+                                <label> 热门商品：</label>
                             </div>
                             <div class="col-sm-1">
-                                <form:checkbox path="popular" cssClass="checkbox-master"/>
+                                <form:checkbox path="popular" cssClass=" checkbox-master"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 特惠商品：</label>
+                                <label> 特惠商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="special"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 推荐商品：</label>
+                                <label> 推荐商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="recommend"/>
@@ -373,6 +485,42 @@
 
                         <div class="row">
                             <div class="col-sm-2">
+                                <label>商家：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <form:input type="hidden" cssClass="form-control" path="seller.sellerId" id="sellerId" />
+                                <div class="input-group">
+                                    <form:input type="text" cssClass="form-control" path="seller.sellerName" id="sellerName" disabled="true" placeholder="不选默认为平台"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" onclick="selectSeller();" class="btn btn-default">选择</button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>汽车配置地址：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" id="specUrl" placeholder="&nbsp;输入汽车网址或商品标题搜索汽车配置" style="width: 320px;line-height: 28px"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" onclick="specAuto()" class="btn btn-default">搜索</button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
                                 <label>商品规格：</label>
                             </div>
                             <div class="col-sm-8">
@@ -393,7 +541,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品图片：</label>
+                                <label><span class="asterisk">*</span>商品图片：</label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>
@@ -406,13 +554,52 @@
                                             autoHidePrompt: true, scroll: false, showOneMessage: true,
                                             onValidationComplete: function (form, valid) {
                                                 if (valid) {
+                                                    var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
+                                                    var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
+
+                                                    if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#costPrice").val())){
+                                                        bootbox.alert("成本价格须介于商品价格段范围内!");
+                                                        return false;
+                                                    }
+                                                    if(Number($("#sellPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#sellPrice").val())){
+                                                        bootbox.alert("销售价格须介于商品价格段范围内!");
+                                                        return false;
+                                                    }
+                                                    if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
+                                                        bootbox.alert("市场价格须介于商品价格段范围内!");
+                                                        return false;
+                                                    }
+
                                                     var defaultPicPath = $('input[name="imgurl"]');
                                                     if (defaultPicPath.size()==0) {
                                                         bootbox.alert("请至少选择一张图片!");
                                                         return false;
-                                                    } else {
-                                                        return true;
                                                     }
+                                                    if (null == $("#editorContent").val() || "" == $("#editorContent").val()) {
+                                                        bootbox.alert("请填写商品详情内容!");
+                                                        return false;
+                                                    }
+                                                    /*if (null == $("#editorContent2").val() || "" == $("#editorContent2").val()) {
+                                                        bootbox.alert("请填写商品配置内容!");
+                                                        return false;
+                                                    }*/
+                                                    /*if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
+                                                        bootbox.alert("请填写商品说明内容!");
+                                                        return false;
+                                                    }*/
+                                                    if ($("#editorContent").val().length > 4098) {
+                                                        bootbox.alert("商品详情内容过长，请输入小于4098个字符!");
+                                                        return false;
+                                                    }
+                                                    /*if ($("#editorContent2").val().length > 4098) {
+                                                        bootbox.alert("商品配置内容过长，请输入小于4098个字符!");
+                                                        return false;
+                                                    }*/
+                                                    if ($("#editorContent1").val().length > 4098) {
+                                                        bootbox.alert("商品说明内容过长，请输入小于4098个字符!");
+                                                        return false;
+                                                    }
+                                                    return true;
                                                 }
                                             }
                                         });
@@ -428,6 +615,7 @@
                                             showRemove :false, //显示移除按钮
                                             showPreview :true, //是否显示预览
                                             showCaption:false,//是否显示标题
+                                            showClose: false,
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
                                             showBrowse : false,
@@ -490,29 +678,28 @@
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
-
-                        <div class="spacer-30"></div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label>商品配置内容：</label>
-                            </div>
-                            <div class="col-sm-9">
-                                    <form:textarea cssClass="form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;"></form:textarea>
-                            </div>
-                            <div class="col-sm-1"></div>
-                        </div>
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品详情内容：</label>
+                                <label><span class="asterisk">*</span>商品详情内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass=" form-control" id="editorContent" path="content" cssStyle="height:500px;" maxlength="255"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
+                        <div class="spacer-30"></div>
+                        <%--<div class="row">
+                            <div class="col-sm-2">
+                                <label><span class="asterisk">*</span>商品配置内容：</label>
+                            </div>
+                            <div class="col-sm-9">
+                                    <form:textarea cssClass=" form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>--%>
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
@@ -521,7 +708,7 @@
                                 <label>商品说明内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass=" form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -532,7 +719,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button"  class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>
@@ -565,6 +752,9 @@
                     </div>
                 </div>
             </div>
+            <div class="alert alert-warning" id="modalMsg" style="display: none;">
+                <strong>提示：</strong>仅第三级商品分类可关联商品！
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button class="btn btn-primary pull-right" onclick="chooseCatalog();">确认</button>
@@ -574,8 +764,10 @@
             var catalogId = 0;
             var catalogName = "";
             var RATIO = 1;//分类比例配置
+            var treeLevel = "";
             $('#catalogNameBtn').click(function (e) {
                 $('#catalogDialog').modal();
+                $('#modalMsg').hide();
                 e.preventDefault();
             });
 
@@ -584,17 +776,40 @@
                 catalogId = data.id;
                 catalogName = data.text;
                 RATIO = data.ratio;
+                treeLevel = data.treeLevel;
             }
 
             function chooseCatalog() {
+                if(treeLevel != 3){
+                    $('#modalMsg').show();
+                    return;
+                }
+                $('#modalMsg').hide();
                 $('#catalogDialog').modal("hide");
                 $("#catalogId").val(catalogId);
                 $("#catalogName").val(catalogName);
-                $("#catalogRatio").val(RATIO);
+                getOneLevelCatalog(catalogId);
                 salePrice_f();//设置销售价
                 loadSpecs(catalogId);
             }
         </script>
+    </div>
+</div>
+<div class="modal fade" id="sellerDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择商家</h4>
+            </div>
+            <div class="modal-body">
+                <jsp:include page="../seller/chooseSeller.jsp"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary pull-right" onclick="chooseSeller();">确认</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>

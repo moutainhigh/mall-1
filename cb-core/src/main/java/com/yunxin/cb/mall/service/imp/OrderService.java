@@ -549,7 +549,8 @@ public class OrderService implements IOrderService {
     @Override
     public void completedOrders() {
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
+        //c.add(Calendar.DAY_OF_WEEK ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
+        c.add(Calendar.MINUTE ,-OrderConfig.ORDER_COMPLETE_TIME.getTime());
         //orderDao.taskCollectTimeOrders(OrderState.SUCCESS, OrderState.RECEIVED, c.getTime());
         List<Order> orders = orderDao.findOrderByOrderStateAndCollectTime(OrderState.RECEIVED, c.getTime());
         if (orders != null && !orders.isEmpty()) {
@@ -565,6 +566,17 @@ public class OrderService implements IOrderService {
                 orderLog.setHandler("后台定时任务");
                 orderLog.setRemark("订单定时完成");
                 orderLogDao.save(orderLog);
+                //商品增加销售量
+                if (order.getOrderItems()!= null && order.getOrderItems().size() > 0) {
+                    for (OrderItem orderItem : order.getOrderItems()) {
+                        Product product = orderItem.getProduct();
+                        Commodity commodity = product.getCommodity();
+                        if (commodity != null) {
+                            int num = commodity.getSaleNum();
+                            commodity.setSaleNum(num + orderItem.getProductNum());
+                        }
+                    }
+                }
                 //资金如资金池
                 fundsPoolService.updateAndCountOrderAmout(order.getOrderId());
             }
@@ -883,97 +895,10 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Page<OrderLoanApply> pageLoanOrders(PageSpecification<OrderLoanApply> query) {
-        query.setCustomSpecification(new CustomSpecification<OrderLoanApply>() {
-            public void buildFetch(Root<OrderLoanApply> root) {
-                root.fetch(OrderLoanApply_.order, JoinType.LEFT);
-                root.fetch(OrderLoanApply_.customer, JoinType.LEFT);
-            }
-            @Override
-            public void addConditions(Root<OrderLoanApply> root, CriteriaQuery<?> query, CriteriaBuilder builder, List<Predicate> predicates) {
-                query.orderBy(builder.desc(root.get(OrderLoanApply_.createTime)));
-            }
-        });
-        return orderLoanApplyDao.findAll(query, query.getPageRequest());
-    }
-
-    @Override
-    public boolean orderLoanApplyAudit(int loanId, AuditState auditState, String auditRemark) {
-        OrderLoanApply orderLoanApply = orderLoanApplyDao.getOrderLoanApplyAndCustomerByLoanId(loanId);
-        if (!LoanState.WAIT_LOAN.equals(orderLoanApply.getLoanState())) {
-            return false;
-        }
-        if (auditState == AuditState.AUDITED) {
-            CustomerWallet customerWallet = customerWalletDao.getCustomerWalletByCustomer(orderLoanApply.getCustomer().getCustomerId());
-            if (customerWallet == null) {
-                return false;
-            }
-            double expectedReturnAmount = customerWallet.getExpectedReturnAmount() == null ? 0 : customerWallet.getExpectedReturnAmount();
-            double loanQuota = customerWallet.getLoanQuota() == null ? 0 : customerWallet.getLoanQuota();
-            //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
-            if (expectedReturnAmount + loanQuota < orderLoanApply.getLoanPrice()){
-                //throw new Exception("信用额度不够，审核通过失败！");
-                return false;
-            }
-            Double subExpectedReturnAmount = 0d;
-            Double subLoanQuota = 0d;
-            //优先减收益在减额度
-            if (expectedReturnAmount >= orderLoanApply.getLoanPrice()) {
-                customerWallet.setExpectedReturnAmount(expectedReturnAmount - orderLoanApply.getLoanPrice());
-                subExpectedReturnAmount = orderLoanApply.getLoanPrice();
-            } else{
-                customerWallet.setExpectedReturnAmount(0d);
-                customerWallet.setLoanQuota(customerWallet.getLoanQuota() + expectedReturnAmount - orderLoanApply.getLoanPrice());
-                subExpectedReturnAmount = expectedReturnAmount;
-                subLoanQuota = orderLoanApply.getLoanPrice() - expectedReturnAmount;
-            }
-            if (subExpectedReturnAmount > 0) {
-                CustomerTradingRecord customerTradingRecord = new CustomerTradingRecord();
-                customerTradingRecord.setAmount(subExpectedReturnAmount);
-                customerTradingRecord.setBusinessType(BusinessType.LOAN_EXPECTED_RETURN);
-                customerTradingRecord.setOperationType(OperationType.SUBTRACT);
-                customerTradingRecord.setCustomer(orderLoanApply.getCustomer());
-                customerTradingRecord.setRemark("贷款审核减少收益");
-                customerTradingRecord.setCreateTime(new Date());
-                customerTradingRecordDaoDao.save(customerTradingRecord);
-            }
-            if (subLoanQuota > 0) {
-                CustomerTradingRecord customerTradingRecord = new CustomerTradingRecord();
-                customerTradingRecord.setAmount(subLoanQuota);
-                customerTradingRecord.setBusinessType(BusinessType.LOAN_EXPECTED_RETURN);
-                customerTradingRecord.setOperationType(OperationType.SUBTRACT);
-                customerTradingRecord.setCustomer(orderLoanApply.getCustomer());
-                customerTradingRecord.setRemark("贷款审核减少贷款额度");
-                customerTradingRecord.setCreateTime(new Date());
-                customerTradingRecordDaoDao.save(customerTradingRecord);
-            }
-            CustomerTradingRecord customerTradingRecord = new CustomerTradingRecord();
-            customerTradingRecord.setAmount(orderLoanApply.getLoanPrice());
-            customerTradingRecord.setBusinessType(BusinessType.LOAN_EXPECTED_RETURN);
-            customerTradingRecord.setOperationType(OperationType.ADD);
-            customerTradingRecord.setCustomer(orderLoanApply.getCustomer());
-            customerTradingRecord.setRemark("贷款审核增加借款金额");
-            customerTradingRecord.setCreateTime(new Date());
-            customerTradingRecordDaoDao.save(customerTradingRecord);
-
-            //订单状态变更
-            Order order = orderDao.findOne(orderLoanApply.getOrder().getOrderId());
-            order.setOrderState(OrderState.PAID_PAYMENT);
-            order.setPaymentTime(new Date());
-            orderLoanApply.setLoanState(LoanState.APPLY_SUCCESS);
-        } else if (auditState == AuditState.NOT_AUDIT) {
-            orderLoanApply.setLoanState(LoanState.APPLY_FAILURE);
-        }
-        orderLoanApply.setAuditState(auditState);
-        orderLoanApply.setAuditRemark(auditRemark);
-        return true;
-    }
-
-    @Override
     public boolean orderAudit(int orderId, AuditState auditState, String auditRemark) {
         Order order = orderDao.findOne(orderId);
         if (order == null || order.getOrderState() != OrderState.PENDING_PAYMENT
-                || order.getPaymentType() != PaymentType.LOAN){
+                || order.getPaymentType() != PaymentType.UNDER_LINE){
             return false;
         }
         Date now = new Date();
@@ -986,11 +911,13 @@ public class OrderService implements IOrderService {
             } else {
                 order.setOrderState(OrderState.PAID_PAYMENT);
             }
+            order.setPaymentState(PaymentState.SUCCESS_PAID);
             order.setPaymentTime(now);
             order.setDeliverTime(now);
             order.setUpdateTime(now);
             orderLog.setRemark("订单审核通过");
         } else if (auditState == AuditState.NOT_AUDIT) {
+            order.setPaymentState(PaymentState.FAIL_PAID);
             order.setOrderState(OrderState.CANCELED);
             order.setCancelReason(auditRemark);
             order.setCancelTime(now);

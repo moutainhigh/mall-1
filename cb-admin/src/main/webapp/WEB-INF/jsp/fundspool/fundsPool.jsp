@@ -92,7 +92,7 @@
                                 <strong>资金池名称:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text"  data-filter="poolName" data-operator="contains" class="form-control grid-filter" placeholder="请输入资金池名称"/>
+                                <input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" type="text"  data-filter="poolName" data-operator="contains" class="form-control grid-filter" placeholder="请输入资金池名称"/>
                             </div>
                         </div>
                         <!-- End .pull-left -->

@@ -5,7 +5,7 @@ package com.yunxin.cb.mall.entity.meta;
  */
 public enum PaymentType {
 
-    LOAN("贷款购车"),;// FULL_SECTION("全款购车"),ALIPAY("支付宝"), TENPAY("财付通"), UNIONPAY("银联"), AFTERREVICED("货到付款");
+    UNDER_LINE("线下支付"),;//LOAN("贷款购车"), FULL_SECTION("全款购车"),ALIPAY("支付宝"), TENPAY("财付通"), UNIONPAY("银联"), AFTERREVICED("货到付款");
     private String name;
 
     private PaymentType(String name) {
@@ -22,6 +22,6 @@ public enum PaymentType {
 
     @Override
     public String toString() {
-        return name;
+        return super.toString() + "(" + name + ")";
     }
 }

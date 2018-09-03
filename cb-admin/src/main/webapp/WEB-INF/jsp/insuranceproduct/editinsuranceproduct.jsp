@@ -37,15 +37,20 @@
                     if (valid) {
                         var defaultPicPath = $('input[name="imgurl"]');
                         var defaultPicPath1 = $('input[name="imgurl1"]');
+                        var price=$('input[name="price"]');
                         if (defaultPicPath.size()==0) {
-                            bootbox.alert("请至少选择一张图片!");
+                            bootbox.alert("请至少选择一张产品图片!");
                             return false;
                         }else if(defaultPicPath1.size()==0) {
-                            bootbox.alert("请至少选择一张图片!");
+                            bootbox.alert("请至少选择一张详情图片!");
                             return false;
-                        } else {
+                        } else if(price.size()==0){
+                            bootbox.alert("请至少填写一个价格!");
+                            return false;
+                        }else{
                             return true;
                         }
+
                     }
                 }
             });
@@ -498,14 +503,14 @@
                         <form:hidden path="prodId"/>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>产品名称：</label>
+                                <label>产品名称：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <form:input path="prodName" value="" cssClass="form-control validate[required,minSize[2]]"
                                             maxlength="50"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>保障年限：</label>
+                                <label>保障年限：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <select class="form-control  grid-filter" path="protectionYear" name="protectionYear">
@@ -518,7 +523,7 @@
                         <div class="spacer-10"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span>保险期间：</label>
+                                <label>保险期间：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <select class="form-control grid-filter" path="insurePeriod" name="insurePeriod">
@@ -544,7 +549,7 @@
                             </div>
 
                             <div class="col-sm-2" style="display: none">
-                                <label><span class="asterisk">*</span>投保须知：</label>
+                                <label>投保须知：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3" style="display: none">
                                 <form:input path="instruction" value="10" cssClass="form-control" maxlength="50"/>
@@ -575,20 +580,20 @@
                                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
-                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
-                                            onValidationComplete: function (form, valid) {
-                                                if (valid) {
-                                                    var defaultPicPath = $('input[name="imgurl"]');
-                                                    if (defaultPicPath.size()==0) {
-                                                        bootbox.alert("请至少选择一张图片!");
-                                                        return false;
-                                                    } else {
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        });
+                                        // $("#validateSubmitForm").validationEngine({
+                                        //     autoHidePrompt: true, scroll: false, showOneMessage: true,
+                                        //     onValidationComplete: function (form, valid) {
+                                        //         if (valid) {
+                                        //             var defaultPicPath = $('input[name="imgurl"]');
+                                        //             if (defaultPicPath.size()==0) {
+                                        //                 bootbox.alert("请至少选择一张图片!");
+                                        //                 return false;
+                                        //             } else {
+                                        //                 return true;
+                                        //             }
+                                        //         }
+                                        //     }
+                                        // });
                                         var initPreview = new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
@@ -597,13 +602,14 @@
                                             showCaption: true,
                                             minImageWidth: 50,
                                             minImageHeight: 50,
-                                            showUpload:true, //是否显示上传按钮
+                                            showUpload:false, //是否显示上传按钮
                                             showRemove :false, //显示移除按钮
                                             showPreview :true, //是否显示预览
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             allowedFileExtensions: ["jpg", "png", "gif"],
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
@@ -619,6 +625,7 @@
                                             var html='<input name="imgurl" type="hidden" id="'+response.timeStr+'" value="'+response.url+','+response.fileName+','+response.timeStr+'">';
                                             $('#imgDiv').html($('#imgDiv').html()+html);
                                             //上传完成回调
+
                                             var index=0;
                                             if(initPreview.length>0 ){
                                                 index=initPreview.length;
@@ -689,20 +696,20 @@
                                     <%--图片上传控件--%>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
-                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
-                                            onValidationComplete: function (form, valid) {
-                                                if (valid) {
-                                                    var defaultPicPath = $('input[name="imgurl1"]');
-                                                    if (defaultPicPath.size()==0) {
-                                                        bootbox.alert("请至少选择一张图片!");
-                                                        return false;
-                                                    } else {
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        });
+                                        // $("#validateSubmitForm").validationEngine({
+                                        //     autoHidePrompt: true, scroll: false, showOneMessage: true,
+                                        //     onValidationComplete: function (form, valid) {
+                                        //         if (valid) {
+                                        //             var defaultPicPath = $('input[name="imgurl1"]');
+                                        //             if (defaultPicPath.size()==0) {
+                                        //                 bootbox.alert("请至少选择一张图片!");
+                                        //                 return false;
+                                        //             } else {
+                                        //                 return true;
+                                        //             }
+                                        //         }
+                                        //     }
+                                        // });
                                         var initPreview= new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
@@ -715,6 +722,7 @@
                                             showRemove :false, //显示移除按钮
                                             showPreview :true, //是否显示预览
                                             showCaption:false,//是否显示标题
+                                            showClose: false,
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
                                             showBrowse : false,
@@ -801,7 +809,7 @@
                                 <div class="btn-group pull-right">
                                     <button class="btn btn-default"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;
                                     </button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
+                                    <button onclick="clearInput('form-control')" type="button" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;
                                     </button>
                                 </div>
                             </div>
@@ -813,9 +821,13 @@
                             var idIndex = ${insuranceProduct.insuranceProductPrices.size()==0}?0:${insuranceProduct.insuranceProductPrices.size()};
                             function addAttribute() {
                                 var json = {idIndex: idIndex};
-                                $("#attributeTable tr:last").after($('#attributeTr').tmpl(json));
-                                $('#attributeTable tr').find('td:eq(1) td:eq(2)').hide();
-                                idIndex++;
+                                if(idIndex<5) {
+                                    $("#attributeTable tr:last").after($('#attributeTr').tmpl(json));
+                                    $('#attributeTable tr').find('td:eq(1) td:eq(2)').hide();
+                                    idIndex++;
+                                }else{
+                                    bootbox.alert("产品价格不能超过五个!");
+                                }
                             }
                             function removeprice(indx) {
                                 $("#price" + indx).remove();
@@ -824,15 +836,15 @@
                         </script>
                         <script id="attributeTr" type="text/x-jquery-tmpl">
                             <tr id='price{{= idIndex}}'>
-                                <td><input type='text' name='price' class='form-control validate[required,custom[number]]' maxlength='32'/></td>
-                                <td><input type='text' name='unit' class='form-control validate[required,minSize[1]]' maxlength='32'/></td>
+                                <td><input type='text' name='price' class='form-control validate[required,custom[number]]' maxlength='7' onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/></td>
+                                <td><input type='text' name='unit' value='元' class='form-control validate[required,minSize[1]]' maxlength='32' readonly/></td>
                                 <td class="text-center"><a class='btn btn-default' href='javascript:removeprice({{= idIndex}})'><i class='fa fa-minus-circle'></i></a></td>
                             </tr>
                         </script>
                         <legend>产品价格</legend>
                         <div class="row" style="margin-left: 15px;">
                             <div class="col-sm-1">
-                                <label><span class="asterisk">*</span> 价格列表：</label>
+                                <label> 价格列表：<span class="asterisk">*</span></label>
                             </div>
                             <div class="col-sm-3">
                                 <button type="button" onclick="addAttribute();" title="添加" class="btn btn-default">
@@ -858,9 +870,9 @@
                                     <c:forEach var="pri" items="${insuranceProduct.insuranceProductPrices}">
                                         <tr id="price${pri.priceId}">
                                             <td><input type="hidden" name="priceId" value="${pri.priceId}}">
-                                                <input type='text' name='price' value="${pri.price}" class='form-control validate[required,custom[number]]' maxlength='32'/>
+                                                <input type='text' name='price' value="${pri.price}" class='form-control validate[required,custom[number]]' maxlength='7' onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
                                             </td>
-                                            <td><input type='text' name='unit' value="${pri.unit}" class='form-control validate[required,minSize[1]]' maxlength='2'/></td>
+                                            <td><input type='text' name='unit' value="${pri.unit}" class='form-control validate[required,minSize[1]]' value='元' maxlength='2' readonly/></td>
                                             <td><a type='button' title='删除' class='btn btn-default' href='javascript:removeprice(${pri.priceId})'><i class='fa fa-minus-circle'></i></a>
                                             </td>
                                         </tr>

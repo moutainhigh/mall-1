@@ -103,15 +103,10 @@ public class MainResource extends BaseResource {
             customer.setAvatarUrl(avatarUrl);
             customer.setCustomerType(CustomerType.PLATFORM_SELF);
             customer.setEnabled(true);
-            if (recommendCustomer != null) {
-                customer.setRecommendCustomer(recommendCustomer);
-                Customer customerCode = customerService.generateCode(recommendCustomer.getInvitationCode());
-                if (customerCode != null) {
-                    customer.setLevelCode(customerCode.getLevelCode());
-                    customer.setCustomerLevel(customerCode.getCustomerLevel());
-                    customer.setInvitationCode(customerCode.getInvitationCode());
-                }
-            }
+            customer.setRecommendCustomer(recommendCustomer);
+//            if (recommendCustomer != null) {
+
+//            }
             customer = customerService.addCustomer(customer);
             String token = JwtUtil.generateToken(customer.getCustomerId(), customer.getMobile());
             customer.setToken(token);
@@ -357,7 +352,7 @@ public class MainResource extends BaseResource {
                     responseResult.setMessage("短信发送失败，请确认手机号或稍后再试!");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("sendMobileValidCode failed", e);
                 responseResult.setMessage("服务器出错！");
             }
         }

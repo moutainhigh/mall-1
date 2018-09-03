@@ -25,10 +25,24 @@ public interface IInsuranceOrderCodeService {
     public void addInsuranceOrderCode(InsuranceOrderCode insuranceOrderCode);
 
     /**
+     * 获取最大序号
+     */
+    public int getInsuranceOrderCodeMaxSort();
+
+    /**
      * 分页
      * @param query
      * @return
      */
     Page<InsuranceOrderCode> pageInsuranceOrderCode(PageSpecification<InsuranceOrderCode> query);
+
+//    /**
+//     * 邮件提醒
+//     */
+//    public void mailReminding();
+    /**
+     * 邮件提醒
+     */
+    public void Reminding();
 
 }

@@ -74,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
                     }
                 }
             } else {
-                return new AjaxResult().addError("订单不能为null");
+                return new AjaxResult().addError("查询不到对应的订单");
             }
 
         } catch (Exception e) {

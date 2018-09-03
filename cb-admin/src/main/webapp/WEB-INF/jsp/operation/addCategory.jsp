@@ -9,7 +9,13 @@
 
     <title>新增运营分类</title>
     <script type="text/javascript">
+        $(document).ready(function () {
 
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+        })
     </script>
 </head>
 <body>
@@ -107,7 +113,7 @@
                                 <label><span class="asterisk">*</span> 排序：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,min[0],custom[integer]]" path="sortOrder" maxlength="4"/>
+                                <form:input cssClass="form-control validate[required,min[0],custom[integer]]"  path="sortOrder" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 是否启用：</label>
@@ -122,14 +128,14 @@
                                 <label><span class="asterisk">*</span> 分类编号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required]" path="categoryNo" maxlength="32"/>
+                                <form:input cssClass="form-control validate[required]" path="categoryNo" readonly="true" maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 价格区间：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input path="lowestPrice" maxlength="32"/>-
-                                <form:input path="highestPrice" maxlength="32"/>万
+                                <form:input  path="lowestPrice" maxlength="6" cssClass="validate[required,min[0],max[999.99],custom[number]]"/>-
+                                <form:input path="highestPrice" maxlength="6" cssClass="validate[required,min[0],max[999.99],custom[number]]"/>万
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -173,6 +179,7 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             autoReplace : true,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
@@ -205,6 +212,7 @@
                                             });
                                             $(".btn-default").attr("disabled",false);
                                         }).on("filepredelete", function(jqXHR) {
+                                            debugger;
                                             var abort = true;
                                             if (confirm("确定要删除吗？(删除后不会恢复)")) {
                                                 abort = false;
@@ -249,7 +257,7 @@
                                 <label>分类描述：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" path="description" maxlength="512"></form:textarea>
+                                <form:textarea cssClass="form-control" path="description" maxlength="10"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>

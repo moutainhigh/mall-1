@@ -7,10 +7,12 @@ import com.yunxin.cb.mall.entity.meta.ObjectType;
 import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.TreeViewItem;
+import com.yunxin.cb.search.vo.ResponseResult;
+import com.yunxin.cb.search.vo.meta.Result;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
-import com.yunxin.core.util.LogicUtils;
+import com.yunxin.core.util.IdGenerate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -27,9 +29,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author gonglei
@@ -92,6 +94,8 @@ public class CommodityController implements ServletContextAware {
 
     @RequestMapping(value = "toAddCommodity", method = RequestMethod.GET)
     public String toAddCommodity(@ModelAttribute("commodity") Commodity commodity, ModelMap modelMap, HttpServletRequest request) {
+        commodity.setCommodityCode(IdGenerate.genGoodsID());
+        modelMap.addAttribute("commodity", commodity);
         return toAddCommodity(commodity, modelMap);
     }
 
@@ -102,12 +106,12 @@ public class CommodityController implements ServletContextAware {
 //		modelMap.addAttribute("commoditySpecs", commoditySpecs);
         TreeViewItem catalogTree = catalogService.getCatalogTree();
         modelMap.addAttribute("catalogTree", Arrays.asList(catalogTree));
-        modelMap.addAttribute("priceSections", priceService.getAllPriceSections());
+        modelMap.addAttribute("priceSections", priceService.findAllByEnabled());
         return "commodity/addCommodity";
     }
 
     @RequestMapping(value = "addCommodity", method = RequestMethod.POST)
-    public String addCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
+    public String addCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request)  throws Exception  {
         if (result.hasErrors()) {
             return toAddCommodity(commodity, modelMap);
         }
@@ -115,8 +119,10 @@ public class CommodityController implements ServletContextAware {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
-                Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
-                commodity.setSeller(seller);
+                if(commodity.getSeller().getSellerId()==0){
+                    Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
+                    commodity.setSeller(seller);
+                }
                 commodity = commodityService.addCommodity(commodity);
                 //保存图片路径
                 attachmentService.deleteAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId());
@@ -126,8 +132,10 @@ public class CommodityController implements ServletContextAware {
             }
 
         } catch (EntityExistException e) {
-            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
-                    messageSource.getMessage("commodity_commodityName_repeat", null, locale)));
+//            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
+//                    messageSource.getMessage("commodity_commodityName_repeat", null, locale)));
+            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toAddCommodity(commodity, modelMap);
         }
         return "redirect:editProducts.do?commodityId=" + commodity.getCommodityId();
@@ -145,9 +153,10 @@ public class CommodityController implements ServletContextAware {
         modelMap.addAttribute("brands", brands);
         TreeViewItem catalogTree = catalogService.getCatalogTree();
         modelMap.addAttribute("catalogTree", Arrays.asList(catalogTree));
-        modelMap.addAttribute("priceSections", priceService.getAllPriceSections());
+        modelMap.addAttribute("priceSections", priceService.findAllByEnabled());
         Commodity commodity = commodityService.getCommodityDetailById(commodityId);
         modelMap.addAttribute("commodity", commodity);
+        modelMap.addAttribute("seller", commodity.getSeller());
         List<CommoditySpec> currentSpecs = commodityService.getCommoditySpecsByCommodityId(commodityId);
         modelMap.addAttribute("currentSpecs", currentSpecs);
         List<Attachment> listAttachment=attachmentService.findAttachmentByObjectTypeAndObjectId(ObjectType.COMMODITY,commodity.getCommodityId());
@@ -160,11 +169,15 @@ public class CommodityController implements ServletContextAware {
     }
 
     @RequestMapping(value = "editCommodity", method = RequestMethod.POST)
-    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request) {
+    public String editCommodity(@Valid @ModelAttribute("commodity") Commodity commodity,HttpSession session, BindingResult result, ModelMap modelMap, Locale locale,HttpServletRequest request)  throws Exception  {
         try {
             String[] imgurl = request.getParameterValues("imgurl");
             if(imgurl.length>0){
                 commodity.setDefaultPicPath(imgurl[0].split(",")[0]);
+                if(commodity.getSeller().getSellerId()==0){
+                    Seller seller = (Seller) session.getAttribute(SecurityConstants.LOGIN_SELLER);
+                    commodity.setSeller(seller);
+                }
                 commodity = commodityService.updateCommodity(commodity);
                 //保存图片路径
                 attachmentService.deleteAttachmentPictures(ObjectType.COMMODITY,commodity.getCommodityId());
@@ -175,8 +188,10 @@ public class CommodityController implements ServletContextAware {
             commodityService.updateCommodityES(commodity.getCommodityId());
 
         } catch (Exception e) {
-            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
-                    messageSource.getMessage("commodity_commodityName_repeat", null, locale)));
+            /*result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,
+                    messageSource.getMessage("commodity_commodityName_repeat", null, locale)));*/
+            result.addError(new FieldError("commodity", "commodityName", commodity.getCommodityName(), true, null, null,e.getMessage()));
+            modelMap.put("errerMsg",e.getMessage());
             return toEditCommodity(commodity.getCommodityId(), modelMap, locale);
         }
         return "redirect:../common/success.do?reurl=commodity/commodities.do";
@@ -186,17 +201,18 @@ public class CommodityController implements ServletContextAware {
     @ResponseBody
     public boolean removeCommodityById(@RequestParam("commodityId") int commodityId, HttpServletRequest request) {
         try {
-            Commodity commodity = commodityService.findByCommodityId(commodityId);
-            String imgDirectory = servletContext.getRealPath("/images/commodity/" + commodity.getCommodityCode());
             commodityService.removeCommodityById(commodityId);
-            File imageDir = new File(imgDirectory);
-            if (imageDir.isDirectory()) {
-                String[] children = imageDir.list();
-                for (int i = 0; i < children.length; i++) {
-                    new File(imageDir, children[i]).delete();
-                }
-                imageDir.delete();
-            }
+//            Commodity commodity = commodityService.findByCommodityId(commodityId);
+//            String imgDirectory = servletContext.getRealPath("/images/commodity/" + commodity.getCommodityCode());
+//
+//            File imageDir = new File(imgDirectory);
+//            if (imageDir.isDirectory()) {
+//                String[] children = imageDir.list();
+//                for (int i = 0; i < children.length; i++) {
+//                    new File(imageDir, children[i]).delete();
+//                }
+//                imageDir.delete();
+//            }
 
             return true;
         } catch (Exception e) {
@@ -207,13 +223,15 @@ public class CommodityController implements ServletContextAware {
 
     @ResponseBody
     @RequestMapping(value = "upOrDownShelvesCommodity",method = RequestMethod.GET)
-    public boolean upOrDownShelvesCommodity(@RequestParam("commodityId") int commodityId, @RequestParam("publishState") PublishState publishState) {
+    public ResponseResult upOrDownShelvesCommodity(@RequestParam("commodityId") int commodityId, @RequestParam("publishState") PublishState publishState) {
+        ResponseResult responseResult = new ResponseResult(Result.FAILURE);
         try{
-            return commodityService.upOrDownShelvesCommodity(commodityId, publishState);
+            responseResult = commodityService.upOrDownShelvesCommodity(commodityId, publishState,null);
         }catch (Exception ex){
             logger.info(ex.getMessage());
-            return false;
+            responseResult.setData(ex.getMessage());
         }
+        return responseResult;
     }
 
     @RequestMapping(value = "commodityDetail",method = RequestMethod.GET)
@@ -283,6 +301,24 @@ public class CommodityController implements ServletContextAware {
             return false;
         }
 
+    }
+
+    /**
+     * @Description:                根据分类id,返回一级分类的比例配置
+     * @author: lxc
+     * @param catalogId             分类id
+     * @Return java.lang.String:
+     * @DateTime: 2018/8/15 17:41
+     */
+    @ResponseBody
+    @RequestMapping(value = "getOneLevelCatalog",method = RequestMethod.GET)
+    public String getOneLevelCatalog(@RequestParam("catalogId") int catalogId) {
+        Catalog one = catalogService.findOne(catalogId);
+        if(one.getParentCatalogId() == 1){
+            return one.getRatio().toString();
+        }
+        Catalog catalog = catalogService.findOneLevelCatalogByCatalogCode(one.getCatalogCode());
+        return catalog.getRatio().toString();
     }
 
 //    @RequestMapping(method = RequestMethod.GET)

@@ -93,6 +93,12 @@ public class Advertisement {
     private String templatePath;
 
     private String[] clientTypesTemporary;
+    public Advertisement() {
+
+    }
+    public Advertisement(int advertId) {
+        this.advertId = advertId;
+    }
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

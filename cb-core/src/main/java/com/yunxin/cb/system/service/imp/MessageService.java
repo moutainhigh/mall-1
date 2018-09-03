@@ -1,11 +1,14 @@
 package com.yunxin.cb.system.service.imp;
 
+import com.yunxin.cb.mall.entity.meta.ObjectType;
+import com.yunxin.cb.mall.service.imp.AttachmentService;
 import com.yunxin.cb.system.dao.MessageDao;
 import com.yunxin.cb.system.entity.Message;
 import com.yunxin.cb.system.entity.Message_;
 import com.yunxin.cb.system.service.IMessageService;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ public class MessageService implements IMessageService {
 
     @Resource
     private MessageDao messageDao;
+
+    @Resource
+    private AttachmentService attachmentService;
 
     /**
      * 功能描述: 消息列表分页查询
@@ -60,7 +66,21 @@ public class MessageService implements IMessageService {
     @Override
     @Transactional
     public Message addMessage(Message message) {
-        return messageDao.save(message);
+        if(null == message.getPushTime()){
+            String imgUrl = message.getDigestPic();
+            message.setDigestPic(!StringUtils.isEmpty(imgUrl)?imgUrl.split(",")[0]:null);
+            message = messageDao.save(message);
+
+            //保存图片路径
+            attachmentService.deleteAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId());
+            if(!StringUtils.isEmpty(imgUrl)){
+                attachmentService.addAttachmentPictures(ObjectType.MESSAGEDIGEST,message.getMessageId(),imgUrl);
+            }
+        }else{
+            //推送消息时，仅更新推送状态
+            message = messageDao.save(message);
+        }
+        return message;
     }
 
     /**
@@ -76,4 +96,18 @@ public class MessageService implements IMessageService {
         return messageDao.findOne(messageId);
     }
 
+    /**
+     * 功能描述: 通过消息ID删除消息
+     *
+     * @param: messageId 消息ID
+     * @return:
+     * @auther: yangzhen
+     * @date: 2018/8/15 17:24
+     */
+    @Override
+    @Transactional
+    public void removeMessageById(int messageId) {
+        attachmentService.deleteAttachmentPictures(ObjectType.MESSAGEDIGEST,messageId);
+        messageDao.delete(messageId);
+    }
 }

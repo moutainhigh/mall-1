@@ -54,7 +54,7 @@
             <jsp:param name="active" value="active"/>
         </jsp:include>
         <div id="sidebar-tab-2" class="tab-pane active clearfix">
-            <input type="hidden" id="catalogId" data-filter="catalog.catalogId" data-operator="eq" class="grid-filter" value="0"/>
+            <%--<input type="hidden" id="catalogId" data-filter="catalog.catalogId" data-operator="eq" class="grid-filter" value="0"/>--%>
             <div class="sidebar-module">
                 <ul class="easyfiletree">
                     <c:set var="instanceUnderCatalog" value="catalogAttributeGroup" scope="request"/>
@@ -99,7 +99,7 @@
                     <h2>属性组管理</h2>
                 </div>
                 <div class="pull-right">
-                    <div class="btn-group">
+                    <%--<div class="btn-group">
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-star"></i>
                         </a>
@@ -109,7 +109,7 @@
                         <a class="btn btn-default" href="#">
                             <i class="fa fa-cog"></i>
                         </a>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </header>
@@ -128,7 +128,7 @@
             </div>
             <div class="inner-padding">
                 <div class="toolbar responsive-helper">
-                    <form>
+                    <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
                                 <strong>属性组名称:</strong>
@@ -169,10 +169,10 @@
                     <kendo:grid name="grid" pageable="false" sortable="true" selectable="true" height="510" detailTemplate="template">
                         <kendo:grid-pageable refresh="true" pageSizes="true" buttonCount="5" pageSize="10"/>
                         <kendo:grid-columns>
-                            <kendo:grid-column title="属性组名" field="groupName" width="350px"/>
+                            <kendo:grid-column title="属性组名" field="groupName" width="300px"/>
                             <kendo:grid-column title="分类" field="catalog.catalogName"/>
-                            <kendo:grid-column title="是否以图片显示" field="showAsImage" width="150px" template="#= showAsImage ? '是' : '否' #"/>
-                            <kendo:grid-column title="创建时间" field="createTime" width="130" format="{0:yyyy-MM-dd HH:mm}"/>
+                            <%--<kendo:grid-column title="是否以图片显示" field="showAsImage" width="150px" template="#= showAsImage ? '是' : '否' #"/>--%>
+                            <kendo:grid-column title="创建时间" field="createTime" width="200" format="{0:yyyy-MM-dd HH:mm:ss}"/>
                         </kendo:grid-columns>
                         <kendo:grid-dataBound>
                             <script>

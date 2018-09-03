@@ -9,13 +9,14 @@
     <title>新增用户</title>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+            $(document).ready(function() {
             $("#roleIds").select2();
             $("#validateSubmitForm").validationEngine({
                 autoHidePrompt: true, scroll: false, showOneMessage: true
             });
 
         });
+
 
         /**
          * 手机验证
@@ -100,7 +101,7 @@
                                 <label><span class="asterisk">*</span>用户名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" cssClass="form-control validate[required,minSize[2]]" path="userName" maxlength="32"/>
+                                <form:input onkeyup="this.value=this.value.replace(/[^a-zA-Z\d\u4e00-\u9fa5]/g,'')" cssClass="form-control validate[required,minSize[2],funcCall[specialChar]]" path="userName" maxlength="32"/>
                                 <form:errors path="userName" cssClass="Validform_checktip"/>
                             </div>
                             <div class="col-sm-2">
@@ -133,7 +134,7 @@
                                 <label><span class="asterisk">*</span>手机号码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input onblur="checkPhone(this.value)" id="phone" cssClass="form-control validate[required,custom[phone]]" path="mobile" maxlength="11"/>
+                                <form:input  id="phone" cssClass="form-control validate[required,custom[checkPhone]]" path="mobile" maxlength="11"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>邮箱：</label>
@@ -167,8 +168,8 @@
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>角色：</label>
                             </div>
-                            <div class="col-sm-8">
-                                <form:select cssClass="simpleselect validate[groupRequired[roleIds]]" id="roleIds" path="roldIds" items="${roles}" itemLabel="roleName" itemValue="roleId"/>
+                            <div class="col-sm-3">
+                                <form:select cssClass="simpleselect validate[groupRequired[roleIds]]" id="roleIds" path="roldIds" items="${roles}" itemLabel="roleName" itemValue="roleId" multiple="false"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>

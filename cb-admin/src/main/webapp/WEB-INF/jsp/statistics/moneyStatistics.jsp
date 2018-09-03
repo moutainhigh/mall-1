@@ -39,14 +39,20 @@
           categories:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
           title: {
             text: "时间:日"
-          }
+          },
+            //minRange:31,
+            //max:5,
+            //tickWidth:1000,
+            labels:{
+
+            }
         },
         yAxis: {
           min: 0,
           title: {
-            text: "单位: 元 RMB"
+            text: "单位: 元 RMB（K:千元，M:百万元，G:十亿元）"
           },
-          alternateGridColor: '#FDFFD5'
+           alternateGridColor: '#FDFFD5'
         },
         plotOptions: {
           series: {
@@ -72,13 +78,33 @@
         series: [
           {
             name: "成交金额",
-            color: '#029402'
+            color: '#029402',
+            dataLabels: {  // 针对不同的数据列做数据标签偏移及加颜色处理
+                  enabled: true,
+                  allowOverlap: true,
+                  color: '#029402',
+                crop:false,
+                overflow: 'none'
+            }
           },
           {
             name: "已付款金额",
-            color: '#ff0000'
+            color: '#ff0000',
+            dataLabels: {  // 针对不同的数据列做数据标签偏移及加颜色处理
+                  y: -10,
+                  enabled: true,
+                  allowOverlap: true,
+                  color: '#ff0000',
+                crop:false,
+                overflow: 'none'
+             }
           }
-        ]
+        ],
+          navigation: {
+              buttonOptions: {
+                  enabled: false
+              }
+          }
 
       };
 
@@ -89,11 +115,11 @@
         var datasA = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasA.push([value.day, value.orderPrice]);
+          datasA.push([value.day-1, value.orderPrice]);
           categories.push(value.day);
         });
         options.series[0].data = datasA;
-        options.xAxis.categories = categories;
+        //options.xAxis.categories = categories;
         $('#chartContainer').highcharts(options);
       });
 
@@ -104,7 +130,7 @@
         var datasB = [];
         var categories = [];
         $.each(json, function (date, value) {
-          datasB.push([value.day, value.orderPrice]);
+          datasB.push([value.day-1, value.orderPrice]);
           categories.push(value.day);
         });
         options.series[1].data = datasB;
@@ -138,7 +164,7 @@
         yAxis: {
           min: 0,
           title: {
-            text: "单位: 元 RMB"
+            text: "单位: 元 RMB（K:千元，M:百万元，G:十亿元）"
           },
           alternateGridColor: '#FDFFD5'
         },
@@ -166,11 +192,22 @@
         series: [
           {
             name: "成交金额",
-            color: '#029402'
+            color: '#029402',
+              dataLabels: {  // 针对不同的数据列做数据标签偏移及加颜色处理
+                  enabled: true,
+                  allowOverlap: true,
+                  color: '#029402',
+              }
           },
           {
             name: "已付款金额",
-            color: '#ff0000'
+            color: '#ff0000',
+              dataLabels: {  // 针对不同的数据列做数据标签偏移及加颜色处理
+                  y: -10,
+                  enabled: true,
+                  allowOverlap: true,
+                  color: '#ff0000',
+              }
           }
         ]
 
@@ -239,8 +276,8 @@
       <div class="header-main-bottom">
         <div class="pull-left">
           <ul class="breadcrumb">
-            <li><a href="#">首页</a></li>
-            <li><a href="#">统计分析</a></li>
+            <li>首页</li>
+            <li>统计分析</li>
             <li class="active"><a href="moneyStatistics.do">金额统计</a></li>
           </ul>
           <!-- End .breadcrumb -->
@@ -291,7 +328,7 @@
           <div id="content-tab-1" class="tab-pane active">
             <div class="inner-padding">
               <div class="toolbar responsive-helper">
-                <form>
+                <form style="width: 100%">
                   <div class="pull-left">
                     <div class="toolbar-field">
                       <strong>时间:</strong>
@@ -300,13 +337,13 @@
                     <div class="toolbar-field">
                       <div class="row">
                         <div class="col-md-4">
-                          <select id="yearSelect" name="year" class="form-control input-sm">
+                          <select id="yearSelect" name="year" class="form-control input-sm" style="width: 80px;">
                             <c:forEach var="i" begin="2015" end="2050">
                               <option <c:if test="${year==i}"> selected="selected"</c:if> value="${i}"> ${i}</option>
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>年</strong></div>
+                        <div class="col-md-2"  style="margin-top: 5px;"><strong>年</strong></div>
                         <div class="col-md-4">
                           <select id="monthSelect" name="month" class="form-control input-sm">
                             <c:forEach var="i" begin="1" end="12">
@@ -314,7 +351,7 @@
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>月</strong></div>
+                        <div class="col-md-2"  style="margin-top: 5px;"><strong>月</strong></div>
 
 
                       </div>
@@ -366,7 +403,7 @@
                             </c:forEach>
                           </select>
                         </div>
-                        <div class="col-md-2"><strong>年</strong></div>
+                        <div class="col-md-2"  style="margin-top: 5px;"><strong>年</strong></div>
 
 
                       </div>

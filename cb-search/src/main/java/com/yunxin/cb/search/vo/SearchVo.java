@@ -35,6 +35,9 @@ public class SearchVo implements java.io.Serializable {
     @ApiModelProperty(value="商品筛选属性",name="commoditySpecs",example="商品筛选属性")
     private Set<CommoditySpec> commoditySpecs = new HashSet<>();
 
+    @ApiModelProperty(value="城市编码",name="cityCode",example="440300")
+    private String cityCode;
+
     @ApiModelProperty(value="排序字段",name="sortBy",example="排序字段")
     private SortBy sortBy;
 
@@ -45,6 +48,11 @@ public class SearchVo implements java.io.Serializable {
     private int size;
     @ApiModelProperty(value="页码",name="page",example="0")
     private int page;
+
+    @ApiModelProperty(value="地理纬度",name="lat",example="18.257776")
+    private Double lat;
+    @ApiModelProperty(value="地理经度",name="lon",example="109.522771")
+    private Double lon;
 
     public int getBrandId() {
         return brandId;
@@ -132,5 +140,29 @@ public class SearchVo implements java.io.Serializable {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
     }
 }

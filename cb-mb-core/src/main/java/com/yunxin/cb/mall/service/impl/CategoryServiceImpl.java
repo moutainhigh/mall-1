@@ -24,7 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 根据分类NO查询子类
-     * @param parentCategoryId
+     * @param categoryNo
      * @return
      */
     @Override

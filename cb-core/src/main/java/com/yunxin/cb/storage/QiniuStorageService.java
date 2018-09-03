@@ -158,6 +158,7 @@ public class QiniuStorageService implements IStorageService {
         String domain = domain_1;
         String fileName= objectType.toString()+"/"+timeStr;
         String upToken = auth.uploadToken(bucket);
+        System.out.println(upToken);
         try {
             Response response = uploadManager.put(inputStream, fileName, upToken, null, null);
             //解析上传成功的结果
@@ -241,6 +242,22 @@ public class QiniuStorageService implements IStorageService {
                 //ignore
             }
         }
+        return result;
+    }
+
+    /**
+     * 获取七牛信息
+     * @return
+     */
+    @Override
+    public Map<String,String> getQiniuInfo(){
+        Map<String,String> result=new HashMap();
+        Auth auth = Auth.create(accessKey, secretKey);
+        String bucket = bucket_1;
+        String domain = domain_1;
+        String upToken = auth.uploadToken(bucket);
+        result.put("upToken",upToken);
+        result.put("domain",domain);
         return result;
     }
 }

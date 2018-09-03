@@ -355,7 +355,6 @@
                       var initPreviewConfig = new Array();//展示设置
                       //初始化图片上传组件
                       $("#picUrl").fileinput({
-                          uploadUrl: "/admin/uploads/uploadFile/COMMODITY.do",
                           showCaption: true,
                           minImageWidth: 50,
                           minImageHeight: 50,
@@ -366,17 +365,18 @@
                           browseOnZoneClick: false,//是否显示点击选择文件
                           language: "zh" ,
                           showBrowse : false,
-                          maxFileSize : 2000,
-                          allowedFileExtensions: ["jpg", "png", "gif"],
-                          autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
-                          overwriteInitial: false,//不覆盖已存在的图片
-                          browseClass:"btn btn-primary", //按钮样式
+                          //maxFileSize : 2000,
+                          //allowedFileExtensions: ["jpg", "png", "gif"],
+                          //autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉
+                          //overwriteInitial: false,//不覆盖已存在的图片
+                          //browseClass:"btn btn-primary", //按钮样式
                           layoutTemplates:{
                               actionUpload:'',    //设置为空可去掉上传按钮
                               actionDelete:''
                           },
                           maxFileCount: 10  //上传的个数
                       });
+                      $('.file-drop-zone-title').html("");
                       //加载图片
                       var a='${list}';
                       var json=eval('(' + a + ')')
@@ -384,7 +384,7 @@
                           initPreview[i]  = json[i];
                           var config = new Object();
                           config.caption = "";
-                          config.url="/admin/uploads/delete/COMMODITY.do";
+                          //config.url="/admin/uploads/delete/COMMODITY.do";
                           config.key=json[i];
                           initPreviewConfig[i]=config;
                           $("#picUrl").fileinput('refresh', {

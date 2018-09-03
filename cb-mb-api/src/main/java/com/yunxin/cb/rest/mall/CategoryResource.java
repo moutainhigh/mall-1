@@ -3,8 +3,11 @@ package com.yunxin.cb.rest.mall;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.entity.Category;
+import com.yunxin.cb.mall.entity.Profile;
+import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.service.BrandService;
 import com.yunxin.cb.mall.service.CategoryService;
+import com.yunxin.cb.mall.service.ProfileService;
 import com.yunxin.cb.mall.vo.CategoryVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
@@ -16,6 +19,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +42,10 @@ public class CategoryResource extends BaseResource {
 
     @Resource
     private BrandService brandService;
-    /**
-     * 汽车运营分类编码
-     */
-    private static final String CAR_CATEGORY_CODE = "NO01";
+
+    @Resource
+    private ProfileService profileService;
+
 
     @ApiOperation(value = "查询汽车品牌 V1")
     @ApiImplicitParams({
@@ -51,7 +55,8 @@ public class CategoryResource extends BaseResource {
     @IgnoreAuthentication
     public ResponseResult<Map<String, List<CategoryVO>>> carBrand() {
         try {
-            Category cate=categoryService.selectByParentCategoryNo(CAR_CATEGORY_CODE);
+            Profile profile = profileService.getProfileByName(ProfileState.CAR_CLASS_CONFIG.name());
+            Category cate=categoryService.selectByParentCategoryNo(profile.getFileValue());
             if(LogicUtils.isNull(cate)){
                 return new ResponseResult(Result.FAILURE);
             }
@@ -79,14 +84,19 @@ public class CategoryResource extends BaseResource {
 
     @ApiOperation(value = "根据汽车品牌分类查询车系 V1")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "categoryId", value = "分类ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "categoryId", value = "分类ID", required = true, paramType = "path", dataType = "Integer")})
     @GetMapping(value = "getCategoryById/{categoryId}")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<CategoryVO>> getCategoryById(@PathVariable("categoryId") int categoryId) {
+    public ResponseResult<List<CategoryVO>> getCategoryById(
+            @NotBlank(message = "分类ID不能为空")
+            @PathVariable("categoryId") int categoryId) {
         try {
             List<CategoryVO> catagoryVOs = new ArrayList<>();
             List<Category> catagorys=categoryService.selectByParentCategoryId(categoryId);
+            if(LogicUtils.isNull(catagorys)){
+                return new ResponseResult(Result.FAILURE,"数据为空");
+            }
             for(Category category : catagorys){
                 CategoryVO cVO = new CategoryVO();
                 BeanUtils.copyProperties(cVO, category);
@@ -101,11 +111,13 @@ public class CategoryResource extends BaseResource {
 
     @ApiOperation(value = "根据汽车品牌ID查询车系 V1")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "brandId", value = "品牌ID", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "brandId", value = "品牌ID", required = true, paramType = "path", dataType = "Integer")})
     @GetMapping(value = "getCategoryByBrandId/{brandId}")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<CategoryVO>> getCategoryByBrandId(@PathVariable("brandId") int brandId) {
+    public ResponseResult<List<CategoryVO>> getCategoryByBrandId(
+            @NotBlank(message = "品牌ID不能为空")
+            @PathVariable("brandId") int brandId) {
         try {
             Brand brand=brandService.selectByPrimaryKey(brandId);//获取品牌数据
             if(LogicUtils.isNull(brand)){

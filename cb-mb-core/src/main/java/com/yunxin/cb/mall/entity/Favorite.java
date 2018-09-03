@@ -20,6 +20,9 @@ public class Favorite implements java.io.Serializable{
     /** 商品id */
     private Integer commodityId;
 
+    /** 货品id */
+    private Integer productId;
+
     private Commodity commodity;
 
     /** 客户id */
@@ -71,5 +74,13 @@ public class Favorite implements java.io.Serializable{
 
     public void setCommodity(Commodity commodity) {
         this.commodity = commodity;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 }

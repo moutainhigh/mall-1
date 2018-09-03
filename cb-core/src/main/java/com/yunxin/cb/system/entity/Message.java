@@ -43,8 +43,14 @@ public class Message implements java.io.Serializable {
     /**
      * 消息摘要
      */
-    @ApiModelProperty(value="消息摘要",name="messageDigest",example="消息摘要")
+    @ApiModelProperty(value="消息摘要(文字)",name="messageDigest",example="消息摘要（文字）")
     private String messageDigest;
+
+    /**
+     * 消息摘要
+     */
+    @ApiModelProperty(value="消息摘要图片（路径）",name="digestPic",example="消息摘要图片（路径）")
+    private String digestPic;
 
     /**
      * 消息内容
@@ -73,6 +79,12 @@ public class Message implements java.io.Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date pushTime;
 
+    /**
+     * 消息发送人
+     */
+    @ApiModelProperty(value="消息发送人",name="messageDespatcher",example="消息发送人")
+    private String messageDespatcher;
+
     public Message() {
     }
 
@@ -88,6 +100,7 @@ public class Message implements java.io.Serializable {
         this.messageId = messageId;
     }
 
+    @Column(nullable = true , name = "push_title")
     public String getPushTitle() {
         return pushTitle;
     }
@@ -96,7 +109,7 @@ public class Message implements java.io.Serializable {
         this.pushTitle = pushTitle;
     }
 
-    @Column(nullable = true, length = 4098,name = "message_content")
+    @Column(nullable = true,name = "message_content")
     public String getMessageContent() {
         return messageContent;
     }
@@ -144,5 +157,23 @@ public class Message implements java.io.Serializable {
 
     public void setMessageDigest(String messageDigest) {
         this.messageDigest = messageDigest;
+    }
+
+    @Column(length = 4098, name = "digest_pic")
+    public String getDigestPic() {
+        return digestPic;
+    }
+
+    public void setDigestPic(String digestPic) {
+        this.digestPic = digestPic;
+    }
+
+    @Column(nullable = true , name = "message_despatcher")
+    public String getMessageDespatcher() {
+        return messageDespatcher;
+    }
+
+    public void setMessageDespatcher(String messageDespatcher) {
+        this.messageDespatcher = messageDespatcher;
     }
 }

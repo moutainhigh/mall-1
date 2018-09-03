@@ -16,9 +16,17 @@
 
     <script type="application/javascript">
 
+
+
         var curStep = 0;
 
         $(document).ready(function () {
+
+            var errerMsg='${errerMsg}';
+            if(errerMsg!=null&&errerMsg!=""){
+                commonNotify(errerMsg,"error");
+            }
+
             KindEditor.ready(function (K) {
                 window.editor = K.create('#editorContent', {
                     uploadJson: '../upload/fileUpload.do',
@@ -57,6 +65,8 @@
 
             $("#brandId").select2();
 
+            $("#priceSection").val(${commodity.priceSection.sectionId});
+
             $.citySelector.init({
                 province: "province",
                 city: "city",
@@ -68,8 +78,48 @@
                 autoHidePrompt: true, scroll: false, showOneMessage: true,
                 onValidationComplete: function (form, valid) {
                     if (valid) {
+                        var startPrice = $("#priceSection").find("option:selected").attr("option-startPrice");
+                        var endPrice = $("#priceSection").find("option:selected").attr("option-endPrice");
+
+                        if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#costPrice").val())){
+                            bootbox.alert("成本价格须介于商品价格段范围内!");
+                            return false;
+                        }
+                        if(Number($("#sellPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#sellPrice").val())){
+                            bootbox.alert("销售价格须介于商品价格段范围内!");
+                            return false;
+                        }
+                        if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
+                            bootbox.alert("市场价格须介于商品价格段范围内!");
+                            return false;
+                        }
+                        var defaultPicPath = $('input[name="imgurl"]');
+                        if (defaultPicPath.size()==0) {
+                            bootbox.alert("请至少选择一张图片!");
+                            return false;
+                        }
                         if (null == $("#editorContent").val() || "" == $("#editorContent").val()) {
                             bootbox.alert("请填写商品详情内容!");
+                            return false;
+                        }
+                        /*if (null == $("#editorContent2").val() || "" == $("#editorContent2").val()) {
+                            bootbox.alert("请填写商品配置内容!");
+                            return false;
+                        }*/
+                        /*if (null == $("#editorContent1").val() || "" == $("#editorContent1").val()) {
+                            bootbox.alert("请填写商品说明内容!");
+                            return false;
+                        }*/
+                        if ($("#editorContent").val().length > 4098) {
+                            bootbox.alert("商品详情内容过长，请输入小于4098个字符!");
+                            return false;
+                        }
+                        /*if ($("#editorContent2").val().length > 4098) {
+                            bootbox.alert("商品配置内容过长，请输入小于4098个字符!");
+                            return false;
+                        }*/
+                        if ($("#editorContent1").val().length > 4098) {
+                            bootbox.alert("商品说明内容过长，请输入小于4098个字符!");
                             return false;
                         }
                         return true;
@@ -77,7 +127,6 @@
                 }
             });
         });
-
         function loadAttributeGroups(catalogId) {
             $.getJSON("getAttributeGroupsByCatalogId.do", {
                 catalogId: catalogId
@@ -101,11 +150,55 @@
             }, function (json) {
                 $("#specTable  tr:not(:first)").empty()
                 $.each(json, function (date, value) {
-                    var newRow = "<tr><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control'/></td></tr>";
+                    var newRow = "<tr tag='"+value.specName+"'><td><input type='hidden' name='specId' value='" + value.specId + "'/>" + value.specName + "</td><td><input type='text' name='specValue' class='form-control' maxlength='255'/></td></tr>";
                     $("#specTable tr:last").after(newRow);
 
                 });
             });
+        }
+
+        function specAuto() {
+            var keyword = $("#commodityTitle").val();
+            var specUrl = $("#specUrl").val();
+            if(keyword != ""|| specUrl != ""){
+                $.getJSON("../commodity/specAuto/yicheSpecs.do", {
+                    keyword: keyword,
+                    specUrl:specUrl
+                }, function (json) {
+                    if(json.resultType=="SUCCESS"){
+                        var data = json.data;
+                        for(var key in data){
+                            var specTr = $("#specTable tr[tag='"+key+"']");
+                            if(specTr != null){
+                                $(specTr).find("input[name='specValue']").val(data[key]);
+                            }
+                        }
+                        commonNotify("配置已自动填充完成","success");
+                    }else{
+                        bootbox.alert(json.message);
+                    }
+                });
+            }else{
+                bootbox.alert("请先填写商品标题或者汽车配置网址");
+                return;
+            }
+        }
+
+        function selectSeller() {
+            $('#sellerDialog').modal();
+        }
+
+        function chooseSeller() {
+            var dataItem = getSelectedGridItem("grid");
+            if (dataItem) {
+                var sellerId=dataItem.sellerId;
+                $("#sellerId").val(dataItem.sellerId);
+                $("#sellerName").val(dataItem.sellerName);
+            }else{
+                $("#sellerId").val('');
+                $("#sellerName").val('');
+            }
+            $('#sellerDialog').modal("hide")
         }
 
     </script>
@@ -162,7 +255,7 @@
                             <div class="col-sm-3">
                                 <form:hidden id="catalogId" path="catalog.catalogId"/>
                                 <div class="input-group">
-                                    <form:input id="catalogName" readonly="true" cssClass="form-control validate[required]" path="catalog.catalogName" maxlength="32"/>
+                                    <form:input id="catalogName" readonly="true" cssClass="form-control validate[required]" path="catalog.catalogName" maxlength="32" placeholder="仅可选择第三级商品分类"/>
                                     <span class="input-group-btn">
                                         <button id="catalogNameBtn" class="btn btn-default" type="button">选择</button>
                                     </span>
@@ -188,9 +281,9 @@
                                 <label><span class="asterisk">*</span> 商品价格段：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:select path="priceSection.sectionId" cssClass="form-control simpleselect validate[required]">
+                                <form:select path="priceSection.sectionId" id="priceSection" cssClass="form-control validate[required]">
                                     <c:forEach items="${priceSections}" var="section">
-                                        <option value="${section.sectionId}">${section.startPrice} - ${section.endPrice}</option>
+                                        <option value="${section.sectionId}" option-startPrice="${section.startPrice}" option-endPrice="${section.endPrice}">${section.startPrice} - ${section.endPrice}</option>
                                     </c:forEach>
                                 </form:select>
                             </div>
@@ -201,7 +294,7 @@
                                 <label><span class="asterisk">*</span> 商品编码：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2],custom[onlyLetterNumber]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
+                                <form:input type="text" readonly="true" cssClass="form-control validate[required,minSize[2],custom[onlyLetterNumber]" path="commodityCode" maxlength="32" data-errormessage-custom-error="编码只能输入数字和英文字母"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品简称：</label>
@@ -224,7 +317,7 @@
                                 <label><span class="asterisk">*</span> 商品拼音名称：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityPYName" maxlength="64"/>
+                                <form:input type="text" cssClass="form-control validate[required,minSize[2]]" path="commodityPYName" maxlength="64" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'')"/>
                             </div>
                         </div>
                         <div class="spacer-30"></div>
@@ -241,7 +334,7 @@
                                 <label><span class="asterisk"></span> 商品比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[custom[gtOne]]" path="ratio" onkeyup="salePrice_f();" placeholder="商品比例配置不填,则取分类比例配置" maxlength="12"/>
+                                <form:input type="text" cssClass="form-control validate" path="ratio" onkeyup="salePrice_f();" placeholder="默认取一级分类比例配置" maxlength="12" readonly="true"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -250,13 +343,19 @@
                                 <label><span class="asterisk">*</span> 成本价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="costPrice" onkeyup="salePrice_f();" maxlength="11"/>
+                                </div>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 销售价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="sellPrice" readonly="true" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="sellPrice" readonly="true" title="销售价等于成本价乘以比例配置" maxlength="11"/>
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -265,7 +364,10 @@
                                 <label><span class="asterisk">*</span> 市场价：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="marketPrice" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <span class="input-group-addon">￥</span>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="marketPrice" maxlength="11"/>
+                                </div>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span> 商品单位：</label>
@@ -282,13 +384,19 @@
                                 <label>重量：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="weight" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="11"/>
+                                    <span class="input-group-addon">Kg</span>
+                                </div>
                             </div>
                             <div class="col-sm-2">
                                 <label>体积：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input type="text" cssClass="form-control validate[required,custom[number]]" path="volume" maxlength="12"/>
+                                <div class="input-group input-group">
+                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="11"/>
+                                    <span class="input-group-addon">m3</span>
+                                </div>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -346,24 +454,59 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 热门商品：</label>
+                                <label> 热门商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="popular" cssClass="checkbox-master"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 特惠商品：</label>
+                                <label> 特惠商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="special"/>
                             </div>
                             <div class="col-sm-2">
-                                <label><span class="asterisk">*</span> 推荐商品：</label>
+                                <label> 推荐商品：</label>
                             </div>
                             <div class="col-sm-1">
                                 <form:checkbox path="recommend"/>
                             </div>
                         </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>商家：</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="col-sm-3">
+                                    <form:input type="hidden" cssClass="form-control" path="seller.sellerId" id="sellerId" />
+                                    <form:input type="text" cssClass="form-control" path="seller.sellerName" id="sellerName" disabled="true" placeholder="不选默认为平台"/>
+                                    <button type="button" onclick="selectSeller();" title="添加" class="btn btn-default">
+                                        <i class="fa fa-plus-circle"></i>选择商家
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spacer-30"></div>
+                        <hr>
+                        <div class="spacer-30"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>汽车配置地址：</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" id="specUrl" placeholder="&nbsp;输入汽车网址或商品标题搜索汽车配置" style="width: 320px;line-height: 28px"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" onclick="specAuto()" class="btn btn-default">搜索</button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
@@ -382,7 +525,7 @@
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${currentSpecs}" var="cSpec">
-                                        <tr>
+                                        <tr tag="${cSpec.spec.specName}">
                                             <td><input type='hidden' name='specId' value='${cSpec.spec.specId}'/>${cSpec.spec.specName}</td>
                                             <td><input type='text' name='specValue' class='form-control' value="${cSpec.value}"/></td>
                                         </tr>
@@ -396,7 +539,7 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>图片</label>
+                                <label><span class="asterisk">*</span>商品图片</label>
                             </div>
                             <div class="col-sm-9">
                                     <%--图片上传控件--%>
@@ -405,20 +548,6 @@
                                 <script src="../js/plugins/fileinput/zh.js" type="text/javascript"></script>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $("#validateSubmitForm").validationEngine({
-                                            autoHidePrompt: true, scroll: false, showOneMessage: true,
-                                            onValidationComplete: function (form, valid) {
-                                                if (valid) {
-                                                    var defaultPicPath = $('input[name="imgurl"]');
-                                                    if (defaultPicPath.size()==0) {
-                                                        bootbox.alert("请至少选择一张图片!");
-                                                        return false;
-                                                    } else {
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        });
                                         var initPreview = new Array();//展示元素
                                         var initPreviewConfig = new Array();//展示设置
                                         //初始化图片上传组件
@@ -433,6 +562,7 @@
                                             showCaption:false,//是否显示标题
                                             browseOnZoneClick: true,//是否显示点击选择文件
                                             language: "zh" ,
+                                            showClose: false,
                                             showBrowse : false,
                                             maxFileSize : 2000,
                                             allowedFileExtensions: ["jpg", "png", "gif"],
@@ -472,7 +602,6 @@
                                             }
                                             return abort;
                                         }).on('filedeleted', function(event, id) {
-                                            debugger;
                                             $("#"+id).remove();
                                             for (var i=0;i<initPreview.length;i++)
                                             {
@@ -516,25 +645,23 @@
                         <div class="spacer-30"></div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label>商品配置内容：</label>
+                                <label><span class="asterisk">*</span>商品详情内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;" maxlength="255"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
                         <div class="spacer-30"></div>
-                        <hr>
-                        <div class="spacer-30"></div>
-                        <div class="row">
+                        <%--<div class="row">
                             <div class="col-sm-2">
-                                <label>商品详情内容：</label>
+                                <label><span class="asterisk">*</span>商品配置内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent" path="content" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass="form-control" id="editorContent2" path="settingContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
-                        </div>
+                        </div>--%>
                         <div class="spacer-30"></div>
                         <hr>
                         <div class="spacer-30"></div>
@@ -543,7 +670,7 @@
                                 <label>商品说明内容：</label>
                             </div>
                             <div class="col-sm-9">
-                                <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;"></form:textarea>
+                                <form:textarea cssClass="form-control" id="editorContent1" path="explainContent" cssStyle="height:500px;" maxlength="4098"></form:textarea>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -554,7 +681,7 @@
                             <div class="col-sm-12">
                                 <div class="btn-group pull-right">
                                     <button id="saveBtn" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                                    <button type="reset" class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
+                                    <button onclick="clearInput('form-control')" type="button"   class="btn btn-default"><i class="fa fa-reply"></i>&nbsp;重&nbsp;置&nbsp;</button>
                                 </div>
                             </div>
                         </div>
@@ -587,6 +714,9 @@
                     </div>
                 </div>
             </div>
+            <div class="alert alert-warning" id="modalMsg" style="display: none;">
+                <strong>提示：</strong>仅第三级商品分类可关联商品！
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button class="btn btn-primary pull-right" onclick="chooseCatalog();">确认</button>
@@ -596,8 +726,10 @@
             var catalogId = 0;
             var catalogName = "";
             var RATIO = 1;//分类比例配置
+            var treeLevel = "";
             $('#catalogNameBtn').click(function (e) {
                 $('#catalogDialog').modal();
+                $('#modalMsg').hide();
                 e.preventDefault();
             });
 
@@ -606,9 +738,15 @@
                 catalogId = data.id;
                 catalogName = data.text;
                 RATIO = data.ratio;
+                treeLevel = data.treeLevel;
             }
 
             function chooseCatalog() {
+                if(treeLevel != 3){
+                    $('#modalMsg').show();
+                    return;
+                }
+                $('#modalMsg').hide();
                 $('#catalogDialog').modal("hide");
                 $("#catalogId").val(catalogId);
                 $("#catalogName").val(catalogName);
@@ -619,6 +757,23 @@
             $('#oneLevelCatalog').val(${oneLevelCatalog.ratio});//一级分类比例
         </script>
 
+    </div>
+</div>
+<div class="modal fade" id="sellerDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选择商家</h4>
+            </div>
+            <div class="modal-body">
+                <jsp:include page="../seller/chooseSeller.jsp"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary pull-right" onclick="chooseSeller();">确认</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>

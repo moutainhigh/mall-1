@@ -14,6 +14,7 @@ import com.yunxin.cb.search.restful.RestfulFactory;
 import com.yunxin.cb.search.service.SearchRestService;
 import com.yunxin.cb.search.vo.CommodityVO;
 import com.yunxin.cb.search.vo.ResponseResult;
+import com.yunxin.cb.search.vo.meta.Result;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -83,6 +84,9 @@ public class CommodityService implements ICommodityService {
     @Resource
     private ProductEvaluateDao productEvaluateDao;
 
+    @Resource
+    private CatalogService catalogService;
+
     @Override
     public Commodity addCommodity(Commodity commodity) throws EntityExistException {
         if (!commodityDao.isOrUnique(commodity, Commodity_.commodityCode, Commodity_.commodityName)) {
@@ -125,7 +129,8 @@ public class CommodityService implements ICommodityService {
                 }
             }
         }else{
-            ratio = commodity.getCatalog().getRatio().floatValue();
+            Catalog catalog = catalogService.findOneLevelCatalogByCatalogCode(dbCommodity.getCatalog().getCatalogCode());
+            ratio = catalog.getRatio().floatValue();
         }
         if(updateProductSalePrice) {
             int j = productDao.updateSalePriceByCommodityId(ratio, dbCommodity.getCommodityId());
@@ -134,8 +139,8 @@ public class CommodityService implements ICommodityService {
             }
         }
         //E
-
-        AttributeReplication.copying(commodity, dbCommodity, Commodity_.catalog, Commodity_.priceSection, Commodity_.brand,
+        commodity.setRatio(new BigDecimal(ratio));
+        AttributeReplication.copying(commodity, dbCommodity, Commodity_.catalog, Commodity_.priceSection, Commodity_.brand, Commodity_.seller,
                 Commodity_.commodityCode, Commodity_.commodityName, Commodity_.commodityPYName, Commodity_.shortName, Commodity_.commodityTitle,
                 Commodity_.costPrice, Commodity_.sellPrice, Commodity_.marketPrice, Commodity_.unit, Commodity_.province, Commodity_.city, Commodity_.seoKey,
                 Commodity_.seoTitle, Commodity_.seoDescription, Commodity_.popular, Commodity_.special, Commodity_.recommend, Commodity_.giveaway,
@@ -159,7 +164,8 @@ public class CommodityService implements ICommodityService {
                 commoditySpecDao.save(commoditySpec);
             }
         }
-        // 删除未选中的图
+        //更新货品的默认图片
+        productDao.updateDefaultPicPathByCommodityId(commodity.getDefaultPicPath(),commodity.getCommodityId());
 
 
 
@@ -218,7 +224,8 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public void removeCommodityById(int commodityId) {
-        commodityDao.delete(commodityId);
+        //commodityDao.delete(commodityId);
+        commodityDao.updateCommodityStatusById(CommodityState.DEL, commodityId);
     }
 
     @Override
@@ -609,7 +616,7 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public Spec addSpec(Spec spec) throws EntityExistException {
-        if (!specDao.isUnique(spec, Spec_.specName)) {
+        if (specDao.findTopBySpecNameAndCatalog_CatalogId(spec.getSpecName(), spec.getCatalog().getCatalogId()) != null) {
             throw new EntityExistException("规格名称已存在");
         }
         spec = specDao.save(spec);
@@ -618,7 +625,7 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public Spec updateSpec(Spec spec) throws EntityExistException {
-        if (!specDao.isUnique(spec, Spec_.specName)) {
+        if (specDao.findTopBySpecNameAndCatalog_CatalogIdAndSpecIdNot(spec.getSpecName(), spec.getCatalog().getCatalogId(), spec.getSpecId()) != null) {
             throw new EntityExistException("规格名称已存在");
         }
         Spec oldSpec = specDao.findOne(spec.getSpecId());
@@ -626,9 +633,42 @@ public class CommodityService implements ICommodityService {
         return oldSpec;
     }
 
+    /**
+     * 克隆源分类下的规格到目标分类下
+     * @param cloneCatalogId 源分类ID
+     * @param catalogId 目标分类ID
+     */
     @Override
-    public void removeSpecById(int catalogId) {
-        specDao.delete(catalogId);
+    public void cloneSpec(int cloneCatalogId, int catalogId) {
+        //该分类本身所有规格
+        List<Spec> specs = getSpecsByCatalogId(catalogId);
+        //需要克隆的分类所有规格
+        List<Spec> cloneSpecs = getSpecsByCatalogId(cloneCatalogId);
+        if(cloneSpecs != null){
+            List<Spec> newSpecs = new ArrayList<>();
+            cloneSpecs.forEach(spec -> {
+                if(specs != null){
+                    boolean exist = specs.contains(spec);
+                    if(!exist){
+                        Spec cloneSpec = new Spec(spec.getSpecName(), catalogId);
+                        newSpecs.add(cloneSpec);
+                    }
+                }
+            });
+            specDao.save(newSpecs);
+        }
+    }
+
+    @Override
+    public int removeSpecById(int catalogId) {
+        int result=0;
+        try {
+            specDao.delete(catalogId);
+            result=1;
+        } catch (Exception e) {
+            logger.error("removeSpecById result flag is = "+e);
+        }
+        return result;
     }
 
     /**
@@ -639,24 +679,33 @@ public class CommodityService implements ICommodityService {
      * @return
      */
     @Override
-    public boolean upOrDownShelvesCommodity(int commodityId, PublishState publishState) throws Exception {
-        Commodity commodity = commodityDao.findOne(commodityId);
+    public ResponseResult upOrDownShelvesCommodity(int commodityId, PublishState publishState,Integer productId) throws Exception {
+        ResponseResult responseResult = new ResponseResult(Result.FAILURE);
+        Commodity commodity = commodityDao.findDefaultProductById(commodityId);
         if (commodity.getCommodityState() != CommodityState.AUDITED) {
-            return false;
+            responseResult.setMessage("商品未审核，不能上下架操作！");
+            return responseResult;
         }
         if ((commodity.getPublishState() == PublishState.WAIT_UP_SHELVES || commodity.getPublishState() == PublishState.DOWN_SHELVES)
                 && publishState == PublishState.UP_SHELVES) {
             List<Product> products = productDao.findByCommodity_commodityId(commodityId);
             if (LogicUtils.isNotNullAndEmpty(products)) {
                 List<Integer> prodIds=new ArrayList<Integer>();
-                Product defaultProduct=null;
+                Product defaultProduct=commodity.getDefaultProduct();
                 for (int i = 0; i < products.size(); i++) {
-                    if(products.get(i).getPublishState()==PublishState.UP_SHELVES){
+                    if(null!=productId&&products.get(i).getProductId()==productId){
                         prodIds.add(products.get(i).getProductId());
                     }
+                    if(products.get(i).getPublishState()==PublishState.UP_SHELVES){
+                        prodIds.add(products.get(i).getProductId());
+                        if (i==0&&defaultProduct.getPublishState()!=PublishState.UP_SHELVES) {
+                            defaultProduct=products.get(i);
+                        }
+                    }
                 }
-                if(prodIds.size()<=0){//没有已上架的货品，商品不能上架
-                    return false;
+                if(commodity.getProducts().size() > 0&&prodIds.size()<=0){//没有已上架的货品，商品不能上架
+                    responseResult.setMessage("没有已上架的货品，商品不能上架！");
+                    return responseResult;
                 }
                 commodity.setDefaultProduct(defaultProduct);
                 commodity.setPublishState(PublishState.UP_SHELVES);
@@ -667,9 +716,12 @@ public class CommodityService implements ICommodityService {
                 Call<ResponseResult> call = restService.addCommodity(commodityVO);
                 ResponseResult result = call.execute().body();
                 logger.info("[elasticsearch] Commodity Sync State:" + result);
-                return true;
+                responseResult.setResult(Result.SUCCESS);
+                responseResult.setMessage("操作成功！");
+                return responseResult;
             } else {
-                return false;
+                responseResult.setMessage("商品没有所属货品，不能进行上下架操作！");
+                return responseResult;
             }
         } else if ((commodity.getPublishState() == PublishState.WAIT_UP_SHELVES || commodity.getPublishState() == PublishState.UP_SHELVES)
                 && publishState == PublishState.DOWN_SHELVES) {
@@ -686,12 +738,14 @@ public class CommodityService implements ICommodityService {
                 Call<ResponseResult> call = restService.removeCommodity(commodityId);
                 ResponseResult result = call.execute().body();
                 logger.info("[elasticsearch] remove commodity state:" + result);
-                return true;
+                responseResult.setResult(Result.SUCCESS);
+                responseResult.setMessage("操作成功！");
             } else {
-                return false;
+                responseResult.setMessage("商品没有所属货品，不能进行上下架操作！");
+                return responseResult;
             }
         }
-        return false;
+        return responseResult;
     }
 
     @Override
@@ -767,7 +821,7 @@ public class CommodityService implements ICommodityService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<ActivityCommodity> getActivityCommoditiesByCommodityIds(Set<Integer> commodityIds) {
+    public List<ActivityCommodity> getActivityCommoditiesByCommodityIds(Set<Integer> commodityIds){
         Date date = CalendarUtils.getFormatDate(new Date());
         return activityCommodityDao.getActivityCommoditiesByCommodityIds(commodityIds, date, date);
     }
@@ -834,4 +888,13 @@ public class CommodityService implements ICommodityService {
         }
     }
 
+    @Override
+    public Commodity updateSaleNum(int commodityId, int saleNum) {
+        Commodity commodity = commodityDao.findOne(commodityId);
+        if (commodity != null) {
+            int num = commodity.getSaleNum();
+            commodity.setSaleNum(num + saleNum);
+        }
+        return commodity;
+    }
 }

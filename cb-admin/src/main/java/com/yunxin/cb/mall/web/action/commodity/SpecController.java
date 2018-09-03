@@ -6,22 +6,19 @@ import com.yunxin.cb.mall.service.ICatalogService;
 import com.yunxin.cb.mall.service.ICommodityService;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.core.exception.EntityExistException;
-import com.yunxin.cb.mall.entity.Catalog;
-import com.yunxin.cb.mall.entity.Spec;
-import com.yunxin.cb.mall.service.ICatalogService;
-import com.yunxin.cb.mall.service.ICommodityService;
-import com.yunxin.cb.mall.vo.TreeViewItem;
-import org.springframework.context.MessageSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author z001075
@@ -30,19 +27,16 @@ import java.util.Locale;
 @RequestMapping(value = "/commodity")
 public class SpecController {
 
+    private static Logger logger = LoggerFactory.getLogger(SpecController.class);
+
     @Resource
     private ICommodityService commodityService;
 
     @Resource
     private ICatalogService catalogService;
 
-
-    @Resource
-    private MessageSource messageSource;
-
-
     @RequestMapping(value = "catalogSpecs",method = RequestMethod.GET)
-    public String catalogSpecs(@RequestParam("catalogId") int catalogId, @ModelAttribute("spec") Spec spec, ModelMap modelMap) {
+    public String catalogSpecs(@RequestParam("catalogId") int catalogId, @ModelAttribute("spec") Spec spec, ModelMap modelMap)  {
         Catalog catalog = catalogService.getCategoryById(catalogId);
         modelMap.addAttribute("catalog", catalog);
         spec.setCatalog(catalog);
@@ -50,33 +44,49 @@ public class SpecController {
         modelMap.addAttribute("specs", specs);
         TreeViewItem catalogItem = catalogService.getCatalogTree();
         modelMap.addAttribute("catalogItem", catalogItem);
+
+        TreeViewItem catalogTree = catalogService.getCatalogTree();
+        modelMap.addAttribute("catalogTree", Arrays.asList(catalogTree));
         return "commodity/catalogSpecs";
     }
 
     @RequestMapping(value = "addSpec",method = RequestMethod.POST)
-    public String addSpec(@Valid @ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, Locale locale) {
+    public String addSpec(@Valid @ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, RedirectAttributes redirectAttributes)  throws Exception {
         if (result.hasErrors()) {
             return catalogSpecs(spec.getCatalog().getCatalogId(), spec, modelMap);
         }
         try {
             spec = commodityService.addSpec(spec);
         } catch (EntityExistException e) {
-            e.printStackTrace();
-            result.addError(new FieldError("spec", "specName", spec.getSpecName(), true, null, null,
-                    messageSource.getMessage(e.getMessage(), null, locale)));
-            return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId() + "&msgTitle=添加规格失败&msgContent=" + e.getMessage();
+            logger.error("商品规格名称已存在",e);
+            //redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，添加失败！");
+            //redirectAttributes.addFlashAttribute("msgContent",e.getMessage());
+            //return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
+            result.addError(new FieldError("spec", "sellerName", "商品规格名称已存在", true, null, null,e.getMessage()));
+            modelMap.put("errerMsg","商品规格名称已存在");
+            return catalogSpecs(spec.getCatalog().getCatalogId(), spec, modelMap);
         }
+        redirectAttributes.addFlashAttribute("oppMsg","规格添加成功!");
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
     }
 
     @RequestMapping(value = "editSpec",method = RequestMethod.POST)
-    public String editSpec(@ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap) {
+    public String editSpec(@ModelAttribute("spec") Spec spec, BindingResult result, ModelMap modelMap, RedirectAttributes redirectAttributes) {
         try {
             spec = commodityService.updateSpec(spec);
         } catch (EntityExistException e) {
-            e.printStackTrace();
+            logger.error("商品规格名称已存在",e);
+            redirectAttributes.addFlashAttribute("msgTitle","商品规格名称已存在，修改失败！");
+            return "redirect:../common/failure.do?reurl=commodity/catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
         }
+        redirectAttributes.addFlashAttribute("oppMsg","规格修改成功!");
         return "redirect:catalogSpecs.do?catalogId=" + spec.getCatalog().getCatalogId();
+    }
+
+    @RequestMapping(value = "cloneSpec",method = RequestMethod.POST)
+    public String cloneSpec(@RequestParam("cloneCatalogId") int cloneCatalogId, @RequestParam("catalogId") int catalogId) {
+        commodityService.cloneSpec(cloneCatalogId, catalogId);
+        return "redirect:catalogSpecs.do?catalogId=" + catalogId;
     }
 
     @ResponseBody
@@ -89,8 +99,8 @@ public class SpecController {
     @RequestMapping(value = "removeSpecById",method = RequestMethod.GET)
     public boolean removeSpecById(@RequestParam("specId") int specId) {
         try {
-            commodityService.removeSpecById(specId);
-            return true;
+            int result=commodityService.removeSpecById(specId);
+            return result>0?true:false;
         } catch (Exception e) {
             return false;
         }

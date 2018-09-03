@@ -10,17 +10,39 @@
 
     <script type="application/javascript">
         $(document).ready(function () {
+            var oppMsg = '${oppMsg}';
+            if(oppMsg){
+                commonNotify(oppMsg, "success");
+            }
+
             $("#storeId").select2();
             $("#attributeIds").select2({
                 placeholder: "请选择货品属性"
             });
 
             $("#validateSubmitForm").validationEngine({
-                autoHidePrompt: true, scroll: false, showOneMessage: true
+                autoHidePrompt: true, scroll: false, showOneMessage: true,
+                onValidationComplete: function (form, valid) {
+                    if (valid) {
+                        var startPrice = '${commodity.priceSection.startPrice}';
+                        var endPrice = '${commodity.priceSection.endPrice}';
+                        if(Number($("#costPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#costPrice").val())){
+                            bootbox.alert("成本价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        if(Number($("#salePrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#salePrice").val())){
+                            bootbox.alert("销售价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        if(Number($("#marketPrice").val()) < Number(startPrice) || Number(endPrice) < Number($("#marketPrice").val())){
+                            bootbox.alert("市场价格须介于商品价格段"+startPrice+"—"+endPrice+"范围内!");
+                            return false;
+                        }
+                        return true;
+                    }
+                }
             });
-
         });
-
         function removeProduct(productId) {
             bootbox.confirm("确认删除吗?", function(result) {
                 if(result){
@@ -37,6 +59,11 @@
         }
 
         function defaultProduct(productId,commodityId) {
+            var state="${commodity.publishState}";
+            if(state=='UP_SHELVES'){
+                bootbox.alert("失败,请先下架商品!");
+                return false;
+            }
             bootbox.confirm("确认设置为默认货品吗?", function(result) {
                 if(result){
                     $.post('defaultProductById.do', {productId:productId,commodityId:commodityId}, function(data) {
@@ -81,6 +108,16 @@
 
 
         function upOrDownShelvesProduct(pid,pState){
+            var state="${commodity.publishState}";
+            var commodityState = "${commodity.commodityState}";
+            if(commodityState != 'AUDITED'){
+                bootbox.alert("失败,商品未审核通过!");
+                return false;
+            }
+            if(pState=='DOWN_SHELVES'&&state=='UP_SHELVES'){
+                bootbox.alert("失败,请先下架商品!");
+                return false;
+            }
             bootbox.confirm("确认上/下架该货品吗？", function (result) {
                 if (result) {
                     $.get("upOrDownShelvesProduct.do", {
@@ -97,6 +134,7 @@
                 }
             });
         }
+
     </script>
 </head>
 <body>
@@ -182,7 +220,7 @@
                         <table class="table table-bordered ">
                             <thead>
                             <th style="width: 200px">属性名称</th>
-                            <th style="width: 100px">图片</th>
+                            <%--<th style="width: 100px">图片</th>--%>
                             <th>属性值</th>
                             <th scope="col" style="width: 100px" class="text-center">操作</th>
                             </thead>
@@ -190,7 +228,7 @@
                             <c:forEach var="group" items="${attributeGroups}">
                                 <tr id="group${group.groupId}">
                                     <td>${group.groupName}</td>
-                                    <td>${group.showAsImage==true?"是":"否"}</td>
+                                    <%--<td>${group.showAsImage==true?"是":"否"}</td>--%>
                                     <td>
                                         <c:forEach var="attribute" items="${group.attributes}">
                                              &nbsp;${attribute.attributeName}
@@ -223,7 +261,7 @@
                         <table  class="table table-bordered table-striped">
                             <thead >
                             <tr>
-                                <th scope="col" width="140">编号</th>
+                                <th scope="col" width="260">编号</th>
                                 <th scope="col" >货品名称</th>
                                 <th scope="col" width="100">进货价</th>
                                 <th scope="col" width="100">销售价</th>
@@ -269,13 +307,13 @@
                                         <c:choose>
                                             <c:when test="${product.publishState=='WAIT_UP_SHELVES' || product.publishState=='DOWN_SHELVES'}">
                                                 <a href="javascript:upOrDownShelvesProduct('${product.productId}','UP_SHELVES');" title="上架" class=" btn-less"><i class="fa fa-arrow-up"></i></a>
+                                                <a href="toEditProduct.do?productId=${product.productId}" title="编辑" class=" btn-less"><i class="fa fa-edit"></i></a>
+                                                <a href="javascript:removeProduct(${product.productId});" title="删除" class=" btn-less"><i class="fa fa-trash-o"></i></a>
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="javascript:upOrDownShelvesProduct('${product.productId}','DOWN_SHELVES');" title="下架" class=" btn-less"><i class="fa fa-arrow-down"></i></a>
                                             </c:otherwise>
                                         </c:choose>
-                                        <a href="toEditProduct.do?productId=${product.productId}" title="编辑" class=" btn-less"><i class="fa fa-edit"></i></a>
-                                        <a href="javascript:removeProduct(${product.productId});" title="删除" class=" btn-less"><i class="fa fa-trash-o"></i></a>
                                         <c:if test="${commodity.defaultProduct.productId!=product.productId}"><!-- 设置默认货品 -->
                                             <a href="javascript:defaultProduct('${product.productId}','${commodity.commodityId}');" title="默认" class=" btn-less"><i class="fa fa-level-up"></i></a>
                                         </c:if>
@@ -303,7 +341,7 @@
                                 <label><span class="asterisk">*</span>商品比例配置：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control " path="commodity.ratio" id="ratio" readonly="true" title="商品比例配置不填,则取分类比例配置" maxlength="11"/>
+                                <form:input cssClass="form-control " path="commodity.ratio" id="ratio" readonly="true"  placeholder="默认取一级分类比例配置"  title="默认取一级分类比例配置" maxlength="11"/>
                             </div>
                         </div>
                         <div class="spacer-10"></div>
@@ -312,7 +350,7 @@
                                 <label><span class="asterisk">*</span>货品编号：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,minSize[2]]" path="productNo" maxlength="32"/>
+                                <form:input readonly="true" cssClass="form-control validate[required,minSize[2]]" path="productNo" maxlength="32"/>
                             </div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk">*</span>进货价：</label>
@@ -342,7 +380,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
                                     <span class="input-group-addon">￥</span>
-                                    <form:input cssClass="form-control validate[required,custom[number]]" path="marketPrice" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[required,custom[number]]" path="marketPrice" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                                 </div>
                             </div>
                         </div>
@@ -358,7 +396,7 @@
                                 <label><span class="asterisk">*</span>库存数量：</label>
                             </div>
                             <div class="col-sm-3">
-                                <form:input cssClass="form-control validate[required,custom[number]]" required="true" path="storeNum" maxlength="12"/>
+                                <form:input cssClass="form-control validate[required,custom[checkPositive]]" required="true" path="storeNum" maxlength="12" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                             </div>
                         </div>
 
@@ -369,7 +407,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
-                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[custom[number]]" path="weight" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                                     <span class="input-group-addon">Kg</span>
                                 </div>
                             </div>
@@ -378,7 +416,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group input-group">
-                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="11"/>
+                                    <form:input cssClass="form-control validate[custom[number]]" path="volume" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                                     <span class="input-group-addon">m3</span>
                                 </div>
 
@@ -405,7 +443,7 @@
                                             <td>${group.groupName}</td>
                                             <td>
                                                 <c:forEach var="attribute" items="${group.attributes}">
-                                                <form:checkbox cssClass="validate[minCheckbox[1]]" path="attributeIds" data-gid="${group.groupId}" onchange="checkAttributes(this);" value="${attribute.attributeId}" data-errormessage="请选择至少一个属性"/>&nbsp;${attribute.attributeName}
+                                                <form:checkbox cssClass="validate[minCheckbox[${fn:length(attributeGroups) }]]" path="attributeIds" data-gid="${group.groupId}" onchange="checkAttributes(this);" value="${attribute.attributeId}" data-errormessage="请选择至少${fn:length(attributeGroups) }个属性"/>&nbsp;${attribute.attributeName}
                                                     <c:if test="${!empty attribute.imagePath}">
                                                         <img src="..${PIC_PATH}${attribute.imagePath}">
                                                     </c:if>
@@ -458,7 +496,7 @@
                         <div class="sidebar-module">
                             <table class="table table-bordered table-striped">
                                 <thead>
-                                <th style="width: 100px">属性名称</th>
+                                <th style="width: 200px">属性名称</th>
                                 <th>属性值</th>
                                 </thead>
                                 <tbody>

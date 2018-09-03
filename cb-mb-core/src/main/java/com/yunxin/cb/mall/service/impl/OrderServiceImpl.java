@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,9 +50,12 @@ public class OrderServiceImpl implements OrderService {
     private DeliveryAddressMapper deliveryAddressMapper;
     @Resource
     private CommodityService commodityService;
-
     @Resource
     private ProductMapper productMapper;
+    @Resource
+    private CustomerMapper customerMapper;
+    @Resource
+    private SellerMapper sellerMapper;
 
     /***
      * 获取预下单数据（订单确认页数据）
@@ -67,7 +71,10 @@ public class OrderServiceImpl implements OrderService {
         //根据货品id查询货品（审核通过且上架货品）
         Product product = productMapper.selectProductById(productId, ProductState.AUDITED.ordinal(), PublishState.UP_SHELVES.ordinal());
         //判断货品是否存在，且库存足够
-        if (product == null || product.getStoreNum() <= 0) {
+        if (product == null) {
+            throw new CommonException("货品未上架或者不存在");
+        }
+        if (product.getStoreNum() <= 0) {
             //库存不足
             throw new CommonException("库存不足");
         }
@@ -75,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
         TempOrderVO tempOrderVO = new TempOrderVO();
         CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
         if (commodityVo == null) {
-            return null;
+            throw new CommonException("商品不存在");
         }
         //商品信息
         BeanUtils.copyProperties(tempOrderVO, commodityVo);
@@ -123,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderCode(UUIDGeneratorUtil.getUUCode());
         order.setOrderState(OrderState.PENDING_PAYMENT);
         defaultValue(order);//添加默认数据
-        double totalPrice = 0; // 订单总价
+        BigDecimal totalPrice = BigDecimal.ZERO; // 订单总价
         int totalQuantity = 0;//订单货品总数量
 
         //TODO :活动相关和会员积分相关的还未加
@@ -133,7 +140,10 @@ public class OrderServiceImpl implements OrderService {
                 //根据货品id查询货品（审核通过且上架货品）
                 Product product = productMapper.selectProductById(orderItem.getProductId(), ProductState.AUDITED.ordinal(), PublishState.UP_SHELVES.ordinal());
                 //判断货品是否存在，且库存足够
-                if (product == null || product.getStoreNum() <= 0) {
+                if (product == null) {
+                    throw new CommonException("货品未上架或者不存在");
+                }
+                if (product.getStoreNum() <= 0) {
                     //库存不足
                     throw new CommonException("库存不足");
                 }
@@ -141,51 +151,62 @@ public class OrderServiceImpl implements OrderService {
                 totalQuantity += productNum;
                 orderItem.setOrderId(order.getOrderId());
                 orderItem.setOrderItemPrice(product.getSalePrice() * productNum);
+                orderItem.setEvaluate(false);
+                orderItem.setCreateTime(createTime);
                 orderItem.setProductId(product.getProductId());
                 orderItem.setSalePrice(product.getSalePrice());
                 orderItem.setProductImg(product.getDefaultPicPath());
-                orderItem.setEvaluate(false);
-                orderItem.setCreateTime(createTime);
                 orderItem.setCostPrice(product.getCostPrice());
+                orderItem.setProductNo(product.getProductNo());
+                orderItem.setProductName(product.getProductName());
+                orderItem.setMarketPrice(product.getMarketPrice());
+                orderItem.setVolume(product.getVolume());
+                orderItem.setWeight(product.getWeight());
                 //减少库存
                 product.setStoreNum(product.getStoreNum() - productNum);
                 int reservedStoreNum = product.getReservedStoreNum() == null ? 0  : product.getReservedStoreNum();
                 product.setReservedStoreNum(productNum + reservedStoreNum);
                 productMapper.updateByPrimaryKey(product);
-                totalPrice += product.getSalePrice();
+                totalPrice = totalPrice.add(new BigDecimal(String.valueOf(product.getSalePrice())));
             }
+        } else {
+            throw new CommonException("请选择购买得商品");
         }
+        //是否需要判断买过保单用户才能购买商品(无需判断了)
+//        Customer customer = customerMapper.selectByPrimaryKey(order.getCustomerId());
+//        if (customer.getPolicy() != 2) { //policy==2才算买过保单
+//            throw new CommonException("请先买保单后再购买商品");
+//        }
         //支付方式
-        if (order.getPaymentType()== PaymentType.LOAN) {
+        if (order.getPaymentType()== PaymentType.UNDER_LINE) {
             order.setAuditState(AuditState.WAIT_AUDIT);
-//            CustomerWallet customerWallet = customerWalletMapper.selectByCustomerId(order.getCustomerId());
-//            if (customerWallet != null) {
-//                double expectedReturnAmount = customerWallet.getExpectedReturnAmount() == null ? 0 : customerWallet.getExpectedReturnAmount();
-//                double loanQuota = customerWallet.getLoanQuota() == null ? 0 : customerWallet.getLoanQuota();
-//                //查询用户的钱包的待收收益和可贷余额总额是否大于或等于商品的销售金额
-//                if (expectedReturnAmount + loanQuota < totalPrice){
-//                    throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
-//                }
-//                //在后台审核贷款申请通过是减少，优先减收益在减额度
-//            } else {
-//                throw new CommonException("您的信用额度不够，无法贷款购买此商品，请选择其他商品");
-//            }
         } else {
             order.setAuditState(AuditState.AUDITED);
         }
         //收货地址
-        DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());
-        if (deliveryAddress != null){
-            order.setProvince(deliveryAddress.getProvince());
-            order.setCity(deliveryAddress.getCity());
-            order.setDistrict(deliveryAddress.getDistrict());
-            order.setConsigneeAddress(deliveryAddress.getConsigneeAddress());
-            order.setConsigneeName(deliveryAddress.getConsigneeName());
-            order.setConsigneeMobile(deliveryAddress.getConsigneeMobile());
-            order.setConsigneeTelephone(deliveryAddress.getConsigneeTelephone());
+        if (DeliveryType.ZT != order.getDeliveryType()) {
+            DeliveryAddress deliveryAddress = deliveryAddressMapper.selectByPrimaryKey(order.getAddressId(), order.getCustomerId());
+            if (deliveryAddress != null){
+                order.setProvince(deliveryAddress.getProvince());
+                order.setCity(deliveryAddress.getCity());
+                order.setDistrict(deliveryAddress.getDistrict());
+                order.setConsigneeAddress(deliveryAddress.getConsigneeAddress());
+                order.setConsigneeName(deliveryAddress.getConsigneeName());
+                order.setConsigneeMobile(deliveryAddress.getConsigneeMobile());
+                order.setConsigneeTelephone(deliveryAddress.getConsigneeTelephone());
+                order.setPostCode(deliveryAddress.getPostCode());
+            }
+        } else {
+            Seller seller = sellerMapper.selectByPrimaryKey(order.getSellerId());
+            if (seller == null) {
+                throw new CommonException("店铺不存在");
+            }
+            order.setProvince(seller.getProvince());
+            order.setCity(seller.getCity());
+            order.setDistrict(seller.getDistrict());
         }
         order.setProdQuantity(totalQuantity);
-        order.setTotalPrice(totalPrice);
+        order.setTotalPrice(totalPrice.doubleValue());
         order.setFeeTotal(order.getTotalPrice());
         orderMapper.insert(order);
 
@@ -304,6 +325,7 @@ public class OrderServiceImpl implements OrderService {
         if (order.getDeliveryType() == null) {
             order.setDeliveryType(DeliveryType.ZT);
         }
+        order.setPaymentState(PaymentState.TO_BE_PAID);
         order.setScoreTotal(0);
         order.setEnabled(true);
         order.setWeightTotal(0d);
@@ -313,6 +335,9 @@ public class OrderServiceImpl implements OrderService {
         order.setPayByIntegral(0d);
         order.setDiscountTotal(0d);
         order.setDiscountDeliveryFeeTotal(0d);
+        order.setProvince("0");
+        order.setCity("0");
+        order.setDistrict("0");
         //order.setSellerId(0);
         //order.setLogisticId(0);
     }

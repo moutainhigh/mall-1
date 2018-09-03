@@ -22,7 +22,7 @@
     function viewItem() {
       var dataItem = getSelectedGridItem("grid");
       if (dataItem) {
-        window.location.href = "getOrderDetailById.do?orderId=" + dataItem.order.orderId;
+        window.location.href = "toReturnRefundOrder.do?returnCode=" + dataItem.returnCode;
       }
     }
 
@@ -194,21 +194,21 @@
       <!-- End .actionbar-->
       <div class="inner-padding">
         <div class="toolbar responsive-helper">
-          <form>
+          <form style="width: 100%">
             <div class="pull-left">
               <div class="toolbar-field">
-                <strong>订单编码:</strong>
+                <strong>退货编码:</strong>
               </div>
               <div class="toolbar-field">
-                <input type="text" class="form-control" placeholder="请输入订单编码"/>
+                <input type="text" data-filter="returnCode" class="form-control grid-filter" data-operator="contains" placeholder="请输入订单编码"/>
               </div>
 
             </div>
             <!-- End .pull-left -->
             <div class="pull-right">
               <div class="toolbar-field">
-                <button type="button" class="btn btn-default"><i class="fa fa-search"></i>查询</button>
-                <button type="button" class="btn btn-default">清空</button>
+                <button type="button" class="btn btn-default"  onclick="reloadGridFilters('grid')"><i class="fa fa-search"></i>查询</button>
+                <button type="button" class="btn btn-default"  onclick="clearFilters('grid')">清空</button>
               </div>
             </div>
             <!-- End .pull-right -->
@@ -371,6 +371,9 @@
     if($("input[name='auditState']:checked").val()=="NOT_AUDIT" && $("#auditRemark").val() == ""){
       bootbox.alert("请填写审核不通过原因!");
       return false;
+    }
+    if (!$("#auditForm").validationEngine("validate")) {
+        return false;
     }
     $.get("productReturnAudit.do",$("#auditForm").serialize(),function(result){
       if(result){

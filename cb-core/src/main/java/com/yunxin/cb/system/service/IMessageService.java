@@ -6,10 +6,12 @@ import org.springframework.data.domain.Page;
 
 public interface IMessageService {
 
-    public Page<Message> pageMessage(PageSpecification<Message> query);
+    Page<Message> pageMessage(PageSpecification<Message> query);
 
-    public Message addMessage(Message message);
+    Message addMessage(Message message);
 
-    public Message getMessage(int fileId);
+    Message getMessage(int messageId);
+
+    void removeMessageById(int messageId);
 
 }

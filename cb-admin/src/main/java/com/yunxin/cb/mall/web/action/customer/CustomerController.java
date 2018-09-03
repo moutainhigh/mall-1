@@ -5,8 +5,10 @@ import com.yunxin.cb.mall.entity.DeliveryAddress;
 import com.yunxin.cb.mall.service.IAddressService;
 import com.yunxin.cb.mall.service.ICustomerService;
 import com.yunxin.cb.mall.service.IRankService;
+import com.yunxin.cb.util.HttpsUtils;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.PageSpecification;
+import com.yunxin.core.util.CalendarUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -17,9 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.sound.midi.SysexMessage;
 import javax.validation.Valid;
-import java.rmi.ServerError;
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -91,6 +93,7 @@ public class CustomerController {
 
     @RequestMapping(value = "toEditCustomer",method = RequestMethod.GET)
     public String toEditCustomer(@RequestParam("customerId") int customerId, ModelMap modelMap) {
+        Customer customer = customerService.getCustomerById(customerId);
         modelMap.addAttribute("customer",customerService.getCustomerById(customerId));
         return "customer/editCustomer";
     }
@@ -163,6 +166,26 @@ public class CustomerController {
     public boolean enableCustomerById(@RequestParam("customerId") int customerId,@RequestParam("enabled") boolean enabled) {
         try{
             customerService.enableCustomerById(customerId,enabled);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * 注销
+     * @param customerId
+     * @param ynDelete
+     * @return
+     */
+    @RequestMapping(value = "CancellationCustomerById",method = RequestMethod.GET)
+    @ResponseBody
+    public boolean CancellationCustomerById(@RequestParam("customerId") int customerId,@RequestParam("ynDelete") boolean ynDelete) {
+        try{
+            Customer customer = customerService.getCustomerById(customerId);
+            String time=customer.getMobile()+"-delete-"+CalendarUtils.formatDate(new Date());
+            customerService.CancellationCustomerById(customerId, ynDelete,time);
             return true;
         }catch (Exception e){
             System.out.println(e.getMessage());

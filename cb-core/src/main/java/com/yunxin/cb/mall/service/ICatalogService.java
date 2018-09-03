@@ -15,7 +15,7 @@ import java.util.Map;
 public interface ICatalogService {
 
 
-    Catalog addCatalog(Catalog catalog) throws EntityExistException, CommonException;
+    Catalog addCatalog(Catalog catalog) throws EntityExistException;
 
     public Catalog updateCatalog(Catalog catalog) throws EntityExistException;
 

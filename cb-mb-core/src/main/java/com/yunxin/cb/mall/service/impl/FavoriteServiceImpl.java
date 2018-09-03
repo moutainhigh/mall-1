@@ -1,8 +1,10 @@
 package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.Favorite;
+import com.yunxin.cb.mall.entity.Product;
 import com.yunxin.cb.mall.mapper.CommodityMapper;
 import com.yunxin.cb.mall.mapper.FavoriteMapper;
+import com.yunxin.cb.mall.mapper.ProductMapper;
 import com.yunxin.cb.mall.service.FavoriteService;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
@@ -31,16 +33,21 @@ public class FavoriteServiceImpl implements FavoriteService {
 	private FavoriteMapper favoriteMapper;
 
 	@Resource
+	private ProductMapper productMapper;
+
+	@Resource
 	private CommodityMapper commodityMapper;
 
 	@Override
 	public Favorite addFavorite(Favorite favorite) {
-		if(null==commodityMapper.selectByPrimaryKey(favorite.getCommodityId())){
-			return null;//商品不存在，返回失败
+		Product product=productMapper.selectByPrimaryKey(favorite.getProductId());
+		if(null==product){
+			return null;//货品不存在，返回失败
 		}else{
 			Favorite getFavorite = favoriteMapper.findByCustomerAndCommodity(favorite);
 			if (getFavorite == null) {//不存在，则新增
 				favorite.setCreateTime(new Date());
+				favorite.setCommodityId(product.getCommodityId());
 				favoriteMapper.insert(favorite);
 			}else{
 				favorite=getFavorite;//已存在，则返回成功
@@ -50,19 +57,13 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	@Override
-	public int removeFavorite(int favoriteId) {
-		return favoriteMapper.deleteByPrimaryKey(favoriteId);
-	}
-
-	@Override
-	public int removeFavoriteBatch(String[] favoriteIds){
-		return favoriteMapper.removeFavoriteBatch(favoriteIds);
+	public int removeFavoriteBatch(List<Integer> favoriteIds,Integer customerId){
+		return favoriteMapper.removeFavoriteBatch(favoriteIds,customerId);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PageFinder<Favorite> pageCustomerFavorites(Query q) {
-		PageFinder<Favorite> page = new PageFinder<Favorite>(q.getPageNo(), q.getPageSize());
 		List<Favorite> list = null;
 		long rowCount = 0L;
 		try {
@@ -76,9 +77,8 @@ public class FavoriteServiceImpl implements FavoriteService {
 		//如list为null时，则改为返回一个空列表
 		list = list == null ? new ArrayList<Favorite>(0) : list;
 		//将分页数据和记录总数设置到分页结果对象中
+		PageFinder<Favorite> page = new PageFinder<>(q.getPageNo(), q.getPageSize(), rowCount);
 		page.setData(list);
-		page.setRowCount(rowCount);//记录总数
-		page.setPageCount((int)rowCount);//总页数
 		return page;
 	}
 

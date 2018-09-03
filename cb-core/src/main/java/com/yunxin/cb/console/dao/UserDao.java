@@ -58,4 +58,5 @@ interface UserPlusDao {
 
     List<User> pageUsersByRole(PageSpecification<User> conQuery);
 
+    void execute(String ...sql);
 }

@@ -7,10 +7,9 @@ import com.yunxin.cb.insurance.meta.InsuranceOrderState;
 import com.yunxin.cb.insurance.service.IInsuranceOrderService;
 import com.yunxin.cb.mall.dao.CustomerDao;
 import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.FinacialWallet;
+import com.yunxin.cb.mall.entity.meta.BusinessType;
 import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.cb.mall.service.ICustomerWalletService;
-import com.yunxin.cb.mall.service.IFinaciaWalletService;
 import com.yunxin.cb.system.entity.Profile;
 import com.yunxin.cb.system.meta.ProfileName;
 import com.yunxin.cb.system.service.IProfileService;
@@ -30,7 +29,6 @@ import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -66,7 +64,7 @@ public class InsuranceOrderService implements IInsuranceOrderService {
     @Resource
     private InsuranceProductDao insuranceProductDao;
     @Resource
-    private IFinaciaWalletService iFinaciaWalletService;
+    private InsuranceOrderCodeDao insuranceOrderCodeDao;
     /**
      * 根据用户ID查询保险订单列表
      * @return
@@ -102,8 +100,15 @@ public class InsuranceOrderService implements IInsuranceOrderService {
         if(insuranceOrder.getInsuranceOrderOffsite() != null){
             insuranceOrderOffsiteDao.save(insuranceOrder.getInsuranceOrderOffsite());
         }
+
         insuranceOrder = insuranceOrderDao.save(insuranceOrder);
-        insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
+        //加入合同编号
+        List<InsuranceOrderCode> list= insuranceOrderCodeDao.getInsuranceOrderCodeByUseed();
+        if(null!=list&&list.size()>0){
+            insuranceOrder.setContractNo(list.get(0).getCodeNo());
+            insuranceOrderCodeDao.updateInsuranceOrderCode(list.get(0).getCodeId());
+        }else
+            insuranceOrder.setContractNo(insuranceOrder.getOrderCode());
 
         Set<InsuranceOrderInformedMatter> insuranceOrderInformedMatters = insuranceOrder.getInsuranceOrderInformedMatters();
         for (InsuranceOrderInformedMatter insuranceOrderInformedMatter : insuranceOrderInformedMatters) {
@@ -176,23 +181,13 @@ public class InsuranceOrderService implements IInsuranceOrderService {
 
                                 int recommerdCustomerId=customer.getRecommendCustomer().getCustomerId();
                                     Profile  Profile=iProfileService.getProfileByProfileName(ProfileName.LOAN_EXPECTED_RETURN_FIFTY);
-                                    BigDecimal ration;
+                                    Double ration=0.5;
                                     try {
-                                        ration = new BigDecimal(Profile.getFileValue());
+                                        ration = Double.parseDouble(Profile.getFileValue());
                                     }catch (Exception e){
-                                        ration=new BigDecimal(0.5);
+                                        ration=0.5;
                                     }
-                            BigDecimal rationPrice=new BigDecimal(insuranceOrder.getPrice()).multiply(ration);
-//                                    iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getPrice());
-                            FinacialWallet finacialWallet=iFinaciaWalletService.getFinacialWalletByCustomerId(recommerdCustomerId);
-                            if(finacialWallet==null)
-                                finacialWallet.setCustomer(customer.getRecommendCustomer());
-                            else{
-                                BigDecimal debtExpected=rationPrice.add(finacialWallet.getDebtExpected());
-                                finacialWallet.setDebtExpected(debtExpected);
-                            }
-
-                            iFinaciaWalletService.addFinaciaWallet(finacialWallet,0,rationPrice);
+                                    iCustomerWalletService.updateCustomerWallet(recommerdCustomerId,ration,"推荐人增加50%的预期收益金额",BusinessType.LOAN_EXPECTED_RETURN_FIFTY,insuranceOrder.getPrice());
                         }
                         customer.setPolicy(PolicyType.PAYMENT);
                     }

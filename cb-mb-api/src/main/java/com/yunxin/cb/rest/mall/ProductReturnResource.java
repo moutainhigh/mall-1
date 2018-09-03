@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -43,7 +44,7 @@ public class ProductReturnResource extends BaseResource {
 
     @ApiOperation(value = "退货申请页数据获取")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "path", dataType = "Integer")})
     @ApiVersion(1)
     @GetMapping(value = "productReturn/apply/{orderId}")
     public ResponseResult<ProductReturnApplyDataVO> getProductReturnData(@PathVariable(value = "orderId")int orderId) {
@@ -52,7 +53,7 @@ public class ProductReturnResource extends BaseResource {
             Order order = productReturnService.checkProductReturnApply(orderId, getCustomerId());
             Map returnReason = new HashMap();//退货原因
             for (ReturnReason reason : ReturnReason.values()){
-                returnReason.put(reason, reason.toString());
+                returnReason.put(reason, reason.getName());
             }
             productReturnApplyDataVO.setReturnReason(returnReason);
             productReturnApplyDataVO.setOrderId(order.getOrderId());
@@ -60,7 +61,7 @@ public class ProductReturnResource extends BaseResource {
             productReturnApplyDataVO.setReturnName(order.getConsigneeName());
             return new ResponseResult(productReturnApplyDataVO);
         } catch (CommonException e) {
-            logger.info("productReturnApplyPageData failed", e.getMessage());
+            logger.info("productReturnApplyPageData failed", e);
             return new ResponseResult(Result.FAILURE, e.getMessage());
         } catch (Exception e) {
             logger.error("productReturnApplyPageData failed", e);
@@ -73,7 +74,7 @@ public class ProductReturnResource extends BaseResource {
     })
     @ApiVersion(1)
     @PostMapping(value = "productReturn")
-    public ResponseResult addProductReturn(@RequestBody ProductReturnApplyVO productReturnApplyVO){
+    public ResponseResult addProductReturn(@Validated @RequestBody ProductReturnApplyVO productReturnApplyVO){
         try {
             logger.info("productReturnApplyVO:" + productReturnApplyVO.toString());
             ProductReturn productReturn = new ProductReturn();
@@ -82,7 +83,7 @@ public class ProductReturnResource extends BaseResource {
             productReturnService.applyOrderProductReturn(productReturn);
             return new ResponseResult(Result.SUCCESS);
         } catch (CommonException e) {
-            logger.info("addProductReturn failed", e.getMessage());
+            logger.info("addProductReturn failed", e);
             return new ResponseResult(Result.FAILURE, e.getMessage());
         } catch (Exception e) {
             logger.error("addProductReturn failed", e);
@@ -92,8 +93,8 @@ public class ProductReturnResource extends BaseResource {
 
     @ApiOperation(value = "退货分页列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "form", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "form", dataType = "int")})
+            @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "form", dataType = "Integer"),
+            @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "form", dataType = "Integer")})
     @ApiVersion(1)
     @PostMapping(value = "productReturn/pageList")
     public ResponseResult<PageFinder<ProductReturnDetailVO>> pageProductReturn(@RequestParam(value = "pageNo") int pageNo,
@@ -114,7 +115,7 @@ public class ProductReturnResource extends BaseResource {
 
     @ApiOperation(value = "退货详情")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "productReturnId", value = "退货id", required = true, paramType = "path", dataType = "int")})
+            @ApiImplicitParam(name = "productReturnId", value = "退货id", required = true, paramType = "path", dataType = "Integer")})
     @ApiVersion(1)
     @GetMapping(value = "productReturn/{productReturnId}")
     public ResponseResult<ProductReturnDetailVO> getProductReturn(@PathVariable Integer productReturnId){

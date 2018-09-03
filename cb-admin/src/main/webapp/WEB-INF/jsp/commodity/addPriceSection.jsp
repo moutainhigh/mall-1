@@ -17,12 +17,22 @@
   <script type="text/javascript">
     $(document).ready(function() {
 
+        var errerMsg='${errerMsg}';
+        if(errerMsg!=null&&errerMsg!=""){
+            commonNotify(errerMsg,"error");
+        }
+
       $("#validateSubmitForm").validationEngine({
         autoHidePrompt: true, scroll: false, showOneMessage: true
       });
 
     });
-
+    function checkPrice(){
+        if(''!=$('#endPrice').val()&&'0'!=$('#endPrice').val()&&parseInt($('#startPrice').val())>parseInt($('#endPrice').val())){
+            bootbox.alert("最大价格不能小于最小价格!");
+            $('#endPrice').val('')
+        }
+    }
 
   </script>
 </head>
@@ -142,17 +152,18 @@
                 <div class="col-sm-2">
                   <label>起始价格：<span class="asterisk">*</span></label>
                 </div>
-                <div class="col-sm-3">
-                  <form:input path="startPrice" cssClass="form-control validate[required,custom[number]]" maxlength="11"/>
+                <div class="col-sm-3" style="position:relative;">
+                  <form:input path="startPrice" onkeyup="value=value.replace(/[^\d]/g,'')" id="startPrice" onchange="checkPrice()" cssClass="form-control validate[required,custom[number]]" maxlength="9"/>
+                  <span style="position: absolute;top:4px;right: -3px;">元</span>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-2">
                   <label>结束价格：<span class="asterisk">*</span></label>
                 </div>
-                <div class="col-sm-3">
-                  <form:input path="endPrice" cssClass="form-control validate[required,custom[number]]" maxlength="11"/>
+                <div class="col-sm-3" style="position:relative;">
+                  <form:input path="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')" id="endPrice" onchange="checkPrice()" cssClass="form-control validate[required,custom[number]]" maxlength="9"/>
+                  <span style="position: absolute;top:4px;right: -3px;">元</span>
                 </div>
-                <div class="col-sm-1"><form:errors path="endPrice"/> </div>
               </div>
               <div class="spacer-10"></div>
 
@@ -162,7 +173,7 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="inline-labels">
-                    <form:input path="sectionNo" cssClass="form-control validate[required,minSize[2]]" maxlength="32"/>
+                    <form:input path="sectionNo" readonly="true" cssClass="form-control validate[required,minSize[2]]" maxlength="32"/>
                   </div>
                 </div>
                 <div class="col-sm-1"></div>

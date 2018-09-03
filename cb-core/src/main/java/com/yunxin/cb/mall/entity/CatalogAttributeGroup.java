@@ -5,7 +5,7 @@ package com.yunxin.cb.mall.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.yunxin.core.web.json.serializer.JsonDateSerializer;
+import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -96,7 +96,7 @@ public class CatalogAttributeGroup implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(length = 7, nullable = false)
-    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Date getCreateTime() {
         return createTime;
     }

@@ -184,22 +184,6 @@ public interface IOrderService {
      */
     public void updateOrderItemEvaluate(int itemId);
 
-    /***
-     * 贷款订单
-     * @param query
-     * @return
-     */
-    public Page<OrderLoanApply> pageLoanOrders(PageSpecification<OrderLoanApply> query);
-
-    /**
-     * 贷款审核
-    * @author gws
-    * @date 2018/7/25 15:14
-    * @param
-    * @return void
-    */
-    public boolean orderLoanApplyAudit(int loanId, AuditState auditState, String auditRemark);
-
     /**
      * 订单审核
      * @author gws

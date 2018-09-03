@@ -5,6 +5,7 @@ import com.yunxin.cb.jwt.JwtUtil;
 import com.yunxin.cb.jwt.Token;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.orm.CustomerContextHolder;
+import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         //用户访问日志
         logger.info("AppAccess info: clientIp=" + getIpAddr(request) + " access_url=" + request.getRequestURI() + " attime=" + new Date().toString()
                 + " Bymethod= " + request.getMethod() + ",user-Agent='" + request.getHeader("user-Agent") + "'");
-
+        
         if (!request.getMethod().equals("OPTIONS")) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
 
@@ -44,14 +45,22 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             if (ignoreAuthentication == null)
                 ignoreAuthentication = handlerMethod.getMethod().getAnnotation(IgnoreAuthentication.class);
 
-            if (ignoreAuthentication != null)
+            String authHeader = request.getHeader(HEADER_STRING);
+            if (ignoreAuthentication != null){
+                //如果用户有token，就保存
+                if (authHeader != null){
+                    authHeader = authHeader.replace(TOKEN_PREFIX, "");
+                    Token token = JwtUtil.getToken(authHeader);
+                    int customerId = token.getAccountId();
+                    CustomerContextHolder.setCustomerId(customerId);
+                }
                 // don't need token
                 return true;
+            }
 
 
             response.setContentType("application/json;charset=utf-8");
             response.setCharacterEncoding("UTF-8");
-            String authHeader = request.getHeader(HEADER_STRING);
             if ((authHeader == null) ||
                     !authHeader.startsWith(TOKEN_PREFIX)) {
                 ObjectMapper mapper = new ObjectMapper();

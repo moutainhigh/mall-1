@@ -10,10 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -41,7 +39,8 @@ public class InsuranceOrderCodeController {
      * @date        2018/7/17 20:59
      */
     @RequestMapping(value = "insuranceordercodes")
-    public String insuranceordercodes(ModelMap modelMap) {
+    public String insuranceordercodes(ModelMap modelMap)
+    {
         return "insuranceordercode/insuranceordercodes";
     }
 
@@ -76,7 +75,6 @@ public class InsuranceOrderCodeController {
     /**
      * 导入EXCEL
      * @author      likang
-     * @param request
     * @param response
     * @param session
      * @return      java.lang.String
@@ -84,23 +82,26 @@ public class InsuranceOrderCodeController {
      * @date        2018/7/17 21:01
      */
     @RequestMapping(value = "uploadPayerCreditInfoExcel")
-    public String uploadPayerCreditInfoExcel(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        MultipartFile file = multipartRequest.getFile("upfile");
+    @ResponseBody
+    public String uploadPayerCreditInfoExcel(@RequestParam("file") MultipartFile file,  HttpServletResponse response, HttpSession session) throws Exception {
         if (file.isEmpty()) {
             throw new Exception("文件不存在！");
         }
         java.io.InputStream in = file.getInputStream();
         List<List<Object>> listob = ExcelUtils.getBankListByExcel(in,file.getOriginalFilename());
+        int maxSort=insuranceOrderCodeService.getInsuranceOrderCodeMaxSort();
         for (int i = 0; i < listob.size(); i++) {
             List<Object> ob = listob.get(i);
             String codeno=ob.get(0).toString();
-            if (insuranceOrderCodeService.getInsuranceOrderCodeByCodeNo(codeno) == null) {
-                InsuranceOrderCode insuranceOrderCode = new InsuranceOrderCode();
-                insuranceOrderCode.setCodeNo(codeno);
-                insuranceOrderCode.setUseed(0);
-                insuranceOrderCode.setCreateTime(new Date());
-                insuranceOrderCodeService.addInsuranceOrderCode(insuranceOrderCode);
+            if(codeno.matches("^[0-9_]+$")) {
+                if (insuranceOrderCodeService.getInsuranceOrderCodeByCodeNo(codeno) == null) {
+                    InsuranceOrderCode insuranceOrderCode = new InsuranceOrderCode();
+                    insuranceOrderCode.setCodeNo(codeno);
+                    insuranceOrderCode.setUseed(0);
+                    insuranceOrderCode.setCreateTime(new Date());
+                    insuranceOrderCode.setSort(maxSort + 1);
+                    insuranceOrderCodeService.addInsuranceOrderCode(insuranceOrderCode);
+                }
             }
         }
         return "redirect:../common/success.do?reurl=insuranceordercode/insuranceordercodes.do";

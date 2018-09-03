@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface FloorCommodityDao extends JpaRepository<FloorCommodity, Integer>, JpaSpecificationExecutor<FloorCommodity> {
 
     @Modifying
-    @Query("delete from FloorCommodity p  where p.homeFloor=?1")
+    @Query("delete from FloorAdvert p  where p.homeFloor=?1")
     public void emptyByHomeFloor(HomeFloor homeFloor);
 }

@@ -28,7 +28,7 @@ public class SinoLifeService {
         Map<String, String> cookies = getCookie();
         cookies = getAjax();
         //2.获取验证码
-        byte[] data = JsoupDoloadPicture.downloadImg("https://www.sino-life.com/elogin/getVerifyCode.do", cookies);
+        byte[] data = JsoupDownloadPicture.downloadImg("https://www.sino-life.com/elogin/getVerifyCode.do", cookies);
         String code = RuoKuai.createByData("107803","6cd4293bae4c4522ad83b5b56d19ad00","3040","tanggangyi","tgy123456",data);
         //3.登录
         cookies = login(account, pwd, code, cookies);

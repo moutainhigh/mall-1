@@ -116,7 +116,6 @@
          *上传图片
          */
         function onchangeImg(imgId){
-            debugger;
             var formData = new FormData();
             formData.append("file", $('#upload'+imgId)[0].files[0]);
             $.ajax({
@@ -361,6 +360,7 @@
                                                 showRemove :false, //显示移除按钮
                                                 showPreview :true, //是否显示预览
                                                 showCaption:false,//是否显示标题
+                                                showClose: false,
                                                 browseOnZoneClick: true,//是否显示点击选择文件
                                                 language: "zh" ,
                                                 showBrowse : false,

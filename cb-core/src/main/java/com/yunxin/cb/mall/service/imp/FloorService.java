@@ -1,9 +1,6 @@
 package com.yunxin.cb.mall.service.imp;
 
-import com.yunxin.cb.mall.dao.FloorBrandDao;
-import com.yunxin.cb.mall.dao.FloorCategoryDao;
-import com.yunxin.cb.mall.dao.FloorCommodityDao;
-import com.yunxin.cb.mall.dao.HomeFloorDao;
+import com.yunxin.cb.mall.dao.*;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.service.IFloorService;
 import com.yunxin.core.exception.EntityExistException;
@@ -38,6 +35,9 @@ public class FloorService implements IFloorService {
     @Resource
     private FloorBrandDao floorBrandDao;
 
+    @Resource
+    private FloorAdvertDao floorAdvertDao;
+
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -52,19 +52,35 @@ public class FloorService implements IFloorService {
     }
 
     @Override
-    public HomeFloor addHomeFloor(HomeFloor homeFloor) {
+    public HomeFloor addHomeFloor(HomeFloor homeFloor)throws EntityExistException {
+        if (!homeFloorDao.isOrUnique(homeFloor, HomeFloor_.floorName)) {
+            throw new EntityExistException("楼层名称已存在");
+        }
+        if(homeFloor.isEnabled()){
+            HomeFloor homeFloor1 =  homeFloorDao.findHomeFloorByEnabledAndSortOrder(homeFloor.isEnabled(),homeFloor.getSortOrder());
+            if(null != homeFloor1){
+                throw new EntityExistException("该状态的楼层已存在,不能重复添加");
+            }
+        }
         int[] categoryId = homeFloor.getCategoryId();
         int[] categoryOrder = homeFloor.getCategoryOrder();
         int[] commodityId = homeFloor.getCommodityId();
         int[] commodityOrder = homeFloor.getCommodityOrder();
         int[] brandId = homeFloor.getBrandId();
+        if(homeFloor.getSortOrder() == 2){
+            if(brandId.length != 7){
+                throw new EntityExistException("品牌数量只能有7个");
+            }
+        }
         int[] brandOrder = homeFloor.getBrandOrder();
+        int[] advertId = homeFloor.getAdvertId();
+        int[] advertOrder = homeFloor.getAdvertOrder();
         homeFloor = homeFloorDao.save(homeFloor);
-        batchAddFloorCategoryAndCommodity(homeFloor, categoryId, categoryOrder, commodityId, commodityOrder,brandId,brandOrder);
+        batchAddFloorCategoryAndCommodity(homeFloor, categoryId, categoryOrder, commodityId, commodityOrder,brandId,brandOrder,advertId,advertOrder);
         return homeFloor;
     }
 
-    private void batchAddFloorCategoryAndCommodity(HomeFloor homeFloor, int[] categoryId, int[] categoryOrder, int[] commodityId, int[] commodityOrder,int[] brandId,int[] brandOrder) {
+    private void batchAddFloorCategoryAndCommodity(HomeFloor homeFloor, int[] categoryId, int[] categoryOrder, int[] commodityId, int[] commodityOrder,int[] brandId,int[] brandOrder,int[] advertId,int[] advertOrder) {
         if (categoryId != null) {
             for (int i = 0; i < categoryId.length; i++) {
                 FloorCategoryId id = new FloorCategoryId(homeFloor.getFloorId(), categoryId[i]);
@@ -101,6 +117,18 @@ public class FloorService implements IFloorService {
             }
             homeFloor.setBrandAmount(brandId.length);
         }
+        if(advertId != null){
+            for(int i=0;i < advertId.length; i++){
+                FloorAdvertId id = new FloorAdvertId(homeFloor.getFloorId(),advertId[i]);
+                FloorAdvert floorAdvert = new FloorAdvert();
+                floorAdvert.setId(id);
+                floorAdvert.setAdvertisement(new Advertisement(advertId[i]));
+                floorAdvert.setHomeFloor(homeFloor);
+                floorAdvert.setSortOrder(advertOrder[i]);
+                floorAdvertDao.save(floorAdvert);
+            }
+            homeFloor.setAdvertAmount(advertId.length);
+        }
     }
 
     @Override
@@ -131,20 +159,35 @@ public class FloorService implements IFloorService {
         if (!homeFloorDao.isUnique(homeFloor, HomeFloor_.floorName)) {
             throw new EntityExistException("楼层名称已存在！");
         }
+        if(homeFloor.isEnabled()){
+            HomeFloor homeFloor1 =  homeFloorDao.findHomeFloorByEnabledAndSortOrder(homeFloor.isEnabled(),homeFloor.getSortOrder());
+            if(null != homeFloor1 && homeFloor.getFloorId() != homeFloor1.getFloorId()){
+                throw new EntityExistException("该状态的楼层已存在,不能更改状态");
+            }
+        }
         HomeFloor dbhomeFloor = homeFloorDao.findOne(homeFloor.getFloorId());
 
-        AttributeReplication.copying(homeFloor, dbhomeFloor, HomeFloor_.categoryAmount, HomeFloor_.commodityAmount, HomeFloor_.enabled, HomeFloor_.floorName,
+        AttributeReplication.copying(homeFloor, dbhomeFloor, HomeFloor_.categoryAmount, HomeFloor_.commodityAmount,HomeFloor_.advertAmount,HomeFloor_.brandAmount, HomeFloor_.enabled, HomeFloor_.floorName,
                 HomeFloor_.imagePath, HomeFloor_.iconPath, HomeFloor_.remark, HomeFloor_.sortOrder, HomeFloor_.floorLayout);
         int[] categoryId = homeFloor.getCategoryId();
         int[] categoryOrder = homeFloor.getCategoryOrder();
         int[] commodityId = homeFloor.getCommodityId();
         int[] commodityOrder = homeFloor.getCommodityOrder();
         int[] brandId = homeFloor.getBrandId();
+
+        if(homeFloor.getSortOrder() == 2){
+            if(brandId.length != 7){
+                throw new EntityExistException("品牌数量只能有7个");
+            }
+        }
         int[] brandOrder = homeFloor.getBrandOrder();
+        int[] advertId = homeFloor.getAdvertId();
+        int[] advertOrder = homeFloor.getAdvertOrder();
         floorCategoryDao.emptyByHomeFloor(dbhomeFloor);
         floorCommodityDao.emptyByHomeFloor(dbhomeFloor);
         floorBrandDao.emptyByHomeFloor(dbhomeFloor);
-        batchAddFloorCategoryAndCommodity(dbhomeFloor, categoryId, categoryOrder, commodityId, commodityOrder,brandId, brandOrder);
+        floorAdvertDao.emptyByHomeFloor(dbhomeFloor);
+        batchAddFloorCategoryAndCommodity(dbhomeFloor, categoryId, categoryOrder, commodityId, commodityOrder,brandId, brandOrder,advertId,advertOrder);
         return dbhomeFloor;
     }
 
@@ -154,9 +197,17 @@ public class FloorService implements IFloorService {
     }
 
     @Override
-    public void enableHomeFloorById(int floorId, boolean enabled) {
-        homeFloorDao.enableHomeFloorById(enabled, floorId);
+    public void enableHomeFloorById(int floorId, boolean enabled) throws EntityExistException {
+        if(enabled){
+            HomeFloor homeFloor = homeFloorDao.findById(floorId);
+            HomeFloor homeFloor1 = homeFloorDao.findHomeFloorByEnabledAndSortOrder(enabled,homeFloor.getSortOrder());
+            if(null == homeFloor1){
+                homeFloorDao.enableHomeFloorById(enabled, floorId);
+            }else {
+                throw new EntityExistException("该楼层只能启用一个");
+            }
+        }else {
+            homeFloorDao.enableHomeFloorById(enabled, floorId);
+        }
     }
-
-
 }
