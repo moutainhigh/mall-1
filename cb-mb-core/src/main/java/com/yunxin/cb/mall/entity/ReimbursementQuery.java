@@ -32,9 +32,13 @@ public class ReimbursementQuery implements Serializable {
      */
     private Date createTime;
     /**
-     * 商家地址
+     * 商家名称
      */
-    private String sellerAddress;
+    private String sellerName;
+    /**
+     * 商品名称
+     */
+    private String commodityName;
     /**
      * 货品默认图片
      */
@@ -108,12 +112,20 @@ public class ReimbursementQuery implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getSellerAddress() {
-        return sellerAddress;
+    public String getSellerName() {
+        return sellerName;
     }
 
-    public void setSellerAddress(String sellerAddress) {
-        this.sellerAddress = sellerAddress;
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public String getCommodityName() {
+        return commodityName;
+    }
+
+    public void setCommodityName(String commodityName) {
+        this.commodityName = commodityName;
     }
 
     public String getDefaultPicPath() {

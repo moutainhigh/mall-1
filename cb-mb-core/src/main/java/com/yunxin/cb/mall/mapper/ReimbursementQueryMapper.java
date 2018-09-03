@@ -30,7 +30,7 @@ public interface ReimbursementQueryMapper {
     @Select({
             "select",
             "REIMBURSEMENT_QUERY_ID, ITEM_ID, PRODUCT_ID, SALE_PRICE, PRODUCT_NUM, CREATE_TIME, ",
-            "SELLER_ADDRESS, DEFAULT_PIC_PATH, COMMODITY_ID, PRODUCT_NAME, CUSTOMER_ID, REIMBURSEMENT_QUERY_STATE",
+            "SELLER_NAME, COMMODITY_NAME,DEFAULT_PIC_PATH, COMMODITY_ID, PRODUCT_NAME, CUSTOMER_ID, REIMBURSEMENT_QUERY_STATE",
             "from rb_reimbursement_query",
             "where REIMBURSEMENT_QUERY_ID = #{reimbursementQueryId,jdbcType=INTEGER} and CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
@@ -41,7 +41,8 @@ public interface ReimbursementQueryMapper {
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="PRODUCT_NUM", property="productNum", jdbcType=JdbcType.INTEGER),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="SELLER_ADDRESS", property="sellerAddress", jdbcType=JdbcType.VARCHAR),
+            @Result(column="SELLER_NAME", property="sellerName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="COMMODITY_NAME", property="commodityName", jdbcType=JdbcType.VARCHAR),
             @Result(column="DEFAULT_PIC_PATH", property="defaultPicPath", jdbcType=JdbcType.VARCHAR),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
             @Result(column="PRODUCT_NAME", property="productName", jdbcType=JdbcType.VARCHAR),
@@ -57,7 +58,7 @@ public interface ReimbursementQueryMapper {
             "SALE_PRICE = #{salePrice,jdbcType=REAL},",
             "PRODUCT_NUM = #{productNum,jdbcType=INTEGER},",
             "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},",
-            "SELLER_ADDRESS = #{sellerAddress,jdbcType=VARCHAR},",
+            "SELLER_NAME = #{sellerName,jdbcType=VARCHAR},",
             "DEFAULT_PIC_PATH = #{defaultPicPath,jdbcType=VARCHAR},",
             "COMMODITY_ID = #{commodityId,jdbcType=INTEGER},",
             "PRODUCT_NAME = #{productName,jdbcType=VARCHAR},",
@@ -82,7 +83,8 @@ public interface ReimbursementQueryMapper {
                     "PRODUCT_NUM,\n" +
                     "SALE_PRICE,\n" +
                     "CREATE_TIME,\n" +
-                    "SELLER_ADDRESS,\n" +
+                    "SELLER_NAME,\n" +
+                    "COMMODITY_NAME,\n" +
                     "DEFAULT_PIC_PATH,\n" +
                     "COMMODITY_ID,\n" +
                     "PRODUCT_NAME,\n" +
@@ -100,7 +102,8 @@ public interface ReimbursementQueryMapper {
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="PRODUCT_NUM", property="productNum", jdbcType=JdbcType.INTEGER),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="SELLER_ADDRESS", property="sellerAddress", jdbcType=JdbcType.VARCHAR),
+            @Result(column="SELLER_NAME", property="sellerName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="COMMODITY_NAME", property="commodityName", jdbcType=JdbcType.VARCHAR),
             @Result(column="DEFAULT_PIC_PATH", property="defaultPicPath", jdbcType=JdbcType.VARCHAR),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
             @Result(column="PRODUCT_NAME", property="productName", jdbcType=JdbcType.VARCHAR),
@@ -144,8 +147,8 @@ public interface ReimbursementQueryMapper {
      * @return
      */
     @Select({
-        "SELECT c.SELLER_ADDRESS\n" +
-                ",c.SALE_PRICE,c.PRODUCT_NUM,c.PRODUCT_NAME,c.DEFAULT_PIC_PATH\n" +
+        "SELECT c.SELLER_NAME\n" +
+                ",c.SALE_PRICE,c.PRODUCT_NUM,c.PRODUCT_NAME,c.COMMODITY_NAME,c.DEFAULT_PIC_PATH\n" +
                 "FROM rb_reimbursement a \n" +
                 "left join rb_reimbursement_order b on a.REIMBURSEMENT_ID = b.REIMBURSEMENT_ID \n" +
                 "left join rb_reimbursement_query c on b.REIMBURSEMENT_QUERY_ID = c.REIMBURSEMENT_QUERY_ID\n"+
@@ -154,7 +157,8 @@ public interface ReimbursementQueryMapper {
     @Results({
             @Result(column="PRODUCT_NUM", property="productNum", jdbcType=JdbcType.INTEGER),
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.FLOAT),
-            @Result(column="SELLER_ADDRESS", property="sellerAddress", jdbcType=JdbcType.VARCHAR),
+            @Result(column="SELLER_NAME", property="sellerName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="COMMODITY_NAME", property="commodityName", jdbcType=JdbcType.VARCHAR),
             @Result(column="DEFAULT_PIC_PATH", property="defaultPicPath", jdbcType=JdbcType.VARCHAR),
             @Result(column="PRODUCT_NAME", property="productName", jdbcType=JdbcType.VARCHAR),
     })
@@ -163,7 +167,7 @@ public interface ReimbursementQueryMapper {
     @Select({
             "select",
             "REIMBURSEMENT_QUERY_ID, ITEM_ID, PRODUCT_ID, SALE_PRICE, PRODUCT_NUM, CREATE_TIME, ",
-            "SELLER_ADDRESS, DEFAULT_PIC_PATH, COMMODITY_ID, PRODUCT_NAME, CUSTOMER_ID, REIMBURSEMENT_QUERY_STATE",
+            "SELLER_NAME, COMMODITY_NAME,DEFAULT_PIC_PATH, COMMODITY_ID, PRODUCT_NAME, CUSTOMER_ID, REIMBURSEMENT_QUERY_STATE",
             "from rb_reimbursement_query",
             "where REIMBURSEMENT_QUERY_ID = #{reimbursementQueryId,jdbcType=INTEGER}"
     })
@@ -174,7 +178,8 @@ public interface ReimbursementQueryMapper {
             @Result(column="SALE_PRICE", property="salePrice", jdbcType=JdbcType.REAL),
             @Result(column="PRODUCT_NUM", property="productNum", jdbcType=JdbcType.INTEGER),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="SELLER_ADDRESS", property="sellerAddress", jdbcType=JdbcType.VARCHAR),
+            @Result(column="SELLER_NAME", property="sellerName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="COMMODITY_NAME", property="commodityName", jdbcType=JdbcType.VARCHAR),
             @Result(column="DEFAULT_PIC_PATH", property="defaultPicPath", jdbcType=JdbcType.VARCHAR),
             @Result(column="COMMODITY_ID", property="commodityId", jdbcType=JdbcType.INTEGER),
             @Result(column="PRODUCT_NAME", property="productName", jdbcType=JdbcType.VARCHAR),

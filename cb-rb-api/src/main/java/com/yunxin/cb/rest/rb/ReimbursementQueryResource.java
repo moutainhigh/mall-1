@@ -55,7 +55,6 @@ public class ReimbursementQueryResource extends BaseResource {
     @ApiVersion(1)
     @ApiImplicitParams({
     })
-    //TODO 必须带上用户ID
     public ResponseResult<ReimbursementSuccessVO> addReimbursement(@RequestBody List<AddReimbursementRequestVO> list) {
         ReimbursementSuccessVO reimbursementSuccessVO;
         try {

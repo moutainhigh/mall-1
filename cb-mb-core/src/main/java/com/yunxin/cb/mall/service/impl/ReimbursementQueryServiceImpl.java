@@ -18,12 +18,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static com.yunxin.cb.orm.CustomerContextHolder.getCustomerId;
 
 @Service
 public class ReimbursementQueryServiceImpl implements ReimbursementQueryService {
@@ -101,22 +100,13 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             //获取商品分类
             Catalog catalog = catalogMapper.selectByCommodityId(reimbursementQuery.getCommodityId());
             //判断该订单属于哪一商品分类
-            if(catalog.getParentCatalogId() == 1){
-                List<ReimbursementQuery> items = lotaLogMap.get(catalog.getCatalogId());
-                if(items == null){
-                    items = new ArrayList<>();
-                }
-                items.add(reimbursementQuery);
-                lotaLogMap.put(catalog.getCatalogId(),items);
-            }else{
-                Integer catalogId = isTwoFrool(catalog);
-                List<ReimbursementQuery> items = lotaLogMap.get(catalogId);
-                if(items == null){
-                    items = new ArrayList<>();
-                }
-                items.add(reimbursementQuery);
-                lotaLogMap.put(catalogId,items);
+            Integer catalogId = isTwoFrool(catalog);
+            List<ReimbursementQuery> items = lotaLogMap.get(catalogId);
+            if(items == null){
+                items = new ArrayList<>();
             }
+            items.add(reimbursementQuery);
+            lotaLogMap.put(catalogId,items);
         }
         //合并同一商品大类的订单
         for(Map.Entry<Integer, List<ReimbursementQuery>> entry : lotaLogMap.entrySet()){
@@ -220,6 +210,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     @Override
     public AlreadyReimbursementVO selectAlreadyReimbursementDetail(int reimbursementId,int customerId)throws Exception{
         Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,customerId);
+        if(null == reimbursement){
+            return null;
+        }
         //税点
         Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
         BigDecimal taxPoint = new BigDecimal(profile.getFileValue());
@@ -262,6 +255,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     @Transactional(rollbackFor = Exception.class)
     public ResponseResult cancelReimbursement(int reimbursementId,int customerId)throws Exception{
         Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,customerId);
+        if(null == reimbursement){
+            return new ResponseResult(Result.FAILURE, "该报账订单不存在");
+        }
         if (reimbursement.getOrderState().ordinal() == ReimbursementState.FINANCE_IN_APPROVAL.ordinal()) {
             //更新报账主表
             reimbursement.setOrderState(ReimbursementState.CANCEL_REIMBURSEMENT);
@@ -326,6 +322,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     @Override
     public CompleteReimbursementDetailVO getCompleteReimbursementDetail(int reimbursementId,int customerId)throws Exception{
         Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,customerId);
+        if(null == reimbursement){
+            return null;
+        }
         CompleteReimbursementDetailVO completeReimbursementDetailVO = new CompleteReimbursementDetailVO();
         List<String> list = new ArrayList<>();
         //查询商品相关信息

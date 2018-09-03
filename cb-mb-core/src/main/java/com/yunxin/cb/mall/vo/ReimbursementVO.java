@@ -11,8 +11,10 @@ public class ReimbursementVO implements Serializable {
     private int reimbursementQueryId;
     @ApiModelProperty(value="货品数量",name="productNum",example="1")
     private int productNum;
-    @ApiModelProperty(value="商家地址",name="sellerAddress",example="深圳市福田区xxx号")
-    private String sellerAddress;
+    @ApiModelProperty(value="商家店名",name="sellerName",example="深圳市福田店")
+    private String sellerName;
+    @ApiModelProperty(value="商品名",name="commodityName",example="2018 宝马")
+    private String commodityName;
     @ApiModelProperty(value="商品默认图片",name="defaultPicPath",example="xxx.jpg")
     private String defaultPicPath;
     @ApiModelProperty(value="货品名称",name="productName",example="颜色：雪山白&排量：2.0L&变速箱：自动")
@@ -38,14 +40,6 @@ public class ReimbursementVO implements Serializable {
 
     public void setProductNum(int productNum) {
         this.productNum = productNum;
-    }
-
-    public String getSellerAddress() {
-        return sellerAddress;
-    }
-
-    public void setSellerAddress(String sellerAddress) {
-        this.sellerAddress = sellerAddress;
     }
 
     public String getDefaultPicPath() {
@@ -88,4 +82,19 @@ public class ReimbursementVO implements Serializable {
         this.tax = tax;
     }
 
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public String getCommodityName() {
+        return commodityName;
+    }
+
+    public void setCommodityName(String commodityName) {
+        this.commodityName = commodityName;
+    }
 }
