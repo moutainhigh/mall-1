@@ -66,13 +66,13 @@ public class FinancialWalletResource extends BaseResource {
     })
     @ApiVersion(1)
     @GetMapping(value = "get")
-    public ResponseResult<FinancialWalletVO> get(){
+    public ResponseResult<FinancialWalletVO> get() {
         try {
             Customer customer = customerService.getCustomerById(getCustomerId());
             if (customer == null) {
                 return new ResponseResult(Result.FAILURE, "未获取到用户信息");
             }
-            FinancialWalletVO vo= financialWalletService.getFinancialWalletByCustomerId(customer.getCustomerId());
+            FinancialWalletVO vo = financialWalletService.getFinancialWalletByCustomerId(customer.getCustomerId());
             return new ResponseResult(vo);
         } catch (Exception e) {
             logger.info("get failed", e);

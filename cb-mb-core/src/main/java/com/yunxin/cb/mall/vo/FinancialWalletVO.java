@@ -31,7 +31,7 @@ public class FinancialWalletVO implements java.io.Serializable {
     private BigDecimal debtCar;
 
     @ApiModelProperty(value = "信用贷款", name = "debtCredit", example = "100")
-    private BigDecimal insuranceAmount;
+    private BigDecimal debtCredit;
 
     @ApiModelProperty(value = "版本号", name = "version", example = "100")
     private Integer version;
@@ -76,12 +76,12 @@ public class FinancialWalletVO implements java.io.Serializable {
         this.debtCar = debtCar;
     }
 
-    public BigDecimal getInsuranceAmount() {
-        return insuranceAmount;
+    public BigDecimal getDebtCredit() {
+        return debtCredit;
     }
 
-    public void setInsuranceAmount(BigDecimal insuranceAmount) {
-        this.insuranceAmount = insuranceAmount;
+    public void setDebtCredit(BigDecimal debtCredit) {
+        this.debtCredit = debtCredit;
     }
 
     public Integer getVersion() {

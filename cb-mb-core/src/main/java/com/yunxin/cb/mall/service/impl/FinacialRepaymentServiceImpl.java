@@ -8,11 +8,11 @@ import com.yunxin.cb.mall.entity.meta.TransactionType;
 import com.yunxin.cb.mall.mapper.FinacialRepaymentMapper;
 import com.yunxin.cb.mall.mapper.FinacialWalletMapper;
 import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
-import com.yunxin.cb.mall.service.FinacialLoanService;
+import com.yunxin.cb.mall.service.FinancialLoanService;
 import com.yunxin.cb.mall.service.FinacialRepaymentService;
 import com.yunxin.cb.mall.service.FinancialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
-import com.yunxin.cb.mall.vo.FinacialLoanVO;
+import com.yunxin.cb.mall.vo.FinancialLoanVO;
 import com.yunxin.cb.mall.vo.FinacialRepaymentVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import org.apache.commons.logging.Log;
@@ -34,7 +34,7 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
     private FinacialRepaymentMapper finacialRepaymentServiceMapper;
 
     @Resource
-    private FinacialLoanService finacialLoanService;
+    private FinancialLoanService financialLoanService;
 
     @Resource
     private FinacialLiabilitiesBillService finacialLiabilitiesBillService;
@@ -75,8 +75,8 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
         finacialLiabilitiesBillService.addFinacialLiabilitiesBill(billvo);
         /**还款，添加交易记录END*/
         log.info("start repay cutomerId:"+coutomerId+";repayAmount:"+repayAmount);
-        List<FinacialLoanVO> insuranlist = finacialLoanService.getByCustomerIdAndType(coutomerId);
-        for (FinacialLoanVO p : insuranlist) {
+        List<FinancialLoanVO> insuranlist = financialLoanService.getByCustomerIdAndType(coutomerId);
+        for (FinancialLoanVO p : insuranlist) {
             BigDecimal surplusAmount = p.getSurplusAmount();//该贷款总负债
             BigDecimal insuranceAmount=p.getInsuranceAmount();//保险金负债
             BigDecimal creditAmount=p.getCreditAmount();//信用金负债
@@ -87,7 +87,7 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
                 p.setState(LoanState.SETTLE);
                 p.setInsuranceAmount(new BigDecimal(0));
                 p.setCreditAmount(new BigDecimal(0));
-                finacialLoanService.update(p);
+                financialLoanService.update(p);
                 repayAmount = repayAmount.subtract(surplusAmount);
                 /**添加还款计划*/
                 FinacialRepayment finacialRepayment = new FinacialRepayment(p.getCustomerId(), p.getLoanId(), surplusAmount,
@@ -107,7 +107,7 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
                     insuranceAmount = insuranceAmount.subtract(repayAmount);
                     p.setInsuranceAmount(insuranceAmount);
                 }
-                finacialLoanService.update(p);
+                financialLoanService.update(p);
                 repayAmount = new BigDecimal(0);
                 /**添加还款计划*/
                 FinacialRepayment finacialRepayment = new FinacialRepayment(p.getCustomerId(), p.getLoanId(), repayAmount,
