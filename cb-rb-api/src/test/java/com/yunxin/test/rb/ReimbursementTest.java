@@ -51,7 +51,7 @@ public class ReimbursementTest extends MockHttpUtils{
 
     @Test
     public void getAlreadyReimbursementDetail()throws Exception{
-        log.info("已报账详情 V1 start");
+        log.info("已报账详情 V1 start  ");
         String url = "/v1/reimbursement/getAlreadyReimbursementDetail/97";
         commonMvcPerFormGet(url,null,MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",null);
     }
