@@ -13,8 +13,10 @@ public class ReimbursementProductVO implements Serializable {
     private String defaultPicPath;
     @ApiModelProperty(value="货品名称",name="productName",example="颜色：雪山白&排量：2.0L&变速箱：自动")
     private String productName;
-    @ApiModelProperty(value="卖家地址",name="sellerAddress",example="深圳市xx区xx号")
-    private String sellerAddress;
+    @ApiModelProperty(value="店家名称",name="sellerName",example="深圳市xx区xx号")
+    private String sellerName;
+    @ApiModelProperty(value="商品名称",name="commodityName",example="2018 宝马")
+    private String commodityName;
     @ApiModelProperty(value="商品单个售价",name="salePrice",example="22")
     private float salePrice;
 
@@ -42,12 +44,20 @@ public class ReimbursementProductVO implements Serializable {
         this.productName = productName;
     }
 
-    public String getSellerAddress() {
-        return sellerAddress;
+    public String getSellerName() {
+        return sellerName;
     }
 
-    public void setSellerAddress(String sellerAddress) {
-        this.sellerAddress = sellerAddress;
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public String getCommodityName() {
+        return commodityName;
+    }
+
+    public void setCommodityName(String commodityName) {
+        this.commodityName = commodityName;
     }
 
     public float getSalePrice() {

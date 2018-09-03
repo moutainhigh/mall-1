@@ -33,7 +33,7 @@ public class ReimbursementTest extends MockHttpUtils{
         String url = "/v1/reimbursement/addReimbursement";
         List<AddReimbursementRequestVO> list = new ArrayList<>();
         AddReimbursementRequestVO addReimbursementRequestVO = new AddReimbursementRequestVO();
-        addReimbursementRequestVO.setReimbursementQueryId(2);
+        addReimbursementRequestVO.setReimbursementQueryId(3);
         list.add(addReimbursementRequestVO);
         String deadVO = JSONObject.toJSONString(list);
         commonMvcPerFormPost(url,deadVO,MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",null);
@@ -46,7 +46,37 @@ public class ReimbursementTest extends MockHttpUtils{
         MultiValueMap<String,String> paramMap = new LinkedMultiValueMap<>();
         paramMap.add("pageNo","1");
         paramMap.add("pageSize","10");
-        commonMvcPerFormGet(url,null,MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",paramMap);
+        commonMvcPerFormPost(url,null,MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",paramMap);
     }
 
+    @Test
+    public void getAlreadyReimbursementDetail()throws Exception{
+        log.info("已报账详情 V1 start  ");
+        String url = "/v1/reimbursement/getAlreadyReimbursementDetail/97";
+        commonMvcPerFormGet(url,null,MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",null);
+    }
+
+    @Test
+    public void getCompleteReimbursement()throws Exception{
+        log.info("报账已完成列表查询 V1 start");
+        String url = "/v1/reimbursement/getCompleteReimbursement";
+        MultiValueMap<String,String> paramMap = new LinkedMultiValueMap<>();
+        paramMap.add("pageNo","1");
+        paramMap.add("pageSize","10");
+        commonMvcPerFormPost(url,null,MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",paramMap);
+    }
+
+    @Test
+    public void getCompleteReimbursementDetail()throws Exception{
+        log.info("报账已完成详情 V1 start");
+        String url = "/v1/reimbursement/getCompleteReimbursementDetail/67";
+        commonMvcPerFormGet(url,null,MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",null);
+    }
+
+    @Test
+    public void cancelReimbursement()throws Exception{
+        log.info("取消报账  V1 start");
+        String url = "/v1/reimbursement/cancelReimbursement/68";
+        commonMvcPerFormGet(url,null,MediaType.APPLICATION_JSON_UTF8_VALUE,"SUCCESS",null);
+    }
 }

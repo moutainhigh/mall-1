@@ -36,6 +36,10 @@ public class AlreadyReimbursementVO implements Serializable {
     private String reimbursementNo;
     @ApiModelProperty(value="备注",name="remarks",example="该订单不符合报账")
     private String remarks;
+    @ApiModelProperty(value="商家店名",name="sellerName",example="深圳市福田店")
+    private String sellerName;
+    @ApiModelProperty(value="商品名",name="commodityName",example="2018 宝马")
+    private String commodityName;
 
 
     public int getReimbursementId() {
@@ -140,5 +144,21 @@ public class AlreadyReimbursementVO implements Serializable {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public String getCommodityName() {
+        return commodityName;
+    }
+
+    public void setCommodityName(String commodityName) {
+        this.commodityName = commodityName;
     }
 }
