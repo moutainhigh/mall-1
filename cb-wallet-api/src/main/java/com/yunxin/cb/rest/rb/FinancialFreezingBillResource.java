@@ -1,11 +1,9 @@
 package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
-import com.yunxin.cb.mall.entity.Favorite;
-import com.yunxin.cb.mall.entity.FinacialExpectBill;
-import com.yunxin.cb.mall.service.FinacialExpectBillService;
-import com.yunxin.cb.mall.vo.FavoriteVo;
-import com.yunxin.cb.mall.vo.FinacialExpectBillVO;
+import com.yunxin.cb.mall.entity.FinancialFreezingBill;
+import com.yunxin.cb.mall.service.FinancialFreezingBillService;
+import com.yunxin.cb.mall.vo.FinancialFreezingBillVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
@@ -20,15 +18,14 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
-@Api(description = "预期收益交易记录")
+@Api(description = "冻结金额交易记录")
 @RestController
 @RequestMapping(value = "/{version}/rb/expectbill")
-public class FinacialExpectBillResource extends BaseResource {
+public class FinancialFreezingBillResource extends BaseResource {
 
     @Resource
-    private FinacialExpectBillService finacialExpectBillService;
+    private FinancialFreezingBillService financialFreezingBillService;
 
     private static final Log log = LogFactory.getLog(FiaciaWalletResource.class);
 
@@ -39,14 +36,14 @@ public class FinacialExpectBillResource extends BaseResource {
     })
     @ApiVersion(1)
     @PostMapping(value = "get")
-    public ResponseResult<PageFinder<FinacialExpectBillVO>> get(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
+    public ResponseResult<PageFinder<FinancialFreezingBillVO>> get(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
         try {
             Query q = new Query(pageNo, pageSize);
-            FinacialExpectBill fbill=new FinacialExpectBill();
+            FinancialFreezingBill fbill = new FinancialFreezingBill();
             fbill.setCustomerId(getCustomerId());
             q.setData(fbill);
-            PageFinder<FinacialExpectBill> pageFinder=finacialExpectBillService.page(q);
-            PageFinder<FinacialExpectBillVO> page=FinacialExpectBillVO.dOconvertVOPage(pageFinder);
+            PageFinder<FinancialFreezingBill> pageFinder = financialFreezingBillService.page(q);
+            PageFinder<FinancialFreezingBillVO> page = FinancialFreezingBillVO.dOconvertVOPage(pageFinder);
             return new ResponseResult(page);
         } catch (Exception e) {
             log.info("get failed", e);
@@ -59,9 +56,9 @@ public class FinacialExpectBillResource extends BaseResource {
     })
     @ApiVersion(1)
     @GetMapping(value = "add")
-    public ResponseResult<FinacialExpectBillVO> add(@RequestBody FinacialExpectBillVO vo){
+    public ResponseResult<FinancialFreezingBillVO> add(@RequestBody FinancialFreezingBillVO vo){
         try {
-            finacialExpectBillService.addFinacialExpectBill(vo);
+            financialFreezingBillService.addFinancialFreezingBill(vo);
             return new ResponseResult(vo);
         } catch (Exception e) {
             log.info("get failed", e);

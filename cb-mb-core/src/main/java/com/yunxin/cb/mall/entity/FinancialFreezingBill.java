@@ -2,25 +2,16 @@ package com.yunxin.cb.mall.entity;
 
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-@Entity
-@DynamicInsert
-@DynamicUpdate
-@Table
-public class FinacialExpectBill {
+public class FinancialFreezingBill {
     /**  */
-    private Integer finacialExpectId;
+    private Integer financialFreezingId;
 
-    /** 客户*/
-    private Customer customer;
+    /** 客户ID */
+    private Integer customerId;
 
     /** 资金类型：1.支出，2.收入 */
     private CapitalType type;
@@ -37,28 +28,22 @@ public class FinacialExpectBill {
     /** 交易时间 */
     private Date createTime;
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
-    public Integer getFinacialExpectId() {
-        return finacialExpectId;
+    public Integer getFinancialFreezingId() {
+        return financialFreezingId;
     }
 
-    public void setFinacialExpectId(Integer finacialExpectId) {
-        this.finacialExpectId = finacialExpectId;
+    public void setFinancialFreezingId(Integer financialFreezingId) {
+        this.financialFreezingId = financialFreezingId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "customer_id", nullable = false, insertable = true, updatable = true)
-     })
-    public Customer getCustomer() {
-        return customer;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
+
     public CapitalType getType() {
         return type;
     }
@@ -67,8 +52,6 @@ public class FinacialExpectBill {
         this.type = type;
     }
 
-    @Column(length = 128, nullable = false, unique = true)
-    @Enumerated(value = EnumType.STRING)
     public TransactionType getTransactionType() {
         return transactionType;
     }
@@ -77,7 +60,6 @@ public class FinacialExpectBill {
         this.transactionType = transactionType;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 1024)
     public String getTransactionDesc() {
         return transactionDesc;
     }
@@ -86,7 +68,6 @@ public class FinacialExpectBill {
         this.transactionDesc = transactionDesc == null ? null : transactionDesc.trim();
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 1024)
     public BigDecimal getAmount() {
         return amount;
     }
@@ -95,7 +76,6 @@ public class FinacialExpectBill {
         this.amount = amount;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 1024)
     public Date getCreateTime() {
         return createTime;
     }

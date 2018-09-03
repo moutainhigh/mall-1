@@ -1,7 +1,7 @@
 package com.yunxin.test.rb;
 
 import com.yunxin.cb.Application;
-import com.yunxin.cb.rest.rb.FinacialExpectBillResource;
+import com.yunxin.cb.rest.rb.FinancialFreezingBillResource;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class ExpectbillQueryTest {
     private WebApplicationContext context;
     @Before
     public void setUp() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(new FinacialExpectBillResource()).build();
+        mvc = MockMvcBuilders.standaloneSetup(new FinancialFreezingBillResource()).build();
     }
 
     @Test
