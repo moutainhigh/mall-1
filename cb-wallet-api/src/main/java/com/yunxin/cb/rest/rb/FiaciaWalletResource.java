@@ -5,7 +5,7 @@ import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.meta.WithdrawType;
 import com.yunxin.cb.mall.service.CustomerService;
 import com.yunxin.cb.mall.service.FinacialWalletService;
-import com.yunxin.cb.mall.vo.FinacialWalletVO;
+import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.vo.ResponseResult;
@@ -13,8 +13,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -38,9 +36,9 @@ public class FiaciaWalletResource extends BaseResource {
 //    })
 //    @ApiVersion(1)
 //    @PostMapping(value = "add")
-//    public ResponseResult<FinacialWalletVO> add(@RequestBody FinacialWalletVO vo){
+//    public ResponseResult<FinancialWalletVO> add(@RequestBody FinancialWalletVO vo){
 //        try {
-//            vo = finacialWalletService.addFinaciaWallet(vo);
+//            vo = finacialWalletService.addFinancialWallet(vo);
 //            return new ResponseResult(vo);
 //        } catch (Exception e) {
 //            logger.error("add failed", e);
@@ -53,9 +51,9 @@ public class FiaciaWalletResource extends BaseResource {
 //    })
 //    @ApiVersion(1)
 //    @PostMapping(value = "update")
-//    public ResponseResult<FinacialWalletVO> update(@RequestBody FinacialWalletVO vo){
+//    public ResponseResult<FinancialWalletVO> update(@RequestBody FinancialWalletVO vo){
 //        try {
-//            vo = finacialWalletService.updateFinacialWallet(vo);
+//            vo = finacialWalletService.updateFinancialWallet(vo);
 //            return new ResponseResult(vo);
 //        } catch (Exception e) {
 //            log.info("update failed", e);
@@ -68,13 +66,13 @@ public class FiaciaWalletResource extends BaseResource {
     })
     @ApiVersion(1)
     @GetMapping(value = "get")
-    public ResponseResult<FinacialWalletVO> get(){
+    public ResponseResult<FinancialWalletVO> get(){
         try {
             Customer customer = customerService.getCustomerById(getCustomerId());
             if (customer == null) {
                 return new ResponseResult(Result.FAILURE, "未获取到用户信息");
             }
-            FinacialWalletVO vo=finacialWalletService.getFinacialWalletByCustomerId(customer.getCustomerId());
+            FinancialWalletVO vo=finacialWalletService.getFinancialWalletByCustomerId(customer.getCustomerId());
             return new ResponseResult(vo);
         } catch (Exception e) {
             logger.info("get failed", e);
@@ -85,7 +83,7 @@ public class FiaciaWalletResource extends BaseResource {
     /**
      * @title: 处理用户返现接口（用于报账转账和保险返利转账）
      * @param: [customerId]
-     * @return: com.yunxin.cb.vo.ResponseResult<com.yunxin.cb.mall.vo.FinacialWalletVO>
+     * @return: com.yunxin.cb.vo.ResponseResult<com.yunxin.cb.mall.vo.FinancialWalletVO>
      * @auther: eleven
      * @date: 2018/8/8 19:34
      */

@@ -1,12 +1,10 @@
 package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.FinacialRepayment;
-import com.yunxin.cb.mall.entity.FinacialWallet;
+import com.yunxin.cb.mall.entity.FinancialWallet;
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.LoanState;
-import com.yunxin.cb.mall.entity.meta.LoanType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
-import com.yunxin.cb.mall.exception.CommonException;
 import com.yunxin.cb.mall.mapper.FinacialRepaymentMapper;
 import com.yunxin.cb.mall.mapper.FinacialWalletMapper;
 import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
@@ -16,7 +14,7 @@ import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
 import com.yunxin.cb.mall.vo.FinacialRepaymentVO;
-import com.yunxin.cb.mall.vo.FinacialWalletVO;
+import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
@@ -62,11 +60,11 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
     @Transactional(rollbackFor = Exception.class)
     public void add(BigDecimal repayAmount,int coutomerId) throws Exception{
         //获取用户钱包
-        FinacialWallet finacialWallet=finacialWalletMapper.selectByCustomerId(coutomerId);
+        FinancialWallet financialWallet =finacialWalletMapper.selectByCustomerId(coutomerId);
         BigDecimal totalAmount=repayAmount;//实际还款金
-        if(finacialWallet.getDebtTotal().subtract(totalAmount).doubleValue()<0){
-            throw new CommonException("还款失败，还款金额不对");
-        }
+//        if(financialWallet.getDebtTotal().subtract(totalAmount).doubleValue()<0){
+//            throw new CommonException("还款失败，还款金额不对");
+//        }
         /**还款，添加交易记录START*/
         FinacialLiabilitiesBillVO billvo = new FinacialLiabilitiesBillVO();
         billvo.setAmount(repayAmount);
@@ -119,10 +117,10 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
             }
         }
         /**更新负债金额*/
-        finacialWallet.setDebtTotal(finacialWallet.getDebtTotal().subtract(totalAmount));
-        FinacialWalletVO finacialWalletVO = new FinacialWalletVO();
-        BeanUtils.copyProperties(finacialWalletVO,finacialWallet);
-        finacialWalletService.updateFinacialWallet(finacialWalletVO);
+//        financialWallet.setDebtTotal(financialWallet.getDebtTotal().subtract(totalAmount));
+        FinancialWalletVO financialWalletVO = new FinancialWalletVO();
+        BeanUtils.copyProperties(financialWalletVO, financialWallet);
+        finacialWalletService.updateFinancialWallet(financialWalletVO);
     }
 
     /**

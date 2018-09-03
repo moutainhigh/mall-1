@@ -59,9 +59,9 @@ public class FinacialCreditAmountResource extends BaseResource {
     @ApiVersion(1)
     public ResponseResult<FinacialCreditLineVO> getCreditAmountInfo() {
         try {
-            FinacialWalletVO finacialWalletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
+            FinancialWalletVO financialWalletVO = finacialWalletService.getFinancialWalletByCustomerId(getCustomerId());
             FinacialCreditLineVO vo = new FinacialCreditLineVO();
-            BeanUtils.copyProperties(finacialWalletVO, vo);
+            BeanUtils.copyProperties(financialWalletVO, vo);
             // 查询审核通过的我的借款次数
             vo.setLoanCount(finacialLoanService.countByCustomerId(getCustomerId()));
             return new ResponseResult(vo);
@@ -88,8 +88,8 @@ public class FinacialCreditAmountResource extends BaseResource {
             }
             FinacialLoanInitDateVO vo = new FinacialLoanInitDateVO();
             //最高可贷金额
-            FinacialWalletVO finacialWalletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
-            vo.setTotalAmount(finacialWalletVO.getTotalAmount());
+            FinancialWalletVO financialWalletVO = finacialWalletService.getFinancialWalletByCustomerId(getCustomerId());
+//            vo.setTotalAmount(financialWalletVO.getTotalAmount());
             //期限
             List<FinacialLoanConfig> list = finacialLoanConfigService.getFinacilaLoanConfigs();
             List<FinacialLoanConfigVO> listFinacialLoanConfigVO = new ArrayList<FinacialLoanConfigVO>();
@@ -127,11 +127,11 @@ public class FinacialCreditAmountResource extends BaseResource {
                 return new ResponseResult(Result.FAILURE, "请先绑定银行卡再申请贷款");
             }
             //最高可贷金额,判断额度是否满足贷款
-            FinacialWalletVO walletVO = finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
-            BigDecimal totalAmount = walletVO.getTotalAmount();
-            if (finacialLoanVO.getAmount().compareTo(totalAmount) > 0) {
-                return new ResponseResult(Result.FAILURE, "您的可贷金额不足");
-            }
+            FinancialWalletVO walletVO = finacialWalletService.getFinancialWalletByCustomerId(getCustomerId());
+//            BigDecimal totalAmount = walletVO.getTotalAmount();
+//            if (finacialLoanVO.getAmount().compareTo(totalAmount) > 0) {
+//                return new ResponseResult(Result.FAILURE, "您的可贷金额不足");
+//            }
             //判断是否超过最多次数
             Profile profile = profileService.getProfileByName(ProfileState.MAX_LOAN_NUM.name());
 

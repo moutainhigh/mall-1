@@ -7,7 +7,7 @@ import com.yunxin.cb.mall.service.BankInfoService;
 import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.service.ProfileService;
 import com.yunxin.cb.mall.vo.BankInfoVO;
-import com.yunxin.cb.mall.vo.FinacialWalletVO;
+import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.LogicUtils;
@@ -58,7 +58,7 @@ public class WithdrawResource extends BaseResource {
     public ResponseResult<WithdrawInfoVO> getWithdrawInfo(){
         try {
             //查询用户的钱包余额
-            FinacialWalletVO finacialWalletVO=finacialWalletService.getFinacialWalletByCustomerId(getCustomerId());
+            FinancialWalletVO financialWalletVO =finacialWalletService.getFinancialWalletByCustomerId(getCustomerId());
             //查询用户所有银行卡
             List<BankInfoVO> bankInfoVOs=bankInfoService.selectAll(getCustomerId());
             //查询后台配置提现手续费率
@@ -69,7 +69,7 @@ public class WithdrawResource extends BaseResource {
             }
             WithdrawInfoVO withdrawInfoVO=new WithdrawInfoVO();
             withdrawInfoVO.setBankInfoVOS(bankInfoVOs);
-            withdrawInfoVO.setBalance(finacialWalletVO.getBalance());
+//            withdrawInfoVO.setBalance(financialWalletVO.getBalance());
             withdrawInfoVO.setFreeRate(freeRate);
             return new ResponseResult(withdrawInfoVO);
         } catch (Exception e) {

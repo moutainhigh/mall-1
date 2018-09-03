@@ -11,7 +11,7 @@ import com.yunxin.cb.mall.mapper.FinacialLoanMapper;
 import com.yunxin.cb.mall.service.FinacialLoanService;
 import com.yunxin.cb.mall.service.FinacialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLoanVO;
-import com.yunxin.cb.mall.vo.FinacialWalletVO;
+import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import com.yunxin.cb.util.CalendarUtils;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
@@ -43,34 +43,34 @@ public class FinacialLoanServiceImpl implements FinacialLoanService {
      * 添加
      * @author      likang
      * @param finacialLoanVO
-     * @param finacialWalletVO
+     * @param financialWalletVO
      * @return      com.yunxin.cb.mall.vo.FinacialLoanVO
      * @exception
      * @date        2018/8/9 14:32
      */
     @Override
     @Transactional
-    public FinacialLoanVO add(FinacialLoanVO finacialLoanVO, FinacialWalletVO finacialWalletVO){
+    public FinacialLoanVO add(FinacialLoanVO finacialLoanVO, FinancialWalletVO financialWalletVO){
         log.info("add:"+finacialLoanVO);
         //借款金额小于保单额度（优先减少保单额度，再减少感恩额度）
-        if (finacialLoanVO.getAmount().compareTo(finacialWalletVO.getInsuranceAmount()) < 1) {
+        if (finacialLoanVO.getAmount().compareTo(financialWalletVO.getInsuranceAmount()) < 1) {
             //钱包减少金额
-            finacialWalletVO.setInsuranceAmount(finacialWalletVO.getInsuranceAmount().subtract(finacialLoanVO.getAmount()));
+            financialWalletVO.setInsuranceAmount(financialWalletVO.getInsuranceAmount().subtract(finacialLoanVO.getAmount()));
             //借款金额区分
             finacialLoanVO.setInsuranceAmount(finacialLoanVO.getAmount());
             finacialLoanVO.setCreditAmount(BigDecimal.ZERO);
         } else { //借款金额大于保单额度但小于总额度
             //借款金额区分
-            finacialLoanVO.setInsuranceAmount(finacialWalletVO.getInsuranceAmount());
-            finacialLoanVO.setCreditAmount(finacialLoanVO.getAmount().subtract(finacialWalletVO.getInsuranceAmount()));
+            finacialLoanVO.setInsuranceAmount(financialWalletVO.getInsuranceAmount());
+            finacialLoanVO.setCreditAmount(finacialLoanVO.getAmount().subtract(financialWalletVO.getInsuranceAmount()));
             //钱包减少金额
-            finacialWalletVO.setInsuranceAmount(BigDecimal.ZERO);
-            finacialWalletVO.setCreditAmount(finacialLoanVO.getAmount().subtract(finacialWalletVO.getInsuranceAmount()));
+            financialWalletVO.setInsuranceAmount(BigDecimal.ZERO);
+            financialWalletVO.setCreditAmount(finacialLoanVO.getAmount().subtract(financialWalletVO.getInsuranceAmount()));
         }
         FinacialLoan finacialLoan = new FinacialLoan();
         BeanUtils.copyProperties(finacialLoan, finacialLoanVO);
         //更新钱包额度
-        finacialWalletService.updateFinacialWallet(finacialWalletVO);
+        finacialWalletService.updateFinancialWallet(financialWalletVO);
         Date now = new Date();
         //添加借款记录
         finacialLoan.setCreateTime(now);
