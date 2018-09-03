@@ -1,6 +1,5 @@
 package com.yunxin.cb.mall.vo;
 
-import com.yunxin.cb.mall.entity.FinacialExpectBill;
 import com.yunxin.cb.mall.entity.FinacialLiabilitiesBill;
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
@@ -17,7 +16,7 @@ import java.util.List;
 @ApiModel(value = "用户负债交易VO", description = "用户负债交易VO FinacialLiabilitiesBillVO")
 public class FinacialLiabilitiesBillVO {
     /**  */
-    private Integer finacialExpectId;
+    private Integer financialFreezingId;
 
     @ApiModelProperty(value = "客户ID", name = "customerId", example = "1")
     private Integer customerId;
@@ -37,12 +36,12 @@ public class FinacialLiabilitiesBillVO {
     @ApiModelProperty(value = "交易时间 ", name = "createTime", example = "2018-08-08")
     private Date createTime;
 
-    public Integer getFinacialExpectId() {
-        return finacialExpectId;
+    public Integer getFinancialFreezingId() {
+        return financialFreezingId;
     }
 
-    public void setFinacialExpectId(Integer finacialExpectId) {
-        this.finacialExpectId = finacialExpectId;
+    public void setFinancialFreezingId(Integer financialFreezingId) {
+        this.financialFreezingId = financialFreezingId;
     }
 
     public Integer getCustomerId() {
@@ -96,7 +95,7 @@ public class FinacialLiabilitiesBillVO {
     @Override
     public String toString() {
         return "FinacialLiabilitiesBillVO{" +
-                "finacialExpectId=" + finacialExpectId +
+                "financialFreezingId=" + financialFreezingId +
                 ", customerId=" + customerId +
                 ", type=" + type +
                 ", transactionType=" + transactionType +

@@ -3,7 +3,6 @@ package com.yunxin.cb.mall.vo;
 import com.yunxin.cb.mall.entity.meta.ReturnReason;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 
@@ -35,7 +34,7 @@ public class ProductReturnApplyVO implements java.io.Serializable{
     private ReturnReason returnReason;
 
     /** 原因 */
-    @NotBlank(message = "原因不能为空")
+    @NotNull(message = "原因不能为空")
     @ApiModelProperty(value="原因",name="reason",example="我不想买了", required = true)
     private String reason;
 

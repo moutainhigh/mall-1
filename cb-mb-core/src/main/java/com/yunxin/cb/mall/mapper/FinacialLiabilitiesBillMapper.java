@@ -1,12 +1,11 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FinacialExpectBill;
 import com.yunxin.cb.mall.entity.FinacialLiabilitiesBill;
-import java.util.List;
-
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.List;
 
 @Mapper
 public interface FinacialLiabilitiesBillMapper {
@@ -86,7 +85,7 @@ public interface FinacialLiabilitiesBillMapper {
             + "LIMIT #{rowIndex},#{pageSize}"
             + "</script>")
     @Results({
-            @Result(column="FINACIAL_EXPECT_ID", property="finacialExpectId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="FINACIAL_FREEZING_ID", property="financialFreezingId", jdbcType=JdbcType.INTEGER, id=true),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
             @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
             @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),

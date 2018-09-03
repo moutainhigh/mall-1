@@ -35,7 +35,7 @@ public class FinacialWalletService implements IFinaciaWalletService {
     private FinacialWalletLogDao finacialWalletLogDao;
 
     @Resource
-    private FinacialExpectBillDao finacialExpectBillDao;
+    private FinancialFreezingBillDao financialFreezingBillDao;
 
     @Resource
     private FinacialCreditLineBillDao FinacialCreditLineBillDao;
@@ -68,21 +68,21 @@ public class FinacialWalletService implements IFinaciaWalletService {
             logger.info("addFinaciaWallet sucess");
         }else{
             updateFinacialWallet(fw);
-            FinacialExpectBill finacialExpectBill = new FinacialExpectBill();
-            finacialExpectBill.setAmount(amount);
-            finacialExpectBill.setCreateTime(new Date());
-            finacialExpectBill.setCustomer(customer);
-            finacialExpectBill.setTransactionDesc(customer.getAccountName()+"买保险增加50%");
-            finacialExpectBill.setTransactionType(TransactionType.INSURANCE_PURCHASE);
-            finacialExpectBill.setType(CapitalType.ADD);
+            FinancialFreezingBill financialFreezingBill = new FinancialFreezingBill();
+            financialFreezingBill.setAmount(amount);
+            financialFreezingBill.setCreateTime(new Date());
+            financialFreezingBill.setCustomer(customer);
+            financialFreezingBill.setTransactionDesc(customer.getAccountName()+"买保险增加50%");
+            financialFreezingBill.setTransactionType(TransactionType.INSURANCE_PURCHASE);
+            financialFreezingBill.setType(CapitalType.ADD);
             FinacialCreditLineBill finacialCreditLineBill = new FinacialCreditLineBill();
-            BeanUtils.copyProperties(finacialExpectBill,finacialCreditLineBill);
+            BeanUtils.copyProperties(financialFreezingBill,finacialCreditLineBill);
             finacialCreditLineBill.setTransactionDesc(customer.getAccountName()+"点赞增加5%");
             //保险购买
             if(type==0){
                 /**保险:保存预期收益记录*/
-                finacialExpectBillDao.save(finacialExpectBill);
-                logger.info("add FinacialExpectBill sucess:"+finacialExpectBill);
+                financialFreezingBillDao.save(financialFreezingBill);
+                logger.info("add FinancialFreezingBill sucess:"+financialFreezingBill);
                 /**点赞:保存额度记录*/
                 FinacialCreditLineBillDao.save(finacialCreditLineBill);
                 logger.info("add finacialCreditLineBill sucess:"+finacialCreditLineBill);

@@ -2,12 +2,9 @@ package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.FinacialExpectBill;
 import com.yunxin.cb.mall.entity.FinacialLiabilitiesBill;
 import com.yunxin.cb.mall.service.CustomerService;
-import com.yunxin.cb.mall.service.FinacialExpectBillService;
 import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
-import com.yunxin.cb.mall.vo.FinacialExpectBillVO;
 import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
@@ -18,14 +15,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
-@Api(description = "预期收益交易记录")
+@Api(description = "负债交易记录")
 @RestController
 @RequestMapping(value = "/{version}/rb/liabilities")
 public class FinacialLiabilitiesBillResource extends BaseResource {
