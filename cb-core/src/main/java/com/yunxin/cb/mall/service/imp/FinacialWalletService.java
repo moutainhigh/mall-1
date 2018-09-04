@@ -46,7 +46,7 @@ public class FinacialWalletService implements IFinaciaWalletService {
     @Resource
     private FinancialWithdrawDao financialWithdrawDao;
     @Resource
-    private FinacialInsuCashbackLogDao finacialInsuCashbackLogDao;
+    private FinancialCashbackLogDao financialCashbackLogDao;
 
     /**
      * 方法实现说明
@@ -156,17 +156,17 @@ public class FinacialWalletService implements IFinaciaWalletService {
         if(type.getValue()==WithdrawType.BX.getValue()){
             finacialWallet.setExpectedAmount(finacialWallet.getExpectedAmount().subtract(money));
             //加入返现日志记录
-            FinacialInsuCashbackLog finacialInsuCashbackLog=new FinacialInsuCashbackLog();
-            finacialInsuCashbackLog.setCustomer(customer);
+            FinancialCashbackLog financialCashbackLog = new FinancialCashbackLog();
+            financialCashbackLog.setCustomer(customer);
             if(LogicUtils.isNotNull(customer)){
-                finacialInsuCashbackLog.setCustomerName(customer.getRealName());
-                finacialInsuCashbackLog.setMobile(customer.getMobile());
+                financialCashbackLog.setCustomerName(customer.getRealName());
+                financialCashbackLog.setMobile(customer.getMobile());
             }
-            finacialInsuCashbackLog.setAmount(money);
-            finacialInsuCashbackLog.setState(CashbackLogState.FINISHED);
-            finacialInsuCashbackLog.setOrderNo(remark);
-            finacialInsuCashbackLog.setCreateTime(new Date());
-            finacialInsuCashbackLogDao.save(finacialInsuCashbackLog);
+            financialCashbackLog.setAmount(money);
+            financialCashbackLog.setState(CashbackLogState.FINISHED);
+            financialCashbackLog.setOrderNo(remark);
+            financialCashbackLog.setCreateTime(new Date());
+            financialCashbackLogDao.save(financialCashbackLog);
         }
         //是否有负债，先还负债
         if(debtTotal.compareTo(BigDecimal.ZERO)>0){

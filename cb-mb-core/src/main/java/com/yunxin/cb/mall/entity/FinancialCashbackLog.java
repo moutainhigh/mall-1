@@ -9,7 +9,7 @@ import java.util.Date;
  * @auther: eleven
  * @date: 2018/8/10 11:47
  */
-public class FinacialInsuCashbackLog implements Serializable {
+public class FinancialCashbackLog implements Serializable {
     private static final long serialVersionUID = 8103278472401545335L;
     /** 保险返现id */
     private Integer logId;

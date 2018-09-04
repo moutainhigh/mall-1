@@ -1,21 +1,21 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FinacialInsuCashbackLog;
+import com.yunxin.cb.mall.entity.FinancialCashbackLog;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 
 @Mapper
-public interface FinacialInsuCashbackLogMapper {
+public interface FinancialCashbackLogMapper {
     @Delete({
-        "delete from finacial_insu_cashback_log",
+        "delete from financial_cashback_log",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer logId);
 
     @Insert({
-        "insert into finacial_insu_cashback_log (LOG_ID, CUSTOMER_ID, ",
+        "insert into financial_cashback_log (LOG_ID, CUSTOMER_ID, ",
         "CUSTOMER_NAME, MOBILE, ",
         "AMOUNT, STATE, ORDER_NO, ",
         "CREATE_TIME)",
@@ -24,12 +24,12 @@ public interface FinacialInsuCashbackLogMapper {
         "#{amount,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, ",
         "#{createTime,jdbcType=TIMESTAMP})"
     })
-    int insert(FinacialInsuCashbackLog record);
+    int insert(FinancialCashbackLog record);
 
     @Select({
         "select",
         "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, MOBILE, AMOUNT, STATE, ORDER_NO, CREATE_TIME",
-        "from finacial_insu_cashback_log",
+        "from financial_cashback_log",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
     })
     @Results({
@@ -42,12 +42,12 @@ public interface FinacialInsuCashbackLogMapper {
         @Result(column="ORDER_NO", property="orderNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    FinacialInsuCashbackLog selectByPrimaryKey(Integer logId);
+    FinancialCashbackLog selectByPrimaryKey(Integer logId);
 
     @Select({
         "select",
         "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, MOBILE, AMOUNT, STATE, ORDER_NO, CREATE_TIME",
-        "from finacial_insu_cashback_log"
+        "from financial_cashback_log"
     })
     @Results({
         @Result(column="LOG_ID", property="logId", jdbcType=JdbcType.INTEGER, id=true),
@@ -59,10 +59,10 @@ public interface FinacialInsuCashbackLogMapper {
         @Result(column="ORDER_NO", property="orderNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<FinacialInsuCashbackLog> selectAll();
+    List<FinancialCashbackLog> selectAll();
 
     @Update({
-        "update finacial_insu_cashback_log",
+        "update financial_cashback_log",
         "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
           "CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},",
           "MOBILE = #{mobile,jdbcType=VARCHAR},",
@@ -72,5 +72,5 @@ public interface FinacialInsuCashbackLogMapper {
           "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKey(FinacialInsuCashbackLog record);
+    int updateByPrimaryKey(FinancialCashbackLog record);
 }

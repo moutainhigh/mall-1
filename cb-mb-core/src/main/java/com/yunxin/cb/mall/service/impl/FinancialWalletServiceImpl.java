@@ -30,7 +30,7 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
     @Resource
     private FinancialWithdrawMapper financialWithdrawMapper;
     @Resource
-    private FinacialInsuCashbackLogMapper finacialInsuCashbackLogMapper;
+    private FinancialCashbackLogMapper financialCashbackLogMapper;
     @Resource
     private CustomerMapper customerMapper;
 
@@ -120,17 +120,17 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
 //            financialWallet.setExpectedAmount(financialWallet.getExpectedAmount().subtract(money));
 //            //加入返现日志记录
 //            Customer customer=customerMapper.selectByPrimaryKey(customerId);
-//            FinacialInsuCashbackLog finacialInsuCashbackLog=new FinacialInsuCashbackLog();
-//            finacialInsuCashbackLog.setCustomerId(customerId);
+//            FinancialCashbackLog financialCashbackLog=new FinancialCashbackLog();
+//            financialCashbackLog.setCustomerId(customerId);
 //            if(LogicUtils.isNotNull(customer)){
-//                finacialInsuCashbackLog.setCustomerName(customer.getRealName());
-//                finacialInsuCashbackLog.setMobile(customer.getMobile());
+//                financialCashbackLog.setCustomerName(customer.getRealName());
+//                financialCashbackLog.setMobile(customer.getMobile());
 //            }
-//            finacialInsuCashbackLog.setAmount(money);
-//            finacialInsuCashbackLog.setState(CashbackLogState.FINISHED.getValue());
-//            finacialInsuCashbackLog.setOrderNo(remark);
-//            finacialInsuCashbackLog.setCreateTime(new Date());
-//            finacialInsuCashbackLogMapper.insert(finacialInsuCashbackLog);
+//            financialCashbackLog.setAmount(money);
+//            financialCashbackLog.setState(CashbackLogState.FINISHED.getValue());
+//            financialCashbackLog.setOrderNo(remark);
+//            financialCashbackLog.setCreateTime(new Date());
+//            financialCashbackLogMapper.insert(financialCashbackLog);
 //        }
 //        //是否有负债，先还负债
 //        if(debtTotal.compareTo(BigDecimal.ZERO)>0){

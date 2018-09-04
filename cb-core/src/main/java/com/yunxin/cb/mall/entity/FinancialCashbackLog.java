@@ -16,7 +16,7 @@ import java.util.Date;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * @title: 保险返利记录表
+ * @title: 返现记录表
  * @auther: eleven
  * @date: 2018/8/13 11:13
  */
@@ -25,8 +25,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table
 @DynamicInsert
 @DynamicUpdate
-@ApiModel(value="保险返利记录表",description="保险返利记录FinacialInsuCashbackLog")
-public class FinacialInsuCashbackLog implements java.io.Serializable {
+@ApiModel(value="返现记录表",description="返现记录FinancialCashbackLog")
+public class FinancialCashbackLog implements java.io.Serializable {
 
     private static final long serialVersionUID = -3554709459548268254L;
 
