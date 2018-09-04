@@ -78,7 +78,7 @@ public class FinancialFreezingBillServiceImpl implements FinancialFreezingBillSe
             log.error(e.getMessage(), e);
         }
         //如list为null时，则改为返回一个空列表
-        list = list == null ? new ArrayList<FinancialFreezingBill>(0) : list;
+        list = list == null ? new ArrayList<>(0) : list;
         //将分页数据和记录总数设置到分页结果对象中
         page.setData(list);
         page.setRowCount(rowCount);//记录总数

@@ -1,7 +1,7 @@
 package com.yunxin.cb.mall.web.action.finance;
 
-import com.yunxin.cb.mall.entity.FinacialWithdraw;
-import com.yunxin.cb.mall.service.IFinacialWithdrawService;
+import com.yunxin.cb.mall.entity.FinancialWithdraw;
+import com.yunxin.cb.mall.service.IFinancialWithdrawService;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.persistence.PageSpecification;
 import com.yunxin.core.util.LogicUtils;
@@ -22,12 +22,12 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping(value = "/withdraw")
 @SessionAttributes({SecurityConstants.LOGIN_SESSION})
-public class FinacialWithdrawController {
+public class FinancialWithdrawController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FinacialWithdrawController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FinancialWithdrawController.class);
 
     @Resource
-    private IFinacialWithdrawService finacialWithdrawService;
+    private IFinancialWithdrawService financialWithdrawService;
 
     /**
      * @title: 页面跳转
@@ -44,14 +44,14 @@ public class FinacialWithdrawController {
     /**
      * @title: 列表查询
      * @param: [query, modelMap]
-     * @return: org.springframework.data.domain.Page<com.yunxin.cb.mall.entity.FinacialWithdraw>
+     * @return: org.springframework.data.domain.Page<com.yunxin.cb.mall.entity.FinancialWithdraw>
      * @auther: eleven
      * @date: 2018/8/10 15:07
      */
     @RequestMapping(value = "pageWithdrawList")
     @ResponseBody
-    public Page<FinacialWithdraw> pageWithdrawList(@RequestBody PageSpecification<FinacialWithdraw> query, ModelMap modelMap) {
-        return finacialWithdrawService.pageServiceFinacialWithdraw(query);
+    public Page<FinancialWithdraw> pageWithdrawList(@RequestBody PageSpecification<FinancialWithdraw> query, ModelMap modelMap) {
+        return financialWithdrawService.pageServiceFinancialWithdraw(query);
     }
 
     /**
@@ -67,7 +67,7 @@ public class FinacialWithdrawController {
         boolean flag=false;
         try{
             if(LogicUtils.isNotNullAndEmpty(ids)){
-                int result=finacialWithdrawService.tansfer(ids);
+                int result=financialWithdrawService.tansfer(ids);
                 if(result>0){
                     flag=true;
                 }

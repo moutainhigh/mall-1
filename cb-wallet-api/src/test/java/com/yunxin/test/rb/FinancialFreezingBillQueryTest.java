@@ -25,8 +25,8 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-public class ExpectbillQueryTest {
-    private static final Logger log = LoggerFactory.getLogger(ExpectbillQueryTest.class);
+public class FinancialFreezingBillQueryTest {
+    private static final Logger log = LoggerFactory.getLogger(FinancialFreezingBillQueryTest.class);
     private MockMvc mvc;
     @Autowired
     private WebApplicationContext context;

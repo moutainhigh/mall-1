@@ -4,7 +4,7 @@ package com.yunxin.cb.mall.entity.meta;
  * Created by Administrator on 2016/3/17.
  */
 public enum TransactionType {
-    //预期收益类型
+    //冻结金额类型
     INSURANCE_REBATE("保险返利"), INSURANCE_PURCHASE("保险购买"),
     //负债类型
     MANUAL_REPAYMENT("手动还款"),INSURANCE_REPAYMENT("保险返利自动还款"),
@@ -17,7 +17,7 @@ public enum TransactionType {
 
     private String name;
 
-    private TransactionType(String name) {
+    TransactionType(String name) {
         this.name = name;
     }
 

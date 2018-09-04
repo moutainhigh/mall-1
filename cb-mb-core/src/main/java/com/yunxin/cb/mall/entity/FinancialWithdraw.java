@@ -1,39 +1,24 @@
 package com.yunxin.cb.mall.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.yunxin.cb.mall.entity.meta.WithdrawState;
-import com.yunxin.cb.mall.entity.meta.WithdrawType;
-import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 /**
  * @title: 提现表实体类
  * @auther: eleven
- * @date: 2018/8/10 14:12
+ * @date: 2018/8/8 15:59
  */
-@Entity
-@Table
-@DynamicInsert
-@DynamicUpdate
-public class FinacialWithdraw implements Serializable {
-    private static final long serialVersionUID = -9202329900442055950L;
-
+public class FinancialWithdraw implements Serializable {
+    private static final long serialVersionUID = -8295725539307112445L;
     /**  */
     private Integer withdrawId;
 
     /** 用户id */
-    private Customer customer;
+    private Integer customerId;
 
     /** 提现人银行卡 */
-    private BankInfo bank;
+    private Integer bankId;
 
     /** 提现金额 */
     private BigDecimal amount;
@@ -45,10 +30,10 @@ public class FinacialWithdraw implements Serializable {
     private BigDecimal chargeFee;
 
     /** 状态：0.审核中 1.审核失败 2.待发放 3.转账中 4.交易完成 */
-    private WithdrawState state;
+    private Integer state;
 
     /** 提现类型：0.报账转账 1.保险返利转账 */
-    private WithdrawType withdrawType;
+    private Integer withdrawType;
 
     /** 审核时间 */
     private Date auditDate;
@@ -71,9 +56,6 @@ public class FinacialWithdraw implements Serializable {
     /** 修改时间 */
     private Date updateDate;
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(unique = true, nullable = false, precision = 12, scale = 0)
     public Integer getWithdrawId() {
         return withdrawId;
     }
@@ -82,27 +64,22 @@ public class FinacialWithdraw implements Serializable {
         this.withdrawId = withdrawId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
-    public Customer getCustomer() {
-        return customer;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BANK_ID", nullable = false)
-    public BankInfo getBank() {
-        return bank;
+    public Integer getBankId() {
+        return bankId;
     }
 
-    public void setBank(BankInfo bank) {
-        this.bank = bank;
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
     }
 
-    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 22)
     public BigDecimal getAmount() {
         return amount;
     }
@@ -111,7 +88,6 @@ public class FinacialWithdraw implements Serializable {
         this.amount = amount;
     }
 
-    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 22)
     public BigDecimal getRealAmount() {
         return realAmount;
     }
@@ -120,7 +96,6 @@ public class FinacialWithdraw implements Serializable {
         this.realAmount = realAmount;
     }
 
-    @Column(unique = false, nullable = true, insertable = true, updatable = true, length = 22)
     public BigDecimal getChargeFee() {
         return chargeFee;
     }
@@ -129,29 +104,22 @@ public class FinacialWithdraw implements Serializable {
         this.chargeFee = chargeFee;
     }
 
-    @Column(nullable = false, precision = 1)
-    @Enumerated(EnumType.ORDINAL)
-    public WithdrawState getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(WithdrawState state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
-    @Column(nullable = false, precision = 1)
-    @Enumerated(EnumType.ORDINAL)
-    public WithdrawType getWithdrawType() {
+    public Integer getWithdrawType() {
         return withdrawType;
     }
 
-    public void setWithdrawType(WithdrawType withdrawType) {
+    public void setWithdrawType(Integer withdrawType) {
         this.withdrawType = withdrawType;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(length = 7, nullable = false)
-    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Date getAuditDate() {
         return auditDate;
     }
@@ -160,27 +128,22 @@ public class FinacialWithdraw implements Serializable {
         this.auditDate = auditDate;
     }
 
-    @Column(length = 40)
     public String getAuditOperator() {
         return auditOperator;
     }
 
     public void setAuditOperator(String auditOperator) {
-        this.auditOperator = auditOperator;
+        this.auditOperator = auditOperator == null ? null : auditOperator.trim();
     }
 
-    @Column(length = 255)
     public String getAuditMessage() {
         return auditMessage;
     }
 
     public void setAuditMessage(String auditMessage) {
-        this.auditMessage = auditMessage;
+        this.auditMessage = auditMessage == null ? null : auditMessage.trim();
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(length = 7, nullable = false)
-    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Date getGrantDate() {
         return grantDate;
     }
@@ -189,18 +152,14 @@ public class FinacialWithdraw implements Serializable {
         this.grantDate = grantDate;
     }
 
-    @Column(length = 40)
     public String getGrantOperator() {
         return grantOperator;
     }
 
     public void setGrantOperator(String grantOperator) {
-        this.grantOperator = grantOperator;
+        this.grantOperator = grantOperator == null ? null : grantOperator.trim();
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(length = 7, nullable = false)
-    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Date getApplyDate() {
         return applyDate;
     }
@@ -209,9 +168,6 @@ public class FinacialWithdraw implements Serializable {
         this.applyDate = applyDate;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(length = 7, nullable = false)
-    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Date getUpdateDate() {
         return updateDate;
     }

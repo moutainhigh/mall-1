@@ -1,21 +1,21 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FinacialWithdraw;
+import com.yunxin.cb.mall.entity.FinancialWithdraw;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 
 @Mapper
-public interface FinacialWithdrawMapper {
+public interface FinancialWithdrawMapper {
     @Delete({
-        "delete from finacial_withdraw",
+        "delete from financial_withdraw",
         "where WITHDRAW_ID = #{withdrawId,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer withdrawId);
 
     @Insert({
-        "insert into finacial_withdraw (WITHDRAW_ID, CUSTOMER_ID, ",
+        "insert into financial_withdraw (WITHDRAW_ID, CUSTOMER_ID, ",
         "BANK_ID, AMOUNT, ",
         "REAL_AMOUNT, CHARGE_FEE, ",
         "STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
@@ -31,13 +31,13 @@ public interface FinacialWithdrawMapper {
         "#{applyDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP})"
     })
     @Options(useGeneratedKeys=true, keyProperty="withdrawId", keyColumn="WITHDRAW_ID")
-    int insert(FinacialWithdraw record);
+    int insert(FinancialWithdraw record);
 
     @Select({
         "select",
         "WITHDRAW_ID, CUSTOMER_ID, BANK_ID, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
         "AUDIT_OPERATOR, AUDIT_MESSAGE, GRANT_DATE, GRANT_OPERATOR, APPLY_DATE, UPDATE_DATE",
-        "from finacial_withdraw",
+        "from financial_withdraw",
         "where WITHDRAW_ID = #{withdrawId,jdbcType=INTEGER}"
     })
     @Results({
@@ -57,13 +57,13 @@ public interface FinacialWithdrawMapper {
         @Result(column="APPLY_DATE", property="applyDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="UPDATE_DATE", property="updateDate", jdbcType=JdbcType.TIMESTAMP)
     })
-    FinacialWithdraw selectByPrimaryKey(Integer withdrawId);
+    FinancialWithdraw selectByPrimaryKey(Integer withdrawId);
 
     @Select({
         "select",
         "WITHDRAW_ID, CUSTOMER_ID, BANK_ID, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
         "AUDIT_OPERATOR, AUDIT_MESSAGE, GRANT_DATE, GRANT_OPERATOR, APPLY_DATE, UPDATE_DATE",
-        "from finacial_withdraw"
+        "from financial_withdraw"
     })
     @Results({
         @Result(column="WITHDRAW_ID", property="withdrawId", jdbcType=JdbcType.INTEGER, id=true),
@@ -82,10 +82,10 @@ public interface FinacialWithdrawMapper {
         @Result(column="APPLY_DATE", property="applyDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="UPDATE_DATE", property="updateDate", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<FinacialWithdraw> selectAll();
+    List<FinancialWithdraw> selectAll();
 
     @Update({
-        "update finacial_withdraw",
+        "update financial_withdraw",
         "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
           "BANK_ID = #{bankId,jdbcType=INTEGER},",
           "AMOUNT = #{amount,jdbcType=DECIMAL},",
@@ -102,5 +102,5 @@ public interface FinacialWithdrawMapper {
           "UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}",
         "where WITHDRAW_ID = #{withdrawId,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKey(FinacialWithdraw record);
+    int updateByPrimaryKey(FinancialWithdraw record);
 }

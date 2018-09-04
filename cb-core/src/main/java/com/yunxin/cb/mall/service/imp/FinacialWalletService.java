@@ -44,7 +44,7 @@ public class FinacialWalletService implements IFinaciaWalletService {
     @Resource
     private BankInfoDao bankInfoDao;
     @Resource
-    private FinacialWithdrawDao finacialWithdrawDao;
+    private FinancialWithdrawDao financialWithdrawDao;
     @Resource
     private FinacialInsuCashbackLogDao finacialInsuCashbackLogDao;
 
@@ -218,17 +218,17 @@ public class FinacialWalletService implements IFinaciaWalletService {
                 BankInfo bankInfo=bankInfos.get(0);
                 //新增提现记录
                 Date nowDate=new Date();
-                FinacialWithdraw finacialWithdraw = new FinacialWithdraw();
-                finacialWithdraw.setCustomer(customer);
-                finacialWithdraw.setBank(bankInfo);
-                finacialWithdraw.setAmount(money);
-                finacialWithdraw.setRealAmount(money);
-                finacialWithdraw.setChargeFee(BigDecimal.ZERO);//默认没有手续费
-                finacialWithdraw.setState(WithdrawState.WAIT_GRANT);
-                finacialWithdraw.setWithdrawType(type);
-                finacialWithdraw.setApplyDate(nowDate);
-                finacialWithdraw.setUpdateDate(nowDate);
-                finacialWithdrawDao.save(finacialWithdraw);
+                FinancialWithdraw financialWithdraw = new FinancialWithdraw();
+                financialWithdraw.setCustomer(customer);
+                financialWithdraw.setBank(bankInfo);
+                financialWithdraw.setAmount(money);
+                financialWithdraw.setRealAmount(money);
+                financialWithdraw.setChargeFee(BigDecimal.ZERO);//默认没有手续费
+                financialWithdraw.setState(WithdrawState.WAIT_GRANT);
+                financialWithdraw.setWithdrawType(type);
+                financialWithdraw.setApplyDate(nowDate);
+                financialWithdraw.setUpdateDate(nowDate);
+                financialWithdrawDao.save(financialWithdraw);
                 //操作成功
                 result.setResult(Result.SUCCESS);
             }else{

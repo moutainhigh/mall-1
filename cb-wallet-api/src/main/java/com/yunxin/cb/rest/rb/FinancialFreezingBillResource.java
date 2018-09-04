@@ -29,7 +29,7 @@ public class FinancialFreezingBillResource extends BaseResource {
 
     private static final Log log = LogFactory.getLog(FinancialWalletResource.class);
 
-    @ApiOperation(value = "获取预期收益交易信息")
+    @ApiOperation(value = "获取冻结金额交易信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")
@@ -51,7 +51,7 @@ public class FinancialFreezingBillResource extends BaseResource {
         return new ResponseResult(Result.FAILURE);
     }
 
-    @ApiOperation(value = "添加预期收益交易信息")
+    @ApiOperation(value = "添加冻结金额交易信息")
     @ApiImplicitParams({
     })
     @ApiVersion(1)

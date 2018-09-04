@@ -28,7 +28,7 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
     @Resource
     private BankInfoMapper bankInfoMapper;
     @Resource
-    private FinacialWithdrawMapper finacialWithdrawMapper;
+    private FinancialWithdrawMapper financialWithdrawMapper;
     @Resource
     private FinacialInsuCashbackLogMapper finacialInsuCashbackLogMapper;
     @Resource
@@ -184,17 +184,17 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
 //                BankInfo bankInfo=bankInfos.get(0);
 //                //新增提现记录
 //                Date nowDate=new Date();
-//                FinacialWithdraw finacialWithdraw = new FinacialWithdraw();
-//                finacialWithdraw.setCustomerId(customerId);
-//                finacialWithdraw.setBankId(bankInfo.getBankId());
-//                finacialWithdraw.setAmount(money);
-//                finacialWithdraw.setRealAmount(money);
-//                finacialWithdraw.setChargeFee(BigDecimal.ZERO);//默认没有手续费
-//                finacialWithdraw.setState(WithdrawState.WAIT_GRANT.getValue());
-//                finacialWithdraw.setWithdrawType(type.getValue());
-//                finacialWithdraw.setApplyDate(nowDate);
-//                finacialWithdraw.setUpdateDate(nowDate);
-//                finacialWithdrawMapper.insert(finacialWithdraw);
+//                FinancialWithdraw financialWithdraw = new FinancialWithdraw();
+//                financialWithdraw.setCustomerId(customerId);
+//                financialWithdraw.setBankId(bankInfo.getBankId());
+//                financialWithdraw.setAmount(money);
+//                financialWithdraw.setRealAmount(money);
+//                financialWithdraw.setChargeFee(BigDecimal.ZERO);//默认没有手续费
+//                financialWithdraw.setState(WithdrawState.WAIT_GRANT.getValue());
+//                financialWithdraw.setWithdrawType(type.getValue());
+//                financialWithdraw.setApplyDate(nowDate);
+//                financialWithdraw.setUpdateDate(nowDate);
+//                financialWithdrawMapper.insert(financialWithdraw);
 //                //操作成功
 //                result.setResult(Result.SUCCESS);
 //            }else{
