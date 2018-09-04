@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>品牌管理</title>
+    <title>提现管理</title>
     <script type="text/javascript">
         function detailItem(){
             var dataItem = getSelectedGridItem("grid");

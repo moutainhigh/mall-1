@@ -18,7 +18,7 @@ public class FinancialWithdraw implements Serializable {
     private Integer customerId;
 
     /** 提现人银行卡 */
-    private Integer bankId;
+    private Integer bankNo;
 
     /** 提现金额 */
     private BigDecimal amount;
@@ -72,12 +72,12 @@ public class FinancialWithdraw implements Serializable {
         this.customerId = customerId;
     }
 
-    public Integer getBankId() {
-        return bankId;
+    public Integer getBankNo() {
+        return bankNo;
     }
 
-    public void setBankId(Integer bankId) {
-        this.bankId = bankId;
+    public void setBankNo(Integer bankNo) {
+        this.bankNo = bankNo;
     }
 
     public BigDecimal getAmount() {
