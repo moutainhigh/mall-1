@@ -4,6 +4,7 @@ import com.yunxin.cb.mall.vo.FinancialLogBillVO;
 import com.yunxin.cb.mall.vo.FinancialLogDataVO;
 import com.yunxin.cb.mall.vo.FinancialLogDetailVO;
 import com.yunxin.cb.mall.vo.FinancialLogVO;
+import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 
 public interface FinancialLogService {
@@ -24,7 +25,7 @@ public interface FinancialLogService {
      * @auther: eleven
      * @date: 2018/8/9 19:12
      */
-    FinancialLogDataVO pageFinancialLog(Query q);
+    PageFinder<FinancialLogDataVO> pageFinancialLog(Query q);
 
     /**
      * 根据用户ID和账单ID查看详情

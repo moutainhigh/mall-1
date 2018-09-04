@@ -39,9 +39,10 @@ public class FinancialLogServiceImpl implements FinancialLogService {
     }
 
     @Override
-    public FinancialLogDataVO pageFinancialLog(Query q) {
+    public PageFinder<FinancialLogDataVO> pageFinancialLog(Query q) {
         try {
-            FinancialLogDataVO financialLogDataVO =new FinancialLogDataVO();
+            FinancialLogDataVO financialLogDataVO = new FinancialLogDataVO();
+            List<FinancialLogDataVO> listVO = new ArrayList<>();
             //调用dao查询满足条件的分页数据
             List<FinancialLogVO> list = financialLogMapper.pageList(q);
             //调用dao统计满足条件的记录总数
@@ -49,15 +50,17 @@ public class FinancialLogServiceImpl implements FinancialLogService {
             //如list为null时，则改为返回一个空列表
             list = list == null ? new ArrayList<>(0) : list;
             //将分页数据和记录总数设置到分页结果对象中
-            PageFinder<FinancialLogVO> page = new PageFinder<>(q.getPageNo(), q.getPageSize(), rowCount);
-            page.setData(list);
-            financialLogDataVO.setFinancialLogVOS(list);
+            PageFinder<FinancialLogDataVO> page = new PageFinder<>(q.getPageNo(), q.getPageSize(), rowCount);
+//            page.setData(list);
+            financialLogDataVO.setFinancialLogVO(list);
             Map map = financialLogMapper.queryTotalAmount(q);
             BigDecimal addTotalAmount=new BigDecimal(String.valueOf(map.get("addTotalAmount")));//收入
             BigDecimal subTotalAmount=new BigDecimal(String.valueOf(map.get("subTotalAmount")));//支出
             financialLogDataVO.setAddTotalAmount(addTotalAmount);
             financialLogDataVO.setSubTotalAmount(subTotalAmount);
-            return financialLogDataVO;
+            listVO.add(financialLogDataVO);
+            page.setData(listVO);
+            return page;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return null;

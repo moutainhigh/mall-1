@@ -8,6 +8,7 @@ import com.yunxin.cb.mall.vo.FinancialLogRequestVO;
 import com.yunxin.cb.mall.vo.FinancialLogVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
@@ -45,8 +46,8 @@ public class FinancialLogResource extends BaseResource {
         vo.setCustomerId(getCustomerId());
         vo.setYearMonth(yearMonth);
         q.setData(vo);
-        FinancialLogDataVO financialLogDataVO = financialLogService.pageFinancialLog(q);
-        return new ResponseResult(financialLogDataVO);
+        PageFinder<FinancialLogDataVO> page = financialLogService.pageFinancialLog(q);
+        return new ResponseResult(page);
     }
     @ApiOperation(value = "获取用户账单详情")
     @ApiImplicitParams({

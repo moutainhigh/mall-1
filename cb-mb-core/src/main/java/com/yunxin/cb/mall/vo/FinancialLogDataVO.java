@@ -15,7 +15,7 @@ import java.util.List;
 public class FinancialLogDataVO {
 
     @ApiModelProperty(value="账单数据",name="financialLogVOS",example="financialLogVOS")
-    private List<FinancialLogVO> financialLogVOS;
+    private List<FinancialLogVO> financialLogVO;
 
     @ApiModelProperty(value="收入",name="addTotalAmount",example="100.00")
     private BigDecimal addTotalAmount;
@@ -23,12 +23,12 @@ public class FinancialLogDataVO {
     @ApiModelProperty(value="支出",name="subTotalAmount",example="100.00")
     private BigDecimal subTotalAmount;
 
-    public List<FinancialLogVO> getFinancialLogVOS() {
-        return financialLogVOS;
+    public List<FinancialLogVO> getFinancialLogVO() {
+        return financialLogVO;
     }
 
-    public void setFinancialLogVOS(List<FinancialLogVO> financialLogVOS) {
-        this.financialLogVOS = financialLogVOS;
+    public void setFinancialLogVO(List<FinancialLogVO> financialLogVO) {
+        this.financialLogVO = financialLogVO;
     }
 
     public BigDecimal getAddTotalAmount() {
@@ -50,7 +50,7 @@ public class FinancialLogDataVO {
     @Override
     public String toString() {
         return "FinancialLogDataVO{" +
-                "financialLogVOS=" + financialLogVOS +
+                "financialLogVO=" + financialLogVO +
                 ", addTotalAmount=" + addTotalAmount +
                 ", subTotalAmount=" + subTotalAmount +
                 '}';

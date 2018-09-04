@@ -128,7 +128,7 @@ public interface FinancialLogMapper {
             "<script>",
             "select",
             "count(LOG_ID)",
-            "from finacial_log",
+            "from financial_log_bill",
             "where 1=1",
             "<if test='data.customerId!=null'>",
             "and CUSTOMER_ID = #{data.customerId}",
