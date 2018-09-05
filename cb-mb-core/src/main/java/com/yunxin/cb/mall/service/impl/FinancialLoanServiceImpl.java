@@ -196,21 +196,30 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
 
     /**
      * 获取用户借款条数
+     *
      * @param customerId
      * @return
      */
     @Override
     public int countByCustomerId(Integer customerId) {
+
         return financialLoanMapper.countLoanByCustomer(customerId);
     }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public PageFinder<FinancialLoan> pageByCustomer(Integer customerId, Integer pageNo, Integer pageSize) {
+
         PageHelper.startPage(pageNo, pageSize);
-        Page<FinancialLoan> page = financialLoanMapper.pageListByCustomer(customerId);
+        Page<FinancialLoan> page = financialLoanMapper.pageByCustomer(customerId);
         PageFinder<FinancialLoan> pageFinder = new PageFinder<>(pageNo, pageSize, page.getTotal());
         pageFinder.setData(page.getResult());
         return pageFinder;
+    }
+
+    @Override
+    public List<FinancialLoan> getByCustomerRepaying(Integer customerId) {
+
+        return financialLoanMapper.selectByCustomerRepaying(customerId);
     }
 }

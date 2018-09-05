@@ -29,7 +29,7 @@ import java.util.List;
  * @auther: gws
  * @date: 2018/8/8 14:28
  */
-@Api(description = "信用额度接口")
+@Api(description = "信用额度-借款接口")
 @RestController
 @RequestMapping(value = "/{version}/rb/creditAmount")
 public class FinancialCreditAmountResource extends BaseResource {
@@ -48,9 +48,6 @@ public class FinancialCreditAmountResource extends BaseResource {
 
     @Resource
     private FinancialLoanConfigService financialLoanConfigService;
-
-    @Resource
-    private ProfileService profileService;
 
 
     @ApiOperation(value = "信用额度信息")

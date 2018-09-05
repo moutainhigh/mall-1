@@ -29,6 +29,17 @@ public interface FinancialLoanService {
      */
     int countByCustomerId(Integer customerId);
 
+    /**
+     * @Author chenpeng
+     * @Description 借款信息分页列表
+     * @Date 2018/9/5 14:29
+     **/
     PageFinder<FinancialLoan> pageByCustomer(Integer customerId, Integer pageNo, Integer pageSize);
 
+    /**
+     * @Author chenpeng
+     * @Description 用户未还清的借款列表
+     * @Date 2018/9/5 14:29
+     **/
+    List<FinancialLoan> getByCustomerRepaying(Integer customerId);
 }

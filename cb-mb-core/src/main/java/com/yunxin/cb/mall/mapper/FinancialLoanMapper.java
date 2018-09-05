@@ -116,7 +116,7 @@ public interface FinancialLoanMapper {
             "</script>"
     })
     @ResultMap(value="financialLoanMap")
-    Page<FinancialLoan> pageListByCustomer(@Param("customerId")Integer customerId);
+    Page<FinancialLoan> pageByCustomer(@Param("customerId")Integer customerId);
 
 //    @Select({
 //            "<script>",
@@ -147,6 +147,21 @@ public interface FinancialLoanMapper {
             "and STATE in (1,4)",
             "</script>"
     })
-    int countLoanByCustomer(Integer customerId);
+    int countLoanByCustomer(@Param("customerId")Integer customerId);
 
+    @Select({
+            "<script>",
+            "select",
+            "*",
+            "from financial_loan",
+            "where 1=1",
+            "<if test='customerId!=null'>",
+            "and CUSTOMER_ID = #{customerId}",
+            "</if>",
+            "and STATE = 4 and REPAYMENT_STATE &lt;&gt; 2",
+            "ORDER BY CREATE_TIME ASC",
+            "</script>"
+    })
+    @ResultMap(value="financialLoanMap")
+    List<FinancialLoan> selectByCustomerRepaying(@Param("customerId")Integer customerId);
 }
