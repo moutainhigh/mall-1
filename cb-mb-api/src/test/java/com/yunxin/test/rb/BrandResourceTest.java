@@ -8,13 +8,16 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.context.WebApplicationContext;
 
 public class BrandResourceTest extends MockHttpUtils{
     @Autowired
     private BrandResource brandResource;
+    @Autowired
+    private WebApplicationContext context;
     @Before
     public void setUp() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(brandResource).build();
+        mvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
     @Test
     public void getBrand() throws Exception {

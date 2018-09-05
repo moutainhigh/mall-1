@@ -97,18 +97,29 @@
     function CancellationCustomerById(ynDelete) {
         var dataItem = getSelectedGridItem("grid");
         if (dataItem) {
-            $.get("CancellationCustomerById.do", {
-                customerId: dataItem.customerId,
-                ynDelete: ynDelete,
-                rad: Math.random()
-            }, function (data) {
-                if (true == data) {
-                    commonNotify("操作成功！", "success");
-                    $("#grid").data("kendoGrid").dataSource.read();
-                } else {
-                    commonNotify("操作失败!", "error");
-                }
-            });
+           var ynDelete=dataItem.ynDelete;
+           if(!ynDelete){
+               bootbox.confirm("确认要注销客户吗？", function (result) {
+                   if (result) {
+                       $.get("CancellationCustomerById.do", {
+                           customerId: dataItem.customerId,
+                           ynDelete: ynDelete,
+                           rad: Math.random()
+                       }, function (data) {
+                           if (true == data) {
+                               commonNotify("操作成功！", "success");
+                               $("#grid").data("kendoGrid").dataSource.read();
+                           } else {
+                               commonNotify("操作失败!", "error");
+                           }
+                       });
+
+                   }
+               });
+           }else{
+               bootbox.alert("此用户已注销！");
+           }
+
         }
     }
   </script>

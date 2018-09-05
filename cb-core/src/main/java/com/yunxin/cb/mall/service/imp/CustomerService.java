@@ -28,7 +28,6 @@ import com.yunxin.cb.system.service.IProfileService;
 import com.yunxin.cb.util.DmSequenceFourUtils;
 import com.yunxin.cb.util.DmSequenceSixUtils;
 import com.yunxin.cb.util.PasswordHash;
-import com.yunxin.cb.util.RSAUtils;
 import com.yunxin.core.exception.EntityExistException;
 import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
@@ -63,8 +62,7 @@ import java.util.concurrent.Executors;
 public class CustomerService implements ICustomerService {
     @Value("${application.default.avatarUrl}")
     private String avatarUrl;
-    @Value("${rsa.privateKey}")
-    private String privateKey;
+
     private static Logger logger = LoggerFactory.getLogger(CustomerService.class);
     @Resource
     private CustomerDao customerDao;
@@ -164,8 +162,6 @@ public class CustomerService implements ICustomerService {
         if (StringUtils.isBlank(customer.getPassword())) {
             // 初始密码
             customer.setPassword(CommonUtils.randomString(6, CommonUtils.RANDRULE.RAND_IGNORE));
-        }else{
-            customer.setPassword(RSAUtils.decryptData(customer.getPassword(), privateKey));
         }
         customer.setCreateTime(new Date());
         customer.setRank(rankDao.getRankByDefaultRank());
@@ -250,7 +246,6 @@ public class CustomerService implements ICustomerService {
     public Customer updatePassword(int customerId, String password) {
         Customer customer = customerDao.findOne(customerId);
         try {
-            password=RSAUtils.decryptData(password, privateKey);
             customer.setPassword(PasswordHash.createHash(password));
         } catch (PasswordHash.CannotPerformOperationException e) {
             e.printStackTrace();
@@ -640,7 +635,6 @@ public class CustomerService implements ICustomerService {
     public Customer getCustomerByAccountNameAndPassword(String accountName, String password) {
         PBKDF2PasswordEncoder pbkdf2 = new PBKDF2PasswordEncoder();
         Customer customer = customerDao.findByAccountNameAndEnabled(accountName, true,false);
-        password=RSAUtils.decryptData(password, privateKey);
         if (customer != null) {
             if (pbkdf2.matches(password, customer.getPassword())) {
                 if (StringUtils.isNotEmpty(customer.getRealName()) && StringUtils.isNotEmpty(customer.getCustomerCountry())

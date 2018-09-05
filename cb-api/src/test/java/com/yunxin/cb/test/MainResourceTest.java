@@ -50,7 +50,7 @@ public class MainResourceTest {
         log.info("注册发送短信验证码 start");
         String mobile="13823221027";
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/noAuth/sendMobileValidCode/REGISTER/"+mobile)
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/noAuth/sendMobileValidCode/REGISTER/"+mobile)
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
@@ -96,8 +96,8 @@ public class MainResourceTest {
     public void loginByPwdTest() throws Exception {
         log.info("用户名密码登录 start");
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/noAuth/loginByPwd")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).param("accountName","13823221027").param("password","123456"))
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/noAuth/loginByPwd")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).param("accountName","13823221020").param("password","123456"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码

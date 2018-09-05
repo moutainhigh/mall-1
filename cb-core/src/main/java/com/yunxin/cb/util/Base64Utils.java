@@ -1,9 +1,9 @@
 package com.yunxin.cb.util;
 
 
-import org.apache.xmlbeans.impl.util.Base64;
 
 import java.io.*;
+import java.util.Base64;
 
 /**
  * @author wangteng
@@ -12,10 +12,10 @@ public class Base64Utils {
     private static final int CACHE_SIZE = 1024;
 
     public static byte[] decode(String base64) throws Exception {
-                 return Base64.decode(base64.getBytes());
+                 return Base64.getDecoder().decode(base64.getBytes());
     }
     public static String encode(byte[] bytes) throws Exception {
-                 return new String(Base64.encode(bytes));
+                 return new String(Base64.getEncoder().encode(bytes));
              }
     public static String encodeFile(String filePath) throws Exception {
                  byte[] bytes = fileToByte(filePath);
