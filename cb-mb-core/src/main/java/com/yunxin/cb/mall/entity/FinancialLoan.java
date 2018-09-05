@@ -87,7 +87,7 @@ public class FinancialLoan {
     private BigDecimal lateFee;
 
     /**
-     * 贷款状态：0.申请，1.已审核，2.已拒绝，3.已取消，4.已转账
+     * 贷款状态：0.申请中-待审核，1.审核通过-已审核，2.审核不通过-已拒绝，3.已取消，4.已转账
      */
     private LoanState state;
 

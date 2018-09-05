@@ -82,7 +82,7 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
 //            if (repayAmount.doubleValue() > surplusAmount.doubleValue()) {
 //                /**已还完，结清并修改剩余还款金为0*/
 //                p.setSurplusAmount(new BigDecimal(0));
-//                p.setState(LoanState.SETTLE);
+//                p.setState(LoanState.TRANSFERRED);
 //                p.setInsuranceAmount(new BigDecimal(0));
 //                p.setCreditAmount(new BigDecimal(0));
 //                financialLoanService.update(p);

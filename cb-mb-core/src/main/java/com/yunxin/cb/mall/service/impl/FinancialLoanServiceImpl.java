@@ -118,7 +118,7 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
         financialLoan.setLeftInterest(interest);
         financialLoan.setOverdueNumber(0);
         financialLoan.setLateFee(BigDecimal.ZERO);
-        financialLoan.setState(LoanState.WAIT_LOAN);
+        financialLoan.setState(LoanState.WAIT_AUDIT);
         financialLoan.setRepaymentState(RepaymentState.NON_REPAYMENT);
         financialLoan.setCreateTime(LocalDateTime.now());
         resultFlag = financialLoanMapper.insert(financialLoan) == 1;
