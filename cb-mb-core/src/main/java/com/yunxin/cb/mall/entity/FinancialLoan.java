@@ -2,77 +2,123 @@ package com.yunxin.cb.mall.entity;
 
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.entity.meta.LoanType;
+import com.yunxin.cb.mall.entity.meta.RepaymentState;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class FinancialLoan {
+
     /**  */
     private Integer loanId;
 
     /**  */
     private Integer customerId;
 
-    /** 贷款金额 */
-    private BigDecimal amount;
-
-    /** 还款期数 */
-    private Integer term;
-
-    /** 贷款利率 */
-    private BigDecimal interestRate;
-
-    /** 贷款类型：1.信用贷款，2.预期收益贷 */
-    private LoanType type;
-
-    /** 每月几日还款 */
-    private Integer repayDay;
-
-    /** 贷款状态：1.申请，2.审核，3.发放 */
-    private LoanState state;
-
-    /** 贷款日期 */
-    private Date createTime;
-
-    /** 更新日期，审核为审核日期，发放为发放日期 */
-    private Date updateTime;
-
-    /** 还款期限 */
-    private Integer repaymentTerm;
-
-    /** 最后还款时间 */
-    private Date finalRepaymentTime;
-
-    /** 应还总额 */
-    private BigDecimal repayAmount;
-
-    /** 实际已还 */
-    private BigDecimal readyAmount;
-
-    /** 剩余需还 */
-    private BigDecimal surplusAmount;
-
-    /** 还款滞纳金 */
-    private BigDecimal lateFee;
-
-    /** 还款利息 */
-    private BigDecimal interest;
-
-    /** 逾期次数 */
-    private Integer overdueNumer;
-
-    /** 银行卡ID */
+    /**
+     * 银行卡ID
+     */
     private Integer bankId;
 
-    /** 贷款信用额度金额 */
-    private BigDecimal creditAmount;
+    /**
+     * 贷款金额
+     */
+    private BigDecimal amount;
 
-    /** 贷款保险额度金额 */
-    private BigDecimal insuranceAmount;
+    /**
+     * 贷款周期
+     */
+    private Integer term;
 
-    /**查询使用*/
-    private List<LoanState> stateList;
+    /**
+     * 贷款利率
+     */
+    private BigDecimal interestRate;
+
+    /**
+     * 贷款利息
+     */
+    private BigDecimal interest;
+
+    /**
+     * 贷款类型：0.信用贷款
+     */
+    private LoanType type;
+
+    /**
+     * 最后还款日
+     */
+    private LocalDate finalRepaymentTime;
+
+    /**
+     * 操作版本号
+     */
+    private Integer version;
+
+    /**
+     * 应还总额
+     */
+    private BigDecimal repayAmount;
+
+    /**
+     * 实际已还
+     */
+    private BigDecimal readyAmount;
+
+    /**
+     * 剩余需还本金
+     */
+    private BigDecimal leftAmount;
+
+    /**
+     * 剩余需还利息（优先还利息）
+     */
+    private BigDecimal leftInterest;
+
+    /**
+     * 逾期次数
+     */
+    private Integer overdueNumber;
+
+    /**
+     * 逾期利息
+     */
+    private BigDecimal lateFee;
+
+    /**
+     * 贷款状态：0.申请，1.已审核，2.已拒绝，3.已取消，4.已转账
+     */
+    private LoanState state;
+
+    /**
+     * 还款状态：0.未还款，1.已逾期，2.已还款
+     */
+    private RepaymentState repaymentState;
+
+    /**
+     * 审核时间
+     */
+    private LocalDateTime auditTime;
+    /**
+     * 审核备注
+     */
+    private String auditRemark;
+
+    /**
+     * 转账时间
+     */
+    private LocalDateTime transferTime;
+    /**
+     * 转账备注
+     */
+    private String transferRemark;
+
+    /**
+     * 贷款日期
+     */
+    private LocalDateTime createTime;
+
 
     public Integer getLoanId() {
         return loanId;
@@ -88,6 +134,14 @@ public class FinancialLoan {
 
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public Integer getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
     }
 
     public BigDecimal getAmount() {
@@ -114,6 +168,14 @@ public class FinancialLoan {
         this.interestRate = interestRate;
     }
 
+    public BigDecimal getInterest() {
+        return interest;
+    }
+
+    public void setInterest(BigDecimal interest) {
+        this.interest = interest;
+    }
+
     public LoanType getType() {
         return type;
     }
@@ -122,52 +184,20 @@ public class FinancialLoan {
         this.type = type;
     }
 
-    public Integer getRepayDay() {
-        return repayDay;
-    }
-
-    public void setRepayDay(Integer repayDay) {
-        this.repayDay = repayDay;
-    }
-
-    public LoanState getState() {
-        return state;
-    }
-
-    public void setState(LoanState state) {
-        this.state = state;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getRepaymentTerm() {
-        return repaymentTerm;
-    }
-
-    public void setRepaymentTerm(Integer repaymentTerm) {
-        this.repaymentTerm = repaymentTerm;
-    }
-
-    public Date getFinalRepaymentTime() {
+    public LocalDate getFinalRepaymentTime() {
         return finalRepaymentTime;
     }
 
-    public void setFinalRepaymentTime(Date finalRepaymentTime) {
+    public void setFinalRepaymentTime(LocalDate finalRepaymentTime) {
         this.finalRepaymentTime = finalRepaymentTime;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     public BigDecimal getRepayAmount() {
@@ -186,12 +216,28 @@ public class FinancialLoan {
         this.readyAmount = readyAmount;
     }
 
-    public BigDecimal getSurplusAmount() {
-        return surplusAmount;
+    public BigDecimal getLeftAmount() {
+        return leftAmount;
     }
 
-    public void setSurplusAmount(BigDecimal surplusAmount) {
-        this.surplusAmount = surplusAmount;
+    public void setLeftAmount(BigDecimal leftAmount) {
+        this.leftAmount = leftAmount;
+    }
+
+    public BigDecimal getLeftInterest() {
+        return leftInterest;
+    }
+
+    public void setLeftInterest(BigDecimal leftInterest) {
+        this.leftInterest = leftInterest;
+    }
+
+    public Integer getOverdueNumber() {
+        return overdueNumber;
+    }
+
+    public void setOverdueNumber(Integer overdueNumber) {
+        this.overdueNumber = overdueNumber;
     }
 
     public BigDecimal getLateFee() {
@@ -202,51 +248,59 @@ public class FinancialLoan {
         this.lateFee = lateFee;
     }
 
-    public BigDecimal getInterest() {
-        return interest;
+    public LoanState getState() {
+        return state;
     }
 
-    public void setInterest(BigDecimal interest) {
-        this.interest = interest;
+    public void setState(LoanState state) {
+        this.state = state;
     }
 
-    public Integer getOverdueNumer() {
-        return overdueNumer;
+    public RepaymentState getRepaymentState() {
+        return repaymentState;
     }
 
-    public void setOverdueNumer(Integer overdueNumer) {
-        this.overdueNumer = overdueNumer;
+    public void setRepaymentState(RepaymentState repaymentState) {
+        this.repaymentState = repaymentState;
     }
 
-    public Integer getBankId() {
-        return bankId;
+    public LocalDateTime getAuditTime() {
+        return auditTime;
     }
 
-    public void setBankId(Integer bankId) {
-        this.bankId = bankId;
+    public void setAuditTime(LocalDateTime auditTime) {
+        this.auditTime = auditTime;
     }
 
-    public BigDecimal getCreditAmount() {
-        return creditAmount;
+    public String getAuditRemark() {
+        return auditRemark;
     }
 
-    public void setCreditAmount(BigDecimal creditAmount) {
-        this.creditAmount = creditAmount;
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
     }
 
-    public BigDecimal getInsuranceAmount() {
-        return insuranceAmount;
+    public LocalDateTime getTransferTime() {
+        return transferTime;
     }
 
-    public void setInsuranceAmount(BigDecimal insuranceAmount) {
-        this.insuranceAmount = insuranceAmount;
+    public void setTransferTime(LocalDateTime transferTime) {
+        this.transferTime = transferTime;
     }
 
-    public List<LoanState> getStateList() {
-        return stateList;
+    public String getTransferRemark() {
+        return transferRemark;
     }
 
-    public void setStateList(List<LoanState> stateList) {
-        this.stateList = stateList;
+    public void setTransferRemark(String transferRemark) {
+        this.transferRemark = transferRemark;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 }

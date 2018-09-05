@@ -6,7 +6,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 @Mapper
-public interface FinacialWalletMapper {
+public interface FinancialWalletMapper {
     @Delete({
         "delete from financial_wallet",
         "where WALLET_ID = #{walletId,jdbcType=INTEGER}"
@@ -76,14 +76,15 @@ public interface FinacialWalletMapper {
     List<FinancialWallet> selectAll();
 
     @Update({
-        "update financial_wallet",
-        "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
-          "FREEZING_AMOUNT = #{freezingAmount,jdbcType=DECIMAL},",
-          "CREDIT_AMOUNT = #{creditAmount,jdbcType=DECIMAL},",
-          "DEBT_CAR = #{debtCar,jdbcType=DECIMAL},",
-          "DEBT_CREDIT = #{debtCredit,jdbcType=DECIMAL},",
-          "VERSION = #{version,jdbcType=DECIMAL},",
-        "where WALLET_ID = #{walletId,jdbcType=INTEGER}"
+            "update financial_wallet",
+            "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
+            "FREEZING_AMOUNT = #{freezingAmount,jdbcType=DECIMAL},",
+            "CREDIT_AMOUNT = #{creditAmount,jdbcType=DECIMAL},",
+            "DEBT_CAR = #{debtCar,jdbcType=DECIMAL},",
+            "DEBT_CREDIT = #{debtCredit,jdbcType=DECIMAL},",
+            "VERSION = VERSION + 1",
+            "where WALLET_ID = #{walletId,jdbcType=INTEGER}",
+            "and VERSION = #{version,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKey(FinancialWallet record);
+    int updateByPrimaryKeyOnVersion(FinancialWallet record);
 }

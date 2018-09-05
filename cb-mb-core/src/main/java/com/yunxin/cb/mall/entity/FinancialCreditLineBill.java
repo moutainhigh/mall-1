@@ -4,11 +4,16 @@ import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public class FinacialCreditLineBill {
+/**
+ * @Author chenpeng
+ * @Description 信用额度变动记录
+ * @Date 2018/9/4 18:17
+ **/
+public class FinancialCreditLineBill {
     /**  */
-    private Integer finacialCreditLineId;
+    private Integer creditLineId;
 
     /** 客户ID */
     private Integer customerId;
@@ -26,14 +31,14 @@ public class FinacialCreditLineBill {
     private BigDecimal amount;
 
     /** 时间 */
-    private Date createTime;
+    private LocalDateTime createTime;
 
-    public Integer getFinacialCreditLineId() {
-        return finacialCreditLineId;
+    public Integer getCreditLineId() {
+        return creditLineId;
     }
 
-    public void setFinacialCreditLineId(Integer finacialCreditLineId) {
-        this.finacialCreditLineId = finacialCreditLineId;
+    public void setCreditLineId(Integer creditLineId) {
+        this.creditLineId = creditLineId;
     }
 
     public Integer getCustomerId() {
@@ -49,7 +54,7 @@ public class FinacialCreditLineBill {
     }
 
     public void setType(CapitalType type) {
-        this.type = type == null ? null : type;
+        this.type = type;
     }
 
     public TransactionType getTransactionType() {
@@ -57,7 +62,7 @@ public class FinacialCreditLineBill {
     }
 
     public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType == null ? null : transactionType;
+        this.transactionType = transactionType;
     }
 
     public String getTransactionDesc() {
@@ -65,7 +70,7 @@ public class FinacialCreditLineBill {
     }
 
     public void setTransactionDesc(String transactionDesc) {
-        this.transactionDesc = transactionDesc == null ? null : transactionDesc.trim();
+        this.transactionDesc = transactionDesc;
     }
 
     public BigDecimal getAmount() {
@@ -76,11 +81,11 @@ public class FinacialCreditLineBill {
         this.amount = amount;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 }

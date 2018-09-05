@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.mapper;
 
+import com.github.pagehelper.Page;
 import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
@@ -10,101 +11,74 @@ import java.util.List;
 @Mapper
 public interface FinancialLoanMapper {
     @Delete({
-            "delete from finacial_loan",
+            "delete from financial_loan",
             "where LOAN_ID = #{loanId,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer loanId);
 
     @Insert({
-            "insert into finacial_loan (LOAN_ID, CUSTOMER_ID, ",
-            "AMOUNT, TERM, INTEREST_RATE, ",
-            "TYPE, REPAY_DAY, ",
-            "STATE, CREATE_TIME, ",
-            "UPDATE_TIME, REPAYMENT_TERM, ",
-            "FINAL_REPAYMENT_TIME, REPAY_AMOUNT, ",
-            "READY_AMOUNT, SURPLUS_AMOUNT, ",
-            "LATE_FEE, INTEREST, ",
-            "OVERDUE_NUMER, BANK_ID)",
-            "values (#{loanId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, ",
-            "#{amount,jdbcType=DECIMAL}, #{term,jdbcType=INTEGER}, #{interestRate,jdbcType=DECIMAL}, ",
-            "#{type,jdbcType=VARCHAR}, #{repayDay,jdbcType=INTEGER}, ",
-            "#{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
-            "#{updateTime,jdbcType=TIMESTAMP}, #{repaymentTerm,jdbcType=INTEGER}, ",
-            "#{finalRepaymentTime,jdbcType=TIMESTAMP}, #{repayAmount,jdbcType=DECIMAL}, ",
-            "#{readyAmount,jdbcType=DECIMAL}, #{surplusAmount,jdbcType=DECIMAL}, ",
-            "#{lateFee,jdbcType=DECIMAL}, #{interest,jdbcType=DECIMAL}, ",
-            "#{overdueNumer,jdbcType=INTEGER}, #{bankId,jdbcType=INTEGER},",
-            "#{creditAmount,jdbcType=DECIMAL},#{insuranceAmount,jdbcType=DECIMAL})"
+            "insert into financial_loan (LOAN_ID, CUSTOMER_ID, ",
+            "BANK_ID, AMOUNT, TERM, ",
+            "INTEREST_RATE, INTEREST, ",
+            "TYPE, FINAL_REPAYMENT_TIME, ",
+            "VERSION, REPAY_AMOUNT, ",
+            "READY_AMOUNT, LEFT_AMOUNT, ",
+            "LEFT_INTEREST, OVERDUE_NUMBER, ",
+            "LATE_FEE, STATE, REPAYMENT_STATE, ",
+            "AUDIT_TIME, AUDIT_REMARK, ",
+            "TRANSFER_TIME, TRANSFER_REMARK, ",
+            "CREATE_TIME)",
+            "values ",
+            "(#{loanId},#{customerId},#{bankId},#{amount},#{term},#{interestRate},#{interest},#{type},",
+            "#{finalRepaymentTime},#{version},#{repayAmount},#{readyAmount},#{leftAmount},#{leftInterest},#{overdueNumber},",
+            "#{lateFee},#{state},#{repaymentState},#{auditTime},#{auditRemark},#{transferTime},#{transferRemark},",
+            "#{createTime})"
     })
     int insert(FinancialLoan record);
 
     @Select({
             "select",
-            "LOAN_ID, CUSTOMER_ID, AMOUNT, TERM, INTEREST_RATE, TYPE, REPAY_DAY, STATE, CREATE_TIME, ",
-            "UPDATE_TIME, REPAYMENT_TERM, FINAL_REPAYMENT_TIME, REPAY_AMOUNT, READY_AMOUNT, ",
-            "SURPLUS_AMOUNT, LATE_FEE, INTEREST, OVERDUE_NUMER, BANK_ID,CREDIT_AMOUNT,INSURANCE_AMOUNT",
-            "from finacial_loan",
+            "*",
+            "from financial_loan",
             "where LOAN_ID = #{loanId,jdbcType=INTEGER}"
     })
-    @Results({
-            @Result(column="LOAN_ID", property="loanId", jdbcType=JdbcType.INTEGER, id=true),
+    @Results(id = "financialLoanMap", value = {
+            @Result(column = "LOAN_ID", property = "loanId", jdbcType = JdbcType.INTEGER, id = true),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
+            @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER),
             @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
             @Result(column="TERM", property="term", jdbcType=JdbcType.INTEGER),
             @Result(column="INTEREST_RATE", property="interestRate", jdbcType=JdbcType.DECIMAL),
-            @Result(column="TYPE", property="type", jdbcType=JdbcType.VARCHAR),
-            @Result(column="REPAY_DAY", property="repayDay", jdbcType=JdbcType.INTEGER),
-            @Result(column="STATE", property="state", jdbcType=JdbcType.VARCHAR),
-            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="UPDATE_TIME", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="REPAYMENT_TERM", property="repaymentTerm", jdbcType=JdbcType.INTEGER),
+            @Result(column="INTEREST", property="interest", jdbcType=JdbcType.DECIMAL),
+            @Result(column="TYPE", property="type"),
             @Result(column="FINAL_REPAYMENT_TIME", property="finalRepaymentTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="VERSION", property="version", jdbcType=JdbcType.INTEGER),
             @Result(column="REPAY_AMOUNT", property="repayAmount", jdbcType=JdbcType.DECIMAL),
             @Result(column="READY_AMOUNT", property="readyAmount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="SURPLUS_AMOUNT", property="surplusAmount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="LEFT_AMOUNT", property="leftAmount", jdbcType=JdbcType.DECIMAL),
+            @Result(column="LEFT_INTEREST", property="leftInterest", jdbcType=JdbcType.DECIMAL),
+            @Result(column="OVERDUE_NUMBER", property="overdueNumber", jdbcType=JdbcType.INTEGER),
             @Result(column="LATE_FEE", property="lateFee", jdbcType=JdbcType.DECIMAL),
-            @Result(column="INTEREST", property="interest", jdbcType=JdbcType.DECIMAL),
-            @Result(column="OVERDUE_NUMER", property="overdueNumer", jdbcType=JdbcType.INTEGER),
-            @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER),
-            @Result(column="CREDIT_AMOUNT", property="creditAmount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="INSURANCE_AMOUNT", property="insuranceAmount", jdbcType=JdbcType.DECIMAL)
+            @Result(column="STATE", property="state"),
+            @Result(column="REPAYMENT_STATE", property="repaymentState"),
+            @Result(column="AUDIT_TIME", property="auditTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="AUDIT_REMARK", property="auditRemark", jdbcType=JdbcType.VARCHAR),
+            @Result(column="TRANSFER_TIME", property="transferTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="TRANSFER_REMARK", property="transferRemark", jdbcType=JdbcType.VARCHAR),
+            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
     })
     FinancialLoan selectByPrimaryKey(Integer loanId);
 
     @Select({
             "select",
-            "LOAN_ID, CUSTOMER_ID, AMOUNT, TERM, INTEREST_RATE, TYPE, REPAY_DAY, STATE, CREATE_TIME, ",
-            "UPDATE_TIME, REPAYMENT_TERM, FINAL_REPAYMENT_TIME, REPAY_AMOUNT, READY_AMOUNT, ",
-            "SURPLUS_AMOUNT, LATE_FEE, INTEREST, OVERDUE_NUMER, BANK_ID,CREDIT_AMOUNT,INSURANCE_AMOUNT",
-            "from finacial_loan where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
+            "*",
+            "from financial_loan where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
-    @Results(id = "finacialLoanMap", value = {
-            @Result(column="LOAN_ID", property="loanId", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
-            @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="TERM", property="term", jdbcType=JdbcType.INTEGER),
-            @Result(column="INTEREST_RATE", property="interestRate", jdbcType=JdbcType.DECIMAL),
-            @Result(column="TYPE", property="type", jdbcType=JdbcType.VARCHAR),
-            @Result(column="REPAY_DAY", property="repayDay", jdbcType=JdbcType.INTEGER),
-            @Result(column="STATE", property="state", jdbcType=JdbcType.VARCHAR),
-            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="UPDATE_TIME", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="REPAYMENT_TERM", property="repaymentTerm", jdbcType=JdbcType.INTEGER),
-            @Result(column="FINAL_REPAYMENT_TIME", property="finalRepaymentTime", jdbcType=JdbcType.TIMESTAMP),
-            @Result(column="REPAY_AMOUNT", property="repayAmount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="READY_AMOUNT", property="readyAmount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="SURPLUS_AMOUNT", property="surplusAmount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="LATE_FEE", property="lateFee", jdbcType=JdbcType.DECIMAL),
-            @Result(column="INTEREST", property="interest", jdbcType=JdbcType.DECIMAL),
-            @Result(column="OVERDUE_NUMER", property="overdueNumer", jdbcType=JdbcType.INTEGER),
-            @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER),
-            @Result(column="CREDIT_AMOUNT", property="creditAmount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="INSURANCE_AMOUNT", property="insuranceAmount", jdbcType=JdbcType.DECIMAL)
-    })
+    @ResultMap(value="financialLoanMap")
     List<FinancialLoan> selectByCustomerIdAndType(@Param("customerId") Integer customerId);
 
     @Update({
-            "update finacial_loan",
+            "update financial_loan",
             "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
             "AMOUNT = #{amount,jdbcType=DECIMAL},",
             "TERM = #{term,jdbcType=INTEGER},",
@@ -132,38 +106,47 @@ public interface FinancialLoanMapper {
     @Select({
             "<script>",
             "select",
-            "LOAN_ID, CUSTOMER_ID, AMOUNT, TERM, INTEREST_RATE, TYPE, REPAY_DAY, STATE, CREATE_TIME, ",
-            "UPDATE_TIME, REPAYMENT_TERM, FINAL_REPAYMENT_TIME, REPAY_AMOUNT, READY_AMOUNT, ",
-            "SURPLUS_AMOUNT, LATE_FEE, INTEREST, OVERDUE_NUMER, BANK_ID,CREDIT_AMOUNT,INSURANCE_AMOUNT",
-            "from finacial_loan",
+            "*",
+            "from financial_loan",
             "where 1=1",
-            "<if test='data.customerId!=null'>",
-            "and CUSTOMER_ID = #{data.customerId}",
+            "<if test='customerId!=null'>",
+            "and CUSTOMER_ID = #{customerId}",
             "</if>",
             "ORDER BY CREATE_TIME DESC",
-            "LIMIT #{rowIndex},#{pageSize}",
             "</script>"
     })
-    @ResultMap(value="finacialLoanMap")
-    List<FinancialLoan> pageList(Query q);
+    @ResultMap(value="financialLoanMap")
+    Page<FinancialLoan> pageListByCustomer(@Param("customerId")Integer customerId);
+
+//    @Select({
+//            "<script>",
+//            "select",
+//            "count(LOAN_ID)",
+//            "from financial_loan",
+//            "where 1=1",
+//            "<if test='data.customerId!=null'>",
+//            "and CUSTOMER_ID = #{data.customerId}",
+//            "</if>",
+//            "<if test='data.stateList!=null'>",
+//                "and STATE in ",
+//                    "<foreach collection='data.stateList' index='index' item='item' open='(' separator=',' close=')'>",
+//                        " #{item} ",
+//                    "</foreach> ",
+//            "</if>",
+//            "</script>"
+//    })
+//    int count(Query q);
 
     @Select({
             "<script>",
             "select",
             "count(LOAN_ID)",
-            "from finacial_loan",
+            "from financial_loan",
             "where 1=1",
-            "<if test='data.customerId!=null'>",
-            "and CUSTOMER_ID = #{data.customerId}",
-            "</if>",
-            "<if test='data.stateList!=null'>",
-                "and STATE in ",
-                    "<foreach collection='data.stateList' index='index' item='item' open='(' separator=',' close=')'>",
-                        " #{item} ",
-                    "</foreach> ",
-            "</if>",
+            "and CUSTOMER_ID = #{customerId}",
+            "and STATE in (1,4)",
             "</script>"
     })
-    int count(Query q);
+    int countLoanByCustomer(Integer customerId);
 
 }

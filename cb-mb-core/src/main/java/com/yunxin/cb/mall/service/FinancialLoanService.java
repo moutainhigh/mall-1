@@ -2,15 +2,19 @@ package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.vo.FinancialLoanVO;
-import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface FinancialLoanService {
 
-    FinancialLoanVO add(FinancialLoanVO vo, FinancialWalletVO financialWalletVO);
+    /**
+     * @Author chenpeng
+     * @Description  借款提交
+     * @Date 2018/9/4 10:47
+     **/
+    void add(Integer customerId, Integer loanConfigId, Integer bankId, BigDecimal amount);
 
     List<FinancialLoanVO> getByCustomerIdAndType(int customerId);
 
@@ -23,8 +27,8 @@ public interface FinancialLoanService {
      * @param customerId
      * @return
      */
-    int countByCustomerId(int customerId);
+    int countByCustomerId(Integer customerId);
 
-    PageFinder<FinancialLoan> page(Query q);
+    PageFinder<FinancialLoan> pageByCustomer(Integer customerId, Integer pageNo, Integer pageSize);
 
 }

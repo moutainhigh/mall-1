@@ -31,10 +31,14 @@ public class BankInfoServiceImpl implements BankInfoService {
      * @date 2018/7/31 11:30
      */
     public BankInfoVO selectByPrimaryKey(Integer bankId,Integer customerId) {
-        BankInfoVO bankInfoVO = new BankInfoVO();
         BankInfo bankInfo = bankInfoMapper.selectByPrimaryKey(bankId,customerId);
-        BeanUtils.copyProperties(bankInfo, bankInfoVO);
-        return bankInfoVO;
+        if (bankInfo == null) {
+            return null;
+        } else {
+            BankInfoVO bankInfoVO = new BankInfoVO();
+            BeanUtils.copyProperties(bankInfo, bankInfoVO);
+            return bankInfoVO;
+        }
     }
 
     /**
@@ -48,7 +52,7 @@ public class BankInfoServiceImpl implements BankInfoService {
     public List<BankInfoVO> selectAll(Integer customerId) {
         List<BankInfoVO> listVO=new ArrayList<>();
         List<BankInfo> list = bankInfoMapper.selectAll(customerId);
-        list.stream().forEach(p ->{
+        list.forEach(p ->{
             BankInfoVO bankInfoVO = new BankInfoVO();
             BeanUtils.copyProperties(p, bankInfoVO);
             listVO.add(bankInfoVO);

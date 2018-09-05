@@ -1,20 +1,17 @@
 package com.yunxin.cb.mall.service.impl;
 
-import com.yunxin.cb.mall.entity.FinacialCreditLineBill;
-import com.yunxin.cb.mall.entity.FinancialLoan;
-import com.yunxin.cb.mall.entity.meta.CapitalType;
-import com.yunxin.cb.mall.entity.meta.LoanState;
-import com.yunxin.cb.mall.entity.meta.LoanType;
-import com.yunxin.cb.mall.entity.meta.TransactionType;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.meta.*;
 import com.yunxin.cb.mall.mapper.FinancialCreditLineBillMapper;
+import com.yunxin.cb.mall.mapper.FinancialLoanConfigMapper;
 import com.yunxin.cb.mall.mapper.FinancialLoanMapper;
-import com.yunxin.cb.mall.service.FinancialLoanService;
-import com.yunxin.cb.mall.service.FinancialWalletService;
+import com.yunxin.cb.mall.service.*;
+import com.yunxin.cb.mall.vo.BankInfoVO;
 import com.yunxin.cb.mall.vo.FinancialLoanVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
-import com.yunxin.cb.util.CalendarUtils;
 import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
@@ -24,77 +21,124 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class FinancialLoanServiceImpl implements FinancialLoanService {
 
     @Resource
-    private FinancialLoanMapper financialLoanMapper;
+    private CustomerService customerService;
+    @Resource
+    private BankInfoService bankInfoService;
     @Resource
     private FinancialWalletService financialWalletService;
+    @Resource
+    private ProfileService profileService;
+    @Resource
+    private FinancialLoanMapper financialLoanMapper;
+    @Resource
+    private FinancialLoanConfigMapper financialLoanConfigMapper;
     @Resource
     private FinancialCreditLineBillMapper financialCreditLineBillMapper;
 
     private static final Log log = LogFactory.getLog(FinancialLoanServiceImpl.class);
+    
+
     /**
-     * 添加
-     * @author      likang
-     * @param financialLoanVO
-     * @param financialWalletVO
-     * @return      com.yunxin.cb.mall.vo.FinancialLoanVO
-     * @exception
-     * @date        2018/8/9 14:32
-     */
+     * @Author chenpeng
+     * @Description 申请贷款
+     * @Date 2018/9/4 18:28 
+     **/
     @Override
     @Transactional
-    public FinancialLoanVO add(FinancialLoanVO financialLoanVO, FinancialWalletVO financialWalletVO){
-        log.info("add:"+ financialLoanVO);
-        //借款金额小于保单额度（优先减少保单额度，再减少感恩额度）
-//        if (financialLoanVO.getAmount().compareTo(financialWalletVO.getInsuranceAmount()) < 1) {
-//            //钱包减少金额
-//            financialWalletVO.setInsuranceAmount(financialWalletVO.getInsuranceAmount().subtract(financialLoanVO.getAmount()));
-//            //借款金额区分
-//            financialLoanVO.setInsuranceAmount(financialLoanVO.getAmount());
-//            financialLoanVO.setCreditAmount(BigDecimal.ZERO);
-//        } else { //借款金额大于保单额度但小于总额度
-//            //借款金额区分
-//            financialLoanVO.setInsuranceAmount(financialWalletVO.getInsuranceAmount());
-//            financialLoanVO.setCreditAmount(financialLoanVO.getAmount().subtract(financialWalletVO.getInsuranceAmount()));
-//            //钱包减少金额
-//            financialWalletVO.setInsuranceAmount(BigDecimal.ZERO);
-//            financialWalletVO.setCreditAmount(financialLoanVO.getAmount().subtract(financialWalletVO.getInsuranceAmount()));
-//        }
+    public void add(Integer customerId, Integer loanConfigId, Integer bankId, BigDecimal amount) {
+
+        Customer customer = customerService.getCustomerById(customerId);
+        if (customer == null || customer.getAuthFlag() != 1) {
+            throw new RuntimeException("未实名认证");
+        }
+        BankInfoVO bankInfoVO = bankInfoService.selectByPrimaryKey(bankId, customerId);
+        if (bankInfoVO == null) {
+            throw new RuntimeException("您选择的银行卡有误");
+        }
+
+        //最高可贷金额,判断额度是否满足贷款
+        FinancialWalletVO walletVO = financialWalletService.getFinancialWalletByCustomerId(customerId);
+        BigDecimal totalAmount = walletVO.getCreditAmount();
+        if (amount.compareTo(totalAmount) > 0) {
+            throw new RuntimeException("您的可贷金额不足");
+        }
+
+        //判断是否超过最多次数
+        Profile profile = profileService.getProfileByName(ProfileState.MAX_LOAN_NUM.name());
+        if (profile != null) {
+            int maxCount = Integer.valueOf(profile.getFileValue());
+            // 查询审核通过的我的借款次数
+            int count = this.countByCustomerId(customerId);
+            if (count >= maxCount) {
+                throw new RuntimeException("您已经贷了" + maxCount + "次款了，不能再贷了");
+            }
+        }
+
+        // 贷款期限
+        FinancialLoanConfig financialLoanConfig = financialLoanConfigMapper.selectByPrimaryKey(loanConfigId);
+        if (financialLoanConfig == null) {
+            throw new RuntimeException("您选择的贷款期限有误");
+        }
+
+        // 钱包变动
+        walletVO.setCreditAmount(walletVO.getCreditAmount().subtract(amount));
+        walletVO.setDebtCredit(walletVO.getCreditAmount().add(amount));
+        String remark = "借款：" + amount + ",减少对应信用额度，增加对应负债";
+        boolean resultFlag = financialWalletService.updateFinancialWallet(walletVO, amount, OperationType.SUBTRACT, remark);
+        if (!resultFlag) {
+            throw new RuntimeException("内部错误(钱包)");
+        }
+
+        // 贷款申请
         FinancialLoan financialLoan = new FinancialLoan();
-        BeanUtils.copyProperties(financialLoan, financialLoanVO);
-        //更新钱包额度
-        financialWalletService.updateFinancialWallet(financialWalletVO);
-        Date now = new Date();
-        //添加借款记录
-        financialLoan.setCreateTime(now);
-        financialLoan.setState(LoanState.WAIT_LOAN);
+        financialLoan.setCustomerId(customerId);
+        financialLoan.setBankId(bankId);
+        financialLoan.setAmount(amount);
+        financialLoan.setTerm(financialLoanConfig.getTerm());
+        financialLoan.setInterestRate(financialLoanConfig.getInterestRate());
+        BigDecimal interest = amount.multiply(financialLoanConfig.getInterestRate()).setScale(2, RoundingMode.HALF_UP);
+        financialLoan.setInterest(interest);    //利息
         financialLoan.setType(LoanType.LOAN);
-        //还款时间
-        financialLoan.setFinalRepaymentTime(CalendarUtils.addMonth(now, financialLoan.getRepaymentTerm()));
-        financialLoan.setLateFee(BigDecimal.ZERO);
-        financialLoan.setOverdueNumer(0);
+        LocalDate finalDate = LocalDate.now().plusMonths(financialLoanConfig.getTerm());
+        financialLoan.setFinalRepaymentTime(finalDate);     //最后还款日
+        financialLoan.setVersion(0);
+        financialLoan.setRepayAmount(amount.add(interest));     //应还总额 = 本金+利息
         financialLoan.setReadyAmount(BigDecimal.ZERO);
-        financialLoan.setRepayAmount(financialLoan.getAmount().add(financialLoan.getInterest()));
-        financialLoan.setTerm(1);//默认为1期
-        financialLoanMapper.insert(financialLoan);
-        //添加额度明细
-        FinacialCreditLineBill finacialCreditLineBill = new FinacialCreditLineBill();
-        finacialCreditLineBill.setCustomerId(financialLoan.getCustomerId());
-        finacialCreditLineBill.setType(CapitalType.SUBTRACT);
-        finacialCreditLineBill.setTransactionType(TransactionType.APPLY_LOAN);
-        finacialCreditLineBill.setAmount(financialLoan.getInsuranceAmount());//只记录保单额度变更
-        finacialCreditLineBill.setCreateTime(now);
-        finacialCreditLineBill.setFinacialCreditLineId(financialLoan.getLoanId());
-        finacialCreditLineBill.setTransactionDesc("贷款申请");
-        financialCreditLineBillMapper.insert(finacialCreditLineBill);
-        return financialLoanVO;
+        financialLoan.setLeftAmount(amount);
+        financialLoan.setLeftInterest(interest);
+        financialLoan.setOverdueNumber(0);
+        financialLoan.setLateFee(BigDecimal.ZERO);
+        financialLoan.setState(LoanState.WAIT_LOAN);
+        financialLoan.setRepaymentState(RepaymentState.NON_REPAYMENT);
+        financialLoan.setCreateTime(LocalDateTime.now());
+        resultFlag = financialLoanMapper.insert(financialLoan) == 1;
+        if (!resultFlag) {
+            throw new RuntimeException("内部错误(借款提交)");
+        }
+
+        // 信用额度变动
+        FinancialCreditLineBill financialCreditLineBill = new FinancialCreditLineBill();
+        financialCreditLineBill.setCustomerId(customerId);
+        financialCreditLineBill.setType(CapitalType.SUBTRACT);
+        financialCreditLineBill.setTransactionType(TransactionType.APPLY_LOAN);
+        financialCreditLineBill.setAmount(amount);
+        financialCreditLineBill.setTransactionDesc("申请贷款：" + amount + ",减少对应信用额度");
+        financialCreditLineBill.setCreateTime(LocalDateTime.now());
+        resultFlag = financialCreditLineBillMapper.insert(financialCreditLineBill) == 1;
+        if (!resultFlag) {
+            throw new RuntimeException("内部错误(借款提交后信用额度变动)");
+        }
+
     }
 
     /**
@@ -156,35 +200,17 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
      * @return
      */
     @Override
-    public int countByCustomerId(int customerId) {
-        Query q = new Query();
-        FinancialLoan financialLoan = new FinancialLoan();
-        financialLoan.setCustomerId(customerId);
-        List<LoanState> list = new ArrayList<LoanState>();
-        list.add(LoanState.APPLY_SUCCESS);
-        list.add(LoanState.SETTLE);
-        financialLoan.setStateList(list);
-        q.setData(financialLoan);
-        return financialLoanMapper.count(q);
+    public int countByCustomerId(Integer customerId) {
+        return financialLoanMapper.countLoanByCustomer(customerId);
     }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public PageFinder<FinancialLoan> page(Query q) {
-        try {
-            //调用dao查询满足条件的分页数据
-            List<FinancialLoan> list = financialLoanMapper.pageList(q);
-            //调用dao统计满足条件的记录总数
-            long rowCount = financialLoanMapper.count(q);
-            //如list为null时，则改为返回一个空列表
-            list = list == null ? new ArrayList<FinancialLoan>(0) : list;
-            //将分页数据和记录总数设置到分页结果对象中
-            PageFinder<FinancialLoan> page = new PageFinder<FinancialLoan>(q.getPageNo(), q.getPageSize(), rowCount);
-            page.setData(list);
-            return page;
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return null;
-        }
+    public PageFinder<FinancialLoan> pageByCustomer(Integer customerId, Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        Page<FinancialLoan> page = financialLoanMapper.pageListByCustomer(customerId);
+        PageFinder<FinancialLoan> pageFinder = new PageFinder<>(pageNo, pageSize, page.getTotal());
+        pageFinder.setData(page.getResult());
+        return pageFinder;
     }
 }

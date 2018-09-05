@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import com.yunxin.cb.mall.entity.*;
+import com.yunxin.cb.mall.entity.meta.OperationType;
 import com.yunxin.cb.mall.entity.meta.WithdrawType;
 import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.restful.ResponseResult;
@@ -11,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -22,7 +24,7 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
 
     private static final Log log = LogFactory.getLog(FinancialWalletServiceImpl.class);
     @Resource
-    private FinacialWalletMapper finacialWalletMapper;
+    private FinancialWalletMapper financialWalletMapper;
     @Resource
     private FinacialWalletLogMapper finacialWalletLogMapper;
     @Resource
@@ -48,14 +50,14 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
         log.info("addFinancialWallet:" + vo.toString());
         FinancialWallet financialWallet = new FinancialWallet();
         BeanUtils.copyProperties(financialWallet, vo);
-        if (finacialWalletMapper.selectByCustomerId(financialWallet.getCustomerId()) == null) {
-            /**初始化钱包信息*/
+        if (financialWalletMapper.selectByCustomerId(financialWallet.getCustomerId()) == null) {
+            //初始化钱包信息
             financialWallet.setDebtCredit(new BigDecimal(0));
             financialWallet.setDebtCar(new BigDecimal(0));
             financialWallet.setCreditAmount(new BigDecimal(0));
             financialWallet.setFreezingAmount(new BigDecimal(0));
             financialWallet.setVersion(0);//初始化版本号
-            finacialWalletMapper.insert(financialWallet);
+            financialWalletMapper.insert(financialWallet);
         }
         return vo;
     }
@@ -69,9 +71,20 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
      * @date        2018/8/7 11:55
      */
     @Override
-    public FinancialWalletVO getFinancialWalletByCustomerId(int customerId){
+    public FinancialWalletVO getFinancialWalletByCustomerId(Integer customerId){
         FinancialWalletVO vo = new FinancialWalletVO();
-        FinancialWallet financialWallet = finacialWalletMapper.selectByCustomerId(customerId);
+        FinancialWallet financialWallet = financialWalletMapper.selectByCustomerId(customerId);
+        if (financialWallet == null) {
+            //初始化钱包信息
+            financialWallet = new FinancialWallet();
+            financialWallet.setCustomerId(customerId);
+            financialWallet.setDebtCredit(new BigDecimal(0));
+            financialWallet.setDebtCar(new BigDecimal(0));
+            financialWallet.setCreditAmount(new BigDecimal(0));
+            financialWallet.setFreezingAmount(new BigDecimal(0));
+            financialWallet.setVersion(0);//初始化版本号
+            financialWalletMapper.insert(financialWallet);
+        }
         BeanUtils.copyProperties(financialWallet, vo);
         return vo;
     }
@@ -85,16 +98,21 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
      * @date        2018/8/7 11:56
      */
     @Override
-    public FinancialWalletVO updateFinancialWallet(FinancialWalletVO vo){
+    @Transactional
+    public boolean updateFinancialWallet(FinancialWalletVO vo, BigDecimal amount, OperationType type, String remark){
         FinancialWallet financialWallet = new FinancialWallet();
-        BeanUtils.copyProperties(financialWallet, vo);
-        finacialWalletMapper.updateByPrimaryKey(financialWallet);
-        /**添加日志信息*/
-        FinacialWalletLog finacialWalletlog = new FinacialWalletLog();
-        BeanUtils.copyProperties(financialWallet, finacialWalletlog);
-        finacialWalletlog.setAmount(new BigDecimal("0"));
-        finacialWalletLogMapper.insert(finacialWalletlog);
-        return vo;
+        BeanUtils.copyProperties(vo, financialWallet);
+        int result = financialWalletMapper.updateByPrimaryKeyOnVersion(financialWallet);
+        if (result == 1) {
+            // 钱包变动日志
+            FinancialWalletLog financialWalletlog = new FinancialWalletLog();
+            BeanUtils.copyProperties(vo, financialWalletlog);
+            financialWalletlog.setAmount(amount);
+            financialWalletlog.setType(type);
+            financialWalletlog.setRemark(remark);
+            result = finacialWalletLogMapper.insert(financialWalletlog);
+        }
+        return result == 1;
     }
 
     @Override
@@ -102,7 +120,7 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
         //成功标识
         ResponseResult result=new ResponseResult(Result.FAILURE);
 //        //获取用户钱包
-//        FinancialWallet financialWallet =finacialWalletMapper.selectByCustomerId(customerId);
+//        FinancialWallet financialWallet =financialWalletMapper.selectByCustomerId(customerId);
 //        log.info("用户钱包："+ financialWallet);
 //        if(LogicUtils.isNull(financialWallet)){
 //            throw new RuntimeException("用户没有钱包，返现处理失败");
