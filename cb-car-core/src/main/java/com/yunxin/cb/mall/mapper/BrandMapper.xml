@@ -172,21 +172,21 @@ display,enabled,hot,category_id,sort
 	</where>
 </select>
 
-<select id="count" parameterType="Brand" resultType="Long">
+<select id="count" parameterType="Query" resultType="Long">
 	select count(brand_id) from BRAND 
 	<where>
 	<include refid="listCommonWhere"/>
 	</where>
 </select>
 
-<select id="queryAll" parameterType="Brand" resultMap="Brand">
+<select id="queryAll" parameterType="Query" resultMap="Brand">
 	select <include refid="CommonColumnlist"/> from BRAND 
 	<where>
 	<include refid="listCommonWhere"/>
 	</where>
 </select>
 
-<select id="pageList" parameterType="Brand" resultMap="Brand">
+<select id="pageList" parameterType="Query" resultMap="Brand">
 	select <include refid="CommonColumnlist"/> from BRAND
 	<where>
 	 <include refid="listCommonWhere"/>

@@ -21,8 +21,8 @@ public class MybatisConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception{
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setTypeAliasesPackage("com.yunxin.cb.mall.entity");
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
+        bean.setTypeAliasesPackage("com.yunxin.cb.mall");
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/yunxin/cb/mall/mapper/*.xml"));
         return bean.getObject();
     }
 
