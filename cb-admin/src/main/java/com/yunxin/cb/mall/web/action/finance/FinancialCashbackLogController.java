@@ -1,4 +1,4 @@
-package com.yunxin.cb.mall.web.action.reimbursement;
+package com.yunxin.cb.mall.web.action.finance;
 
 import com.yunxin.cb.mall.entity.FinancialCashbackLog;
 import com.yunxin.cb.mall.service.IFinancialCashbackLogService;
@@ -21,7 +21,7 @@ public class FinancialCashbackLogController {
 
     @RequestMapping(value = "financialCashbackLogs", method = RequestMethod.GET)
     public String financialCashbackLogs() {
-        return "rb/financialCashbackLogs";
+        return "finance/cashBack/financialCashbackLogs";
     }
 
     /**

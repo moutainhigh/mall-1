@@ -32,9 +32,9 @@
 </head>
 <body>
 
-<jsp:include page="../layouts/left.jsp"/>
+<jsp:include page="../../layouts/left.jsp"/>
 
-<jsp:include page="../layouts/sidebarRight.jsp"/>
+<jsp:include page="../../layouts/sidebarRight.jsp"/>
 
 <div id="main" class="clearfix">
 
@@ -235,7 +235,7 @@
             <!-- End .inner-padding -->
         </div>
 
-        <jsp:include page="../layouts/footer.jsp"/>
+        <jsp:include page="../../layouts/footer.jsp"/>
         <!-- End #footer-main -->
     </div>
     <!-- End #content -->

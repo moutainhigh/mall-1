@@ -1,21 +1,21 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FinacialRepayment;
-import java.util.List;
-
+import com.yunxin.cb.mall.entity.FinancialLoanRepayment;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
+import java.util.List;
+
 @Mapper
-public interface FinacialRepaymentMapper {
+public interface FinancialLoanRepaymentMapper {
     @Delete({
-        "delete from finacial_repayment",
+        "delete from financial_loan_repayment",
         "where REPAYMENT_ID = #{repaymentId,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer repaymentId);
 
     @Insert({
-        "insert into finacial_repayment (REPAYMENT_ID, CUSTOMER_ID, ",
+        "insert into financial_loan_repayment (REPAYMENT_ID, CUSTOMER_ID, ",
         "LOAN_ID, AMOUNT, ",
         "SEQ, LATE_FEE, INTEREST, ",
         "CREATE_TIME, REPAY_AMOUNT, ",
@@ -26,13 +26,13 @@ public interface FinacialRepaymentMapper {
         "#{createTime,jdbcType=TIMESTAMP}, #{repayAmount,jdbcType=DECIMAL}, ",
         "#{readyRepaymentTime,jdbcType=TIMESTAMP}, #{repayTime,jdbcType=TIMESTAMP})"
     })
-    int insert(FinacialRepayment record);
+    int insert(FinancialLoanRepayment record);
 
     @Select({
         "select",
         "REPAYMENT_ID, CUSTOMER_ID, LOAN_ID, AMOUNT, SEQ, LATE_FEE, INTEREST, CREATE_TIME, ",
         "REPAY_AMOUNT, READY_REPAYMENT_TIME, REPAY_TIME",
-        "from finacial_repayment",
+        "from financial_loan_repayment",
         "where REPAYMENT_ID = #{repaymentId,jdbcType=INTEGER}"
     })
     @Results({
@@ -48,13 +48,13 @@ public interface FinacialRepaymentMapper {
         @Result(column="READY_REPAYMENT_TIME", property="readyRepaymentTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="REPAY_TIME", property="repayTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    FinacialRepayment selectByPrimaryKey(Integer repaymentId);
+    FinancialLoanRepayment selectByPrimaryKey(Integer repaymentId);
 
     @Select({
         "select",
         "REPAYMENT_ID, CUSTOMER_ID, LOAN_ID, AMOUNT, SEQ, LATE_FEE, INTEREST, CREATE_TIME, ",
         "REPAY_AMOUNT, READY_REPAYMENT_TIME, REPAY_TIME",
-        "from finacial_repayment where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
+        "from financial_loan_repayment where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="REPAYMENT_ID", property="repaymentId", jdbcType=JdbcType.INTEGER, id=true),
@@ -69,10 +69,10 @@ public interface FinacialRepaymentMapper {
         @Result(column="READY_REPAYMENT_TIME", property="readyRepaymentTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="REPAY_TIME", property="repayTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<FinacialRepayment> selectByCustomerId(int customerId);
+    List<FinancialLoanRepayment> selectByCustomerId(int customerId);
 
     @Update({
-        "update finacial_repayment",
+        "update financial_loan_repayment",
         "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
           "LOAN_ID = #{loanId,jdbcType=INTEGER},",
           "AMOUNT = #{amount,jdbcType=DECIMAL},",
@@ -85,5 +85,5 @@ public interface FinacialRepaymentMapper {
           "REPAY_TIME = #{repayTime,jdbcType=TIMESTAMP}",
         "where REPAYMENT_ID = #{repaymentId,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKey(FinacialRepayment record);
+    int updateByPrimaryKey(FinancialLoanRepayment record);
 }

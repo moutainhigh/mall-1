@@ -1,66 +1,43 @@
-package com.yunxin.cb.mall.entity;
+package com.yunxin.cb.mall.vo;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class FinacialRepayment {
-    /**  */
-    private Integer repaymentId;
+@ApiModel(value = "用户还款VO", description = "用户还款VO FinancialLoanRepaymentVO")
+public class FinancialLoanRepaymentVO {
 
-    /**  */
+    @ApiModelProperty(value = "客户ID", name = "customerId", example = "1")
     private Integer customerId;
 
-    /**  */
+    @ApiModelProperty(value = "借款ID", name = "loanId", example = "1")
     private Integer loanId;
 
-    /** 还款金额 */
+    @ApiModelProperty(value = "还款金额", name = "amount", example = "100")
     private BigDecimal amount;
 
-    /** 第几期还款 */
+    @ApiModelProperty(value = "第几期还款", name = "seq", example = "1")
     private Integer seq;
 
-    /** 还款滞纳金 */
+    @ApiModelProperty(value = "还款滞纳金", name = "lateFee", example = "100")
     private BigDecimal lateFee;
 
-    /** 还款利息 */
+    @ApiModelProperty(value = "还款利息", name = "interest", example = "100")
     private BigDecimal interest;
 
-    /** 创建时间 */
+    @ApiModelProperty(value = "创建时间", name = "createTime", example = "2018-10-10")
     private Date createTime;
 
-    /** 实际还款金 */
+    @ApiModelProperty(value = "实际还款金", name = "repayAmount", example = "100")
     private BigDecimal repayAmount;
 
-    /** 实际还款时间 */
+    @ApiModelProperty(value = "实际还款时间", name = "readyRepaymentTime", example = "2018-10-10")
     private Date readyRepaymentTime;
 
-    /** 规定还款时间 */
+    @ApiModelProperty(value = "规定还款时间", name = "repayTime", example = "2018-10-10")
     private Date repayTime;
-
-    public FinacialRepayment(Integer repaymentId) {
-        this.repaymentId = repaymentId;
-    }
-
-    public FinacialRepayment(Integer customerId, Integer loanId, BigDecimal amount, Date createTime, BigDecimal repayAmount, Date readyRepaymentTime) {
-        this.customerId = customerId;
-        this.loanId = loanId;
-        this.amount = amount;
-        this.createTime = createTime;
-        this.repayAmount = repayAmount;
-        this.readyRepaymentTime = readyRepaymentTime;
-        this.seq = 0;
-        this.lateFee = new BigDecimal(0);
-        this.interest = new BigDecimal(0);
-        this.repayTime = new Date();
-    }
-
-    public Integer getRepaymentId() {
-        return repaymentId;
-    }
-
-    public void setRepaymentId(Integer repaymentId) {
-        this.repaymentId = repaymentId;
-    }
 
     public Integer getCustomerId() {
         return customerId;
@@ -140,5 +117,21 @@ public class FinacialRepayment {
 
     public void setRepayTime(Date repayTime) {
         this.repayTime = repayTime;
+    }
+
+    @Override
+    public String toString() {
+        return "FinancialLoanRepaymentVO{" +
+                "customerId=" + customerId +
+                ", loanId=" + loanId +
+                ", amount=" + amount +
+                ", seq=" + seq +
+                ", lateFee=" + lateFee +
+                ", interest=" + interest +
+                ", createTime=" + createTime +
+                ", repayAmount=" + repayAmount +
+                ", readyRepaymentTime=" + readyRepaymentTime +
+                ", repayTime=" + repayTime +
+                '}';
     }
 }

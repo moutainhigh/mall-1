@@ -4,7 +4,7 @@ public enum RepaymentType {
     BANK_CARD("银行卡"),WALLET("钱包");
     private String name;
 
-    private RepaymentType(String name) {
+    RepaymentType(String name) {
         this.name = name;
     }
 

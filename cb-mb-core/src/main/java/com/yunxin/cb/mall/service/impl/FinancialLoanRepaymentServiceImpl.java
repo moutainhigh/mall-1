@@ -1,19 +1,19 @@
 package com.yunxin.cb.mall.service.impl;
 
-import com.yunxin.cb.mall.entity.FinacialRepayment;
+import com.yunxin.cb.mall.entity.FinancialLoanRepayment;
 import com.yunxin.cb.mall.entity.FinancialWallet;
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
-import com.yunxin.cb.mall.mapper.FinacialRepaymentMapper;
+import com.yunxin.cb.mall.mapper.FinancialLoanRepaymentMapper;
 import com.yunxin.cb.mall.mapper.FinacialWalletMapper;
 import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
 import com.yunxin.cb.mall.service.FinancialLoanService;
-import com.yunxin.cb.mall.service.FinacialRepaymentService;
+import com.yunxin.cb.mall.service.FinancialLoanRepaymentService;
 import com.yunxin.cb.mall.service.FinancialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
+import com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO;
 import com.yunxin.cb.mall.vo.FinancialLoanVO;
-import com.yunxin.cb.mall.vo.FinacialRepaymentVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,10 +28,10 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
+public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepaymentService {
 
     @Resource
-    private FinacialRepaymentMapper finacialRepaymentServiceMapper;
+    private FinancialLoanRepaymentMapper financialLoanRepaymentMapper;
 
     @Resource
     private FinancialLoanService financialLoanService;
@@ -45,22 +45,23 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
     @Resource
     private FinancialWalletService financialWalletService;
 
-    private static final Log log = LogFactory.getLog(FinacialRepaymentServiceImpl.class);
+    private static final Log log = LogFactory.getLog(FinancialLoanRepaymentServiceImpl.class);
 
 
     /**
      * 添加
      * @author      likang
-     * @param vo
-     * @return      com.yunxin.cb.mall.vo.FinacialRepaymentVO
+     * @param repayAmount
+     * @param customerId
+     * @return      com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO
      * @exception
      * @date        2018/8/9 14:47
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void add(BigDecimal repayAmount,int coutomerId) throws Exception{
+    public void add(BigDecimal repayAmount,int customerId) throws Exception{
         //获取用户钱包
-        FinancialWallet financialWallet =finacialWalletMapper.selectByCustomerId(coutomerId);
+        FinancialWallet financialWallet =finacialWalletMapper.selectByCustomerId(customerId);
         BigDecimal totalAmount=repayAmount;//实际还款金
 //        if(financialWallet.getDebtTotal().subtract(totalAmount).doubleValue()<0){
 //            throw new CommonException("还款失败，还款金额不对");
@@ -68,14 +69,14 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
         /**还款，添加交易记录START*/
         FinacialLiabilitiesBillVO billvo = new FinacialLiabilitiesBillVO();
         billvo.setAmount(repayAmount);
-        billvo.setCustomerId(coutomerId);
+        billvo.setCustomerId(customerId);
         billvo.setTransactionType(TransactionType.MANUAL_REPAYMENT);
         billvo.setType(CapitalType.ADD);
         billvo.setTransactionDesc("手动还款");
         finacialLiabilitiesBillService.addFinacialLiabilitiesBill(billvo);
         /**还款，添加交易记录END*/
-        log.info("start repay cutomerId:"+coutomerId+";repayAmount:"+repayAmount);
-        List<FinancialLoanVO> insuranlist = financialLoanService.getByCustomerIdAndType(coutomerId);
+        log.info("start repay customerId:"+customerId+";repayAmount:"+repayAmount);
+        List<FinancialLoanVO> insuranlist = financialLoanService.getByCustomerIdAndType(customerId);
         for (FinancialLoanVO p : insuranlist) {
             BigDecimal surplusAmount = p.getSurplusAmount();//该贷款总负债
             BigDecimal insuranceAmount=p.getInsuranceAmount();//保险金负债
@@ -90,10 +91,10 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
                 financialLoanService.update(p);
                 repayAmount = repayAmount.subtract(surplusAmount);
                 /**添加还款计划*/
-                FinacialRepayment finacialRepayment = new FinacialRepayment(p.getCustomerId(), p.getLoanId(), surplusAmount,
+                FinancialLoanRepayment financialLoanRepayment = new FinancialLoanRepayment(p.getCustomerId(), p.getLoanId(), surplusAmount,
                         new Date(), surplusAmount, new Date());
-                finacialRepaymentServiceMapper.insert(finacialRepayment);
-                log.info("repay loanId"+p.getLoanId()+"cutomerId:"+coutomerId+
+                financialLoanRepaymentMapper.insert(financialLoanRepayment);
+                log.info("repay loanId"+p.getLoanId()+"customerId:"+customerId+
                         ";repayAmount:"+repayAmount+";surplusAmount:"+surplusAmount);
             }else{
                 surplusAmount = surplusAmount.subtract(repayAmount);
@@ -110,9 +111,9 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
                 financialLoanService.update(p);
                 repayAmount = new BigDecimal(0);
                 /**添加还款计划*/
-                FinacialRepayment finacialRepayment = new FinacialRepayment(p.getCustomerId(), p.getLoanId(), repayAmount,
+                FinancialLoanRepayment financialLoanRepayment = new FinancialLoanRepayment(p.getCustomerId(), p.getLoanId(), repayAmount,
                         new Date(), surplusAmount, new Date());
-                finacialRepaymentServiceMapper.insert(finacialRepayment);
+                financialLoanRepaymentMapper.insert(financialLoanRepayment);
                 break;
             }
         }
@@ -127,16 +128,16 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
      * 根据用户获取还款信息
      * @author      likang
      * @param customerId
-     * @return      java.util.List<com.yunxin.cb.mall.vo.FinacialRepaymentVO>
+     * @return      java.util.List<com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO>
      * @exception
      * @date        2018/8/9 14:48
      */
     @Override
-    public List<FinacialRepaymentVO> getByCustomerId(int customerId){
-        List<FinacialRepayment> list = finacialRepaymentServiceMapper.selectByCustomerId(customerId);
-        List<FinacialRepaymentVO> listVo = new ArrayList<>();
+    public List<FinancialLoanRepaymentVO> getByCustomerId(int customerId){
+        List<FinancialLoanRepayment> list = financialLoanRepaymentMapper.selectByCustomerId(customerId);
+        List<FinancialLoanRepaymentVO> listVo = new ArrayList<>();
         list.stream().forEach(p ->{
-            FinacialRepaymentVO vo = new FinacialRepaymentVO();
+            FinancialLoanRepaymentVO vo = new FinancialLoanRepaymentVO();
             BeanUtils.copyProperties(p, vo);
             listVo.add(vo);
         });
@@ -147,14 +148,14 @@ public class FinacialRepaymentServiceImpl implements FinacialRepaymentService {
      * 根据id获取还款信息
      * @author      likang
      * @param repaymentId
-     * @return      com.yunxin.cb.mall.vo.FinacialRepaymentVO
+     * @return      com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO
      * @exception
      * @date        2018/8/9 14:50
      */
     @Override
-    public FinacialRepaymentVO getById(int repaymentId){
-        FinacialRepaymentVO vo = new FinacialRepaymentVO();
-        FinacialRepayment loan = finacialRepaymentServiceMapper.selectByPrimaryKey(repaymentId);
+    public FinancialLoanRepaymentVO getById(int repaymentId){
+        FinancialLoanRepaymentVO vo = new FinancialLoanRepaymentVO();
+        FinancialLoanRepayment loan = financialLoanRepaymentMapper.selectByPrimaryKey(repaymentId);
         BeanUtils.copyProperties(loan, vo);
         return vo;
     }

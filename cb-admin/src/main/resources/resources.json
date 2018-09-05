@@ -197,7 +197,7 @@
         "name": "返现管理", "code": "195", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../financialCashbackLog/financialCashbackLogs.do"
       },
       {
-        "name": "还款管理", "code": "196", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../financialCashbackLog/financialCashbackLogs.do"
+        "name": "还款管理", "code": "196", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../financialLoanRepayment/financialLoanRepaymentLogs.do"
       }
     ]
   }
