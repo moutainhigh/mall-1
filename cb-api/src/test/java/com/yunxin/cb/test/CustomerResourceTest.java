@@ -48,7 +48,7 @@ public class CustomerResourceTest {
         log.info("查询客户基本信息 start");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/customer/getCustomerInfo")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -69,7 +69,7 @@ public class CustomerResourceTest {
         String requestJson = JSONObject.toJSONString(feedback);
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/customer/addFeedback")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ").content(requestJson))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog").content(requestJson))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -87,7 +87,7 @@ public class CustomerResourceTest {
         log.info("添加黑名单 start");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/customer/addBlacklist/310")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -105,7 +105,7 @@ public class CustomerResourceTest {
         log.info("移除黑名单 start");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/customer/removeBlacklist/310")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -123,7 +123,7 @@ public class CustomerResourceTest {
         log.info("获取黑名单 start");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/customer/getBlacklist")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -140,7 +140,7 @@ public class CustomerResourceTest {
         log.info("用户点赞 start");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/customer/praise")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -159,7 +159,7 @@ public class CustomerResourceTest {
         log.info("查询点赞用户 start");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/customer/getPraiseCustomer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -181,7 +181,7 @@ public class CustomerResourceTest {
         String jsonString= JSONObject.toJSONString(customerUpdateVo);
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/customer/updateCustomer")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ").content(jsonString))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog").content(jsonString))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -212,7 +212,7 @@ public class CustomerResourceTest {
         String  str= JSONObject.toJSONString(customerUpdateVo);
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/customer/matchAddressBook")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ").content(str))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog").content(str))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -230,7 +230,7 @@ public class CustomerResourceTest {
         log.info("获取感恩统计 start");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/customer/getGratitude")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -248,7 +248,7 @@ public class CustomerResourceTest {
         log.info("获取感恩列表 start");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/customer/getGratitudeData/GRATITUDEME")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
@@ -266,7 +266,7 @@ public class CustomerResourceTest {
         log.info("我的个人统计 start");
         //mock进行模拟
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/customer/getInterpersonal")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzgyMzIyMTAyNyIsImV4cCI6MTUzNTQ0NjE2MiwianRpIjoiNTYzIn0.XVXzI_GKRzZ1x2_OW_P2sfhlKfPbTxYDglQO6EPxePQMi281RIZXVg353Yl38qtx2X9t-aq6rFVb4kB7h6PpQQ"))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).header("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJtb2JpbGUiOiIxMzAxMjMxMzU4MiIsImV4cCI6MTUzNjczNDQyMSwianRpIjoiMzAwMyJ9.Q1kdxyo-AHBdOUjnUarrgUYZXAu1tumvdOkhA1_h31IjmKJGE3pf-yjmNCcb5ltkNGkZWIT9s8i-3sv3pYxYog"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();                 //得到返回代码
