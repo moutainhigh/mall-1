@@ -196,69 +196,69 @@ display,enabled,hot,category_id,sort
 
 
 <sql id="listCommonWhere">
-	<if test="q!=null">
-		<if test="q.brandId!=null ">
-			AND brand_id=#{q.brandId}
+	<if test="data!=null">
+		<if test="data.brandId!=null ">
+			AND brand_id=#{data.brandId}
 		</if>
-		<if test="q.brandEnName!=null and q.brandEnName!=''">
-			AND brand_en_name=#{q.brandEnName}
+		<if test="data.brandEnName!=null and data.brandEnName!=''">
+			AND brand_en_name=#{data.brandEnName}
 		</if>
-		<if test="q.brandKey!=null and q.brandKey!=''">
-			AND brand_key=#{q.brandKey}
+		<if test="data.brandKey!=null and data.brandKey!=''">
+			AND brand_key=#{data.brandKey}
 		</if>
-		<if test="q.brandName!=null and q.brandName!=''">
-			AND brand_name=#{q.brandName}
+		<if test="data.brandName!=null and data.brandName!=''">
+			AND brand_name=#{data.brandName}
 		</if>
-		<if test="q.brandNo!=null and q.brandNo!=''">
-			AND brand_no=#{q.brandNo}
+		<if test="data.brandNo!=null and data.brandNo!=''">
+			AND brand_no=#{data.brandNo}
 		</if>
-		<if test="q.brandTitle!=null and q.brandTitle!=''">
-			AND brand_title=#{q.brandTitle}
+		<if test="data.brandTitle!=null and data.brandTitle!=''">
+			AND brand_title=#{data.brandTitle}
 		</if>
-		<if test="q.createTime!=null ">
-			AND create_time=#{q.createTime}
+		<if test="data.createTime!=null ">
+			AND create_time=#{data.createTime}
 		</if>
-		<if test="q.createTimeStart!=null">
-		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		<if test="data.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{data.createTimeStart}  ]]>
 		</if>
-		<if test="q.createTimeEnd!=null">
-		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		<if test="data.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{data.createTimeEnd}   ]]>
 		</if>
-		<if test="q.description!=null and q.description!=''">
-			AND description=#{q.description}
+		<if test="data.description!=null and data.description!=''">
+			AND description=#{data.description}
 		</if>
-		<if test="q.display!=null ">
-			AND display=#{q.display}
+		<if test="data.display!=null ">
+			AND display=#{data.display}
 		</if>
-		<if test="q.enabled!=null ">
-			AND enabled=#{q.enabled}
+		<if test="data.enabled!=null ">
+			AND enabled=#{data.enabled}
 		</if>
-		<if test="q.hot!=null ">
-			AND hot=#{q.hot}
+		<if test="data.hot!=null ">
+			AND hot=#{data.hot}
 		</if>
-		<if test="q.picPath!=null and q.picPath!=''">
-			AND pic_path=#{q.picPath}
+		<if test="data.picPath!=null and data.picPath!=''">
+			AND pic_path=#{data.picPath}
 		</if>
-		<if test="q.remark!=null and q.remark!=''">
-			AND remark=#{q.remark}
+		<if test="data.remark!=null and data.remark!=''">
+			AND remark=#{data.remark}
 		</if>
-		<if test="q.seoDescription!=null and q.seoDescription!=''">
-			AND seo_description=#{q.seoDescription}
+		<if test="data.seoDescription!=null and data.seoDescription!=''">
+			AND seo_description=#{data.seoDescription}
 		</if>
-		<if test="q.seoKey!=null and q.seoKey!=''">
-			AND seo_key=#{q.seoKey}
+		<if test="data.seoKey!=null and data.seoKey!=''">
+			AND seo_key=#{data.seoKey}
 		</if>
-		<if test="q.seoTitle!=null and q.seoTitle!=''">
-			AND seo_title=#{q.seoTitle}
+		<if test="data.seoTitle!=null and data.seoTitle!=''">
+			AND seo_title=#{data.seoTitle}
 		</if>
-		<if test="q.website!=null and q.website!=''">
-			AND website=#{q.website}
+		<if test="data.website!=null and data.website!=''">
+			AND website=#{data.website}
 		</if>
-		<if test="q.categoryId!=null ">
-			AND category_id=#{q.categoryId}
+		<if test="data.categoryId!=null ">
+			AND category_id=#{data.categoryId}
 		</if>
-		<if test="q.sort!=null ">
-			AND sort=#{q.sort}
+		<if test="data.sort!=null ">
+			AND sort=#{data.sort}
 		</if>
 	</if>
 </sql>

@@ -89,21 +89,21 @@ favorite_id,create_time,sale_price,commodity_id,customer_id,product_id
 	</where>
 </select>
 
-<select id="count" parameterType="Favorite" resultType="Long">
+<select id="count" parameterType="Query" resultType="Long">
 	select count(favorite_id) from FAVORITE 
 	<where>
 	<include refid="listCommonWhere"/>
 	</where>
 </select>
 
-<select id="queryAll" parameterType="Favorite" resultMap="Favorite">
+<select id="queryAll" parameterType="Query" resultMap="Favorite">
 	select <include refid="CommonColumnlist"/> from FAVORITE 
 	<where>
 	<include refid="listCommonWhere"/>
 	</where>
 </select>
 
-<select id="pageList" parameterType="Favorite" resultMap="Favorite">
+<select id="pageList" parameterType="Query" resultMap="Favorite">
 	select <include refid="CommonColumnlist"/> from FAVORITE
 	<where>
 	 <include refid="listCommonWhere"/>
@@ -113,30 +113,30 @@ favorite_id,create_time,sale_price,commodity_id,customer_id,product_id
 
 
 <sql id="listCommonWhere">
-	<if test="q!=null">
-		<if test="q.favoriteId!=null ">
-			AND favorite_id=#{q.favoriteId}
+	<if test="data!=null">
+		<if test="data.favoriteId!=null ">
+			AND favorite_id=#{data.favoriteId}
 		</if>
-		<if test="q.createTime!=null ">
-			AND create_time=#{q.createTime}
+		<if test="data.createTime!=null ">
+			AND create_time=#{data.createTime}
 		</if>
-		<if test="q.createTimeStart!=null">
-		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		<if test="data.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{data.createTimeStart}  ]]>
 		</if>
-		<if test="q.createTimeEnd!=null">
-		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		<if test="data.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{data.createTimeEnd}   ]]>
 		</if>
-		<if test="q.salePrice!=null ">
-			AND sale_price=#{q.salePrice}
+		<if test="data.salePrice!=null ">
+			AND sale_price=#{data.salePrice}
 		</if>
-		<if test="q.commodityId!=null ">
-			AND commodity_id=#{q.commodityId}
+		<if test="data.commodityId!=null ">
+			AND commodity_id=#{data.commodityId}
 		</if>
-		<if test="q.customerId!=null ">
-			AND customer_id=#{q.customerId}
+		<if test="data.customerId!=null ">
+			AND customer_id=#{data.customerId}
 		</if>
-		<if test="q.productId!=null ">
-			AND product_id=#{q.productId}
+		<if test="data.productId!=null ">
+			AND product_id=#{data.productId}
 		</if>
 	</if>
 </sql>

@@ -6,14 +6,15 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.yunxin.cb.mall.common.PageFinder;
-import com.yunxin.cb.mall.common.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.BrandDao;
 import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.service.BrandService;
