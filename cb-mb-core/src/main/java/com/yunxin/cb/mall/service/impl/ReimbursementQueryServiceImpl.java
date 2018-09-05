@@ -98,6 +98,9 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
         for(AddReimbursementRequestVO addReimbursementRequestVO : list){
             //根据ReimbursementQueryId查询
             ReimbursementQuery reimbursementQuery = reimbursementQueryMapper.selectByPrimaryKeyAndCustomerId(addReimbursementRequestVO.getReimbursementQueryId(),customerId);
+            if(reimbursementQuery.getReimbursementQueryState().getName().equals(ReimbursementQueryState.CANNOT_REIMBURSEMENT)){
+                return null;
+            }
             //获取商品分类
             Catalog catalog = catalogMapper.selectByCommodityId(reimbursementQuery.getCommodityId());
             //判断该订单属于哪一商品分类

@@ -55,6 +55,8 @@ public class BankInfo implements Serializable {
 
     private Customer customer;
 
+    private String bankName;
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)
@@ -129,5 +131,13 @@ public class BankInfo implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+    @Column(nullable = false, length = 60)
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
 }

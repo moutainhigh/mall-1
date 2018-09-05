@@ -197,7 +197,14 @@
         "name": "返现管理", "code": "195", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../financialCashbackLog/financialCashbackLogs.do"
       },
       {
-        "name": "还款管理", "code": "196", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../financialLoanRepayment/financialLoanRepaymentLogs.do"
+        "name": "借款管理", "code": "196", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../loan/loanList.do"
+      },
+      {
+        "name": "借款审批", "code": "197", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../loan/loanApprovalList.do"
+      },
+      {
+        "name": "返现管理", "code": "198", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../finacialInsuCashbackLog/finacialInsuCashbackLogs.do"
+        "name": "还款管理", "code": "199", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../financialLoanRepayment/financialLoanRepaymentLogs.do"
       }
     ]
   }
