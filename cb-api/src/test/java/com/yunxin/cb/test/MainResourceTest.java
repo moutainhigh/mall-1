@@ -96,7 +96,7 @@ public class MainResourceTest {
     public void loginByPwdTest() throws Exception {
         log.info("用户名密码登录 start");
         //mock进行模拟
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/v1/noAuth/loginByPwd")
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/noAuth/loginByPwd")
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).param("accountName","13823221020").param("password","123456"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
