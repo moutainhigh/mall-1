@@ -89,21 +89,21 @@ favorite_id,create_time,sale_price,commodity_id,customer_id,product_id
 	</where>
 </select>
 
-<select id="count" parameterType="Query" resultType="Long">
+<select id="count" parameterType="com.yunxin.cb.util.page.Query" resultType="Long">
 	select count(favorite_id) from FAVORITE 
 	<where>
 	<include refid="listCommonWhere"/>
 	</where>
 </select>
 
-<select id="queryAll" parameterType="Query" resultMap="Favorite">
+<select id="queryAll" parameterType="com.yunxin.cb.util.page.Query" resultMap="Favorite">
 	select <include refid="CommonColumnlist"/> from FAVORITE 
 	<where>
 	<include refid="listCommonWhere"/>
 	</where>
 </select>
 
-<select id="pageList" parameterType="Query" resultMap="Favorite">
+<select id="pageList" parameterType="com.yunxin.cb.util.page.Query" resultMap="Favorite">
 	select <include refid="CommonColumnlist"/> from FAVORITE
 	<where>
 	 <include refid="listCommonWhere"/>
