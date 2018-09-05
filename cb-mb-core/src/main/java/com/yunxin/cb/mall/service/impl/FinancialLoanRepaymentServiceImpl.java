@@ -4,20 +4,14 @@ import com.yunxin.cb.mall.entity.FinancialLoanRepayment;
 import com.yunxin.cb.mall.entity.FinancialWallet;
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
-import com.yunxin.cb.mall.mapper.FinacialRepaymentMapper;
-import com.yunxin.cb.mall.mapper.FinancialWalletMapper;
 import com.yunxin.cb.mall.mapper.FinancialLoanRepaymentMapper;
-import com.yunxin.cb.mall.mapper.FinacialWalletMapper;
+import com.yunxin.cb.mall.mapper.FinancialWalletMapper;
 import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
-import com.yunxin.cb.mall.service.FinacialRepaymentService;
-import com.yunxin.cb.mall.service.FinancialLoanService;
-import com.yunxin.cb.mall.service.FinancialLoanService;
 import com.yunxin.cb.mall.service.FinancialLoanRepaymentService;
+import com.yunxin.cb.mall.service.FinancialLoanService;
 import com.yunxin.cb.mall.service.FinancialWalletService;
 import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
-import com.yunxin.cb.mall.vo.FinacialRepaymentVO;
 import com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO;
-import com.yunxin.cb.mall.vo.FinancialLoanVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -64,7 +58,7 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
     @Transactional(rollbackFor = Exception.class)
     public void add(BigDecimal repayAmount,int customerId) throws Exception{
         //获取用户钱包
-        FinancialWallet financialWallet = financialWalletMapper.selectByCustomerId(coutomerId);
+        FinancialWallet financialWallet = financialWalletMapper.selectByCustomerId(customerId);
         BigDecimal totalAmount=repayAmount;//实际还款金
 //        if(financialWallet.getDebtTotal().subtract(totalAmount).doubleValue()<0){
 //            throw new CommonException("还款失败，还款金额不对");
@@ -78,7 +72,7 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
         billvo.setTransactionDesc("手动还款");
         finacialLiabilitiesBillService.addFinacialLiabilitiesBill(billvo);
         /**还款，添加交易记录END*/
-        log.info("start repay cutomerId:"+coutomerId+";repayAmount:"+repayAmount);
+        log.info("start repay cutomerId:"+customerId+";repayAmount:"+repayAmount);
 //        List<FinancialLoanVO> insuranlist = financialLoanService.getByCustomerIdAndType(coutomerId);
 //        for (FinancialLoanVO p : insuranlist) {
 //            BigDecimal surplusAmount = p.getSurplusAmount();//该贷款总负债

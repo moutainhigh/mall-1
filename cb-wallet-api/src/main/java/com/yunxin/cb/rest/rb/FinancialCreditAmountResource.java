@@ -58,7 +58,6 @@ public class FinancialCreditAmountResource extends BaseResource {
     })
     @GetMapping(value = "getCreditAmountInfo")
     @ApiVersion(1)
-    @IgnoreAuthentication
     public ResponseResult<FinancialCreditLineVO> getCreditAmountInfo() {
         try {
             FinancialWalletVO financialWalletVO = financialWalletService.getFinancialWalletByCustomerId(getCustomerId());
@@ -78,7 +77,6 @@ public class FinancialCreditAmountResource extends BaseResource {
     })
     @GetMapping("getLoanInitDataInfo")
     @ApiVersion(1)
-    @IgnoreAuthentication
     public ResponseResult<FinancialLoanInitDateVO> getLoanInitDataInfo() {
         try {
             Customer customer = customerService.getCustomerById(getCustomerId());
@@ -116,7 +114,6 @@ public class FinancialCreditAmountResource extends BaseResource {
     })
     @PostMapping(value = "submitLoan")
     @ApiVersion(1)
-    @IgnoreAuthentication
     public ResponseResult submitLoan(@Valid @RequestBody AddFinancialLoanVO addFinancialLoanVO) {
         try {
             //添加借款记录
@@ -136,7 +133,6 @@ public class FinancialCreditAmountResource extends BaseResource {
     })
     @GetMapping(value = "getLoanDetails")
     @ApiVersion(1)
-    @IgnoreAuthentication
     public ResponseResult<PageFinder<FinancialLoanVO>> getLoanDetails(@RequestParam Integer pageNo, @RequestParam Integer pageSize) {
         try {
             PageFinder<FinancialLoan> pageFinder = financialLoanService.pageByCustomer(getCustomerId(),pageNo, pageSize);
