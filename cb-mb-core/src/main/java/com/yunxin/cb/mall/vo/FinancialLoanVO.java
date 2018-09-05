@@ -108,31 +108,20 @@ public class FinancialLoanVO {
     /**
      * 分页DO转换VO
      */
-    public static List<FinancialLoanVO> convertVOList(List<FinancialLoan> list){
-        try {
-            List<FinancialLoanVO> volist = new ArrayList<>();
-            for (FinancialLoan model : list) {
+    public static PageFinder<FinancialLoanVO> convertVOPage(PageFinder<FinancialLoan> pageFinder) {
+
+        PageFinder<FinancialLoanVO> page = new PageFinder<>(pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
+        List<FinancialLoanVO> volist = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(pageFinder.getData())) {
+            for (FinancialLoan model : pageFinder.getData()) {
                 FinancialLoanVO vo = new FinancialLoanVO();
                 org.springframework.beans.BeanUtils.copyProperties(model, vo);
                 volist.add(vo);
             }
-            return volist;
-        } catch (BeansException e) {
-            e.printStackTrace();
         }
-        return null;
-    }
-
-    /**
-     * 分页DO转换VO
-     */
-    public static PageFinder<FinancialLoanVO> convertVOPage(PageFinder<FinancialLoan> pageFinder){
-        PageFinder<FinancialLoanVO> page = new PageFinder<> (pageFinder.getPageNo(), pageFinder.getPageSize(), pageFinder.getRowCount());
-        if (CollectionUtils.isNotEmpty(pageFinder.getData())) {
-            List<FinancialLoanVO> list = FinancialLoanVO.convertVOList(pageFinder.getData());
-            page.setData(list);
-        }
+        page.setData(volist);
         page.setRowCount(pageFinder.getRowCount());//记录总数
+        page.setPageCount(pageFinder.getPageCount());//总页数
         return page;
     }
 }

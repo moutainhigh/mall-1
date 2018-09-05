@@ -96,22 +96,18 @@ public class FinancialLoanBillVO {
     /**
      * 分页DO转换VO
      */
-    public static PageFinder<FinancialLoanBillVO> dOconvertVOPage (PageFinder<FinancialLoanBill> pageFinder){
-        PageFinder<FinancialLoanBillVO> page = new PageFinder<> (pageFinder.getPageNo(), pageFinder.getPageSize());
+    public static PageFinder<FinancialLoanBillVO> convertVOPage(PageFinder<FinancialLoanBill> pageFinder) {
+
+        PageFinder<FinancialLoanBillVO> page = new PageFinder<>(pageFinder.getPageNo(), pageFinder.getPageSize());
+        List<FinancialLoanBillVO> volist = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(pageFinder.getData())) {
-            try {
-                List<FinancialLoanBill> list = pageFinder.getData();
-                List<FinancialLoanBillVO> volist = new ArrayList<>();
-                for (FinancialLoanBill fa : list) {
-                    FinancialLoanBillVO fbVo = new FinancialLoanBillVO();
-                    org.springframework.beans.BeanUtils.copyProperties(fa, fbVo);
-                    volist.add(fbVo);
-                }
-                page.setData(volist);
-            } catch (BeansException e) {
-                e.printStackTrace();
+            for (FinancialLoanBill fa : pageFinder.getData()) {
+                FinancialLoanBillVO fbVo = new FinancialLoanBillVO();
+                org.springframework.beans.BeanUtils.copyProperties(fa, fbVo);
+                volist.add(fbVo);
             }
         }
+        page.setData(volist);
         page.setRowCount(pageFinder.getRowCount());//记录总数
         page.setPageCount(pageFinder.getPageCount());//总页数
         return page;

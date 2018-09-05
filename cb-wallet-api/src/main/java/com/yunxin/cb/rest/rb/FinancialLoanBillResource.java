@@ -8,8 +8,8 @@ import com.yunxin.cb.mall.service.FinancialLoanBillService;
 import com.yunxin.cb.mall.vo.FinancialLoanBillVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -25,7 +25,7 @@ import javax.annotation.Resource;
 @Api(description = "负债交易记录")
 @RestController
 @RequestMapping(value = "/{version}/rb/liabilities")
-public class FinacialLiabilitiesBillResource extends BaseResource {
+public class FinancialLoanBillResource extends BaseResource {
 
     @Resource
     private FinancialLoanBillService financialLoanBillService;
@@ -40,23 +40,19 @@ public class FinacialLiabilitiesBillResource extends BaseResource {
     })
     @ApiVersion(1)
     @GetMapping(value = "get")
-    public ResponseResult<PageFinder<FinancialLoanBillVO>> get(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
+    public ResponseResult<PageFinder<FinancialLoanBillVO>> get(@RequestParam Integer pageNo, @RequestParam Integer pageSize) {
         try {
             Customer customer = customerService.getCustomerById(getCustomerId());
             if (customer == null) {
                 return new ResponseResult<>(Result.FAILURE, "未获取到用户信息");
             }
-            Query q = new Query(pageNo, pageSize);
-            FinancialLoanBill fbill=new FinancialLoanBill();
-            fbill.setCustomerId(customer.getCustomerId());
-            q.setData(fbill);
-            PageFinder<FinancialLoanBill> pageFinder= financialLoanBillService.page(q);
-            PageFinder<FinancialLoanBillVO> page=FinancialLoanBillVO.dOconvertVOPage(pageFinder);
-            return new ResponseResult(page);
+            PageFinder<FinancialLoanBill> pageFinder = financialLoanBillService.page(getCustomerId(), pageNo, pageSize);
+            PageFinder<FinancialLoanBillVO> page = FinancialLoanBillVO.convertVOPage(pageFinder);
+            return new ResponseResult<>(page);
         } catch (Exception e) {
-            logger.error("get failed", e);
+            logger.error("get FinancialLoanBill page failed", e);
         }
-        return new ResponseResult(Result.FAILURE);
+        return new ResponseResult<>(Result.FAILURE);
     }
 
 //    @ApiOperation(value = "添加负债交易信息")

@@ -1,11 +1,12 @@
 package com.yunxin.cb.mall.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.yunxin.cb.mall.entity.FinancialLoanBill;
-import com.yunxin.cb.mall.mapper.FinacialLiabilitiesBillMapper;
+import com.yunxin.cb.mall.mapper.FinancialLoanBillMapper;
 import com.yunxin.cb.mall.service.FinancialLoanBillService;
 import com.yunxin.cb.mall.vo.FinancialLoanBillVO;
 import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +23,7 @@ import java.util.List;
 public class FinancialLoanBillServiceImpl implements FinancialLoanBillService {
 
     @Resource
-    private FinacialLiabilitiesBillMapper finacialLiabilitiesBillMapper;
+    private FinancialLoanBillMapper financialLoanBillMapper;
 
     private static final Log log = LogFactory.getLog(FinancialLoanBillServiceImpl.class);
     /**
@@ -39,7 +40,7 @@ public class FinancialLoanBillServiceImpl implements FinancialLoanBillService {
         FinancialLoanBill financialLoanBill = new FinancialLoanBill();
         BeanUtils.copyProperties(financialLoanBill, vo);
         financialLoanBill.setCreateTime(LocalDateTime.now());
-        finacialLiabilitiesBillMapper.insert(financialLoanBill);
+        financialLoanBillMapper.insert(financialLoanBill);
         return vo;
     }
 
@@ -53,7 +54,7 @@ public class FinancialLoanBillServiceImpl implements FinancialLoanBillService {
      */
     @Override
     public List<FinancialLoanBillVO> getFinacialLiabilitiesBillByCustomerId(int customerId){
-        List<FinancialLoanBill> list = finacialLiabilitiesBillMapper.selectByCustomerId(customerId);
+        List<FinancialLoanBill> list = financialLoanBillMapper.selectByCustomerId(customerId);
         List<FinancialLoanBillVO> listvo=new ArrayList<>();
         list.stream().forEach(f ->{
             FinancialLoanBillVO vo = new FinancialLoanBillVO();
@@ -64,33 +65,17 @@ public class FinancialLoanBillServiceImpl implements FinancialLoanBillService {
     }
 
     /**
-     * 获取分页信息
-     * @author      likang
-     * @param q
-     * @return      com.yunxin.cb.util.page.PageFinder<com.yunxin.cb.mall.entity.FinancialLoanBill>
-     * @exception
-     * @date        2018/8/9 17:33
-     */
+     * @Author chenpeng
+     * @Description 获取 负债记录 分页信息
+     * @Date 2018/9/5 11:10 
+     **/
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public PageFinder<FinancialLoanBill> page(Query q) {
-        PageFinder<FinancialLoanBill> page = new PageFinder<FinancialLoanBill>(q.getPageNo(), q.getPageSize());
-        List<FinancialLoanBill> list = null;
-        long rowCount = 0L;
-        try {
-            //调用dao查询满足条件的分页数据
-            list = finacialLiabilitiesBillMapper.pageList(q);
-            //调用dao统计满足条件的记录总数
-            rowCount = finacialLiabilitiesBillMapper.count(q);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-        //如list为null时，则改为返回一个空列表
-        list = list == null ? new ArrayList<FinancialLoanBill>(0) : list;
-        //将分页数据和记录总数设置到分页结果对象中
-        page.setData(list);
-        page.setRowCount(rowCount);//记录总数
-        page.setPageCount((int)rowCount);//总页数
-        return page;
+    public PageFinder<FinancialLoanBill> page(Integer customerId, Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        Page<FinancialLoanBill> page = financialLoanBillMapper.pageListByCustomer(customerId);
+        PageFinder<FinancialLoanBill> pageFinder = new PageFinder<>(pageNo, pageSize, page.getTotal());
+        pageFinder.setData(page.getResult());
+        return pageFinder;
     }
 }

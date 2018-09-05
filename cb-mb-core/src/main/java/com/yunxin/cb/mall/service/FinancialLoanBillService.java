@@ -13,5 +13,5 @@ public interface FinancialLoanBillService {
 
     List<FinancialLoanBillVO> getFinacialLiabilitiesBillByCustomerId(int customerId);
 
-    public PageFinder<FinancialLoanBill> page(Query q);
+    PageFinder<FinancialLoanBill> page(Integer customerId, Integer pageNo, Integer pageSize);
 }
