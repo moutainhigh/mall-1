@@ -70,14 +70,14 @@ public class FinancialWalletResource extends BaseResource {
         try {
             Customer customer = customerService.getCustomerById(getCustomerId());
             if (customer == null) {
-                return new ResponseResult(Result.FAILURE, "未获取到用户信息");
+                return new ResponseResult<>(Result.FAILURE, "未获取到用户信息");
             }
             FinancialWalletVO vo = financialWalletService.getFinancialWalletByCustomerId(customer.getCustomerId());
-            return new ResponseResult(vo);
+            return new ResponseResult<>(vo);
         } catch (Exception e) {
             logger.info("get failed", e);
         }
-        return new ResponseResult(Result.FAILURE);
+        return new ResponseResult<>(Result.FAILURE);
     }
 
     /**

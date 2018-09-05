@@ -4,36 +4,49 @@ import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public class FinacialLiabilitiesBill {
+public class FinancialLoanBill {
+
     /**  */
-    private Integer financialFreezingId;
+    private Integer loanBillId;
 
-    /** 客户ID */
+    /**
+     * 客户ID
+     */
     private Integer customerId;
 
-    /** 资金类型：1.支出，2.收入 */
+    /**
+     * 资金类型：1.支出，2.收入
+     */
     private CapitalType type;
 
-    /** 交易类型：1.保险返利 2.保险购买 */
+    /**
+     * 交易类型：1.保险返利 2.保险购买
+     */
     private TransactionType transactionType;
 
-    /** 交易描述 */
+    /**
+     * 交易描述
+     */
     private String transactionDesc;
 
-    /** 交易金 */
+    /**
+     * 交易金
+     */
     private BigDecimal amount;
 
-    /** 交易时间 */
-    private Date createTime;
+    /**
+     * 交易时间
+     */
+    private LocalDateTime createTime;
 
-    public Integer getFinancialFreezingId() {
-        return financialFreezingId;
+    public Integer getLoanBillId() {
+        return loanBillId;
     }
 
-    public void setFinancialFreezingId(Integer financialFreezingId) {
-        this.financialFreezingId = financialFreezingId;
+    public void setLoanBillId(Integer loanBillId) {
+        this.loanBillId = loanBillId;
     }
 
     public Integer getCustomerId() {
@@ -65,7 +78,7 @@ public class FinacialLiabilitiesBill {
     }
 
     public void setTransactionDesc(String transactionDesc) {
-        this.transactionDesc = transactionDesc == null ? null : transactionDesc.trim();
+        this.transactionDesc = transactionDesc;
     }
 
     public BigDecimal getAmount() {
@@ -76,11 +89,11 @@ public class FinacialLiabilitiesBill {
         this.amount = amount;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 }

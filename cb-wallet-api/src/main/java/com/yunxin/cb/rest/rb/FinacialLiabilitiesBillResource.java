@@ -2,10 +2,10 @@ package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.FinacialLiabilitiesBill;
+import com.yunxin.cb.mall.entity.FinancialLoanBill;
 import com.yunxin.cb.mall.service.CustomerService;
-import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
-import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
+import com.yunxin.cb.mall.service.FinancialLoanBillService;
+import com.yunxin.cb.mall.vo.FinancialLoanBillVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
@@ -28,7 +28,7 @@ import javax.annotation.Resource;
 public class FinacialLiabilitiesBillResource extends BaseResource {
 
     @Resource
-    private FinacialLiabilitiesBillService finacialLiabilitiesBillService;
+    private FinancialLoanBillService financialLoanBillService;
 
     @Resource
     private CustomerService customerService;
@@ -40,18 +40,18 @@ public class FinacialLiabilitiesBillResource extends BaseResource {
     })
     @ApiVersion(1)
     @GetMapping(value = "get")
-    public ResponseResult<PageFinder<FinacialLiabilitiesBillVO>> get(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
+    public ResponseResult<PageFinder<FinancialLoanBillVO>> get(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize){
         try {
             Customer customer = customerService.getCustomerById(getCustomerId());
             if (customer == null) {
-                return new ResponseResult(Result.FAILURE, "未获取到用户信息");
+                return new ResponseResult<>(Result.FAILURE, "未获取到用户信息");
             }
             Query q = new Query(pageNo, pageSize);
-            FinacialLiabilitiesBill fbill=new FinacialLiabilitiesBill();
+            FinancialLoanBill fbill=new FinancialLoanBill();
             fbill.setCustomerId(customer.getCustomerId());
             q.setData(fbill);
-            PageFinder<FinacialLiabilitiesBill> pageFinder=finacialLiabilitiesBillService.page(q);
-            PageFinder<FinacialLiabilitiesBillVO> page=FinacialLiabilitiesBillVO.dOconvertVOPage(pageFinder);
+            PageFinder<FinancialLoanBill> pageFinder= financialLoanBillService.page(q);
+            PageFinder<FinancialLoanBillVO> page=FinancialLoanBillVO.dOconvertVOPage(pageFinder);
             return new ResponseResult(page);
         } catch (Exception e) {
             logger.error("get failed", e);
@@ -64,9 +64,9 @@ public class FinacialLiabilitiesBillResource extends BaseResource {
 //    })
 //    @ApiVersion(1)
 //    @GetMapping(value = "add")
-//    public ResponseResult<FinacialLiabilitiesBillVO> add(@RequestBody FinacialLiabilitiesBillVO vo){
+//    public ResponseResult<FinancialLoanBillVO> add(@RequestBody FinancialLoanBillVO vo){
 //        try {
-//            finacialLiabilitiesBillService.addFinacialLiabilitiesBill(vo);
+//            financialLoanBillService.addFinacialLiabilitiesBill(vo);
 //            return new ResponseResult(vo);
 //        } catch (Exception e) {
 //            log.info("get failed", e);

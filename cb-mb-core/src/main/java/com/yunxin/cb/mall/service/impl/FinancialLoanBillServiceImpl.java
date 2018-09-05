@@ -1,9 +1,9 @@
 package com.yunxin.cb.mall.service.impl;
 
-import com.yunxin.cb.mall.entity.FinacialLiabilitiesBill;
+import com.yunxin.cb.mall.entity.FinancialLoanBill;
 import com.yunxin.cb.mall.mapper.FinacialLiabilitiesBillMapper;
-import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
-import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
+import com.yunxin.cb.mall.service.FinancialLoanBillService;
+import com.yunxin.cb.mall.vo.FinancialLoanBillVO;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 import org.apache.commons.logging.Log;
@@ -14,32 +14,32 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
-public class FinacialLiabilitiesBillServiceImpl implements FinacialLiabilitiesBillService {
+public class FinancialLoanBillServiceImpl implements FinancialLoanBillService {
 
     @Resource
     private FinacialLiabilitiesBillMapper finacialLiabilitiesBillMapper;
 
-    private static final Log log = LogFactory.getLog(FinacialLiabilitiesBillServiceImpl.class);
+    private static final Log log = LogFactory.getLog(FinancialLoanBillServiceImpl.class);
     /**
      * 添加
      * @author      likang
      * @param vo
-     * @return      com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO
+     * @return      com.yunxin.cb.mall.vo.FinancialLoanBillVO
      * @exception
      * @date        2018/8/8 16:59
      */
     @Override
-    public FinacialLiabilitiesBillVO addFinacialLiabilitiesBill(FinacialLiabilitiesBillVO vo){
+    public FinancialLoanBillVO addFinacialLiabilitiesBill(FinancialLoanBillVO vo){
         log.info("addFinacialLiabilitiesBill:"+vo);
-        FinacialLiabilitiesBill finacialLiabilitiesBill = new FinacialLiabilitiesBill();
-        BeanUtils.copyProperties(finacialLiabilitiesBill, vo);
-        finacialLiabilitiesBill.setCreateTime(new Date());
-        finacialLiabilitiesBillMapper.insert(finacialLiabilitiesBill);
+        FinancialLoanBill financialLoanBill = new FinancialLoanBill();
+        BeanUtils.copyProperties(financialLoanBill, vo);
+        financialLoanBill.setCreateTime(LocalDateTime.now());
+        finacialLiabilitiesBillMapper.insert(financialLoanBill);
         return vo;
     }
 
@@ -47,16 +47,16 @@ public class FinacialLiabilitiesBillServiceImpl implements FinacialLiabilitiesBi
      * 获取记录
      * @author      likang
      * @param customerId
-     * @return      java.util.List<com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO>
+     * @return      java.util.List<com.yunxin.cb.mall.vo.FinancialLoanBillVO>
      * @exception
      * @date        2018/8/8 17:04
      */
     @Override
-    public List<FinacialLiabilitiesBillVO> getFinacialLiabilitiesBillByCustomerId(int customerId){
-        List<FinacialLiabilitiesBill> list = finacialLiabilitiesBillMapper.selectByCustomerId(customerId);
-        List<FinacialLiabilitiesBillVO> listvo=new ArrayList<>();
+    public List<FinancialLoanBillVO> getFinacialLiabilitiesBillByCustomerId(int customerId){
+        List<FinancialLoanBill> list = finacialLiabilitiesBillMapper.selectByCustomerId(customerId);
+        List<FinancialLoanBillVO> listvo=new ArrayList<>();
         list.stream().forEach(f ->{
-            FinacialLiabilitiesBillVO vo = new FinacialLiabilitiesBillVO();
+            FinancialLoanBillVO vo = new FinancialLoanBillVO();
             BeanUtils.copyProperties(f, vo);
             listvo.add(vo);
         });
@@ -67,15 +67,15 @@ public class FinacialLiabilitiesBillServiceImpl implements FinacialLiabilitiesBi
      * 获取分页信息
      * @author      likang
      * @param q
-     * @return      com.yunxin.cb.util.page.PageFinder<com.yunxin.cb.mall.entity.FinacialLiabilitiesBill>
+     * @return      com.yunxin.cb.util.page.PageFinder<com.yunxin.cb.mall.entity.FinancialLoanBill>
      * @exception
      * @date        2018/8/9 17:33
      */
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public PageFinder<FinacialLiabilitiesBill> page(Query q) {
-        PageFinder<FinacialLiabilitiesBill> page = new PageFinder<FinacialLiabilitiesBill>(q.getPageNo(), q.getPageSize());
-        List<FinacialLiabilitiesBill> list = null;
+    public PageFinder<FinancialLoanBill> page(Query q) {
+        PageFinder<FinancialLoanBill> page = new PageFinder<FinancialLoanBill>(q.getPageNo(), q.getPageSize());
+        List<FinancialLoanBill> list = null;
         long rowCount = 0L;
         try {
             //调用dao查询满足条件的分页数据
@@ -86,7 +86,7 @@ public class FinacialLiabilitiesBillServiceImpl implements FinacialLiabilitiesBi
             log.error(e.getMessage(), e);
         }
         //如list为null时，则改为返回一个空列表
-        list = list == null ? new ArrayList<FinacialLiabilitiesBill>(0) : list;
+        list = list == null ? new ArrayList<FinancialLoanBill>(0) : list;
         //将分页数据和记录总数设置到分页结果对象中
         page.setData(list);
         page.setRowCount(rowCount);//记录总数

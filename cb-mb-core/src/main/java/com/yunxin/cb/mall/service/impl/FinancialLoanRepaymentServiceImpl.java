@@ -6,11 +6,11 @@ import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
 import com.yunxin.cb.mall.mapper.FinancialLoanRepaymentMapper;
 import com.yunxin.cb.mall.mapper.FinancialWalletMapper;
-import com.yunxin.cb.mall.service.FinacialLiabilitiesBillService;
+import com.yunxin.cb.mall.service.FinancialLoanBillService;
 import com.yunxin.cb.mall.service.FinancialLoanRepaymentService;
 import com.yunxin.cb.mall.service.FinancialLoanService;
 import com.yunxin.cb.mall.service.FinancialWalletService;
-import com.yunxin.cb.mall.vo.FinacialLiabilitiesBillVO;
+import com.yunxin.cb.mall.vo.FinancialLoanBillVO;
 import com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import org.apache.commons.logging.Log;
@@ -34,7 +34,7 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
     private FinancialLoanService financialLoanService;
 
     @Resource
-    private FinacialLiabilitiesBillService finacialLiabilitiesBillService;
+    private FinancialLoanBillService financialLoanBillService;
 
     @Resource
     private FinancialWalletMapper financialWalletMapper;
@@ -64,13 +64,13 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
 //            throw new CommonException("还款失败，还款金额不对");
 //        }
         /**还款，添加交易记录START*/
-        FinacialLiabilitiesBillVO billvo = new FinacialLiabilitiesBillVO();
+        FinancialLoanBillVO billvo = new FinancialLoanBillVO();
         billvo.setAmount(repayAmount);
         billvo.setCustomerId(customerId);
         billvo.setTransactionType(TransactionType.MANUAL_REPAYMENT);
         billvo.setType(CapitalType.ADD);
         billvo.setTransactionDesc("手动还款");
-        finacialLiabilitiesBillService.addFinacialLiabilitiesBill(billvo);
+        financialLoanBillService.addFinacialLiabilitiesBill(billvo);
         /**还款，添加交易记录END*/
         log.info("start repay cutomerId:"+customerId+";repayAmount:"+repayAmount);
 //        List<FinancialLoanVO> insuranlist = financialLoanService.getByCustomerIdAndType(coutomerId);

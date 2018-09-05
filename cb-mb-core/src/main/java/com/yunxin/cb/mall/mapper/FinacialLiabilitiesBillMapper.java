@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FinacialLiabilitiesBill;
+import com.yunxin.cb.mall.entity.FinancialLoanBill;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
@@ -25,7 +25,7 @@ public interface FinacialLiabilitiesBillMapper {
         "#{transactionDesc,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, ",
         "#{createTime,jdbcType=TIMESTAMP})"
     })
-    int insert(FinacialLiabilitiesBill record);
+    int insert(FinancialLoanBill record);
 
     @Select({
         "select",
@@ -43,7 +43,7 @@ public interface FinacialLiabilitiesBillMapper {
         @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    FinacialLiabilitiesBill selectByPrimaryKey(Integer finacialLiabilitiesId);
+    FinancialLoanBill selectByPrimaryKey(Integer finacialLiabilitiesId);
 
     @Select({
         "select",
@@ -60,7 +60,7 @@ public interface FinacialLiabilitiesBillMapper {
         @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<FinacialLiabilitiesBill> selectByCustomerId(int customerId);
+    List<FinancialLoanBill> selectByCustomerId(int customerId);
 
     @Update({
         "update finacial_liabilities_bill",
@@ -72,7 +72,7 @@ public interface FinacialLiabilitiesBillMapper {
           "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}",
         "where FINACIAL_LIABILITIES_ID = #{finacialLiabilitiesId,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKey(FinacialLiabilitiesBill record);
+    int updateByPrimaryKey(FinancialLoanBill record);
 
 
     @Select("<script>"
@@ -93,7 +93,7 @@ public interface FinacialLiabilitiesBillMapper {
             @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
             @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<FinacialLiabilitiesBill> pageList(Query q);
+    List<FinancialLoanBill> pageList(Query q);
 
     @Select("<script>"
             +"select count(FINACIAL_LIABILITIES_ID) from finacial_liabilities_bill where 1=1"
