@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.UserInfoDao">
+
+<resultMap type="UserInfo" id="UserInfo">
+	<id column="user_id" property="userId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="email" property="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="last_time" property="lastTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="mobile" property="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="position" property="position" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="real_name" property="realName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="sex" property="sex" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="user_name" property="userName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="seller_id" property="sellerId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+user_id,create_time,email,enabled,last_time,mobile,password,
+position,real_name,remark,sex,user_name,seller_id
+
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+user_id,create_time,email,enabled,last_time,mobile,password,
+position,real_name,sex,user_name,seller_id
+
+</sql>
+
+<insert id="add" parameterType="UserInfo" useGeneratedKeys="true" keyProperty="userId">
+	insert into USER_INFO(
+		<if test="userId!=null">
+		user_id,
+		</if>
+		create_time,
+		email,
+		enabled,
+		last_time,
+		mobile,
+		password,
+		position,
+		real_name,
+		remark,
+		sex,
+		user_name,
+		seller_id
+	) values (
+		<if test="userId!=null">
+		#{userId,jdbcType = INTEGER},
+		</if>
+		#{createTime,jdbcType = TIMESTAMP},
+		#{email,jdbcType = VARCHAR},
+		#{enabled,jdbcType = BIT},
+		#{lastTime,jdbcType = TIMESTAMP},
+		#{mobile,jdbcType = VARCHAR},
+		#{password,jdbcType = VARCHAR},
+		#{position,jdbcType = VARCHAR},
+		#{realName,jdbcType = VARCHAR},
+		#{remark,jdbcType = VARCHAR},
+		#{sex,jdbcType = BIT},
+		#{userName,jdbcType = VARCHAR},
+		#{sellerId,jdbcType = INTEGER}
+	)
+</insert>
+
+<update id="update" parameterType="UserInfo">
+	update USER_INFO 
+	<set>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="email!=null and email!=''">
+			email=#{email,jdbcType = VARCHAR},
+		</if>
+		<if test="enabled!=null ">
+			enabled=#{enabled,jdbcType = BIT},
+		</if>
+		<if test="lastTime!=null ">
+			last_time=#{lastTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="mobile!=null and mobile!=''">
+			mobile=#{mobile,jdbcType = VARCHAR},
+		</if>
+		<if test="password!=null and password!=''">
+			password=#{password,jdbcType = VARCHAR},
+		</if>
+		<if test="position!=null and position!=''">
+			position=#{position,jdbcType = VARCHAR},
+		</if>
+		<if test="realName!=null and realName!=''">
+			real_name=#{realName,jdbcType = VARCHAR},
+		</if>
+		<if test="remark!=null and remark!=''">
+			remark=#{remark,jdbcType = VARCHAR},
+		</if>
+		<if test="sex!=null ">
+			sex=#{sex,jdbcType = BIT},
+		</if>
+		<if test="userName!=null and userName!=''">
+			user_name=#{userName,jdbcType = VARCHAR},
+		</if>
+		<if test="sellerId!=null ">
+			seller_id=#{sellerId,jdbcType = INTEGER},
+		</if>
+	</set>
+	<where>
+		AND user_id=#{userId}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from USER_INFO 
+	<where>
+		user_id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="UserInfo">
+	select <include refid="AllColumnlist"/> from USER_INFO
+	<where>
+		user_id=#{0}
+	</where>
+</select>
+
+<select id="getSysUser" resultMap="UserInfo">
+	select <include refid="AllColumnlist"/> from USER_INFO
+	<where>
+		USER_NAME=#{0}
+		and PASSWORD=#{1}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="UserInfo">
+	select <include refid="AllColumnlist"/> from USER_INFO
+	<where>
+		user_id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(user_id) from USER_INFO 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="UserInfo">
+	select <include refid="CommonColumnlist"/> from USER_INFO 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="UserInfo">
+	select <include refid="CommonColumnlist"/> from USER_INFO
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+	<if test="data!=null">
+		<if test="data.userId!=null ">
+			AND user_id=#{data.userId}
+		</if>
+		<if test="data.createTime!=null ">
+			AND create_time=#{data.createTime}
+		</if>
+		<if test="data.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{data.createTimeStart}  ]]>
+		</if>
+		<if test="data.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{data.createTimeEnd}   ]]>
+		</if>
+		<if test="data.email!=null and data.email!=''">
+			AND email=#{data.email}
+		</if>
+		<if test="data.enabled!=null ">
+			AND enabled=#{data.enabled}
+		</if>
+		<if test="data.lastTime!=null ">
+			AND last_time=#{data.lastTime}
+		</if>
+		<if test="data.lastTimeStart!=null">
+		<![CDATA[	AND last_time>=#{data.lastTimeStart}  ]]>
+		</if>
+		<if test="data.lastTimeEnd!=null">
+		<![CDATA[	AND last_time<#{data.lastTimeEnd}   ]]>
+		</if>
+		<if test="data.mobile!=null and data.mobile!=''">
+			AND mobile=#{data.mobile}
+		</if>
+		<if test="data.password!=null and data.password!=''">
+			AND password=#{data.password}
+		</if>
+		<if test="data.position!=null and data.position!=''">
+			AND position=#{data.position}
+		</if>
+		<if test="data.realName!=null and data.realName!=''">
+			AND real_name=#{data.realName}
+		</if>
+		<if test="data.remark!=null and data.remark!=''">
+			AND remark=#{data.remark}
+		</if>
+		<if test="data.sex!=null ">
+			AND sex=#{data.sex}
+		</if>
+		<if test="data.userName!=null and data.userName!=''">
+			AND user_name=#{data.userName}
+		</if>
+		<if test="data.sellerId!=null ">
+			AND seller_id=#{data.sellerId}
+		</if>
+	</if>
+</sql>
+
+</mapper>

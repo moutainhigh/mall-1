@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.UserRoleDao">
+
+<resultMap type="UserRole" id="UserRole">
+	<id column="user_id" property="userId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<id column="role_id" property="roleId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+user_id,role_id
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+user_id,role_id
+</sql>
+
+<insert id="add" parameterType="UserRole" useGeneratedKeys="true" keyProperty="roleId">
+	insert into USER_ROLE(
+		<if test="userId!=null">
+		user_id,
+		</if>
+		<if test="roleId!=null">
+		role_id
+		</if>
+	) values (
+		<if test="userId!=null">
+		#{userId,jdbcType = INTEGER},
+		</if>
+		<if test="roleId!=null">
+		#{roleId,jdbcType = INTEGER}
+		</if>
+	)
+</insert>
+
+<update id="update" parameterType="UserRole">
+	update USER_ROLE 
+	<set>
+	</set>
+	<where>
+		AND role_id=#{roleId}
+		AND user_id=#{userId}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from USER_ROLE 
+	<where>
+		role_id=#{0}
+		user_id=#{1}
+	</where>
+</delete>
+
+<select id="get" resultMap="UserRole">
+	select <include refid="AllColumnlist"/> from USER_ROLE
+	<where>
+		role_id=#{0}
+		user_id=#{1}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="UserRole">
+	select <include refid="AllColumnlist"/> from USER_ROLE
+	<where>
+		user_id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(user_id) from USER_ROLE 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="UserRole">
+	select <include refid="CommonColumnlist"/> from USER_ROLE 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="UserRole">
+	select <include refid="CommonColumnlist"/> from USER_ROLE
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+	<if test="data!=null">
+		<if test="data.userId!=null ">
+			AND user_id=#{data.userId}
+		</if>
+		<if test="data.roleId!=null ">
+			AND role_id=#{data.roleId}
+		</if>
+	</if>
+</sql>
+
+</mapper>
