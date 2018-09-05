@@ -5,75 +5,45 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>提现管理</title>
+    <title>还款管理</title>
     <script type="text/javascript">
-        function detailItem(){
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                window.location.href = "fundsPoolDetail.do?id=" + dataItem.poolId;
-            }
-        }
+        $(document).ready(function () {
+            $("#createTime").kendoDatePicker({
+                format: "yyyy-MM-dd",
+                culture: "zh-CN",
+                parseFormats: ["yyyy-MM-dd"]
+            });
+            $("#createTimes").kendoDatePicker({
+                format: "yyyy-MM-dd",
+                culture: "zh-CN",
+                parseFormats: ["yyyy-MM-dd"]
+            });
+        });
 
-        function getStateName(data){
-            switch (data){
-                case "AUDIT":{
-                    return "审核中";
+        function getTypeName(loanRepaymentType){
+            switch (loanRepaymentType){
+                case "INSURANCE_REBATE_REPAYMENT":{
+                    return "保险返利还款";
                 }
-                case "AUDIT_NOT":{
-                    return "审核失败";
+                case "COMMODITY_REIMBURESE_REPAYMENT":{
+                    return "商品报账还款";
                 }
-                case "WAIT_GRANT":{
-                    return "待发放";
+                case "MANUAL_REIMBURSEMENT_REPAYMENT":{
+                    return "手动还款";
                 }
-                case "TRANSFER":{
-                    return "转账中";
-                }
-                case "FANISHED":{
-                    return "交易完成";
-                }
-            }
-            return state;
-        }
-
-        function getTypeName(data){
-            switch (data){
-                case "BZ":{
-                    return "报账转账";
-                }
-                case "BX":{
-                    return "保险返利转账";
+                case "CAR_REBATE_REPAYMENT":{
+                    return "汽车返利还款";
                 }
             }
             return state;
         }
 
-        function confirm(){
-            var dataItem = getSelectedGridItem("grid");
-            if (dataItem) {
-                bootbox.confirm("确认转账吗？", function (result) {
-                    if (result) {
-                        var ids="";
-                        for(var i=0;i<dataItem.length;i++){
-                            ids+=dataItem[i].withdrawId;
-                            if(i>0){
-                                ids+=","+dataItem[i].withdrawId;
-                            }
-                        }
-                        $.get("tansfer.do", {
-                            ids: ids
-                        }, function (data) {
-                            if (data) {
-                                bootbox.alert("确认转账成功");
-                                $("#grid").data("kendoGrid").dataSource.read();
-                            } else {
-                                bootbox.alert("确认转账失败");
-                            }
-                        });
-                    }
-                });
+        function checkTime() {
+            if ($('#createTime').val() > $('#createTimes').val() && '' != $('#createTimes').val()) {
+                alert("开始时间不能大于结束时间")
+                $('#createTimes').val('')
             }
         }
-
     </script>
 </head>
 <body>
@@ -150,51 +120,61 @@
                     <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
-                                <strong>提现人:</strong>
-                                <input type="hidden" id="withdrawIdHid" name="withdrawId">
+                                <strong>还款人:</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text"  data-filter="customer.realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入提现人"/>
+                                <input type="text"  data-filter="customer.realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入还款人"/>
                             </div>
                             <div class="toolbar-field">
-                                <strong>提现人手机号 :</strong>
+                                <strong>还款人手机号 :</strong>
                             </div>
                             <div class="toolbar-field">
-                                <input type="text"  data-filter="customer.mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入提现人手机号"/>
+                                <input type="text"  data-filter="customer.mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入还款人手机号"/>
                             </div>
                             <div class="toolbar-field">
-                                <strong>提现金额 :</strong>
+                                <strong>还款金额 :</strong>
                             </div>
                             <div class="toolbar-field">
                                 <table>
                                     <tr>
-                                        <td><input type="number" data-filter="amount" data-operator="gte" class="form-control grid-filter" style="width: 60px" placeholder="最小"/></td>
+                                        <td><input type="number" data-filter="repayAmount" data-operator="gte" class="form-control grid-filter" style="width: 60px" placeholder="最小"/></td>
                                         <td>-</td>
-                                        <td><input type="number" data-filter="amount" data-operator="lte" class="form-control grid-filter" style="width: 60px" placeholder="最大"/></td>
+                                        <td><input type="number" data-filter="repayAmount" data-operator="lte" class="form-control grid-filter" style="width: 60px" placeholder="最大"/></td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="toolbar-field">
-                                <strong>状态 :</strong>
+                                <strong>还款时间 :</strong>
                             </div>
                             <div class="toolbar-field">
-                                <select data-filter="state" data-operator="eq" class="form-control  grid-filter">
-                                    <option value="">全部</option>
-                                    <option value="AUDIT">审核中</option>
-                                    <option value="AUDIT_NOT">审核失败</option>
-                                    <option value="WAIT_GRANT">待发放</option>
-                                    <option value="TRANSFER">转账中</option>
-                                    <option value="FANISHED">交易完成</option>
-                                </select>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input name="createTime" onchange="checkTime()"
+                                                   onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="createTime"
+                                                   placeholder="请选择开始时间" data-filter="createTime" data-operator="gte"
+                                                   class="form-control grid-filter"/>
+                                        </td>
+                                        <td>-</td>
+                                        <td>
+                                            <input name="createTime" onchange="checkTime()"
+                                                   onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'')" id="createTimes"
+                                                   placeholder="请选择结束时间" data-filter="createTime" data-operator="lte"
+                                                   class="form-control grid-filter"/>
+                                            </td>
+                                    </tr>
+                                </table>
                             </div>
                             <div class="toolbar-field">
-                                <strong>提现类型 :</strong>
+                                <strong>还款类型 :</strong>
                             </div>
                             <div class="toolbar-field">
-                                <select data-filter="withdrawType" data-operator="eq" class="form-control  grid-filter">
-                                    <option value="">全部</option>
-                                    <option value="BZ">报账转账</option>
-                                    <option value="BX">保险返利转账</option>
+                                <select data-filter="loanRepaymentType" data-operator="eq" class="form-control  grid-filter">
+                                    <option value="">--还款类型--</option>
+                                    <option value="INSURANCE_REBATE_REPAYMENT">保险返利还款</option>
+                                    <option value="COMMODITY_REIMBURESE_REPAYMENT">商品报账还款</option>
+                                    <option value="MANUAL_REIMBURSEMENT_REPAYMENT">手动还款</option>
+                                    <option value="CAR_REBATE_REPAYMENT">汽车返利还款</option>
                                 </select>
                             </div>
                         </div>
@@ -218,11 +198,6 @@
                         <div class="pull-left">
                             <h3>提现列表</h3>
                         </div>
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <a href="javascript:void(0);" onclick="confirm()" class="btn btn-default"><i class="fa fa-check"></i>&nbsp;转账确认</a>
-                               </div>
-                        </div>
                     </header>
                 </div>
                 <div class="table-wrapper">
@@ -236,21 +211,18 @@
                         </kendo:grid-filterable>
                         <kendo:grid-columns>
                             <kendo:grid-column field="poolId" width="350px" hidden="true"/>
-                            <kendo:grid-column title="提现人" filterable="false" field="customer.realName" width="100px"/>
-                            <kendo:grid-column title="提现人手机号" filterable="false" field="customer.mobile" width="100px"/>
-                            <kendo:grid-column title="提现金额" filterable="false" field="amount" width="100px" />
-                            <kendo:grid-column title="手续费" filterable="false" field="chargeFee" width="100px"/>
-                            <kendo:grid-column title="实际到账金额" filterable="false" field="realAmount" width="100px"/>
-                            <kendo:grid-column title="状态" filterable="false" field="state" width="100px" template="#=getStateName(state)#"/>
-                            <kendo:grid-column title="提现时间" filterable="false" field="applyDate" width="100px"/>
-                            <kendo:grid-column title="提现类型" filterable="false" field="withdrawType" width="100px" template="#=getTypeName(withdrawType)#"/>
-                            <kendo:grid-column title="提现到" filterable="false" field="bank.bankCardNumber" width="100px" />
+                            <kendo:grid-column title="负债人" filterable="false" field="customer.realName" width="100px"/>
+                            <kendo:grid-column title="负债人手机号" filterable="false" field="customer.mobile" width="100px"/>
+                            <kendo:grid-column title="还款类型" filterable="false" field="loanRepaymentType" template="#=getTypeName(loanRepaymentType)#" width="100px" />
+                            <kendo:grid-column title="还款金额" filterable="false" field="repayAmount" width="100px"/>
+                            <kendo:grid-column title="还款时间" filterable="false" field="createTime" width="100px"/>
+                            <kendo:grid-column title="备注" filterable="false" width="100px" />
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
                             <kendo:dataSource-schema data="content" total="totalElements">
                             </kendo:dataSource-schema>
                             <kendo:dataSource-transport>
-                                <kendo:dataSource-transport-read url="pageWithdrawList.do" type="POST" contentType="application/json"/>
+                                <kendo:dataSource-transport-read url="pageLoanRepaymentList.do" type="POST" contentType="application/json"/>
                                 <kendo:dataSource-transport-parameterMap>
                                     <script>
                                         function parameterMap(options, type) {

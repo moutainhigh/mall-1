@@ -30,9 +30,9 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
     @Resource
     private BankInfoMapper bankInfoMapper;
     @Resource
-    private FinacialWithdrawMapper finacialWithdrawMapper;
+    private FinancialWithdrawMapper financialWithdrawMapper;
     @Resource
-    private FinacialInsuCashbackLogMapper finacialInsuCashbackLogMapper;
+    private FinancialCashbackLogMapper financialCashbackLogMapper;
     @Resource
     private CustomerMapper customerMapper;
 
@@ -138,17 +138,17 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
 //            financialWallet.setExpectedAmount(financialWallet.getExpectedAmount().subtract(money));
 //            //加入返现日志记录
 //            Customer customer=customerMapper.selectByPrimaryKey(customerId);
-//            FinacialInsuCashbackLog finacialInsuCashbackLog=new FinacialInsuCashbackLog();
-//            finacialInsuCashbackLog.setCustomerId(customerId);
+//            FinancialCashbackLog financialCashbackLog=new FinancialCashbackLog();
+//            financialCashbackLog.setCustomerId(customerId);
 //            if(LogicUtils.isNotNull(customer)){
-//                finacialInsuCashbackLog.setCustomerName(customer.getRealName());
-//                finacialInsuCashbackLog.setMobile(customer.getMobile());
+//                financialCashbackLog.setCustomerName(customer.getRealName());
+//                financialCashbackLog.setMobile(customer.getMobile());
 //            }
-//            finacialInsuCashbackLog.setAmount(money);
-//            finacialInsuCashbackLog.setState(CashbackLogState.FINISHED.getValue());
-//            finacialInsuCashbackLog.setOrderNo(remark);
-//            finacialInsuCashbackLog.setCreateTime(new Date());
-//            finacialInsuCashbackLogMapper.insert(finacialInsuCashbackLog);
+//            financialCashbackLog.setAmount(money);
+//            financialCashbackLog.setState(CashbackLogState.FINISHED.getValue());
+//            financialCashbackLog.setOrderNo(remark);
+//            financialCashbackLog.setCreateTime(new Date());
+//            financialCashbackLogMapper.insert(financialCashbackLog);
 //        }
 //        //是否有负债，先还负债
 //        if(debtTotal.compareTo(BigDecimal.ZERO)>0){
@@ -202,17 +202,17 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
 //                BankInfo bankInfo=bankInfos.get(0);
 //                //新增提现记录
 //                Date nowDate=new Date();
-//                FinacialWithdraw finacialWithdraw = new FinacialWithdraw();
-//                finacialWithdraw.setCustomerId(customerId);
-//                finacialWithdraw.setBankId(bankInfo.getBankId());
-//                finacialWithdraw.setAmount(money);
-//                finacialWithdraw.setRealAmount(money);
-//                finacialWithdraw.setChargeFee(BigDecimal.ZERO);//默认没有手续费
-//                finacialWithdraw.setState(WithdrawState.WAIT_GRANT.getValue());
-//                finacialWithdraw.setWithdrawType(type.getValue());
-//                finacialWithdraw.setApplyDate(nowDate);
-//                finacialWithdraw.setUpdateDate(nowDate);
-//                finacialWithdrawMapper.insert(finacialWithdraw);
+//                FinancialWithdraw financialWithdraw = new FinancialWithdraw();
+//                financialWithdraw.setCustomerId(customerId);
+//                financialWithdraw.setBankId(bankInfo.getBankId());
+//                financialWithdraw.setAmount(money);
+//                financialWithdraw.setRealAmount(money);
+//                financialWithdraw.setChargeFee(BigDecimal.ZERO);//默认没有手续费
+//                financialWithdraw.setState(WithdrawState.WAIT_GRANT.getValue());
+//                financialWithdraw.setWithdrawType(type.getValue());
+//                financialWithdraw.setApplyDate(nowDate);
+//                financialWithdraw.setUpdateDate(nowDate);
+//                financialWithdrawMapper.insert(financialWithdraw);
 //                //操作成功
 //                result.setResult(Result.SUCCESS);
 //            }else{

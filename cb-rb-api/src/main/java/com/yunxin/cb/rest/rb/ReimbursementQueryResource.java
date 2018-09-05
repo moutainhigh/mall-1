@@ -19,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Api(description = "报账")
@@ -153,5 +154,32 @@ public class ReimbursementQueryResource extends BaseResource {
             return new ResponseResult(Result.FAILURE);
         }
     }
+    @ApiOperation(value = "添加测试数据 V1")
+    @PostMapping(value = "addReimbursementQuery")
+    @ApiVersion(1)
+    public ResponseResult addReimbursementQuery(){
+        try{
+            for(int i=0;i<100;i++){
+                ReimbursementQuery reimbursementQuery = new ReimbursementQuery();
+                reimbursementQuery.setReimbursementQueryState(ReimbursementQueryState.CAN_REIMBURSEMENT);
+                reimbursementQuery.setCustomerId(1);
+                reimbursementQuery.setCommodityId(453);
+                reimbursementQuery.setCreateTime(new Date());
+                reimbursementQuery.setDefaultPicPath("http://test.resource.999shuijingqiu.com/COMMODITY/1534572544331");
+                reimbursementQuery.setItemId(246);
+                reimbursementQuery.setProductId(536);
+                reimbursementQuery.setProductName("颜色：黄色&档位：手动挡");
+                reimbursementQuery.setProductNum(1);
+                reimbursementQuery.setSalePrice(200000);
+                reimbursementQuery.setSellerName("深圳店");
+                reimbursementQuery.setCommodityName("2018 运动新款");
+                reimbursementQueryService.insert(reimbursementQuery);
+            }
+        }catch (Exception e){
+            return new ResponseResult(Result.FAILURE);
+        }
+        return new ResponseResult(Result.SUCCESS);
+    }
+
 }
 
