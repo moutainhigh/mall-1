@@ -3,15 +3,13 @@ package com.yunxin.cb.mall.common;
 import java.io.Serializable;
 import java.util.List;
 
-import com.yunxin.cb.util.page.Query;
-
 /**
  * 数据对象基础操作类
  * @author yong
  * 
  */
 public interface BaseDao<T,PK extends Serializable> {
-	
+
 	/**
 	 * 增加对象
 	 * @param obj
@@ -25,40 +23,42 @@ public interface BaseDao<T,PK extends Serializable> {
 	public int update(T obj);
 
 	/**
-	 * 删除对象
+	 * 根据主键删除对象
 	 * @param pk
 	 */
 	public int delete(PK pk);
 
 	/**
-	 * 得到某个对象
+	 * 根据主键得到某个对象
 	 * @param pk
 	 */
 	public T get(PK pk);
-	
+
 	/**
-	 * 根据主键得到一组对象
+	 * 根据一组主键（数组），得到多个对象，以列表形式返回
 	 * @param pks
-	 */
-	public List<T> getByIds(Integer[] pks);
-	
-	/**
-	 * 获得数据条数
-	 * @param obj
 	 * @return
 	 */
-	public Long count(Query obj);
-	
+	public List<T> getByIds(PK[] pks);
+
 	/**
-	 * 查询所有数据
+	 * 根据条件查询数据条件
+	 * @param q
 	 * @return
 	 */
-	public List<T> queryAll(Query obj);
-	
+	public Long count(Query q);
+
 	/**
-	 * 分页查询
-	 * @param obj
+	 * 根据条件查询数据
+	 * @param q
 	 * @return
 	 */
-	public List<T> pageList(Query obj);
+	public List<T> queryAll(Query q);
+
+	/**
+	 * 根据条件查询数据
+	 * @param q
+	 * @return
+	 */
+	public List<T> pageList(Query q);
 }

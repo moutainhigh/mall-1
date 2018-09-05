@@ -2,6 +2,7 @@ package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Brand;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.service.BrandService;
 import com.yunxin.cb.mall.vo.BrandVO;
 import com.yunxin.cb.meta.Result;
@@ -36,7 +37,11 @@ public class BrandResource extends BaseResource {
     @IgnoreAuthentication
     public ResponseResult<List<BrandVO>> getBrand() {
         try {
-            List<Brand> list = brandService.getBrandList(null);
+            Brand b=new Brand();
+            b.setBrandName("奔驰");
+            Query q=new Query();
+            q.setData(b);
+            List<Brand> list = brandService.getBrandList(q);
             List<BrandVO> listVO = list.stream()
                     .map(brand -> {
                         BrandVO brandVO = new BrandVO();

@@ -9,8 +9,8 @@ spring:
   session:
      store-type: none
 mybatis:
-  type-aliases-package: com.yunxin.cb.mall.entity
-  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.yunxin.cb.mall.common,com.yunxin.cb.mall.entity
+  mapper-locations: classpath:com/yunxin/cb/mall/mapper/*.xml
 #pagehelper分页插件
 pagehelper:
   helperDialect: mysql
