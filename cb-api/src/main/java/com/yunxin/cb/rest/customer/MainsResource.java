@@ -41,6 +41,7 @@ public class MainsResource extends BaseResource {
 
     @Value("${application.default.avatarUrl}")
     private String avatarUrl;
+    //私钥
     @Value("${rsa.privateKey}")
     private String privateKey;
     @Resource
