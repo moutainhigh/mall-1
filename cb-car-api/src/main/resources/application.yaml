@@ -1,6 +1,6 @@
 server:
   context-path: /car-api
-  port: 8159
+  port: 8160
 
 
 # 默认的profile为dev，其他环境通过指定启动参数使用不同的profile，比如：
