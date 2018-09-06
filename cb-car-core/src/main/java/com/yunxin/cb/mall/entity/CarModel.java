@@ -55,7 +55,7 @@ public class CarModel extends Entity<Integer> {
 	//操作人ID
 	private Integer operateId;
 	//是否默认（0：否；1：是）
-	private String isDefault;
+	private Integer isDefault;
 	
 	/*Auto generated properties end*/
 	
@@ -242,11 +242,11 @@ public class CarModel extends Entity<Integer> {
 		this.operateId = operateId;
 	}
 	
-	public String getIsDefault(){
+	public Integer getIsDefault(){
 		return isDefault;
 	}
 	
-	public void setIsDefault(String isDefault){
+	public void setIsDefault(Integer isDefault){
 		this.isDefault = isDefault;
 	}
 	

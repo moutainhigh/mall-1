@@ -20,7 +20,7 @@
 			<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 			<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 			<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-			<result column="is_default" property="isDefault" javaType="java.lang.String" jdbcType="CHAR"/>
+			<result column="is_default" property="isDefault" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 </resultMap>
 
 
@@ -79,7 +79,7 @@ seat_id,structu_id,substitutuion,publish_state,examine_state,create_time,update_
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{isDelete,jdbcType = INTEGER},
 		#{operateId,jdbcType = INTEGER},
-		#{isDefault,jdbcType = CHAR}
+		#{isDefault,jdbcType = INTEGER}
 	)
 </insert>
 
@@ -150,8 +150,8 @@ seat_id,structu_id,substitutuion,publish_state,examine_state,create_time,update_
 			operate_id=#{operateId,jdbcType = INTEGER},
 
 		</if>
-		<if test="isDefault!=null and isDefault!=''">
-			is_default=#{isDefault,jdbcType = CHAR},
+		<if test="isDefault!=null ">
+			is_default=#{isDefault,jdbcType = INTEGER},
 
 		</if>
 	</set>
@@ -272,7 +272,7 @@ seat_id,structu_id,substitutuion,publish_state,examine_state,create_time,update_
 		<if test="q.operateId!=null ">
 			AND operate_id=#{q.operateId}
 		</if>
-		<if test="q.isDefault!=null and q.isDefault!=''">
+		<if test="q.isDefault!=null ">
 			AND is_default=#{q.isDefault}
 		</if>
 	</if>
