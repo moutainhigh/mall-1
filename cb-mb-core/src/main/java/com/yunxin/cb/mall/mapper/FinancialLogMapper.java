@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FiaciaLog;
+import com.yunxin.cb.mall.entity.FinancialLogBill;
 import com.yunxin.cb.mall.vo.FinancialLogVO;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
@@ -31,7 +31,7 @@ public interface FinancialLogMapper {
         "#{state,jdbcType=INTEGER}, #{transactionNo,jdbcType=VARCHAR}, ",
         "#{transactionDesc,jdbcType=VARCHAR})"
     })
-    int insert(FiaciaLog record);
+    int insert(FinancialLogBill record);
 
     @Select({
         "select",
@@ -55,7 +55,7 @@ public interface FinancialLogMapper {
         @Result(column="TRANSACTION_NO", property="transactionNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR)
     })
-    FiaciaLog selectByPrimaryKey(Integer logId);
+    FinancialLogBill selectByPrimaryKey(Integer logId);
 
     @Select({
         "select",
@@ -78,7 +78,7 @@ public interface FinancialLogMapper {
         @Result(column="TRANSACTION_NO", property="transactionNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR)
     })
-    List<FiaciaLog> selectAll();
+    List<FinancialLogBill> selectAll();
 
     @Update({
         "update finacial_log",
@@ -96,7 +96,7 @@ public interface FinancialLogMapper {
           "TRANSACTION_DESC = #{transactionDesc,jdbcType=VARCHAR}",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKey(FiaciaLog record);
+    int updateByPrimaryKey(FinancialLogBill record);
 
     @Select({
             "<script>",
@@ -172,5 +172,5 @@ public interface FinancialLogMapper {
             @Result(column="TRANSACTION_NO", property="transactionNo", jdbcType=JdbcType.VARCHAR),
             @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR)
     })
-    FiaciaLog selectByPrimaryKeyAndCustomerId(@Param("logId")Integer logId,@Param("customerId")Integer customerId);
+    FinancialLogBill selectByPrimaryKeyAndCustomerId(@Param("logId")Integer logId, @Param("customerId")Integer customerId);
 }

@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.service.impl;
 
-import com.yunxin.cb.mall.entity.FiaciaLog;
+import com.yunxin.cb.mall.entity.FinancialLogBill;
 import com.yunxin.cb.mall.mapper.FinancialLogMapper;
 import com.yunxin.cb.mall.service.FinancialLogService;
 import com.yunxin.cb.mall.vo.FinancialLogBillVO;
@@ -28,15 +28,6 @@ public class FinancialLogServiceImpl implements FinancialLogService {
 
     @Resource
     private FinancialLogMapper financialLogMapper;
-
-    @Override
-    public int addFiaciaLog(FinancialLogBillVO vo) {
-        log.info("add:"+vo);
-        FiaciaLog log=new FiaciaLog();
-        vo.setCreateTime(new Date());
-        BeanUtils.copyProperties(vo,log);
-        return financialLogMapper.insert(log);
-    }
 
     @Override
     public PageFinder<FinancialLogDataVO> pageFinancialLog(Query q) {
@@ -71,9 +62,9 @@ public class FinancialLogServiceImpl implements FinancialLogService {
     public FinancialLogDetailVO getCustomerFinancialLogDetail(Integer logId, Integer customerId) {
         try {
             FinancialLogDetailVO financialLogDetailVO = new FinancialLogDetailVO();
-            FiaciaLog fiaciaLog = financialLogMapper.selectByPrimaryKeyAndCustomerId(logId,customerId);
-            if(null != fiaciaLog){
-                BeanUtils.copyProperties(fiaciaLog,financialLogDetailVO);
+            FinancialLogBill financialLogBill = financialLogMapper.selectByPrimaryKeyAndCustomerId(logId,customerId);
+            if(null != financialLogBill){
+                BeanUtils.copyProperties(financialLogBill,financialLogDetailVO);
             }
             return financialLogDetailVO;
         } catch (Exception e) {

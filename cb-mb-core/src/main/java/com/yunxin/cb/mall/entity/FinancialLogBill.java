@@ -14,7 +14,7 @@ import java.util.Date;
  * @auther: eleven
  * @date: 2018/8/9 17:12
  */
-public class FiaciaLog implements Serializable {
+public class FinancialLogBill implements Serializable {
     private static final long serialVersionUID = 8601417579276046520L;
 
     private Integer logId;

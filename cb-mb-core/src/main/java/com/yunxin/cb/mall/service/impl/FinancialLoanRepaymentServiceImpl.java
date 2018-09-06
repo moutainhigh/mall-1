@@ -97,20 +97,20 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
         // 4. 账单
         // 4.1 返利或者报账账单
         Customer customer = customerMapper.selectByPrimaryKey(customerId);
-        FiaciaLog fiaciaLog = new FiaciaLog();
-        fiaciaLog.setCustomerId(customerId);
-        fiaciaLog.setCustomerName(customer.getRealName());
-        fiaciaLog.setAmount(repayAmount);
-        fiaciaLog.setType(OperationType.ADD);
-        fiaciaLog.setTransactionTypeOnPayment(type, false);
-        fiaciaLog.setPayTypeOnPayment(type);
-        fiaciaLog.setState(PayState.PROCESSED_SUCCESS);
-        fiaciaLog.setTransactionNo("transactionNo");
-        fiaciaLog.setTransactionDesc("返利或者报账账单");
-        fiaciaLog.setCreateTime(new Date());
-        financialLogMapper.insert(fiaciaLog);
+        FinancialLogBill financialLogBill = new FinancialLogBill();
+        financialLogBill.setCustomerId(customerId);
+        financialLogBill.setCustomerName(customer.getRealName());
+        financialLogBill.setAmount(repayAmount);
+        financialLogBill.setType(OperationType.ADD);
+        financialLogBill.setTransactionTypeOnPayment(type, false);
+        financialLogBill.setPayTypeOnPayment(type);
+        financialLogBill.setState(PayState.PROCESSED_SUCCESS);
+        financialLogBill.setTransactionNo("transactionNo");
+        financialLogBill.setTransactionDesc("返利或者报账账单");
+        financialLogBill.setCreateTime(new Date());
+        financialLogMapper.insert(financialLogBill);
         // 4.2 还款账单
-        FiaciaLog bill = new FiaciaLog();
+        FinancialLogBill bill = new FinancialLogBill();
         bill.setCustomerId(customerId);
         bill.setCustomerName(customer.getRealName());
         bill.setAmount(carRepayment.add(creditRepayment));
@@ -167,7 +167,7 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
 
         // 3.还款账单
         Customer customer = customerMapper.selectByPrimaryKey(customerId);
-        FiaciaLog bill = new FiaciaLog();
+        FinancialLogBill bill = new FinancialLogBill();
         bill.setCustomerId(customerId);
         bill.setCustomerName(customer.getRealName());
         bill.setAmount(creditRepayment);

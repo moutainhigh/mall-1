@@ -5,8 +5,6 @@ import com.yunxin.cb.mall.service.FinancialLogService;
 import com.yunxin.cb.mall.vo.FinancialLogDataVO;
 import com.yunxin.cb.mall.vo.FinancialLogDetailVO;
 import com.yunxin.cb.mall.vo.FinancialLogRequestVO;
-import com.yunxin.cb.mall.vo.FinancialLogVO;
-import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
