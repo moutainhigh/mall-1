@@ -1,7 +1,5 @@
 package com.yunxin.cb.mall.entity;
 
-import java.sql.Blob;
-
 import com.yunxin.cb.mall.common.Entity;
 
 /** 
@@ -19,7 +17,7 @@ public class CarModelSpec extends Entity<Long> {
 	//配置ID
 	private Integer specId;
 	//配置值
-	private Blob specValue;
+	private String specValue;
 	
 	/*Auto generated properties end*/
 	
@@ -62,11 +60,11 @@ public class CarModelSpec extends Entity<Long> {
 		this.specId = specId;
 	}
 	
-	public Blob getSpecValue(){
+	public String getSpecValue(){
 		return specValue;
 	}
 	
-	public void setSpecValue(Blob specValue){
+	public void setSpecValue(String specValue){
 		this.specValue = specValue;
 	}
 	

@@ -4,12 +4,12 @@
 
 <resultMap type="CarSetUpdateLog" id="CarSetUpdateLog">
 	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="account" property="account" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
-	<result column="name" property="name" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
-	<result column="set_name" property="setName" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
-	<result column="set_type" property="setType" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
-	<result column="init_value" property="initValue" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
-	<result column="set_value" property="setValue" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="account" property="account" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="set_name" property="setName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="set_type" property="setType" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="init_value" property="initValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="set_value" property="setValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 </resultMap>
@@ -23,7 +23,8 @@ is_delete,create_time
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
-id,is_delete,create_time
+id,account,name,set_name,set_type,init_value,set_value,
+is_delete,create_time
 </sql>
 
 <insert id="add" parameterType="CarSetUpdateLog" useGeneratedKeys="true" keyProperty="id">
@@ -43,12 +44,12 @@ id,is_delete,create_time
 		<if test="id!=null">
 		#{id,jdbcType = INTEGER},
 		</if>
-		#{account,jdbcType = VARBINARY},
-		#{name,jdbcType = VARBINARY},
-		#{setName,jdbcType = VARBINARY},
-		#{setType,jdbcType = VARBINARY},
-		#{initValue,jdbcType = VARBINARY},
-		#{setValue,jdbcType = VARBINARY},
+		#{account,jdbcType = VARCHAR},
+		#{name,jdbcType = VARCHAR},
+		#{setName,jdbcType = VARCHAR},
+		#{setType,jdbcType = VARCHAR},
+		#{initValue,jdbcType = VARCHAR},
+		#{setValue,jdbcType = VARCHAR},
 		#{isDelete,jdbcType = INTEGER},
 		#{createTime,jdbcType = TIMESTAMP}
 	)
@@ -57,23 +58,23 @@ id,is_delete,create_time
 <update id="update" parameterType="CarSetUpdateLog">
 	update CAR_SET_UPDATE_LOG 
 	<set>
-		<if test="account!=null ">
-			account=#{account,jdbcType = VARBINARY},
+		<if test="account!=null and account!=''">
+			account=#{account,jdbcType = VARCHAR},
 		</if>
-		<if test="name!=null ">
-			name=#{name,jdbcType = VARBINARY},
+		<if test="name!=null and name!=''">
+			name=#{name,jdbcType = VARCHAR},
 		</if>
-		<if test="setName!=null ">
-			set_name=#{setName,jdbcType = VARBINARY},
+		<if test="setName!=null and setName!=''">
+			set_name=#{setName,jdbcType = VARCHAR},
 		</if>
-		<if test="setType!=null ">
-			set_type=#{setType,jdbcType = VARBINARY},
+		<if test="setType!=null and setType!=''">
+			set_type=#{setType,jdbcType = VARCHAR},
 		</if>
-		<if test="initValue!=null ">
-			init_value=#{initValue,jdbcType = VARBINARY},
+		<if test="initValue!=null and initValue!=''">
+			init_value=#{initValue,jdbcType = VARCHAR},
 		</if>
-		<if test="setValue!=null ">
-			set_value=#{setValue,jdbcType = VARBINARY},
+		<if test="setValue!=null and setValue!=''">
+			set_value=#{setValue,jdbcType = VARCHAR},
 		</if>
 		<if test="isDelete!=null ">
 			is_delete=#{isDelete,jdbcType = INTEGER},
@@ -139,22 +140,22 @@ id,is_delete,create_time
 		<if test="q.id!=null ">
 			AND id=#{q.id}
 		</if>
-		<if test="q.account!=null ">
+		<if test="q.account!=null and q.account!=''">
 			AND account=#{q.account}
 		</if>
-		<if test="q.name!=null ">
+		<if test="q.name!=null and q.name!=''">
 			AND name=#{q.name}
 		</if>
-		<if test="q.setName!=null ">
+		<if test="q.setName!=null and q.setName!=''">
 			AND set_name=#{q.setName}
 		</if>
-		<if test="q.setType!=null ">
+		<if test="q.setType!=null and q.setType!=''">
 			AND set_type=#{q.setType}
 		</if>
-		<if test="q.initValue!=null ">
+		<if test="q.initValue!=null and q.initValue!=''">
 			AND init_value=#{q.initValue}
 		</if>
-		<if test="q.setValue!=null ">
+		<if test="q.setValue!=null and q.setValue!=''">
 			AND set_value=#{q.setValue}
 		</if>
 		<if test="q.isDelete!=null ">

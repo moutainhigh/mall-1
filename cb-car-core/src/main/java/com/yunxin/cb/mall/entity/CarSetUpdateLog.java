@@ -1,6 +1,5 @@
 package com.yunxin.cb.mall.entity;
 
-import java.sql.Blob;
 import java.util.Date;
 
 import com.yunxin.cb.mall.common.Entity;
@@ -16,17 +15,17 @@ public class CarSetUpdateLog extends Entity<Integer> {
 	
 	private Integer id;
 	//帐号
-	private Blob account;
+	private String account;
 	//姓名
-	private Blob name;
+	private String name;
 	//设置名称
-	private Blob setName;
+	private String setName;
 	//设置类型
-	private Blob setType;
+	private String setType;
 	//初始值
-	private Blob initValue;
+	private String initValue;
 	//设置值
-	private Blob setValue;
+	private String setValue;
 	//是否逻辑删除（0：否；1：是）
 	private Integer isDelete;
 	//创建时间
@@ -61,51 +60,51 @@ public class CarSetUpdateLog extends Entity<Integer> {
 		this.id = id;
 	}
 	
-	public Blob getAccount(){
+	public String getAccount(){
 		return account;
 	}
 	
-	public void setAccount(Blob account){
+	public void setAccount(String account){
 		this.account = account;
 	}
 	
-	public Blob getName(){
+	public String getName(){
 		return name;
 	}
 	
-	public void setName(Blob name){
+	public void setName(String name){
 		this.name = name;
 	}
 	
-	public Blob getSetName(){
+	public String getSetName(){
 		return setName;
 	}
 	
-	public void setSetName(Blob setName){
+	public void setSetName(String setName){
 		this.setName = setName;
 	}
 	
-	public Blob getSetType(){
+	public String getSetType(){
 		return setType;
 	}
 	
-	public void setSetType(Blob setType){
+	public void setSetType(String setType){
 		this.setType = setType;
 	}
 	
-	public Blob getInitValue(){
+	public String getInitValue(){
 		return initValue;
 	}
 	
-	public void setInitValue(Blob initValue){
+	public void setInitValue(String initValue){
 		this.initValue = initValue;
 	}
 	
-	public Blob getSetValue(){
+	public String getSetValue(){
 		return setValue;
 	}
 	
-	public void setSetValue(Blob setValue){
+	public void setSetValue(String setValue){
 		this.setValue = setValue;
 	}
 	

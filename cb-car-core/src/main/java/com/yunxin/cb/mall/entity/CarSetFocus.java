@@ -1,6 +1,5 @@
 package com.yunxin.cb.mall.entity;
 
-import java.sql.Blob;
 import java.util.Date;
 
 import com.yunxin.cb.mall.common.Entity;
@@ -16,11 +15,11 @@ public class CarSetFocus extends Entity<Integer> {
 	
 	private Integer id;
 	//设置名称
-	private Blob setName;
+	private String setName;
 	//设置类型
-	private Blob setType;
+	private String setType;
 	//设置值
-	private Blob setValue;
+	private String setValue;
 	//创建时间
 	private Date createTime;
 	//创建时间 时间范围起（查询用）
@@ -61,27 +60,27 @@ public class CarSetFocus extends Entity<Integer> {
 		this.id = id;
 	}
 	
-	public Blob getSetName(){
+	public String getSetName(){
 		return setName;
 	}
 	
-	public void setSetName(Blob setName){
+	public void setSetName(String setName){
 		this.setName = setName;
 	}
 	
-	public Blob getSetType(){
+	public String getSetType(){
 		return setType;
 	}
 	
-	public void setSetType(Blob setType){
+	public void setSetType(String setType){
 		this.setType = setType;
 	}
 	
-	public Blob getSetValue(){
+	public String getSetValue(){
 		return setValue;
 	}
 	
-	public void setSetValue(Blob setValue){
+	public void setSetValue(String setValue){
 		this.setValue = setValue;
 	}
 	
