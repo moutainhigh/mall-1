@@ -54,6 +54,8 @@ public class CarModel extends Entity<Integer> {
 	private Integer isDelete;
 	//操作人ID
 	private Integer operateId;
+	//是否默认（0：否；1：是）
+	private String isDefault;
 	
 	/*Auto generated properties end*/
 	
@@ -240,6 +242,14 @@ public class CarModel extends Entity<Integer> {
 		this.operateId = operateId;
 	}
 	
+	public String getIsDefault(){
+		return isDefault;
+	}
+	
+	public void setIsDefault(String isDefault){
+		this.isDefault = isDefault;
+	}
+	
 	
 	/*Auto generated methods end*/
 	
@@ -257,7 +267,7 @@ public class CarModel extends Entity<Integer> {
 		 + ", modelCode = " + modelCode + ", modelName = " + modelName + ", catalogId = " + catalogId + ", seatId = " + seatId
 		 + ", structuId = " + structuId + ", substitutuion = " + substitutuion + ", publishState = " + publishState + ", examineState = " + examineState
 		 + ", introduce = " + introduce + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", isDelete = " + isDelete
-		 + ", operateId = " + operateId
+		 + ", operateId = " + operateId + ", isDefault = " + isDefault
 		+"]";
 	}
 }

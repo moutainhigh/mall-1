@@ -4,22 +4,23 @@
 
 <resultMap type="CarModel" id="CarModel">
 	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="brand_id" property="brandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="sys_id" property="sysId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="dis_id" property="disId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="model_code" property="modelCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="model_name" property="modelName" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="catalog_id" property="catalogId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="seat_id" property="seatId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="structu_id" property="structuId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="substitutuion" property="substitutuion" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="publish_state" property="publishState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="examine_state" property="examineState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="introduce" property="introduce" javaType="java.lang.String" jdbcType="CLOB"/>
-	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="brand_id" property="brandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="sys_id" property="sysId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="dis_id" property="disId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="model_code" property="modelCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="model_name" property="modelName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="catalog_id" property="catalogId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="seat_id" property="seatId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="structu_id" property="structuId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="substitutuion" property="substitutuion" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="publish_state" property="publishState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="examine_state" property="examineState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="introduce" property="introduce" javaType="java.lang.String" jdbcType="CLOB"/>
+			<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="is_default" property="isDefault" javaType="java.lang.String" jdbcType="CHAR"/>
 </resultMap>
 
 
@@ -27,14 +28,13 @@
 <sql id="AllColumnlist">
 id,brand_id,sys_id,dis_id,model_code,model_name,catalog_id,
 seat_id,structu_id,substitutuion,publish_state,examine_state,introduce,
-create_time,update_time,is_delete,operate_id
+create_time,update_time,is_delete,operate_id,is_default
 </sql>
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
 id,brand_id,sys_id,dis_id,model_code,model_name,catalog_id,
-seat_id,structu_id,substitutuion,publish_state,examine_state,introduce,
-create_time,update_time,is_delete,operate_id
+seat_id,structu_id,substitutuion,publish_state,examine_state,create_time,update_time,is_delete,operate_id,is_default
 </sql>
 
 <insert id="add" parameterType="CarModel" useGeneratedKeys="true" keyProperty="id">
@@ -57,7 +57,8 @@ create_time,update_time,is_delete,operate_id
 		create_time,
 		update_time,
 		is_delete,
-		operate_id
+		operate_id,
+		is_default
 	) values (
 		<if test="id!=null">
 		#{id,jdbcType = INTEGER},
@@ -73,11 +74,12 @@ create_time,update_time,is_delete,operate_id
 		#{substitutuion,jdbcType = INTEGER},
 		#{publishState,jdbcType = INTEGER},
 		#{examineState,jdbcType = INTEGER},
-		#{introduce,jdbcType = CLOB},
+		#{introduce,jdbcType = CLOB },
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{isDelete,jdbcType = INTEGER},
-		#{operateId,jdbcType = INTEGER}
+		#{operateId,jdbcType = INTEGER},
+		#{isDefault,jdbcType = CHAR}
 	)
 </insert>
 
@@ -86,51 +88,71 @@ create_time,update_time,is_delete,operate_id
 	<set>
 		<if test="brandId!=null ">
 			brand_id=#{brandId,jdbcType = INTEGER},
+
 		</if>
 		<if test="sysId!=null ">
 			sys_id=#{sysId,jdbcType = INTEGER},
+
 		</if>
 		<if test="disId!=null ">
 			dis_id=#{disId,jdbcType = INTEGER},
+
 		</if>
 		<if test="modelCode!=null and modelCode!=''">
 			model_code=#{modelCode,jdbcType = VARCHAR},
+
 		</if>
 		<if test="modelName!=null and modelName!=''">
 			model_name=#{modelName,jdbcType = VARCHAR},
+
 		</if>
 		<if test="catalogId!=null ">
 			catalog_id=#{catalogId,jdbcType = INTEGER},
+
 		</if>
 		<if test="seatId!=null ">
 			seat_id=#{seatId,jdbcType = INTEGER},
+
 		</if>
 		<if test="structuId!=null ">
 			structu_id=#{structuId,jdbcType = INTEGER},
+
 		</if>
 		<if test="substitutuion!=null ">
 			substitutuion=#{substitutuion,jdbcType = INTEGER},
+
 		</if>
 		<if test="publishState!=null ">
 			publish_state=#{publishState,jdbcType = INTEGER},
+
 		</if>
 		<if test="examineState!=null ">
 			examine_state=#{examineState,jdbcType = INTEGER},
+
 		</if>
 		<if test="introduce!=null and introduce!=''">
 			introduce=#{introduce,jdbcType = CLOB},
+
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="updateTime!=null ">
 			update_time=#{updateTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="isDelete!=null ">
 			is_delete=#{isDelete,jdbcType = INTEGER},
+
 		</if>
 		<if test="operateId!=null ">
 			operate_id=#{operateId,jdbcType = INTEGER},
+
+		</if>
+		<if test="isDefault!=null and isDefault!=''">
+			is_default=#{isDefault,jdbcType = CHAR},
+
 		</if>
 	</set>
 	<where>
@@ -249,6 +271,9 @@ create_time,update_time,is_delete,operate_id
 		</if>
 		<if test="q.operateId!=null ">
 			AND operate_id=#{q.operateId}
+		</if>
+		<if test="q.isDefault!=null and q.isDefault!=''">
+			AND is_default=#{q.isDefault}
 		</if>
 	</if>
 </sql>
