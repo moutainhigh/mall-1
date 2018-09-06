@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.FinancialLoan;
+import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.util.page.PageFinder;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ public interface FinancialLoanService {
      * @Description  借款提交
      * @Date 2018/9/4 10:47
      **/
-    void add(Integer customerId, Integer loanConfigId, Integer bankId, BigDecimal amount);
+    ResponseResult add(Integer customerId, Integer loanConfigId, Integer bankId, BigDecimal amount);
 
     /**
      * 获取用户借款条数
