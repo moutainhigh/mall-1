@@ -31,9 +31,9 @@ public class CarModel extends Entity<Integer> {
 	//结构ID
 	private Integer structuId;
 	//是否置换（0：否；1：是）
-	private Boolean substitutuion;
+	private Integer substitutuion;
 	//上架状态（0：否；1：是）
-	private Boolean publishState;
+	private Integer publishState;
 	//审核状态（0：未审核；1：通过；2：未通过）
 	private Integer examineState;
 	//介绍
@@ -144,19 +144,19 @@ public class CarModel extends Entity<Integer> {
 		this.structuId = structuId;
 	}
 	
-	public Boolean getSubstitutuion(){
+	public Integer getSubstitutuion(){
 		return substitutuion;
 	}
 	
-	public void setSubstitutuion(Boolean substitutuion){
+	public void setSubstitutuion(Integer substitutuion){
 		this.substitutuion = substitutuion;
 	}
 	
-	public Boolean getPublishState(){
+	public Integer getPublishState(){
 		return publishState;
 	}
 	
-	public void setPublishState(Boolean publishState){
+	public void setPublishState(Integer publishState){
 		this.publishState = publishState;
 	}
 	

@@ -66,7 +66,7 @@ public interface CarHomeBrandService extends BaseService {
 	 * @return
 	 */
 	public Integer generatePK();
-	
+
 		/**
 	 * 为CarHomeBrand对象设置默认值
 	 * @param obj

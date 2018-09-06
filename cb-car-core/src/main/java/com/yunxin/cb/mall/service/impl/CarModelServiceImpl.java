@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarModelDao;
 import com.yunxin.cb.mall.entity.CarModel;
 import com.yunxin.cb.mall.service.CarModelService;
@@ -41,7 +42,7 @@ public class CarModelServiceImpl implements CarModelService {
 		List<CarModel> list = null;
 		try {
 			//已删除的不查出
-			CarModel carModel = (CarModel)q.getQ();
+			CarModel carModel = (CarModel)q.getData();
 			if (carModel != null) {
 				carModel.setIsDelete(0);
 			}
@@ -69,7 +70,7 @@ public class CarModelServiceImpl implements CarModelService {
 		
 		try {
 			//已删除的不查出
-			CarModel carModel = (CarModel)q.getQ();
+			CarModel carModel = (CarModel)q.getData();
 			if (carModel != null) {
 				carModel.setIsDelete(0);
 			}
@@ -243,9 +244,6 @@ public class CarModelServiceImpl implements CarModelService {
 	 */
 	public void fillDefaultValues(CarModel obj) {
 		if (obj != null) {
-		    if (obj.getIsDelete() == null) {
-		    	obj.setIsDelete(0);
-		    }
 		}
 	}
 

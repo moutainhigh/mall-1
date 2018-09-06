@@ -30,7 +30,7 @@
 	<result column="payment_sequence" property="paymentSequence" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="finish_time" property="finishTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="is_delete" property="isDelete" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 </resultMap>
@@ -118,7 +118,7 @@ finish_time,remark,is_delete,create_time,update_time
 		#{paymentSequence,jdbcType = VARCHAR},
 		#{finishTime,jdbcType = TIMESTAMP},
 		#{remark,jdbcType = VARCHAR},
-		#{isDelete,jdbcType = BIT},
+		#{isDelete,jdbcType = INTEGER},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP}
 	)
@@ -206,7 +206,7 @@ finish_time,remark,is_delete,create_time,update_time
 			remark=#{remark,jdbcType = VARCHAR},
 		</if>
 		<if test="isDelete!=null ">
-			is_delete=#{isDelete,jdbcType = BIT},
+			is_delete=#{isDelete,jdbcType = INTEGER},
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},

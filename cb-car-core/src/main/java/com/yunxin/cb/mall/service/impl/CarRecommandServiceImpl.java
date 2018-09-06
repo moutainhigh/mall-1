@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarRecommandDao;
 import com.yunxin.cb.mall.entity.CarRecommand;
 import com.yunxin.cb.mall.service.CarRecommandService;
@@ -225,12 +226,6 @@ public class CarRecommandServiceImpl implements CarRecommandService {
 	 */
 	public void fillDefaultValues(CarRecommand obj) {
 		if (obj != null) {
-		    if (obj.getMinValue() == null) {
-		    	obj.setMinValue(0);
-		    }
-		    if (obj.getMaxValue() == null) {
-		    	obj.setMaxValue(0);
-		    }
 		}
 	}
 

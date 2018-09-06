@@ -25,11 +25,11 @@ public class CarSystem extends Entity<Integer> {
 	//是否热门
 	private Integer isHot;
 	//是否主打车（0：否；1：是）
-	private Boolean mainCar;
+	private Integer mainCar;
 	//审核状态（0：未审核；1：通过；2：未通过）
 	private Integer examineState;
 	//上架状态（0：否；1：是）
-	private Boolean publishState;
+	private Integer publishState;
 	//介绍
 	private String introduce;
 	//说明
@@ -116,11 +116,11 @@ public class CarSystem extends Entity<Integer> {
 		this.isHot = isHot;
 	}
 	
-	public Boolean getMainCar(){
+	public Integer getMainCar(){
 		return mainCar;
 	}
 	
-	public void setMainCar(Boolean mainCar){
+	public void setMainCar(Integer mainCar){
 		this.mainCar = mainCar;
 	}
 	
@@ -132,11 +132,11 @@ public class CarSystem extends Entity<Integer> {
 		this.examineState = examineState;
 	}
 	
-	public Boolean getPublishState(){
+	public Integer getPublishState(){
 		return publishState;
 	}
 	
-	public void setPublishState(Boolean publishState){
+	public void setPublishState(Integer publishState){
 		this.publishState = publishState;
 	}
 	

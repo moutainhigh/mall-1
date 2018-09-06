@@ -27,7 +27,7 @@ public class CarTestDrive extends Entity<Integer> {
 	//门店ID
 	private Integer agentId;
 	//状态（0：未试驾；1：已试驾）
-	private Boolean driveState;
+	private Integer driveState;
 	//创建时间
 	private Date createTime;
 	//创建时间 时间范围起（查询用）
@@ -118,11 +118,11 @@ public class CarTestDrive extends Entity<Integer> {
 		this.agentId = agentId;
 	}
 	
-	public Boolean getDriveState(){
+	public Integer getDriveState(){
 		return driveState;
 	}
 	
-	public void setDriveState(Boolean driveState){
+	public void setDriveState(Integer driveState){
 		this.driveState = driveState;
 	}
 	

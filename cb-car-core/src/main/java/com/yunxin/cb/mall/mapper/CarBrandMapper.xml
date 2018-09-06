@@ -9,8 +9,8 @@
 	<result column="initial" property="initial" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="brand_no" property="brandNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="catalog_id" property="catalogId" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="is_display" property="isDisplay" javaType="java.lang.Boolean" jdbcType="BIT"/>
-	<result column="is_hot" property="isHot" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="is_display" property="isDisplay" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="is_hot" property="isHot" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -55,8 +55,8 @@ is_hot,remark,create_time,update_time,operate_id
 		#{initial,jdbcType = VARCHAR},
 		#{brandNo,jdbcType = VARCHAR},
 		#{catalogId,jdbcType = VARCHAR},
-		#{isDisplay,jdbcType = BIT},
-		#{isHot,jdbcType = BIT},
+		#{isDisplay,jdbcType = INTEGER},
+		#{isHot,jdbcType = INTEGER},
 		#{remark,jdbcType = VARCHAR},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
@@ -83,10 +83,10 @@ is_hot,remark,create_time,update_time,operate_id
 			catalog_id=#{catalogId,jdbcType = VARCHAR},
 		</if>
 		<if test="isDisplay!=null ">
-			is_display=#{isDisplay,jdbcType = BIT},
+			is_display=#{isDisplay,jdbcType = INTEGER},
 		</if>
 		<if test="isHot!=null ">
-			is_hot=#{isHot,jdbcType = BIT},
+			is_hot=#{isHot,jdbcType = INTEGER},
 		</if>
 		<if test="remark!=null and remark!=''">
 			remark=#{remark,jdbcType = VARCHAR},

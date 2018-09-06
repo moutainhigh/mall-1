@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarSetPriceDao;
 import com.yunxin.cb.mall.entity.CarSetPrice;
 import com.yunxin.cb.mall.service.CarSetPriceService;
@@ -41,7 +42,7 @@ public class CarSetPriceServiceImpl implements CarSetPriceService {
 		List<CarSetPrice> list = null;
 		try {
 			//已删除的不查出
-			CarSetPrice carSetPrice = (CarSetPrice)q.getQ();
+			CarSetPrice carSetPrice = (CarSetPrice)q.getData();
 			if (carSetPrice != null) {
 				carSetPrice.setIsDelete(0);
 			}
@@ -69,7 +70,7 @@ public class CarSetPriceServiceImpl implements CarSetPriceService {
 		
 		try {
 			//已删除的不查出
-			CarSetPrice carSetPrice = (CarSetPrice)q.getQ();
+			CarSetPrice carSetPrice = (CarSetPrice)q.getData();
 			if (carSetPrice != null) {
 				carSetPrice.setIsDelete(0);
 			}
@@ -243,9 +244,6 @@ public class CarSetPriceServiceImpl implements CarSetPriceService {
 	 */
 	public void fillDefaultValues(CarSetPrice obj) {
 		if (obj != null) {
-		    if (obj.getIsDelete() == null) {
-		    	obj.setIsDelete(0);
-		    }
 		}
 	}
 

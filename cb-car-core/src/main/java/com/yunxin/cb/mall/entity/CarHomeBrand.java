@@ -26,7 +26,7 @@ public class CarHomeBrand extends Entity<Integer> {
 	//首字母
 	private String initial;
 	//是否显示(0否,1是)
-	private Boolean isDisplay;
+	private Integer isDisplay;
 	//CREATE_TIME
 	private Date createTime;
 	//CREATE_TIME 时间范围起（查询用）
@@ -105,11 +105,11 @@ public class CarHomeBrand extends Entity<Integer> {
 		this.initial = initial;
 	}
 	
-	public Boolean getIsDisplay(){
+	public Integer getIsDisplay(){
 		return isDisplay;
 	}
 	
-	public void setIsDisplay(Boolean isDisplay){
+	public void setIsDisplay(Integer isDisplay){
 		this.isDisplay = isDisplay;
 	}
 	

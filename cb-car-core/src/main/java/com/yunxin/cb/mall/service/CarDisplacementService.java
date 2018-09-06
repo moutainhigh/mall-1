@@ -66,7 +66,7 @@ public interface CarDisplacementService extends BaseService {
 	 * @return
 	 */
 	public Integer generatePK();
-	
+
 		/**
 	 * 为CarDisplacement对象设置默认值
 	 * @param obj

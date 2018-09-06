@@ -13,11 +13,11 @@
 	<result column="uname" property="uname" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="on_cards_time" property="onCardsTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="kilometre" property="kilometre" javaType="java.lang.Double" jdbcType="DOUBLE"/>
-	<result column="overhaul" property="overhaul" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="overhaul" property="overhaul" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="assessment_name" property="assessmentName" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="mobile" property="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="contact" property="contact" javaType="java.lang.Boolean" jdbcType="BIT"/>
-	<result column="transfer" property="transfer" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="contact" property="contact" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="transfer" property="transfer" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -77,11 +77,11 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 		#{uname,jdbcType = VARCHAR},
 		#{onCardsTime,jdbcType = TIMESTAMP},
 		#{kilometre,jdbcType = DOUBLE},
-		#{overhaul,jdbcType = BIT},
+		#{overhaul,jdbcType = INTEGER},
 		#{assessmentName,jdbcType = VARCHAR},
 		#{mobile,jdbcType = VARCHAR},
-		#{contact,jdbcType = BIT},
-		#{transfer,jdbcType = BIT},
+		#{contact,jdbcType = INTEGER},
+		#{transfer,jdbcType = INTEGER},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{isDelete,jdbcType = INTEGER},
@@ -120,7 +120,7 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 			kilometre=#{kilometre,jdbcType = DOUBLE},
 		</if>
 		<if test="overhaul!=null ">
-			overhaul=#{overhaul,jdbcType = BIT},
+			overhaul=#{overhaul,jdbcType = INTEGER},
 		</if>
 		<if test="assessmentName!=null and assessmentName!=''">
 			assessment_name=#{assessmentName,jdbcType = VARCHAR},
@@ -129,10 +129,10 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 			mobile=#{mobile,jdbcType = VARCHAR},
 		</if>
 		<if test="contact!=null ">
-			contact=#{contact,jdbcType = BIT},
+			contact=#{contact,jdbcType = INTEGER},
 		</if>
 		<if test="transfer!=null ">
-			transfer=#{transfer,jdbcType = BIT},
+			transfer=#{transfer,jdbcType = INTEGER},
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},

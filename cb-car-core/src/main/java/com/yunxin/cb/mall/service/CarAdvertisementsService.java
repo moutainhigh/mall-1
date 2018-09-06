@@ -66,7 +66,7 @@ public interface CarAdvertisementsService extends BaseService {
 	 * @return
 	 */
 	public Integer generatePK();
-	
+
 		/**
 	 * 为CarAdvertisements对象设置默认值
 	 * @param obj

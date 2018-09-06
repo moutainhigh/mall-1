@@ -10,7 +10,7 @@
 	<result column="city_name" property="cityName" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="sys_id" property="sysId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="agent_id" property="agentId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="drive_state" property="driveState" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="drive_state" property="driveState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -56,7 +56,7 @@ drive_state,create_time,update_time,is_delete,operate_id
 		#{cityName,jdbcType = VARCHAR},
 		#{sysId,jdbcType = INTEGER},
 		#{agentId,jdbcType = INTEGER},
-		#{driveState,jdbcType = BIT},
+		#{driveState,jdbcType = INTEGER},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{isDelete,jdbcType = INTEGER},
@@ -86,7 +86,7 @@ drive_state,create_time,update_time,is_delete,operate_id
 			agent_id=#{agentId,jdbcType = INTEGER},
 		</if>
 		<if test="driveState!=null ">
-			drive_state=#{driveState,jdbcType = BIT},
+			drive_state=#{driveState,jdbcType = INTEGER},
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},

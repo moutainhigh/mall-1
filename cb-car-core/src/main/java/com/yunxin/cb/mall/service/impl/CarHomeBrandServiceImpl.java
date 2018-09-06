@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarHomeBrandDao;
 import com.yunxin.cb.mall.entity.CarHomeBrand;
 import com.yunxin.cb.mall.service.CarHomeBrandService;
@@ -225,12 +226,6 @@ public class CarHomeBrandServiceImpl implements CarHomeBrandService {
 	 */
 	public void fillDefaultValues(CarHomeBrand obj) {
 		if (obj != null) {
-		    if (obj.getParentId() == null) {
-		    	obj.setParentId(0);
-		    }
-		    if (obj.getIsDisplay() == null) {
-		    	obj.setIsDisplay();
-		    }
 		}
 	}
 

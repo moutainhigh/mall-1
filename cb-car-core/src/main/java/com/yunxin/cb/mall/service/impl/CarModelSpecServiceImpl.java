@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarModelSpecDao;
 import com.yunxin.cb.mall.entity.CarModelSpec;
 import com.yunxin.cb.mall.service.CarModelSpecService;
@@ -85,7 +86,7 @@ public class CarModelSpecServiceImpl implements CarModelSpecService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public CarModelSpec getCarModelSpec(Integer id) {
+	public CarModelSpec getCarModelSpec(Long id) {
 		CarModelSpec obj = null;
 		if (id == null || id <= 0) { //传入的主键无效时直接返回null
 			log.info("param error : " + " id = " + id);
@@ -107,7 +108,7 @@ public class CarModelSpecServiceImpl implements CarModelSpecService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<CarModelSpec> getCarModelSpecByIds(Integer[] ids) {
+	public List<CarModelSpec> getCarModelSpecByIds(Long[] ids) {
 		List<CarModelSpec> list = null;
 		if (ids == null || ids.length == 0) {
 			log.info("param error : " + " ids is null or empty array.");
@@ -132,7 +133,7 @@ public class CarModelSpecServiceImpl implements CarModelSpecService {
 	 * @return
 	 */
 	@Transactional
-	public int delCarModelSpec(Integer id) {
+	public int delCarModelSpec(Long id) {
 		int count = 0;
 		if (id == null || id <= 0) { //传入的主键无效时直接返回失败结果
 			log.info("param error : " + " id = " + id);
@@ -164,11 +165,7 @@ public class CarModelSpecServiceImpl implements CarModelSpecService {
 					carModelSpec.setId(this.generatePK());
 				}
 				
-				//设置创建时间和更新时间为当前时间
-				Date now = DateUtils.getTimeNow();
-				carModelSpec.setCreateTime(now);
-				carModelSpec.setUpdateTime(now);
-				
+
 				//填充默认值
 				this.fillDefaultValues(carModelSpec);
 				
@@ -197,9 +194,7 @@ public class CarModelSpecServiceImpl implements CarModelSpecService {
 				
 		if (carModelSpec != null && carModelSpec.getId() != null) { //传入参数无效时直接返回失败结果
 			try {
-				//设置更新时间为当前时间
-				carModelSpec.setUpdateTime(DateUtils.getTimeNow());
-				
+
 				//调用Dao执行更新操作，并判断更新语句执行结果
 				count = carModelSpecDao.update(carModelSpec);			
 			} catch (Exception e) {
@@ -215,7 +210,7 @@ public class CarModelSpecServiceImpl implements CarModelSpecService {
 	 * 生成主键，如果表主键自增，则本方法可直接返回null；如非自增主键，则本方法必须返回一个大于0的值。
 	 * @return
 	 */
-	public Integer generatePK() {
+	public Long generatePK() {
 		return null;
 	}
 	

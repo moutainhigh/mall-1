@@ -33,7 +33,7 @@ public class CarAgency extends Entity<Integer> {
 	//代理费
 	private BigDecimal agencyFee;
 	//代理费是否已付
-	private Boolean isPay;
+	private Integer isPay;
 	//详细地址
 	private String detailAddress;
 	//介绍
@@ -49,7 +49,7 @@ public class CarAgency extends Entity<Integer> {
 	//商家纬度
 	private Double positionY;
 	//是否启用(0否,1是)
-	private Boolean enabled;
+	private Integer enabled;
 	//CREATE_TIME
 	private Date createTime;
 	//CREATE_TIME 时间范围起（查询用）
@@ -160,11 +160,11 @@ public class CarAgency extends Entity<Integer> {
 		this.agencyFee = agencyFee;
 	}
 	
-	public Boolean getIsPay(){
+	public Integer getIsPay(){
 		return isPay;
 	}
 	
-	public void setIsPay(Boolean isPay){
+	public void setIsPay(Integer isPay){
 		this.isPay = isPay;
 	}
 	
@@ -224,11 +224,11 @@ public class CarAgency extends Entity<Integer> {
 		this.positionY = positionY;
 	}
 	
-	public Boolean getEnabled(){
+	public Integer getEnabled(){
 		return enabled;
 	}
 	
-	public void setEnabled(Boolean enabled){
+	public void setEnabled(Integer enabled){
 		this.enabled = enabled;
 	}
 	

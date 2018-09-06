@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarOrderReasonDao;
 import com.yunxin.cb.mall.entity.CarOrderReason;
 import com.yunxin.cb.mall.service.CarOrderReasonService;
@@ -85,7 +86,7 @@ public class CarOrderReasonServiceImpl implements CarOrderReasonService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public CarOrderReason getCarOrderReason(Integer id) {
+	public CarOrderReason getCarOrderReason(Long id) {
 		CarOrderReason obj = null;
 		if (id == null || id <= 0) { //传入的主键无效时直接返回null
 			log.info("param error : " + " id = " + id);
@@ -107,7 +108,7 @@ public class CarOrderReasonServiceImpl implements CarOrderReasonService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<CarOrderReason> getCarOrderReasonByIds(Integer[] ids) {
+	public List<CarOrderReason> getCarOrderReasonByIds(Long[] ids) {
 		List<CarOrderReason> list = null;
 		if (ids == null || ids.length == 0) {
 			log.info("param error : " + " ids is null or empty array.");
@@ -132,7 +133,7 @@ public class CarOrderReasonServiceImpl implements CarOrderReasonService {
 	 * @return
 	 */
 	@Transactional
-	public int delCarOrderReason(Integer id) {
+	public int delCarOrderReason(Long id) {
 		int count = 0;
 		if (id == null || id <= 0) { //传入的主键无效时直接返回失败结果
 			log.info("param error : " + " id = " + id);
@@ -167,8 +168,7 @@ public class CarOrderReasonServiceImpl implements CarOrderReasonService {
 				//设置创建时间和更新时间为当前时间
 				Date now = DateUtils.getTimeNow();
 				carOrderReason.setCreateTime(now);
-				carOrderReason.setUpdateTime(now);
-				
+
 				//填充默认值
 				this.fillDefaultValues(carOrderReason);
 				
@@ -197,9 +197,7 @@ public class CarOrderReasonServiceImpl implements CarOrderReasonService {
 				
 		if (carOrderReason != null && carOrderReason.getId() != null) { //传入参数无效时直接返回失败结果
 			try {
-				//设置更新时间为当前时间
-				carOrderReason.setUpdateTime(DateUtils.getTimeNow());
-				
+
 				//调用Dao执行更新操作，并判断更新语句执行结果
 				count = carOrderReasonDao.update(carOrderReason);			
 			} catch (Exception e) {
@@ -215,7 +213,7 @@ public class CarOrderReasonServiceImpl implements CarOrderReasonService {
 	 * 生成主键，如果表主键自增，则本方法可直接返回null；如非自增主键，则本方法必须返回一个大于0的值。
 	 * @return
 	 */
-	public Integer generatePK() {
+	public Long generatePK() {
 		return null;
 	}
 	

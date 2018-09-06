@@ -12,7 +12,7 @@
 	<result column="belong_city_name" property="belongCityName" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="business_type" property="businessType" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="agency_fee" property="agencyFee" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
-	<result column="is_pay" property="isPay" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="is_pay" property="isPay" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="detail_address" property="detailAddress" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="introduction" property="introduction" javaType="java.lang.String" jdbcType="LONGTEXT"/>
 	<result column="province_id" property="provinceId" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -20,7 +20,7 @@
 	<result column="district_id" property="districtId" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="position_x" property="positionX" javaType="java.lang.Double" jdbcType="DOUBLE"/>
 	<result column="position_y" property="positionY" javaType="java.lang.Double" jdbcType="DOUBLE"/>
-	<result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="enabled" property="enabled" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="bus_name" property="busName" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -86,7 +86,7 @@ update_time,bus_name,usslicense_no,is_delete,operate_id
 		#{belongCityName,jdbcType = VARCHAR},
 		#{businessType,jdbcType = VARCHAR},
 		#{agencyFee,jdbcType = DECIMAL},
-		#{isPay,jdbcType = BIT},
+		#{isPay,jdbcType = INTEGER},
 		#{detailAddress,jdbcType = VARCHAR},
 		#{introduction,jdbcType = LONGTEXT},
 		#{provinceId,jdbcType = VARCHAR},
@@ -94,7 +94,7 @@ update_time,bus_name,usslicense_no,is_delete,operate_id
 		#{districtId,jdbcType = VARCHAR},
 		#{positionX,jdbcType = DOUBLE},
 		#{positionY,jdbcType = DOUBLE},
-		#{enabled,jdbcType = BIT},
+		#{enabled,jdbcType = INTEGER},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{busName,jdbcType = VARCHAR},
@@ -132,7 +132,7 @@ update_time,bus_name,usslicense_no,is_delete,operate_id
 			agency_fee=#{agencyFee,jdbcType = DECIMAL},
 		</if>
 		<if test="isPay!=null ">
-			is_pay=#{isPay,jdbcType = BIT},
+			is_pay=#{isPay,jdbcType = INTEGER},
 		</if>
 		<if test="detailAddress!=null and detailAddress!=''">
 			detail_address=#{detailAddress,jdbcType = VARCHAR},
@@ -156,7 +156,7 @@ update_time,bus_name,usslicense_no,is_delete,operate_id
 			position_y=#{positionY,jdbcType = DOUBLE},
 		</if>
 		<if test="enabled!=null ">
-			enabled=#{enabled,jdbcType = BIT},
+			enabled=#{enabled,jdbcType = INTEGER},
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},

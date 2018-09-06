@@ -37,15 +37,15 @@ public class CarUsedCar extends Entity<Integer> {
 	//里程数
 	private Double kilometre;
 	//是否大修（0：否；1：是）
-	private Boolean overhaul;
+	private Integer overhaul;
 	//评估人
 	private String assessmentName;
 	//手机号
 	private String mobile;
 	//是否联系（0：否；1：是）
-	private Boolean contact;
+	private Integer contact;
 	//过户（0：否；1：是）
-	private Boolean transfer;
+	private Integer transfer;
 	//创建时间
 	private Date createTime;
 	//创建时间 时间范围起（查询用）
@@ -176,11 +176,11 @@ public class CarUsedCar extends Entity<Integer> {
 		this.kilometre = kilometre;
 	}
 	
-	public Boolean getOverhaul(){
+	public Integer getOverhaul(){
 		return overhaul;
 	}
 	
-	public void setOverhaul(Boolean overhaul){
+	public void setOverhaul(Integer overhaul){
 		this.overhaul = overhaul;
 	}
 	
@@ -200,19 +200,19 @@ public class CarUsedCar extends Entity<Integer> {
 		this.mobile = mobile;
 	}
 	
-	public Boolean getContact(){
+	public Integer getContact(){
 		return contact;
 	}
 	
-	public void setContact(Boolean contact){
+	public void setContact(Integer contact){
 		this.contact = contact;
 	}
 	
-	public Boolean getTransfer(){
+	public Integer getTransfer(){
 		return transfer;
 	}
 	
-	public void setTransfer(Boolean transfer){
+	public void setTransfer(Integer transfer){
 		this.transfer = transfer;
 	}
 	
