@@ -2,8 +2,6 @@ package com.yunxin.cb.rest.interceptor;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,7 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
+/**
+ * @author gws
+ * 2016-3-1
+ */
 public class PermissionInterceptor extends HandlerInterceptorAdapter{
     private final Logger log = LoggerFactory.getLogger(PermissionInterceptor.class);
 
@@ -26,6 +27,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter{
         HTML_EXCLUDE_PATHS.add("leftPage.do");
         HTML_EXCLUDE_PATHS.add("loginOut.do");
         HTML_EXCLUDE_PATHS.add("loginInfo.do");
+        HTML_EXCLUDE_PATHS.add("orderRefund/serverAlirefund.do");
     }
 
     /**

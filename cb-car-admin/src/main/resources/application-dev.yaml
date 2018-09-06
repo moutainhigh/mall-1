@@ -8,15 +8,13 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   session:
      store-type: none
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
 mybatis:
   type-aliases-package: com.yunxin.cb.mall.common,com.yunxin.cb.mall.entity
   mapper-locations: classpath:com/yunxin/cb/mall/mapper/*.xml
-mvc:
-      view:
-          # 页面默认前缀目录
-          prefix: /WEB-INF/jsp/
-          # 响应页面默认后缀
-          suffix: .jsp
 #pagehelper分页插件
 pagehelper:
   helperDialect: mysql

@@ -13,13 +13,8 @@ spring:
   http:
     multipart:
       enabled: true
-      max-file-size: 50mb
-      max-request-size: 50mb
-  messages:
-      basename: i18n_validate,i18n_message
-      encoding: UTF-8
-
-
+      max-file-size: 20mb
+      max-request-size: 20mb
 
 
 
