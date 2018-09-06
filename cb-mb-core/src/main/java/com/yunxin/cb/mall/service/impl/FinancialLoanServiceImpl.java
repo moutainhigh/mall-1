@@ -88,8 +88,7 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
 
         // 钱包变动
         walletVO.setCreditAmount(walletVO.getCreditAmount().subtract(amount));
-        walletVO.setDebtCredit(walletVO.getCreditAmount().add(amount));
-        String remark = "借款：" + amount + ",减少对应信用额度，增加对应负债";
+        String remark = "申请借款：" + amount + ",减少对应信用额度";
         boolean resultFlag = financialWalletService.updateFinancialWallet(walletVO, amount, OperationType.SUBTRACT, remark);
         if (!resultFlag) {
             throw new RuntimeException("内部错误(钱包)");
