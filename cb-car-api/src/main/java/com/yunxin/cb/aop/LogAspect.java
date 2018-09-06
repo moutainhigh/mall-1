@@ -14,6 +14,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -114,7 +116,11 @@ public class LogAspect {
 					+ isJson(outputParam) + "执行时间:" + excTime+ "\n "
 			);
 		} catch (Throwable e) {
-			log.error("类名称" + joinPoint.getSignature().getDeclaringTypeName() + ",方法名称:" + methodName);
+			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw, true));
+			String str = sw.toString();
+			log.error(str + "类名称" + joinPoint.getSignature().getDeclaringTypeName() + ",方法名称:" + methodName);
 			return webExceptionHandler.handleThrowable(e); //异常同意处理
 		}
 		return outputParam;
