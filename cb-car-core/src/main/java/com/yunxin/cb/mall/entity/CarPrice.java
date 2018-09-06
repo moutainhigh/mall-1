@@ -37,6 +37,8 @@ public class CarPrice extends Entity<Integer> {
 	private Integer isDelete;
 	//操作人ID
 	private Integer operateId;
+	//是否默认（0：否；1：是）
+	private Integer isDefault;
 	
 	/*Auto generated properties end*/
 	
@@ -151,6 +153,14 @@ public class CarPrice extends Entity<Integer> {
 		this.operateId = operateId;
 	}
 	
+	public Integer getIsDefault(){
+		return isDefault;
+	}
+	
+	public void setIsDefault(Integer isDefault){
+		this.isDefault = isDefault;
+	}
+	
 	
 	/*Auto generated methods end*/
 	
@@ -166,6 +176,7 @@ public class CarPrice extends Entity<Integer> {
 		return "CarPrice ["
 		 + "id = " + id + ", modelId = " + modelId + ", price = " + price + ", agentId = " + agentId
 		 + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", isDelete = " + isDelete + ", operateId = " + operateId
+		 + ", isDefault = " + isDefault
 		+"]";
 	}
 }

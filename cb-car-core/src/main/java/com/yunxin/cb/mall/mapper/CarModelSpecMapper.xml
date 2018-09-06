@@ -6,7 +6,7 @@
 	<id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
 	<result column="model_id" property="modelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="spec_id" property="specId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="spec_value" property="specValue" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="spec_value" property="specValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
 </resultMap>
 
 
@@ -17,7 +17,7 @@ id,model_id,spec_id,spec_value
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
-id,model_id,spec_id,
+id,model_id,spec_id,spec_value
 </sql>
 
 <insert id="add" parameterType="CarModelSpec" useGeneratedKeys="true" keyProperty="id">
@@ -34,7 +34,7 @@ id,model_id,spec_id,
 		</if>
 		#{modelId,jdbcType = INTEGER},
 		#{specId,jdbcType = INTEGER},
-		#{specValue,jdbcType = VARBINARY}
+		#{specValue,jdbcType = VARCHAR}
 	)
 </insert>
 
@@ -47,8 +47,8 @@ id,model_id,spec_id,
 		<if test="specId!=null ">
 			spec_id=#{specId,jdbcType = INTEGER},
 		</if>
-		<if test="specValue!=null ">
-			spec_value=#{specValue,jdbcType = VARBINARY},
+		<if test="specValue!=null and specValue!=''">
+			spec_value=#{specValue,jdbcType = VARCHAR},
 		</if>
 	</set>
 	<where>
@@ -111,7 +111,7 @@ id,model_id,spec_id,
 		<if test="q.specId!=null ">
 			AND spec_id=#{q.specId}
 		</if>
-		<if test="q.specValue!=null ">
+		<if test="q.specValue!=null and q.specValue!=''">
 			AND spec_value=#{q.specValue}
 		</if>
 	</if>

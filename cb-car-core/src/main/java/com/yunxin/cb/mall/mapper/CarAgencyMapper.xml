@@ -14,7 +14,7 @@
 	<result column="agency_fee" property="agencyFee" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
 	<result column="is_pay" property="isPay" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="detail_address" property="detailAddress" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="introduction" property="introduction" javaType="java.lang.String" jdbcType="LONGTEXT"/>
+	<result column="introduction" property="introduction" javaType="java.lang.String" jdbcType="CLOB"/>
 	<result column="province_id" property="provinceId" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="city_id" property="cityId" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="district_id" property="districtId" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -41,7 +41,7 @@ update_time,bus_name,usslicense_no,is_delete,operate_id
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
 id,agency_name,contacter,phone,email,belong_city_id,belong_city_name,
-business_type,agency_fee,is_pay,detail_address,introduction,province_id,
+business_type,agency_fee,is_pay,detail_address,province_id,
 city_id,district_id,position_x,position_y,enabled,create_time,
 update_time,bus_name,usslicense_no,is_delete,operate_id
 </sql>
@@ -88,7 +88,7 @@ update_time,bus_name,usslicense_no,is_delete,operate_id
 		#{agencyFee,jdbcType = DECIMAL},
 		#{isPay,jdbcType = INTEGER},
 		#{detailAddress,jdbcType = VARCHAR},
-		#{introduction,jdbcType = LONGTEXT},
+		#{introduction,jdbcType = CLOB},
 		#{provinceId,jdbcType = VARCHAR},
 		#{cityId,jdbcType = VARCHAR},
 		#{districtId,jdbcType = VARCHAR},
@@ -137,8 +137,8 @@ update_time,bus_name,usslicense_no,is_delete,operate_id
 		<if test="detailAddress!=null and detailAddress!=''">
 			detail_address=#{detailAddress,jdbcType = VARCHAR},
 		</if>
-		<if test="introduction!=null and introduction!=''">
-			introduction=#{introduction,jdbcType = LONGTEXT},
+		<if test="introduction!=null ">
+			introduction=#{introduction,jdbcType = CLOB},
 		</if>
 		<if test="provinceId!=null and provinceId!=''">
 			province_id=#{provinceId,jdbcType = VARCHAR},
@@ -264,7 +264,7 @@ update_time,bus_name,usslicense_no,is_delete,operate_id
 		<if test="q.detailAddress!=null and q.detailAddress!=''">
 			AND detail_address=#{q.detailAddress}
 		</if>
-		<if test="q.introduction!=null and q.introduction!=''">
+		<if test="q.introduction!=null ">
 			AND introduction=#{q.introduction}
 		</if>
 		<if test="q.provinceId!=null and q.provinceId!=''">

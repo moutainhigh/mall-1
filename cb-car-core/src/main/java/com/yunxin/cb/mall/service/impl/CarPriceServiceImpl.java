@@ -182,11 +182,12 @@ public class CarPriceServiceImpl implements CarPriceService {
 				if (carPrice.getId() == null) {
 					carPrice.setId(this.generatePK());
 				}
-				
+
 				//设置创建时间和更新时间为当前时间
 				Date now = DateUtils.getTimeNow();
 				carPrice.setCreateTime(now);
 				carPrice.setUpdateTime(now);
+
 				
 				//填充默认值
 				this.fillDefaultValues(carPrice);
@@ -216,8 +217,9 @@ public class CarPriceServiceImpl implements CarPriceService {
 				
 		if (carPrice != null && carPrice.getId() != null) { //传入参数无效时直接返回失败结果
 			try {
-				//设置更新时间为当前时间
-				carPrice.setUpdateTime(DateUtils.getTimeNow());
+					//设置更新时间为当前时间
+					carPrice.setUpdateTime(DateUtils.getTimeNow());
+
 				
 				//调用Dao执行更新操作，并判断更新语句执行结果
 				count = carPriceDao.update(carPrice);			

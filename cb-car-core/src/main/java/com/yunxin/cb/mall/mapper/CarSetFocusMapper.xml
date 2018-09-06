@@ -4,9 +4,9 @@
 
 <resultMap type="CarSetFocus" id="CarSetFocus">
 	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="set_name" property="setName" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
-	<result column="set_type" property="setType" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
-	<result column="set_value" property="setValue" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="set_name" property="setName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="set_type" property="setType" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="set_value" property="setValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -21,7 +21,7 @@ id,set_name,set_type,set_value,create_time,update_time,is_delete
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
-id,create_time,update_time,is_delete
+id,set_name,set_type,set_value,create_time,update_time,is_delete
 
 </sql>
 
@@ -40,9 +40,9 @@ id,create_time,update_time,is_delete
 		<if test="id!=null">
 		#{id,jdbcType = INTEGER},
 		</if>
-		#{setName,jdbcType = VARBINARY},
-		#{setType,jdbcType = VARBINARY},
-		#{setValue,jdbcType = VARBINARY},
+		#{setName,jdbcType = VARCHAR},
+		#{setType,jdbcType = VARCHAR},
+		#{setValue,jdbcType = VARCHAR},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{isDelete,jdbcType = INTEGER}
@@ -52,14 +52,14 @@ id,create_time,update_time,is_delete
 <update id="update" parameterType="CarSetFocus">
 	update CAR_SET_FOCUS 
 	<set>
-		<if test="setName!=null ">
-			set_name=#{setName,jdbcType = VARBINARY},
+		<if test="setName!=null and setName!=''">
+			set_name=#{setName,jdbcType = VARCHAR},
 		</if>
-		<if test="setType!=null ">
-			set_type=#{setType,jdbcType = VARBINARY},
+		<if test="setType!=null and setType!=''">
+			set_type=#{setType,jdbcType = VARCHAR},
 		</if>
-		<if test="setValue!=null ">
-			set_value=#{setValue,jdbcType = VARBINARY},
+		<if test="setValue!=null and setValue!=''">
+			set_value=#{setValue,jdbcType = VARCHAR},
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},
@@ -128,13 +128,13 @@ id,create_time,update_time,is_delete
 		<if test="q.id!=null ">
 			AND id=#{q.id}
 		</if>
-		<if test="q.setName!=null ">
+		<if test="q.setName!=null and q.setName!=''">
 			AND set_name=#{q.setName}
 		</if>
-		<if test="q.setType!=null ">
+		<if test="q.setType!=null and q.setType!=''">
 			AND set_type=#{q.setType}
 		</if>
-		<if test="q.setValue!=null ">
+		<if test="q.setValue!=null and q.setValue!=''">
 			AND set_value=#{q.setValue}
 		</if>
 		<if test="q.createTime!=null ">

@@ -4,26 +4,27 @@
 
 <resultMap type="CarPrice" id="CarPrice">
 	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="model_id" property="modelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="price" property="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
-	<result column="agent_id" property="agentId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="model_id" property="modelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="price" property="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="agent_id" property="agentId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="is_default" property="isDefault" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 </resultMap>
 
 
 <!-- 全部字段，一般用于明细查询 -->
 <sql id="AllColumnlist">
 id,model_id,price,agent_id,create_time,update_time,is_delete,
-operate_id
+operate_id,is_default
 </sql>
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
 id,model_id,price,agent_id,create_time,update_time,is_delete,
-operate_id
+operate_id,is_default
 </sql>
 
 <insert id="add" parameterType="CarPrice" useGeneratedKeys="true" keyProperty="id">
@@ -37,7 +38,8 @@ operate_id
 		create_time,
 		update_time,
 		is_delete,
-		operate_id
+		operate_id,
+		is_default
 	) values (
 		<if test="id!=null">
 		#{id,jdbcType = INTEGER},
@@ -48,7 +50,8 @@ operate_id
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{isDelete,jdbcType = INTEGER},
-		#{operateId,jdbcType = INTEGER}
+		#{operateId,jdbcType = INTEGER},
+		#{isDefault,jdbcType = INTEGER}
 	)
 </insert>
 
@@ -57,24 +60,35 @@ operate_id
 	<set>
 		<if test="modelId!=null ">
 			model_id=#{modelId,jdbcType = INTEGER},
+
 		</if>
 		<if test="price!=null ">
 			price=#{price,jdbcType = DECIMAL},
+
 		</if>
 		<if test="agentId!=null ">
 			agent_id=#{agentId,jdbcType = INTEGER},
+
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="updateTime!=null ">
 			update_time=#{updateTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="isDelete!=null ">
 			is_delete=#{isDelete,jdbcType = INTEGER},
+
 		</if>
 		<if test="operateId!=null ">
 			operate_id=#{operateId,jdbcType = INTEGER},
+
+		</if>
+		<if test="isDefault!=null ">
+			is_default=#{isDefault,jdbcType = INTEGER},
+
 		</if>
 	</set>
 	<where>
@@ -166,6 +180,9 @@ operate_id
 		</if>
 		<if test="q.operateId!=null ">
 			AND operate_id=#{q.operateId}
+		</if>
+		<if test="q.isDefault!=null ">
+			AND is_default=#{q.isDefault}
 		</if>
 	</if>
 </sql>
