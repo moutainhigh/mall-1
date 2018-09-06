@@ -204,8 +204,11 @@
       },
       {
         "name": "返现管理", "code": "198", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../finacialInsuCashbackLog/finacialInsuCashbackLogs.do"
+      },
+      {
         "name": "还款管理", "code": "199", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../financialLoanRepayment/financialLoanRepaymentLogs.do"
       }
+
     ]
   }
 ]
