@@ -1,10 +1,8 @@
 package com.yunxin.cb.mall.service;
 
 import com.yunxin.cb.mall.entity.FinancialLoanRepayment;
-import com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public interface FinancialLoanRepaymentService {
 
@@ -22,7 +20,4 @@ public interface FinancialLoanRepaymentService {
      **/
     void repay(BigDecimal repayAmount, Integer customerId);
 
-    List<FinancialLoanRepaymentVO> getByCustomerId(int customerId);
-
-    FinancialLoanRepaymentVO getById(int repaymentId);
 }

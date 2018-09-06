@@ -75,7 +75,7 @@ public interface FinancialLoanMapper {
             "from financial_loan where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     @ResultMap(value="financialLoanMap")
-    List<FinancialLoan> selectByCustomerIdAndType(@Param("customerId") Integer customerId);
+    List<FinancialLoan> selectByCustomerId(@Param("customerId") Integer customerId);
 
     @Update({
             "update financial_loan",

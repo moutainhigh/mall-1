@@ -3,7 +3,6 @@ package com.yunxin.cb.mall.service.impl;
 import com.yunxin.cb.mall.entity.FinancialLogBill;
 import com.yunxin.cb.mall.mapper.FinancialLogMapper;
 import com.yunxin.cb.mall.service.FinancialLogService;
-import com.yunxin.cb.mall.vo.FinancialLogBillVO;
 import com.yunxin.cb.mall.vo.FinancialLogDataVO;
 import com.yunxin.cb.mall.vo.FinancialLogDetailVO;
 import com.yunxin.cb.mall.vo.FinancialLogVO;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

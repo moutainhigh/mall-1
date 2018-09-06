@@ -6,18 +6,15 @@ import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.service.FinancialLoanRepaymentService;
 import com.yunxin.cb.mall.service.FinancialLoanService;
 import com.yunxin.cb.mall.service.FinancialWalletService;
-import com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -268,39 +265,4 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
         return result;
     }
 
-    /**
-     * 根据用户获取还款信息
-     * @author      likang
-     * @param customerId
-     * @return      java.util.List<com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO>
-     * @exception
-     * @date        2018/8/9 14:48
-     */
-    @Override
-    public List<FinancialLoanRepaymentVO> getByCustomerId(int customerId){
-        List<FinancialLoanRepayment> list = financialLoanRepaymentMapper.selectByCustomerId(customerId);
-        List<FinancialLoanRepaymentVO> listVo = new ArrayList<>();
-        list.forEach(p ->{
-            FinancialLoanRepaymentVO vo = new FinancialLoanRepaymentVO();
-            BeanUtils.copyProperties(p, vo);
-            listVo.add(vo);
-        });
-        return listVo;
-    }
-
-    /**
-     * 根据id获取还款信息
-     * @author      likang
-     * @param repaymentId
-     * @return      com.yunxin.cb.mall.vo.FinancialLoanRepaymentVO
-     * @exception
-     * @date        2018/8/9 14:50
-     */
-    @Override
-    public FinancialLoanRepaymentVO getById(int repaymentId){
-        FinancialLoanRepaymentVO vo = new FinancialLoanRepaymentVO();
-        FinancialLoanRepayment loan = financialLoanRepaymentMapper.selectByPrimaryKey(repaymentId);
-        BeanUtils.copyProperties(loan, vo);
-        return vo;
-    }
 }

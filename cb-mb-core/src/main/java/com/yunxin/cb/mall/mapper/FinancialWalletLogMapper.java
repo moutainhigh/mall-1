@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 @Mapper
-public interface FinacialWalletLogMapper {
+public interface FinancialWalletLogMapper {
     @Delete({
         "delete from financial_wallet_log",
         "where WALLET_LOG_ID = #{walletLogId,jdbcType=INTEGER}"

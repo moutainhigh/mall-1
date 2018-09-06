@@ -9,14 +9,11 @@ import com.yunxin.cb.mall.mapper.FinancialLoanConfigMapper;
 import com.yunxin.cb.mall.mapper.FinancialLoanMapper;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.BankInfoVO;
-import com.yunxin.cb.mall.vo.FinancialLoanVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
 import com.yunxin.cb.util.page.PageFinder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -24,7 +21,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -142,59 +138,6 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
     }
 
     /**
-     * 根据用户ID获取借款信息
-     * @author      likang
-     * @param customerId
-     * @return      java.util.List<com.yunxin.cb.mall.vo.FinancialLoanVO>
-     * @exception
-     * @date        2018/8/9 14:38
-     */
-    @Override
-    public List<FinancialLoanVO> getByCustomerIdAndType(int customerId){
-        List<FinancialLoan> list = financialLoanMapper.selectByCustomerIdAndType(customerId);
-        List<FinancialLoanVO> listVo = new ArrayList<>();
-        list.stream().forEach(p ->{
-            FinancialLoanVO vo = new FinancialLoanVO();
-            BeanUtils.copyProperties(p, vo);
-            listVo.add(vo);
-        });
-        return listVo;
-    }
-
-    /**
-     * 获取一条记录
-     * @author      likang
-     * @param repaymentId
-     * @return      com.yunxin.cb.mall.vo.FinancialLoanVO
-     * @exception
-     * @date        2018/8/9 14:44
-     */
-    @Override
-    public FinancialLoanVO getById(int repaymentId){
-        FinancialLoanVO vo = new FinancialLoanVO();
-        FinancialLoan loan = financialLoanMapper.selectByPrimaryKey(repaymentId);
-        BeanUtils.copyProperties(loan, vo);
-        return vo;
-    }
-
-    /**
-     * 更新
-     * @author      likang
-     * @param vo
-     * @return      com.yunxin.cb.mall.vo.FinancialLoanVO
-     * @exception
-     * @date        2018/8/9 14:44
-     */
-    @Override
-    public FinancialLoanVO update(FinancialLoanVO vo){
-        log.info("update:"+vo);
-        FinancialLoan financialLoan = new FinancialLoan();
-        BeanUtils.copyProperties(financialLoan, vo);
-        financialLoanMapper.updateOnVersion(financialLoan);
-        return vo;
-    }
-
-    /**
      * 获取用户借款条数
      *
      * @param customerId
@@ -207,7 +150,6 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public PageFinder<FinancialLoan> pageByCustomer(Integer customerId, Integer pageNo, Integer pageSize) {
 
         PageHelper.startPage(pageNo, pageSize);

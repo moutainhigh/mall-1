@@ -12,7 +12,7 @@ import java.util.Map;
 @Mapper
 public interface FinancialLogMapper {
     @Delete({
-        "delete from finacial_log",
+        "delete from financial_log_bill",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer logId);
@@ -61,7 +61,7 @@ public interface FinancialLogMapper {
         "select",
         "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
         "CREATE_TIME, STATE, TRANSACTION_NO, TRANSACTION_DESC",
-        "from finacial_log"
+        "from financial_log_bill"
     })
     @Results({
         @Result(column="LOG_ID", property="logId", jdbcType=JdbcType.INTEGER, id=true),
@@ -81,7 +81,7 @@ public interface FinancialLogMapper {
     List<FinancialLogBill> selectAll();
 
     @Update({
-        "update finacial_log",
+        "update financial_log_bill",
         "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
           "CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},",
           "TITLE = #{title,jdbcType=VARCHAR},",
