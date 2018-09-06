@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarHomeBrandDao">
+
+<resultMap type="CarHomeBrand" id="CarHomeBrand">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="parent_id" property="parentId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="chiness_name" property="chinessName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="en_name" property="enName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="level" property="level" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="initial" property="initial" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="is_display" property="isDisplay" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,parent_id,chiness_name,en_name,level,initial,is_display,
+create_time,update_time
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,parent_id,chiness_name,en_name,level,initial,is_display,
+create_time,update_time
+</sql>
+
+<insert id="add" parameterType="CarHomeBrand" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_HOME_BRAND(
+		<if test="id!=null">
+		id,
+		</if>
+		parent_id,
+		chiness_name,
+		en_name,
+		level,
+		initial,
+		is_display,
+		create_time,
+		update_time
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{parentId,jdbcType = INTEGER},
+		#{chinessName,jdbcType = VARCHAR},
+		#{enName,jdbcType = VARCHAR},
+		#{level,jdbcType = INTEGER},
+		#{initial,jdbcType = VARCHAR},
+		#{isDisplay,jdbcType = BIT},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{updateTime,jdbcType = TIMESTAMP}
+	)
+</insert>
+
+<update id="update" parameterType="CarHomeBrand">
+	update CAR_HOME_BRAND 
+	<set>
+		<if test="parentId!=null ">
+			parent_id=#{parentId,jdbcType = INTEGER},
+		</if>
+		<if test="chinessName!=null and chinessName!=''">
+			chiness_name=#{chinessName,jdbcType = VARCHAR},
+		</if>
+		<if test="enName!=null and enName!=''">
+			en_name=#{enName,jdbcType = VARCHAR},
+		</if>
+		<if test="level!=null ">
+			level=#{level,jdbcType = INTEGER},
+		</if>
+		<if test="initial!=null and initial!=''">
+			initial=#{initial,jdbcType = VARCHAR},
+		</if>
+		<if test="isDisplay!=null ">
+			is_display=#{isDisplay,jdbcType = BIT},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="updateTime!=null ">
+			update_time=#{updateTime,jdbcType = TIMESTAMP},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_HOME_BRAND 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarHomeBrand">
+	select <include refid="AllColumnlist"/> from CAR_HOME_BRAND
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarHomeBrand">
+	select <include refid="AllColumnlist"/> from CAR_HOME_BRAND
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_HOME_BRAND 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarHomeBrand">
+	select <include refid="CommonColumnlist"/> from CAR_HOME_BRAND 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarHomeBrand">
+	select <include refid="CommonColumnlist"/> from CAR_HOME_BRAND
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.parentId!=null ">
+			AND parent_id=#{q.parentId}
+		</if>
+		<if test="q.chinessName!=null and q.chinessName!=''">
+			AND chiness_name=#{q.chinessName}
+		</if>
+		<if test="q.enName!=null and q.enName!=''">
+			AND en_name=#{q.enName}
+		</if>
+		<if test="q.level!=null ">
+			AND level=#{q.level}
+		</if>
+		<if test="q.initial!=null and q.initial!=''">
+			AND initial=#{q.initial}
+		</if>
+		<if test="q.isDisplay!=null ">
+			AND is_display=#{q.isDisplay}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.updateTime!=null ">
+			AND update_time=#{q.updateTime}
+		</if>
+		<if test="q.updateTimeStart!=null">
+		<![CDATA[	AND update_time>=#{q.updateTimeStart}  ]]>
+		</if>
+		<if test="q.updateTimeEnd!=null">
+		<![CDATA[	AND update_time<#{q.updateTimeEnd}   ]]>
+		</if>
+	</if>
+</sql>
+
+</mapper>

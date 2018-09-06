@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarSetUpdateLogDao">
+
+<resultMap type="CarSetUpdateLog" id="CarSetUpdateLog">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="account" property="account" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="name" property="name" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="set_name" property="setName" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="set_type" property="setType" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="init_value" property="initValue" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="set_value" property="setValue" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,account,name,set_name,set_type,init_value,set_value,
+is_delete,create_time
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,is_delete,create_time
+</sql>
+
+<insert id="add" parameterType="CarSetUpdateLog" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_SET_UPDATE_LOG(
+		<if test="id!=null">
+		id,
+		</if>
+		account,
+		name,
+		set_name,
+		set_type,
+		init_value,
+		set_value,
+		is_delete,
+		create_time
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{account,jdbcType = VARBINARY},
+		#{name,jdbcType = VARBINARY},
+		#{setName,jdbcType = VARBINARY},
+		#{setType,jdbcType = VARBINARY},
+		#{initValue,jdbcType = VARBINARY},
+		#{setValue,jdbcType = VARBINARY},
+		#{isDelete,jdbcType = INTEGER},
+		#{createTime,jdbcType = TIMESTAMP}
+	)
+</insert>
+
+<update id="update" parameterType="CarSetUpdateLog">
+	update CAR_SET_UPDATE_LOG 
+	<set>
+		<if test="account!=null ">
+			account=#{account,jdbcType = VARBINARY},
+		</if>
+		<if test="name!=null ">
+			name=#{name,jdbcType = VARBINARY},
+		</if>
+		<if test="setName!=null ">
+			set_name=#{setName,jdbcType = VARBINARY},
+		</if>
+		<if test="setType!=null ">
+			set_type=#{setType,jdbcType = VARBINARY},
+		</if>
+		<if test="initValue!=null ">
+			init_value=#{initValue,jdbcType = VARBINARY},
+		</if>
+		<if test="setValue!=null ">
+			set_value=#{setValue,jdbcType = VARBINARY},
+		</if>
+		<if test="isDelete!=null ">
+			is_delete=#{isDelete,jdbcType = INTEGER},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_SET_UPDATE_LOG 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarSetUpdateLog">
+	select <include refid="AllColumnlist"/> from CAR_SET_UPDATE_LOG
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarSetUpdateLog">
+	select <include refid="AllColumnlist"/> from CAR_SET_UPDATE_LOG
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_SET_UPDATE_LOG 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarSetUpdateLog">
+	select <include refid="CommonColumnlist"/> from CAR_SET_UPDATE_LOG 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarSetUpdateLog">
+	select <include refid="CommonColumnlist"/> from CAR_SET_UPDATE_LOG
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+    <if test="q==null"><!-- 无传入参数时默认查未删除的 -->
+       AND is_delete=0
+    </if>
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.account!=null ">
+			AND account=#{q.account}
+		</if>
+		<if test="q.name!=null ">
+			AND name=#{q.name}
+		</if>
+		<if test="q.setName!=null ">
+			AND set_name=#{q.setName}
+		</if>
+		<if test="q.setType!=null ">
+			AND set_type=#{q.setType}
+		</if>
+		<if test="q.initValue!=null ">
+			AND init_value=#{q.initValue}
+		</if>
+		<if test="q.setValue!=null ">
+			AND set_value=#{q.setValue}
+		</if>
+		<if test="q.isDelete!=null ">
+			AND is_delete=#{q.isDelete}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+	</if>
+</sql>
+
+</mapper>

@@ -3,8 +3,6 @@ package com.yunxin.cb.mall.common;
 import java.io.Serializable;
 import java.util.List;
 
-import com.yunxin.cb.mall.common.Query;
-
 /**
  * 数据对象基础操作类
  * @author yong
@@ -40,7 +38,7 @@ public interface BaseDao<T,PK extends Serializable> {
 	 * 根据主键得到一组对象
 	 * @param pks
 	 */
-	public List<T> getByIds(Integer[] pks);
+	public List<T> getByIds(PK[] pks);
 	
 	/**
 	 * 获得数据条数

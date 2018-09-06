@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarAgencyDao">
+
+<resultMap type="CarAgency" id="CarAgency">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="agency_name" property="agencyName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="contacter" property="contacter" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="phone" property="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="email" property="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="belong_city_id" property="belongCityId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="belong_city_name" property="belongCityName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="business_type" property="businessType" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="agency_fee" property="agencyFee" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+	<result column="is_pay" property="isPay" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="detail_address" property="detailAddress" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="introduction" property="introduction" javaType="java.lang.String" jdbcType="LONGTEXT"/>
+	<result column="province_id" property="provinceId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="city_id" property="cityId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="district_id" property="districtId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="position_x" property="positionX" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+	<result column="position_y" property="positionY" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+	<result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="bus_name" property="busName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="usslicense_no" property="usslicenseNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,agency_name,contacter,phone,email,belong_city_id,belong_city_name,
+business_type,agency_fee,is_pay,detail_address,introduction,province_id,
+city_id,district_id,position_x,position_y,enabled,create_time,
+update_time,bus_name,usslicense_no,is_delete,operate_id
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,agency_name,contacter,phone,email,belong_city_id,belong_city_name,
+business_type,agency_fee,is_pay,detail_address,introduction,province_id,
+city_id,district_id,position_x,position_y,enabled,create_time,
+update_time,bus_name,usslicense_no,is_delete,operate_id
+</sql>
+
+<insert id="add" parameterType="CarAgency" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_AGENCY(
+		<if test="id!=null">
+		id,
+		</if>
+		agency_name,
+		contacter,
+		phone,
+		email,
+		belong_city_id,
+		belong_city_name,
+		business_type,
+		agency_fee,
+		is_pay,
+		detail_address,
+		introduction,
+		province_id,
+		city_id,
+		district_id,
+		position_x,
+		position_y,
+		enabled,
+		create_time,
+		update_time,
+		bus_name,
+		usslicense_no,
+		is_delete,
+		operate_id
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{agencyName,jdbcType = VARCHAR},
+		#{contacter,jdbcType = VARCHAR},
+		#{phone,jdbcType = VARCHAR},
+		#{email,jdbcType = VARCHAR},
+		#{belongCityId,jdbcType = VARCHAR},
+		#{belongCityName,jdbcType = VARCHAR},
+		#{businessType,jdbcType = VARCHAR},
+		#{agencyFee,jdbcType = DECIMAL},
+		#{isPay,jdbcType = BIT},
+		#{detailAddress,jdbcType = VARCHAR},
+		#{introduction,jdbcType = LONGTEXT},
+		#{provinceId,jdbcType = VARCHAR},
+		#{cityId,jdbcType = VARCHAR},
+		#{districtId,jdbcType = VARCHAR},
+		#{positionX,jdbcType = DOUBLE},
+		#{positionY,jdbcType = DOUBLE},
+		#{enabled,jdbcType = BIT},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{updateTime,jdbcType = TIMESTAMP},
+		#{busName,jdbcType = VARCHAR},
+		#{usslicenseNo,jdbcType = VARCHAR},
+		#{isDelete,jdbcType = INTEGER},
+		#{operateId,jdbcType = INTEGER}
+	)
+</insert>
+
+<update id="update" parameterType="CarAgency">
+	update CAR_AGENCY 
+	<set>
+		<if test="agencyName!=null and agencyName!=''">
+			agency_name=#{agencyName,jdbcType = VARCHAR},
+		</if>
+		<if test="contacter!=null and contacter!=''">
+			contacter=#{contacter,jdbcType = VARCHAR},
+		</if>
+		<if test="phone!=null and phone!=''">
+			phone=#{phone,jdbcType = VARCHAR},
+		</if>
+		<if test="email!=null and email!=''">
+			email=#{email,jdbcType = VARCHAR},
+		</if>
+		<if test="belongCityId!=null and belongCityId!=''">
+			belong_city_id=#{belongCityId,jdbcType = VARCHAR},
+		</if>
+		<if test="belongCityName!=null and belongCityName!=''">
+			belong_city_name=#{belongCityName,jdbcType = VARCHAR},
+		</if>
+		<if test="businessType!=null and businessType!=''">
+			business_type=#{businessType,jdbcType = VARCHAR},
+		</if>
+		<if test="agencyFee!=null ">
+			agency_fee=#{agencyFee,jdbcType = DECIMAL},
+		</if>
+		<if test="isPay!=null ">
+			is_pay=#{isPay,jdbcType = BIT},
+		</if>
+		<if test="detailAddress!=null and detailAddress!=''">
+			detail_address=#{detailAddress,jdbcType = VARCHAR},
+		</if>
+		<if test="introduction!=null and introduction!=''">
+			introduction=#{introduction,jdbcType = LONGTEXT},
+		</if>
+		<if test="provinceId!=null and provinceId!=''">
+			province_id=#{provinceId,jdbcType = VARCHAR},
+		</if>
+		<if test="cityId!=null and cityId!=''">
+			city_id=#{cityId,jdbcType = VARCHAR},
+		</if>
+		<if test="districtId!=null and districtId!=''">
+			district_id=#{districtId,jdbcType = VARCHAR},
+		</if>
+		<if test="positionX!=null ">
+			position_x=#{positionX,jdbcType = DOUBLE},
+		</if>
+		<if test="positionY!=null ">
+			position_y=#{positionY,jdbcType = DOUBLE},
+		</if>
+		<if test="enabled!=null ">
+			enabled=#{enabled,jdbcType = BIT},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="updateTime!=null ">
+			update_time=#{updateTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="busName!=null and busName!=''">
+			bus_name=#{busName,jdbcType = VARCHAR},
+		</if>
+		<if test="usslicenseNo!=null and usslicenseNo!=''">
+			usslicense_no=#{usslicenseNo,jdbcType = VARCHAR},
+		</if>
+		<if test="isDelete!=null ">
+			is_delete=#{isDelete,jdbcType = INTEGER},
+		</if>
+		<if test="operateId!=null ">
+			operate_id=#{operateId,jdbcType = INTEGER},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_AGENCY 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarAgency">
+	select <include refid="AllColumnlist"/> from CAR_AGENCY
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarAgency">
+	select <include refid="AllColumnlist"/> from CAR_AGENCY
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_AGENCY 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarAgency">
+	select <include refid="CommonColumnlist"/> from CAR_AGENCY 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarAgency">
+	select <include refid="CommonColumnlist"/> from CAR_AGENCY
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+    <if test="q==null"><!-- 无传入参数时默认查未删除的 -->
+       AND is_delete=0
+    </if>
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.agencyName!=null and q.agencyName!=''">
+			AND agency_name=#{q.agencyName}
+		</if>
+		<if test="q.contacter!=null and q.contacter!=''">
+			AND contacter=#{q.contacter}
+		</if>
+		<if test="q.phone!=null and q.phone!=''">
+			AND phone=#{q.phone}
+		</if>
+		<if test="q.email!=null and q.email!=''">
+			AND email=#{q.email}
+		</if>
+		<if test="q.belongCityId!=null and q.belongCityId!=''">
+			AND belong_city_id=#{q.belongCityId}
+		</if>
+		<if test="q.belongCityName!=null and q.belongCityName!=''">
+			AND belong_city_name=#{q.belongCityName}
+		</if>
+		<if test="q.businessType!=null and q.businessType!=''">
+			AND business_type=#{q.businessType}
+		</if>
+		<if test="q.agencyFee!=null ">
+			AND agency_fee=#{q.agencyFee}
+		</if>
+		<if test="q.isPay!=null ">
+			AND is_pay=#{q.isPay}
+		</if>
+		<if test="q.detailAddress!=null and q.detailAddress!=''">
+			AND detail_address=#{q.detailAddress}
+		</if>
+		<if test="q.introduction!=null and q.introduction!=''">
+			AND introduction=#{q.introduction}
+		</if>
+		<if test="q.provinceId!=null and q.provinceId!=''">
+			AND province_id=#{q.provinceId}
+		</if>
+		<if test="q.cityId!=null and q.cityId!=''">
+			AND city_id=#{q.cityId}
+		</if>
+		<if test="q.districtId!=null and q.districtId!=''">
+			AND district_id=#{q.districtId}
+		</if>
+		<if test="q.positionX!=null ">
+			AND position_x=#{q.positionX}
+		</if>
+		<if test="q.positionY!=null ">
+			AND position_y=#{q.positionY}
+		</if>
+		<if test="q.enabled!=null ">
+			AND enabled=#{q.enabled}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.updateTime!=null ">
+			AND update_time=#{q.updateTime}
+		</if>
+		<if test="q.updateTimeStart!=null">
+		<![CDATA[	AND update_time>=#{q.updateTimeStart}  ]]>
+		</if>
+		<if test="q.updateTimeEnd!=null">
+		<![CDATA[	AND update_time<#{q.updateTimeEnd}   ]]>
+		</if>
+		<if test="q.busName!=null and q.busName!=''">
+			AND bus_name=#{q.busName}
+		</if>
+		<if test="q.usslicenseNo!=null and q.usslicenseNo!=''">
+			AND usslicense_no=#{q.usslicenseNo}
+		</if>
+		<if test="q.isDelete!=null ">
+			AND is_delete=#{q.isDelete}
+		</if>
+		<if test="q.operateId!=null ">
+			AND operate_id=#{q.operateId}
+		</if>
+	</if>
+</sql>
+
+</mapper>
