@@ -14,7 +14,7 @@
 	<result column="jump_url" property="jumpUrl" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="brand_id" property="brandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="sys_id" property="sysId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="content" property="content" javaType="java.lang.String" jdbcType="LONGTEXT"/>
+	<result column="content" property="content" javaType="java.lang.String" jdbcType="CLOB"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -32,7 +32,7 @@ update_time,is_delete,operate_id
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
 id,title,adver_type,position,state_time,end_time,enabled,
-jump_type,jump_url,brand_id,sys_id,content,create_time,
+jump_type,jump_url,brand_id,sys_id,create_time,
 update_time,is_delete,operate_id
 </sql>
 
@@ -70,7 +70,7 @@ update_time,is_delete,operate_id
 		#{jumpUrl,jdbcType = VARCHAR},
 		#{brandId,jdbcType = INTEGER},
 		#{sysId,jdbcType = INTEGER},
-		#{content,jdbcType = LONGTEXT},
+		#{content,jdbcType = CLOB},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{isDelete,jdbcType = INTEGER},
@@ -112,7 +112,7 @@ update_time,is_delete,operate_id
 			sys_id=#{sysId,jdbcType = INTEGER},
 		</if>
 		<if test="content!=null and content!=''">
-			content=#{content,jdbcType = LONGTEXT},
+			content=#{content,jdbcType = CLOB},
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},
