@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.BrandDao">
+
+<resultMap type="Brand" id="Brand">
+	<id column="brand_id" property="brandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="brand_en_name" property="brandEnName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="brand_key" property="brandKey" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="brand_name" property="brandName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="brand_no" property="brandNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="brand_title" property="brandTitle" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="description" property="description" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="display" property="display" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="hot" property="hot" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="pic_path" property="picPath" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="seo_description" property="seoDescription" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="seo_key" property="seoKey" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="seo_title" property="seoTitle" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="website" property="website" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="category_id" property="categoryId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="sort" property="sort" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+brand_id,brand_en_name,brand_key,brand_name,brand_no,brand_title,create_time,
+description,display,enabled,hot,pic_path,remark,
+seo_description,seo_key,seo_title,website,category_id,sort
+
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+brand_id,brand_en_name,brand_key,brand_name,brand_no,brand_title,create_time,
+display,enabled,hot,category_id,sort
+
+</sql>
+
+<insert id="add" parameterType="Brand" useGeneratedKeys="true" keyProperty="brandId">
+	insert into BRAND(
+		<if test="brandId!=null">
+		brand_id,
+		</if>
+		brand_en_name,
+		brand_key,
+		brand_name,
+		brand_no,
+		brand_title,
+		create_time,
+		description,
+		display,
+		enabled,
+		hot,
+		pic_path,
+		remark,
+		seo_description,
+		seo_key,
+		seo_title,
+		website,
+		category_id,
+		sort
+	) values (
+		<if test="brandId!=null">
+		#{brandId,jdbcType = INTEGER},
+		</if>
+		#{brandEnName,jdbcType = VARCHAR},
+		#{brandKey,jdbcType = VARCHAR},
+		#{brandName,jdbcType = VARCHAR},
+		#{brandNo,jdbcType = VARCHAR},
+		#{brandTitle,jdbcType = VARCHAR},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{description,jdbcType = VARCHAR},
+		#{display,jdbcType = BIT},
+		#{enabled,jdbcType = BIT},
+		#{hot,jdbcType = BIT},
+		#{picPath,jdbcType = VARCHAR},
+		#{remark,jdbcType = VARCHAR},
+		#{seoDescription,jdbcType = VARCHAR},
+		#{seoKey,jdbcType = VARCHAR},
+		#{seoTitle,jdbcType = VARCHAR},
+		#{website,jdbcType = VARCHAR},
+		#{categoryId,jdbcType = INTEGER},
+		#{sort,jdbcType = INTEGER}
+	)
+</insert>
+
+<update id="update" parameterType="Brand">
+	update BRAND 
+	<set>
+		<if test="brandEnName!=null and brandEnName!=''">
+			brand_en_name=#{brandEnName,jdbcType = VARCHAR},
+		</if>
+		<if test="brandKey!=null and brandKey!=''">
+			brand_key=#{brandKey,jdbcType = VARCHAR},
+		</if>
+		<if test="brandName!=null and brandName!=''">
+			brand_name=#{brandName,jdbcType = VARCHAR},
+		</if>
+		<if test="brandNo!=null and brandNo!=''">
+			brand_no=#{brandNo,jdbcType = VARCHAR},
+		</if>
+		<if test="brandTitle!=null and brandTitle!=''">
+			brand_title=#{brandTitle,jdbcType = VARCHAR},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="description!=null and description!=''">
+			description=#{description,jdbcType = VARCHAR},
+		</if>
+		<if test="display!=null ">
+			display=#{display,jdbcType = BIT},
+		</if>
+		<if test="enabled!=null ">
+			enabled=#{enabled,jdbcType = BIT},
+		</if>
+		<if test="hot!=null ">
+			hot=#{hot,jdbcType = BIT},
+		</if>
+		<if test="picPath!=null and picPath!=''">
+			pic_path=#{picPath,jdbcType = VARCHAR},
+		</if>
+		<if test="remark!=null and remark!=''">
+			remark=#{remark,jdbcType = VARCHAR},
+		</if>
+		<if test="seoDescription!=null and seoDescription!=''">
+			seo_description=#{seoDescription,jdbcType = VARCHAR},
+		</if>
+		<if test="seoKey!=null and seoKey!=''">
+			seo_key=#{seoKey,jdbcType = VARCHAR},
+		</if>
+		<if test="seoTitle!=null and seoTitle!=''">
+			seo_title=#{seoTitle,jdbcType = VARCHAR},
+		</if>
+		<if test="website!=null and website!=''">
+			website=#{website,jdbcType = VARCHAR},
+		</if>
+		<if test="categoryId!=null ">
+			category_id=#{categoryId,jdbcType = INTEGER},
+		</if>
+		<if test="sort!=null ">
+			sort=#{sort,jdbcType = INTEGER},
+		</if>
+	</set>
+	<where>
+		AND brand_id=#{brandId}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from BRAND 
+	<where>
+		brand_id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="Brand">
+	select <include refid="AllColumnlist"/> from BRAND
+	<where>
+		brand_id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="Brand">
+	select <include refid="AllColumnlist"/> from BRAND
+	<where>
+		brand_id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(brand_id) from BRAND 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="Brand">
+	select <include refid="CommonColumnlist"/> from BRAND 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="Brand">
+	select <include refid="CommonColumnlist"/> from BRAND
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.brandId!=null ">
+			AND brand_id=#{q.brandId}
+		</if>
+		<if test="q.brandEnName!=null and q.brandEnName!=''">
+			AND brand_en_name=#{q.brandEnName}
+		</if>
+		<if test="q.brandKey!=null and q.brandKey!=''">
+			AND brand_key=#{q.brandKey}
+		</if>
+		<if test="q.brandName!=null and q.brandName!=''">
+			AND brand_name=#{q.brandName}
+		</if>
+		<if test="q.brandNo!=null and q.brandNo!=''">
+			AND brand_no=#{q.brandNo}
+		</if>
+		<if test="q.brandTitle!=null and q.brandTitle!=''">
+			AND brand_title=#{q.brandTitle}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.description!=null and q.description!=''">
+			AND description=#{q.description}
+		</if>
+		<if test="q.display!=null ">
+			AND display=#{q.display}
+		</if>
+		<if test="q.enabled!=null ">
+			AND enabled=#{q.enabled}
+		</if>
+		<if test="q.hot!=null ">
+			AND hot=#{q.hot}
+		</if>
+		<if test="q.picPath!=null and q.picPath!=''">
+			AND pic_path=#{q.picPath}
+		</if>
+		<if test="q.remark!=null and q.remark!=''">
+			AND remark=#{q.remark}
+		</if>
+		<if test="q.seoDescription!=null and q.seoDescription!=''">
+			AND seo_description=#{q.seoDescription}
+		</if>
+		<if test="q.seoKey!=null and q.seoKey!=''">
+			AND seo_key=#{q.seoKey}
+		</if>
+		<if test="q.seoTitle!=null and q.seoTitle!=''">
+			AND seo_title=#{q.seoTitle}
+		</if>
+		<if test="q.website!=null and q.website!=''">
+			AND website=#{q.website}
+		</if>
+		<if test="q.categoryId!=null ">
+			AND category_id=#{q.categoryId}
+		</if>
+		<if test="q.sort!=null ">
+			AND sort=#{q.sort}
+		</if>
+	</if>
+</sql>
+
+</mapper>
