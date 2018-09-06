@@ -22,7 +22,7 @@ public class CarBaseData extends Entity<Integer> {
 	//父基础数据
 	private Integer parentBaseDataId;
 	//状态(0否,1是)
-	private Boolean enabled;
+	private Integer enabled;
 	//排序
 	private Integer sortOrder;
 	//备注
@@ -91,11 +91,11 @@ public class CarBaseData extends Entity<Integer> {
 		this.parentBaseDataId = parentBaseDataId;
 	}
 	
-	public Boolean getEnabled(){
+	public Integer getEnabled(){
 		return enabled;
 	}
 	
-	public void setEnabled(Boolean enabled){
+	public void setEnabled(Integer enabled){
 		this.enabled = enabled;
 	}
 	

@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarAgencyDao;
 import com.yunxin.cb.mall.entity.CarAgency;
 import com.yunxin.cb.mall.service.CarAgencyService;
@@ -41,7 +42,7 @@ public class CarAgencyServiceImpl implements CarAgencyService {
 		List<CarAgency> list = null;
 		try {
 			//已删除的不查出
-			CarAgency carAgency = (CarAgency)q.getQ();
+			CarAgency carAgency = (CarAgency)q.getData();
 			if (carAgency != null) {
 				carAgency.setIsDelete(0);
 			}
@@ -69,7 +70,7 @@ public class CarAgencyServiceImpl implements CarAgencyService {
 		
 		try {
 			//已删除的不查出
-			CarAgency carAgency = (CarAgency)q.getQ();
+			CarAgency carAgency = (CarAgency)q.getData();
 			if (carAgency != null) {
 				carAgency.setIsDelete(0);
 			}
@@ -243,12 +244,6 @@ public class CarAgencyServiceImpl implements CarAgencyService {
 	 */
 	public void fillDefaultValues(CarAgency obj) {
 		if (obj != null) {
-		    if (obj.getEnabled() == null) {
-		    	obj.setEnabled();
-		    }
-		    if (obj.getIsDelete() == null) {
-		    	obj.setIsDelete(0);
-		    }
 		}
 	}
 

@@ -19,14 +19,16 @@ public class CarOpenCity extends Entity<Integer> {
 	private String provinceName;
 	//城市名称
 	private String cityName;
+	//首字母
+	private String initial;
 	//省份编码
 	private String provinceCode;
 	//城市编码
 	private String cityCode;
 	//是否显示(0否,1是)
-	private Boolean isDisplay;
+	private Integer isDisplay;
 	//是否热门品牌(0否,1是)
-	private Boolean isHot;
+	private Integer isHot;
 	//CREATE_TIME
 	private Date createTime;
 	//CREATE_TIME 时间范围起（查询用）
@@ -83,6 +85,14 @@ public class CarOpenCity extends Entity<Integer> {
 		this.cityName = cityName;
 	}
 	
+	public String getInitial(){
+		return initial;
+	}
+	
+	public void setInitial(String initial){
+		this.initial = initial;
+	}
+	
 	public String getProvinceCode(){
 		return provinceCode;
 	}
@@ -99,19 +109,19 @@ public class CarOpenCity extends Entity<Integer> {
 		this.cityCode = cityCode;
 	}
 	
-	public Boolean getIsDisplay(){
+	public Integer getIsDisplay(){
 		return isDisplay;
 	}
 	
-	public void setIsDisplay(Boolean isDisplay){
+	public void setIsDisplay(Integer isDisplay){
 		this.isDisplay = isDisplay;
 	}
 	
-	public Boolean getIsHot(){
+	public Integer getIsHot(){
 		return isHot;
 	}
 	
-	public void setIsHot(Boolean isHot){
+	public void setIsHot(Integer isHot){
 		this.isHot = isHot;
 	}
 	
@@ -184,9 +194,9 @@ public class CarOpenCity extends Entity<Integer> {
 	@Override
 	public String toString() {
 		return "CarOpenCity ["
-		 + "id = " + id + ", provinceName = " + provinceName + ", cityName = " + cityName + ", provinceCode = " + provinceCode
-		 + ", cityCode = " + cityCode + ", isDisplay = " + isDisplay + ", isHot = " + isHot + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd
-		 + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", operateId = " + operateId
+		 + "id = " + id + ", provinceName = " + provinceName + ", cityName = " + cityName + ", initial = " + initial
+		 + ", provinceCode = " + provinceCode + ", cityCode = " + cityCode + ", isDisplay = " + isDisplay + ", isHot = " + isHot
+		 + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", operateId = " + operateId
 		+"]";
 	}
 }

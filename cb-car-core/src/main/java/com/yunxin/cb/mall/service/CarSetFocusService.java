@@ -66,7 +66,7 @@ public interface CarSetFocusService extends BaseService {
 	 * @return
 	 */
 	public Integer generatePK();
-	
+
 		/**
 	 * 为CarSetFocus对象设置默认值
 	 * @param obj

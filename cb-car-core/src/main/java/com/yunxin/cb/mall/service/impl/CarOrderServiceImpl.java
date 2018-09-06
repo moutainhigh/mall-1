@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarOrderDao;
 import com.yunxin.cb.mall.entity.CarOrder;
 import com.yunxin.cb.mall.service.CarOrderService;
@@ -41,7 +42,7 @@ public class CarOrderServiceImpl implements CarOrderService {
 		List<CarOrder> list = null;
 		try {
 			//已删除的不查出
-			CarOrder carOrder = (CarOrder)q.getQ();
+			CarOrder carOrder = (CarOrder)q.getData();
 			if (carOrder != null) {
 				carOrder.setIsDelete(0);
 			}
@@ -69,7 +70,7 @@ public class CarOrderServiceImpl implements CarOrderService {
 		
 		try {
 			//已删除的不查出
-			CarOrder carOrder = (CarOrder)q.getQ();
+			CarOrder carOrder = (CarOrder)q.getData();
 			if (carOrder != null) {
 				carOrder.setIsDelete(0);
 			}
@@ -97,7 +98,7 @@ public class CarOrderServiceImpl implements CarOrderService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public CarOrder getCarOrder(Integer id) {
+	public CarOrder getCarOrder(Long id) {
 		CarOrder obj = null;
 		if (id == null || id <= 0) { //传入的主键无效时直接返回null
 			log.info("param error : " + " id = " + id);
@@ -119,7 +120,7 @@ public class CarOrderServiceImpl implements CarOrderService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<CarOrder> getCarOrderByIds(Integer[] ids) {
+	public List<CarOrder> getCarOrderByIds(Long[] ids) {
 		List<CarOrder> list = null;
 		if (ids == null || ids.length == 0) {
 			log.info("param error : " + " ids is null or empty array.");
@@ -144,7 +145,7 @@ public class CarOrderServiceImpl implements CarOrderService {
 	 * @return
 	 */
 	@Transactional
-	public int delCarOrder(Integer id) {
+	public int delCarOrder(Long id) {
 		int count = 0;
 		if (id == null || id <= 0) { //传入的主键无效时直接返回失败结果
 			log.info("param error : " + " id = " + id);
@@ -233,7 +234,7 @@ public class CarOrderServiceImpl implements CarOrderService {
 	 * 生成主键，如果表主键自增，则本方法可直接返回null；如非自增主键，则本方法必须返回一个大于0的值。
 	 * @return
 	 */
-	public Integer generatePK() {
+	public Long generatePK() {
 		return null;
 	}
 	
@@ -243,24 +244,6 @@ public class CarOrderServiceImpl implements CarOrderService {
 	 */
 	public void fillDefaultValues(CarOrder obj) {
 		if (obj != null) {
-		    if (obj.getTotalPrice() == null) {
-		    	obj.setTotalPrice();
-		    }
-		    if (obj.getEarnest() == null) {
-		    	obj.setEarnest();
-		    }
-		    if (obj.getDiscountTotal() == null) {
-		    	obj.setDiscountTotal();
-		    }
-		    if (obj.getTailMoney() == null) {
-		    	obj.setTailMoney();
-		    }
-		    if (obj.getOrderState() == null) {
-		    	obj.setOrderState(1);
-		    }
-		    if (obj.getIsDelete() == null) {
-		    	obj.setIsDelete();
-		    }
 		}
 	}
 

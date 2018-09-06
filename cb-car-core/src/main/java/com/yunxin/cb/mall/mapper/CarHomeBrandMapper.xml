@@ -9,7 +9,7 @@
 	<result column="en_name" property="enName" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="level" property="level" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="initial" property="initial" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="is_display" property="isDisplay" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="is_display" property="isDisplay" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 </resultMap>
@@ -49,7 +49,7 @@ create_time,update_time
 		#{enName,jdbcType = VARCHAR},
 		#{level,jdbcType = INTEGER},
 		#{initial,jdbcType = VARCHAR},
-		#{isDisplay,jdbcType = BIT},
+		#{isDisplay,jdbcType = INTEGER},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP}
 	)
@@ -74,7 +74,7 @@ create_time,update_time
 			initial=#{initial,jdbcType = VARCHAR},
 		</if>
 		<if test="isDisplay!=null ">
-			is_display=#{isDisplay,jdbcType = BIT},
+			is_display=#{isDisplay,jdbcType = INTEGER},
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},

@@ -31,21 +31,21 @@ public interface CarOrderReasonService extends BaseService {
 	 * @param id 主键id
 	 * @return
 	 */
-	public CarOrderReason getCarOrderReason(Integer id);
+	public CarOrderReason getCarOrderReason(Long id);
 
 	/**
 	 * 根据主键数组，查询并返回一组CarOrderReason对象
 	 * @param ids 主键数组，数组中的主键值应当无重复值，如有重复值时，则返回的列表长度可能小于传入的数组长度
 	 * @return
 	 */
-	public List<CarOrderReason> getCarOrderReasonByIds(Integer[] ids);
+	public List<CarOrderReason> getCarOrderReasonByIds(Long[] ids);
 	
 	/**
 	 * 根据主键，删除特定的CarOrderReason记录
 	 * @param id 主键id
 	 * @return
 	 */
-	public int delCarOrderReason(Integer id);
+	public int delCarOrderReason(Long id);
 	
 	/**
 	 * 新增一条CarOrderReason记录，执行成功后传入对象及返回对象的主键属性值不为null
@@ -65,8 +65,8 @@ public interface CarOrderReasonService extends BaseService {
 	 * 生成主键，如果表主键自增，则本方法可直接返回null；如非自增主键，则本方法必须返回一个大于0的值。
 	 * @return
 	 */
-	public Integer generatePK();
-	
+	public Long generatePK();
+
 		/**
 	 * 为CarOrderReason对象设置默认值
 	 * @param obj

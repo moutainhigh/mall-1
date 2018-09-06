@@ -7,7 +7,7 @@
 	<result column="base_data_name" property="baseDataName" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="base_data_code" property="baseDataCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="parent_base_data_id" property="parentBaseDataId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="enabled" property="enabled" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="sort_order" property="sortOrder" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -49,7 +49,7 @@ create_time,update_time,operate_id
 		#{baseDataName,jdbcType = VARCHAR},
 		#{baseDataCode,jdbcType = VARCHAR},
 		#{parentBaseDataId,jdbcType = INTEGER},
-		#{enabled,jdbcType = BIT},
+		#{enabled,jdbcType = INTEGER},
 		#{sortOrder,jdbcType = INTEGER},
 		#{remark,jdbcType = VARCHAR},
 		#{createTime,jdbcType = TIMESTAMP},
@@ -71,7 +71,7 @@ create_time,update_time,operate_id
 			parent_base_data_id=#{parentBaseDataId,jdbcType = INTEGER},
 		</if>
 		<if test="enabled!=null ">
-			enabled=#{enabled,jdbcType = BIT},
+			enabled=#{enabled,jdbcType = INTEGER},
 		</if>
 		<if test="sortOrder!=null ">
 			sort_order=#{sortOrder,jdbcType = INTEGER},

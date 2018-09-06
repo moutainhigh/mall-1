@@ -9,9 +9,9 @@
 	<result column="sys_code" property="sysCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="base_data_id" property="baseDataId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="is_hot" property="isHot" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="main_car" property="mainCar" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="main_car" property="mainCar" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="examine_state" property="examineState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="publish_state" property="publishState" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="publish_state" property="publishState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="introduce" property="introduce" javaType="java.lang.String" jdbcType="LONGTEXT"/>
 	<result column="explain_info" property="explainInfo" javaType="java.lang.String" jdbcType="LONGTEXT"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -63,9 +63,9 @@ is_delete,operate_id
 		#{sysCode,jdbcType = VARCHAR},
 		#{baseDataId,jdbcType = INTEGER},
 		#{isHot,jdbcType = INTEGER},
-		#{mainCar,jdbcType = BIT},
+		#{mainCar,jdbcType = INTEGER},
 		#{examineState,jdbcType = INTEGER},
-		#{publishState,jdbcType = BIT},
+		#{publishState,jdbcType = INTEGER},
 		#{introduce,jdbcType = LONGTEXT},
 		#{explainInfo,jdbcType = LONGTEXT},
 		#{createTime,jdbcType = TIMESTAMP},
@@ -94,13 +94,13 @@ is_delete,operate_id
 			is_hot=#{isHot,jdbcType = INTEGER},
 		</if>
 		<if test="mainCar!=null ">
-			main_car=#{mainCar,jdbcType = BIT},
+			main_car=#{mainCar,jdbcType = INTEGER},
 		</if>
 		<if test="examineState!=null ">
 			examine_state=#{examineState,jdbcType = INTEGER},
 		</if>
 		<if test="publishState!=null ">
-			publish_state=#{publishState,jdbcType = BIT},
+			publish_state=#{publishState,jdbcType = INTEGER},
 		</if>
 		<if test="introduce!=null and introduce!=''">
 			introduce=#{introduce,jdbcType = LONGTEXT},

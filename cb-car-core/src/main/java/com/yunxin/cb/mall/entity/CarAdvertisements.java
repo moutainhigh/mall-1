@@ -33,7 +33,7 @@ public class CarAdvertisements extends Entity<Integer> {
 	//结束时间 时间范围止（查询用）
 	private Date endTimeEnd;	
 	//是否启用（0：否；1：是）
-	private Boolean enabled;
+	private Integer enabled;
 	//跳转类型（0：不跳转：1：内部；2：外部）
 	private Integer jumpType;
 	//跳转路径
@@ -158,11 +158,11 @@ public class CarAdvertisements extends Entity<Integer> {
 		this.endTimeEnd = endTimeEnd;
 	}	
 	
-	public Boolean getEnabled(){
+	public Integer getEnabled(){
 		return enabled;
 	}
 	
-	public void setEnabled(Boolean enabled){
+	public void setEnabled(Integer enabled){
 		this.enabled = enabled;
 	}
 	

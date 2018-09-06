@@ -25,9 +25,9 @@ public class CarBrand extends Entity<Integer> {
 	//国家(分类表,国家分类id)
 	private String catalogId;
 	//是否显示(0否,1是)
-	private Boolean isDisplay;
+	private Integer isDisplay;
 	//是否热门品牌(0否,1是)
-	private Boolean isHot;
+	private Integer isHot;
 	//备注
 	private String remark;
 	//CREATE_TIME
@@ -110,19 +110,19 @@ public class CarBrand extends Entity<Integer> {
 		this.catalogId = catalogId;
 	}
 	
-	public Boolean getIsDisplay(){
+	public Integer getIsDisplay(){
 		return isDisplay;
 	}
 	
-	public void setIsDisplay(Boolean isDisplay){
+	public void setIsDisplay(Integer isDisplay){
 		this.isDisplay = isDisplay;
 	}
 	
-	public Boolean getIsHot(){
+	public Integer getIsHot(){
 		return isHot;
 	}
 	
-	public void setIsHot(Boolean isHot){
+	public void setIsHot(Integer isHot){
 		this.isHot = isHot;
 	}
 	

@@ -9,7 +9,7 @@
 	<result column="position" property="position" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="state_time" property="stateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="end_time" property="endTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="enabled" property="enabled" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="enabled" property="enabled" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="jump_type" property="jumpType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="jump_url" property="jumpUrl" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="brand_id" property="brandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -65,7 +65,7 @@ update_time,is_delete,operate_id
 		#{position,jdbcType = VARCHAR},
 		#{stateTime,jdbcType = TIMESTAMP},
 		#{endTime,jdbcType = TIMESTAMP},
-		#{enabled,jdbcType = BIT},
+		#{enabled,jdbcType = INTEGER},
 		#{jumpType,jdbcType = INTEGER},
 		#{jumpUrl,jdbcType = VARCHAR},
 		#{brandId,jdbcType = INTEGER},
@@ -97,7 +97,7 @@ update_time,is_delete,operate_id
 			end_time=#{endTime,jdbcType = TIMESTAMP},
 		</if>
 		<if test="enabled!=null ">
-			enabled=#{enabled,jdbcType = BIT},
+			enabled=#{enabled,jdbcType = INTEGER},
 		</if>
 		<if test="jumpType!=null ">
 			jump_type=#{jumpType,jdbcType = INTEGER},

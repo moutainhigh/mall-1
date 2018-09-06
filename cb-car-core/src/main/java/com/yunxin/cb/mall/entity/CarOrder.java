@@ -84,7 +84,7 @@ public class CarOrder extends Entity<Long> {
 	//备注信息
 	private String remark;
 	//是否删除(0否,1是)
-	private Boolean isDelete;
+	private Integer isDelete;
 	//CREATE_TIME
 	private Date createTime;
 	//CREATE_TIME 时间范围起（查询用）
@@ -395,11 +395,11 @@ public class CarOrder extends Entity<Long> {
 		this.remark = remark;
 	}
 	
-	public Boolean getIsDelete(){
+	public Integer getIsDelete(){
 		return isDelete;
 	}
 	
-	public void setIsDelete(Boolean isDelete){
+	public void setIsDelete(Integer isDelete){
 		this.isDelete = isDelete;
 	}
 	

@@ -12,8 +12,8 @@
 	<result column="catalog_id" property="catalogId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="seat_id" property="seatId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="structu_id" property="structuId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="substitutuion" property="substitutuion" javaType="java.lang.Boolean" jdbcType="BIT"/>
-	<result column="publish_state" property="publishState" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="substitutuion" property="substitutuion" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="publish_state" property="publishState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="examine_state" property="examineState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="introduce" property="introduce" javaType="java.lang.String" jdbcType="LONGTEXT"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -70,8 +70,8 @@ create_time,update_time,is_delete,operate_id
 		#{catalogId,jdbcType = INTEGER},
 		#{seatId,jdbcType = INTEGER},
 		#{structuId,jdbcType = INTEGER},
-		#{substitutuion,jdbcType = BIT},
-		#{publishState,jdbcType = BIT},
+		#{substitutuion,jdbcType = INTEGER},
+		#{publishState,jdbcType = INTEGER},
 		#{examineState,jdbcType = INTEGER},
 		#{introduce,jdbcType = LONGTEXT},
 		#{createTime,jdbcType = TIMESTAMP},
@@ -109,10 +109,10 @@ create_time,update_time,is_delete,operate_id
 			structu_id=#{structuId,jdbcType = INTEGER},
 		</if>
 		<if test="substitutuion!=null ">
-			substitutuion=#{substitutuion,jdbcType = BIT},
+			substitutuion=#{substitutuion,jdbcType = INTEGER},
 		</if>
 		<if test="publishState!=null ">
-			publish_state=#{publishState,jdbcType = BIT},
+			publish_state=#{publishState,jdbcType = INTEGER},
 		</if>
 		<if test="examineState!=null ">
 			examine_state=#{examineState,jdbcType = INTEGER},

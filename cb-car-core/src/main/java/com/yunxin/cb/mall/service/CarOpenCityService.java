@@ -66,7 +66,7 @@ public interface CarOpenCityService extends BaseService {
 	 * @return
 	 */
 	public Integer generatePK();
-	
+
 		/**
 	 * 为CarOpenCity对象设置默认值
 	 * @param obj

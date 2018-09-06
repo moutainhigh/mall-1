@@ -6,10 +6,11 @@
 	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="province_name" property="provinceName" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="city_name" property="cityName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="initial" property="initial" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="province_code" property="provinceCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="city_code" property="cityCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="is_display" property="isDisplay" javaType="java.lang.Boolean" jdbcType="BIT"/>
-	<result column="is_hot" property="isHot" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="is_display" property="isDisplay" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="is_hot" property="isHot" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -18,14 +19,14 @@
 
 <!-- 全部字段，一般用于明细查询 -->
 <sql id="AllColumnlist">
-id,province_name,city_name,province_code,city_code,is_display,is_hot,
-create_time,update_time,operate_id
+id,province_name,city_name,initial,province_code,city_code,is_display,
+is_hot,create_time,update_time,operate_id
 </sql>
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
-id,province_name,city_name,province_code,city_code,is_display,is_hot,
-create_time,update_time,operate_id
+id,province_name,city_name,initial,province_code,city_code,is_display,
+is_hot,create_time,update_time,operate_id
 </sql>
 
 <insert id="add" parameterType="CarOpenCity" useGeneratedKeys="true" keyProperty="id">
@@ -35,6 +36,7 @@ create_time,update_time,operate_id
 		</if>
 		province_name,
 		city_name,
+		initial,
 		province_code,
 		city_code,
 		is_display,
@@ -48,10 +50,11 @@ create_time,update_time,operate_id
 		</if>
 		#{provinceName,jdbcType = VARCHAR},
 		#{cityName,jdbcType = VARCHAR},
+		#{initial,jdbcType = VARCHAR},
 		#{provinceCode,jdbcType = VARCHAR},
 		#{cityCode,jdbcType = VARCHAR},
-		#{isDisplay,jdbcType = BIT},
-		#{isHot,jdbcType = BIT},
+		#{isDisplay,jdbcType = INTEGER},
+		#{isHot,jdbcType = INTEGER},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{operateId,jdbcType = INTEGER}
@@ -67,6 +70,9 @@ create_time,update_time,operate_id
 		<if test="cityName!=null and cityName!=''">
 			city_name=#{cityName,jdbcType = VARCHAR},
 		</if>
+		<if test="initial!=null and initial!=''">
+			initial=#{initial,jdbcType = VARCHAR},
+		</if>
 		<if test="provinceCode!=null and provinceCode!=''">
 			province_code=#{provinceCode,jdbcType = VARCHAR},
 		</if>
@@ -74,10 +80,10 @@ create_time,update_time,operate_id
 			city_code=#{cityCode,jdbcType = VARCHAR},
 		</if>
 		<if test="isDisplay!=null ">
-			is_display=#{isDisplay,jdbcType = BIT},
+			is_display=#{isDisplay,jdbcType = INTEGER},
 		</if>
 		<if test="isHot!=null ">
-			is_hot=#{isHot,jdbcType = BIT},
+			is_hot=#{isHot,jdbcType = INTEGER},
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},
@@ -148,6 +154,9 @@ create_time,update_time,operate_id
 		</if>
 		<if test="q.cityName!=null and q.cityName!=''">
 			AND city_name=#{q.cityName}
+		</if>
+		<if test="q.initial!=null and q.initial!=''">
+			AND initial=#{q.initial}
 		</if>
 		<if test="q.provinceCode!=null and q.provinceCode!=''">
 			AND province_code=#{q.provinceCode}

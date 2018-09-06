@@ -1,6 +1,7 @@
 package com.yunxin.cb.mall.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarRecommendSystemDao;
 import com.yunxin.cb.mall.entity.CarRecommendSystem;
 import com.yunxin.cb.mall.service.CarRecommendSystemService;
@@ -167,8 +168,7 @@ public class CarRecommendSystemServiceImpl implements CarRecommendSystemService 
 				//设置创建时间和更新时间为当前时间
 				Date now = DateUtils.getTimeNow();
 				carRecommendSystem.setCreateTime(now);
-				carRecommendSystem.setUpdateTime(now);
-				
+
 				//填充默认值
 				this.fillDefaultValues(carRecommendSystem);
 				
@@ -197,9 +197,7 @@ public class CarRecommendSystemServiceImpl implements CarRecommendSystemService 
 				
 		if (carRecommendSystem != null && carRecommendSystem.getId() != null) { //传入参数无效时直接返回失败结果
 			try {
-				//设置更新时间为当前时间
-				carRecommendSystem.setUpdateTime(DateUtils.getTimeNow());
-				
+
 				//调用Dao执行更新操作，并判断更新语句执行结果
 				count = carRecommendSystemDao.update(carRecommendSystem);			
 			} catch (Exception e) {

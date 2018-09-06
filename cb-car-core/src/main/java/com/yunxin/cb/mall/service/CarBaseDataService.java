@@ -66,7 +66,7 @@ public interface CarBaseDataService extends BaseService {
 	 * @return
 	 */
 	public Integer generatePK();
-	
+
 		/**
 	 * 为CarBaseData对象设置默认值
 	 * @param obj

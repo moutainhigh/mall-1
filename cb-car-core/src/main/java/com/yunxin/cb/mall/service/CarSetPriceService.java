@@ -66,7 +66,7 @@ public interface CarSetPriceService extends BaseService {
 	 * @return
 	 */
 	public Integer generatePK();
-	
+
 		/**
 	 * 为CarSetPrice对象设置默认值
 	 * @param obj
