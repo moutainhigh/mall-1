@@ -105,15 +105,25 @@ public class FinancialLoanController {
         modelMap.addAttribute("financialLoan", financialLoan);
         return "finance/loan/toExamine";
     }
-
+    @ResponseBody
     @RequestMapping(value = "editFinancialLoan", method = RequestMethod.POST)
-    public String editFinancialLoan(@ModelAttribute("financialLoan") FinancialLoan financialLoan, BindingResult result, HttpServletRequest request, ModelMap modelMap, Locale locale) {
+    public Map<String,Object> editFinancialLoan(@RequestParam("loanId") int loanId,@RequestParam("state") String state,@RequestParam("auditRemark") String auditRemark) {
+        Map<String,Object> map = new HashMap<>();
         try {
+            FinancialLoan financialLoan = new FinancialLoan();
+            if(state.equals("APPLY_SUCCESS")){
+                financialLoan.setState(LoanState.APPLY_SUCCESS);
+            }else if(state.equals("APPLY_FAILURE")){
+                financialLoan.setState(LoanState.APPLY_FAILURE);
+            }
+            financialLoan.setLoanId(loanId);
+            financialLoan.setAuditRemark(auditRemark);
             financialLoanService.updateFinancialLoan(financialLoan);
+            map.put("result","success");
         } catch (Exception e) {
-            modelMap.put("errerMsg",e.getMessage());
+            map.put("result","fail");
         }
-        return "redirect:../common/success.do?reurl=loan/loanApprovalList.do";
+        return map;
     }
 
     @ResponseBody
