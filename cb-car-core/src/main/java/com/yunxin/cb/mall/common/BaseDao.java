@@ -1,9 +1,7 @@
 package com.yunxin.cb.mall.common;
 
 import java.io.Serializable;
-import java.util.List;
-
-import com.yunxin.cb.mall.common.Query;
+import com.yunxin.cb.util.page.Query;
 
 /**
  * 数据对象基础操作类

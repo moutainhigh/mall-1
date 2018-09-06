@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarSetFocusDao">
+
+<resultMap type="CarSetFocus" id="CarSetFocus">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="set_name" property="setName" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="set_type" property="setType" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="set_value" property="setValue" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,set_name,set_type,set_value,create_time,update_time,is_delete
+
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,create_time,update_time,is_delete
+
+</sql>
+
+<insert id="add" parameterType="CarSetFocus" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_SET_FOCUS(
+		<if test="id!=null">
+		id,
+		</if>
+		set_name,
+		set_type,
+		set_value,
+		create_time,
+		update_time,
+		is_delete
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{setName,jdbcType = VARBINARY},
+		#{setType,jdbcType = VARBINARY},
+		#{setValue,jdbcType = VARBINARY},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{updateTime,jdbcType = TIMESTAMP},
+		#{isDelete,jdbcType = INTEGER}
+	)
+</insert>
+
+<update id="update" parameterType="CarSetFocus">
+	update CAR_SET_FOCUS 
+	<set>
+		<if test="setName!=null ">
+			set_name=#{setName,jdbcType = VARBINARY},
+		</if>
+		<if test="setType!=null ">
+			set_type=#{setType,jdbcType = VARBINARY},
+		</if>
+		<if test="setValue!=null ">
+			set_value=#{setValue,jdbcType = VARBINARY},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="updateTime!=null ">
+			update_time=#{updateTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="isDelete!=null ">
+			is_delete=#{isDelete,jdbcType = INTEGER},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_SET_FOCUS 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarSetFocus">
+	select <include refid="AllColumnlist"/> from CAR_SET_FOCUS
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarSetFocus">
+	select <include refid="AllColumnlist"/> from CAR_SET_FOCUS
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_SET_FOCUS 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarSetFocus">
+	select <include refid="CommonColumnlist"/> from CAR_SET_FOCUS 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarSetFocus">
+	select <include refid="CommonColumnlist"/> from CAR_SET_FOCUS
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+    <if test="q==null"><!-- 无传入参数时默认查未删除的 -->
+       AND is_delete=0
+    </if>
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.setName!=null ">
+			AND set_name=#{q.setName}
+		</if>
+		<if test="q.setType!=null ">
+			AND set_type=#{q.setType}
+		</if>
+		<if test="q.setValue!=null ">
+			AND set_value=#{q.setValue}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.updateTime!=null ">
+			AND update_time=#{q.updateTime}
+		</if>
+		<if test="q.updateTimeStart!=null">
+		<![CDATA[	AND update_time>=#{q.updateTimeStart}  ]]>
+		</if>
+		<if test="q.updateTimeEnd!=null">
+		<![CDATA[	AND update_time<#{q.updateTimeEnd}   ]]>
+		</if>
+		<if test="q.isDelete!=null ">
+			AND is_delete=#{q.isDelete}
+		</if>
+	</if>
+</sql>
+
+</mapper>

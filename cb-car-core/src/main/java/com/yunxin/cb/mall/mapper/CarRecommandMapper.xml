@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarRecommandDao">
+
+<resultMap type="CarRecommand" id="CarRecommand">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="assess_type" property="assessType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="recommand_name" property="recommandName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="min_value" property="minValue" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="max_value" property="maxValue" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="enabled" property="enabled" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,assess_type,recommand_name,min_value,max_value,enabled,create_time,
+update_time,operate_id
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,assess_type,recommand_name,min_value,max_value,enabled,create_time,
+update_time,operate_id
+</sql>
+
+<insert id="add" parameterType="CarRecommand" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_RECOMMAND(
+		<if test="id!=null">
+		id,
+		</if>
+		assess_type,
+		recommand_name,
+		min_value,
+		max_value,
+		enabled,
+		create_time,
+		update_time,
+		operate_id
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{assessType,jdbcType = INTEGER},
+		#{recommandName,jdbcType = VARCHAR},
+		#{minValue,jdbcType = INTEGER},
+		#{maxValue,jdbcType = INTEGER},
+		#{enabled,jdbcType = INTEGER},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{updateTime,jdbcType = TIMESTAMP},
+		#{operateId,jdbcType = INTEGER}
+	)
+</insert>
+
+<update id="update" parameterType="CarRecommand">
+	update CAR_RECOMMAND 
+	<set>
+		<if test="assessType!=null ">
+			assess_type=#{assessType,jdbcType = INTEGER},
+		</if>
+		<if test="recommandName!=null and recommandName!=''">
+			recommand_name=#{recommandName,jdbcType = VARCHAR},
+		</if>
+		<if test="minValue!=null ">
+			min_value=#{minValue,jdbcType = INTEGER},
+		</if>
+		<if test="maxValue!=null ">
+			max_value=#{maxValue,jdbcType = INTEGER},
+		</if>
+		<if test="enabled!=null ">
+			enabled=#{enabled,jdbcType = INTEGER},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="updateTime!=null ">
+			update_time=#{updateTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="operateId!=null ">
+			operate_id=#{operateId,jdbcType = INTEGER},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_RECOMMAND 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarRecommand">
+	select <include refid="AllColumnlist"/> from CAR_RECOMMAND
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarRecommand">
+	select <include refid="AllColumnlist"/> from CAR_RECOMMAND
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_RECOMMAND 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarRecommand">
+	select <include refid="CommonColumnlist"/> from CAR_RECOMMAND 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarRecommand">
+	select <include refid="CommonColumnlist"/> from CAR_RECOMMAND
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.assessType!=null ">
+			AND assess_type=#{q.assessType}
+		</if>
+		<if test="q.recommandName!=null and q.recommandName!=''">
+			AND recommand_name=#{q.recommandName}
+		</if>
+		<if test="q.minValue!=null ">
+			AND min_value=#{q.minValue}
+		</if>
+		<if test="q.maxValue!=null ">
+			AND max_value=#{q.maxValue}
+		</if>
+		<if test="q.enabled!=null ">
+			AND enabled=#{q.enabled}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.updateTime!=null ">
+			AND update_time=#{q.updateTime}
+		</if>
+		<if test="q.updateTimeStart!=null">
+		<![CDATA[	AND update_time>=#{q.updateTimeStart}  ]]>
+		</if>
+		<if test="q.updateTimeEnd!=null">
+		<![CDATA[	AND update_time<#{q.updateTimeEnd}   ]]>
+		</if>
+		<if test="q.operateId!=null ">
+			AND operate_id=#{q.operateId}
+		</if>
+	</if>
+</sql>
+
+</mapper>

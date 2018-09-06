@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarTestDriveDao">
+
+<resultMap type="CarTestDrive" id="CarTestDrive">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="drive_name" property="driveName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="mobile" property="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="city_id" property="cityId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="city_name" property="cityName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="sys_id" property="sysId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="agent_id" property="agentId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="drive_state" property="driveState" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,drive_name,mobile,city_id,city_name,sys_id,agent_id,
+drive_state,create_time,update_time,is_delete,operate_id
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,drive_name,mobile,city_id,city_name,sys_id,agent_id,
+drive_state,create_time,update_time,is_delete,operate_id
+</sql>
+
+<insert id="add" parameterType="CarTestDrive" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_TEST_DRIVE(
+		<if test="id!=null">
+		id,
+		</if>
+		drive_name,
+		mobile,
+		city_id,
+		city_name,
+		sys_id,
+		agent_id,
+		drive_state,
+		create_time,
+		update_time,
+		is_delete,
+		operate_id
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{driveName,jdbcType = VARCHAR},
+		#{mobile,jdbcType = VARCHAR},
+		#{cityId,jdbcType = INTEGER},
+		#{cityName,jdbcType = VARCHAR},
+		#{sysId,jdbcType = INTEGER},
+		#{agentId,jdbcType = INTEGER},
+		#{driveState,jdbcType = BIT},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{updateTime,jdbcType = TIMESTAMP},
+		#{isDelete,jdbcType = INTEGER},
+		#{operateId,jdbcType = INTEGER}
+	)
+</insert>
+
+<update id="update" parameterType="CarTestDrive">
+	update CAR_TEST_DRIVE 
+	<set>
+		<if test="driveName!=null and driveName!=''">
+			drive_name=#{driveName,jdbcType = VARCHAR},
+		</if>
+		<if test="mobile!=null and mobile!=''">
+			mobile=#{mobile,jdbcType = VARCHAR},
+		</if>
+		<if test="cityId!=null ">
+			city_id=#{cityId,jdbcType = INTEGER},
+		</if>
+		<if test="cityName!=null and cityName!=''">
+			city_name=#{cityName,jdbcType = VARCHAR},
+		</if>
+		<if test="sysId!=null ">
+			sys_id=#{sysId,jdbcType = INTEGER},
+		</if>
+		<if test="agentId!=null ">
+			agent_id=#{agentId,jdbcType = INTEGER},
+		</if>
+		<if test="driveState!=null ">
+			drive_state=#{driveState,jdbcType = BIT},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="updateTime!=null ">
+			update_time=#{updateTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="isDelete!=null ">
+			is_delete=#{isDelete,jdbcType = INTEGER},
+		</if>
+		<if test="operateId!=null ">
+			operate_id=#{operateId,jdbcType = INTEGER},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_TEST_DRIVE 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarTestDrive">
+	select <include refid="AllColumnlist"/> from CAR_TEST_DRIVE
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarTestDrive">
+	select <include refid="AllColumnlist"/> from CAR_TEST_DRIVE
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_TEST_DRIVE 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarTestDrive">
+	select <include refid="CommonColumnlist"/> from CAR_TEST_DRIVE 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarTestDrive">
+	select <include refid="CommonColumnlist"/> from CAR_TEST_DRIVE
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+    <if test="q==null"><!-- 无传入参数时默认查未删除的 -->
+       AND is_delete=0
+    </if>
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.driveName!=null and q.driveName!=''">
+			AND drive_name=#{q.driveName}
+		</if>
+		<if test="q.mobile!=null and q.mobile!=''">
+			AND mobile=#{q.mobile}
+		</if>
+		<if test="q.cityId!=null ">
+			AND city_id=#{q.cityId}
+		</if>
+		<if test="q.cityName!=null and q.cityName!=''">
+			AND city_name=#{q.cityName}
+		</if>
+		<if test="q.sysId!=null ">
+			AND sys_id=#{q.sysId}
+		</if>
+		<if test="q.agentId!=null ">
+			AND agent_id=#{q.agentId}
+		</if>
+		<if test="q.driveState!=null ">
+			AND drive_state=#{q.driveState}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.updateTime!=null ">
+			AND update_time=#{q.updateTime}
+		</if>
+		<if test="q.updateTimeStart!=null">
+		<![CDATA[	AND update_time>=#{q.updateTimeStart}  ]]>
+		</if>
+		<if test="q.updateTimeEnd!=null">
+		<![CDATA[	AND update_time<#{q.updateTimeEnd}   ]]>
+		</if>
+		<if test="q.isDelete!=null ">
+			AND is_delete=#{q.isDelete}
+		</if>
+		<if test="q.operateId!=null ">
+			AND operate_id=#{q.operateId}
+		</if>
+	</if>
+</sql>
+
+</mapper>

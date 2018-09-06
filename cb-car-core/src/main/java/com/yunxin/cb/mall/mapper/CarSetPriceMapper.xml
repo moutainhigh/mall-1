@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarSetPriceDao">
+
+<resultMap type="CarSetPrice" id="CarSetPrice">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="pri_min" property="priMin" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+	<result column="pri_max" property="priMax" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+	<result column="level" property="level" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="pri_value" property="priValue" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,pri_min,pri_max,level,pri_value,create_time,update_time,
+is_delete,operate_id
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,pri_min,pri_max,level,pri_value,create_time,update_time,
+is_delete,operate_id
+</sql>
+
+<insert id="add" parameterType="CarSetPrice" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_SET_PRICE(
+		<if test="id!=null">
+		id,
+		</if>
+		pri_min,
+		pri_max,
+		level,
+		pri_value,
+		create_time,
+		update_time,
+		is_delete,
+		operate_id
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{priMin,jdbcType = DECIMAL},
+		#{priMax,jdbcType = DECIMAL},
+		#{level,jdbcType = INTEGER},
+		#{priValue,jdbcType = DECIMAL},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{updateTime,jdbcType = TIMESTAMP},
+		#{isDelete,jdbcType = INTEGER},
+		#{operateId,jdbcType = INTEGER}
+	)
+</insert>
+
+<update id="update" parameterType="CarSetPrice">
+	update CAR_SET_PRICE 
+	<set>
+		<if test="priMin!=null ">
+			pri_min=#{priMin,jdbcType = DECIMAL},
+		</if>
+		<if test="priMax!=null ">
+			pri_max=#{priMax,jdbcType = DECIMAL},
+		</if>
+		<if test="level!=null ">
+			level=#{level,jdbcType = INTEGER},
+		</if>
+		<if test="priValue!=null ">
+			pri_value=#{priValue,jdbcType = DECIMAL},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="updateTime!=null ">
+			update_time=#{updateTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="isDelete!=null ">
+			is_delete=#{isDelete,jdbcType = INTEGER},
+		</if>
+		<if test="operateId!=null ">
+			operate_id=#{operateId,jdbcType = INTEGER},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_SET_PRICE 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarSetPrice">
+	select <include refid="AllColumnlist"/> from CAR_SET_PRICE
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarSetPrice">
+	select <include refid="AllColumnlist"/> from CAR_SET_PRICE
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_SET_PRICE 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarSetPrice">
+	select <include refid="CommonColumnlist"/> from CAR_SET_PRICE 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarSetPrice">
+	select <include refid="CommonColumnlist"/> from CAR_SET_PRICE
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+    <if test="q==null"><!-- 无传入参数时默认查未删除的 -->
+       AND is_delete=0
+    </if>
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.priMin!=null ">
+			AND pri_min=#{q.priMin}
+		</if>
+		<if test="q.priMax!=null ">
+			AND pri_max=#{q.priMax}
+		</if>
+		<if test="q.level!=null ">
+			AND level=#{q.level}
+		</if>
+		<if test="q.priValue!=null ">
+			AND pri_value=#{q.priValue}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.updateTime!=null ">
+			AND update_time=#{q.updateTime}
+		</if>
+		<if test="q.updateTimeStart!=null">
+		<![CDATA[	AND update_time>=#{q.updateTimeStart}  ]]>
+		</if>
+		<if test="q.updateTimeEnd!=null">
+		<![CDATA[	AND update_time<#{q.updateTimeEnd}   ]]>
+		</if>
+		<if test="q.isDelete!=null ">
+			AND is_delete=#{q.isDelete}
+		</if>
+		<if test="q.operateId!=null ">
+			AND operate_id=#{q.operateId}
+		</if>
+	</if>
+</sql>
+
+</mapper>

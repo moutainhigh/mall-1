@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarPriceDao">
+
+<resultMap type="CarPrice" id="CarPrice">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="model_id" property="modelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="price" property="price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+	<result column="agent_id" property="agentId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,model_id,price,agent_id,create_time,update_time,is_delete,
+operate_id
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,model_id,price,agent_id,create_time,update_time,is_delete,
+operate_id
+</sql>
+
+<insert id="add" parameterType="CarPrice" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_PRICE(
+		<if test="id!=null">
+		id,
+		</if>
+		model_id,
+		price,
+		agent_id,
+		create_time,
+		update_time,
+		is_delete,
+		operate_id
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{modelId,jdbcType = INTEGER},
+		#{price,jdbcType = DECIMAL},
+		#{agentId,jdbcType = INTEGER},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{updateTime,jdbcType = TIMESTAMP},
+		#{isDelete,jdbcType = INTEGER},
+		#{operateId,jdbcType = INTEGER}
+	)
+</insert>
+
+<update id="update" parameterType="CarPrice">
+	update CAR_PRICE 
+	<set>
+		<if test="modelId!=null ">
+			model_id=#{modelId,jdbcType = INTEGER},
+		</if>
+		<if test="price!=null ">
+			price=#{price,jdbcType = DECIMAL},
+		</if>
+		<if test="agentId!=null ">
+			agent_id=#{agentId,jdbcType = INTEGER},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="updateTime!=null ">
+			update_time=#{updateTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="isDelete!=null ">
+			is_delete=#{isDelete,jdbcType = INTEGER},
+		</if>
+		<if test="operateId!=null ">
+			operate_id=#{operateId,jdbcType = INTEGER},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_PRICE 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarPrice">
+	select <include refid="AllColumnlist"/> from CAR_PRICE
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarPrice">
+	select <include refid="AllColumnlist"/> from CAR_PRICE
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_PRICE 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarPrice">
+	select <include refid="CommonColumnlist"/> from CAR_PRICE 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarPrice">
+	select <include refid="CommonColumnlist"/> from CAR_PRICE
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+    <if test="q==null"><!-- 无传入参数时默认查未删除的 -->
+       AND is_delete=0
+    </if>
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.modelId!=null ">
+			AND model_id=#{q.modelId}
+		</if>
+		<if test="q.price!=null ">
+			AND price=#{q.price}
+		</if>
+		<if test="q.agentId!=null ">
+			AND agent_id=#{q.agentId}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.updateTime!=null ">
+			AND update_time=#{q.updateTime}
+		</if>
+		<if test="q.updateTimeStart!=null">
+		<![CDATA[	AND update_time>=#{q.updateTimeStart}  ]]>
+		</if>
+		<if test="q.updateTimeEnd!=null">
+		<![CDATA[	AND update_time<#{q.updateTimeEnd}   ]]>
+		</if>
+		<if test="q.isDelete!=null ">
+			AND is_delete=#{q.isDelete}
+		</if>
+		<if test="q.operateId!=null ">
+			AND operate_id=#{q.operateId}
+		</if>
+	</if>
+</sql>
+
+</mapper>

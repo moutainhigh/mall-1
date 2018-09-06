@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarModelDao">
+
+<resultMap type="CarModel" id="CarModel">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="brand_id" property="brandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="sys_id" property="sysId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="dis_id" property="disId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="model_code" property="modelCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="model_name" property="modelName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+	<result column="catalog_id" property="catalogId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="seat_id" property="seatId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="structu_id" property="structuId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="substitutuion" property="substitutuion" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="publish_state" property="publishState" javaType="java.lang.Boolean" jdbcType="BIT"/>
+	<result column="examine_state" property="examineState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="introduce" property="introduce" javaType="java.lang.String" jdbcType="LONGTEXT"/>
+	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,brand_id,sys_id,dis_id,model_code,model_name,catalog_id,
+seat_id,structu_id,substitutuion,publish_state,examine_state,introduce,
+create_time,update_time,is_delete,operate_id
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,brand_id,sys_id,dis_id,model_code,model_name,catalog_id,
+seat_id,structu_id,substitutuion,publish_state,examine_state,introduce,
+create_time,update_time,is_delete,operate_id
+</sql>
+
+<insert id="add" parameterType="CarModel" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_MODEL(
+		<if test="id!=null">
+		id,
+		</if>
+		brand_id,
+		sys_id,
+		dis_id,
+		model_code,
+		model_name,
+		catalog_id,
+		seat_id,
+		structu_id,
+		substitutuion,
+		publish_state,
+		examine_state,
+		introduce,
+		create_time,
+		update_time,
+		is_delete,
+		operate_id
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{brandId,jdbcType = INTEGER},
+		#{sysId,jdbcType = INTEGER},
+		#{disId,jdbcType = INTEGER},
+		#{modelCode,jdbcType = VARCHAR},
+		#{modelName,jdbcType = VARCHAR},
+		#{catalogId,jdbcType = INTEGER},
+		#{seatId,jdbcType = INTEGER},
+		#{structuId,jdbcType = INTEGER},
+		#{substitutuion,jdbcType = BIT},
+		#{publishState,jdbcType = BIT},
+		#{examineState,jdbcType = INTEGER},
+		#{introduce,jdbcType = LONGTEXT},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{updateTime,jdbcType = TIMESTAMP},
+		#{isDelete,jdbcType = INTEGER},
+		#{operateId,jdbcType = INTEGER}
+	)
+</insert>
+
+<update id="update" parameterType="CarModel">
+	update CAR_MODEL 
+	<set>
+		<if test="brandId!=null ">
+			brand_id=#{brandId,jdbcType = INTEGER},
+		</if>
+		<if test="sysId!=null ">
+			sys_id=#{sysId,jdbcType = INTEGER},
+		</if>
+		<if test="disId!=null ">
+			dis_id=#{disId,jdbcType = INTEGER},
+		</if>
+		<if test="modelCode!=null and modelCode!=''">
+			model_code=#{modelCode,jdbcType = VARCHAR},
+		</if>
+		<if test="modelName!=null and modelName!=''">
+			model_name=#{modelName,jdbcType = VARCHAR},
+		</if>
+		<if test="catalogId!=null ">
+			catalog_id=#{catalogId,jdbcType = INTEGER},
+		</if>
+		<if test="seatId!=null ">
+			seat_id=#{seatId,jdbcType = INTEGER},
+		</if>
+		<if test="structuId!=null ">
+			structu_id=#{structuId,jdbcType = INTEGER},
+		</if>
+		<if test="substitutuion!=null ">
+			substitutuion=#{substitutuion,jdbcType = BIT},
+		</if>
+		<if test="publishState!=null ">
+			publish_state=#{publishState,jdbcType = BIT},
+		</if>
+		<if test="examineState!=null ">
+			examine_state=#{examineState,jdbcType = INTEGER},
+		</if>
+		<if test="introduce!=null and introduce!=''">
+			introduce=#{introduce,jdbcType = LONGTEXT},
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="updateTime!=null ">
+			update_time=#{updateTime,jdbcType = TIMESTAMP},
+		</if>
+		<if test="isDelete!=null ">
+			is_delete=#{isDelete,jdbcType = INTEGER},
+		</if>
+		<if test="operateId!=null ">
+			operate_id=#{operateId,jdbcType = INTEGER},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_MODEL 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarModel">
+	select <include refid="AllColumnlist"/> from CAR_MODEL
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarModel">
+	select <include refid="AllColumnlist"/> from CAR_MODEL
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_MODEL 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarModel">
+	select <include refid="CommonColumnlist"/> from CAR_MODEL 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarModel">
+	select <include refid="CommonColumnlist"/> from CAR_MODEL
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+    <if test="q==null"><!-- 无传入参数时默认查未删除的 -->
+       AND is_delete=0
+    </if>
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.brandId!=null ">
+			AND brand_id=#{q.brandId}
+		</if>
+		<if test="q.sysId!=null ">
+			AND sys_id=#{q.sysId}
+		</if>
+		<if test="q.disId!=null ">
+			AND dis_id=#{q.disId}
+		</if>
+		<if test="q.modelCode!=null and q.modelCode!=''">
+			AND model_code=#{q.modelCode}
+		</if>
+		<if test="q.modelName!=null and q.modelName!=''">
+			AND model_name=#{q.modelName}
+		</if>
+		<if test="q.catalogId!=null ">
+			AND catalog_id=#{q.catalogId}
+		</if>
+		<if test="q.seatId!=null ">
+			AND seat_id=#{q.seatId}
+		</if>
+		<if test="q.structuId!=null ">
+			AND structu_id=#{q.structuId}
+		</if>
+		<if test="q.substitutuion!=null ">
+			AND substitutuion=#{q.substitutuion}
+		</if>
+		<if test="q.publishState!=null ">
+			AND publish_state=#{q.publishState}
+		</if>
+		<if test="q.examineState!=null ">
+			AND examine_state=#{q.examineState}
+		</if>
+		<if test="q.introduce!=null and q.introduce!=''">
+			AND introduce=#{q.introduce}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.updateTime!=null ">
+			AND update_time=#{q.updateTime}
+		</if>
+		<if test="q.updateTimeStart!=null">
+		<![CDATA[	AND update_time>=#{q.updateTimeStart}  ]]>
+		</if>
+		<if test="q.updateTimeEnd!=null">
+		<![CDATA[	AND update_time<#{q.updateTimeEnd}   ]]>
+		</if>
+		<if test="q.isDelete!=null ">
+			AND is_delete=#{q.isDelete}
+		</if>
+		<if test="q.operateId!=null ">
+			AND operate_id=#{q.operateId}
+		</if>
+	</if>
+</sql>
+
+</mapper>

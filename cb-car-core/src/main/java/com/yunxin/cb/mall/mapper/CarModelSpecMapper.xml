@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarModelSpecDao">
+
+<resultMap type="CarModelSpec" id="CarModelSpec">
+	<id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+	<result column="model_id" property="modelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="spec_id" property="specId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="spec_value" property="specValue" javaType="java.sql.Blob" jdbcType="VARBINARY"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,model_id,spec_id,spec_value
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,model_id,spec_id,
+</sql>
+
+<insert id="add" parameterType="CarModelSpec" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_MODEL_SPEC(
+		<if test="id!=null">
+		id,
+		</if>
+		model_id,
+		spec_id,
+		spec_value
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = BIGINT},
+		</if>
+		#{modelId,jdbcType = INTEGER},
+		#{specId,jdbcType = INTEGER},
+		#{specValue,jdbcType = VARBINARY}
+	)
+</insert>
+
+<update id="update" parameterType="CarModelSpec">
+	update CAR_MODEL_SPEC 
+	<set>
+		<if test="modelId!=null ">
+			model_id=#{modelId,jdbcType = INTEGER},
+		</if>
+		<if test="specId!=null ">
+			spec_id=#{specId,jdbcType = INTEGER},
+		</if>
+		<if test="specValue!=null ">
+			spec_value=#{specValue,jdbcType = VARBINARY},
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_MODEL_SPEC 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarModelSpec">
+	select <include refid="AllColumnlist"/> from CAR_MODEL_SPEC
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarModelSpec">
+	select <include refid="AllColumnlist"/> from CAR_MODEL_SPEC
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_MODEL_SPEC 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarModelSpec">
+	select <include refid="CommonColumnlist"/> from CAR_MODEL_SPEC 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarModelSpec">
+	select <include refid="CommonColumnlist"/> from CAR_MODEL_SPEC
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.modelId!=null ">
+			AND model_id=#{q.modelId}
+		</if>
+		<if test="q.specId!=null ">
+			AND spec_id=#{q.specId}
+		</if>
+		<if test="q.specValue!=null ">
+			AND spec_value=#{q.specValue}
+		</if>
+	</if>
+</sql>
+
+</mapper>
