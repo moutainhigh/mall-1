@@ -27,6 +27,33 @@
             }
             return true;
         }
+        function check(flag) {
+            var state;
+            if(flag == "APPLY_SUCCESS"){
+                state = $("#state").val("APPLY_SUCCESS");
+            }else {
+                state = $("#state").val("APPLY_FAILURE");
+            }
+            var auditRemark = $("#auditRemark").val();
+            var loanId = $("#loanId").val();
+            if(null == auditRemark || "" == auditRemark){
+                bootbox.alert("财务审批意见不能为空");
+                return false;
+            }
+            $.ajax({
+                url:"editFinancialLoan.do",
+                type:'POST',//GET 或POST
+                data:$("#validateSubmitForm").serialize(),
+                success:function(data){
+                    alert("成功");
+                    window.location.href = "loanApprovalList.do";
+                },
+                error:function(data){
+                    bootbox.alert("失败");
+                    window.location.href = "loanApprovalList.do";
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -60,7 +87,7 @@
     <div id="content" class="clearfix">
         <div class="window">
             <div class="inner-padding">
-                <form:form id="validateSubmitForm" action="editFinancialLoan.do" cssClass="form-horizontal" method="post" commandName="financialLoan" onsubmit="return submitForm();">
+                <form:form id="validateSubmitForm" cssClass="form-horizontal" method="post" commandName="financialLoan">
                 <div class="subheading">
                     <h3>借款审核</h3>
                 </div>
@@ -216,11 +243,11 @@
         <div class="row">
             <div class="col-sm-2">
                 <div class="btn-group pull-left">
-                    <button id="adopt" class="btn btn-default" value="1" type="submit"><i class="fa fa-save"></i>&nbsp;通&nbsp;过&nbsp;</button>
+                    <input type="button" class="btn btn-default" onclick="check('APPLY_SUCCESS')" value="&nbsp;通&nbsp;过&nbsp;" >
                 </div>
             </div>
             <div class="col-sm-2">
-                <button id="notAdopt" class="btn btn-default" value="2" type="submit"><i class="fa fa-save"></i>不&nbsp;通&nbsp;过&nbsp;</button>
+                <input type="button" class="btn btn-default" onclick="check('APPLY_FAILURE')" value="不&nbsp;通&nbsp;过&nbsp;" >
             </div>
             <div class="col-sm-2">
                 <div class="btn-group pull-right">
