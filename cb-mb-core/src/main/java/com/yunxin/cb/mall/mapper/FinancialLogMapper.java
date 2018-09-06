@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.mapper;
 
-import com.yunxin.cb.mall.entity.FiaciaLog;
+import com.yunxin.cb.mall.entity.FinancialLogBill;
 import com.yunxin.cb.mall.vo.FinancialLogVO;
 import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
@@ -12,7 +12,7 @@ import java.util.Map;
 @Mapper
 public interface FinancialLogMapper {
     @Delete({
-        "delete from finacial_log",
+        "delete from financial_log_bill",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer logId);
@@ -31,7 +31,7 @@ public interface FinancialLogMapper {
         "#{state,jdbcType=INTEGER}, #{transactionNo,jdbcType=VARCHAR}, ",
         "#{transactionDesc,jdbcType=VARCHAR})"
     })
-    int insert(FiaciaLog record);
+    int insert(FinancialLogBill record);
 
     @Select({
         "select",
@@ -55,13 +55,13 @@ public interface FinancialLogMapper {
         @Result(column="TRANSACTION_NO", property="transactionNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR)
     })
-    FiaciaLog selectByPrimaryKey(Integer logId);
+    FinancialLogBill selectByPrimaryKey(Integer logId);
 
     @Select({
         "select",
         "LOG_ID, CUSTOMER_ID, CUSTOMER_NAME, TITLE, IMAGE, AMOUNT, TYPE, TRANSACTION_TYPE, PAY_TYPE, ",
         "CREATE_TIME, STATE, TRANSACTION_NO, TRANSACTION_DESC",
-        "from finacial_log"
+        "from financial_log_bill"
     })
     @Results({
         @Result(column="LOG_ID", property="logId", jdbcType=JdbcType.INTEGER, id=true),
@@ -78,10 +78,10 @@ public interface FinancialLogMapper {
         @Result(column="TRANSACTION_NO", property="transactionNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR)
     })
-    List<FiaciaLog> selectAll();
+    List<FinancialLogBill> selectAll();
 
     @Update({
-        "update finacial_log",
+        "update financial_log_bill",
         "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
           "CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},",
           "TITLE = #{title,jdbcType=VARCHAR},",
@@ -96,7 +96,7 @@ public interface FinancialLogMapper {
           "TRANSACTION_DESC = #{transactionDesc,jdbcType=VARCHAR}",
         "where LOG_ID = #{logId,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKey(FiaciaLog record);
+    int updateByPrimaryKey(FinancialLogBill record);
 
     @Select({
             "<script>",
@@ -172,5 +172,5 @@ public interface FinancialLogMapper {
             @Result(column="TRANSACTION_NO", property="transactionNo", jdbcType=JdbcType.VARCHAR),
             @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR)
     })
-    FiaciaLog selectByPrimaryKeyAndCustomerId(@Param("logId")Integer logId,@Param("customerId")Integer customerId);
+    FinancialLogBill selectByPrimaryKeyAndCustomerId(@Param("logId")Integer logId, @Param("customerId")Integer customerId);
 }

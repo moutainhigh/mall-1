@@ -26,7 +26,7 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
     @Resource
     private FinancialWalletMapper financialWalletMapper;
     @Resource
-    private FinacialWalletLogMapper finacialWalletLogMapper;
+    private FinancialWalletLogMapper financialWalletLogMapper;
     @Resource
     private BankInfoMapper bankInfoMapper;
     @Resource
@@ -110,7 +110,7 @@ public class FinancialWalletServiceImpl implements FinancialWalletService {
             financialWalletlog.setAmount(amount);
             financialWalletlog.setType(type);
             financialWalletlog.setRemark(remark);
-            result = finacialWalletLogMapper.insert(financialWalletlog);
+            result = financialWalletLogMapper.insert(financialWalletlog);
         }
         return result == 1;
     }

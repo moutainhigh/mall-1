@@ -3,7 +3,7 @@ package com.yunxin.cb.mall.entity.meta;
 public enum FiaciaLogPayType {
 
     VX("微信"),ALIPAY("支付宝"),
-    RB("报账"),LOAN("还款");
+    RB("报账"),LOAN("还款"),TRANSFER("返利转账");
 
     private String name;
 

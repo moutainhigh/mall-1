@@ -75,33 +75,26 @@ public interface FinancialLoanMapper {
             "from financial_loan where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     @ResultMap(value="financialLoanMap")
-    List<FinancialLoan> selectByCustomerIdAndType(@Param("customerId") Integer customerId);
+    List<FinancialLoan> selectByCustomerId(@Param("customerId") Integer customerId);
 
     @Update({
             "update financial_loan",
-            "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
-            "AMOUNT = #{amount,jdbcType=DECIMAL},",
-            "TERM = #{term,jdbcType=INTEGER},",
-            "INTEREST_RATE = #{interestRate,jdbcType=DECIMAL},",
-            "TYPE = #{type,jdbcType=VARCHAR},",
-            "REPAY_DAY = #{repayDay,jdbcType=INTEGER},",
-            "STATE = #{state,jdbcType=VARCHAR},",
-            "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},",
-            "UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},",
-            "REPAYMENT_TERM = #{repaymentTerm,jdbcType=INTEGER},",
+            "set",
             "FINAL_REPAYMENT_TIME = #{finalRepaymentTime,jdbcType=TIMESTAMP},",
             "REPAY_AMOUNT = #{repayAmount,jdbcType=DECIMAL},",
             "READY_AMOUNT = #{readyAmount,jdbcType=DECIMAL},",
-            "SURPLUS_AMOUNT = #{surplusAmount,jdbcType=DECIMAL},",
+            "LEFT_AMOUNT = #{leftAmount,jdbcType=DECIMAL},",
+            "LEFT_INTEREST = #{leftInterest,jdbcType=DECIMAL},",
+            "OVERDUE_NUMBER = #{overdueNumber,jdbcType=INTEGER},",
             "LATE_FEE = #{lateFee,jdbcType=DECIMAL},",
-            "INTEREST = #{interest,jdbcType=DECIMAL},",
-            "OVERDUE_NUMER = #{overdueNumer,jdbcType=INTEGER},",
-            "BANK_ID = #{bankId,jdbcType=INTEGER}",
-            "CREDIT_AMOUNT = #{bankId,jdbcType=INTEGER}",
-            "BANK_ID = #{creditAmount,jdbcType=INTEGER}",
-            "INSURANCE_AMOUNT LOAN_ID = #{insuranceAmount,jdbcType=INTEGER}"
+            "STATE = #{state},",
+            "REPAYMENT_STATE = #{repaymentState},",
+            "VERSION = VERSION + 1",
+            "where",
+            "LOAN_ID = #{loanId,jdbcType=INTEGER}",
+            "and VERSION = #{version,jdbcType=INTEGER}"
     })
-    int updateByPrimaryKey(FinancialLoan record);
+    int updateOnVersion(FinancialLoan record);
 
     @Select({
             "<script>",
@@ -117,25 +110,6 @@ public interface FinancialLoanMapper {
     })
     @ResultMap(value="financialLoanMap")
     Page<FinancialLoan> pageByCustomer(@Param("customerId")Integer customerId);
-
-//    @Select({
-//            "<script>",
-//            "select",
-//            "count(LOAN_ID)",
-//            "from financial_loan",
-//            "where 1=1",
-//            "<if test='data.customerId!=null'>",
-//            "and CUSTOMER_ID = #{data.customerId}",
-//            "</if>",
-//            "<if test='data.stateList!=null'>",
-//                "and STATE in ",
-//                    "<foreach collection='data.stateList' index='index' item='item' open='(' separator=',' close=')'>",
-//                        " #{item} ",
-//                    "</foreach> ",
-//            "</if>",
-//            "</script>"
-//    })
-//    int count(Query q);
 
     @Select({
             "<script>",

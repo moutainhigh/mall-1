@@ -96,4 +96,16 @@ public class FinancialLoanBill {
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
+
+    public void setTransactionTypeOnPayment(FinancialLoanRepayment.Type type) {
+        if (FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
+            this.transactionType = TransactionType.INSURANCE_REPAYMENT;
+        }else if (FinancialLoanRepayment.Type.PRODUCT_RB_REPAYMENT.equals(type)) {
+            this.transactionType = TransactionType.PRODUCT_RB_REPAYMENT;
+        }else if (FinancialLoanRepayment.Type.CAR_REPAYMENT.equals(type)) {
+            this.transactionType = TransactionType.CAR_REPAYMENT;
+        }else if (FinancialLoanRepayment.Type.MANUAL_REPAYMENT.equals(type)) {
+            this.transactionType = TransactionType.MANUAL_REPAYMENT;
+        }
+    }
 }

@@ -15,75 +15,41 @@ public interface FinancialLoanRepaymentMapper {
     int deleteByPrimaryKey(Integer repaymentId);
 
     @Insert({
-        "insert into financial_loan_repayment (REPAYMENT_ID, CUSTOMER_ID, ",
-        "LOAN_ID, AMOUNT, ",
-        "SEQ, LATE_FEE, INTEREST, ",
-        "CREATE_TIME, REPAY_AMOUNT, ",
-        "READY_REPAYMENT_TIME, REPAY_TIME)",
-        "values (#{repaymentId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, ",
-        "#{loanId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, ",
-        "#{seq,jdbcType=INTEGER}, #{lateFee,jdbcType=DECIMAL}, #{interest,jdbcType=DECIMAL}, ",
-        "#{createTime,jdbcType=TIMESTAMP}, #{repayAmount,jdbcType=DECIMAL}, ",
-        "#{readyRepaymentTime,jdbcType=TIMESTAMP}, #{repayTime,jdbcType=TIMESTAMP})"
+        "insert into financial_loan_repayment (CUSTOMER_ID, ",
+        "LOAN_ID, REPAY_AMOUNT, ",
+        "REPAY_CAPITAL, REPAY_INTEREST, LOAN_REPAYMENT_TYPE, ",
+        "CREATE_TIME)",
+        "values (#{customerId,jdbcType=INTEGER}, ",
+        "#{loanId,jdbcType=INTEGER}, #{repayAmount,jdbcType=DECIMAL}, ",
+        "#{repayCapital,jdbcType=DECIMAL}, #{repayInterest,jdbcType=DECIMAL}, ",
+        "#{type}, #{createTime,jdbcType=TIMESTAMP})"
     })
     int insert(FinancialLoanRepayment record);
 
     @Select({
         "select",
-        "REPAYMENT_ID, CUSTOMER_ID, LOAN_ID, AMOUNT, SEQ, LATE_FEE, INTEREST, CREATE_TIME, ",
-        "REPAY_AMOUNT, READY_REPAYMENT_TIME, REPAY_TIME",
+        "*",
         "from financial_loan_repayment",
         "where REPAYMENT_ID = #{repaymentId,jdbcType=INTEGER}"
     })
-    @Results({
-        @Result(column="REPAYMENT_ID", property="repaymentId", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
-        @Result(column="LOAN_ID", property="loanId", jdbcType=JdbcType.INTEGER),
-        @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
-        @Result(column="SEQ", property="seq", jdbcType=JdbcType.INTEGER),
-        @Result(column="LATE_FEE", property="lateFee", jdbcType=JdbcType.DECIMAL),
-        @Result(column="INTEREST", property="interest", jdbcType=JdbcType.DECIMAL),
-        @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="REPAY_AMOUNT", property="repayAmount", jdbcType=JdbcType.DECIMAL),
-        @Result(column="READY_REPAYMENT_TIME", property="readyRepaymentTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="REPAY_TIME", property="repayTime", jdbcType=JdbcType.TIMESTAMP)
+    @Results(id = "loanRepayment", value = {
+            @Result(column = "REPAYMENT_ID", property = "repaymentId", jdbcType = JdbcType.INTEGER, id = true),
+            @Result(column = "CUSTOMER_ID", property = "customerId", jdbcType = JdbcType.INTEGER),
+            @Result(column = "LOAN_ID", property = "loanId", jdbcType = JdbcType.INTEGER),
+            @Result(column = "REPAY_AMOUNT", property = "repayAmount", jdbcType = JdbcType.DECIMAL),
+            @Result(column = "REPAY_CAPITAL", property = "repayCapital", jdbcType = JdbcType.DECIMAL),
+            @Result(column = "REPAY_INTEREST", property = "repayInterest", jdbcType = JdbcType.DECIMAL),
+            @Result(column = "LOAN_REPAYMENT_TYPE", property = "type"),
+            @Result(column = "CREATE_TIME", property = "createTime", jdbcType = JdbcType.TIMESTAMP)
     })
-    FinancialLoanRepayment selectByPrimaryKey(Integer repaymentId);
+    FinancialLoanRepayment selectByPrimaryKey(@Param("repaymentId") Integer repaymentId);
 
     @Select({
         "select",
-        "REPAYMENT_ID, CUSTOMER_ID, LOAN_ID, AMOUNT, SEQ, LATE_FEE, INTEREST, CREATE_TIME, ",
-        "REPAY_AMOUNT, READY_REPAYMENT_TIME, REPAY_TIME",
+        "*",
         "from financial_loan_repayment where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
-    @Results({
-        @Result(column="REPAYMENT_ID", property="repaymentId", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
-        @Result(column="LOAN_ID", property="loanId", jdbcType=JdbcType.INTEGER),
-        @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
-        @Result(column="SEQ", property="seq", jdbcType=JdbcType.INTEGER),
-        @Result(column="LATE_FEE", property="lateFee", jdbcType=JdbcType.DECIMAL),
-        @Result(column="INTEREST", property="interest", jdbcType=JdbcType.DECIMAL),
-        @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="REPAY_AMOUNT", property="repayAmount", jdbcType=JdbcType.DECIMAL),
-        @Result(column="READY_REPAYMENT_TIME", property="readyRepaymentTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="REPAY_TIME", property="repayTime", jdbcType=JdbcType.TIMESTAMP)
-    })
-    List<FinancialLoanRepayment> selectByCustomerId(int customerId);
+    @ResultMap(value = "loanRepayment")
+    List<FinancialLoanRepayment> selectByCustomerId(@Param("customerId")Integer customerId);
 
-    @Update({
-        "update financial_loan_repayment",
-        "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
-          "LOAN_ID = #{loanId,jdbcType=INTEGER},",
-          "AMOUNT = #{amount,jdbcType=DECIMAL},",
-          "SEQ = #{seq,jdbcType=INTEGER},",
-          "LATE_FEE = #{lateFee,jdbcType=DECIMAL},",
-          "INTEREST = #{interest,jdbcType=DECIMAL},",
-          "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},",
-          "REPAY_AMOUNT = #{repayAmount,jdbcType=DECIMAL},",
-          "READY_REPAYMENT_TIME = #{readyRepaymentTime,jdbcType=TIMESTAMP},",
-          "REPAY_TIME = #{repayTime,jdbcType=TIMESTAMP}",
-        "where REPAYMENT_ID = #{repaymentId,jdbcType=INTEGER}"
-    })
-    int updateByPrimaryKey(FinancialLoanRepayment record);
 }

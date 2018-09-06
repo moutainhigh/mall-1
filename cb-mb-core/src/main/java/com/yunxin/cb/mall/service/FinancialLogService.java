@@ -1,22 +1,11 @@
 package com.yunxin.cb.mall.service;
 
-import com.yunxin.cb.mall.vo.FinancialLogBillVO;
 import com.yunxin.cb.mall.vo.FinancialLogDataVO;
 import com.yunxin.cb.mall.vo.FinancialLogDetailVO;
-import com.yunxin.cb.mall.vo.FinancialLogVO;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
 
 public interface FinancialLogService {
-
-    /**
-     * @title: 添加账单记录
-     * @param: [vo]
-     * @return: int
-     * @auther: eleven
-     * @date: 2018/8/9 18:00
-     */
-    int addFiaciaLog(FinancialLogBillVO vo);
 
     /**
      * @title: 分页查询用户账单
