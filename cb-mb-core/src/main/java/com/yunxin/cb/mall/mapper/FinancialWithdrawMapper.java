@@ -15,14 +15,14 @@ public interface FinancialWithdrawMapper {
     int deleteByPrimaryKey(Integer withdrawId);
 
     @Insert({
-        "insert into financial_withdraw (WITHDRAW_ID, CUSTOMER_ID, ",
-        "BANK_NO, AMOUNT, ",
+        "insert into financial_withdraw (CUSTOMER_ID, ",
+        "BANK_ID, AMOUNT, ",
         "REAL_AMOUNT, CHARGE_FEE, ",
         "STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
         "AUDIT_OPERATOR, AUDIT_MESSAGE, ",
         "GRANT_DATE, GRANT_OPERATOR, ",
         "APPLY_DATE, UPDATE_DATE)",
-        "values (#{withdrawId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, ",
+        "values (#{customerId,jdbcType=INTEGER}, ",
         "#{bankNo,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, ",
         "#{realAmount,jdbcType=DECIMAL}, #{chargeFee,jdbcType=DECIMAL}, ",
         "#{state,jdbcType=INTEGER}, #{withdrawType,jdbcType=INTEGER}, #{auditDate,jdbcType=TIMESTAMP}, ",
@@ -35,7 +35,7 @@ public interface FinancialWithdrawMapper {
 
     @Select({
         "select",
-        "WITHDRAW_ID, CUSTOMER_ID, BANK_NO, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
+        "WITHDRAW_ID, CUSTOMER_ID, BANK_ID, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
         "AUDIT_OPERATOR, AUDIT_MESSAGE, GRANT_DATE, GRANT_OPERATOR, APPLY_DATE, UPDATE_DATE",
         "from financial_withdraw",
         "where WITHDRAW_ID = #{withdrawId,jdbcType=INTEGER}"
@@ -43,7 +43,7 @@ public interface FinancialWithdrawMapper {
     @Results({
         @Result(column="WITHDRAW_ID", property="withdrawId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
-        @Result(column="BANK_NO", property="bankNo", jdbcType=JdbcType.INTEGER),
+        @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER),
         @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="REAL_AMOUNT", property="realAmount", jdbcType=JdbcType.DECIMAL),
         @Result(column="CHARGE_FEE", property="chargeFee", jdbcType=JdbcType.DECIMAL),
@@ -61,14 +61,14 @@ public interface FinancialWithdrawMapper {
 
     @Select({
         "select",
-        "WITHDRAW_ID, CUSTOMER_ID, BANK_NO, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
+        "WITHDRAW_ID, CUSTOMER_ID, BANK_ID, AMOUNT, REAL_AMOUNT, CHARGE_FEE, STATE, WITHDRAW_TYPE, AUDIT_DATE, ",
         "AUDIT_OPERATOR, AUDIT_MESSAGE, GRANT_DATE, GRANT_OPERATOR, APPLY_DATE, UPDATE_DATE",
         "from financial_withdraw"
     })
     @Results({
         @Result(column="WITHDRAW_ID", property="withdrawId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
-        @Result(column="BANK_NO", property="bankNo", jdbcType=JdbcType.INTEGER),
+        @Result(column="BANK_ID", property="bankId", jdbcType=JdbcType.INTEGER),
         @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
         @Result(column="REAL_AMOUNT", property="realAmount", jdbcType=JdbcType.DECIMAL),
         @Result(column="CHARGE_FEE", property="chargeFee", jdbcType=JdbcType.DECIMAL),
@@ -87,7 +87,7 @@ public interface FinancialWithdrawMapper {
     @Update({
         "update financial_withdraw",
         "set CUSTOMER_ID = #{customerId,jdbcType=INTEGER},",
-          "BANK_NO = #{bankNo,jdbcType=INTEGER},",
+          "BANK_ID = #{bankId,jdbcType=INTEGER},",
           "AMOUNT = #{amount,jdbcType=DECIMAL},",
           "REAL_AMOUNT = #{realAmount,jdbcType=DECIMAL},",
           "CHARGE_FEE = #{chargeFee,jdbcType=DECIMAL},",

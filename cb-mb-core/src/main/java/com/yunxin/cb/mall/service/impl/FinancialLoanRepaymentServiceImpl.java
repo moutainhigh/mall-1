@@ -127,7 +127,7 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
         bill.setCreateTime(new Date());
         financialLogMapper.insert(bill);
 
-        // TODO 5.自动提现
+        // 5.自动提现
         if (leftAvailableAmount.compareTo(BigDecimal.ZERO) > 0) {
 
         }

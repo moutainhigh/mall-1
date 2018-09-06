@@ -93,7 +93,7 @@ public class FinancialWithdraw implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BANK_NO", nullable = false)
+    @JoinColumn(name = "BANK_ID", nullable = false)
     public BankInfo getBank() {
         return bank;
     }

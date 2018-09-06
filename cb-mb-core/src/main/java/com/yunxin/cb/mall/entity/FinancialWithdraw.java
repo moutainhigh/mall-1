@@ -1,8 +1,11 @@
 package com.yunxin.cb.mall.entity;
 
+import com.yunxin.cb.mall.entity.meta.WithdrawState;
+import com.yunxin.cb.mall.entity.meta.WithdrawType;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @title: 提现表实体类
@@ -10,51 +13,80 @@ import java.util.Date;
  * @date: 2018/8/8 15:59
  */
 public class FinancialWithdraw implements Serializable {
+
     private static final long serialVersionUID = -8295725539307112445L;
     /**  */
     private Integer withdrawId;
 
-    /** 用户id */
+    /**
+     * 用户id
+     */
     private Integer customerId;
 
-    /** 提现人银行卡 */
-    private Integer bankNo;
+    /**
+     * 提现人银行卡
+     */
+    private Integer bankId;
 
-    /** 提现金额 */
+    /**
+     * 提现金额
+     */
     private BigDecimal amount;
 
-    /** 实际提现金额 */
+    /**
+     * 实际提现金额
+     */
     private BigDecimal realAmount;
 
-    /** 提现手续费 */
+    /**
+     * 提现手续费
+     */
     private BigDecimal chargeFee;
 
-    /** 状态：0.审核中 1.审核失败 2.待发放 3.转账中 4.交易完成 */
-    private Integer state;
+    /**
+     * 状态：0.审核中 1.审核失败 2.待发放 3.转账中 4.交易完成
+     */
+    private WithdrawState state;
 
-    /** 提现类型：0.报账转账 1.保险返利转账 */
-    private Integer withdrawType;
+    /**
+     * 提现类型：0.报账转账 1.保险返利转账
+     */
+    private WithdrawType withdrawType;
 
-    /** 审核时间 */
-    private Date auditDate;
+    /**
+     * 审核时间
+     */
+    private LocalDateTime auditDate;
 
-    /** 审核员 */
+    /**
+     * 审核员
+     */
     private String auditOperator;
 
-    /** 审核意见 */
+    /**
+     * 审核意见
+     */
     private String auditMessage;
 
-    /** 发放时间 */
-    private Date grantDate;
+    /**
+     * 发放时间
+     */
+    private LocalDateTime grantDate;
 
-    /** 发放员 */
+    /**
+     * 发放员
+     */
     private String grantOperator;
 
-    /** 提现时间 */
-    private Date applyDate;
+    /**
+     * 提现时间
+     */
+    private LocalDateTime applyDate;
 
-    /** 修改时间 */
-    private Date updateDate;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime updateDate;
 
     public Integer getWithdrawId() {
         return withdrawId;
@@ -72,12 +104,12 @@ public class FinancialWithdraw implements Serializable {
         this.customerId = customerId;
     }
 
-    public Integer getBankNo() {
-        return bankNo;
+    public Integer getBankId() {
+        return bankId;
     }
 
-    public void setBankNo(Integer bankNo) {
-        this.bankNo = bankNo;
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
     }
 
     public BigDecimal getAmount() {
@@ -104,27 +136,27 @@ public class FinancialWithdraw implements Serializable {
         this.chargeFee = chargeFee;
     }
 
-    public Integer getState() {
+    public WithdrawState getState() {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(WithdrawState state) {
         this.state = state;
     }
 
-    public Integer getWithdrawType() {
+    public WithdrawType getWithdrawType() {
         return withdrawType;
     }
 
-    public void setWithdrawType(Integer withdrawType) {
+    public void setWithdrawType(WithdrawType withdrawType) {
         this.withdrawType = withdrawType;
     }
 
-    public Date getAuditDate() {
+    public LocalDateTime getAuditDate() {
         return auditDate;
     }
 
-    public void setAuditDate(Date auditDate) {
+    public void setAuditDate(LocalDateTime auditDate) {
         this.auditDate = auditDate;
     }
 
@@ -133,7 +165,7 @@ public class FinancialWithdraw implements Serializable {
     }
 
     public void setAuditOperator(String auditOperator) {
-        this.auditOperator = auditOperator == null ? null : auditOperator.trim();
+        this.auditOperator = auditOperator;
     }
 
     public String getAuditMessage() {
@@ -141,14 +173,14 @@ public class FinancialWithdraw implements Serializable {
     }
 
     public void setAuditMessage(String auditMessage) {
-        this.auditMessage = auditMessage == null ? null : auditMessage.trim();
+        this.auditMessage = auditMessage;
     }
 
-    public Date getGrantDate() {
+    public LocalDateTime getGrantDate() {
         return grantDate;
     }
 
-    public void setGrantDate(Date grantDate) {
+    public void setGrantDate(LocalDateTime grantDate) {
         this.grantDate = grantDate;
     }
 
@@ -157,22 +189,22 @@ public class FinancialWithdraw implements Serializable {
     }
 
     public void setGrantOperator(String grantOperator) {
-        this.grantOperator = grantOperator == null ? null : grantOperator.trim();
+        this.grantOperator = grantOperator;
     }
 
-    public Date getApplyDate() {
+    public LocalDateTime getApplyDate() {
         return applyDate;
     }
 
-    public void setApplyDate(Date applyDate) {
+    public void setApplyDate(LocalDateTime applyDate) {
         this.applyDate = applyDate;
     }
 
-    public Date getUpdateDate() {
+    public LocalDateTime getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(Date updateDate) {
+    public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
     }
 }
