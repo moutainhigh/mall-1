@@ -3,8 +3,8 @@ package com.yunxin.cb.mall.service;
 import java.util.List;
 
 import com.yunxin.cb.mall.common.BaseService;
-import com.yunxin.cb.util.page.PageFinder;
-import com.yunxin.cb.util.page.Query;
+import com.yunxin.cb.mall.common.PageFinder;
+import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.entity.CarRecommand;
 
 /**
