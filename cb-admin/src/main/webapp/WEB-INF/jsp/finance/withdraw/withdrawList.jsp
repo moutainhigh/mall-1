@@ -28,8 +28,8 @@
                 case "TRANSFER":{
                     return "转账中";
                 }
-                case "FANISHED":{
-                    return "交易完成";
+                case "FINISHED":{
+                    return "已转账";
                 }
             }
             return state;

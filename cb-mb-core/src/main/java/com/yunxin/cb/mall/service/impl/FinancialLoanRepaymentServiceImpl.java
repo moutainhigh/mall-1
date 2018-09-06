@@ -78,12 +78,19 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
         carRepayment = result[2];
 
         // 3.钱包变动
-        if (carRepayment.compareTo(BigDecimal.ZERO) > 0 || creditRepayment.compareTo(BigDecimal.ZERO) > 0) {
+        if (carRepayment.compareTo(BigDecimal.ZERO) > 0 || creditRepayment.compareTo(BigDecimal.ZERO) > 0
+                || FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
             walletVO.setDebtCar(walletVO.getDebtCar().subtract(carRepayment));
             BigDecimal debtCredit = walletVO.getCreditAmount().compareTo(creditRepayment) > 0
                     ? walletVO.getCreditAmount().subtract(creditRepayment) : BigDecimal.ZERO;
             walletVO.setDebtCredit(debtCredit);
-            String remark = "自动还款：" + carRepayment.add(creditRepayment);
+            // 保险返利，还要减少冻结金额
+            if (FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
+                BigDecimal freezingAmount = walletVO.getFreezingAmount().compareTo(repayAmount) > 0
+                        ? walletVO.getFreezingAmount().subtract(repayAmount) : BigDecimal.ZERO;
+                walletVO.setFreezingAmount(freezingAmount);
+            }
+            String remark = "返利或报账到账：" + repayAmount + ",自动还款：" + carRepayment.add(creditRepayment);
             boolean resultFlag = financialWalletService.updateFinancialWallet(walletVO,
                     carRepayment.add(creditRepayment), OperationType.SUBTRACT, remark);
             if (!resultFlag) {

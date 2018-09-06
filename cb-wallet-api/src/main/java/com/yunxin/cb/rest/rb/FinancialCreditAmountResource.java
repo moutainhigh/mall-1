@@ -4,14 +4,14 @@ import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.Customer;
 import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.FinancialLoanConfig;
+import com.yunxin.cb.mall.restful.ResponseResult;
+import com.yunxin.cb.mall.restful.meta.Result;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.*;
-import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.vo.AddFinancialLoanVO;
-import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -114,9 +114,8 @@ public class FinancialCreditAmountResource extends BaseResource {
     public ResponseResult submitLoan(@Valid @RequestBody AddFinancialLoanVO addFinancialLoanVO) {
         try {
             //添加借款记录
-            financialLoanService.add(getCustomerId(), addFinancialLoanVO.getLoanConfigId(),
+            return financialLoanService.add(getCustomerId(), addFinancialLoanVO.getLoanConfigId(),
                     addFinancialLoanVO.getBankId(), addFinancialLoanVO.getAmount());
-            return new ResponseResult(Result.SUCCESS);
         } catch (Exception e) {
             logger.info("submitLoan failed", e);
             return new ResponseResult(Result.FAILURE);

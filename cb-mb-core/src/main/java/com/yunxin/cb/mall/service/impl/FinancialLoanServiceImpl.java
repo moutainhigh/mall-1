@@ -7,6 +7,8 @@ import com.yunxin.cb.mall.entity.meta.*;
 import com.yunxin.cb.mall.mapper.FinancialCreditLineBillMapper;
 import com.yunxin.cb.mall.mapper.FinancialLoanConfigMapper;
 import com.yunxin.cb.mall.mapper.FinancialLoanMapper;
+import com.yunxin.cb.mall.restful.ResponseResult;
+import com.yunxin.cb.mall.restful.meta.Result;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.BankInfoVO;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
@@ -51,22 +53,25 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
      **/
     @Override
     @Transactional
-    public void add(Integer customerId, Integer loanConfigId, Integer bankId, BigDecimal amount) {
+    public ResponseResult add(Integer customerId, Integer loanConfigId, Integer bankId, BigDecimal amount) {
 
         Customer customer = customerService.getCustomerById(customerId);
         if (customer == null || customer.getAuthFlag() != 1) {
-            throw new RuntimeException("未实名认证");
+//            throw new RuntimeException("未实名认证");
+            return new ResponseResult<>(Result.FAILURE, "未实名认证");
         }
         BankInfoVO bankInfoVO = bankInfoService.selectByPrimaryKey(bankId, customerId);
         if (bankInfoVO == null) {
-            throw new RuntimeException("您选择的银行卡有误");
+//            throw new RuntimeException("您选择的银行卡有误");
+            return new ResponseResult<>(Result.FAILURE, "您选择的银行卡有误");
         }
 
         // 最高可贷金额,判断额度是否满足贷款
         FinancialWalletVO walletVO = financialWalletService.getFinancialWalletByCustomerId(customerId);
         BigDecimal totalAmount = walletVO.getCreditAmount();
         if (amount.compareTo(totalAmount) > 0) {
-            throw new RuntimeException("您的可贷金额不足");
+//            throw new RuntimeException("您的可贷金额不足");
+            return new ResponseResult<>(Result.FAILURE, "您的可贷金额不足");
         }
 
         // 判断是否超过最多次数
@@ -76,20 +81,21 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
             // 查询审核通过的我的借款次数
             int count = this.countByCustomerId(customerId);
             if (count >= maxCount) {
-                throw new RuntimeException("您已经贷了" + maxCount + "次款了，不能再贷了");
+//                throw new RuntimeException("您已经贷了" + maxCount + "次款了，不能再贷了");
+                return new ResponseResult<>(Result.FAILURE,"您已经贷了" + maxCount + "次款了，不能再贷了");
             }
         }
 
         // 贷款期限
         FinancialLoanConfig financialLoanConfig = financialLoanConfigMapper.selectByPrimaryKey(loanConfigId);
         if (financialLoanConfig == null) {
-            throw new RuntimeException("您选择的贷款期限有误");
+//            throw new RuntimeException("您选择的贷款期限有误");
+            return new ResponseResult<>(Result.FAILURE,"您选择的贷款期限有误");
         }
 
         // 钱包变动
         walletVO.setCreditAmount(walletVO.getCreditAmount().subtract(amount));
-        walletVO.setDebtCredit(walletVO.getCreditAmount().add(amount));
-        String remark = "借款：" + amount + ",减少对应信用额度，增加对应负债";
+        String remark = "申请借款：" + amount + ",减少对应信用额度";
         boolean resultFlag = financialWalletService.updateFinancialWallet(walletVO, amount, OperationType.SUBTRACT, remark);
         if (!resultFlag) {
             throw new RuntimeException("内部错误(钱包)");
@@ -135,6 +141,7 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
             throw new RuntimeException("内部错误(借款提交后信用额度变动)");
         }
 
+        return new ResponseResult<>(Result.SUCCESS);
     }
 
     /**
