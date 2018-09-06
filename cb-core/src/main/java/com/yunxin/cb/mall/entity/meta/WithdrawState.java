@@ -7,7 +7,7 @@ package com.yunxin.cb.mall.entity.meta;
  */
 public enum WithdrawState {
 
-    AUDIT("审核中",0), AUDIT_NOT("审核失败",1), WAIT_GRANT("待发放",2), TRANSFER("转账中",3), FANISHED("交易完成",4);
+    AUDIT("审核中",0), AUDIT_NOT("审核失败",1), WAIT_GRANT("待发放",2), TRANSFER("转账中",3), FINISHED("已转账",4);
     private String name;
     private Integer value;
 
