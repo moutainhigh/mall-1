@@ -158,4 +158,37 @@ public class FiaciaLog implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public void setTransactionTypeOnPayment(FinancialLoanRepayment.Type type, boolean repayment) {
+        if (FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
+            this.transactionType = FiaciaLogTransType.INSURANCE_REBATE;
+            if (repayment) {
+                this.transactionType = FiaciaLogTransType.INSURANCE_REPAYMENT;
+            }
+        }else if (FinancialLoanRepayment.Type.PRODUCT_RB_REPAYMENT.equals(type)) {
+            this.transactionType = FiaciaLogTransType.PRODUCT_RB;
+            if (repayment) {
+                this.transactionType = FiaciaLogTransType.PRODUCT_RB_REPAYMENT;
+            }
+        }else if (FinancialLoanRepayment.Type.CAR_REPAYMENT.equals(type)) {
+            this.transactionType = FiaciaLogTransType.CAR_REBATE;
+            if (repayment) {
+                this.transactionType = FiaciaLogTransType.CAR_REPAYMENT;
+            }
+        }else if (FinancialLoanRepayment.Type.MANUAL_REPAYMENT.equals(type)) {
+            this.transactionType = FiaciaLogTransType.MANUAL_REPAYMENT;
+        }
+    }
+
+    public void setPayTypeOnPayment(FinancialLoanRepayment.Type type) {
+        if (FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
+            this.payType = FiaciaLogPayType.TRANSFER;
+        }else if (FinancialLoanRepayment.Type.PRODUCT_RB_REPAYMENT.equals(type)) {
+            this.payType = FiaciaLogPayType.RB;
+        }else if (FinancialLoanRepayment.Type.CAR_REPAYMENT.equals(type)) {
+            this.payType = FiaciaLogPayType.TRANSFER;
+        }else if (FinancialLoanRepayment.Type.MANUAL_REPAYMENT.equals(type)) {
+            this.payType = FiaciaLogPayType.LOAN;
+        }
+    }
 }

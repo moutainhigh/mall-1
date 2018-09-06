@@ -26,6 +26,7 @@ import java.util.List;
 @Api(description = "还款信息接口")
 @RestController
 @RequestMapping(value = "/{version}/rb/repayment")
+@IgnoreAuthentication
 public class FinancialLoanRepaymentResource extends BaseResource {
 
     @Resource
@@ -61,13 +62,13 @@ public class FinancialLoanRepaymentResource extends BaseResource {
             @ApiImplicitParam(name = "repayAmount", value = "还款金", required = true, paramType = "path", dataType = "string")
     })
     @ApiVersion(1)
-    @PostMapping(value = "repayAmount")
-    public ResponseResult repayAmount(@RequestBody BigDecimal repayAmount) {
+    @GetMapping(value = "repayAmount")
+    public ResponseResult repayAmount(@RequestParam BigDecimal repayAmount) {
         try {
-            financialLoanRepaymentService.add(repayAmount, getCustomerId());
+            financialLoanRepaymentService.repay(repayAmount, getCustomerId());
             return new ResponseResult<>(Result.SUCCESS);
         } catch (Exception e) {
-            logger.info("add failed", e);
+            logger.info("repayAmount failed", e);
         }
         return new ResponseResult<>(Result.FAILURE);
     }

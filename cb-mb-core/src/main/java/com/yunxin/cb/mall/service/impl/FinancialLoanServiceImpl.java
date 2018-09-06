@@ -66,14 +66,14 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
             throw new RuntimeException("您选择的银行卡有误");
         }
 
-        //最高可贷金额,判断额度是否满足贷款
+        // 最高可贷金额,判断额度是否满足贷款
         FinancialWalletVO walletVO = financialWalletService.getFinancialWalletByCustomerId(customerId);
         BigDecimal totalAmount = walletVO.getCreditAmount();
         if (amount.compareTo(totalAmount) > 0) {
             throw new RuntimeException("您的可贷金额不足");
         }
 
-        //判断是否超过最多次数
+        // 判断是否超过最多次数
         Profile profile = profileService.getProfileByName(ProfileState.MAX_LOAN_NUM.name());
         if (profile != null) {
             int maxCount = Integer.valueOf(profile.getFileValue());
@@ -190,7 +190,7 @@ public class FinancialLoanServiceImpl implements FinancialLoanService {
         log.info("update:"+vo);
         FinancialLoan financialLoan = new FinancialLoan();
         BeanUtils.copyProperties(financialLoan, vo);
-        financialLoanMapper.updateByPrimaryKey(financialLoan);
+        financialLoanMapper.updateOnVersion(financialLoan);
         return vo;
     }
 

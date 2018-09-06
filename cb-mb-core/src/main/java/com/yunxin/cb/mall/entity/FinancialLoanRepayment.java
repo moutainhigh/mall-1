@@ -1,9 +1,35 @@
 package com.yunxin.cb.mall.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class FinancialLoanRepayment {
+
+    /**
+     * 还款类型
+     **/
+    public enum Type {
+
+        INSURANCE_REPAYMENT("保险返利自动还款"),
+        PRODUCT_RB_REPAYMENT("商品报帐自动还款"),
+        MANUAL_REPAYMENT("手动还款"),
+        CAR_REPAYMENT("汽车返利自动还款"),;
+
+        private String name;
+
+        Type(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
     /**  */
     private Integer repaymentId;
 
@@ -13,46 +39,30 @@ public class FinancialLoanRepayment {
     /**  */
     private Integer loanId;
 
-    /** 还款金额 */
-    private BigDecimal amount;
-
-    /** 第几期还款 */
-    private Integer seq;
-
-    /** 还款滞纳金 */
-    private BigDecimal lateFee;
-
-    /** 还款利息 */
-    private BigDecimal interest;
-
-    /** 创建时间 */
-    private Date createTime;
-
-    /** 实际还款金 */
+    /**
+     * 还款金额
+     */
     private BigDecimal repayAmount;
 
-    /** 实际还款时间 */
-    private Date readyRepaymentTime;
+    /**
+     * 还款本金
+     */
+    private BigDecimal repayCapital;
 
-    /** 规定还款时间 */
-    private Date repayTime;
+    /**
+     * 还款利息
+     */
+    private BigDecimal repayInterest;
 
-    public FinancialLoanRepayment(Integer repaymentId) {
-        this.repaymentId = repaymentId;
-    }
+    /**
+     * 还款类型
+     */
+    private FinancialLoanRepayment.Type type;
 
-    public FinancialLoanRepayment(Integer customerId, Integer loanId, BigDecimal amount, Date createTime, BigDecimal repayAmount, Date readyRepaymentTime) {
-        this.customerId = customerId;
-        this.loanId = loanId;
-        this.amount = amount;
-        this.createTime = createTime;
-        this.repayAmount = repayAmount;
-        this.readyRepaymentTime = readyRepaymentTime;
-        this.seq = 0;
-        this.lateFee = new BigDecimal(0);
-        this.interest = new BigDecimal(0);
-        this.repayTime = new Date();
-    }
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
 
     public Integer getRepaymentId() {
         return repaymentId;
@@ -78,46 +88,6 @@ public class FinancialLoanRepayment {
         this.loanId = loanId;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public Integer getSeq() {
-        return seq;
-    }
-
-    public void setSeq(Integer seq) {
-        this.seq = seq;
-    }
-
-    public BigDecimal getLateFee() {
-        return lateFee;
-    }
-
-    public void setLateFee(BigDecimal lateFee) {
-        this.lateFee = lateFee;
-    }
-
-    public BigDecimal getInterest() {
-        return interest;
-    }
-
-    public void setInterest(BigDecimal interest) {
-        this.interest = interest;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     public BigDecimal getRepayAmount() {
         return repayAmount;
     }
@@ -126,19 +96,35 @@ public class FinancialLoanRepayment {
         this.repayAmount = repayAmount;
     }
 
-    public Date getReadyRepaymentTime() {
-        return readyRepaymentTime;
+    public BigDecimal getRepayCapital() {
+        return repayCapital;
     }
 
-    public void setReadyRepaymentTime(Date readyRepaymentTime) {
-        this.readyRepaymentTime = readyRepaymentTime;
+    public void setRepayCapital(BigDecimal repayCapital) {
+        this.repayCapital = repayCapital;
     }
 
-    public Date getRepayTime() {
-        return repayTime;
+    public BigDecimal getRepayInterest() {
+        return repayInterest;
     }
 
-    public void setRepayTime(Date repayTime) {
-        this.repayTime = repayTime;
+    public void setRepayInterest(BigDecimal repayInterest) {
+        this.repayInterest = repayInterest;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 }
