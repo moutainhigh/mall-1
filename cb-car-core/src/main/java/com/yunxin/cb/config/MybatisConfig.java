@@ -23,7 +23,7 @@ public class MybatisConfig {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setTypeAliasesPackage("com.yunxin.cb.mall");
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/yunxin/cb/mall/mapper/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/yunxin/cb/mall/mapper/**/*.xml"));
         return bean.getObject();
     }
 
