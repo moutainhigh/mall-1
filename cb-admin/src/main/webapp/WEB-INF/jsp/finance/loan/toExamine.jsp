@@ -19,6 +19,12 @@
                 bootbox.alert("财务审批意见不能为空");
                 return false;
             }
+            var adopt = $("#adopt").val();
+            if(adopt == 1){
+                $("#state").val("APPLY_SUCCESS");
+            }else {
+                $("#state").val("APPLY_FAILURE");
+            }
             return true;
         }
     </script>
@@ -59,6 +65,7 @@
                     <h3>借款审核</h3>
                 </div>
                     <form:hidden path="loanId"/>
+                    <form:hidden path="state" id="state" />
                     <div class="row">
                         <div class="inline-labels">
                             <div class="col-sm-1">
@@ -209,11 +216,11 @@
         <div class="row">
             <div class="col-sm-2">
                 <div class="btn-group pull-left">
-                    <button id="adopt" class="btn btn-default" type="submit"><i class="fa fa-save"></i>&nbsp;通&nbsp;过&nbsp;</button>
+                    <button id="adopt" class="btn btn-default" value="1" type="submit"><i class="fa fa-save"></i>&nbsp;通&nbsp;过&nbsp;</button>
                 </div>
             </div>
             <div class="col-sm-2">
-                <button id="notAdopt" class="btn btn-default" type="submit"><i class="fa fa-save"></i>不&nbsp;通&nbsp;过&nbsp;</button>
+                <button id="notAdopt" class="btn btn-default" value="2" type="submit"><i class="fa fa-save"></i>不&nbsp;通&nbsp;过&nbsp;</button>
             </div>
             <div class="col-sm-2">
                 <div class="btn-group pull-right">

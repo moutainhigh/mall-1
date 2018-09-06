@@ -26,4 +26,9 @@ public interface IFinancialLoanService {
      * 修改状态
      */
     public Map<String,Object> undateState(Integer loanId,LoanState state)throws Exception;
+
+    /**
+     * 审核
+     */
+    public void updateFinancialLoan(FinancialLoan financialLoan)throws Exception;
 }

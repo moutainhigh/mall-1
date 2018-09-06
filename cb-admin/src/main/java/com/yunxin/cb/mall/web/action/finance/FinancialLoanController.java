@@ -2,20 +2,20 @@ package com.yunxin.cb.mall.web.action.finance;
 
 import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.meta.LoanState;
-import com.yunxin.cb.mall.entity.meta.PublishState;
 import com.yunxin.cb.mall.service.IFinancialLoanService;
-import com.yunxin.cb.search.vo.ResponseResult;
-import com.yunxin.cb.search.vo.meta.Result;
 import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.persistence.PageSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Locale;
@@ -35,6 +35,9 @@ public class FinancialLoanController {
 
     @Resource
     private IFinancialLoanService financialLoanService;
+
+    @Resource
+    private MessageSource messageSource;
 
     /**
      * @title: 页面跳转
@@ -104,8 +107,13 @@ public class FinancialLoanController {
     }
 
     @RequestMapping(value = "editFinancialLoan", method = RequestMethod.POST)
-    public String editFinancialLoan(@ModelAttribute("financialLoan") FinancialLoan financialLoan) {
-        return null;
+    public String editFinancialLoan(@ModelAttribute("financialLoan") FinancialLoan financialLoan, BindingResult result, HttpServletRequest request, ModelMap modelMap, Locale locale) {
+        try {
+            financialLoanService.updateFinancialLoan(financialLoan);
+        } catch (Exception e) {
+            modelMap.put("errerMsg",e.getMessage());
+        }
+        return "redirect:../common/success.do?reurl=loan/loanApprovalList.do";
     }
 
     @ResponseBody

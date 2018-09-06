@@ -5,6 +5,7 @@ import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.FinancialLoan_;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.service.IFinancialLoanService;
+import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,12 +60,19 @@ public class FinancialLoanService implements IFinancialLoanService {
     public Map<String, Object> undateState(Integer loanId ,LoanState state) throws Exception{
         Map<String,Object> map = new HashMap<>();
         FinancialLoan financialLoan = financialLoanDao.findOne(loanId);
+        //TODO 还需把数据同步到负债记录表里
         if(financialLoan.getState().ordinal() == state.ordinal()){
-            financialLoanDao.updateFinancialLoanStateById(LoanState.APPLY_TRANSFERRED,loanId);
+            financialLoanDao.updateFinancialLoanStateById(LoanState.APPLY_TRANSFERRED,loanId,new Date());
             map.put("result","success");
             return map;
         }
-
         return null;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateFinancialLoan(FinancialLoan financialLoan)throws Exception {
+        financialLoanDao.updateFinancialLoan(financialLoan.getState(),financialLoan.getLoanId(),new Date(),financialLoan.getAuditRemark());
+
     }
 }

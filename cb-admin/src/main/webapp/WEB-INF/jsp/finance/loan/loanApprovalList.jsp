@@ -10,10 +10,10 @@
         function getStateName(data){
             switch (data){
                 case "WAIT_LOAN":{
-                    return "申请";
+                    return "审批中";
                 }
                 case "APPLY_SUCCESS":{
-                    return "已审核";
+                    return "转账确认中";
                 }
                 case "APPLY_FAILURE":{
                     return "已拒绝";
@@ -27,25 +27,16 @@
             }
             return state;
         }
-        function getTypeName(data){
-            switch (data){
-                case "NON_REPAYMENT":{
-                    return "未还款";
-                }
-                case "OVERDUE":{
-                    return "已逾期";
-                }
-                case "APPLY_REIMBURSEMENT":{
-                    return "已还款";
-                }
-            }
-            return state;
-        }
 
         function confirm(){
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
-                window.location.href = "toExamine.do?loanId=" + dataItem.loanId;
+                if(dataItem.state == "WAIT_LOAN"){
+                    window.location.href = "toExamine.do?loanId=" + dataItem.loanId;
+                }else{
+                    bootbox.alert("该状态已审核!");
+                    return false;
+                }
             }
         }
 
@@ -63,7 +54,6 @@
                         loanId: dataItem.loanId,
                         state : state
                     }, function (data) {
-                        debugger;
                         if (data.result=="success") {
                             bootbox.alert("成功");
                             $("#grid").data("kendoGrid").dataSource.read();
@@ -174,8 +164,8 @@
                             <div class="toolbar-field">
                                 <select data-filter="state" data-operator="eq" class="form-control  grid-filter">
                                     <option value="">全部</option>
-                                    <option value="WAIT_LOAN">申请</option>
-                                    <option value="APPLY_SUCCESS">已审核</option>
+                                    <option value="WAIT_LOAN">审批中</option>
+                                    <option value="APPLY_SUCCESS">转账确认中</option>
                                     <option value="APPLY_FAILURE">已拒绝</option>
                                     <option value="CANCELED">已取消</option>
                                     <option value="APPLY_TRANSFERRED">已转账</option>
@@ -241,7 +231,6 @@
                             <kendo:grid-column title="利息" filterable="false" field="interest" width="100px" />
                             <kendo:grid-column title="最后还款日" filterable="false" field="finalRepaymentTime" width="100px" />
                             <kendo:grid-column title="借款状态" filterable="false" field="state" width="100px" template="#=getStateName(state)#"/>
-                            <kendo:grid-column title="还款状态" filterable="false" field="repaymentState" width="100px" template="#=getTypeName(repaymentState)#"/>
                             <kendo:grid-column title="借款时间" filterable="false" field="createTime" width="100px" />
                             <kendo:grid-column title="借款账户" filterable="false" field="bank.bankCardNumber" width="100px" />
                         </kendo:grid-columns>
