@@ -207,6 +207,9 @@
       },
       {
         "name": "还款管理", "code": "199", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../financialLoanRepayment/financialLoanRepaymentLogs.do"
+      },
+      {
+        "name": "负债管理", "code": "200", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../financialLoanRepayment/financialLoanRepaymentLogs.do"
       }
 
     ]
