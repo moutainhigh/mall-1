@@ -1,5 +1,5 @@
 server:
-  context-path: /mb-api
+  context-path: /yx-api
   port: 8161
 
 
