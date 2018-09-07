@@ -18,6 +18,13 @@ public interface BrandService extends BaseService {
 	 * @return
 	 */
 	public List<Brand> getBrandList(Query q);
+
+	/**
+	 * 根据查询条件，查询并返回Brand的列表
+	 * @param q 查询条件
+	 * @return
+	 */
+	public List<Brand> getBrandList2(Query q);
 	
 	/**
 	 * 根据查询条件，分页查询并返回Brand的分页结果

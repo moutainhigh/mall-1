@@ -54,6 +54,33 @@ public class BrandResource extends BaseResource {
             return new ResponseResult(Result.FAILURE);
         }
     }
+
+    @ApiOperation(value = "查询所有品牌 V1")
+    @ApiImplicitParams({
+    })
+    @GetMapping(value = "brand/list2")
+    @ApiVersion(1)
+    @IgnoreAuthentication
+    public ResponseResult<List<BrandVO>> getBrand2() {
+        try {
+            Brand b=new Brand();
+//            b.setBrandName("奔驰");
+            Query q=new Query();
+            q.setData(b);
+            List<Brand> list = brandService.getBrandList(q);
+            List<BrandVO> listVO = list.stream()
+                    .map(brand -> {
+                        BrandVO brandVO = new BrandVO();
+                        BeanUtils.copyProperties(brand,brandVO);
+                        return brandVO;
+                    }).collect(Collectors.toList());
+            return new ResponseResult(listVO);
+        } catch (Exception e) {
+            logger.info("brand failed", e);
+            return new ResponseResult(Result.FAILURE);
+        }
+    }
+
     @ApiOperation(value = "查询热门品牌 V1")
     @ApiImplicitParams({
     })
