@@ -11,12 +11,12 @@ import java.util.List;
 public interface FinancialFreezingBillMapper {
     @Delete({
         "delete from financial_freezing_bill",
-        "where FINACIAL_FREEZING_ID = #{financialFreezingId,jdbcType=INTEGER}"
+        "where FREEZING_BILL_ID = #{financialFreezingId,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer financialFreezingId);
 
     @Insert({
-        "insert into financial_freezing_bill (FINACIAL_FREEZING_ID, CUSTOMER_ID, ",
+        "insert into financial_freezing_bill (FREEZING_BILL_ID, CUSTOMER_ID, ",
         "TYPE, TRANSACTION_TYPE, ",
         "TRANSACTION_DESC, AMOUNT, ",
         "CREATE_TIME)",
@@ -29,13 +29,13 @@ public interface FinancialFreezingBillMapper {
 
     @Select({
         "select",
-        "FINACIAL_FREEZING_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT, ",
+        "FREEZING_BILL_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT, ",
         "CREATE_TIME",
         "from financial_freezing_bill",
         "where FINACIAL_FREEZING_ID = #{financialFreezingId,jdbcType=INTEGER}"
     })
     @Results({
-        @Result(column="FINACIAL_FREEZING_ID", property="financialFreezingId", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="FREEZING_BILL_ID", property="freezingBillId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
         @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
@@ -47,12 +47,12 @@ public interface FinancialFreezingBillMapper {
 
     @Select({
         "select",
-        "FINACIAL_FREEZING_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT, ",
+        "FREEZING_BILL_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT, ",
         "CREATE_TIME",
         "from financial_freezing_bill where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
     @Results({
-        @Result(column="FINACIAL_FREEZING_ID", property="financialFreezingId", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="FREEZING_BILL_ID", property="freezingBillId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
         @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
@@ -70,12 +70,12 @@ public interface FinancialFreezingBillMapper {
           "TRANSACTION_DESC = #{transactionDesc,jdbcType=VARCHAR},",
           "AMOUNT = #{amount,jdbcType=DECIMAL},",
           "CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}",
-        "where FINACIAL_FREEZING_ID = #{financialFreezingId,jdbcType=INTEGER}"
+        "where FREEZING_BILL_ID = #{freezingBillId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(FinancialFreezingBill record);
 
     @Select("<script>"
-            +"select FINACIAL_FREEZING_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT,CREATE_TIME"
+            +"select FREEZING_BILL_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT,CREATE_TIME"
             +" from financial_freezing_bill where 1=1"
             + "<if test='data.customerId!=null'>"
             + "AND CUSTOMER_ID = #{data.customerId} "
@@ -84,7 +84,7 @@ public interface FinancialFreezingBillMapper {
             + "LIMIT #{rowIndex},#{pageSize}"
             + "</script>")
     @Results({
-            @Result(column="FINACIAL_FREEZING_ID", property="financialFreezingId", jdbcType=JdbcType.INTEGER, id=true),
+            @Result(column="FREEZING_BILL_ID", property="freezingBillId", jdbcType=JdbcType.INTEGER, id=true),
             @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
             @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
             @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
@@ -95,7 +95,7 @@ public interface FinancialFreezingBillMapper {
     List<FinancialFreezingBill> pageList(Query q);
 
     @Select("<script>"
-            +"select count(FINACIAL_FREEZING_ID) from financial_freezing_bill where 1=1"
+            +"select count(FREEZING_BILL_ID) from financial_freezing_bill where 1=1"
             + "<if test='data.customerId!=null'>"
             + "AND CUSTOMER_ID = #{data.customerId} "
             + "</if>"
