@@ -13,4 +13,5 @@ include 'cb-search'
 include 'cb-rb-api'
 include 'cb-wallet-api'
 include 'cb-generated'
+include 'cb-yx-api'
 
