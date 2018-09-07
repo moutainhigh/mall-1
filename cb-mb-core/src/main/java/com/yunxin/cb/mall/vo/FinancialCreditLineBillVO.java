@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @ApiModel(value = "用户信用额度交易VO", description = "用户信用额度交易VO FinancialFreezingBillVO")
-public class FinacialCreditLineBillVO implements java.io.Serializable{
+public class FinancialCreditLineBillVO implements java.io.Serializable{
     private static final long serialVersionUID = -2695946271501714063L;
     /**  */
-    private Integer financialFreezingId;
+    private Integer freezingBillId;
 
     @ApiModelProperty(value = "客户ID", name = "customerId", example = "1")
     private Integer customerId;
@@ -32,12 +32,12 @@ public class FinacialCreditLineBillVO implements java.io.Serializable{
     @ApiModelProperty(value = "交易时间 ", name = "createTime", example = "2018-08-08")
     private Date createTime;
 
-    public Integer getFinancialFreezingId() {
-        return financialFreezingId;
+    public Integer getFreezingBillId() {
+        return freezingBillId;
     }
 
-    public void setFinancialFreezingId(Integer financialFreezingId) {
-        this.financialFreezingId = financialFreezingId;
+    public void setFreezingBillId(Integer freezingBillId) {
+        this.freezingBillId = freezingBillId;
     }
 
     public Integer getCustomerId() {

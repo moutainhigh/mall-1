@@ -22,7 +22,7 @@ public class FinancialLoanBill {
     private CapitalType type;
 
     /**
-     * 交易类型：1.保险返利 2.保险购买
+     * 交易类型
      */
     private TransactionType transactionType;
 
