@@ -8,7 +8,7 @@ import java.io.Serializable;
 /** 
  * 已开通城市表Vo
  */
-public class DemoVo implements Serializable {
+public class DemoVO implements Serializable {
 	
 	private static final long serialVersionUID = 1l;
 	
