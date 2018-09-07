@@ -78,8 +78,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 //                Customer customer =customerService.getCustomerById(customerId);
 //                if (customer == null){
 //                    PrintWriter writer = response.getWriter();
-//                    ObjectMapper mapper = new ObjectMapper();
-//                    String mapJakcson = mapper.writeValueAsString(new ResponseResult(Result.NOT_LOGIN, "token信息错误,token用户信息与系统用户信息不对应"));
+//                    ObjectMapper dao = new ObjectMapper();
+//                    String mapJakcson = dao.writeValueAsString(new ResponseResult(Result.NOT_LOGIN, "token信息错误,token用户信息与系统用户信息不对应"));
 //                    writer.print(mapJakcson);
 //                    return false;
 //                }
