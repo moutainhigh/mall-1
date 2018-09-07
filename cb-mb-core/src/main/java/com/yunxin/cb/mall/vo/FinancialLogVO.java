@@ -1,14 +1,12 @@
 package com.yunxin.cb.mall.vo;
 
-import com.yunxin.cb.mall.entity.meta.FiaciaLogPayType;
 import com.yunxin.cb.mall.entity.meta.FiaciaLogTransType;
 import com.yunxin.cb.mall.entity.meta.OperationType;
-import com.yunxin.cb.mall.entity.meta.PayState;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @title: 账单VO
@@ -41,7 +39,7 @@ public class FinancialLogVO implements java.io.Serializable{
 
     /** 交易时间 */
     @ApiModelProperty(value="交易时间",name="createTime",example="2018-08-09 17:52:50")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     public Integer getLogId() {
         return logId;
@@ -75,11 +73,11 @@ public class FinancialLogVO implements java.io.Serializable{
         this.transactionType = transactionType;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

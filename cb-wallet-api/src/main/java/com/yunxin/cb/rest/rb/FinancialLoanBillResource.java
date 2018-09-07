@@ -8,7 +8,6 @@ import com.yunxin.cb.mall.service.FinancialLoanBillService;
 import com.yunxin.cb.mall.vo.FinancialLoanBillVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;
-import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
@@ -22,9 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-@Api(description = "负债交易记录")
+@Api(description = "我的负债-负债交易")
 @RestController
-@RequestMapping(value = "/{version}/rb/liabilities")
+@RequestMapping(value = "/{version}/rb/loanBill")
 public class FinancialLoanBillResource extends BaseResource {
 
     @Resource
@@ -39,7 +38,7 @@ public class FinancialLoanBillResource extends BaseResource {
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int")
     })
     @ApiVersion(1)
-    @GetMapping(value = "get")
+    @GetMapping(value = "page")
     public ResponseResult<PageFinder<FinancialLoanBillVO>> get(@RequestParam Integer pageNo, @RequestParam Integer pageSize) {
         try {
             Customer customer = customerService.getCustomerById(getCustomerId());
@@ -55,18 +54,4 @@ public class FinancialLoanBillResource extends BaseResource {
         return new ResponseResult<>(Result.FAILURE);
     }
 
-//    @ApiOperation(value = "添加负债交易信息")
-//    @ApiImplicitParams({
-//    })
-//    @ApiVersion(1)
-//    @GetMapping(value = "add")
-//    public ResponseResult<FinancialLoanBillVO> add(@RequestBody FinancialLoanBillVO vo){
-//        try {
-//            financialLoanBillService.addFinacialLiabilitiesBill(vo);
-//            return new ResponseResult(vo);
-//        } catch (Exception e) {
-//            log.info("get failed", e);
-//        }
-//        return new ResponseResult(Result.FAILURE);
-//    }
 }

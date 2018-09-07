@@ -9,9 +9,11 @@ import java.util.List;
 
 public interface FinancialFreezingBillService {
 
-    FinancialFreezingBillVO addFinancialFreezingBill(FinancialFreezingBillVO vo);
+    /**
+     * @Author chenpeng
+     * @Description 分页获取 冻结金额交易明细
+     * @Date 2018/9/7 17:42 
+     **/
+    PageFinder<FinancialFreezingBill> page(Integer customerId, Integer pageNo, Integer pageSize);
 
-    List<FinancialFreezingBillVO> getFinancialFreezingBillByCustomerId(int customerId);
-
-    PageFinder<FinancialFreezingBill> page(Query q);
 }

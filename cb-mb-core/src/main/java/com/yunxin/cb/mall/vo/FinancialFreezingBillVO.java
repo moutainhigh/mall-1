@@ -9,8 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.BeansException;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @ApiModel(value = "用户冻结金额交易VO", description = "用户冻结金额交易VO FinancialFreezingBillVO")
@@ -35,7 +35,7 @@ public class FinancialFreezingBillVO implements java.io.Serializable{
     private BigDecimal amount;
 
     @ApiModelProperty(value = "交易时间 ", name = "createTime", example = "2018-08-08")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     public Integer getFreezingBillId() {
         return freezingBillId;
@@ -85,11 +85,11 @@ public class FinancialFreezingBillVO implements java.io.Serializable{
         this.amount = amount;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

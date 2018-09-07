@@ -4,7 +4,7 @@ import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class FinancialFreezingBill {
     /**  */
@@ -26,7 +26,7 @@ public class FinancialFreezingBill {
     private BigDecimal amount;
 
     /** 交易时间 */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     public Integer getFreezingBillId() {
         return freezingBillId;
@@ -76,11 +76,11 @@ public class FinancialFreezingBill {
         this.amount = amount;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 }

@@ -1,7 +1,7 @@
 package com.yunxin.cb.mall.mapper;
 
+import com.github.pagehelper.Page;
 import com.yunxin.cb.mall.entity.FinancialFreezingBill;
-import com.yunxin.cb.util.page.Query;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
@@ -16,11 +16,11 @@ public interface FinancialFreezingBillMapper {
     int deleteByPrimaryKey(Integer financialFreezingId);
 
     @Insert({
-        "insert into financial_freezing_bill (FREEZING_BILL_ID, CUSTOMER_ID, ",
+        "insert into financial_freezing_bill (CUSTOMER_ID, ",
         "TYPE, TRANSACTION_TYPE, ",
         "TRANSACTION_DESC, AMOUNT, ",
         "CREATE_TIME)",
-        "values (#{financialFreezingId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, ",
+        "values {#{customerId,jdbcType=INTEGER}, ",
         "#{type,jdbcType=INTEGER}, #{transactionType,jdbcType=INTEGER}, ",
         "#{transactionDesc,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, ",
         "#{createTime,jdbcType=TIMESTAMP})"
@@ -32,9 +32,9 @@ public interface FinancialFreezingBillMapper {
         "FREEZING_BILL_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT, ",
         "CREATE_TIME",
         "from financial_freezing_bill",
-        "where FINACIAL_FREEZING_ID = #{financialFreezingId,jdbcType=INTEGER}"
+        "where FREEZING_BILL_ID = #{financialFreezingId,jdbcType=INTEGER}"
     })
-    @Results({
+    @Results(id = "freezingBill", value = {
         @Result(column="FREEZING_BILL_ID", property="freezingBillId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
         @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
@@ -51,15 +51,7 @@ public interface FinancialFreezingBillMapper {
         "CREATE_TIME",
         "from financial_freezing_bill where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}"
     })
-    @Results({
-        @Result(column="FREEZING_BILL_ID", property="freezingBillId", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
-        @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
-        @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
-        @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR),
-        @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
-        @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
-    })
+    @ResultMap(value = "freezingBill")
     List<FinancialFreezingBill> selectByCustomerId(int customerId);
 
     @Update({
@@ -74,31 +66,17 @@ public interface FinancialFreezingBillMapper {
     })
     int updateByPrimaryKey(FinancialFreezingBill record);
 
-    @Select("<script>"
-            +"select FREEZING_BILL_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT,CREATE_TIME"
-            +" from financial_freezing_bill where 1=1"
-            + "<if test='data.customerId!=null'>"
-            + "AND CUSTOMER_ID = #{data.customerId} "
-            + "</if>"
-            + "ORDER BY CREATE_TIME DESC "
-            + "LIMIT #{rowIndex},#{pageSize}"
-            + "</script>")
-    @Results({
-            @Result(column="FREEZING_BILL_ID", property="freezingBillId", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="CUSTOMER_ID", property="customerId", jdbcType=JdbcType.INTEGER),
-            @Result(column="TYPE", property="type", jdbcType=JdbcType.INTEGER),
-            @Result(column="TRANSACTION_TYPE", property="transactionType", jdbcType=JdbcType.INTEGER),
-            @Result(column="TRANSACTION_DESC", property="transactionDesc", jdbcType=JdbcType.VARCHAR),
-            @Result(column="AMOUNT", property="amount", jdbcType=JdbcType.DECIMAL),
-            @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP)
+    @Select({
+            "select",
+            "FREEZING_BILL_ID, CUSTOMER_ID, TYPE, TRANSACTION_TYPE, TRANSACTION_DESC, AMOUNT, ",
+            "CREATE_TIME",
+            "from financial_freezing_bill ",
+            "where",
+            "CUSTOMER_ID = #{customerId,jdbcType=INTEGER}",
+            "ORDER BY",
+            "CREATE_TIME DESC"
     })
-    List<FinancialFreezingBill> pageList(Query q);
+    @ResultMap(value = "freezingBill")
+    Page<FinancialFreezingBill> pageListByCustomer(@Param("customerId") Integer customerId);
 
-    @Select("<script>"
-            +"select count(FREEZING_BILL_ID) from financial_freezing_bill where 1=1"
-            + "<if test='data.customerId!=null'>"
-            + "AND CUSTOMER_ID = #{data.customerId} "
-            + "</if>"
-            + "</script>")
-    long count(Query q);
 }

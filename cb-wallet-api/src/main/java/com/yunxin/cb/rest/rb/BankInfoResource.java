@@ -30,7 +30,7 @@ import java.util.List;
  * @auther: eleven
  * @date: 2018/8/7 17:08
  */
-@Api(description = "银行卡接口")
+@Api(description = "银行卡")
 @RestController
 @RequestMapping(value = "/{version}/rb/bankinfo")
 public class BankInfoResource extends BaseResource {

@@ -22,7 +22,7 @@ import javax.annotation.Resource;
  * @auther: eleven
  * @date: 2018/8/9 17:09
  */
-@Api(description = "账单接口")
+@Api(description = "我的账单")
 @RestController
 @RequestMapping(value = "/{version}/rb/financialLog")
 public class FinancialLogResource extends BaseResource {
@@ -30,17 +30,18 @@ public class FinancialLogResource extends BaseResource {
     @Resource
     private FinancialLogService financialLogService;
 
-    @ApiOperation(value = "获取用户账单")
+    @ApiOperation(value = "获取用户账单(年月)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "post", dataType = "int"),
             @ApiImplicitParam(name = "yearMonth", value = "年月", required = true, paramType = "post", dataType = "string")})
-    @PostMapping(value = "getCustomerFinancialLog")
+    @GetMapping(value = "getCustomerFinancialLog")
     @ApiVersion(1)
-    public ResponseResult<FinancialLogDataVO> getCustomerFinancialLog(@RequestParam(value = "pageNo") int pageNo, @RequestParam(value = "pageSize") int pageSize,
-                                                                   @RequestParam(value = "yearMonth") String yearMonth){
-        Query q = new Query(pageNo, pageSize);
-        FinancialLogRequestVO vo=new FinancialLogRequestVO();
+    public ResponseResult<FinancialLogDataVO> getCustomerFinancialLog(
+            @RequestParam Integer pageNo, @RequestParam Integer pageSize, @RequestParam String yearMonth) {
+
+        Query q = new Query(pageNo.intValue(), pageSize.intValue());
+        FinancialLogRequestVO vo = new FinancialLogRequestVO();
         vo.setCustomerId(getCustomerId());
         vo.setYearMonth(yearMonth);
         q.setData(vo);
@@ -52,7 +53,7 @@ public class FinancialLogResource extends BaseResource {
             @ApiImplicitParam(name = "logId", value = "获取用户账单详情", required = true, paramType = "path", dataType = "int")})
     @GetMapping(value = "getCustomerFinancialLogDetail/{logId}")
     @ApiVersion(1)
-    public ResponseResult<FinancialLogDetailVO> getCustomerFinancialLogDetail(@PathVariable(value = "logId") int logId){
+    public ResponseResult<FinancialLogDetailVO> getCustomerFinancialLogDetail(@PathVariable Integer logId){
         FinancialLogDetailVO financialLogDetailVO = financialLogService.getCustomerFinancialLogDetail(logId,getCustomerId());
         return new ResponseResult(financialLogDetailVO);
     }

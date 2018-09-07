@@ -9,7 +9,6 @@ import com.yunxin.cb.mall.restful.meta.Result;
 import com.yunxin.cb.mall.service.*;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.rest.BaseResource;
-import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.vo.AddFinancialLoanVO;
 import io.swagger.annotations.Api;
