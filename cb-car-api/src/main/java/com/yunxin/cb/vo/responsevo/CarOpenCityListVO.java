@@ -12,7 +12,7 @@ import java.util.List;
  * @Date: 2018/9/7 15:02
  * @Description:
  */
-@ApiModel(value="开通城市VO",description="开通城市List_VO对象(热门城市和城市列表) CarOpenCityListVO")
+@ApiModel(value="开通城市集合VO",description="开通城市List_VO对象(热门城市[cityList]和城市列表[hotCityList]) CarOpenCityListVO")
 public class CarOpenCityListVO implements Serializable {
 
     //城市集合
