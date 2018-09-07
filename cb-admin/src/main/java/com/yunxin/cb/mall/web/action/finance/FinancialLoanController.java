@@ -11,11 +11,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Locale;
@@ -35,9 +33,6 @@ public class FinancialLoanController {
 
     @Resource
     private IFinancialLoanService financialLoanService;
-
-    @Resource
-    private MessageSource messageSource;
 
     /**
      * @title: 页面跳转

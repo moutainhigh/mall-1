@@ -9,7 +9,7 @@ public enum TransactionType {
     //负债类型
     MANUAL_REPAYMENT("手动还款"),INSURANCE_REPAYMENT("保险返利自动还款"),
     PRODUCT_RB_REPAYMENT("商品报帐自动还款"),LOAN("借款"),
-    INTEREST("借款利息");
+    INTEREST("借款利息"),CAR_REPAYMENT("汽车返利自动还款");
 
 
 

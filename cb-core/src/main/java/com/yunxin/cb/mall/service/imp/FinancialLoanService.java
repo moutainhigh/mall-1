@@ -5,7 +5,6 @@ import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.FinancialLoan_;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.service.IFinancialLoanService;
-import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.springframework.data.domain.Page;

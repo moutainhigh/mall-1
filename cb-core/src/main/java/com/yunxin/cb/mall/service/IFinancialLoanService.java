@@ -12,7 +12,7 @@ public interface IFinancialLoanService {
     /**
      * @title: 分页查询贷款记录
      * @param: [serviceRuleQuery]
-     * @auther: eleven
+     * @auther: pengcong
      * @date: 2018/8/10 14:46
      */
     public Page<FinancialLoan> pageServiceFinancialLoan(PageSpecification<FinancialLoan> pageSpecification,int state);

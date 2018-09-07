@@ -40,9 +40,6 @@ public class FinancialWallet implements Serializable {
     /** 信用额度 */
     private BigDecimal creditAmount;
 
-    /** 保险额度 */
-    private BigDecimal insuranceAmount;
-
     /** 冻结金额，例如提现未到账，资金划拨未审核等 */
     private BigDecimal freezingAmount;
 
@@ -60,7 +57,6 @@ public class FinancialWallet implements Serializable {
         this.debtCar=new BigDecimal(0);
         this.debtCredit=new BigDecimal(0);
         this.creditAmount=new BigDecimal(0);
-        this.insuranceAmount=new BigDecimal(0);
         this.freezingAmount=new BigDecimal(0);
         this.version=1;
     }
@@ -118,16 +114,6 @@ public class FinancialWallet implements Serializable {
     }
 
     @Column(nullable = false, precision = 12, scale = 2)
-    public BigDecimal getInsuranceAmount() {
-        return insuranceAmount;
-    }
-
-    public void setInsuranceAmount(BigDecimal insuranceAmount) {
-        this.insuranceAmount = insuranceAmount;
-    }
-
-
-    @Column(nullable = false, precision = 12, scale = 2)
     public Integer getVersion() {
         return version;
     }
@@ -179,7 +165,6 @@ public class FinancialWallet implements Serializable {
                 ", debtCar=" + debtCar +
                 ", debtCredit=" + debtCredit +
                 ", creditAmount=" + creditAmount +
-                ", insuranceAmount=" + insuranceAmount +
                 ", freezingAmount=" + freezingAmount +
                 ", version=" + version +
                 '}';
