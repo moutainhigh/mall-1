@@ -16,54 +16,78 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class FinancialWallet implements Serializable {
     private static final long serialVersionUID = -4076546313843225350L;
 
-    /**  */
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(unique = true, nullable = false)
     private Integer walletId;
 
-    /**  */
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    /** 累计贷款次数 */
-    private Integer frequency;
-
-    /** 累计借款利息 */
-    private BigDecimal loanInterest;
-
-    /** 累计借款金额 */
-    private BigDecimal sumAmount;
-
-    /** 汽车贷款 */
-    private BigDecimal debtCar;
-
-    /** 信用贷 */
-    private BigDecimal debtCredit;
-
-    /** 信用额度 */
-    private BigDecimal creditAmount;
-
-    /** 冻结金额，例如提现未到账，资金划拨未审核等 */
+    /**
+     * 冻结金额
+     */
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal freezingAmount;
 
-    /** 版本号 */
+    /**
+     * 信用额度
+     */
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal creditAmount;
+
+    /**
+     * 汽车贷款
+     */
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal debtCar;
+
+    /**
+     * 信用贷款
+     */
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal debtCredit;
+
+    /**
+     * 累计贷款次数
+     */
+    private Integer frequency;
+
+    /**
+     * 累计借款利息
+     */
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal loanInterest;
+
+    /**
+     * 累计借款金额
+     */
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal sumAmount;
+
+    /**
+     * 版本号
+     */
     private Integer version;
 
     public FinancialWallet() {
     }
 
-    /** 初始化*/
+    /**
+     * 初始化
+     */
     public FinancialWallet(Customer customer) {
         this.customer = customer;
-        this.loanInterest=new BigDecimal(0);
-        this.sumAmount=new BigDecimal(0);
-        this.debtCar=new BigDecimal(0);
-        this.debtCredit=new BigDecimal(0);
-        this.creditAmount=new BigDecimal(0);
-        this.freezingAmount=new BigDecimal(0);
-        this.version=1;
+        this.loanInterest = new BigDecimal(0);
+        this.sumAmount = new BigDecimal(0);
+        this.debtCar = new BigDecimal(0);
+        this.debtCredit = new BigDecimal(0);
+        this.creditAmount = new BigDecimal(0);
+        this.freezingAmount = new BigDecimal(0);
+        this.version = 1;
     }
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
     public Integer getWalletId() {
         return walletId;
     }
@@ -72,39 +96,14 @@ public class FinancialWallet implements Serializable {
         this.walletId = walletId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "customer_id", nullable = false, insertable = true, updatable = true)
-    })
     public Customer getCustomer() {
         return customer;
     }
 
-
-
-    @Column(nullable = false, precision = 12, scale = 2)
-    public BigDecimal getDebtCredit() {
-        return debtCredit;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public void setDebtCredit(BigDecimal debtCredit) {
-        this.debtCredit = debtCredit;
-    }
-
-    @Column(nullable = false, precision = 12, scale = 2)
-    public BigDecimal getCreditAmount() {
-        return creditAmount;
-    }
-
-    public void setCreditAmount(BigDecimal creditAmount) {
-        this.creditAmount = creditAmount;
-    }
-
-    @Column(nullable = false, precision = 12, scale = 2)
     public BigDecimal getFreezingAmount() {
         return freezingAmount;
     }
@@ -113,15 +112,30 @@ public class FinancialWallet implements Serializable {
         this.freezingAmount = freezingAmount;
     }
 
-    @Column(nullable = false, precision = 12, scale = 2)
-    public Integer getVersion() {
-        return version;
+    public BigDecimal getCreditAmount() {
+        return creditAmount;
     }
 
-    public void setVersion(Integer version) {
-        this.version = version;
+    public void setCreditAmount(BigDecimal creditAmount) {
+        this.creditAmount = creditAmount;
     }
-    @Column(nullable = false, precision = 12, scale = 2)
+
+    public BigDecimal getDebtCar() {
+        return debtCar;
+    }
+
+    public void setDebtCar(BigDecimal debtCar) {
+        this.debtCar = debtCar;
+    }
+
+    public BigDecimal getDebtCredit() {
+        return debtCredit;
+    }
+
+    public void setDebtCredit(BigDecimal debtCredit) {
+        this.debtCredit = debtCredit;
+    }
+
     public Integer getFrequency() {
         return frequency;
     }
@@ -129,7 +143,7 @@ public class FinancialWallet implements Serializable {
     public void setFrequency(Integer frequency) {
         this.frequency = frequency;
     }
-    @Column(nullable = false, precision = 12, scale = 2)
+
     public BigDecimal getLoanInterest() {
         return loanInterest;
     }
@@ -137,7 +151,7 @@ public class FinancialWallet implements Serializable {
     public void setLoanInterest(BigDecimal loanInterest) {
         this.loanInterest = loanInterest;
     }
-    @Column(nullable = false, precision = 12, scale = 2)
+
     public BigDecimal getSumAmount() {
         return sumAmount;
     }
@@ -145,13 +159,13 @@ public class FinancialWallet implements Serializable {
     public void setSumAmount(BigDecimal sumAmount) {
         this.sumAmount = sumAmount;
     }
-    @Column(nullable = false, precision = 12, scale = 2)
-    public BigDecimal getDebtCar() {
-        return debtCar;
+
+    public Integer getVersion() {
+        return version;
     }
 
-    public void setDebtCar(BigDecimal debtCar) {
-        this.debtCar = debtCar;
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Override

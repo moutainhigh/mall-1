@@ -1,7 +1,9 @@
 package com.yunxin.cb.mall.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
+import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -15,51 +17,51 @@ import static javax.persistence.GenerationType.IDENTITY;
 @DynamicInsert
 @DynamicUpdate
 @Table
-public class FinacialCreditLineBill {
-    /**  */
-    private Integer finacialCreditLineId;
+public class FinancialCreditLineBill {
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    private Integer creditLineId;
 
     /** 客户*/
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    /** 资金类型：1.支出，2.收入 */
+    /** 资金类型 */
     private CapitalType type;
 
-    /** 交易类型：1.保险返利 2.保险购买 */
+    /** 交易类型 */
     private TransactionType transactionType;
 
     /** 交易描述 */
     private String transactionDesc;
 
-    /** 交易金 */
+    /** 交易额度 */
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
 
     /** 交易时间 */
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    @Column(insertable = false, updatable = false)
     private Date createTime;
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
-    public Integer getFinacialCreditLineId() {
-        return finacialCreditLineId;
+    public Integer getCreditLineId() {
+        return creditLineId;
     }
 
-    public void setFinacialCreditLineId(Integer finacialCreditLineId) {
-        this.finacialCreditLineId = finacialCreditLineId;
+    public void setCreditLineId(Integer creditLineId) {
+        this.creditLineId = creditLineId;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "customer_id", nullable = false, insertable = true, updatable = true)
-     })
-    public Customer getCustomer() {
-        return customer;
-    }
     public CapitalType getType() {
         return type;
     }
@@ -68,8 +70,6 @@ public class FinacialCreditLineBill {
         this.type = type;
     }
 
-    @Column(length = 128, nullable = false, unique = true)
-    @Enumerated(value = EnumType.STRING)
     public TransactionType getTransactionType() {
         return transactionType;
     }
@@ -78,16 +78,14 @@ public class FinacialCreditLineBill {
         this.transactionType = transactionType;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 1024)
     public String getTransactionDesc() {
         return transactionDesc;
     }
 
     public void setTransactionDesc(String transactionDesc) {
-        this.transactionDesc = transactionDesc == null ? null : transactionDesc.trim();
+        this.transactionDesc = transactionDesc;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 1024)
     public BigDecimal getAmount() {
         return amount;
     }
@@ -96,7 +94,6 @@ public class FinacialCreditLineBill {
         this.amount = amount;
     }
 
-    @Column(unique = false, nullable = false, insertable = true, updatable = true, length = 1024)
     public Date getCreateTime() {
         return createTime;
     }

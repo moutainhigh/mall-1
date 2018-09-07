@@ -12,7 +12,7 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.CustomerType;
 import com.yunxin.cb.mall.entity.meta.PolicyType;
 import com.yunxin.cb.mall.service.ICustomerService;
-import com.yunxin.cb.mall.service.IFinaciaWalletService;
+import com.yunxin.cb.mall.service.IFinancialWalletService;
 import com.yunxin.cb.mall.vo.*;
 import com.yunxin.cb.redis.RedisService;
 import com.yunxin.cb.security.PBKDF2PasswordEncoder;
@@ -92,7 +92,7 @@ public class CustomerService implements ICustomerService {
     private InsuranceOrderLogDao insuranceOrderLogDao;
 
     @Resource
-    private IFinaciaWalletService iFinaciaWalletService;
+    private IFinancialWalletService iFinancialWalletService;
 
     @Resource
     private FavoriteDao favoriteDao;
@@ -912,15 +912,15 @@ public class CustomerService implements ICustomerService {
             if (listCustomer != null && listCustomer.size() > 0) {
                 for (Customer listCustome : listCustomer){
 //                    iCustomerWalletService.updateCustomerWallet(listCustome.getCustomerId(), ration, "推荐人以及所有上级增加5%的授信额度", BusinessType.GIVE_THE_THUMBS_UP, list.get(0).getPrice());
-                    FinacialWallet finacialWallet=iFinaciaWalletService.getFinacialWalletByCustomerId(listCustome.getCustomerId());
-                    if(finacialWallet==null)
-                        finacialWallet.setCustomer(listCustome);
+                    FinancialWallet financialWallet = iFinancialWalletService.getFinacialWalletByCustomerId(listCustome.getCustomerId());
+                    if(financialWallet ==null)
+                        financialWallet.setCustomer(listCustome);
                     else{
-                        BigDecimal creditAmount=rationPrice.add(finacialWallet.getCreditAmount());
-                        finacialWallet.setCreditAmount(creditAmount);
+                        BigDecimal creditAmount=rationPrice.add(financialWallet.getCreditAmount());
+                        financialWallet.setCreditAmount(creditAmount);
                     }
 
-                    iFinaciaWalletService.addFinaciaWallet(finacialWallet,1,rationPrice);
+                    iFinancialWalletService.addFinaciaWallet(financialWallet,1,rationPrice);
 
                 }
 

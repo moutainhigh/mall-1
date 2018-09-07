@@ -6,7 +6,7 @@ import com.yunxin.cb.mall.dao.ProductDao;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.Product;
 import com.yunxin.cb.mall.entity.meta.WithdrawType;
-import com.yunxin.cb.mall.service.IFinaciaWalletService;
+import com.yunxin.cb.mall.service.IFinancialWalletService;
 import com.yunxin.cb.rb.dao.FundsPoolDao;
 import com.yunxin.cb.rb.dao.ReimbursementDao;
 import com.yunxin.cb.rb.dao.ReimbursementOrderDao;
@@ -56,7 +56,7 @@ public class ReimbursementService implements IReimbursementService {
     private FundsPoolService fundsPoolService;
 
     @Resource
-    private IFinaciaWalletService iFinaciaWalletService;
+    private IFinancialWalletService iFinancialWalletService;
 
     @Override
     public Page<Reimbursement> pageReimbursement(PageSpecification<Reimbursement> query,int orderState) {
@@ -206,7 +206,7 @@ public class ReimbursementService implements IReimbursementService {
 
                         try{
                             //更新钱包
-                            ResponseResult responseResult=iFinaciaWalletService.processCustomerMoney(reimbursement.getCustomer().getCustomerId(),reimbursement.getOrderAmount(),WithdrawType.BZ,"");
+                            ResponseResult responseResult= iFinancialWalletService.processCustomerMoney(reimbursement.getCustomer().getCustomerId(),reimbursement.getOrderAmount(),WithdrawType.BZ,"");
                             Map<String,BigDecimal> map=(Map<String,BigDecimal>)responseResult.getData();
                             logger.info(map.toString());
                             if(map!=null){

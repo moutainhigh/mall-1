@@ -1,11 +1,8 @@
 package com.yunxin.cb.rest;
 
 import com.yunxin.cb.mall.entity.Customer;
-import com.yunxin.cb.mall.entity.FinacialWallet;
-import com.yunxin.cb.mall.service.ICustomerService;
-import com.yunxin.cb.mall.service.imp.FinacialWalletService;
-import com.yunxin.cb.system.service.IProfileService;
-import com.yunxin.cb.system.vo.ShareInfo;
+import com.yunxin.cb.mall.entity.FinancialWallet;
+import com.yunxin.cb.mall.service.imp.FinancialWalletService;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,8 +17,6 @@ import javax.annotation.Resource;
 
 import java.math.BigDecimal;
 
-import static com.yunxin.cb.meta.Result.SUCCESS;
-
 /**
 * @Description:    获取分享配置信息
 * @Author:         likang
@@ -33,16 +28,16 @@ import static com.yunxin.cb.meta.Result.SUCCESS;
 public class TestResource extends BaseResource {
     private static Logger logger = LoggerFactory.getLogger(TestResource.class);
     @Resource
-    FinacialWalletService F;
+    FinancialWalletService F;
 
     @ApiOperation(value = "获取分享配置信息")
     @ApiImplicitParams({
     })
     @GetMapping(value = "add")
-    public ResponseResult<FinacialWallet> getShareInfo() {
+    public ResponseResult<FinancialWallet> getShareInfo() {
         Customer c = new Customer();
         c.setCustomerId(305);
-        FinacialWallet fw=new FinacialWallet(c);
+        FinancialWallet fw=new FinancialWallet(c);
         fw.setWalletId(4);
         fw.setCreditAmount(new BigDecimal(100));
         fw=F.addFinaciaWallet(fw,0,new BigDecimal(100));
