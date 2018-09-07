@@ -10,15 +10,18 @@ public class FinancialLoanRepayment {
      **/
     public enum Type {
 
-        INSURANCE_REPAYMENT("保险返利自动还款"),
-        PRODUCT_RB_REPAYMENT("商品报帐自动还款"),
-        MANUAL_REPAYMENT("手动还款"),
-        CAR_REPAYMENT("汽车返利自动还款"),;
+        INSURANCE_REPAYMENT("保险返利自动还款","保险返利"),
+        PRODUCT_RB_REPAYMENT("商品报帐自动还款","商品报帐"),
+        MANUAL_REPAYMENT("手动还款","手动还款"),
+        CAR_REPAYMENT("汽车返利自动还款","汽车返利"),;
 
         private String name;
 
-        Type(String name) {
+        private String shortType;
+
+        Type(String name, String shortType) {
             this.name = name;
+            this.shortType = shortType;
         }
 
         public String getName() {
@@ -27,6 +30,14 @@ public class FinancialLoanRepayment {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public String getShortType() {
+            return shortType;
+        }
+
+        public void setShortType(String shortType) {
+            this.shortType = shortType;
         }
     }
 

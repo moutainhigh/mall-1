@@ -3,6 +3,7 @@ package com.yunxin.cb.rest.rb;
 
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.FinancialLoan;
+import com.yunxin.cb.mall.entity.FinancialLoanRepayment;
 import com.yunxin.cb.mall.service.CustomerService;
 import com.yunxin.cb.mall.service.FinancialLoanRepaymentService;
 import com.yunxin.cb.mall.service.FinancialLoanService;
@@ -26,7 +27,6 @@ import java.util.List;
 @Api(description = "还款信息接口")
 @RestController
 @RequestMapping(value = "/{version}/rb/repayment")
-@IgnoreAuthentication
 public class FinancialLoanRepaymentResource extends BaseResource {
 
     @Resource
@@ -57,7 +57,7 @@ public class FinancialLoanRepaymentResource extends BaseResource {
         }
     }
 
-    @ApiOperation(value = "还款")
+    @ApiOperation(value = "还款test")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "repayAmount", value = "还款金", required = true, paramType = "path", dataType = "string")
     })
@@ -66,6 +66,8 @@ public class FinancialLoanRepaymentResource extends BaseResource {
     public ResponseResult repayAmount(@RequestParam BigDecimal repayAmount) {
         try {
             financialLoanRepaymentService.repay(repayAmount, getCustomerId());
+            financialLoanRepaymentService.autoRepay(repayAmount, getCustomerId(),
+                    FinancialLoanRepayment.Type.INSURANCE_REPAYMENT,"BX88888888");
             return new ResponseResult<>(Result.SUCCESS);
         } catch (Exception e) {
             logger.info("repayAmount failed", e);
