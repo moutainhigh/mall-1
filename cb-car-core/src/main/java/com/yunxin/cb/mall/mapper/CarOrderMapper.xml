@@ -4,54 +4,57 @@
 
 <resultMap type="CarOrder" id="CarOrder">
 	<id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
-	<result column="order_code" property="orderCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="customer_id" property="customerId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="customer_phone" property="customerPhone" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="buy_type" property="buyType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="car_name" property="carName" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="total_price" property="totalPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
-	<result column="earnest" property="earnest" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
-	<result column="payment_type" property="paymentType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="payment_time" property="paymentTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="confirm_time" property="confirmTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="discount_total" property="discountTotal" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
-	<result column="tail_money" property="tailMoney" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
-	<result column="tail_payment_type" property="tailPaymentType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="tail_payment_time" property="tailPaymentTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="order_state" property="orderState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="payment_state" property="paymentState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="car_model_id" property="carModelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="naked_car_price" property="nakedCarPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
-	<result column="car_agency_lift_id" property="carAgencyLiftId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="used_car_actual_price" property="usedCarActualPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
-	<result column="car_used_id" property="carUsedId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="car_agency_assess_id" property="carAgencyAssessId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="buyer_message" property="buyerMessage" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="payment_sequence" property="paymentSequence" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="finish_time" property="finishTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="order_code" property="orderCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="customer_id" property="customerId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="customer_phone" property="customerPhone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="buy_type" property="buyType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="car_name" property="carName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="total_num" property="totalNum" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="total_price" property="totalPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="earnest" property="earnest" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="payment_type" property="paymentType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="payment_time" property="paymentTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="confirm_time" property="confirmTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="discount_total" property="discountTotal" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="tail_money" property="tailMoney" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="tail_payment_type" property="tailPaymentType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="tail_payment_time" property="tailPaymentTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="order_state" property="orderState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="payment_state" property="paymentState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="car_model_id" property="carModelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="naked_car_price" property="nakedCarPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="car_agency_lift_id" property="carAgencyLiftId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="used_car_actual_price" property="usedCarActualPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="car_used_id" property="carUsedId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="car_agency_assess_id" property="carAgencyAssessId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="buyer_message" property="buyerMessage" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="payment_sequence" property="paymentSequence" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="finish_time" property="finishTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 </resultMap>
 
 
 <!-- 全部字段，一般用于明细查询 -->
 <sql id="AllColumnlist">
-id,order_code,customer_id,customer_phone,buy_type,car_name,total_price,
-earnest,payment_type,payment_time,confirm_time,discount_total,tail_money,
-tail_payment_type,tail_payment_time,order_state,payment_state,car_model_id,naked_car_price,
-car_agency_lift_id,used_car_actual_price,car_used_id,car_agency_assess_id,buyer_message,payment_sequence,
-finish_time,remark,is_delete,create_time,update_time
+id,order_code,customer_id,customer_phone,buy_type,car_name,total_num,
+total_price,earnest,payment_type,payment_time,confirm_time,discount_total,
+tail_money,tail_payment_type,tail_payment_time,order_state,payment_state,car_model_id,
+naked_car_price,car_agency_lift_id,used_car_actual_price,car_used_id,car_agency_assess_id,buyer_message,
+payment_sequence,finish_time,remark,is_delete,create_time,update_time
+
 </sql>
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
-id,order_code,customer_id,customer_phone,buy_type,car_name,total_price,
-earnest,payment_type,payment_time,confirm_time,discount_total,tail_money,
-tail_payment_type,tail_payment_time,order_state,payment_state,car_model_id,naked_car_price,
-car_agency_lift_id,used_car_actual_price,car_used_id,car_agency_assess_id,buyer_message,payment_sequence,
-finish_time,remark,is_delete,create_time,update_time
+id,order_code,customer_id,customer_phone,buy_type,car_name,total_num,
+total_price,earnest,payment_type,payment_time,confirm_time,discount_total,
+tail_money,tail_payment_type,tail_payment_time,order_state,payment_state,car_model_id,
+naked_car_price,car_agency_lift_id,used_car_actual_price,car_used_id,car_agency_assess_id,buyer_message,
+payment_sequence,finish_time,remark,is_delete,create_time,update_time
+
 </sql>
 
 <insert id="add" parameterType="CarOrder" useGeneratedKeys="true" keyProperty="id">
@@ -64,6 +67,7 @@ finish_time,remark,is_delete,create_time,update_time
 		customer_phone,
 		buy_type,
 		car_name,
+		total_num,
 		total_price,
 		earnest,
 		payment_type,
@@ -97,6 +101,7 @@ finish_time,remark,is_delete,create_time,update_time
 		#{customerPhone,jdbcType = VARCHAR},
 		#{buyType,jdbcType = INTEGER},
 		#{carName,jdbcType = VARCHAR},
+		#{totalNum,jdbcType = INTEGER},
 		#{totalPrice,jdbcType = DECIMAL},
 		#{earnest,jdbcType = DECIMAL},
 		#{paymentType,jdbcType = INTEGER},
@@ -129,90 +134,123 @@ finish_time,remark,is_delete,create_time,update_time
 	<set>
 		<if test="orderCode!=null and orderCode!=''">
 			order_code=#{orderCode,jdbcType = VARCHAR},
+
 		</if>
 		<if test="customerId!=null ">
 			customer_id=#{customerId,jdbcType = INTEGER},
+
 		</if>
 		<if test="customerPhone!=null and customerPhone!=''">
 			customer_phone=#{customerPhone,jdbcType = VARCHAR},
+
 		</if>
 		<if test="buyType!=null ">
 			buy_type=#{buyType,jdbcType = INTEGER},
+
 		</if>
 		<if test="carName!=null and carName!=''">
 			car_name=#{carName,jdbcType = VARCHAR},
+
+		</if>
+		<if test="totalNum!=null ">
+			total_num=#{totalNum,jdbcType = INTEGER},
+
 		</if>
 		<if test="totalPrice!=null ">
 			total_price=#{totalPrice,jdbcType = DECIMAL},
+
 		</if>
 		<if test="earnest!=null ">
 			earnest=#{earnest,jdbcType = DECIMAL},
+
 		</if>
 		<if test="paymentType!=null ">
 			payment_type=#{paymentType,jdbcType = INTEGER},
+
 		</if>
 		<if test="paymentTime!=null ">
 			payment_time=#{paymentTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="confirmTime!=null ">
 			confirm_time=#{confirmTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="discountTotal!=null ">
 			discount_total=#{discountTotal,jdbcType = DECIMAL},
+
 		</if>
 		<if test="tailMoney!=null ">
 			tail_money=#{tailMoney,jdbcType = DECIMAL},
+
 		</if>
 		<if test="tailPaymentType!=null ">
 			tail_payment_type=#{tailPaymentType,jdbcType = INTEGER},
+
 		</if>
 		<if test="tailPaymentTime!=null ">
 			tail_payment_time=#{tailPaymentTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="orderState!=null ">
 			order_state=#{orderState,jdbcType = INTEGER},
+
 		</if>
 		<if test="paymentState!=null ">
 			payment_state=#{paymentState,jdbcType = INTEGER},
+
 		</if>
 		<if test="carModelId!=null ">
 			car_model_id=#{carModelId,jdbcType = INTEGER},
+
 		</if>
 		<if test="nakedCarPrice!=null ">
 			naked_car_price=#{nakedCarPrice,jdbcType = DECIMAL},
+
 		</if>
 		<if test="carAgencyLiftId!=null ">
 			car_agency_lift_id=#{carAgencyLiftId,jdbcType = INTEGER},
+
 		</if>
 		<if test="usedCarActualPrice!=null ">
 			used_car_actual_price=#{usedCarActualPrice,jdbcType = DECIMAL},
+
 		</if>
 		<if test="carUsedId!=null ">
 			car_used_id=#{carUsedId,jdbcType = INTEGER},
+
 		</if>
 		<if test="carAgencyAssessId!=null ">
 			car_agency_assess_id=#{carAgencyAssessId,jdbcType = INTEGER},
+
 		</if>
 		<if test="buyerMessage!=null and buyerMessage!=''">
 			buyer_message=#{buyerMessage,jdbcType = VARCHAR},
+
 		</if>
 		<if test="paymentSequence!=null and paymentSequence!=''">
 			payment_sequence=#{paymentSequence,jdbcType = VARCHAR},
+
 		</if>
 		<if test="finishTime!=null ">
 			finish_time=#{finishTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="remark!=null and remark!=''">
 			remark=#{remark,jdbcType = VARCHAR},
+
 		</if>
 		<if test="isDelete!=null ">
 			is_delete=#{isDelete,jdbcType = INTEGER},
+
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="updateTime!=null ">
 			update_time=#{updateTime,jdbcType = TIMESTAMP},
+
 		</if>
 	</set>
 	<where>
@@ -286,6 +324,9 @@ finish_time,remark,is_delete,create_time,update_time
 		</if>
 		<if test="q.carName!=null and q.carName!=''">
 			AND car_name=#{q.carName}
+		</if>
+		<if test="q.totalNum!=null ">
+			AND total_num=#{q.totalNum}
 		</if>
 		<if test="q.totalPrice!=null ">
 			AND total_price=#{q.totalPrice}

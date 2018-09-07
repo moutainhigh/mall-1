@@ -3,8 +3,9 @@ package com.yunxin.cb.rest.mall;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.service.CarOpenCityService;
 import com.yunxin.cb.rest.BaseResource;
+import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
-import com.yunxin.cb.vo.requestvo.CarOpenCityVo;
+import com.yunxin.cb.vo.responsevo.CarOpenCityVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -28,10 +29,15 @@ public class CarOpenCityController extends BaseResource {
     })
     @GetMapping(value = "opencity/list")
     @ApiVersion(1)
-
-    public ResponseResult<List<CarOpenCityVo>> getOpenCity() {
-        List<CarOpenCityVo> listVo = new ArrayList<>();
-
+    @IgnoreAuthentication
+    public ResponseResult<List<CarOpenCityVO>> getOpenCity() {
+        List<CarOpenCityVO> listVo = new ArrayList<>();
+        CarOpenCityVO c = new CarOpenCityVO();
+        c.setId(1);
+        c.setCityCode("100045");
+        c.setCityName("深圳");
+        c.setInitial("s");
+        listVo.add(c);
         return new ResponseResult(listVo);
     }
 

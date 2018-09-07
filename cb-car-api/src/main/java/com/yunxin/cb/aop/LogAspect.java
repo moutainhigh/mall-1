@@ -121,7 +121,7 @@ public class LogAspect {
 			e.printStackTrace(new PrintWriter(sw, true));
 			String str = sw.toString();
 			log.error(str + "类名称" + joinPoint.getSignature().getDeclaringTypeName() + ",方法名称:" + methodName);
-			return webExceptionHandler.handleThrowable(e); //异常同意处理
+			return webExceptionHandler.handleThrowable(e); //异常统一处理
 		}
 		return outputParam;
 	}

@@ -25,6 +25,8 @@ public class CarOrder extends Entity<Long> {
 	private Integer buyType;
 	//商品名称
 	private String carName;
+	//商品总数量
+	private Integer totalNum;
 	//订单总额
 	private BigDecimal totalPrice;
 	//订金
@@ -161,6 +163,14 @@ public class CarOrder extends Entity<Long> {
 	
 	public void setCarName(String carName){
 		this.carName = carName;
+	}
+	
+	public Integer getTotalNum(){
+		return totalNum;
+	}
+	
+	public void setTotalNum(Integer totalNum){
+		this.totalNum = totalNum;
 	}
 	
 	public BigDecimal getTotalPrice(){
@@ -465,13 +475,13 @@ public class CarOrder extends Entity<Long> {
 	public String toString() {
 		return "CarOrder ["
 		 + "id = " + id + ", orderCode = " + orderCode + ", customerId = " + customerId + ", customerPhone = " + customerPhone
-		 + ", buyType = " + buyType + ", carName = " + carName + ", totalPrice = " + totalPrice + ", earnest = " + earnest
-		 + ", paymentType = " + paymentType + ", paymentTime = " + paymentTime + ", paymentTimeStart = " + paymentTimeStart + ", paymentTimeEnd = " + paymentTimeEnd + ", confirmTime = " + confirmTime + ", confirmTimeStart = " + confirmTimeStart + ", confirmTimeEnd = " + confirmTimeEnd + ", discountTotal = " + discountTotal
-		 + ", tailMoney = " + tailMoney + ", tailPaymentType = " + tailPaymentType + ", tailPaymentTime = " + tailPaymentTime + ", tailPaymentTimeStart = " + tailPaymentTimeStart + ", tailPaymentTimeEnd = " + tailPaymentTimeEnd + ", orderState = " + orderState
-		 + ", paymentState = " + paymentState + ", carModelId = " + carModelId + ", nakedCarPrice = " + nakedCarPrice + ", carAgencyLiftId = " + carAgencyLiftId
-		 + ", usedCarActualPrice = " + usedCarActualPrice + ", carUsedId = " + carUsedId + ", carAgencyAssessId = " + carAgencyAssessId + ", buyerMessage = " + buyerMessage
-		 + ", paymentSequence = " + paymentSequence + ", finishTime = " + finishTime + ", finishTimeStart = " + finishTimeStart + ", finishTimeEnd = " + finishTimeEnd + ", remark = " + remark + ", isDelete = " + isDelete
-		 + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd
+		 + ", buyType = " + buyType + ", carName = " + carName + ", totalNum = " + totalNum + ", totalPrice = " + totalPrice
+		 + ", earnest = " + earnest + ", paymentType = " + paymentType + ", paymentTime = " + paymentTime + ", paymentTimeStart = " + paymentTimeStart + ", paymentTimeEnd = " + paymentTimeEnd + ", confirmTime = " + confirmTime + ", confirmTimeStart = " + confirmTimeStart + ", confirmTimeEnd = " + confirmTimeEnd
+		 + ", discountTotal = " + discountTotal + ", tailMoney = " + tailMoney + ", tailPaymentType = " + tailPaymentType + ", tailPaymentTime = " + tailPaymentTime + ", tailPaymentTimeStart = " + tailPaymentTimeStart + ", tailPaymentTimeEnd = " + tailPaymentTimeEnd
+		 + ", orderState = " + orderState + ", paymentState = " + paymentState + ", carModelId = " + carModelId + ", nakedCarPrice = " + nakedCarPrice
+		 + ", carAgencyLiftId = " + carAgencyLiftId + ", usedCarActualPrice = " + usedCarActualPrice + ", carUsedId = " + carUsedId + ", carAgencyAssessId = " + carAgencyAssessId
+		 + ", buyerMessage = " + buyerMessage + ", paymentSequence = " + paymentSequence + ", finishTime = " + finishTime + ", finishTimeStart = " + finishTimeStart + ", finishTimeEnd = " + finishTimeEnd + ", remark = " + remark
+		 + ", isDelete = " + isDelete + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd
 		+"]";
 	}
 }
