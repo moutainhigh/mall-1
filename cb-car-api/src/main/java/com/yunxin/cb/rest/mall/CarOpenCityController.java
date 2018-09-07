@@ -32,7 +32,12 @@ public class CarOpenCityController extends BaseResource {
     @IgnoreAuthentication
     public ResponseResult<List<CarOpenCityVO>> getOpenCity() {
         List<CarOpenCityVO> listVo = new ArrayList<>();
-
+        CarOpenCityVO c = new CarOpenCityVO();
+        c.setId(1);
+        c.setCityCode("100045");
+        c.setCityName("深圳");
+        c.setInitial("s");
+        listVo.add(c);
         return new ResponseResult(listVo);
     }
 
