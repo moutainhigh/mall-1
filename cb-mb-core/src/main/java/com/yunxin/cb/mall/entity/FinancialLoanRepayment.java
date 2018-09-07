@@ -39,6 +39,11 @@ public class FinancialLoanRepayment {
         public void setShortType(String shortType) {
             this.shortType = shortType;
         }
+
+        @Override
+        public String toString() {
+            return super.toString() + "("+name+")";
+        }
     }
 
     /**  */
