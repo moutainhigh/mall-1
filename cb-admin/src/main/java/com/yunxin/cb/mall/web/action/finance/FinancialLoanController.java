@@ -107,9 +107,9 @@ public class FinancialLoanController {
         try {
             FinancialLoan financialLoan = new FinancialLoan();
             if(state.equals("APPLY_SUCCESS")){
-                financialLoan.setState(LoanState.APPLY_SUCCESS);
+                financialLoan.setState(LoanState.AUDIT_PASS);
             }else if(state.equals("APPLY_FAILURE")){
-                financialLoan.setState(LoanState.APPLY_FAILURE);
+                financialLoan.setState(LoanState.AUDIT_REFUSE);
             }
             financialLoan.setLoanId(loanId);
             financialLoan.setAuditRemark(auditRemark);

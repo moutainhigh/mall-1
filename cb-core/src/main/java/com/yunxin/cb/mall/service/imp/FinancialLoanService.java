@@ -38,8 +38,8 @@ public class FinancialLoanService implements IFinancialLoanService {
                                       List<Predicate> predicates) {
                 switch (state){
                     case 1:
-                        Predicate p1 = builder.equal(root.get(FinancialLoan_.state), LoanState.WAIT_LOAN);
-                        Predicate p2 = builder.equal(root.get(FinancialLoan_.state), LoanState.APPLY_SUCCESS);
+                        Predicate p1 = builder.equal(root.get(FinancialLoan_.state), LoanState.WAIT_AUDIT);
+                        Predicate p2 = builder.equal(root.get(FinancialLoan_.state), LoanState.AUDIT_PASS);
                         predicates.add( builder.or(p1,p2));
                         break;
                 }
@@ -61,7 +61,7 @@ public class FinancialLoanService implements IFinancialLoanService {
         FinancialLoan financialLoan = financialLoanDao.findOne(loanId);
         //TODO 还需把数据同步到负债记录表里
         if(financialLoan.getState().ordinal() == state.ordinal()){
-            financialLoanDao.updateFinancialLoanStateById(LoanState.APPLY_TRANSFERRED,loanId,new Date());
+            financialLoanDao.updateFinancialLoanStateById(LoanState.TRANSFERRED,loanId,new Date());
             map.put("result","success");
             return map;
         }

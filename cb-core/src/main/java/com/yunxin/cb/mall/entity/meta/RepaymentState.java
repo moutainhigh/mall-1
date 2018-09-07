@@ -2,7 +2,7 @@ package com.yunxin.cb.mall.entity.meta;
 
 public enum RepaymentState {
 
-    NON_REPAYMENT("未还款"), OVERDUE("已逾期"), APPLY_REIMBURSEMENT("已还款");
+    NON_REPAYMENT("未还款"), OVERDUE_REPAYMENT("已逾期"), ALREADY_REPAYMENT("已还款");
 
     private String name;
 

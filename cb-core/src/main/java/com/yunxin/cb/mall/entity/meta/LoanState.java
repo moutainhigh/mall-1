@@ -4,7 +4,7 @@ package com.yunxin.cb.mall.entity.meta;
  * Created by Administrator on 2018/7/21.
  */
 public enum LoanState {
-    WAIT_LOAN("申请"), APPLY_SUCCESS("已审核"), APPLY_FAILURE("已拒绝"), CANCELED("已取消"),APPLY_TRANSFERRED("已转账");
+    WAIT_AUDIT("待审核"), AUDIT_PASS("审核通过"), AUDIT_REFUSE("审核不通过"), CANCELED("已取消"), TRANSFERRED("已转账");
 
     private String name;
 

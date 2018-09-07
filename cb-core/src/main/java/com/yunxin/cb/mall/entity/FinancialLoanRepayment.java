@@ -34,11 +34,11 @@ public class FinancialLoanRepayment {
     /** 还款利息 */
     private BigDecimal repayInterest;
 
-    /** 创建时间 */
-    private Date createTime;
-
     /** 还款类型 */
     private LoanRepaymentType loanRepaymentType;
+
+    /** 创建时间 */
+    private Date createTime;
 
     public FinancialLoanRepayment(Integer repaymentId) {
         this.repaymentId = repaymentId;

@@ -108,7 +108,7 @@ public class FinancialLoan implements Serializable {
     private BigDecimal lateFee;
 
     /**
-     *贷款状态：0.申请，1.已审核，2.已拒绝，3.已取消，4.已转账
+     *贷款状态：0.申请中-待审核，1.审核通过-已审核，2.审核不通过-已拒绝，3.已取消，4.已转账
      */
     private LoanState state;
 
@@ -153,7 +153,7 @@ public class FinancialLoan implements Serializable {
         this.loanId = loanId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "CUSTOMER_ID", nullable = false)
     public Customer getCustomer() {
         return customer;
@@ -163,7 +163,7 @@ public class FinancialLoan implements Serializable {
         this.customer = customer;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "BANK_ID", nullable = false)
     public BankInfo getBank() {
         return bank;

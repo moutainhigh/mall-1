@@ -42,7 +42,7 @@ public class FinancialWalletService implements IFinancialWalletService {
     private FinancialFreezingBillDao financialFreezingBillDao;
 
     @Resource
-    private com.yunxin.cb.mall.dao.FinacialCreditLineBillDao FinacialCreditLineBillDao;
+    private FinancialCreditLineBillDao FinancialCreditLineBillDao;
     @Resource
     private CustomerDao customerDao;
     @Resource
@@ -107,11 +107,11 @@ public class FinancialWalletService implements IFinancialWalletService {
                 financialFreezingBillDao.save(financialFreezingBill);
                 logger.info("add FinancialFreezingBill sucess:"+financialFreezingBill);
                 /**点赞:保存额度记录*/
-                FinacialCreditLineBillDao.save(financialCreditLineBill);
+                FinancialCreditLineBillDao.save(financialCreditLineBill);
                 logger.info("add financialCreditLineBill sucess:"+ financialCreditLineBill);
             }else{
                 /**点赞:保存额度记录*/
-                FinacialCreditLineBillDao.save(financialCreditLineBill);
+                FinancialCreditLineBillDao.save(financialCreditLineBill);
                 logger.info("add financialCreditLineBill sucess:"+ financialCreditLineBill);
             }
         }

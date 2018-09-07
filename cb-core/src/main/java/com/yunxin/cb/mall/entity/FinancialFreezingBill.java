@@ -17,7 +17,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table
 public class FinancialFreezingBill {
     /**  */
-    private Integer financialFreezingId;
+    private Integer freezingBillId;
 
     /** 客户*/
     private Customer customer;
@@ -40,12 +40,12 @@ public class FinancialFreezingBill {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, insertable = true, updatable = true, length = 10)
-    public Integer getFinancialFreezingId() {
-        return financialFreezingId;
+    public Integer getFreezingBillId() {
+        return freezingBillId;
     }
 
-    public void setFinancialFreezingId(Integer financialFreezingId) {
-        this.financialFreezingId = financialFreezingId;
+    public void setFreezingBillId(Integer freezingBillId) {
+        this.freezingBillId = freezingBillId;
     }
 
     public void setCustomer(Customer customer) {

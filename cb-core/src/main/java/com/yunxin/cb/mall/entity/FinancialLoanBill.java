@@ -27,7 +27,7 @@ public class FinancialLoanBill implements Serializable {
     /** 资金类型：1.支出，2.收入 */
     private CapitalType type;
 
-    /** 交易类型：1.保险返利 2.保险购买 */
+    /** 交易类型 */
     private TransactionType transactionType;
 
     /** 交易描述 */
@@ -54,14 +54,12 @@ public class FinancialLoanBill implements Serializable {
         this.customer = customer;
     }
 
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "customer_id", nullable = false, insertable = true, updatable = true)
-    })
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     public Customer getCustomer() {
         return customer;
     }
-    @Column(nullable = true, precision = 2)
+    @Column
     @Enumerated(EnumType.ORDINAL)
     public CapitalType getType() {
         return type;
