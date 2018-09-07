@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class FinancialFreezingBill {
     /**  */
-    private Integer financialFreezingId;
+    private Integer freezingBillId;
 
     /** 客户ID */
     private Integer customerId;
@@ -28,12 +28,12 @@ public class FinancialFreezingBill {
     /** 交易时间 */
     private Date createTime;
 
-    public Integer getFinancialFreezingId() {
-        return financialFreezingId;
+    public Integer getFreezingBillId() {
+        return freezingBillId;
     }
 
-    public void setFinancialFreezingId(Integer financialFreezingId) {
-        this.financialFreezingId = financialFreezingId;
+    public void setFreezingBillId(Integer freezingBillId) {
+        this.freezingBillId = freezingBillId;
     }
 
     public Integer getCustomerId() {
