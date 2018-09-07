@@ -50,6 +50,25 @@ public class BrandServiceImpl implements BrandService {
 		list = list == null ? new ArrayList<Brand>(0) : list;
 		return list; 
 	}
+
+	/**
+	 * 根据查询条件，查询并返回Brand的列表
+	 * @param q 查询条件
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<Brand> getBrandList2(Query q) {
+		List<Brand> list = null;
+		try {
+			//直接调用Dao方法进行查询
+			list = brandDao.queryAll(q);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		//如list为null时，则改为返回一个空列表
+		list = list == null ? new ArrayList<Brand>(0) : list;
+		return list;
+	}
 	
 	/**
 	 * 根据查询条件，分页查询并返回Brand的分页结果
