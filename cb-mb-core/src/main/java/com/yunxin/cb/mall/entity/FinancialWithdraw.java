@@ -207,4 +207,14 @@ public class FinancialWithdraw implements Serializable {
     public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
     }
+
+    public void setWithdrawTypeOnPayment(FinancialLoanRepayment.Type type) {
+        if (FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
+            this.withdrawType = WithdrawType.BX;
+        }else if (FinancialLoanRepayment.Type.PRODUCT_RB_REPAYMENT.equals(type)) {
+            this.withdrawType = WithdrawType.BZ;
+        }else if (FinancialLoanRepayment.Type.CAR_REPAYMENT.equals(type)) {
+            this.withdrawType = WithdrawType.CAR;
+        }
+    }
 }

@@ -7,6 +7,7 @@ import com.yunxin.cb.mall.service.FinancialLoanRepaymentService;
 import com.yunxin.cb.mall.service.FinancialLoanService;
 import com.yunxin.cb.mall.service.FinancialWalletService;
 import com.yunxin.cb.mall.vo.FinancialWalletVO;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -37,17 +38,25 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
     private FinancialLogMapper financialLogMapper;
     @Resource
     private CustomerMapper customerMapper;
+    @Resource
+    private BankInfoMapper bankInfoMapper;
+    @Resource
+    private FinancialWithdrawMapper withdrawMapper;
 
     private static final Log log = LogFactory.getLog(FinancialLoanRepaymentServiceImpl.class);
 
     /**
      * @Author chenpeng
      * @Description 自动还款(返利和报账还款)
+     * @Return 还款后剩余金额
      * @Date 2018/9/5 15:48
      **/
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void autoRepay(BigDecimal repayAmount, Integer customerId, FinancialLoanRepayment.Type type) {
+    public BigDecimal autoRepay(BigDecimal repayAmount, Integer customerId, FinancialLoanRepayment.Type type, String transactionNo) {
+
+        log.info("customerId=" + customerId + " autoRepay amount=" + repayAmount + " by "
+                + type.toString() + ",transactionNo=" + transactionNo);
 
         // 还款后剩余金额
         BigDecimal leftAvailableAmount = repayAmount;
@@ -81,8 +90,8 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
         if (carRepayment.compareTo(BigDecimal.ZERO) > 0 || creditRepayment.compareTo(BigDecimal.ZERO) > 0
                 || FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
             walletVO.setDebtCar(walletVO.getDebtCar().subtract(carRepayment));
-            BigDecimal debtCredit = walletVO.getCreditAmount().compareTo(creditRepayment) > 0
-                    ? walletVO.getCreditAmount().subtract(creditRepayment) : BigDecimal.ZERO;
+            BigDecimal debtCredit = walletVO.getDebtCredit().compareTo(creditRepayment) > 0
+                    ? walletVO.getDebtCredit().subtract(creditRepayment) : BigDecimal.ZERO;
             walletVO.setDebtCredit(debtCredit);
             // 保险返利，还要减少冻结金额
             if (FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
@@ -90,7 +99,7 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
                         ? walletVO.getFreezingAmount().subtract(repayAmount) : BigDecimal.ZERO;
                 walletVO.setFreezingAmount(freezingAmount);
             }
-            String remark = "返利或报账到账：" + repayAmount + ",自动还款：" + carRepayment.add(creditRepayment);
+            String remark = type.getShortType() + "到账：" + repayAmount + ",自动还款：" + carRepayment.add(creditRepayment);
             boolean resultFlag = financialWalletService.updateFinancialWallet(walletVO,
                     carRepayment.add(creditRepayment), OperationType.SUBTRACT, remark);
             if (!resultFlag) {
@@ -109,38 +118,66 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
         financialLogBill.setTransactionTypeOnPayment(type, false);
         financialLogBill.setPayTypeOnPayment(type);
         financialLogBill.setState(PayState.PROCESSED_SUCCESS);
-        financialLogBill.setTransactionNo("transactionNo");
-        financialLogBill.setTransactionDesc("返利或者报账账单");
+        financialLogBill.setTransactionNo(transactionNo);
+        String remark1 = type.getShortType() + "到账：" + repayAmount;
+        financialLogBill.setTransactionDesc(remark1);
         financialLogBill.setCreateTime(new Date());
         financialLogMapper.insert(financialLogBill);
         // 4.2 还款账单
-        FinancialLogBill bill = new FinancialLogBill();
-        bill.setCustomerId(customerId);
-        bill.setCustomerName(customer.getRealName());
-        bill.setAmount(carRepayment.add(creditRepayment));
-        bill.setType(OperationType.SUBTRACT);
-        bill.setTransactionTypeOnPayment(type, true);
-        bill.setPayType(FiaciaLogPayType.LOAN);
-        bill.setState(PayState.PROCESSED_SUCCESS);
-        bill.setTransactionNo("transactionNo");
-        bill.setTransactionDesc("自动还款账单");
-        bill.setCreateTime(new Date());
-        financialLogMapper.insert(bill);
+        if (carRepayment.add(creditRepayment).compareTo(BigDecimal.ZERO) > 0) {
+            FinancialLogBill bill = new FinancialLogBill();
+            bill.setCustomerId(customerId);
+            bill.setCustomerName(customer.getRealName());
+            bill.setAmount(carRepayment.add(creditRepayment));
+            bill.setType(OperationType.SUBTRACT);
+            bill.setTransactionTypeOnPayment(type, true);
+            bill.setPayType(FiaciaLogPayType.LOAN);
+            bill.setState(PayState.PROCESSED_SUCCESS);
+            bill.setTransactionNo(transactionNo);
+            String remark2 = type.getName() + "：" + carRepayment.add(creditRepayment);
+            bill.setTransactionDesc(remark2);
+            bill.setCreateTime(new Date());
+            financialLogMapper.insert(bill);
+        }
+
 
         // 5.自动提现
         if (leftAvailableAmount.compareTo(BigDecimal.ZERO) > 0) {
-
+            List<BankInfo> list = bankInfoMapper.selectAll(customerId);
+            if (CollectionUtils.isEmpty(list)) {
+                throw new RuntimeException("用户没有银行卡，提现失败");
+            }
+            FinancialWithdraw withdraw = new FinancialWithdraw();
+            withdraw.setCustomerId(customerId);
+            withdraw.setBankId(list.get(0).getBankId());
+            withdraw.setAmount(leftAvailableAmount);
+            withdraw.setRealAmount(leftAvailableAmount);
+            withdraw.setChargeFee(BigDecimal.ZERO); // 提现手续费，默认0
+            withdraw.setState(WithdrawState.TRANSFER);  // 自动提现，无审核流程，状态转帐中
+            withdraw.setWithdrawTypeOnPayment(type);
+            LocalDateTime now = LocalDateTime.now();
+            withdraw.setUpdateDate(now);
+            withdraw.setApplyDate(now);
+            withdrawMapper.insert(withdraw);
         }
+
+        log.info("customerId=" + customerId + " autoRepay success");
+
+        return leftAvailableAmount;
     }
 
     /**
      * @Author chenpeng
      * @Description 手动还款（负债）
+     * @Return 还款后剩余金额
      * @Date 2018/9/5 19:05
      **/
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void repay(BigDecimal repayAmount, Integer customerId) {
+    public BigDecimal repay(BigDecimal repayAmount, Integer customerId) {
+
+        log.info("customerId=" + customerId + " repay amount=" + repayAmount
+                + " by " + FinancialLoanRepayment.Type.MANUAL_REPAYMENT.toString());
 
         // 还款后剩余金额
         BigDecimal leftAvailableAmount = repayAmount;
@@ -170,19 +207,22 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
         }
 
         // 3.还款账单
-        Customer customer = customerMapper.selectByPrimaryKey(customerId);
-        FinancialLogBill bill = new FinancialLogBill();
-        bill.setCustomerId(customerId);
-        bill.setCustomerName(customer.getRealName());
-        bill.setAmount(creditRepayment);
-        bill.setType(OperationType.SUBTRACT);
-        bill.setTransactionType(FiaciaLogTransType.MANUAL_REPAYMENT);
-        bill.setPayType(FiaciaLogPayType.LOAN);
-        bill.setState(PayState.PROCESSED_SUCCESS);
-        bill.setTransactionNo("transactionNo");
-        bill.setTransactionDesc("手动还款");
-        bill.setCreateTime(new Date());
-        financialLogMapper.insert(bill);
+        if (creditRepayment.compareTo(BigDecimal.ZERO) > 0) {
+            Customer customer = customerMapper.selectByPrimaryKey(customerId);
+            FinancialLogBill bill = new FinancialLogBill();
+            bill.setCustomerId(customerId);
+            bill.setCustomerName(customer.getRealName());
+            bill.setAmount(creditRepayment);
+            bill.setType(OperationType.SUBTRACT);
+            bill.setTransactionType(FiaciaLogTransType.MANUAL_REPAYMENT);
+            bill.setPayType(FiaciaLogPayType.LOAN);
+            bill.setState(PayState.PROCESSED_SUCCESS);
+//            bill.setTransactionNo("transactionNo");
+            bill.setTransactionDesc("手动还款:" + creditRepayment);
+            bill.setCreateTime(new Date());
+            financialLogMapper.insert(bill);
+        }
+
 
         // 4.自动提现
         // TODO 手动还款多余金额提现？？？
@@ -190,6 +230,9 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
 
         }
 
+        log.info("customerId=" + customerId + " repay success");
+
+        return leftAvailableAmount;
     }
 
     private BigDecimal[] repayLoan(Integer customerId, FinancialLoanRepayment.Type type,
@@ -240,13 +283,17 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
                     loanRepayment.setRepayAmount(loanRepayment.getRepayCapital().add(loanRepayment.getRepayInterest()));
                     financialLoanRepaymentMapper.insert(loanRepayment);
                     // 2.3还完，修改还款状态
-                    if (loan.getLeftInterest().equals(BigDecimal.ZERO) && loan.getLeftAmount().equals(BigDecimal.ZERO)) {
+                    if (loan.getLeftInterest().compareTo(BigDecimal.ZERO) == 0 && loan.getLeftAmount().compareTo(BigDecimal.ZERO) == 0) {
                         loan.setRepaymentState(RepaymentState.ALREADY_REPAYMENT);
                     }
                     boolean resultFlag = financialLoanMapper.updateOnVersion(loan) == 1;
                     if (!resultFlag) {
                         throw new RuntimeException("内部错误(修改借款信息)");
                     }
+
+                    log.info("customerId=" + customerId + " repayLoan repayAmount=" + loanRepayment.getRepayAmount() + ",repayCapital="
+                            + loanRepayment.getRepayCapital() + ",repayInterest=" + loanRepayment.getRepayInterest());
+
                 } else {
                     break;
                 }
@@ -258,7 +305,7 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
                 loanBill.setAmount(carRepayment.add(creditRepayment));
                 loanBill.setType(CapitalType.SUBTRACT);
                 loanBill.setTransactionTypeOnPayment(type);
-                loanBill.setTransactionDesc("还款：" + carRepayment.add(creditRepayment));
+                loanBill.setTransactionDesc(type.getName() + "：" + carRepayment.add(creditRepayment));
                 loanBill.setCreateTime(LocalDateTime.now());
                 financialLoanBillMapper.insert(loanBill);
             }

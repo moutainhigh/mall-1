@@ -23,7 +23,7 @@ public interface FinancialWithdrawMapper {
         "GRANT_DATE, GRANT_OPERATOR, ",
         "APPLY_DATE, UPDATE_DATE)",
         "values (#{customerId,jdbcType=INTEGER}, ",
-        "#{bankNo,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, ",
+        "#{bankId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, ",
         "#{realAmount,jdbcType=DECIMAL}, #{chargeFee,jdbcType=DECIMAL}, ",
         "#{state,jdbcType=INTEGER}, #{withdrawType,jdbcType=INTEGER}, #{auditDate,jdbcType=TIMESTAMP}, ",
         "#{auditOperator,jdbcType=VARCHAR}, #{auditMessage,jdbcType=VARCHAR}, ",
