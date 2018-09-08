@@ -7,10 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>负债管理</title>
     <script type="text/javascript">
+        $(document).ready(function(){
+
+        });
+
         function confirm(){
             var dataItem = getSelectedGridItem("grid");
             if (dataItem) {
-                $('#showLiabilitiesListDialog').modal();
+                var customerId = dataItem.customer.customerId;
+                window.location.href = "getLiabilitiesDetail.do?customerId=" + customerId;
             }
         }
     </script>
@@ -129,6 +134,7 @@
                         <kendo:grid-columns>
                             <kendo:grid-column field="loanBillId" width="350px" hidden="true"/>
                             <kendo:grid-column title="负债人" filterable="false" field="customer.realName" width="100px"/>
+                            <kendo:grid-column title="id" filterable="false" field="customer.customerId" hidden="true" width="100px"/>
                             <kendo:grid-column title="负债人手机号" filterable="false" field="customer.mobile" width="100px"/>
                             <kendo:grid-column title="当前负债总金额" filterable="false" field="debtCredit+debtCar" width="100px" />
                             <kendo:grid-column title="我的负债" filterable="false" field="debtCredit" width="100px" />
@@ -159,26 +165,6 @@
             <div class="spacer-40"></div>
         </div>
         <jsp:include page="../../layouts/footer.jsp"/>
-    </div>
-</div>
-<div class="modal fade" id="showLiabilitiesListDialog" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 1000px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">还款明细</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <input type="hidden" data-filter="customerId" data-operator="contains" class="form-control grid-filter" value="${customer.customerId}" />
-                    <input type="hidden" data-filter="type" data-operator="contains" class="form-control grid-filter" value="SUBTRACT" />
-                <jsp:include page="../../finance/wallet/financialWalletDetail.jsp"/>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary pull-right" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
     </div>
 </div>
 </body>

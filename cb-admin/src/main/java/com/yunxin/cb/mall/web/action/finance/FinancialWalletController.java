@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 @Controller
 @RequestMapping(value = "/liabilities")
@@ -52,9 +53,15 @@ public class FinancialWalletController {
         return financialWalletService.pageServiceFinancialWallet(query);
     }
 
+    @RequestMapping(value = "getLiabilitiesDetail", method = RequestMethod.GET)
+    public String getLoanDetail(@RequestParam("customerId") int customerId, ModelMap modelMap, Locale locale) {
+        modelMap.addAttribute("customerId", customerId);
+        return "finance/wallet/financialWalletDetail";
+    }
+
     @ResponseBody
     @RequestMapping(value = "choosePagedLiabilities",method = RequestMethod.POST)
-    public Page<FinancialLoanBill> choosePagedLiabilities(@RequestBody PageSpecification<FinancialLoanBill> query, HttpServletRequest request) {
-        return financialLoanBillService.pageServiceFinancialLoanBill(query);
+    public Page<FinancialLoanBill> choosePagedLiabilities(@RequestBody PageSpecification<FinancialLoanBill> query, HttpServletRequest request,@RequestParam("customerId") int customerId) {
+        return financialLoanBillService.pageServiceFinancialLoanBill(query,customerId);
     }
 }

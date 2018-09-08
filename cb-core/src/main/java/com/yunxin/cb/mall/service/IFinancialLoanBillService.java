@@ -12,5 +12,5 @@ public interface IFinancialLoanBillService {
      * @auther: pengcong
      * @date: 2018/8/10 14:46
      */
-    public Page<FinancialLoanBill> pageServiceFinancialLoanBill(PageSpecification<FinancialLoanBill> pageSpecification);
+    public Page<FinancialLoanBill> pageServiceFinancialLoanBill(PageSpecification<FinancialLoanBill> pageSpecification,int customerId);
 }
