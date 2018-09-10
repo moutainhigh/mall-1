@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /** 
- * 汽车订单表VO
+ * 汽车订单列表VO
  */
 @ApiModel(value="汽车订单列表VO",description="汽车订单列表_VO对象 CarOrderListVO")
 public class CarOrderListVO implements Serializable {
