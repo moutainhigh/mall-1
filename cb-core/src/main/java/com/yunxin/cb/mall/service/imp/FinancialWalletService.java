@@ -1,9 +1,6 @@
 package com.yunxin.cb.mall.service.imp;
 
-import com.yunxin.cb.mall.dao.FinancialCreditLineBillDao;
-import com.yunxin.cb.mall.dao.FinancialFreezingBillDao;
-import com.yunxin.cb.mall.dao.FinancialWalletDao;
-import com.yunxin.cb.mall.dao.FinancialWalletLogDao;
+import com.yunxin.cb.mall.dao.*;
 import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
@@ -32,15 +29,14 @@ public class FinancialWalletService implements IFinancialWalletService {
 
     @Resource
     private FinancialWalletDao financialWalletDao;
-
     @Resource
     private FinancialWalletLogDao financialWalletLogDao;
-
     @Resource
     private FinancialFreezingBillDao financialFreezingBillDao;
-
     @Resource
     private FinancialCreditLineBillDao FinancialCreditLineBillDao;
+    @Resource
+    private CustomerDao customerDao;
 
 
     @Override
@@ -142,8 +138,25 @@ public class FinancialWalletService implements IFinancialWalletService {
     }
 
     @Override
+    @Transactional
     public FinancialWallet getFinancialWalletByCustomerId(Integer customerId) {
-        return financialWalletDao.findByCustomerId(customerId);
+
+        FinancialWallet wallet = financialWalletDao.findByCustomerId(customerId);
+        if (wallet == null) {
+            //初始化钱包信息
+            wallet = new FinancialWallet();
+            wallet.setCustomer(customerDao.findByCustomerId(customerId));
+            wallet.setDebtCredit(new BigDecimal(0));
+            wallet.setDebtCar(new BigDecimal(0));
+            wallet.setCreditAmount(new BigDecimal(0));
+            wallet.setFreezingAmount(new BigDecimal(0));
+            wallet.setVersion(0);//初始化版本号
+            wallet.setFrequency(0);
+            wallet.setSumAmount(new BigDecimal(0));
+            wallet.setLoanInterest(new BigDecimal(0));
+            wallet = financialWalletDao.save(wallet);
+        }
+        return wallet;
     }
 
     @Override
