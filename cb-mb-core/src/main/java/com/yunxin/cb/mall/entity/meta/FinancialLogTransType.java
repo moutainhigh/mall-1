@@ -5,7 +5,7 @@ package com.yunxin.cb.mall.entity.meta;
  * @auther: eleven
  * @date: 2018/8/9 17:36
  */
-public enum FiaciaLogTransType {
+public enum FinancialLogTransType {
     INSURANCE_PURCHASE("保险购买"),INSURANCE_REBATE("保险返利"),
     CAR_REBATE("汽车返利"), PRODUCT_RB("商品报账"),
     GOOD_PAY("商品购买"),GOOD_RETURN("商品退货"),LOAN("借款"),
@@ -14,7 +14,7 @@ public enum FiaciaLogTransType {
 
     private String name;
 
-    private FiaciaLogTransType(String name) {
+    private FinancialLogTransType(String name) {
         this.name = name;
     }
 

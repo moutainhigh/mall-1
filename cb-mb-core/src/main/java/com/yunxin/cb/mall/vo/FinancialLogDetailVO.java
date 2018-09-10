@@ -1,7 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
-import com.yunxin.cb.mall.entity.meta.FiaciaLogPayType;
-import com.yunxin.cb.mall.entity.meta.FiaciaLogTransType;
+import com.yunxin.cb.mall.entity.meta.FinancialLogPayType;
 import com.yunxin.cb.mall.entity.meta.OperationType;
 import com.yunxin.cb.mall.entity.meta.PayState;
 import io.swagger.annotations.ApiModel;
@@ -28,7 +27,7 @@ public class FinancialLogDetailVO implements java.io.Serializable{
 
     /** 支付方式：0.微信，1.支付宝，2.报账，3.还款 */
     @ApiModelProperty(value="支付方式",name="payType",example="1")
-    private FiaciaLogPayType payType;
+    private FinancialLogPayType payType;
 
     /** 交易时间 */
     @ApiModelProperty(value="交易时间",name="createTime",example="2018-08-09 17:52:50")
@@ -58,11 +57,11 @@ public class FinancialLogDetailVO implements java.io.Serializable{
         this.type = type;
     }
 
-    public FiaciaLogPayType getPayType() {
+    public FinancialLogPayType getPayType() {
         return payType;
     }
 
-    public void setPayType(FiaciaLogPayType payType) {
+    public void setPayType(FinancialLogPayType payType) {
         this.payType = payType;
     }
 

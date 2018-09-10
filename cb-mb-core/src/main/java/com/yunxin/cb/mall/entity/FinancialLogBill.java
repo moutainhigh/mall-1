@@ -1,7 +1,7 @@
 package com.yunxin.cb.mall.entity;
 
-import com.yunxin.cb.mall.entity.meta.FiaciaLogPayType;
-import com.yunxin.cb.mall.entity.meta.FiaciaLogTransType;
+import com.yunxin.cb.mall.entity.meta.FinancialLogPayType;
+import com.yunxin.cb.mall.entity.meta.FinancialLogTransType;
 import com.yunxin.cb.mall.entity.meta.OperationType;
 import com.yunxin.cb.mall.entity.meta.PayState;
 
@@ -38,10 +38,10 @@ public class FinancialLogBill implements Serializable {
     private OperationType type;
 
     /** 交易类型：0.保险购买1.保险返利2.商品购买3.商品退货4.借款5.手动还款6.保险返利自动还款7.商品报帐自动还款 */
-    private FiaciaLogTransType transactionType;
+    private FinancialLogTransType transactionType;
 
     /** 支付方式：0.微信，1.支付宝，2.报账，3.还款 */
-    private FiaciaLogPayType payType;
+    private FinancialLogPayType payType;
 
     /** 交易时间 */
     private Date createTime;
@@ -95,19 +95,19 @@ public class FinancialLogBill implements Serializable {
         this.type = type;
     }
 
-    public FiaciaLogTransType getTransactionType() {
+    public FinancialLogTransType getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(FiaciaLogTransType transactionType) {
+    public void setTransactionType(FinancialLogTransType transactionType) {
         this.transactionType = transactionType;
     }
 
-    public FiaciaLogPayType getPayType() {
+    public FinancialLogPayType getPayType() {
         return payType;
     }
 
-    public void setPayType(FiaciaLogPayType payType) {
+    public void setPayType(FinancialLogPayType payType) {
         this.payType = payType;
     }
 
@@ -161,34 +161,34 @@ public class FinancialLogBill implements Serializable {
 
     public void setTransactionTypeOnPayment(FinancialLoanRepayment.Type type, boolean repayment) {
         if (FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
-            this.transactionType = FiaciaLogTransType.INSURANCE_REBATE;
+            this.transactionType = FinancialLogTransType.INSURANCE_REBATE;
             if (repayment) {
-                this.transactionType = FiaciaLogTransType.INSURANCE_REPAYMENT;
+                this.transactionType = FinancialLogTransType.INSURANCE_REPAYMENT;
             }
         }else if (FinancialLoanRepayment.Type.PRODUCT_RB_REPAYMENT.equals(type)) {
-            this.transactionType = FiaciaLogTransType.PRODUCT_RB;
+            this.transactionType = FinancialLogTransType.PRODUCT_RB;
             if (repayment) {
-                this.transactionType = FiaciaLogTransType.PRODUCT_RB_REPAYMENT;
+                this.transactionType = FinancialLogTransType.PRODUCT_RB_REPAYMENT;
             }
         }else if (FinancialLoanRepayment.Type.CAR_REPAYMENT.equals(type)) {
-            this.transactionType = FiaciaLogTransType.CAR_REBATE;
+            this.transactionType = FinancialLogTransType.CAR_REBATE;
             if (repayment) {
-                this.transactionType = FiaciaLogTransType.CAR_REPAYMENT;
+                this.transactionType = FinancialLogTransType.CAR_REPAYMENT;
             }
         }else if (FinancialLoanRepayment.Type.MANUAL_REPAYMENT.equals(type)) {
-            this.transactionType = FiaciaLogTransType.MANUAL_REPAYMENT;
+            this.transactionType = FinancialLogTransType.MANUAL_REPAYMENT;
         }
     }
 
     public void setPayTypeOnPayment(FinancialLoanRepayment.Type type) {
         if (FinancialLoanRepayment.Type.INSURANCE_REPAYMENT.equals(type)) {
-            this.payType = FiaciaLogPayType.TRANSFER;
+            this.payType = FinancialLogPayType.TRANSFER;
         }else if (FinancialLoanRepayment.Type.PRODUCT_RB_REPAYMENT.equals(type)) {
-            this.payType = FiaciaLogPayType.RB;
+            this.payType = FinancialLogPayType.RB;
         }else if (FinancialLoanRepayment.Type.CAR_REPAYMENT.equals(type)) {
-            this.payType = FiaciaLogPayType.TRANSFER;
+            this.payType = FinancialLogPayType.TRANSFER;
         }else if (FinancialLoanRepayment.Type.MANUAL_REPAYMENT.equals(type)) {
-            this.payType = FiaciaLogPayType.LOAN;
+            this.payType = FinancialLogPayType.LOAN;
         }
     }
 }

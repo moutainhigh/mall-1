@@ -132,7 +132,7 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
             bill.setAmount(carRepayment.add(creditRepayment));
             bill.setType(OperationType.SUBTRACT);
             bill.setTransactionTypeOnPayment(type, true);
-            bill.setPayType(FiaciaLogPayType.LOAN);
+            bill.setPayType(FinancialLogPayType.LOAN);
             bill.setState(PayState.PROCESSED_SUCCESS);
             bill.setTransactionNo(transactionNo);
             String remark2 = type.getName() + "：" + carRepayment.add(creditRepayment);
@@ -215,8 +215,8 @@ public class FinancialLoanRepaymentServiceImpl implements FinancialLoanRepayment
             bill.setCustomerName(customer.getRealName());
             bill.setAmount(creditRepayment);
             bill.setType(OperationType.SUBTRACT);
-            bill.setTransactionType(FiaciaLogTransType.MANUAL_REPAYMENT);
-            bill.setPayType(FiaciaLogPayType.LOAN);
+            bill.setTransactionType(FinancialLogTransType.MANUAL_REPAYMENT);
+            bill.setPayType(FinancialLogPayType.LOAN);
             bill.setState(PayState.PROCESSED_SUCCESS);
 //            bill.setTransactionNo("transactionNo");
             bill.setTransactionDesc("手动还款:" + creditRepayment);

@@ -1,6 +1,6 @@
 package com.yunxin.cb.mall.vo;
 
-import com.yunxin.cb.mall.entity.meta.FiaciaLogTransType;
+import com.yunxin.cb.mall.entity.meta.FinancialLogTransType;
 import com.yunxin.cb.mall.entity.meta.OperationType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -35,7 +35,7 @@ public class FinancialLogVO implements java.io.Serializable{
 
     /** 交易类型：0.保险购买1.保险返利2.商品购买3.商品退货4.借款5.手动还款6.保险返利自动还款7.商品报帐自动还款 */
     @ApiModelProperty(value="交易类型",name="transactionType",example="1")
-    private FiaciaLogTransType transactionType;
+    private FinancialLogTransType transactionType;
 
     /** 交易时间 */
     @ApiModelProperty(value="交易时间",name="createTime",example="2018-08-09 17:52:50")
@@ -65,11 +65,11 @@ public class FinancialLogVO implements java.io.Serializable{
         this.type = type;
     }
 
-    public FiaciaLogTransType getTransactionType() {
+    public FinancialLogTransType getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(FiaciaLogTransType transactionType) {
+    public void setTransactionType(FinancialLogTransType transactionType) {
         this.transactionType = transactionType;
     }
 
