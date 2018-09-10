@@ -135,7 +135,7 @@ public class FinancialLoanRepaymentService implements IFinancialLoanRepaymentSer
                 BigDecimal freezingAmount = wallet.getFreezingAmount().compareTo(repayAmount) > 0
                         ? wallet.getFreezingAmount().subtract(repayAmount) : BigDecimal.ZERO;
                 wallet.setFreezingAmount(freezingAmount);
-                // TODO 冻结金额变动记录
+                // 冻结金额变动记录-由调用接口方记录
             }
             String remark = type.getShortType() + "到账：" + repayAmount + ",自动还款：" + carRepayment.add(creditRepayment);
             boolean resultFlag = walletService.updateFinancialWalletOnVersion(wallet,
