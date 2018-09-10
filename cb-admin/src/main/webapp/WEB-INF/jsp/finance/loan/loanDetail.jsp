@@ -165,7 +165,7 @@
                                 <label><span class="asterisk"></span>借款时间：</label>
                             </div>
                             <div class="col-sm-4 col-label">
-                                ${fn:substring(financialLoan.auditTime, 0, 19)}
+                                ${fn:substring(financialLoan.createTime, 0, 19)}
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -185,11 +185,11 @@
                             </div>
                             <div class="col-sm-4 col-label">
                                 <c:choose>
-                                    <c:when test="${financialLoan.state=='WAIT_LOAN'}">否</c:when>
-                                    <c:when test="${financialLoan.state=='APPLY_SUCCESS'}">否</c:when>
-                                    <c:when test="${financialLoan.state=='APPLY_FAILURE'}">否</c:when>
+                                    <c:when test="${financialLoan.state=='WAIT_AUDIT'}">否</c:when>
+                                    <c:when test="${financialLoan.state=='AUDIT_PASS'}">否</c:when>
+                                    <c:when test="${financialLoan.state=='AUDIT_REFUSE'}">否</c:when>
                                     <c:when test="${financialLoan.state=='CANCELED'}">否</c:when>
-                                    <c:when test="${financialLoan.state=='APPLY_TRANSFERRED'}">已转账</c:when>
+                                    <c:when test="${financialLoan.state=='TRANSFERRED'}">已转账</c:when>
                                 </c:choose>
                             </div>
                         </div>
@@ -207,11 +207,11 @@
                             </div>
                             <div class="col-sm-4 col-label">
                                 <c:choose>
-                                    <c:when test="${financialLoan.state=='WAIT_LOAN'}">申请</c:when>
-                                    <c:when test="${financialLoan.state=='APPLY_SUCCESS'}">已审核</c:when>
-                                    <c:when test="${financialLoan.state=='APPLY_FAILURE'}">已拒绝</c:when>
+                                    <c:when test="${financialLoan.state=='WAIT_AUDIT'}">申请</c:when>
+                                    <c:when test="${financialLoan.state=='AUDIT_PASS'}">已审核</c:when>
+                                    <c:when test="${financialLoan.state=='AUDIT_REFUSE'}">已拒绝</c:when>
                                     <c:when test="${financialLoan.state=='CANCELED'}">已取消</c:when>
-                                    <c:when test="${financialLoan.state=='APPLY_TRANSFERRED'}">已转账</c:when>
+                                    <c:when test="${financialLoan.state=='TRANSFERRED'}">已转账</c:when>
                                 </c:choose>
                             </div>
                             <div class="col-sm-1"></div>
@@ -226,14 +226,16 @@
                                 <label><span class="asterisk"></span>审批时间：</label>
                             </div>
                             <div class="col-sm-3 col-label">
-                                ${fn:substring(financialLoan.auditTime, 0, 19)}
+                                <c:if test="${financialLoan.auditTime==null}">--</c:if>
+                                <c:if test="${financialLoan.auditTime!=null}">${fn:substring(financialLoan.auditTime, 0, 19)}</c:if>
                             </div>
                             <div class="col-sm-1"></div>
                             <div class="col-sm-2">
                                 <label><span class="asterisk"></span>审批人：</label>
                             </div>
                             <div class="col-sm-4 col-label">
-                                ${financialLoan.term}
+                                <c:if test="${financialLoan.approver==null}">--</c:if>
+                                <c:if test="${financialLoan.approver!=null}">${financialLoan.approver}</c:if>
                             </div>
                             <div class="col-sm-1"></div>
                         </div>

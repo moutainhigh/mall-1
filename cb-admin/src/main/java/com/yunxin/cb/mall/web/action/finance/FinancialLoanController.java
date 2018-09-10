@@ -106,9 +106,9 @@ public class FinancialLoanController {
         Map<String,Object> map = new HashMap<>();
         try {
             FinancialLoan financialLoan = new FinancialLoan();
-            if(state.equals("APPLY_SUCCESS")){
+            if(state.equals("AUDIT_PASS")){
                 financialLoan.setState(LoanState.AUDIT_PASS);
-            }else if(state.equals("APPLY_FAILURE")){
+            }else if(state.equals("AUDIT_REFUSE")){
                 financialLoan.setState(LoanState.AUDIT_REFUSE);
             }
             financialLoan.setLoanId(loanId);

@@ -5,6 +5,7 @@ import com.yunxin.cb.mall.entity.*;
 import com.yunxin.cb.mall.entity.meta.ProfileState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementQueryState;
 import com.yunxin.cb.mall.entity.meta.ReimbursementState;
+import com.yunxin.cb.mall.exception.CommonException;
 import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.restful.ResponseResult;
 import com.yunxin.cb.mall.restful.meta.Result;
@@ -99,7 +100,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
             //根据ReimbursementQueryId查询
             ReimbursementQuery reimbursementQuery = reimbursementQueryMapper.selectByPrimaryKeyAndCustomerId(addReimbursementRequestVO.getReimbursementQueryId(),customerId);
             if(reimbursementQuery.getReimbursementQueryState().getName().equals(ReimbursementQueryState.CANNOT_REIMBURSEMENT)){
-                return null;
+                throw new CommonException("有报过账的订单");
             }
             //获取商品分类
             Catalog catalog = catalogMapper.selectByCommodityId(reimbursementQuery.getCommodityId());
@@ -214,7 +215,7 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
     public AlreadyReimbursementVO selectAlreadyReimbursementDetail(int reimbursementId,int customerId)throws Exception{
         Reimbursement reimbursement = reimbursementMapper.selectByPrimaryKeyAndCustomerId(reimbursementId,customerId);
         if(null == reimbursement){
-            return null;
+            throw new CommonException("该报账单不存在");
         }
         //税点
         Profile profile = profileMapper.getProfileByName(ProfileState.TAX_RATE.name());
@@ -237,6 +238,8 @@ public class ReimbursementQueryServiceImpl implements ReimbursementQueryService 
                 alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());
             }else if(list.size() > 1){
                 //到账时间
+                ReimbursementProcess reimbursementProcesses = list.get(0);
+                alreadyReimbursementVO.setOperationTime(reimbursementProcesses.getCreateTime());
                 ReimbursementProcess reimbursementProcess = list.get(list.size()-1);
                 alreadyReimbursementVO.setExaminationTime(reimbursementProcess.getCreateTime());
                 alreadyReimbursementVO.setRemarks(reimbursementProcess.getRemarks());

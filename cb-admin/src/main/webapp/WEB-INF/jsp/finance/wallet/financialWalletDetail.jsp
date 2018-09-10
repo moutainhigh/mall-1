@@ -62,7 +62,7 @@
                 <ul class="breadcrumb">
                     <li><a href="#">首页</a></li>
                     <li><a href="#">财务管理</a></li>
-                    <li class="active"><a href="#">负债管理</a></li>
+                    <li class="active"><a href="#">负债详情</a></li>
                 </ul>
             </div>
             <div class="pull-right">
@@ -74,7 +74,7 @@
         <header id="header-sec">
             <div class="inner-padding">
                 <div class="pull-left">
-                    <h2>负债管理</h2>
+                    <h2>负债详情</h2>
                 </div>
             </div>
         </header>
@@ -123,7 +123,7 @@
                 <div class="toolbar responsive-helper">
                     <header>
                         <div class="pull-left">
-                            <h3>负债列表</h3>
+                            <h3>负债详情</h3>
                         </div>
                     </header>
                 </div>

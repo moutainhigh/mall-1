@@ -1,4 +1,5 @@
 <%@ taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html class="no-js">                       <!--<![endif]-->
@@ -9,19 +10,19 @@
     <script type="text/javascript">
         function getStateName(data){
             switch (data){
-                case "WAIT_LOAN":{
+                case "WAIT_AUDIT":{
                     return "申请";
                 }
-                case "APPLY_SUCCESS":{
+                case "AUDIT_PASS":{
                     return "已审核";
                 }
-                case "APPLY_FAILURE":{
+                case "AUDIT_REFUSE":{
                     return "已拒绝";
                 }
                 case "CANCELED":{
                     return "已取消";
                 }
-                case "APPLY_TRANSFERRED":{
+                case "TRANSFERRED":{
                     return "已转账";
                 }
             }
@@ -32,10 +33,10 @@
                 case "NON_REPAYMENT":{
                     return "未还款";
                 }
-                case "OVERDUE":{
+                case "OVERDUE_REPAYMENT":{
                     return "已逾期";
                 }
-                case "APPLY_REIMBURSEMENT":{
+                case "ALREADY_REPAYMENT":{
                     return "已还款";
                 }
             }
@@ -208,7 +209,7 @@
                             <kendo:grid-column title="借款利率" filterable="false" field="interestRate" width="100px" />
                             <kendo:grid-column title="应还总金额" filterable="false" field="repayAmount" width="100px" />
                             <kendo:grid-column title="利息" filterable="false" field="interest" width="100px" />
-                            <kendo:grid-column title="最后还款日" filterable="false" field="finalRepaymentTime" width="100px" />
+                            <kendo:grid-column title="最后还款日" filterable="false" field="finalRepaymentTime" width="100px" template="#= kendo.toString(kendo.parseDate(finalRepaymentTime, 'yyyy-MM-dd'), 'yyyy-MM-dd') #"/>
                             <kendo:grid-column title="借款状态" filterable="false" field="state" width="100px" template="#=getStateName(state)#"/>
                             <kendo:grid-column title="还款状态" filterable="false" field="repaymentState" width="100px" template="#=getTypeName(repaymentState)#"/>
                             <kendo:grid-column title="借款时间" filterable="false" field="createTime" width="100px" />

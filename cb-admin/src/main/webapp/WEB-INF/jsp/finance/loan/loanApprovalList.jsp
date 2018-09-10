@@ -1,4 +1,5 @@
 <%@ taglib prefix="kendo" uri="http://www.kendoui.com/jsp/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html class="no-js">                       <!--<![endif]-->
@@ -7,12 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>借款审批</title>
     <script type="text/javascript">
-        function getStateName(data){
-            switch (data){
-                case "WAIT_LOAN":{
+        function getState(state){
+            switch (state){
+                case "WAIT_AUDIT":{
                     return "审批中";
                 }
-                case "APPLY_SUCCESS":{
+                case "AUDIT_PASS":{
                     return "转账确认中";
                 }
                 case "APPLY_FAILURE":{
@@ -164,11 +165,11 @@
                             <div class="toolbar-field">
                                 <select data-filter="state" data-operator="eq" class="form-control  grid-filter">
                                     <option value="">全部</option>
-                                    <option value="WAIT_LOAN">审批中</option>
-                                    <option value="APPLY_SUCCESS">转账确认中</option>
-                                    <option value="APPLY_FAILURE">已拒绝</option>
+                                    <option value="WAIT_AUDIT">审批中</option>
+                                    <option value="AUDIT_PASS">转账确认中</option>
+                                    <option value="AUDIT_REFUSE">已拒绝</option>
                                     <option value="CANCELED">已取消</option>
-                                    <option value="APPLY_TRANSFERRED">已转账</option>
+                                    <option value="TRANSFERRED">已转账</option>
                                 </select>
                             </div>
                             <div class="toolbar-field">
@@ -229,9 +230,9 @@
                             <kendo:grid-column title="借款利率" filterable="false" field="interestRate" width="100px" />
                             <kendo:grid-column title="应还总金额" filterable="false" field="repayAmount" width="100px" />
                             <kendo:grid-column title="利息" filterable="false" field="interest" width="100px" />
-                            <kendo:grid-column title="最后还款日" filterable="false" field="finalRepaymentTime" width="100px" />
-                            <kendo:grid-column title="借款状态" filterable="false" field="state" width="100px" template="#=getStateName(state)#"/>
-                            <kendo:grid-column title="借款时间" filterable="false" field="createTime" width="100px" />
+                            <kendo:grid-column title="最后还款日" filterable="false" field="finalRepaymentTime" width="100px" template="#= kendo.toString(kendo.parseDate(finalRepaymentTime, 'yyyy-MM-dd'), 'yyyy-MM-dd') #"/>
+                            <kendo:grid-column title="借款状态" filterable="false" field="state" width="100px" template="#=getState(state)#"/>
+                            <kendo:grid-column title="借款时间" filterable="false" field="createTime" width="100px" format="{0:yyyy-MM-dd}"/>
                             <kendo:grid-column title="借款账户" filterable="false" field="bank.bankCardNumber" width="100px" />
                         </kendo:grid-columns>
                         <kendo:dataSource serverPaging="true" serverFiltering="true" serverSorting="true">
