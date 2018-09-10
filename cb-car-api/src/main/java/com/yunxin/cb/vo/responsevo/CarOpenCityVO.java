@@ -1,5 +1,6 @@
 package com.yunxin.cb.vo.responsevo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 /** 
  * 已开通城市表Vo
  */
+@ApiModel(value="开通城市VO",description="开通城市_VO对象(热门城市和城市共用) CarOpenCityVO")
 public class CarOpenCityVO implements Serializable {
 	
 	private static final long serialVersionUID = 1l;

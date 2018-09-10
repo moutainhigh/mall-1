@@ -131,8 +131,15 @@ position,real_name,sex,user_name,seller_id
 <select id="getSysUser" resultMap="UserInfo">
 	select <include refid="AllColumnlist"/> from USER_INFO
 	<where>
-		USER_NAME=#{0}
-		and PASSWORD=#{1}
+		USER_NAME=#{loginName}
+		and PASSWORD=#{loginPassword}
+	</where>
+</select>
+
+<select id="getSysUserByUserName" resultMap="UserInfo">
+	select <include refid="AllColumnlist"/> from USER_INFO
+	<where>
+		USER_NAME=#{userName}
 	</where>
 </select>
 

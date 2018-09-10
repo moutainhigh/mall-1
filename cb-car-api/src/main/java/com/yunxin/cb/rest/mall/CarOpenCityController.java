@@ -25,7 +25,7 @@ public class CarOpenCityController extends BaseResource {
     @Resource
     private CarOpenCityService carOpenCityService;
 
-    @ApiOperation(value = "查询所有开通城市 V1")
+    @ApiOperation(value = "查询所有开通城市 V1 (返回集合两个:热门城市[cityList]和城市列表[hotCityList]")
     @ApiImplicitParams({
     })
     @GetMapping(value = "opencity/list")
