@@ -67,6 +67,8 @@ public class CarOrder extends Entity<Long> {
 	private BigDecimal nakedCarPrice;
 	//提车门店
 	private Integer carAgencyLiftId;
+	//车牌号
+	private String carNum;
 	//二手车实际评估价
 	private BigDecimal usedCarActualPrice;
 	//二手车信息ID
@@ -333,6 +335,14 @@ public class CarOrder extends Entity<Long> {
 		this.carAgencyLiftId = carAgencyLiftId;
 	}
 	
+	public String getCarNum(){
+		return carNum;
+	}
+	
+	public void setCarNum(String carNum){
+		this.carNum = carNum;
+	}
+	
 	public BigDecimal getUsedCarActualPrice(){
 		return usedCarActualPrice;
 	}
@@ -479,9 +489,9 @@ public class CarOrder extends Entity<Long> {
 		 + ", earnest = " + earnest + ", paymentType = " + paymentType + ", paymentTime = " + paymentTime + ", paymentTimeStart = " + paymentTimeStart + ", paymentTimeEnd = " + paymentTimeEnd + ", confirmTime = " + confirmTime + ", confirmTimeStart = " + confirmTimeStart + ", confirmTimeEnd = " + confirmTimeEnd
 		 + ", discountTotal = " + discountTotal + ", tailMoney = " + tailMoney + ", tailPaymentType = " + tailPaymentType + ", tailPaymentTime = " + tailPaymentTime + ", tailPaymentTimeStart = " + tailPaymentTimeStart + ", tailPaymentTimeEnd = " + tailPaymentTimeEnd
 		 + ", orderState = " + orderState + ", paymentState = " + paymentState + ", carModelId = " + carModelId + ", nakedCarPrice = " + nakedCarPrice
-		 + ", carAgencyLiftId = " + carAgencyLiftId + ", usedCarActualPrice = " + usedCarActualPrice + ", carUsedId = " + carUsedId + ", carAgencyAssessId = " + carAgencyAssessId
-		 + ", buyerMessage = " + buyerMessage + ", paymentSequence = " + paymentSequence + ", finishTime = " + finishTime + ", finishTimeStart = " + finishTimeStart + ", finishTimeEnd = " + finishTimeEnd + ", remark = " + remark
-		 + ", isDelete = " + isDelete + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd
+		 + ", carAgencyLiftId = " + carAgencyLiftId + ", carNum = " + carNum + ", usedCarActualPrice = " + usedCarActualPrice + ", carUsedId = " + carUsedId
+		 + ", carAgencyAssessId = " + carAgencyAssessId + ", buyerMessage = " + buyerMessage + ", paymentSequence = " + paymentSequence + ", finishTime = " + finishTime + ", finishTimeStart = " + finishTimeStart + ", finishTimeEnd = " + finishTimeEnd
+		 + ", remark = " + remark + ", isDelete = " + isDelete + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd
 		+"]";
 	}
 }

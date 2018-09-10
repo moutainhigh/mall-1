@@ -231,4 +231,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return userInfoDao.getSysUser(loginName, loginPassword);
 	}
 
+	@Override
+	public UserInfo getSysUserByUserName(String userName) {
+		return userInfoDao.getSysUserByUserName(userName);
+	}
+
 }
