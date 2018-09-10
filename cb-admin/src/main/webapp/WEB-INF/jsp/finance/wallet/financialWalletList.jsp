@@ -74,14 +74,14 @@
                     <form style="width: 100%">
                         <div class="pull-left">
                             <div class="toolbar-field">
-                                <strong>借款人:</strong>
+                                <strong>负债人:</strong>
                                 <input type="hidden" id="withdrawIdHid" name="withdrawId">
                             </div>
                             <div class="toolbar-field">
                                 <input type="text"  data-filter="customer.realName" data-operator="contains" class="form-control grid-filter" placeholder="请输入借款人"/>
                             </div>
                             <div class="toolbar-field">
-                                <strong>借款人手机号 :</strong>
+                                <strong>负债人手机号 :</strong>
                             </div>
                             <div class="toolbar-field">
                                 <input type="text"  data-filter="customer.mobile" data-operator="contains" class="form-control grid-filter" placeholder="请输入借款人手机号"/>
