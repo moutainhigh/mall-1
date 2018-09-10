@@ -1,9 +1,9 @@
 [
   {
-    "name": "商品管理", "code": "3", "type": "MENU", "cssClass": "fa fa-gift", "value": "commodity", "childrenCssClass": "children",
+    "name": "分类管理", "code": "1", "type": "MENU", "cssClass": "fa fa-gift", "value": "base", "childrenCssClass": "children",
     "children": [
       {
-        "name": "品牌管理", "code": "31", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../commodity/brands.do"
+        "name": "基础数据管理", "code": "11", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../base/carBaseData.do"
       }
     ]
   }
