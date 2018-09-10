@@ -25,7 +25,7 @@
                 case "INSURANCE_REBATE_REPAYMENT":{
                     return "保险返利还款";
                 }
-                case "COMMODITY_REIMBURESE_REPAYMENT":{
+                case "COMMODITY_REIMBURSEMENT_REPAYMENT":{
                     return "商品报账还款";
                 }
                 case "MANUAL_REIMBURSEMENT_REPAYMENT":{

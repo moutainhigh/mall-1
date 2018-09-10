@@ -3,6 +3,7 @@ package com.yunxin.cb.mall.entity;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.yunxin.cb.mall.entity.meta.WithdrawState;
 import com.yunxin.cb.mall.entity.meta.WithdrawType;
+import com.yunxin.cb.rb.entity.meta.LoanRepaymentType;
 import com.yunxin.core.web.json.serializer.JsonTimestampSerializer;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -218,5 +219,15 @@ public class FinancialWithdraw implements Serializable {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public void setWithdrawTypeOnPayment(LoanRepaymentType type) {
+            if (LoanRepaymentType.INSURANCE_REBATE_REPAYMENT.equals(type)) {
+                this.withdrawType = WithdrawType.BX;
+            }else if (LoanRepaymentType.COMMODITY_REIMBURSEMENT_REPAYMENT.equals(type)) {
+                this.withdrawType = WithdrawType.BZ;
+            }else if (LoanRepaymentType.CAR_REBATE_REPAYMENT.equals(type)) {
+                this.withdrawType = WithdrawType.CAR;
+            }
     }
 }

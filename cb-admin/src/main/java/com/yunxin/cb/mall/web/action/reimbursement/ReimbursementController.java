@@ -23,8 +23,10 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/reimbursement")
 public class ReimbursementController {
+
     @Resource
     private IReimbursementService iReimbursementService;
+
     @RequestMapping(value = "reimbursements", method = RequestMethod.GET)
     public String reimbursements() {
         return "rb/reimbursements";
@@ -34,6 +36,7 @@ public class ReimbursementController {
     public String reimbursementEa() {
         return "rb/reimbursementEa";
     }
+
     @RequestMapping(value = "reimbursementEam", method = RequestMethod.GET)
     public String reimbursementEam() {
         return "rb/reimbursementEam";

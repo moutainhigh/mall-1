@@ -5,18 +5,17 @@ import com.yunxin.cb.mall.dao.OrderItemDao;
 import com.yunxin.cb.mall.dao.ProductDao;
 import com.yunxin.cb.mall.entity.OrderItem;
 import com.yunxin.cb.mall.entity.Product;
-import com.yunxin.cb.mall.entity.meta.WithdrawType;
-import com.yunxin.cb.mall.service.IFinancialWalletService;
+import com.yunxin.cb.mall.service.imp.FinancialLoanRepaymentService;
 import com.yunxin.cb.rb.dao.FundsPoolDao;
 import com.yunxin.cb.rb.dao.ReimbursementDao;
 import com.yunxin.cb.rb.dao.ReimbursementOrderDao;
 import com.yunxin.cb.rb.dao.ReimbursementProcessDao;
 import com.yunxin.cb.rb.entity.*;
+import com.yunxin.cb.rb.entity.meta.LoanRepaymentType;
 import com.yunxin.cb.rb.entity.meta.ReimbursementProcessType;
 import com.yunxin.cb.rb.entity.meta.ReimbursementType;
 import com.yunxin.cb.rb.entity.meta.RepaymentType;
 import com.yunxin.cb.rb.service.IReimbursementService;
-import com.yunxin.cb.search.vo.ResponseResult;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.slf4j.Logger;
@@ -30,7 +29,6 @@ import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 报账信息wangteng
@@ -54,9 +52,8 @@ public class ReimbursementService implements IReimbursementService {
     private FundsPoolDao fundsPoolDao;
     @Resource
     private FundsPoolService fundsPoolService;
-
     @Resource
-    private IFinancialWalletService iFinancialWalletService;
+    private FinancialLoanRepaymentService loanRepaymentService;
 
     @Override
     public Page<Reimbursement> pageReimbursement(PageSpecification<Reimbursement> query,int orderState) {
@@ -160,86 +157,69 @@ public class ReimbursementService implements IReimbursementService {
     }
 
     @Override
-    public String reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType,String remarks,int operType, User user) {
+    @Transactional
+    public String reimbursementAuditing(int reimbursementId, ReimbursementType reimbursementType, String remarks, int operType, User user) {
 
-    try {
-
-       Reimbursement reimbursement=getReimbursement(reimbursementId);
-//        User user = (User) request.getSession().getAttribute("loginSession");
+        Reimbursement reimbursement = getReimbursement(reimbursementId);
         //TODO 审批不通过需重新生成订单详情
-        ReimbursementProcess reimbursementProcess=new ReimbursementProcess();
-        switch (reimbursementType){
+        ReimbursementProcess reimbursementProcess = new ReimbursementProcess();
+        switch (reimbursementType) {
             //财务人员审批
             case FINANCE_IN_APPROVAL:
-                if(!reimbursement.getOrderState().equals(ReimbursementType.FINANCE_IN_APPROVAL)){
+                if (!reimbursement.getOrderState().equals(ReimbursementType.FINANCE_IN_APPROVAL)) {
                     return "操作失败";
                 }
 
                 //审核通过
-                if(operType==1){
+                if (operType == 1) {
                     reimbursementProcess.setOrderState(ReimbursementProcessType.FINANCE_IN_APPROVAL);
-                    reimbursementDao.updateReimbursementState(ReimbursementType.DIRECTOR_IN_APPROVAL,reimbursementId);
-                }else{
+                    reimbursementDao.updateReimbursementState(ReimbursementType.DIRECTOR_IN_APPROVAL, reimbursementId);
+                } else {
                     reimbursementProcess.setOrderState(ReimbursementProcessType.FINANCE_NOT_PASS_THROUGH);
-                    reimbursementDao.updateReimbursementState(ReimbursementType.NOT_PASS_THROUGH,reimbursementId);
+                    reimbursementDao.updateReimbursementState(ReimbursementType.NOT_PASS_THROUGH, reimbursementId);
                 }
 
                 break;
             //财务主管审批
             case DIRECTOR_IN_APPROVAL:
-                if(!reimbursement.getOrderState().equals(ReimbursementType.DIRECTOR_IN_APPROVAL)){
+                if (!reimbursement.getOrderState().equals(ReimbursementType.DIRECTOR_IN_APPROVAL)) {
                     return "操作失败";
                 }
 
                 //审核通过
-                if(operType==1){
-
-                    FundsPool  fundsPool=fundsPoolDao.findByCatalog_CatalogId(reimbursement.getCatalogId());
-                    if(reimbursement.getOrderAmount().compareTo(fundsPool.getFunds())==1){
+                if (operType == 1) {
+                    FundsPool fundsPool = fundsPoolDao.findByCatalog_CatalogId(reimbursement.getCatalogId());
+                    if (reimbursement.getOrderAmount().compareTo(fundsPool.getFunds()) == 1) {
+                        return "操作失败，资金池不足";
+                    }
+                    //更新资金池
+                    if (!fundsPoolService.updateAndCountReimbursementAmout(reimbursementId)) {
                         return "操作失败，资金池不足";
                     }
 
+                    reimbursementProcess.setOrderState(ReimbursementProcessType.DIRECTOR_IN_APPROVAL);
 
-                    //更新资金池
+                    // 自动还款，自动提现
+                    BigDecimal leftAvailableAmount = loanRepaymentService.autoRepay(reimbursement.getOrderAmount(), reimbursement.getCustomer().getCustomerId(),
+                            LoanRepaymentType.COMMODITY_REIMBURSEMENT_REPAYMENT, reimbursement.getReimbursementNo());
+                    //自动还款
+                    BigDecimal repayAmount = reimbursement.getOrderAmount().subtract(leftAvailableAmount);
+                    //实际到账
+                    BigDecimal realMoney = leftAvailableAmount;
 
-                        reimbursementProcess.setOrderState(ReimbursementProcessType.DIRECTOR_IN_APPROVAL);
-
-                        try{
-                            //更新钱包
-                            ResponseResult responseResult= iFinancialWalletService.processCustomerMoney(reimbursement.getCustomer().getCustomerId(),reimbursement.getOrderAmount(),WithdrawType.BZ,"");
-                            Map<String,BigDecimal> map=(Map<String,BigDecimal>)responseResult.getData();
-                            logger.info(map.toString());
-                            if(map!=null){
-                                //自动还款
-                                BigDecimal repayAmount=map.get("repayAmount");
-                                //实际到账
-                                BigDecimal realMoney=map.get("realMoney");
-                                if(!fundsPoolService.updateAndCountReimbursementAmout(reimbursementId)){
-                                    return "操作失败，资金池不足";
-                                }
-
-                                reimbursementDao.updateReimbursementsState(ReimbursementType.ALREADY_TO_ACCOUNT,repayAmount,realMoney, RepaymentType.WALLET,reimbursementId);
-                            }
-                        }catch (RuntimeException e){
-                            logger.error("processCustomerMoney failed", e);
-                            return "操作失败，未找到用户钱包";
-                        }
-                }else{
+                    reimbursementDao.updateReimbursementsState(ReimbursementType.ALREADY_TO_ACCOUNT, repayAmount, realMoney, RepaymentType.WALLET, reimbursementId);
+                } else {
                     reimbursementProcess.setOrderState(ReimbursementProcessType.DIRECTOR_NOT_PASS_THROUGH);
-                    reimbursementDao.updateReimbursementState(ReimbursementType.NOT_PASS_THROUGH,reimbursementId);
+                    reimbursementDao.updateReimbursementState(ReimbursementType.NOT_PASS_THROUGH, reimbursementId);
                 }
                 break;
         }
         reimbursementProcess.setCreateTime(new Date());
-        reimbursementProcess.setRemarks(remarks==null?"":remarks);
+        reimbursementProcess.setRemarks(remarks == null ? "" : remarks);
         reimbursementProcess.setUser(user);
         reimbursementProcess.setReimbursement(reimbursement);
         reimbursementProcessDao.save(reimbursementProcess);
 
-    }catch (Exception e){
-        logger.error("reimbursementAuditing failed", e);
-        return "服务器异常，请稍后重试";
-    }
         return "审核成功";
 
     }

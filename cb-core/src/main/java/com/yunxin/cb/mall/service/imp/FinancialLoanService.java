@@ -1,9 +1,11 @@
 package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.mall.dao.FinancialLoanDao;
+import com.yunxin.cb.mall.entity.Customer_;
 import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.FinancialLoan_;
 import com.yunxin.cb.mall.entity.meta.LoanState;
+import com.yunxin.cb.mall.entity.meta.RepaymentState;
 import com.yunxin.cb.mall.service.IFinancialLoanService;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
@@ -13,10 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -73,5 +72,29 @@ public class FinancialLoanService implements IFinancialLoanService {
     public void updateFinancialLoan(FinancialLoan financialLoan)throws Exception {
         financialLoanDao.updateFinancialLoan(financialLoan.getState(),financialLoan.getLoanId(),new Date(),financialLoan.getAuditRemark());
 
+    }
+
+    @Override
+    public List<FinancialLoan> getByCustomerRepaying(Integer customerId) {
+        return financialLoanDao.findAll(
+                (root, criteriaQuery, criteriaBuilder) -> {
+                    List<Predicate> predicates = new ArrayList<>();
+                    predicates.add(criteriaBuilder.equal(root.get(FinancialLoan_.customer).get(Customer_.customerId), customerId));
+                    predicates.add(criteriaBuilder.equal(root.get(FinancialLoan_.state), LoanState.TRANSFERRED));
+                    predicates.add(criteriaBuilder.notEqual(root.get(FinancialLoan_.repaymentState), RepaymentState.ALREADY_REPAYMENT));
+                    criteriaQuery.orderBy(criteriaBuilder.asc(root.get(FinancialLoan_.createTime)));
+                    // 将所有条件用 and 联合起来
+                    if (predicates.size() > 0) {
+                        return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+                    }
+                    return criteriaBuilder.conjunction();
+                }
+        );
+    }
+
+    @Override
+    public boolean updateFinancialLoanOnVersion(FinancialLoan loan) {
+
+        return financialLoanDao.updateFinancialLoanOnVersion(loan) == 1;
     }
 }

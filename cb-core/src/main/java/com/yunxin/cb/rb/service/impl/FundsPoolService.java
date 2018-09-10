@@ -103,6 +103,7 @@ public class FundsPoolService implements IFundsPoolService {
     }
 
     @Override
+    @Transactional
     public boolean updateFundsAndSaveFundsPoolLog(FundsPool fundsPool,BigDecimal amount,int type,List<FundsPoolLog> fundsPoolLogs) {
         int version = fundsPool.getVersion();
         int poolId = fundsPool.getPoolId();
@@ -115,6 +116,7 @@ public class FundsPoolService implements IFundsPoolService {
     }
 
     @Override
+    @Transactional
     public boolean updateAndCountReimbursementAmout(int transactionId) {
         List<ReimbursementOrder> reimbursementOrders = reimbursementOrderDao.getReimbursementOrderItemById(transactionId);
         Product p = productDao.finByProductId(reimbursementOrders.get(0).getOrderItem().getProduct().getProductId());
@@ -158,6 +160,7 @@ public class FundsPoolService implements IFundsPoolService {
     }
 
     @Override
+    @Transactional
     public boolean updateAndCountOrderAmout(int transactionId) {
         List<OrderItem> orderItems = orderItemDao.findOrderItemsByOrder_OrderId(transactionId);
         List<FundsPoolLog> fundsPoolLogs = new ArrayList<>();

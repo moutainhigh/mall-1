@@ -40,8 +40,7 @@ public class FinancialLoanRepayment {
     /** 创建时间 */
     private Date createTime;
 
-    public FinancialLoanRepayment(Integer repaymentId) {
-        this.repaymentId = repaymentId;
+    public FinancialLoanRepayment() {
     }
 
     public FinancialLoanRepayment(Customer customer, Integer loanId, BigDecimal repayAmount,BigDecimal repayCapital,Date createTime, LoanRepaymentType loanRepaymentType) {
