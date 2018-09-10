@@ -19,6 +19,11 @@ public class CarBaseDataVO implements java.io.Serializable{
     @ApiModelProperty(value="基础数据编码",name="baseDataName",example="0001")
     private String baseDataCode;
     /**
+     * 基础数据值
+     */
+    @ApiModelProperty(value="基础数据值",name="baseDataValue",example="中国")
+    private String baseDataValue;
+    /**
      * 排序
      */
     @ApiModelProperty(value="排序",name="sortOrder",example="1")
@@ -43,6 +48,14 @@ public class CarBaseDataVO implements java.io.Serializable{
 
     public void setBaseDataCode(String baseDataCode) {
         this.baseDataCode = baseDataCode;
+    }
+
+    public String getBaseDataValue() {
+        return baseDataValue;
+    }
+
+    public void setBaseDataValue(String baseDataValue) {
+        this.baseDataValue = baseDataValue;
     }
 
     public Integer getSortOrder() {
