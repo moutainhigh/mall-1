@@ -1,0 +1,235 @@
+.th-tab {
+    width: 1020px;
+
+}
+.div-tab {
+    width: 1000px;
+    border-radius: 5px;
+    border: #000000 solid 1px;
+}
+
+.div-line {
+    text-align: left;
+    margin: -1px;
+    border-bottom: #000000 solid 1px;
+    font-size: 0;
+}
+
+
+.div-line .div-line-con div {
+    display: inline-block;
+}
+
+
+.div-line .div-line-con .i-cb {
+    position: relative;
+    top: 2px;
+    margin-left: 8px;
+}
+
+
+
+.div-win-2{
+    width: 235px;
+}
+
+span{
+    color: #1e1e1e;
+}
+
+
+
+input {
+    border: unset !important;
+    outline:unset;
+}
+
+.div-postcode {
+    border-left: unset !important;
+    float: right;
+    margin-right: 13px;
+    height: 20px;
+}
+
+.al-font {
+    font-size: 13px;
+}
+
+.al-tab {
+    width: 1000px;
+}
+
+.al-line {
+    height: 33px;
+    font-size: 0;
+}
+
+.al-tab .al-line div{
+    display: inline-block !important;
+}
+
+.al-row-2 {
+    margin-top: 6px;
+    margin-left: 80px;
+}
+
+.al-row-sex {
+    margin-left: 80px;
+    margin-right: 55px;
+}
+
+.al-row-date {
+    margin-left: 120px;
+}
+
+.al-row-age {
+    margin-left: 70px;
+}
+
+.al-row-cardType {
+    margin-left: 108px;
+    margin-top: 4px;
+}
+
+.card-num {
+    letter-spacing: 17.8px;
+    margin-left: 120px;
+    width: 200px;
+}
+
+
+
+
+
+.three-span{
+    font-size: 14px;
+}
+.div-line .div-line-con-three{
+    border-left: #000000 solid 1px;
+    display: inline-block;
+    font-size: 13px;
+    box-sizing: border-box;
+    margin-top: -5px;
+    /*margin-bottom: -1px;*/
+    /*margin-top: -1px;*/
+}
+
+.div-line .div-line-con-three div {
+    display: inline-block;
+}
+
+.div-line .div-line-con-three .i-cb {
+    position: relative;
+    top: 2px;
+    margin-left: 8px;
+}
+
+.div-line-con-three .i-cert-code-three {
+    display: inline-block;
+    width: 21px;
+    height: 20px;
+    font-size: 15px;
+    margin-left: -1px;
+    text-align: center;
+    border-radius: 0;
+}
+
+.i-cert-code-four {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    font-size: 15px;
+    margin-left: -1px;
+    text-align: center;
+    border-radius: 0;
+}
+
+.left-span-div{
+    float: left;
+    width: 2%;
+}
+.right-span-div{
+    float: left;
+    width: 97%;
+}
+.a-body-font-three{
+    font-size: 15px;
+    line-height: 27px;
+}
+.d-body-font-three{
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: bold;
+}
+.b-body-font-three{
+    font-size: 15px;
+    line-height: 40px;
+}
+.c-body-font-three{
+    font-size: 18px;
+    line-height: 25px;
+}
+.f-body-font-three{
+    font-size: 15px;
+    line-height: 15px;
+}
+.a-input-div{
+    width: 100px;
+    border-bottom: #000000 solid 1px;
+}
+.b-input-div{
+    width: 40px;
+    border-bottom: #000000 solid 1px;
+}
+
+
+.body-font{
+    font-size: 14px;
+}
+.a-body-font{
+    font-size: 15px;
+    line-height: 27px;
+}
+.d-body-font{
+    font-size: 15.5px;
+    line-height: 32px;
+}
+.b-body-font{
+    font-size: 15px;
+    line-height: 40px;
+}
+.c-body-font{
+    font-size: 14px;
+    line-height: 22px;
+}
+.f-body-font{
+    font-size: 15px;
+    line-height: 22px;
+}
+.div-line .div-line-con-four{
+    border-left: #000000 solid 1px;
+    display: inline-block;
+    font-size: 13px;
+    box-sizing: border-box;
+    /*margin-bottom: -1px;*/
+    /*margin-top: -1px;*/
+}
+
+.div-line .div-line-con-four div {
+    display: inline-block;
+}
+
+.div-line .div-line-con-four .i-cb {
+    position: relative;
+    top: 2px;
+    margin-left: 8px;
+}
+
+.div-line-con-four .i-cert-code {
+    display: inline-block;
+    width: 21px;
+    font-size: 15px;
+    margin-left: -1px;
+    text-align: center;
+    border-radius: 0;
+}
