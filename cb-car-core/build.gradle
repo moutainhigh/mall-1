@@ -69,6 +69,8 @@ dependencies {
 //            "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
             'com.squareup.okhttp3:logging-interceptor:3.8.1'
     )
+    //七牛jar包
+    compile('com.qiniu:qiniu-java-sdk:7.2.+')
     //druid相关jar包
     compile('com.alibaba:druid:1.0.29')
     compile('com.alibaba:druid-spring-boot-starter:1.1.0')

@@ -22,14 +22,14 @@ public class CarModelController extends BaseResource {
 
     @ApiOperation(value = "查询车系下所有车型 V1")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "carSystemId", value = "车系ID", required = true, paramType = "query", dataType = "Integer"),
+            @ApiImplicitParam(name = "sysId", value = "车系ID", required = true, paramType = "query", dataType = "Integer"),
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "query", dataType = "Integer"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "query", dataType = "Integer")
     })
     @PostMapping(value = "carmodel/list")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<CarModelVO>> getCarList(@RequestParam(value = "carSystemId") int carSystemId,
+    public ResponseResult<List<CarModelVO>> getCarList(@RequestParam(value = "sysId") int sysId,
             @RequestParam(value = "pageNo") int pageNo,@RequestParam(value = "pageSize") int pageSize) {
         List<CarModelVO> listVo = new ArrayList<>();
         CarModelVO car = new CarModelVO();
