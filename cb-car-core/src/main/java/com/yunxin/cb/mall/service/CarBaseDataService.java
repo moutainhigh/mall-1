@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.common.BaseService;
 import com.yunxin.cb.mall.common.PageFinder;
 import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.entity.CarBaseData;
+import com.yunxin.cb.mall.vo.TreeViewItem;
 
 /**
  * 基础数据表 服务接口类
@@ -72,5 +73,22 @@ public interface CarBaseDataService extends BaseService {
 	 * @param obj
 	 */
 	public void fillDefaultValues(CarBaseData obj);
-		
+
+	/**
+	 * @title: 获取所有数据并封装成树
+	 * @param: []
+	 * @return: com.yunxin.cb.mall.vo.TreeViewItem
+	 * @auther: eleven
+	 * @date: 2018/9/11 11:36
+	 */
+	TreeViewItem getDataTree();
+
+	/**
+	 * @title: 停用/启用
+	 * @param: [baseDataId, enabled]
+	 * @return: void
+	 * @auther: eleven
+	 * @date: 2018/9/11 11:21
+	 */
+    boolean enableBaseDataById(int baseDataId, boolean enabled);
 }

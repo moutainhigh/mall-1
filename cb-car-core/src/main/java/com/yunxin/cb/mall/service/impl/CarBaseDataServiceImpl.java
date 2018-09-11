@@ -5,21 +5,20 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
-
+import com.yunxin.cb.mall.vo.TreeViewItem;
+import com.yunxin.cb.util.Constant;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
-
 import com.yunxin.cb.mall.common.PageFinder;
 import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.dao.CarBaseDataDao;
 import com.yunxin.cb.mall.entity.CarBaseData;
 import com.yunxin.cb.mall.service.CarBaseDataService;
 import com.yunxin.cb.util.DateUtils;
-
 /**
  * 基础数据表 服务实现类
  */
@@ -229,4 +228,52 @@ public class CarBaseDataServiceImpl implements CarBaseDataService {
 		}
 	}
 
+	/**
+	 * @title: 获取所有数据并封装成树
+	 * @param: []
+	 * @return: com.yunxin.cb.mall.vo.TreeViewItem
+	 * @auther: eleven
+	 * @date: 2018/9/11 11:36
+	 */
+	@Override
+	public TreeViewItem getDataTree(){
+		CarBaseData queryData=new CarBaseData();
+		queryData.setEnabled(Constant.ENABLED_OK);
+		List<CarBaseData> datas = carBaseDataDao.queryAll(new Query(queryData));
+		CarBaseData data = datas.get(0);
+		datas.remove(data);
+		TreeViewItem root = data.cloneTreeItem();
+		buildCatalogTree(root, datas);
+		return root;
+	}
+
+	/**
+	 * @title: 递归拼接父子节点
+	 * @param: [root, datas]
+	 * @return: void
+	 * @auther: eleven
+	 * @date: 2018/9/11 11:46
+	 */
+	private void buildCatalogTree(TreeViewItem root, List<CarBaseData> datas) {
+		for (CarBaseData baseData : datas) {
+			if (Integer.parseInt(root.getId()) == baseData.getParentBaseDataId()) {
+				TreeViewItem newRoot = baseData.cloneTreeItem();
+				root.getItems().add(newRoot);
+				buildCatalogTree(newRoot, datas);
+			}
+		}
+	}
+
+	/**
+	 * @title: 停用/启用
+	 * @param: [catalogId, enabled]
+	 * @return: boolean
+	 * @auther: eleven
+	 * @date: 2018/9/11 11:23
+	 */
+	@Override
+	public boolean enableBaseDataById(int baseDataId, boolean enabled) {
+		int result=carBaseDataDao.enableBaseDataById(baseDataId,enabled);
+		return result>0?true:false;
+	}
 }

@@ -29,7 +29,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
         UserInfo userInfo=(UserInfo)session.getAttribute(IndexController.LOGIN_SESSION);
         if(userInfo==null){
-            response.sendRedirect(request.getContextPath() + "/login.do");
+            response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }
         return true;

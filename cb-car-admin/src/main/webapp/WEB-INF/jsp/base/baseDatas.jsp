@@ -7,7 +7,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>分类管理</title>
+    <jsp:include page="../layouts/left.jsp"/>
     <script type="application/javascript">
+
+        var dataMsg='${dataMsg}';
+        if(dataMsg!=null&&dataMsg!=""){
+            var msgType='${msgType}';
+            commonNotify(dataMsg,msgType==null||msgType==''?"error":msgType);
+        }
+
         //修改
         function editItem(){
             var dataItem=getSelectedTreeListItem("treelist");
@@ -27,14 +35,14 @@
                 bootbox.confirm("确定删除吗？", function(result) {
                     if(result){
                         var catalogId=dataItem.catalogId;
-                        $.get("removeCatalogById.do", {
+                        $.post("removeById.do", {
                             catalogId : catalogId
                         }, function(data) {
-                            if (data != 0) {
-                                commonNotify("删除成功！", "success");
+                            if (data) {
+                                commonNotify("操作成功！", "success");
                                 window.location.href ="catalogs.do";
                             } else {
-                                commonNotify("删除失败!", "error");
+                                commonNotify("操作失败!", "error");
                             }
                         });
                     }
@@ -50,14 +58,13 @@
                     commonNotify("根分类禁止进行停用/启用操作!", "error");
                     return;
                 }
-                $.get("enableCatalogById.do", {
+                $.get("enableBaseDataById.do", {
                     catalogId: dataItem.catalogId,
                     enabled: enabled,
                     rad: Math.random()
                 }, function (data) {
-                    if ("success" == data) {
+                    if (data) {
                         commonNotify("操作成功！", "success");
-                        $("#treelist").data("kendoTreeList").dataSource.read();
                         window.location.href ="catalogs.do";
                     } else {
                         commonNotify("操作失败!", "error");
@@ -68,7 +75,6 @@
     </script>
 </head>
 <body>
-<jsp:include page="../layouts/left.jsp"/>
 
 <div id="main" class="clearfix">
 
@@ -134,7 +140,7 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="toAddCatalog.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
+                                <a href="toAddBaseData.do" class="btn btn-default"><i class="fa fa-plus-circle"></i>&nbsp;新增</a>
                                 <a href="javascript:void(0);" onclick="editItem()" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
                                 <a href="javascript:void(0);" onclick="removeItem();" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
@@ -150,7 +156,6 @@
                         <kendo:treeList-columns>
                             <kendo:treeList-column field="baseDataName" title="分类名称"></kendo:treeList-column>
                             <kendo:treeList-column field="baseDataCode" title="分类编码"></kendo:treeList-column>
-                            <kendo:treeList-column field="parentBaseDataId" title="上级分类"></kendo:treeList-column>
                             <kendo:treeList-column field="remark" title="分类描述"></kendo:treeList-column>
                             <kendo:treeList-column field="sortOrder" title="顺序"></kendo:treeList-column>
                             <kendo:treeList-column field="enabled" title="状态" template="#= enabled ? '启用' : '停用' #"></kendo:treeList-column>
@@ -180,3 +185,11 @@
 </div>
 </body>
 </html>
+<script type="application/javascript">
+
+    var dataMsg='${dataMsg}';
+    if(dataMsg!=null&&dataMsg!=""){
+        var msgType='${msgType}';
+        commonNotify(dataMsg,msgType==null||msgType==''?"error":msgType);
+    }
+</script>

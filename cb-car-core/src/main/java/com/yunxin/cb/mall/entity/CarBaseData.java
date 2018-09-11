@@ -3,6 +3,8 @@ package com.yunxin.cb.mall.entity;
 import java.beans.Transient;
 import java.util.Date;
 import com.yunxin.cb.mall.common.Entity;
+import com.yunxin.cb.mall.vo.TreeViewItem;
+import org.apache.commons.lang.StringUtils;
 
 /** 
  * 基础数据表 数据实体类
@@ -194,6 +196,14 @@ public class CarBaseData extends Entity<Integer> {
 	/*Customized methods start*/
 	
 	/*Customized methods end*/
+
+	public TreeViewItem cloneTreeItem() {
+		TreeViewItem treeViewItem = new TreeViewItem();
+		treeViewItem.setId(String.valueOf(id));
+		treeViewItem.setText(baseDataName);
+		treeViewItem.setTreeLevel(!StringUtils.isEmpty(baseDataCode) ? String.valueOf((baseDataCode.length()/3) - 1) : null);
+		return treeViewItem;
+	}
 	
 	
 	@Override

@@ -61,23 +61,23 @@ public class IndexController extends BaseController {
         return "index";
     }
 
-    @RequestMapping("index.do")
+    @RequestMapping("index")
     public String index(HttpServletRequest request, HttpServletResponse response) {
-        return "redirect:/console/dashboard.do";
+        return "redirect:/console/dashboard";
     }
 
-    @RequestMapping("doLogin.do")
+    @RequestMapping("doLogin")
     public String doDogin(HttpServletRequest request, HttpServletResponse response,String username,String password) throws Exception {
         if(LogicUtils.isNullOrEmpty(username)||LogicUtils.isNullOrEmpty(password)){
             request.setAttribute("errorMessage","帐号或者密码不能为空！");
-            return "forward:login.do";
+            return "forward:login";
         }
 //        password = PasswordHash.createHash(password);
 //        UserInfo user = userInfoService.getSysUserByUserName(username,password);
         UserInfo user = userInfoService.getSysUserByUserName(username);
         if(LogicUtils.isNull(user)){
             request.setAttribute("errorMessage","帐号或者密码错误！");
-            return "forward:login.do";
+            return "forward:login";
         }
         //读取权限数据
         ClassPathResource resource = new ClassPathResource("resources.json");
@@ -108,11 +108,11 @@ public class IndexController extends BaseController {
         redisService.updateRedisByKey(LOGIN_SUCCESS,list);
     }
 
-    @RequestMapping("logout.do")
+    @RequestMapping("logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute(LOGIN_SUCCESS);
-        return "redirect:login.do";
+        return "redirect:login";
     }
 
 }
