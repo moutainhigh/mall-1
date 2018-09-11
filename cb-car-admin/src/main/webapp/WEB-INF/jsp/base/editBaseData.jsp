@@ -7,7 +7,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>新增商品分类</title>
-    <jsp:include page="../layouts/left.jsp"/>
     <script type="application/javascript">
 
         var dataMsg='${dataMsg}';
@@ -23,7 +22,7 @@
     </script>
 </head>
 <body>
-
+<jsp:include page="../layouts/left.jsp"/>
 <div id="main" class="clearfix">
 
     <header id="header-main">

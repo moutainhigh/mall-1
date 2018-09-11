@@ -44,10 +44,6 @@ public class CarBaseDataController extends BaseController {
             }
         });
         modelMap.addAttribute("datas", datas);
-        String dataMsg = (String) request.getParameter("dataMsg");
-        String msgType = (String) request.getParameter("msgType");
-        modelMap.addAttribute("dataMsg", dataMsg);
-        modelMap.addAttribute("msgType", msgType);
         return "base/baseDatas";
     }
 
@@ -120,10 +116,10 @@ public class CarBaseDataController extends BaseController {
         try {
             int result=carBaseDataService.updateCarBaseData(baseData);
             if(result>0){
-                redirect.addAttribute("dataMsg","操作成功");
-                redirect.addAttribute("msgType","success");
+                redirect.addFlashAttribute("dataMsg","操作成功");
+                redirect.addFlashAttribute("msgType","success");
             }else{
-                redirect.addAttribute("dataMsg","操作失败");
+                redirect.addFlashAttribute("dataMsg","操作失败");
             }
         } catch (RuntimeException e) {
             logger.error(e.getMessage());

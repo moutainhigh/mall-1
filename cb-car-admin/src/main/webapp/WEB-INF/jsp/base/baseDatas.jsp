@@ -7,13 +7,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>分类管理</title>
-    <jsp:include page="../layouts/left.jsp"/>
     <script type="application/javascript">
         $(document).ready(function () {
+
+            //显示提示内容
             var dataMsg='${dataMsg}';
             if(dataMsg!=null&&dataMsg!=""){
                 var msgType='${msgType}';
-                commonNotify(dataMsg,msgType==null||msgType==''?"error":msgType);
+                showMsg(dataMsg,msgType==null||msgType==''?"error":msgType);
             }
         })
 
@@ -30,7 +31,7 @@
             var dataItem=getSelectedTreeListItem("treelist");
             if(dataItem){
                 if(dataItem.baseDataCode && dataItem.baseDataCode.length == 3){
-                    commonNotify("根分类禁止删除!", "error");
+                    showMsg("根分类禁止删除!", "error");
                     return;
                 }
                 bootbox.confirm("确定删除吗？", function(result) {
@@ -39,12 +40,9 @@
                             baseDataId : dataItem.id
                         }, function(data) {
                             if (data) {
-                                commonNotify("操作成功！", "success");
-                                setTimeout(function(){
-                                    window.location.href ="carBaseData.do";
-                                },1000);
+                                showMsg("操作成功！", "success", true, "carBaseData.do");
                             } else {
-                                commonNotify("操作失败!", "error");
+                                showMsg("操作失败!", "error");
                             }
                         });
                     }
@@ -57,11 +55,11 @@
             var dataItem = getSelectedTreeListItem("treelist");
             if (dataItem) {
                 if(dataItem.baseDataCode && dataItem.baseDataCode.length == 3){
-                    commonNotify("根分类禁止进行停用/启用操作!", "error");
+                    showMsg("根分类禁止进行停用/启用操作!", "error");
                     return;
                 }
                 if(dataItem.enabled==enabled){
-                    commonNotify("节点已是"+(enabled==0?"停用":"启用")+"状态!", "error");
+                    showMsg("节点已是"+(enabled==0?"停用":"启用")+"状态!", "error");
                     return;
                 }
                 $.get("enableBaseDataById.do", {
@@ -70,12 +68,9 @@
                     rad: Math.random()
                 }, function (data) {
                     if (data) {
-                        commonNotify("操作成功！", "success");
-                        setTimeout(function(){
-                            window.location.href ="carBaseData.do";
-                        },1000);
+                        showMsg("操作成功！", "success", true, "carBaseData.do");
                     } else {
-                        commonNotify("操作失败!", "error");
+                        showMsg("操作失败!", "error");
                     }
                 });
             }
@@ -83,7 +78,7 @@
     </script>
 </head>
 <body>
-
+<jsp:include page="../layouts/left.jsp"/>
 <div id="main" class="clearfix">
 
     <header id="header-main">
@@ -193,11 +188,3 @@
 </div>
 </body>
 </html>
-<script type="application/javascript">
-
-    var dataMsg='${dataMsg}';
-    if(dataMsg!=null&&dataMsg!=""){
-        var msgType='${msgType}';
-        commonNotify(dataMsg,msgType==null||msgType==''?"error":msgType);
-    }
-</script>
