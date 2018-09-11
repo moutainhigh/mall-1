@@ -4,6 +4,7 @@ package com.yunxin.cb.rest.mall;
 import com.jpay.vo.AjaxResult;
 import com.yunxin.cb.annotation.ApiVersion;
 import com.yunxin.cb.mall.entity.meta.ChannelType;
+import com.yunxin.cb.mall.entity.meta.OrderSource;
 import com.yunxin.cb.mall.entity.meta.TerminalType;
 import com.yunxin.cb.mall.service.PaymentService;
 import com.yunxin.cb.meta.Result;
@@ -32,12 +33,15 @@ public class PayResource extends BaseResource {
     @ApiOperation(value = "app支付")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderId", value = "订单id", required = true, paramType = "post", dataType = "int"),
-            @ApiImplicitParam(name = "channcelType", value = "支付渠道", required = true, paramType = "post", dataType = "String")})
+            @ApiImplicitParam(name = "channcelType", value = "支付渠道", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "orderSource", value = "订单来源", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "terminalType", value = "支付终端", required = true, paramType = "post", dataType = "String")})
     @ApiVersion(1)
     @PostMapping(value = "appPay")
-    public ResponseResult appPay(@RequestParam(value = "orderId") int orderId, @RequestParam(value = "channcelType") ChannelType channcelType){
+    public ResponseResult appPay(@RequestParam(value = "orderId") int orderId, @RequestParam(value = "channcelType") ChannelType channcelType,
+                                 @RequestParam(value = "orderSource") OrderSource orderSource, @RequestParam(value = "terminalType") TerminalType terminalType){
         try {
-            AjaxResult result = payService.pay(orderId, getCustomerId(), channcelType, TerminalType.APP);
+            AjaxResult result = payService.pay(orderId, getCustomerId(), channcelType, terminalType);
             if (result != null) {
                 if (result.getCode() == 0) {
                     return new ResponseResult(result.getData());

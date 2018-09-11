@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.service;
 
+import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.core.persistence.PageSpecification;
@@ -26,7 +27,7 @@ public interface IFinancialLoanService {
     /**
      * 修改状态
      */
-    Map<String,Object> undateState(Integer loanId,LoanState state)throws Exception;
+    Map<String,Object> undateState(Integer loanId,LoanState state,User user)throws Exception;
 
     /**
      * 审核
@@ -36,7 +37,7 @@ public interface IFinancialLoanService {
     /**
      * @Author chenpeng
      * @Description 获取用户正在还的贷款，按借款时间正序排序
-     * @Date 2018/9/10 11:38 
+     * @Date 2018/9/10 11:38
      **/
     List<FinancialLoan> getByCustomerRepaying(Integer customerId);
 

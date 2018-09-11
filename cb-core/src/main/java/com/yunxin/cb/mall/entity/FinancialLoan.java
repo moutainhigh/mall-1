@@ -145,7 +145,7 @@ public class FinancialLoan implements Serializable {
     /**
      * 审核人
      */
-    private String Approver;
+    private String approver;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(unique = true, nullable = false, precision = 12, scale = 0)
@@ -349,12 +349,12 @@ public class FinancialLoan implements Serializable {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    @Column(length = 255)
+    @Column(length = 30)
     public String getApprover() {
-        return Approver;
+        return approver;
     }
 
     public void setApprover(String approver) {
-        Approver = approver;
+        this.approver = approver;
     }
 }

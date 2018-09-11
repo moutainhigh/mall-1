@@ -1,5 +1,7 @@
 package com.yunxin.cb.mall.service.imp;
 
+import com.yunxin.cb.console.entity.User;
+import com.yunxin.cb.mall.dao.FinancialLoanBillDao;
 import com.yunxin.cb.mall.dao.FinancialLoanDao;
 import com.yunxin.cb.mall.entity.Customer_;
 import com.yunxin.cb.mall.entity.FinancialLoan;
@@ -23,6 +25,8 @@ public class FinancialLoanService implements IFinancialLoanService {
 
     @Resource
     private FinancialLoanDao financialLoanDao;
+    @Resource
+    private FinancialLoanBillDao financialLoanBillDao;
 
     @Override
     public Page<FinancialLoan> pageServiceFinancialLoan(PageSpecification<FinancialLoan> pageSpecification,int state) {
@@ -55,12 +59,24 @@ public class FinancialLoanService implements IFinancialLoanService {
     }
 
     @Override
-    public Map<String, Object> undateState(Integer loanId ,LoanState state) throws Exception{
+    @Transactional(rollbackFor = Exception.class)
+    public Map<String, Object> undateState(Integer loanId ,LoanState state,User user) throws Exception{
         Map<String,Object> map = new HashMap<>();
         FinancialLoan financialLoan = financialLoanDao.findOne(loanId);
-        //TODO 还需把数据同步到负债记录表里
         if(financialLoan.getState().ordinal() == state.ordinal()){
-            financialLoanDao.updateFinancialLoanStateById(LoanState.TRANSFERRED,loanId,new Date());
+            financialLoanDao.updateFinancialLoanStateById(LoanState.TRANSFERRED,loanId,new Date(),user.getUserName());
+            //TODO 同意还需把数据同步到负债记录表里
+/*            if(state.ordinal() == LoanState.AUDIT_PASS.ordinal()){
+                FinancialLoanBill financialLoanBill = new FinancialLoanBill();
+                financialLoanBill.setCreateTime(new Date());
+                financialLoanBill.setType(CapitalType.SUBTRACT);
+                financialLoanBill.setTransactionType(TransactionType.LOAN);
+                financialLoanBill.setCustomer(financialLoan.getCustomer());
+                financialLoanBill.setAmount(financialLoan.getAmount());
+                financialLoanBillDao.save(financialLoanBill);
+            }else{
+            //TODO 拒绝还需同步更新钱包
+            }*/
             map.put("result","success");
             return map;
         }

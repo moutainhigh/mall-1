@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.web.action.finance;
 
+import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.cb.mall.service.IFinancialLoanService;
@@ -7,13 +8,13 @@ import com.yunxin.cb.security.SecurityConstants;
 import com.yunxin.core.persistence.PageSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Locale;
@@ -123,10 +124,11 @@ public class FinancialLoanController {
 
     @ResponseBody
     @RequestMapping(value = "transferAccounts",method = RequestMethod.GET)
-    public Map<String,Object> transferAccounts(@RequestParam("loanId") int loanId,@RequestParam("state") LoanState state) {
+    public Map<String,Object> transferAccounts(@RequestParam("loanId") int loanId,@RequestParam("state") LoanState state,HttpServletRequest request) {
         Map<String,Object> map = new HashMap<>();
         try{
-            return financialLoanService.undateState(loanId,state);
+            User user = (User) request.getSession().getAttribute("loginSession");
+            return financialLoanService.undateState(loanId,state,user);
         }catch (Exception ex){
             logger.info(ex.getMessage());
             map.put("result","fail");
