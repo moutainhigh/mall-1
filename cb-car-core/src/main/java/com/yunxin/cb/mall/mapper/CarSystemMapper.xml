@@ -4,35 +4,36 @@
 
 <resultMap type="CarSystem" id="CarSystem">
 	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="brand_id" property="brandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="sys_name" property="sysName" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="sys_code" property="sysCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="base_data_id" property="baseDataId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="is_hot" property="isHot" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="main_car" property="mainCar" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="examine_state" property="examineState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="publish_state" property="publishState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="introduce" property="introduce" javaType="java.lang.String" jdbcType="CLOB"/>
-	<result column="explain_info" property="explainInfo" javaType="java.lang.String" jdbcType="CLOB"/>
-	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="brand_id" property="brandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="sys_name" property="sysName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="sys_code" property="sysCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="base_data_id" property="baseDataId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="is_hot" property="isHot" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="main_car" property="mainCar" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="examine_state" property="examineState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="publish_state" property="publishState" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="introduce" property="introduce" javaType="java.lang.String" jdbcType="CLOB"/>
+			<result column="default_pic" property="defaultPic" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="explain_info" property="explainInfo" javaType="java.lang.String" jdbcType="CLOB"/>
+			<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 </resultMap>
 
 
 <!-- 全部字段，一般用于明细查询 -->
 <sql id="AllColumnlist">
 id,brand_id,sys_name,sys_code,base_data_id,is_hot,main_car,
-examine_state,publish_state,introduce,explain_info,create_time,update_time,
-is_delete,operate_id
+examine_state,publish_state,introduce,default_pic,explain_info,create_time,
+update_time,is_delete,operate_id
 </sql>
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
 id,brand_id,sys_name,sys_code,base_data_id,is_hot,main_car,
-examine_state,publish_state,create_time,update_time,
-is_delete,operate_id
+examine_state,publish_state,default_pic,create_time,
+update_time,is_delete,operate_id
 </sql>
 
 <insert id="add" parameterType="CarSystem" useGeneratedKeys="true" keyProperty="id">
@@ -49,6 +50,7 @@ is_delete,operate_id
 		examine_state,
 		publish_state,
 		introduce,
+		default_pic,
 		explain_info,
 		create_time,
 		update_time,
@@ -66,8 +68,9 @@ is_delete,operate_id
 		#{mainCar,jdbcType = INTEGER},
 		#{examineState,jdbcType = INTEGER},
 		#{publishState,jdbcType = INTEGER},
-		#{introduce,jdbcType = CLOB},
-		#{explainInfo,jdbcType = CLOB},
+		#{introduce,jdbcType = CLOB },
+		#{defaultPic,jdbcType = VARCHAR},
+		#{explainInfo,jdbcType = CLOB },
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
 		#{isDelete,jdbcType = INTEGER},
@@ -80,45 +83,63 @@ is_delete,operate_id
 	<set>
 		<if test="brandId!=null ">
 			brand_id=#{brandId,jdbcType = INTEGER},
+
 		</if>
 		<if test="sysName!=null and sysName!=''">
 			sys_name=#{sysName,jdbcType = VARCHAR},
+
 		</if>
 		<if test="sysCode!=null and sysCode!=''">
 			sys_code=#{sysCode,jdbcType = VARCHAR},
+
 		</if>
 		<if test="baseDataId!=null ">
 			base_data_id=#{baseDataId,jdbcType = INTEGER},
+
 		</if>
 		<if test="isHot!=null ">
 			is_hot=#{isHot,jdbcType = INTEGER},
+
 		</if>
 		<if test="mainCar!=null ">
 			main_car=#{mainCar,jdbcType = INTEGER},
+
 		</if>
 		<if test="examineState!=null ">
 			examine_state=#{examineState,jdbcType = INTEGER},
+
 		</if>
 		<if test="publishState!=null ">
 			publish_state=#{publishState,jdbcType = INTEGER},
+
 		</if>
 		<if test="introduce!=null and introduce!=''">
 			introduce=#{introduce,jdbcType = CLOB},
+
+		</if>
+		<if test="defaultPic!=null and defaultPic!=''">
+			default_pic=#{defaultPic,jdbcType = VARCHAR},
+
 		</if>
 		<if test="explainInfo!=null and explainInfo!=''">
 			explain_info=#{explainInfo,jdbcType = CLOB},
+
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="updateTime!=null ">
 			update_time=#{updateTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="isDelete!=null ">
 			is_delete=#{isDelete,jdbcType = INTEGER},
+
 		</if>
 		<if test="operateId!=null ">
 			operate_id=#{operateId,jdbcType = INTEGER},
+
 		</if>
 	</set>
 	<where>
@@ -204,6 +225,9 @@ is_delete,operate_id
 		</if>
 		<if test="q.introduce!=null and q.introduce!=''">
 			AND introduce=#{q.introduce}
+		</if>
+		<if test="q.defaultPic!=null and q.defaultPic!=''">
+			AND default_pic=#{q.defaultPic}
 		</if>
 		<if test="q.explainInfo!=null and q.explainInfo!=''">
 			AND explain_info=#{q.explainInfo}
