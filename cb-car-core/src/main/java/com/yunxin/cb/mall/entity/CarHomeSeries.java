@@ -5,31 +5,24 @@ import java.util.Date;
 import com.yunxin.cb.mall.common.Entity;
 
 /** 
- * 品牌 数据实体类
+ * 汽车之家的车系,与品牌相关 数据实体类
  */
-public class CarBrand extends Entity<Integer> {
+public class CarHomeSeries extends Entity<Integer> {
 	
 	private static final long serialVersionUID = 1l;
 	
 	/*Auto generated properties start*/
 	
+	//汽车车系id
 	private Integer id;
-	//品牌中文名称
-	private String brandName;
-	//品牌英文名称
-	private String brandEnName;
-	//首字母
-	private String initial;
-	//品牌编号
-	private String brandNo;
-	//国家(分类表,国家分类id)
-	private String catalogId;
+	//汽车品牌id
+	private Integer brandId;
+	//汽车车系分组
+	private String seriesGroup;
+	//汽车车系
+	private String series;
 	//是否显示(0否,1是)
 	private Integer isDisplay;
-	//是否热门品牌(0否,1是)
-	private Integer isHot;
-	//备注
-	private String remark;
 	//CREATE_TIME
 	private Date createTime;
 	//CREATE_TIME 时间范围起（查询用）
@@ -42,10 +35,6 @@ public class CarBrand extends Entity<Integer> {
 	private Date updateTimeStart;
 	//UPDATE_TIME 时间范围止（查询用）
 	private Date updateTimeEnd;	
-	//操作人ID
-	private Integer operateId;
-	//默认图片
-	private String defaultPic;
 	
 	/*Auto generated properties end*/
 	
@@ -72,44 +61,28 @@ public class CarBrand extends Entity<Integer> {
 		this.id = id;
 	}
 	
-	public String getBrandName(){
-		return brandName;
+	public Integer getBrandId(){
+		return brandId;
 	}
 	
-	public void setBrandName(String brandName){
-		this.brandName = brandName;
+	public void setBrandId(Integer brandId){
+		this.brandId = brandId;
 	}
 	
-	public String getBrandEnName(){
-		return brandEnName;
+	public String getSeriesGroup(){
+		return seriesGroup;
 	}
 	
-	public void setBrandEnName(String brandEnName){
-		this.brandEnName = brandEnName;
+	public void setSeriesGroup(String seriesGroup){
+		this.seriesGroup = seriesGroup;
 	}
 	
-	public String getInitial(){
-		return initial;
+	public String getSeries(){
+		return series;
 	}
 	
-	public void setInitial(String initial){
-		this.initial = initial;
-	}
-	
-	public String getBrandNo(){
-		return brandNo;
-	}
-	
-	public void setBrandNo(String brandNo){
-		this.brandNo = brandNo;
-	}
-	
-	public String getCatalogId(){
-		return catalogId;
-	}
-	
-	public void setCatalogId(String catalogId){
-		this.catalogId = catalogId;
+	public void setSeries(String series){
+		this.series = series;
 	}
 	
 	public Integer getIsDisplay(){
@@ -118,22 +91,6 @@ public class CarBrand extends Entity<Integer> {
 	
 	public void setIsDisplay(Integer isDisplay){
 		this.isDisplay = isDisplay;
-	}
-	
-	public Integer getIsHot(){
-		return isHot;
-	}
-	
-	public void setIsHot(Integer isHot){
-		this.isHot = isHot;
-	}
-	
-	public String getRemark(){
-		return remark;
-	}
-	
-	public void setRemark(String remark){
-		this.remark = remark;
 	}
 	
 	public Date getCreateTime(){
@@ -184,22 +141,6 @@ public class CarBrand extends Entity<Integer> {
 		this.updateTimeEnd = updateTimeEnd;
 	}	
 	
-	public Integer getOperateId(){
-		return operateId;
-	}
-	
-	public void setOperateId(Integer operateId){
-		this.operateId = operateId;
-	}
-	
-	public String getDefaultPic(){
-		return defaultPic;
-	}
-	
-	public void setDefaultPic(String defaultPic){
-		this.defaultPic = defaultPic;
-	}
-	
 	
 	/*Auto generated methods end*/
 	
@@ -212,11 +153,9 @@ public class CarBrand extends Entity<Integer> {
 	
 	@Override
 	public String toString() {
-		return "CarBrand ["
-		 + "id = " + id + ", brandName = " + brandName + ", brandEnName = " + brandEnName + ", initial = " + initial
-		 + ", brandNo = " + brandNo + ", catalogId = " + catalogId + ", isDisplay = " + isDisplay + ", isHot = " + isHot
-		 + ", remark = " + remark + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", operateId = " + operateId
-		 + ", defaultPic = " + defaultPic
+		return "CarHomeSeries ["
+		 + "id = " + id + ", brandId = " + brandId + ", seriesGroup = " + seriesGroup + ", series = " + series
+		 + ", isDisplay = " + isDisplay + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd
 		+"]";
 	}
 }

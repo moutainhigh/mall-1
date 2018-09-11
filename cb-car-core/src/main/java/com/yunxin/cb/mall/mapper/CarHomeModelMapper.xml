@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yunxin.cb.mall.dao.CarHomeBrandDao">
+<mapper namespace="com.yunxin.cb.mall.dao.CarHomeModelDao">
 
-<resultMap type="CarHomeBrand" id="CarHomeBrand">
+<resultMap type="CarHomeModel" id="CarHomeModel">
 	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-			<result column="initial" property="initial" javaType="java.lang.String" jdbcType="VARCHAR"/>
-			<result column="brand_name" property="brandName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="series_id" property="seriesId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="car_model" property="carModel" javaType="java.lang.String" jdbcType="VARCHAR"/>
 			<result column="is_display" property="isDisplay" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 			<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 			<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -14,21 +14,21 @@
 
 <!-- 全部字段，一般用于明细查询 -->
 <sql id="AllColumnlist">
-id,initial,brand_name,is_display,create_time,update_time
+id,series_id,car_model,is_display,create_time,update_time
 </sql>
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
-id,initial,brand_name,is_display,create_time,update_time
+id,series_id,is_display,create_time,update_time
 </sql>
 
-<insert id="add" parameterType="CarHomeBrand" useGeneratedKeys="true" keyProperty="id">
-	insert into CAR_HOME_BRAND(
+<insert id="add" parameterType="CarHomeModel" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_HOME_MODEL(
 		<if test="id!=null">
 		id,
 		</if>
-		initial,
-		brand_name,
+		series_id,
+		car_model,
 		is_display,
 		create_time,
 		update_time
@@ -36,23 +36,23 @@ id,initial,brand_name,is_display,create_time,update_time
 		<if test="id!=null">
 		#{id,jdbcType = INTEGER},
 		</if>
-		#{initial,jdbcType = VARCHAR},
-		#{brandName,jdbcType = VARCHAR},
+		#{seriesId,jdbcType = INTEGER},
+		#{carModel,jdbcType = VARCHAR},
 		#{isDisplay,jdbcType = INTEGER},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP}
 	)
 </insert>
 
-<update id="update" parameterType="CarHomeBrand">
-	update CAR_HOME_BRAND 
+<update id="update" parameterType="CarHomeModel">
+	update CAR_HOME_MODEL 
 	<set>
-		<if test="initial!=null and initial!=''">
-			initial=#{initial,jdbcType = VARCHAR},
+		<if test="seriesId!=null ">
+			series_id=#{seriesId,jdbcType = INTEGER},
 
 		</if>
-		<if test="brandName!=null and brandName!=''">
-			brand_name=#{brandName,jdbcType = VARCHAR},
+		<if test="carModel!=null and carModel!=''">
+			car_model=#{carModel,jdbcType = VARCHAR},
 
 		</if>
 		<if test="isDisplay!=null ">
@@ -74,42 +74,42 @@ id,initial,brand_name,is_display,create_time,update_time
 </update>
 
 <delete id="delete">
-	delete from CAR_HOME_BRAND 
+	delete from CAR_HOME_MODEL 
 	<where>
 		id=#{0}
 	</where>
 </delete>
 
-<select id="get" resultMap="CarHomeBrand">
-	select <include refid="AllColumnlist"/> from CAR_HOME_BRAND
+<select id="get" resultMap="CarHomeModel">
+	select <include refid="AllColumnlist"/> from CAR_HOME_MODEL
 	<where>
 		id=#{0}
 	</where>
 </select>
 
-<select id="getByIds" resultMap="CarHomeBrand">
-	select <include refid="AllColumnlist"/> from CAR_HOME_BRAND
+<select id="getByIds" resultMap="CarHomeModel">
+	select <include refid="AllColumnlist"/> from CAR_HOME_MODEL
 	<where>
 		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
 	</where>
 </select>
 
 <select id="count" parameterType="Query" resultType="Long">
-	select count(id) from CAR_HOME_BRAND 
+	select count(id) from CAR_HOME_MODEL 
 	<where>
 	<include refid="listCommonWhere"/>
 	</where>
 </select>
 
-<select id="queryAll" parameterType="Query" resultMap="CarHomeBrand">
-	select <include refid="CommonColumnlist"/> from CAR_HOME_BRAND 
+<select id="queryAll" parameterType="Query" resultMap="CarHomeModel">
+	select <include refid="CommonColumnlist"/> from CAR_HOME_MODEL 
 	<where>
 	<include refid="listCommonWhere"/>
 	</where>
 </select>
 
-<select id="pageList" parameterType="Query" resultMap="CarHomeBrand">
-	select <include refid="CommonColumnlist"/> from CAR_HOME_BRAND
+<select id="pageList" parameterType="Query" resultMap="CarHomeModel">
+	select <include refid="CommonColumnlist"/> from CAR_HOME_MODEL
 	<where>
 	 <include refid="listCommonWhere"/>
 	</where>
@@ -122,11 +122,11 @@ id,initial,brand_name,is_display,create_time,update_time
 		<if test="q.id!=null ">
 			AND id=#{q.id}
 		</if>
-		<if test="q.initial!=null and q.initial!=''">
-			AND initial=#{q.initial}
+		<if test="q.seriesId!=null ">
+			AND series_id=#{q.seriesId}
 		</if>
-		<if test="q.brandName!=null and q.brandName!=''">
-			AND brand_name=#{q.brandName}
+		<if test="q.carModel!=null and q.carModel!=''">
+			AND car_model=#{q.carModel}
 		</if>
 		<if test="q.isDisplay!=null ">
 			AND is_display=#{q.isDisplay}

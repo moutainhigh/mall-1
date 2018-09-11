@@ -4,30 +4,33 @@
 
 <resultMap type="CarBrand" id="CarBrand">
 	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="brand_name" property="brandName" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="brand_en_name" property="brandEnName" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="initial" property="initial" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="brand_no" property="brandNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="catalog_id" property="catalogId" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="is_display" property="isDisplay" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="is_hot" property="isHot" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="brand_name" property="brandName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="brand_en_name" property="brandEnName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="initial" property="initial" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="brand_no" property="brandNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="catalog_id" property="catalogId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="is_display" property="isDisplay" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="is_hot" property="isHot" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="default_pic" property="defaultPic" javaType="java.lang.String" jdbcType="VARCHAR"/>
 </resultMap>
 
 
 <!-- 全部字段，一般用于明细查询 -->
 <sql id="AllColumnlist">
 id,brand_name,brand_en_name,initial,brand_no,catalog_id,is_display,
-is_hot,remark,create_time,update_time,operate_id
+is_hot,remark,create_time,update_time,operate_id,default_pic
+
 </sql>
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
 id,brand_name,brand_en_name,initial,brand_no,catalog_id,is_display,
-is_hot,remark,create_time,update_time,operate_id
+is_hot,remark,create_time,update_time,operate_id,default_pic
+
 </sql>
 
 <insert id="add" parameterType="CarBrand" useGeneratedKeys="true" keyProperty="id">
@@ -45,7 +48,8 @@ is_hot,remark,create_time,update_time,operate_id
 		remark,
 		create_time,
 		update_time,
-		operate_id
+		operate_id,
+		default_pic
 	) values (
 		<if test="id!=null">
 		#{id,jdbcType = INTEGER},
@@ -60,7 +64,8 @@ is_hot,remark,create_time,update_time,operate_id
 		#{remark,jdbcType = VARCHAR},
 		#{createTime,jdbcType = TIMESTAMP},
 		#{updateTime,jdbcType = TIMESTAMP},
-		#{operateId,jdbcType = INTEGER}
+		#{operateId,jdbcType = INTEGER},
+		#{defaultPic,jdbcType = VARCHAR}
 	)
 </insert>
 
@@ -69,36 +74,51 @@ is_hot,remark,create_time,update_time,operate_id
 	<set>
 		<if test="brandName!=null and brandName!=''">
 			brand_name=#{brandName,jdbcType = VARCHAR},
+
 		</if>
 		<if test="brandEnName!=null and brandEnName!=''">
 			brand_en_name=#{brandEnName,jdbcType = VARCHAR},
+
 		</if>
 		<if test="initial!=null and initial!=''">
 			initial=#{initial,jdbcType = VARCHAR},
+
 		</if>
 		<if test="brandNo!=null and brandNo!=''">
 			brand_no=#{brandNo,jdbcType = VARCHAR},
+
 		</if>
 		<if test="catalogId!=null and catalogId!=''">
 			catalog_id=#{catalogId,jdbcType = VARCHAR},
+
 		</if>
 		<if test="isDisplay!=null ">
 			is_display=#{isDisplay,jdbcType = INTEGER},
+
 		</if>
 		<if test="isHot!=null ">
 			is_hot=#{isHot,jdbcType = INTEGER},
+
 		</if>
 		<if test="remark!=null and remark!=''">
 			remark=#{remark,jdbcType = VARCHAR},
+
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="updateTime!=null ">
 			update_time=#{updateTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="operateId!=null ">
 			operate_id=#{operateId,jdbcType = INTEGER},
+
+		</if>
+		<if test="defaultPic!=null and defaultPic!=''">
+			default_pic=#{defaultPic,jdbcType = VARCHAR},
+
 		</if>
 	</set>
 	<where>
@@ -199,6 +219,9 @@ is_hot,remark,create_time,update_time,operate_id
 		</if>
 		<if test="q.operateId!=null ">
 			AND operate_id=#{q.operateId}
+		</if>
+		<if test="q.defaultPic!=null and q.defaultPic!=''">
+			AND default_pic=#{q.defaultPic}
 		</if>
 	</if>
 </sql>
