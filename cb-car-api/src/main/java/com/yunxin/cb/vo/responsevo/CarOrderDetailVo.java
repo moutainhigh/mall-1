@@ -52,14 +52,14 @@ public class CarOrderDetailVo implements Serializable {
 	@ApiModelProperty(value="提车门店id",name="carAgencyLiftId",example="1")
 	private Integer carAgencyLiftId;
 	//提车门店名称
-	@ApiModelProperty(value="提车门店名称",name="carAgencyLiftName",example="4S店")
+	@ApiModelProperty(value="提车门店名称",name="carAgencyLiftName",example="深圳上通汽车4S店")
 	private String carAgencyLiftName;
 	//提车门店地址
-	@ApiModelProperty(value="提车门店地址",name="carAgencyLiftAddress",example="深圳市福田区")
+	@ApiModelProperty(value="提车门店地址",name="carAgencyLiftAddress",example="深圳市福田区福中一路1001号生命保险大厦(金田路与福中一路交汇处)")
 	private String carAgencyLiftAddress;
 	//用户与门店的距离
-	@ApiModelProperty(value="用户与门店的距离",name="distance",example="1200")
-	private int distance;
+	@ApiModelProperty(value="用户与门店的距离",name="distanceLift",example="1200")
+	private int distanceLift;
 	//CREATE_TIME
 	@ApiModelProperty(value="提交时间",name="createTime",example="2018-09-07 11:19:50")
 	private Date createTime;
@@ -79,6 +79,15 @@ public class CarOrderDetailVo implements Serializable {
 	//尾款
 	@ApiModelProperty(value="尾款式",name="tailMoney",example="120000")
 	private BigDecimal tailMoney;
+	//车辆评估门店id
+	@ApiModelProperty(value="车辆评估门店id",name="carAgencyAssessId",example="1")
+	private Integer carAgencyAssessId;
+	//车辆评估门店名字
+	@ApiModelProperty(value="车辆评估门店名字",name="carAgencyAssessName",example="深圳上通汽车4S店")
+	private String carAgencyAssessName;
+	//车辆评估门店地址
+	@ApiModelProperty(value="车辆评估门店地址",name="carAgencyAssessAddress",example="深圳市福田区福中一路1001号生命保险大厦(金田路与福中一路交汇处)")
+	private String carAgencyAssessAddress;
 	//二手车名字
 	@ApiModelProperty(value="二手车名字",name="usedCarName",example="2008 款 240 TURBO 自动两驱舒适版")
 	private String usedCarName;
@@ -106,6 +115,10 @@ public class CarOrderDetailVo implements Serializable {
 	//新车打折价格
 	@ApiModelProperty(value="新车打折价格",name="carDiscount",example="33.74万")
 	private String carDiscount;
+	//用户与评估门店的距离
+	@ApiModelProperty(value="用户与评估门店的距离",name="distanceAssess",example="1200")
+	private int distanceAssess;
+
 
 	public Long getId(){
 		return id;
@@ -219,12 +232,12 @@ public class CarOrderDetailVo implements Serializable {
 		this.carAgencyLiftAddress = carAgencyLiftAddress;
 	}
 
-	public int getDistance() {
-		return distance;
+	public int getDistanceLift() {
+		return distanceLift;
 	}
 
-	public void setDistance(int distance) {
-		this.distance = distance;
+	public void setDistanceLift(int distanceLift) {
+		this.distanceLift = distanceLift;
 	}
 
 	public Date getCreateTime() {
@@ -347,6 +360,38 @@ public class CarOrderDetailVo implements Serializable {
 		this.carDiscount = carDiscount;
 	}
 
+	public Integer getCarAgencyAssessId() {
+		return carAgencyAssessId;
+	}
+
+	public void setCarAgencyAssessId(Integer carAgencyAssessId) {
+		this.carAgencyAssessId = carAgencyAssessId;
+	}
+
+	public String getCarAgencyAssessName() {
+		return carAgencyAssessName;
+	}
+
+	public void setCarAgencyAssessName(String carAgencyAssessName) {
+		this.carAgencyAssessName = carAgencyAssessName;
+	}
+
+	public String getCarAgencyAssessAddress() {
+		return carAgencyAssessAddress;
+	}
+
+	public void setCarAgencyAssessAddress(String carAgencyAssessAddress) {
+		this.carAgencyAssessAddress = carAgencyAssessAddress;
+	}
+
+	public int getDistanceAssess() {
+		return distanceAssess;
+	}
+
+	public void setDistanceAssess(int distanceAssess) {
+		this.distanceAssess = distanceAssess;
+	}
+
 	@Override
 	public String toString() {
 		return "CarOrderDetailVo{" +
@@ -364,13 +409,16 @@ public class CarOrderDetailVo implements Serializable {
 				", carAgencyLiftId=" + carAgencyLiftId +
 				", carAgencyLiftName='" + carAgencyLiftName + '\'' +
 				", carAgencyLiftAddress='" + carAgencyLiftAddress + '\'' +
-				", distance=" + distance +
+				", distanceLift=" + distanceLift +
 				", createTime=" + createTime +
 				", buyCarName='" + buyCarName + '\'' +
 				", buyCarPhone='" + buyCarPhone + '\'' +
 				", earnest=" + earnest +
 				", paymentType=" + paymentType +
 				", tailMoney=" + tailMoney +
+				", carAgencyAssessId=" + carAgencyAssessId +
+				", carAgencyAssessName='" + carAgencyAssessName + '\'' +
+				", carAgencyAssessAddress='" + carAgencyAssessAddress + '\'' +
 				", usedCarName='" + usedCarName + '\'' +
 				", onCardsTime='" + onCardsTime + '\'' +
 				", onCardsCity='" + onCardsCity + '\'' +
@@ -380,6 +428,7 @@ public class CarOrderDetailVo implements Serializable {
 				", actualAssessPrice=" + actualAssessPrice +
 				", countPrice='" + countPrice + '\'' +
 				", carDiscount='" + carDiscount + '\'' +
+				", distanceAssess=" + distanceAssess +
 				'}';
 	}
 }
