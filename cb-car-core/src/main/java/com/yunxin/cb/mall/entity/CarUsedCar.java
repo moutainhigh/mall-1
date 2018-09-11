@@ -43,6 +43,8 @@ public class CarUsedCar extends Entity<Integer> {
 	private Double kilometre;
 	//参考价格
 	private BigDecimal referencePrice;
+	//参考范围(格式:12.3-15),前端拆成12.3万~15万
+	private String referenceRange;
 	//购买价格
 	private BigDecimal buyPrice;
 	//实际评估价格
@@ -211,6 +213,14 @@ public class CarUsedCar extends Entity<Integer> {
 		this.referencePrice = referencePrice;
 	}
 	
+	public String getReferenceRange(){
+		return referenceRange;
+	}
+	
+	public void setReferenceRange(String referenceRange){
+		this.referenceRange = referenceRange;
+	}
+	
 	public BigDecimal getBuyPrice(){
 		return buyPrice;
 	}
@@ -347,9 +357,10 @@ public class CarUsedCar extends Entity<Integer> {
 		 + "id = " + id + ", reBrandId = " + reBrandId + ", reSysId = " + reSysId + ", reModelId = " + reModelId
 		 + ", applyId = " + applyId + ", applyMobile = " + applyMobile + ", userType = " + userType + ", uname = " + uname
 		 + ", carNum = " + carNum + ", onCardsTime = " + onCardsTime + ", onCardsTimeStart = " + onCardsTimeStart + ", onCardsTimeEnd = " + onCardsTimeEnd + ", onCardsCity = " + onCardsCity + ", kilometre = " + kilometre
-		 + ", referencePrice = " + referencePrice + ", buyPrice = " + buyPrice + ", actualAssessPrice = " + actualAssessPrice + ", overhaul = " + overhaul
-		 + ", assessmentName = " + assessmentName + ", mobile = " + mobile + ", contact = " + contact + ", transfer = " + transfer
-		 + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", isDelete = " + isDelete + ", operateId = " + operateId
+		 + ", referencePrice = " + referencePrice + ", referenceRange = " + referenceRange + ", buyPrice = " + buyPrice + ", actualAssessPrice = " + actualAssessPrice
+		 + ", overhaul = " + overhaul + ", assessmentName = " + assessmentName + ", mobile = " + mobile + ", contact = " + contact
+		 + ", transfer = " + transfer + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", isDelete = " + isDelete
+		 + ", operateId = " + operateId
 		+"]";
 	}
 }

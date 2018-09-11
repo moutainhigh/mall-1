@@ -16,6 +16,7 @@
 			<result column="on_cards_city" property="onCardsCity" javaType="java.lang.String" jdbcType="VARCHAR"/>
 			<result column="kilometre" property="kilometre" javaType="java.lang.Double" jdbcType="DOUBLE"/>
 			<result column="reference_price" property="referencePrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="reference_range" property="referenceRange" javaType="java.lang.String" jdbcType="VARCHAR"/>
 			<result column="buy_price" property="buyPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
 			<result column="actual_assess_price" property="actualAssessPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
 			<result column="overhaul" property="overhaul" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -34,16 +35,18 @@
 <sql id="AllColumnlist">
 id,re_brand_id,re_sys_id,re_model_id,apply_id,apply_mobile,user_type,
 uname,car_num,on_cards_time,on_cards_city,kilometre,reference_price,
-buy_price,actual_assess_price,overhaul,assessment_name,mobile,contact,
-transfer,create_time,update_time,is_delete,operate_id
+reference_range,buy_price,actual_assess_price,overhaul,assessment_name,mobile,
+contact,transfer,create_time,update_time,is_delete,operate_id
+
 </sql>
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
 id,re_brand_id,re_sys_id,re_model_id,apply_id,apply_mobile,user_type,
 uname,car_num,on_cards_time,on_cards_city,kilometre,reference_price,
-buy_price,actual_assess_price,overhaul,assessment_name,mobile,contact,
-transfer,create_time,update_time,is_delete,operate_id
+reference_range,buy_price,actual_assess_price,overhaul,assessment_name,mobile,
+contact,transfer,create_time,update_time,is_delete,operate_id
+
 </sql>
 
 <insert id="add" parameterType="CarUsedCar" useGeneratedKeys="true" keyProperty="id">
@@ -63,6 +66,7 @@ transfer,create_time,update_time,is_delete,operate_id
 		on_cards_city,
 		kilometre,
 		reference_price,
+		reference_range,
 		buy_price,
 		actual_assess_price,
 		overhaul,
@@ -90,6 +94,7 @@ transfer,create_time,update_time,is_delete,operate_id
 		#{onCardsCity,jdbcType = VARCHAR},
 		#{kilometre,jdbcType = DOUBLE},
 		#{referencePrice,jdbcType = DECIMAL},
+		#{referenceRange,jdbcType = VARCHAR},
 		#{buyPrice,jdbcType = DECIMAL},
 		#{actualAssessPrice,jdbcType = DECIMAL},
 		#{overhaul,jdbcType = INTEGER},
@@ -153,6 +158,10 @@ transfer,create_time,update_time,is_delete,operate_id
 		</if>
 		<if test="referencePrice!=null ">
 			reference_price=#{referencePrice,jdbcType = DECIMAL},
+
+		</if>
+		<if test="referenceRange!=null and referenceRange!=''">
+			reference_range=#{referenceRange,jdbcType = VARCHAR},
 
 		</if>
 		<if test="buyPrice!=null ">
@@ -298,6 +307,9 @@ transfer,create_time,update_time,is_delete,operate_id
 		</if>
 		<if test="q.referencePrice!=null ">
 			AND reference_price=#{q.referencePrice}
+		</if>
+		<if test="q.referenceRange!=null and q.referenceRange!=''">
+			AND reference_range=#{q.referenceRange}
 		</if>
 		<if test="q.buyPrice!=null ">
 			AND buy_price=#{q.buyPrice}
