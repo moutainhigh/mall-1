@@ -89,7 +89,7 @@ public class CarBaseDataController extends BaseController {
             modelMap.put("dataMsg",e.getMessage());
             return toAddCatalog(baseData, modelMap);
         }
-        return "redirect:/base/carBaseData";
+        return "redirect:/base/carBaseData.do";
     }
 
     /**
@@ -115,7 +115,7 @@ public class CarBaseDataController extends BaseController {
      * @auther: eleven
      * @date: 2018/9/11 11:09
      */
-    @RequestMapping(value = "editCatalog",method = RequestMethod.POST)
+    @RequestMapping(value = "editBaseData",method = RequestMethod.POST)
     public String editCatalog(@Valid @ModelAttribute("catalog") CarBaseData baseData, ModelMap modelMap, RedirectAttributes redirect)  throws Exception  {
         try {
             int result=carBaseDataService.updateCarBaseData(baseData);
@@ -130,7 +130,7 @@ public class CarBaseDataController extends BaseController {
             modelMap.put("dataMsg",e.getMessage());
             return toEditCatalog(baseData.getId(), modelMap);
         }
-        return "redirect:/base/carBaseData";
+        return "redirect:/base/carBaseData.do";
     }
 
 
@@ -162,7 +162,7 @@ public class CarBaseDataController extends BaseController {
      */
     @RequestMapping(value = "enableBaseDataById",method = RequestMethod.GET)
     @ResponseBody
-    public boolean enableBaseDataById(@RequestParam("baseDataId") int baseDataId, @RequestParam("enabled") boolean enabled) {
+    public boolean enableBaseDataById(@RequestParam("baseDataId") Integer baseDataId, @RequestParam("enabled") Integer enabled) {
         boolean flag=false;
         try {
             flag = carBaseDataService.enableBaseDataById(baseDataId, enabled);

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import com.yunxin.cb.mall.vo.TreeViewItem;
 import com.yunxin.cb.util.Constant;
+import com.yunxin.cb.util.LogicUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -93,7 +94,10 @@ public class CarBaseDataServiceImpl implements CarBaseDataService {
 		}
 		try {
 			//调用dao，根据主键查询
-			obj = carBaseDataDao.get(id); 
+			obj = carBaseDataDao.get(id);
+			if(LogicUtils.isNotNull(obj)){
+				obj.setParentBaseData(carBaseDataDao.get(obj.getParentBaseDataId()));
+			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
@@ -154,35 +158,36 @@ public class CarBaseDataServiceImpl implements CarBaseDataService {
 	 * @return
 	 */
 	@Transactional
-	public int addCarBaseData(CarBaseData carBaseData) {
+	public int addCarBaseData(CarBaseData carBaseData) throws RuntimeException {
 		int count = 0;
 		
 		if (carBaseData != null) { //传入参数无效时直接返回失败结果
-			try {
-				//如果传入参数的主键为null，则调用生成主键的方法获取新的主键
-				if (carBaseData.getId() == null) {
-					carBaseData.setId(this.generatePK());
-				}
-				
-				//设置创建时间和更新时间为当前时间
-				Date now = DateUtils.getTimeNow();
-				carBaseData.setCreateTime(now);
-				carBaseData.setUpdateTime(now);
-				
-				//填充默认值
-				this.fillDefaultValues(carBaseData);
-				
-				//调用Dao执行插入操作
-				carBaseDataDao.add(carBaseData);
-				if (carBaseData.getId() != null) {
-					count = 1;
-				}
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			}	
+			CarBaseData queryData=new CarBaseData();
+			queryData.setBaseDataCode(carBaseData.getBaseDataCode());
+			long result=carBaseDataDao.count(new Query(queryData));
+			if(result>0){
+				throw new RuntimeException("编号已存在，不能新增！");
+			}
+
+			//如果传入参数的主键为null，则调用生成主键的方法获取新的主键
+			if (carBaseData.getId() == null) {
+				carBaseData.setId(this.generatePK());
+			}
+
+			//设置创建时间和更新时间为当前时间
+			Date now = DateUtils.getTimeNow();
+			carBaseData.setCreateTime(now);
+			carBaseData.setUpdateTime(now);
+
+			//填充默认值
+			this.fillDefaultValues(carBaseData);
+
+			//调用Dao执行插入操作
+			carBaseDataDao.add(carBaseData);
+			if (carBaseData.getId() != null) {
+				count = 1;
+			}
 		}
-		
 		return count;
 	}			
 	
@@ -192,20 +197,20 @@ public class CarBaseDataServiceImpl implements CarBaseDataService {
 	 * @return
 	 */
 	@Transactional
-	public int updateCarBaseData(CarBaseData carBaseData) {
+	public int updateCarBaseData(CarBaseData carBaseData) throws RuntimeException {
 		int count = 0;
 				
 		if (carBaseData != null && carBaseData.getId() != null) { //传入参数无效时直接返回失败结果
-			try {
-				//设置更新时间为当前时间
-				carBaseData.setUpdateTime(DateUtils.getTimeNow());
-				
-				//调用Dao执行更新操作，并判断更新语句执行结果
-				count = carBaseDataDao.update(carBaseData);			
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			long result=carBaseDataDao.getObjByNotCode(carBaseData.getBaseDataCode(),carBaseData.getId());
+			if(result>0){
+				throw new RuntimeException("编号已存在，不能修改！");
 			}
+
+			//设置更新时间为当前时间
+			carBaseData.setUpdateTime(DateUtils.getTimeNow());
+
+			//调用Dao执行更新操作，并判断更新语句执行结果
+			count = carBaseDataDao.update(carBaseData);
 		}
 		
 		return count;
@@ -272,7 +277,7 @@ public class CarBaseDataServiceImpl implements CarBaseDataService {
 	 * @date: 2018/9/11 11:23
 	 */
 	@Override
-	public boolean enableBaseDataById(int baseDataId, boolean enabled) {
+	public boolean enableBaseDataById(Integer baseDataId, Integer enabled) {
 		int result=carBaseDataDao.enableBaseDataById(baseDataId,enabled);
 		return result>0?true:false;
 	}
