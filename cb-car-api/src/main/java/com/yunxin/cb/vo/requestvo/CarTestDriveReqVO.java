@@ -24,7 +24,7 @@ public class CarTestDriveReqVO implements Serializable {
 	private Integer sysId;
 	@ApiModelProperty(value="门店ID",name="agentId",example="2")
 	private Integer agentId;
-	@ApiModelProperty(value="图片路径",name="picPath",example="xxxx.png")
+	@ApiModelProperty(value="驾照图片路径",name="picPath",example="xxxx.png")
 	private String picPath;
 
 	public String getDriveName() {
