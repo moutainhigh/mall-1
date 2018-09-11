@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.List;
 
-@ApiModel(value="汽车车型",description="汽车车型VO对象 CarSystemVO")
+@ApiModel(value="汽车车型",description="汽车车型VO对象 CarModelVO")
 public class CarModelVO implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1l;

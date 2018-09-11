@@ -17,6 +17,10 @@ public class CarSystemVO implements java.io.Serializable{
 	private String sysName;
 	@ApiModelProperty(value="品类",name="category",example="SUV")
 	private String category;
+	@ApiModelProperty(value="是否热门（0：否，1：是）",name="isHot",example="1")
+	private Integer isHot;
+	@ApiModelProperty(value="是否主打车系（0：否，1：是）",name="mainCar",example="0")
+	private Integer mainCar;
 	@ApiModelProperty(value="最小价格",name="mixMonery",example="50000.00")
 	private BigDecimal mixMonery;
 	@ApiModelProperty(value="最大价格",name="maxMonery",example="100000.00")
@@ -62,7 +66,23 @@ public class CarSystemVO implements java.io.Serializable{
         this.category = category;
     }
 
-    public BigDecimal getMixMonery() {
+	public Integer getIsHot() {
+		return isHot;
+	}
+
+	public void setIsHot(Integer isHot) {
+		this.isHot = isHot;
+	}
+
+	public Integer getMainCar() {
+		return mainCar;
+	}
+
+	public void setMainCar(Integer mainCar) {
+		this.mainCar = mainCar;
+	}
+
+	public BigDecimal getMixMonery() {
 		return mixMonery;
 	}
 

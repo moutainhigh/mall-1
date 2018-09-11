@@ -9,6 +9,11 @@ import java.util.List;
 public class CarBaseDataVO implements java.io.Serializable{
     private static final long serialVersionUID = 3473099803823395986L;
     /**
+     * 基础数据ID
+     */
+    @ApiModelProperty(value="基础数据ID",name="id",example="1")
+    private Integer id;
+    /**
      * 基础数据名称
      */
     @ApiModelProperty(value="基础数据名称",name="baseDataName",example="国别")
@@ -24,15 +29,33 @@ public class CarBaseDataVO implements java.io.Serializable{
     @ApiModelProperty(value="基础数据值",name="baseDataValue",example="中国")
     private String baseDataValue;
     /**
+     * 备注
+     */
+    @ApiModelProperty(value="备注",name="remark",example="备注")
+    private String remark;
+    /**
      * 排序
      */
     @ApiModelProperty(value="排序",name="sortOrder",example="1")
     private Integer sortOrder;
     /**
+     * 图片路径
+     */
+    @ApiModelProperty(value="图片路径",name="picPath",example="www.baidu.com/xxx.jpg")
+    private String picPath;
+    /**
      * 父节点数据
      */
     @ApiModelProperty(value="父节点数据",name="chilrenList",example="父节点数据")
     private CarBaseDataVO parentNode;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getBaseDataName() {
         return baseDataName;
@@ -58,12 +81,28 @@ public class CarBaseDataVO implements java.io.Serializable{
         this.baseDataValue = baseDataValue;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public Integer getSortOrder() {
         return sortOrder;
     }
 
     public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    public String getPicPath() {
+        return picPath;
+    }
+
+    public void setPicPath(String picPath) {
+        this.picPath = picPath;
     }
 
     public CarBaseDataVO getParentNode() {
