@@ -62,15 +62,18 @@ dependencies {
 //            "org.apache.poi:poi:3.9",
 //            "org.apache.poi:poi-ooxml:3.9",
             'io.springfox:springfox-swagger2:2.9.2',
-            'io.springfox:springfox-swagger-ui:2.9.2',
-            "com.github.xiaoymin:swagger-bootstrap-ui:1.8.2",
+//            'io.springfox:springfox-swagger-ui:2.9.2',
+//            "com.github.xiaoymin:swagger-bootstrap-ui:1.8.2",
             "com.squareup.retrofit2:retrofit:2.3.0",
             "com.squareup.retrofit2:converter-gson:2.3.0",
 //            "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
             'com.squareup.okhttp3:logging-interceptor:3.8.1'
     )
+    //七牛jar包
+    compile('com.qiniu:qiniu-java-sdk:7.2.+')
     //druid相关jar包
     compile('com.alibaba:druid:1.0.29')
+    compile('com.qiniu:qiniu-java-sdk:7.2.+')
     compile('com.alibaba:druid-spring-boot-starter:1.1.0')
 
     //compile('org.springframework.boot:spring-boot-starter-log4j2')

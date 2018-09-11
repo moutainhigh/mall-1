@@ -6,6 +6,7 @@ import com.yunxin.cb.mall.common.BaseService;
 import com.yunxin.cb.mall.common.PageFinder;
 import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.entity.CarBaseData;
+import com.yunxin.cb.mall.vo.TreeViewItem;
 
 /**
  * 基础数据表 服务接口类
@@ -52,14 +53,14 @@ public interface CarBaseDataService extends BaseService {
 	 * @param carBaseData 新增的CarBaseData数据（如果无特殊需求，新增对象的主键值请保留为null）
 	 * @return
 	 */
-	public int addCarBaseData(CarBaseData carBaseData);
+	public int addCarBaseData(CarBaseData carBaseData) throws RuntimeException;
 	
 	/**
 	 * 根据主键，更新一条CarBaseData记录
 	 * @param carBaseData 更新的CarBaseData数据，且其主键不能为空
 	 * @return
 	 */
-	public int updateCarBaseData(CarBaseData carBaseData);
+	public int updateCarBaseData(CarBaseData carBaseData) throws RuntimeException;
 
 	/**
 	 * 生成主键，如果表主键自增，则本方法可直接返回null；如非自增主键，则本方法必须返回一个大于0的值。
@@ -72,5 +73,22 @@ public interface CarBaseDataService extends BaseService {
 	 * @param obj
 	 */
 	public void fillDefaultValues(CarBaseData obj);
-		
+
+	/**
+	 * @title: 获取所有数据并封装成树
+	 * @param: []
+	 * @return: com.yunxin.cb.mall.vo.TreeViewItem
+	 * @auther: eleven
+	 * @date: 2018/9/11 11:36
+	 */
+	TreeViewItem getDataTree();
+
+	/**
+	 * @title: 停用/启用
+	 * @param: [baseDataId, enabled]
+	 * @return: void
+	 * @auther: eleven
+	 * @date: 2018/9/11 11:21
+	 */
+    boolean enableBaseDataById(Integer baseDataId, Integer enabled);
 }

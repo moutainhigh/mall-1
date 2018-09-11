@@ -44,6 +44,8 @@ public class CarBrand extends Entity<Integer> {
 	private Date updateTimeEnd;	
 	//操作人ID
 	private Integer operateId;
+	//默认图片
+	private String defaultPic;
 	
 	/*Auto generated properties end*/
 	
@@ -190,6 +192,14 @@ public class CarBrand extends Entity<Integer> {
 		this.operateId = operateId;
 	}
 	
+	public String getDefaultPic(){
+		return defaultPic;
+	}
+	
+	public void setDefaultPic(String defaultPic){
+		this.defaultPic = defaultPic;
+	}
+	
 	
 	/*Auto generated methods end*/
 	
@@ -206,6 +216,7 @@ public class CarBrand extends Entity<Integer> {
 		 + "id = " + id + ", brandName = " + brandName + ", brandEnName = " + brandEnName + ", initial = " + initial
 		 + ", brandNo = " + brandNo + ", catalogId = " + catalogId + ", isDisplay = " + isDisplay + ", isHot = " + isHot
 		 + ", remark = " + remark + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", operateId = " + operateId
+		 + ", defaultPic = " + defaultPic
 		+"]";
 	}
 }

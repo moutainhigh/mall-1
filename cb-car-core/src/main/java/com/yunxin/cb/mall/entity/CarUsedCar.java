@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.yunxin.cb.mall.common.Entity;
@@ -23,19 +24,31 @@ public class CarUsedCar extends Entity<Integer> {
 	//申请人ID
 	private Integer applyId;
 	//用户手机号
-	private Integer applyMobile;
+	private String applyMobile;
 	//用户类型（1：后台；2：APP）
 	private Integer userType;
 	//车主名
 	private String uname;
+	//车牌号
+	private String carNum;
 	//上牌时间
 	private Date onCardsTime;
 	//上牌时间 时间范围起（查询用）
 	private Date onCardsTimeStart;
 	//上牌时间 时间范围止（查询用）
 	private Date onCardsTimeEnd;	
+	//上牌城市
+	private String onCardsCity;
 	//里程数
 	private Double kilometre;
+	//参考价格
+	private BigDecimal referencePrice;
+	//参考范围(格式:12.3-15),前端拆成12.3万~15万
+	private String referenceRange;
+	//购买价格
+	private BigDecimal buyPrice;
+	//实际评估价格
+	private BigDecimal actualAssessPrice;
 	//是否大修（0：否；1：是）
 	private Integer overhaul;
 	//评估人
@@ -120,11 +133,11 @@ public class CarUsedCar extends Entity<Integer> {
 		this.applyId = applyId;
 	}
 	
-	public Integer getApplyMobile(){
+	public String getApplyMobile(){
 		return applyMobile;
 	}
 	
-	public void setApplyMobile(Integer applyMobile){
+	public void setApplyMobile(String applyMobile){
 		this.applyMobile = applyMobile;
 	}
 	
@@ -142,6 +155,14 @@ public class CarUsedCar extends Entity<Integer> {
 	
 	public void setUname(String uname){
 		this.uname = uname;
+	}
+	
+	public String getCarNum(){
+		return carNum;
+	}
+	
+	public void setCarNum(String carNum){
+		this.carNum = carNum;
 	}
 	
 	public Date getOnCardsTime(){
@@ -168,12 +189,52 @@ public class CarUsedCar extends Entity<Integer> {
 		this.onCardsTimeEnd = onCardsTimeEnd;
 	}	
 	
+	public String getOnCardsCity(){
+		return onCardsCity;
+	}
+	
+	public void setOnCardsCity(String onCardsCity){
+		this.onCardsCity = onCardsCity;
+	}
+	
 	public Double getKilometre(){
 		return kilometre;
 	}
 	
 	public void setKilometre(Double kilometre){
 		this.kilometre = kilometre;
+	}
+	
+	public BigDecimal getReferencePrice(){
+		return referencePrice;
+	}
+	
+	public void setReferencePrice(BigDecimal referencePrice){
+		this.referencePrice = referencePrice;
+	}
+	
+	public String getReferenceRange(){
+		return referenceRange;
+	}
+	
+	public void setReferenceRange(String referenceRange){
+		this.referenceRange = referenceRange;
+	}
+	
+	public BigDecimal getBuyPrice(){
+		return buyPrice;
+	}
+	
+	public void setBuyPrice(BigDecimal buyPrice){
+		this.buyPrice = buyPrice;
+	}
+	
+	public BigDecimal getActualAssessPrice(){
+		return actualAssessPrice;
+	}
+	
+	public void setActualAssessPrice(BigDecimal actualAssessPrice){
+		this.actualAssessPrice = actualAssessPrice;
 	}
 	
 	public Integer getOverhaul(){
@@ -295,9 +356,11 @@ public class CarUsedCar extends Entity<Integer> {
 		return "CarUsedCar ["
 		 + "id = " + id + ", reBrandId = " + reBrandId + ", reSysId = " + reSysId + ", reModelId = " + reModelId
 		 + ", applyId = " + applyId + ", applyMobile = " + applyMobile + ", userType = " + userType + ", uname = " + uname
-		 + ", onCardsTime = " + onCardsTime + ", onCardsTimeStart = " + onCardsTimeStart + ", onCardsTimeEnd = " + onCardsTimeEnd + ", kilometre = " + kilometre + ", overhaul = " + overhaul + ", assessmentName = " + assessmentName
-		 + ", mobile = " + mobile + ", contact = " + contact + ", transfer = " + transfer + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd
-		 + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", isDelete = " + isDelete + ", operateId = " + operateId
+		 + ", carNum = " + carNum + ", onCardsTime = " + onCardsTime + ", onCardsTimeStart = " + onCardsTimeStart + ", onCardsTimeEnd = " + onCardsTimeEnd + ", onCardsCity = " + onCardsCity + ", kilometre = " + kilometre
+		 + ", referencePrice = " + referencePrice + ", referenceRange = " + referenceRange + ", buyPrice = " + buyPrice + ", actualAssessPrice = " + actualAssessPrice
+		 + ", overhaul = " + overhaul + ", assessmentName = " + assessmentName + ", mobile = " + mobile + ", contact = " + contact
+		 + ", transfer = " + transfer + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", isDelete = " + isDelete
+		 + ", operateId = " + operateId
 		+"]";
 	}
 }

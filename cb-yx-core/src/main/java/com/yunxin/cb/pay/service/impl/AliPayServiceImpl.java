@@ -126,7 +126,7 @@ public class AliPayServiceImpl implements PayService {
                         order.setOrderState(OrderState.PAID_PAYMENT);
                         order.setUpdateTime(curDate);
                         //order.setPaymentType(PaymentType.ALIPAY);
-                        order.setPaymentSequence(trade_no);
+//                        order.setPaymentSequence(trade_no);
                         order.setPaymentTime(curDate);
                         //找到当前用户，更新用户积分，根据当前积分，更新用户等级 并在积分记录表插入数据
                         //rankService.updateRankAndIntegral(payment.getCustomer().getCustomerId(), Double.valueOf(total_fee));

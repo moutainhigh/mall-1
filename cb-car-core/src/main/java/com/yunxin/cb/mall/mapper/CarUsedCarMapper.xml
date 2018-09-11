@@ -4,31 +4,38 @@
 
 <resultMap type="CarUsedCar" id="CarUsedCar">
 	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="re_brand_id" property="reBrandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="re_sys_id" property="reSysId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="re_model_id" property="reModelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="apply_id" property="applyId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="apply_mobile" property="applyMobile" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="user_type" property="userType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="uname" property="uname" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="on_cards_time" property="onCardsTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="kilometre" property="kilometre" javaType="java.lang.Double" jdbcType="DOUBLE"/>
-	<result column="overhaul" property="overhaul" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="assessment_name" property="assessmentName" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="mobile" property="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="contact" property="contact" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="transfer" property="transfer" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-	<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="re_brand_id" property="reBrandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="re_sys_id" property="reSysId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="re_model_id" property="reModelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="apply_id" property="applyId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="apply_mobile" property="applyMobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="user_type" property="userType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="uname" property="uname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="car_num" property="carNum" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="on_cards_time" property="onCardsTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="on_cards_city" property="onCardsCity" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="kilometre" property="kilometre" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+			<result column="reference_price" property="referencePrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="reference_range" property="referenceRange" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="buy_price" property="buyPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="actual_assess_price" property="actualAssessPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+			<result column="overhaul" property="overhaul" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="assessment_name" property="assessmentName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="mobile" property="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="contact" property="contact" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="transfer" property="transfer" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="is_delete" property="isDelete" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 </resultMap>
 
 
 <!-- 全部字段，一般用于明细查询 -->
 <sql id="AllColumnlist">
 id,re_brand_id,re_sys_id,re_model_id,apply_id,apply_mobile,user_type,
-uname,on_cards_time,kilometre,overhaul,assessment_name,mobile,
+uname,car_num,on_cards_time,on_cards_city,kilometre,reference_price,
+reference_range,buy_price,actual_assess_price,overhaul,assessment_name,mobile,
 contact,transfer,create_time,update_time,is_delete,operate_id
 
 </sql>
@@ -36,7 +43,8 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
 <sql id="CommonColumnlist">
 id,re_brand_id,re_sys_id,re_model_id,apply_id,apply_mobile,user_type,
-uname,on_cards_time,kilometre,overhaul,assessment_name,mobile,
+uname,car_num,on_cards_time,on_cards_city,kilometre,reference_price,
+reference_range,buy_price,actual_assess_price,overhaul,assessment_name,mobile,
 contact,transfer,create_time,update_time,is_delete,operate_id
 
 </sql>
@@ -53,8 +61,14 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 		apply_mobile,
 		user_type,
 		uname,
+		car_num,
 		on_cards_time,
+		on_cards_city,
 		kilometre,
+		reference_price,
+		reference_range,
+		buy_price,
+		actual_assess_price,
 		overhaul,
 		assessment_name,
 		mobile,
@@ -72,11 +86,17 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 		#{reSysId,jdbcType = INTEGER},
 		#{reModelId,jdbcType = INTEGER},
 		#{applyId,jdbcType = INTEGER},
-		#{applyMobile,jdbcType = INTEGER},
+		#{applyMobile,jdbcType = VARCHAR},
 		#{userType,jdbcType = INTEGER},
 		#{uname,jdbcType = VARCHAR},
+		#{carNum,jdbcType = VARCHAR},
 		#{onCardsTime,jdbcType = TIMESTAMP},
+		#{onCardsCity,jdbcType = VARCHAR},
 		#{kilometre,jdbcType = DOUBLE},
+		#{referencePrice,jdbcType = DECIMAL},
+		#{referenceRange,jdbcType = VARCHAR},
+		#{buyPrice,jdbcType = DECIMAL},
+		#{actualAssessPrice,jdbcType = DECIMAL},
 		#{overhaul,jdbcType = INTEGER},
 		#{assessmentName,jdbcType = VARCHAR},
 		#{mobile,jdbcType = VARCHAR},
@@ -94,57 +114,99 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 	<set>
 		<if test="reBrandId!=null ">
 			re_brand_id=#{reBrandId,jdbcType = INTEGER},
+
 		</if>
 		<if test="reSysId!=null ">
 			re_sys_id=#{reSysId,jdbcType = INTEGER},
+
 		</if>
 		<if test="reModelId!=null ">
 			re_model_id=#{reModelId,jdbcType = INTEGER},
+
 		</if>
 		<if test="applyId!=null ">
 			apply_id=#{applyId,jdbcType = INTEGER},
+
 		</if>
-		<if test="applyMobile!=null ">
-			apply_mobile=#{applyMobile,jdbcType = INTEGER},
+		<if test="applyMobile!=null and applyMobile!=''">
+			apply_mobile=#{applyMobile,jdbcType = VARCHAR},
+
 		</if>
 		<if test="userType!=null ">
 			user_type=#{userType,jdbcType = INTEGER},
+
 		</if>
 		<if test="uname!=null and uname!=''">
 			uname=#{uname,jdbcType = VARCHAR},
+
+		</if>
+		<if test="carNum!=null and carNum!=''">
+			car_num=#{carNum,jdbcType = VARCHAR},
+
 		</if>
 		<if test="onCardsTime!=null ">
 			on_cards_time=#{onCardsTime,jdbcType = TIMESTAMP},
+
+		</if>
+		<if test="onCardsCity!=null and onCardsCity!=''">
+			on_cards_city=#{onCardsCity,jdbcType = VARCHAR},
+
 		</if>
 		<if test="kilometre!=null ">
 			kilometre=#{kilometre,jdbcType = DOUBLE},
+
+		</if>
+		<if test="referencePrice!=null ">
+			reference_price=#{referencePrice,jdbcType = DECIMAL},
+
+		</if>
+		<if test="referenceRange!=null and referenceRange!=''">
+			reference_range=#{referenceRange,jdbcType = VARCHAR},
+
+		</if>
+		<if test="buyPrice!=null ">
+			buy_price=#{buyPrice,jdbcType = DECIMAL},
+
+		</if>
+		<if test="actualAssessPrice!=null ">
+			actual_assess_price=#{actualAssessPrice,jdbcType = DECIMAL},
+
 		</if>
 		<if test="overhaul!=null ">
 			overhaul=#{overhaul,jdbcType = INTEGER},
+
 		</if>
 		<if test="assessmentName!=null and assessmentName!=''">
 			assessment_name=#{assessmentName,jdbcType = VARCHAR},
+
 		</if>
 		<if test="mobile!=null and mobile!=''">
 			mobile=#{mobile,jdbcType = VARCHAR},
+
 		</if>
 		<if test="contact!=null ">
 			contact=#{contact,jdbcType = INTEGER},
+
 		</if>
 		<if test="transfer!=null ">
 			transfer=#{transfer,jdbcType = INTEGER},
+
 		</if>
 		<if test="createTime!=null ">
 			create_time=#{createTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="updateTime!=null ">
 			update_time=#{updateTime,jdbcType = TIMESTAMP},
+
 		</if>
 		<if test="isDelete!=null ">
 			is_delete=#{isDelete,jdbcType = INTEGER},
+
 		</if>
 		<if test="operateId!=null ">
 			operate_id=#{operateId,jdbcType = INTEGER},
+
 		</if>
 	</set>
 	<where>
@@ -216,7 +278,7 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 		<if test="q.applyId!=null ">
 			AND apply_id=#{q.applyId}
 		</if>
-		<if test="q.applyMobile!=null ">
+		<if test="q.applyMobile!=null and q.applyMobile!=''">
 			AND apply_mobile=#{q.applyMobile}
 		</if>
 		<if test="q.userType!=null ">
@@ -224,6 +286,9 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 		</if>
 		<if test="q.uname!=null and q.uname!=''">
 			AND uname=#{q.uname}
+		</if>
+		<if test="q.carNum!=null and q.carNum!=''">
+			AND car_num=#{q.carNum}
 		</if>
 		<if test="q.onCardsTime!=null ">
 			AND on_cards_time=#{q.onCardsTime}
@@ -234,8 +299,23 @@ contact,transfer,create_time,update_time,is_delete,operate_id
 		<if test="q.onCardsTimeEnd!=null">
 		<![CDATA[	AND on_cards_time<#{q.onCardsTimeEnd}   ]]>
 		</if>
+		<if test="q.onCardsCity!=null and q.onCardsCity!=''">
+			AND on_cards_city=#{q.onCardsCity}
+		</if>
 		<if test="q.kilometre!=null ">
 			AND kilometre=#{q.kilometre}
+		</if>
+		<if test="q.referencePrice!=null ">
+			AND reference_price=#{q.referencePrice}
+		</if>
+		<if test="q.referenceRange!=null and q.referenceRange!=''">
+			AND reference_range=#{q.referenceRange}
+		</if>
+		<if test="q.buyPrice!=null ">
+			AND buy_price=#{q.buyPrice}
+		</if>
+		<if test="q.actualAssessPrice!=null ">
+			AND actual_assess_price=#{q.actualAssessPrice}
 		</if>
 		<if test="q.overhaul!=null ">
 			AND overhaul=#{q.overhaul}

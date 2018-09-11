@@ -5,7 +5,7 @@ import java.util.Date;
 import com.yunxin.cb.mall.common.Entity;
 
 /** 
- * 汽车之家品牌数据 数据实体类
+ * 汽车之家的品牌 数据实体类
  */
 public class CarHomeBrand extends Entity<Integer> {
 	
@@ -13,18 +13,12 @@ public class CarHomeBrand extends Entity<Integer> {
 	
 	/*Auto generated properties start*/
 	
-	//ID
+	//汽车品牌id
 	private Integer id;
-	//父节点ID
-	private Integer parentId;
-	//中文名称
-	private String chinessName;
-	//英文名称
-	private String enName;
-	//级别(1,品牌,2车系,3车型)
-	private Integer level;
-	//首字母
+	//汽车品牌首字母
 	private String initial;
+	//汽车品牌
+	private String brandName;
 	//是否显示(0否,1是)
 	private Integer isDisplay;
 	//CREATE_TIME
@@ -65,44 +59,20 @@ public class CarHomeBrand extends Entity<Integer> {
 		this.id = id;
 	}
 	
-	public Integer getParentId(){
-		return parentId;
-	}
-	
-	public void setParentId(Integer parentId){
-		this.parentId = parentId;
-	}
-	
-	public String getChinessName(){
-		return chinessName;
-	}
-	
-	public void setChinessName(String chinessName){
-		this.chinessName = chinessName;
-	}
-	
-	public String getEnName(){
-		return enName;
-	}
-	
-	public void setEnName(String enName){
-		this.enName = enName;
-	}
-	
-	public Integer getLevel(){
-		return level;
-	}
-	
-	public void setLevel(Integer level){
-		this.level = level;
-	}
-	
 	public String getInitial(){
 		return initial;
 	}
 	
 	public void setInitial(String initial){
 		this.initial = initial;
+	}
+	
+	public String getBrandName(){
+		return brandName;
+	}
+	
+	public void setBrandName(String brandName){
+		this.brandName = brandName;
 	}
 	
 	public Integer getIsDisplay(){
@@ -174,9 +144,8 @@ public class CarHomeBrand extends Entity<Integer> {
 	@Override
 	public String toString() {
 		return "CarHomeBrand ["
-		 + "id = " + id + ", parentId = " + parentId + ", chinessName = " + chinessName + ", enName = " + enName
-		 + ", level = " + level + ", initial = " + initial + ", isDisplay = " + isDisplay + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd
-		 + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd
+		 + "id = " + id + ", initial = " + initial + ", brandName = " + brandName + ", isDisplay = " + isDisplay
+		 + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd
 		+"]";
 	}
 }

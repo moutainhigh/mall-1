@@ -21,7 +21,7 @@ import com.yunxin.cb.mall.service.CarHomeBrandService;
 import com.yunxin.cb.util.DateUtils;
 
 /**
- * 汽车之家品牌数据 服务实现类
+ * 汽车之家的品牌 服务实现类
  */
 @Service
 public class CarHomeBrandServiceImpl implements CarHomeBrandService {
@@ -164,11 +164,12 @@ public class CarHomeBrandServiceImpl implements CarHomeBrandService {
 				if (carHomeBrand.getId() == null) {
 					carHomeBrand.setId(this.generatePK());
 				}
-				
+
 				//设置创建时间和更新时间为当前时间
 				Date now = DateUtils.getTimeNow();
 				carHomeBrand.setCreateTime(now);
 				carHomeBrand.setUpdateTime(now);
+
 				
 				//填充默认值
 				this.fillDefaultValues(carHomeBrand);
@@ -198,8 +199,9 @@ public class CarHomeBrandServiceImpl implements CarHomeBrandService {
 				
 		if (carHomeBrand != null && carHomeBrand.getId() != null) { //传入参数无效时直接返回失败结果
 			try {
-				//设置更新时间为当前时间
-				carHomeBrand.setUpdateTime(DateUtils.getTimeNow());
+					//设置更新时间为当前时间
+					carHomeBrand.setUpdateTime(DateUtils.getTimeNow());
+
 				
 				//调用Dao执行更新操作，并判断更新语句执行结果
 				count = carHomeBrandDao.update(carHomeBrand);			

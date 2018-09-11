@@ -8,7 +8,7 @@ import com.yunxin.cb.mall.common.Query;
 import com.yunxin.cb.mall.entity.CarHomeBrand;
 
 /**
- * 汽车之家品牌数据 服务接口类
+ * 汽车之家的品牌 服务接口类
  */
 public interface CarHomeBrandService extends BaseService {
 

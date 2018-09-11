@@ -32,6 +32,8 @@ public class CarSystem extends Entity<Integer> {
 	private Integer publishState;
 	//介绍
 	private String introduce;
+	//默认图片
+	private String defaultPic;
 	//说明
 	private String explainInfo;
 	//创建时间
@@ -148,6 +150,14 @@ public class CarSystem extends Entity<Integer> {
 		this.introduce = introduce;
 	}
 	
+	public String getDefaultPic(){
+		return defaultPic;
+	}
+	
+	public void setDefaultPic(String defaultPic){
+		this.defaultPic = defaultPic;
+	}
+	
 	public String getExplainInfo(){
 		return explainInfo;
 	}
@@ -235,8 +245,8 @@ public class CarSystem extends Entity<Integer> {
 		return "CarSystem ["
 		 + "id = " + id + ", brandId = " + brandId + ", sysName = " + sysName + ", sysCode = " + sysCode
 		 + ", baseDataId = " + baseDataId + ", isHot = " + isHot + ", mainCar = " + mainCar + ", examineState = " + examineState
-		 + ", publishState = " + publishState + ", introduce = " + introduce + ", explainInfo = " + explainInfo + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd
-		 + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", isDelete = " + isDelete + ", operateId = " + operateId
+		 + ", publishState = " + publishState + ", introduce = " + introduce + ", defaultPic = " + defaultPic + ", explainInfo = " + explainInfo
+		 + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd + ", isDelete = " + isDelete + ", operateId = " + operateId
 		+"]";
 	}
 }

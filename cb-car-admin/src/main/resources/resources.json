@@ -1,0 +1,13 @@
+[
+  {
+    "name": "分类管理", "code": "1", "type": "MENU", "cssClass": "fa fa-gift", "value": "base", "childrenCssClass": "children",
+    "children": [
+      {
+        "name": "基础数据管理", "code": "11", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../base/carBaseData.do"
+      },
+      {
+        "name": "品牌管理", "code": "12", "type": "MENU", "cssClass": "fa fa-caret-right", "value": "../brand/brands.do"
+      }
+    ]
+  }
+]

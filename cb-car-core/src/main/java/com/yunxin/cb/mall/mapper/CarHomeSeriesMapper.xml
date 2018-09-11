@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.CarHomeSeriesDao">
+
+<resultMap type="CarHomeSeries" id="CarHomeSeries">
+	<id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="brand_id" property="brandId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="series_group" property="seriesGroup" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="series" property="series" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="is_display" property="isDisplay" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+id,brand_id,series_group,series,is_display,create_time,update_time
+
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+id,brand_id,series_group,is_display,create_time,update_time
+
+</sql>
+
+<insert id="add" parameterType="CarHomeSeries" useGeneratedKeys="true" keyProperty="id">
+	insert into CAR_HOME_SERIES(
+		<if test="id!=null">
+		id,
+		</if>
+		brand_id,
+		series_group,
+		series,
+		is_display,
+		create_time,
+		update_time
+	) values (
+		<if test="id!=null">
+		#{id,jdbcType = INTEGER},
+		</if>
+		#{brandId,jdbcType = INTEGER},
+		#{seriesGroup,jdbcType = VARCHAR},
+		#{series,jdbcType = VARCHAR},
+		#{isDisplay,jdbcType = INTEGER},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{updateTime,jdbcType = TIMESTAMP}
+	)
+</insert>
+
+<update id="update" parameterType="CarHomeSeries">
+	update CAR_HOME_SERIES 
+	<set>
+		<if test="brandId!=null ">
+			brand_id=#{brandId,jdbcType = INTEGER},
+
+		</if>
+		<if test="seriesGroup!=null and seriesGroup!=''">
+			series_group=#{seriesGroup,jdbcType = VARCHAR},
+
+		</if>
+		<if test="series!=null and series!=''">
+			series=#{series,jdbcType = VARCHAR},
+
+		</if>
+		<if test="isDisplay!=null ">
+			is_display=#{isDisplay,jdbcType = INTEGER},
+
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+
+		</if>
+		<if test="updateTime!=null ">
+			update_time=#{updateTime,jdbcType = TIMESTAMP},
+
+		</if>
+	</set>
+	<where>
+		AND id=#{id}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from CAR_HOME_SERIES 
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+<select id="get" resultMap="CarHomeSeries">
+	select <include refid="AllColumnlist"/> from CAR_HOME_SERIES
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="CarHomeSeries">
+	select <include refid="AllColumnlist"/> from CAR_HOME_SERIES
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(id) from CAR_HOME_SERIES 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="CarHomeSeries">
+	select <include refid="CommonColumnlist"/> from CAR_HOME_SERIES 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="CarHomeSeries">
+	select <include refid="CommonColumnlist"/> from CAR_HOME_SERIES
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.brandId!=null ">
+			AND brand_id=#{q.brandId}
+		</if>
+		<if test="q.seriesGroup!=null and q.seriesGroup!=''">
+			AND series_group=#{q.seriesGroup}
+		</if>
+		<if test="q.series!=null and q.series!=''">
+			AND series=#{q.series}
+		</if>
+		<if test="q.isDisplay!=null ">
+			AND is_display=#{q.isDisplay}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.updateTime!=null ">
+			AND update_time=#{q.updateTime}
+		</if>
+		<if test="q.updateTimeStart!=null">
+		<![CDATA[	AND update_time>=#{q.updateTimeStart}  ]]>
+		</if>
+		<if test="q.updateTimeEnd!=null">
+		<![CDATA[	AND update_time<#{q.updateTimeEnd}   ]]>
+		</if>
+	</if>
+</sql>
+
+</mapper>

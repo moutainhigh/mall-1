@@ -3,7 +3,6 @@ package com.yunxin.cb.vo.responsevo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import java.util.List;
 
 @ApiModel(value="车系",description="车系VO对象 CarSystemVO")
 public class CarSystemVO implements java.io.Serializable{
@@ -16,18 +15,24 @@ public class CarSystemVO implements java.io.Serializable{
 	private CarBrandVO carBrandVO;
 	@ApiModelProperty(value="车系名称",name="sysName",example="宝马（进口）7系")
 	private String sysName;
-	@ApiModelProperty(value="基础数据",name="carBaseDataVO",example="基础数据")
-	private CarBaseDataVO carBaseDataVO;
+	@ApiModelProperty(value="品类",name="category",example="SUV")
+	private String category;
+	@ApiModelProperty(value="是否热门（0：否，1：是）",name="isHot",example="1")
+	private Integer isHot;
+	@ApiModelProperty(value="是否主打车系（0：否，1：是）",name="mainCar",example="0")
+	private Integer mainCar;
 	@ApiModelProperty(value="最小价格",name="mixMonery",example="50000.00")
 	private BigDecimal mixMonery;
 	@ApiModelProperty(value="最大价格",name="maxMonery",example="100000.00")
 	private BigDecimal maxMonery;
 	@ApiModelProperty(value="介绍",name="introduce",example="介绍")
 	private String introduce;
-	@ApiModelProperty(value="图片路径",name="introduce",example="www.baidu.com")
-	private List<String> picPathList;
+	@ApiModelProperty(value="图片路径",name="picPath",example="www.baidu.com/pic.jpg")
+	private String picPath;
 	@ApiModelProperty(value="说明",name="explainInfo",example="说明")
 	private String explainInfo;
+    @ApiModelProperty(value="默认车型",name="carModelVO",example="默认车型")
+	private CarModelVO carModelVO;
 
 	public Integer getId() {
 		return id;
@@ -53,12 +58,28 @@ public class CarSystemVO implements java.io.Serializable{
 		this.sysName = sysName;
 	}
 
-	public CarBaseDataVO getCarBaseDataVO() {
-		return carBaseDataVO;
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+	public Integer getIsHot() {
+		return isHot;
 	}
 
-	public void setCarBaseDataVO(CarBaseDataVO carBaseDataVO) {
-		this.carBaseDataVO = carBaseDataVO;
+	public void setIsHot(Integer isHot) {
+		this.isHot = isHot;
+	}
+
+	public Integer getMainCar() {
+		return mainCar;
+	}
+
+	public void setMainCar(Integer mainCar) {
+		this.mainCar = mainCar;
 	}
 
 	public BigDecimal getMixMonery() {
@@ -85,19 +106,27 @@ public class CarSystemVO implements java.io.Serializable{
 		this.introduce = introduce;
 	}
 
-	public List<String> getPicPathList() {
-		return picPathList;
-	}
+    public String getPicPath() {
+        return picPath;
+    }
 
-	public void setPicPathList(List<String> picPathList) {
-		this.picPathList = picPathList;
-	}
+    public void setPicPath(String picPath) {
+        this.picPath = picPath;
+    }
 
-	public String getExplainInfo() {
+    public String getExplainInfo() {
 		return explainInfo;
 	}
 
 	public void setExplainInfo(String explainInfo) {
 		this.explainInfo = explainInfo;
 	}
+
+    public CarModelVO getCarModelVO() {
+        return carModelVO;
+    }
+
+    public void setCarModelVO(CarModelVO carModelVO) {
+        this.carModelVO = carModelVO;
+    }
 }

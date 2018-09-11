@@ -35,8 +35,8 @@ public class CarAdvertisementsVO implements java.io.Serializable{
     @ApiModelProperty(value="品牌",name="carBrandVO",example="品牌")
     private CarBrandVO carBrandVO;
 
-    @ApiModelProperty(value="车系",name="carSystemVO",example="车系")
-    private CarSystemVO carSystemVO;
+    @ApiModelProperty(value="车系ID",name="sysId",example="1")
+    private Integer sysId;
 
     @ApiModelProperty(value="内容",name="content",example="内容")
     private String content;
@@ -105,12 +105,12 @@ public class CarAdvertisementsVO implements java.io.Serializable{
         this.carBrandVO = carBrandVO;
     }
 
-    public CarSystemVO getCarSystemVO() {
-        return carSystemVO;
+    public Integer getSysId() {
+        return sysId;
     }
 
-    public void setCarSystemVO(CarSystemVO carSystemVO) {
-        this.carSystemVO = carSystemVO;
+    public void setSysId(Integer sysId) {
+        this.sysId = sysId;
     }
 
     public String getContent() {

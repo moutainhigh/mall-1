@@ -81,4 +81,6 @@ public interface UserInfoService extends BaseService {
 	 * @return
 	 */
 	public UserInfo getSysUser(String loginName, String loginPassword);
+
+    UserInfo getSysUserByUserName(String userName);
 }
