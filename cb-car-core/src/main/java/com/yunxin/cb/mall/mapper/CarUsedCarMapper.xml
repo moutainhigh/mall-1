@@ -8,7 +8,7 @@
 			<result column="re_sys_id" property="reSysId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 			<result column="re_model_id" property="reModelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 			<result column="apply_id" property="applyId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-			<result column="apply_mobile" property="applyMobile" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="apply_mobile" property="applyMobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
 			<result column="user_type" property="userType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 			<result column="uname" property="uname" javaType="java.lang.String" jdbcType="VARCHAR"/>
 			<result column="car_num" property="carNum" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -82,7 +82,7 @@ transfer,create_time,update_time,is_delete,operate_id
 		#{reSysId,jdbcType = INTEGER},
 		#{reModelId,jdbcType = INTEGER},
 		#{applyId,jdbcType = INTEGER},
-		#{applyMobile,jdbcType = INTEGER},
+		#{applyMobile,jdbcType = VARCHAR},
 		#{userType,jdbcType = INTEGER},
 		#{uname,jdbcType = VARCHAR},
 		#{carNum,jdbcType = VARCHAR},
@@ -123,8 +123,8 @@ transfer,create_time,update_time,is_delete,operate_id
 			apply_id=#{applyId,jdbcType = INTEGER},
 
 		</if>
-		<if test="applyMobile!=null ">
-			apply_mobile=#{applyMobile,jdbcType = INTEGER},
+		<if test="applyMobile!=null and applyMobile!=''">
+			apply_mobile=#{applyMobile,jdbcType = VARCHAR},
 
 		</if>
 		<if test="userType!=null ">
@@ -269,7 +269,7 @@ transfer,create_time,update_time,is_delete,operate_id
 		<if test="q.applyId!=null ">
 			AND apply_id=#{q.applyId}
 		</if>
-		<if test="q.applyMobile!=null ">
+		<if test="q.applyMobile!=null and q.applyMobile!=''">
 			AND apply_mobile=#{q.applyMobile}
 		</if>
 		<if test="q.userType!=null ">
