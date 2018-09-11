@@ -18,8 +18,8 @@ public interface FinancialLoanDao extends JpaRepository<FinancialLoan, Integer>,
     public FinancialLoan getFinancialLoanDetailById(int loanId);
 
     @Modifying
-    @Query("update FinancialLoan c set c.state = ?1 , c.transferTime =?3 where c.loanId=?2")
-    public void updateFinancialLoanStateById(LoanState state, int loanId, Date date);
+    @Query("update FinancialLoan c set c.state = ?1 , c.transferTime =?3 ,c.approver=?4 where c.loanId=?2")
+    public void updateFinancialLoanStateById(LoanState state, int loanId, Date date,String approver);
 
     @Modifying
     @Query("update FinancialLoan c set c.state = ?1 , c.auditTime =?3 ,c.auditRemark = ?4 where c.loanId=?2")

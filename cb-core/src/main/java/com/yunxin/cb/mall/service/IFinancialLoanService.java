@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.service;
 
+import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.meta.LoanState;
 import com.yunxin.core.persistence.PageSpecification;
@@ -25,7 +26,7 @@ public interface IFinancialLoanService {
     /**
      * 修改状态
      */
-    public Map<String,Object> undateState(Integer loanId,LoanState state)throws Exception;
+    public Map<String,Object> undateState(Integer loanId, LoanState state, User user)throws Exception;
 
     /**
      * 审核

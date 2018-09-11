@@ -102,19 +102,6 @@
                 <div class="pull-left">
                     <h2>借款审批</h2>
                 </div>
-                <div class="pull-right">
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="#">
-                            <i class="fa fa-star"></i>
-                        </a>
-                        <a class="btn btn-default" href="#" id="modal-update-trigger">
-                            Modal
-                        </a>
-                        <a class="btn btn-default" href="#">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                    </div>
-                </div>
             </div>
         </header>
         <div class="window">
@@ -206,7 +193,7 @@
                         </div>
                         <div class="pull-right">
                             <div class="btn-group">
-                                <a href="javascript:void(0);" onclick="transferAccounts('APPLY_SUCCESS')" class="btn btn-default">&nbsp;转账确认</a>
+                                <a href="javascript:void(0);" onclick="transferAccounts('AUDIT_PASS')" class="btn btn-default">&nbsp;转账确认</a>
                             </div>
                         </div>
                     </header>

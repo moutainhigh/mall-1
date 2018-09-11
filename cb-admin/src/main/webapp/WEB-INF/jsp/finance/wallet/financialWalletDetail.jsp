@@ -62,6 +62,7 @@
                 <ul class="breadcrumb">
                     <li><a href="#">首页</a></li>
                     <li><a href="#">财务管理</a></li>
+                    <li><a href="#"></a>负债管理</li>
                     <li class="active"><a href="#">负债详情</a></li>
                 </ul>
             </div>

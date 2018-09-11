@@ -1,5 +1,6 @@
 package com.yunxin.cb.mall.service.imp;
 
+import com.yunxin.cb.console.entity.User;
 import com.yunxin.cb.mall.dao.FinancialLoanDao;
 import com.yunxin.cb.mall.entity.FinancialLoan;
 import com.yunxin.cb.mall.entity.FinancialLoan_;
@@ -56,12 +57,13 @@ public class FinancialLoanService implements IFinancialLoanService {
     }
 
     @Override
-    public Map<String, Object> undateState(Integer loanId ,LoanState state) throws Exception{
+    @Transactional(rollbackFor = Exception.class)
+    public Map<String, Object> undateState(Integer loanId ,LoanState state,User user) throws Exception{
         Map<String,Object> map = new HashMap<>();
         FinancialLoan financialLoan = financialLoanDao.findOne(loanId);
         //TODO 还需把数据同步到负债记录表里
         if(financialLoan.getState().ordinal() == state.ordinal()){
-            financialLoanDao.updateFinancialLoanStateById(LoanState.TRANSFERRED,loanId,new Date());
+            financialLoanDao.updateFinancialLoanStateById(LoanState.TRANSFERRED,loanId,new Date(),user.getUserName());
             map.put("result","success");
             return map;
         }
