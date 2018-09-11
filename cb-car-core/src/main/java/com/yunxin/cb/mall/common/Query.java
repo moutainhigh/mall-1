@@ -31,14 +31,14 @@ public class Query {
 	/**
 	 * 查询条件
 	 */
-	private Object data;
+	private Object q;
 	
 	public Query() {
 		this.pageable = "false";
 	}
 
 	public Query(Object data) {
-		this.data = data;
+		this.q = data;
 		this.pageable = "false";
 	}
 
@@ -60,7 +60,7 @@ public class Query {
 		this.pageNo = pageNo <= 0 ? 1 : pageNo;
 		this.pageSize = pageSize < 0 ? 0 : pageSize;
 		this.rowIndex = (this.pageNo - 1) * this.pageSize;
-		this.data = data;
+		this.q = data;
 	}
 
 	public int getPageNo() {
@@ -96,10 +96,10 @@ public class Query {
 	}
 
 	public Object getData() {
-		return data;
+		return q;
 	}
 
 	public void setData(Object data) {
-		this.data = data;
+		this.q = data;
 	}
 }

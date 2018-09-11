@@ -11,8 +11,6 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import com.yunxin.cb.mall.entity.meta.ObjectType;
-import com.yunxin.cb.mall.entity.meta.UploadType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,96 +45,6 @@ public class QiniuStorageService implements IStorageService {
         Configuration cfg = new Configuration(Zone.zone2());
         //...其他参数参考类注释
         uploadManager = new UploadManager(cfg);
-    }
-
-    @Override
-    public String put(InputStream inputStream, UploadType type) {
-        //默认不指定key的情况下，以文件内容的hash值作为文件名
-        String key = null;
-        Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = bucket_1;
-        String domain = domain_1;
-        String upToken = auth.uploadToken(bucket);
-        try {
-            Response response = uploadManager.put(inputStream, key, upToken, null, null);
-            //解析上传成功的结果
-            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            String url = domain + putRet.key;
-            logger.info("qiniu put success, url:" + url);
-            return url;
-        } catch (QiniuException ex) {
-            Response r = ex.response;
-            logger.error(r.toString());
-            try {
-                logger.error(r.bodyString());
-            } catch (QiniuException ex2) {
-                //ignore
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 上传带文件名的文件
-     * @author      likang
-     * @param inputStream
-    * @param type 文件夹
-    * @param key 文件名
-     * @return      java.lang.String
-     * @exception
-     * @date        2018/7/19 17:36
-     */
-    @Override
-    public String put(InputStream inputStream, UploadType type,String key) {
-        //默认不指定key的情况下，以文件内容的hash值作为文件名
-        Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = bucket_1;
-        String domain = domain_1;
-        String upToken = auth.uploadToken(bucket);
-        try {
-            Response response = uploadManager.put(inputStream, key, upToken, null, null);
-            //解析上传成功的结果
-            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            String url = domain + putRet.key;
-            logger.info("qiniu put success, url:" + url);
-            return url;
-        } catch (QiniuException ex) {
-            Response r = ex.response;
-            logger.error(r.toString());
-            try {
-                logger.error(r.bodyString());
-            } catch (QiniuException ex2) {
-                //ignore
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public String put(byte[] data, UploadType type) {
-        //默认不指定key的情况下，以文件内容的hash值作为文件名
-        String key = null;
-        Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = bucket_1;
-        String domain = domain_1;
-        String upToken = auth.uploadToken(bucket);
-        try {
-            Response response = uploadManager.put(data, key, upToken, null, null, true);
-            //解析上传成功的结果
-            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            String url = domain + putRet.key;
-            logger.info("qiniu put success, url:" + url);
-            return url;
-        } catch (QiniuException ex) {
-            Response r = ex.response;
-            logger.error(r.toString());
-            try {
-                logger.error(r.bodyString());
-            } catch (QiniuException ex2) {
-                //ignore
-            }
-        }
-        return null;
     }
 
     /**
@@ -212,7 +120,6 @@ public class QiniuStorageService implements IStorageService {
     /**
      * 根据fileName删除文件
      * @author      likang
-     * @param objectType
     * @param fileName
      * @return      java.util.Map<java.lang.String,java.lang.String>
      * @exception
