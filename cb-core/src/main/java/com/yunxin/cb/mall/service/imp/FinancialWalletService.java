@@ -1,11 +1,11 @@
 package com.yunxin.cb.mall.service.imp;
 
 import com.yunxin.cb.mall.dao.*;
-import com.yunxin.cb.mall.entity.*;
-import com.yunxin.cb.mall.entity.meta.CapitalType;
-import com.yunxin.cb.mall.entity.meta.TransactionType;
+import com.yunxin.cb.mall.entity.FinancialWallet;
+import com.yunxin.cb.mall.entity.FinancialWalletLog;
+import com.yunxin.cb.mall.entity.FinancialWallet_;
+import com.yunxin.cb.mall.entity.OperationType;
 import com.yunxin.cb.mall.service.IFinancialWalletService;
-import com.yunxin.core.persistence.AttributeReplication;
 import com.yunxin.core.persistence.CustomSpecification;
 import com.yunxin.core.persistence.PageSpecification;
 import org.slf4j.Logger;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,10 +30,6 @@ public class FinancialWalletService implements IFinancialWalletService {
     private FinancialWalletDao financialWalletDao;
     @Resource
     private FinancialWalletLogDao financialWalletLogDao;
-    @Resource
-    private FinancialFreezingBillDao financialFreezingBillDao;
-    @Resource
-    private FinancialCreditLineBillDao FinancialCreditLineBillDao;
     @Resource
     private CustomerDao customerDao;
 
@@ -55,86 +50,6 @@ public class FinancialWalletService implements IFinancialWalletService {
         });
         Page<FinancialWallet> pages = financialWalletDao.findAll(pageSpecification, pageSpecification.getPageRequest());
         return pages;
-    }
-
-    /**
-     * 方法实现说明
-     * @author      likang
-     * @param fw   钱包信息
-     * @param type  0：保险 1：点赞
-     * @param  amount 操作金额
-     * @return      com.yunxin.cb.mall.entity.FinancialWallet
-     * @exception
-     * @date        2018/8/10 11:58
-     */
-    @Override
-    public FinancialWallet addFinaciaWallet(FinancialWallet fw, int type, BigDecimal amount){
-        logger.info("addFinaciaWallet:"+fw);
-        Customer customer = fw.getCustomer();
-        if(financialWalletDao.findByCustomerId(customer.getCustomerId())==null){
-            /**钱包:初始化钱包信息*/
-            financialWalletDao.save(fw);
-            logger.info("addFinaciaWallet sucess");
-        }else{
-            updateFinacialWallet(fw);
-            FinancialFreezingBill financialFreezingBill = new FinancialFreezingBill();
-            financialFreezingBill.setAmount(amount);
-            financialFreezingBill.setCreateTime(new Date());
-            financialFreezingBill.setCustomer(customer);
-            financialFreezingBill.setTransactionDesc(customer.getAccountName()+"买保险增加50%");
-            financialFreezingBill.setTransactionType(TransactionType.INSURANCE_PURCHASE);
-            financialFreezingBill.setType(CapitalType.ADD);
-            FinancialCreditLineBill financialCreditLineBill = new FinancialCreditLineBill();
-            BeanUtils.copyProperties(financialFreezingBill, financialCreditLineBill);
-            financialCreditLineBill.setTransactionDesc(customer.getAccountName()+"点赞增加5%");
-            //保险购买
-            if(type==0){
-                /**保险:保存预期收益记录*/
-                financialFreezingBillDao.save(financialFreezingBill);
-                logger.info("add FinancialFreezingBill sucess:"+financialFreezingBill);
-                /**点赞:保存额度记录*/
-                FinancialCreditLineBillDao.save(financialCreditLineBill);
-                logger.info("add financialCreditLineBill sucess:"+ financialCreditLineBill);
-            }else{
-                /**点赞:保存额度记录*/
-                FinancialCreditLineBillDao.save(financialCreditLineBill);
-                logger.info("add financialCreditLineBill sucess:"+ financialCreditLineBill);
-            }
-        }
-        return fw;
-    }
-
-
-    /**
-     * 修改钱包信息
-     * @author      likang
-     * @param fw
-     * @return      com.yunxin.cb.mall.entity.FinancialWallet
-     * @exception
-     * @date        2018/8/13 11:34
-     */
-    @Override
-    public FinancialWallet updateFinacialWallet(FinancialWallet fw){
-        FinancialWallet oldfw = financialWalletDao.findOne(fw.getWalletId());
-        if(fw.getVersion()!=fw.getVersion()){
-            throw new RuntimeException("用户版本号不正确，请稍后再试");
-        }
-        fw.setVersion(fw.getVersion()+1);
-        /**钱包:更新钱包信息*/
-        AttributeReplication.copying(fw, oldfw, FinancialWallet_.creditAmount,
-                FinancialWallet_.debtCredit,
-                FinancialWallet_.freezingAmount,
-                FinancialWallet_.version);
-        FinancialWalletLog flog = new FinancialWalletLog();
-        BeanUtils.copyProperties(fw,flog);
-        flog.setFinancialWallet(fw);
-        flog.setWalletLogId(null);
-//        flog.setType();
-        flog.setAmount(new BigDecimal(0));
-        /**钱包:保存钱包日志记录*/
-        financialWalletLogDao.save(flog);
-        logger.info("updateFinaciaWallet sucess");
-        return fw;
     }
 
     @Override

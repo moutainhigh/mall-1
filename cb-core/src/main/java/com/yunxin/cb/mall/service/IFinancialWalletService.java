@@ -17,11 +17,6 @@ public interface IFinancialWalletService {
      */
     Page<FinancialWallet> pageServiceFinancialWallet(PageSpecification<FinancialWallet> pageSpecification);
 
-    FinancialWallet addFinaciaWallet(FinancialWallet fw, int type, BigDecimal amount);
-
-    FinancialWallet updateFinacialWallet(FinancialWallet fw);
-
-
     FinancialWallet getFinancialWalletByCustomerId(Integer customerId);
 
     /**

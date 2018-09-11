@@ -25,7 +25,7 @@ public class FinancialFreezingBill {
     /** 资金类型：1.支出，2.收入 */
     private CapitalType type;
 
-    /** 交易类型：1.保险返利 2.保险购买 */
+    /** 交易类型：0.保险返利 1.保险购买 */
     private TransactionType transactionType;
 
     /** 交易描述 */
@@ -68,7 +68,7 @@ public class FinancialFreezingBill {
     }
 
     @Column(length = 128, nullable = false, unique = true)
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     public TransactionType getTransactionType() {
         return transactionType;
     }

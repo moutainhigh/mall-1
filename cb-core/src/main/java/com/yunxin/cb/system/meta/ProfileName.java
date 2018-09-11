@@ -36,6 +36,7 @@ public enum ProfileName {
     HOT_SEARCH("昂克赛拉,卡罗拉,福克斯,思域,凯美瑞,迈腾,雷克萨斯CT"),//热门搜索
     HOT_CITY("北京市&110000,上海市&310000,广州市&440100,深圳市&440300"),//热门城市
     CAR_CLASS_CONFIG("NO01"),//汽车根分类配置
+    INSURANCE_CASHBACK_TERM("5"),//保险返利返还期数
     ;
 
     private String i18nName;
