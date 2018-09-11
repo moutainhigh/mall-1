@@ -35,36 +35,36 @@ public class CarOrderController extends BaseResource {
     @Resource
     private CarOpenCityService carOpenCityService;
 
-    @ApiOperation(value = "查询用户汽车商城订单列表 V1")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNo", value = "当前页数", defaultValue = "1", paramType = "query", dataType = "Integer"),
-            @ApiImplicitParam(name = "pageSize", value = "每页行数", defaultValue = "20", paramType = "query", dataType = "Integer"),
-            @ApiImplicitParam(name = "appOrderState", value = "前端订单状态(1未支付,2待收货,3已完成,4已取消)", paramType = "query", dataType = "Integer")
-    })
-    @GetMapping(value = "order/list")
-    @ApiVersion(1)
-    @IgnoreAuthentication   //TODO  联调时应该去掉
-    public ResponseResult<List<CarOrderListVO>> getOrderList(@RequestParam(defaultValue = "1") @Min(value = 1) Integer pageNo,
-            @RequestParam(defaultValue = "20") @Min(value = 10) @Max(value = 30) Integer pageSize,
-            @Min(value = 1) @Max(value = 4) Integer appOrderState) {
-        List<CarOrderListVO> listVo = new ArrayList<>();
-        CarOrderListVO c = new CarOrderListVO();
-        c.setId(1l);
-        c.setAppOrderState(appOrderState != null ? appOrderState : 1);
-        c.setAppPaymentState(1);
-        c.setBuyType(1);
-        c.setCarAgencyLiftId(1);
-        c.setCarAgencyLiftName("深圳上通汽车4S店");
-        c.setCarColor("白色");
-        c.setCarImageUrl("http://pb9sg55i7.bkt.clouddn.com/HOMEFLOORICO/1532574926181");
-        c.setCarModelId(1);
-        c.setCarName("宝马");
-        c.setOrderCode("201809070001");
-        c.setTotalNum(1);
-        c.setTotalPrice(new BigDecimal(112000));
-        listVo.add(c);
-        return new ResponseResult(listVo);
-    }
+//    @ApiOperation(value = "查询用户汽车商城订单列表 V1")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "pageNo", value = "当前页数", defaultValue = "1", paramType = "query", dataType = "Integer"),
+//            @ApiImplicitParam(name = "pageSize", value = "每页行数", defaultValue = "20", paramType = "query", dataType = "Integer"),
+//            @ApiImplicitParam(name = "appOrderState", value = "前端订单状态(1未支付,2待收货,3已完成,4已取消)", paramType = "query", dataType = "Integer")
+//    })
+//    @GetMapping(value = "order/list")
+//    @ApiVersion(1)
+//    @IgnoreAuthentication   //TODO  联调时应该去掉
+//    public ResponseResult<List<CarOrderListVO>> getOrderList(@RequestParam(defaultValue = "1") @Min(value = 1) Integer pageNo,
+//            @RequestParam(defaultValue = "20") @Min(value = 10) @Max(value = 30) Integer pageSize,
+//            @Min(value = 1) @Max(value = 4) Integer appOrderState) {
+//        List<CarOrderListVO> listVo = new ArrayList<>();
+//        CarOrderListVO c = new CarOrderListVO();
+//        c.setId(1l);
+//        c.setAppOrderState(appOrderState != null ? appOrderState : 1);
+//        c.setAppPaymentState(1);
+//        c.setBuyType(1);
+//        c.setCarAgencyLiftId(1);
+//        c.setCarAgencyLiftName("深圳上通汽车4S店");
+//        c.setCarColor("白色");
+//        c.setCarImageUrl("http://pb9sg55i7.bkt.clouddn.com/HOMEFLOORICO/1532574926181");
+//        c.setCarModelId(1);
+//        c.setCarName("宝马");
+//        c.setOrderCode("201809070001");
+//        c.setTotalNum(1);
+//        c.setTotalPrice(new BigDecimal(112000));
+//        listVo.add(c);
+//        return new ResponseResult(listVo);
+//    }
 
 
     @ApiOperation(value = "查询用户汽车商城订单详情 V1")
