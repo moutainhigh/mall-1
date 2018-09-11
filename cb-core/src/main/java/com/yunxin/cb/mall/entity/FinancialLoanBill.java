@@ -2,6 +2,7 @@ package com.yunxin.cb.mall.entity;
 
 import com.yunxin.cb.mall.entity.meta.CapitalType;
 import com.yunxin.cb.mall.entity.meta.TransactionType;
+import com.yunxin.cb.rb.entity.meta.LoanRepaymentType;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -106,4 +107,15 @@ public class FinancialLoanBill implements Serializable {
         this.createTime = createTime;
     }
 
+    public void setTransactionTypeOnPayment(LoanRepaymentType type) {
+        if (LoanRepaymentType.INSURANCE_REBATE_REPAYMENT.equals(type)) {
+            this.transactionType = TransactionType.INSURANCE_REPAYMENT;
+        }else if (LoanRepaymentType.COMMODITY_REIMBURSEMENT_REPAYMENT.equals(type)) {
+            this.transactionType = TransactionType.PRODUCT_RB_REPAYMENT;
+        }else if (LoanRepaymentType.MANUAL_REIMBURSEMENT_REPAYMENT.equals(type)) {
+            this.transactionType = TransactionType.CAR_REPAYMENT;
+        }else if (LoanRepaymentType.CAR_REBATE_REPAYMENT.equals(type)) {
+            this.transactionType = TransactionType.MANUAL_REPAYMENT;
+        }
+    }
 }
