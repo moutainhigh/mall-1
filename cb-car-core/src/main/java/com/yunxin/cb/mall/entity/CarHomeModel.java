@@ -5,20 +5,20 @@ import java.util.Date;
 import com.yunxin.cb.mall.common.Entity;
 
 /** 
- * 汽车之家的品牌 数据实体类
+ * 汽车之家的车型,与车系相关 数据实体类
  */
-public class CarHomeBrand extends Entity<Integer> {
+public class CarHomeModel extends Entity<Integer> {
 	
 	private static final long serialVersionUID = 1l;
 	
 	/*Auto generated properties start*/
 	
-	//汽车品牌id
+	//汽车车型ID
 	private Integer id;
-	//汽车品牌首字母
-	private String initial;
-	//汽车品牌
-	private String brandName;
+	//车型对应车系ID
+	private Integer seriesId;
+	//汽车车型
+	private String carModel;
 	//是否显示(0否,1是)
 	private Integer isDisplay;
 	//CREATE_TIME
@@ -59,20 +59,20 @@ public class CarHomeBrand extends Entity<Integer> {
 		this.id = id;
 	}
 	
-	public String getInitial(){
-		return initial;
+	public Integer getSeriesId(){
+		return seriesId;
 	}
 	
-	public void setInitial(String initial){
-		this.initial = initial;
+	public void setSeriesId(Integer seriesId){
+		this.seriesId = seriesId;
 	}
 	
-	public String getBrandName(){
-		return brandName;
+	public String getCarModel(){
+		return carModel;
 	}
 	
-	public void setBrandName(String brandName){
-		this.brandName = brandName;
+	public void setCarModel(String carModel){
+		this.carModel = carModel;
 	}
 	
 	public Integer getIsDisplay(){
@@ -143,8 +143,8 @@ public class CarHomeBrand extends Entity<Integer> {
 	
 	@Override
 	public String toString() {
-		return "CarHomeBrand ["
-		 + "id = " + id + ", initial = " + initial + ", brandName = " + brandName + ", isDisplay = " + isDisplay
+		return "CarHomeModel ["
+		 + "id = " + id + ", seriesId = " + seriesId + ", carModel = " + carModel + ", isDisplay = " + isDisplay
 		 + ", createTime = " + createTime + ", createTimeStart = " + createTimeStart + ", createTimeEnd = " + createTimeEnd + ", updateTime = " + updateTime + ", updateTimeStart = " + updateTimeStart + ", updateTimeEnd = " + updateTimeEnd
 		+"]";
 	}
