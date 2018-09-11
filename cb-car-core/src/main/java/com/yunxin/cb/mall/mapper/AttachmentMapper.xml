@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunxin.cb.mall.dao.AttachmentDao">
+
+<resultMap type="Attachment" id="Attachment">
+	<id column="attach_id" property="attachId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="object_type" property="objectType" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="object_id" property="objectId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="business_scenario" property="businessScenario" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="input_id" property="inputId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="file_path" property="filePath" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="file_name" property="fileName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="file_type" property="fileType" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="file_size" property="fileSize" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="fs_guid" property="fsGuid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+			<result column="staff_id" property="staffId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="staff_name" property="staffName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="state" property="state" javaType="java.lang.String" jdbcType="VARCHAR"/>
+			<result column="description" property="description" javaType="java.lang.String" jdbcType="VARCHAR"/>
+</resultMap>
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+attach_id,object_type,object_id,business_scenario,input_id,file_path,file_name,
+file_type,file_size,fs_guid,create_time,staff_id,staff_name,
+state,description
+</sql>
+
+<!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
+<sql id="CommonColumnlist">
+attach_id,object_id,file_size,create_time,staff_id,
+</sql>
+
+<insert id="add" parameterType="Attachment" useGeneratedKeys="true" keyProperty="attachId">
+	insert into ATTACHMENT(
+		<if test="attachId!=null">
+		attach_id,
+		</if>
+		object_type,
+		object_id,
+		business_scenario,
+		input_id,
+		file_path,
+		file_name,
+		file_type,
+		file_size,
+		fs_guid,
+		create_time,
+		staff_id,
+		staff_name,
+		state,
+		description
+	) values (
+		<if test="attachId!=null">
+		#{attachId,jdbcType = INTEGER},
+		</if>
+		#{objectType,jdbcType = VARCHAR},
+		#{objectId,jdbcType = INTEGER},
+		#{businessScenario,jdbcType = VARCHAR},
+		#{inputId,jdbcType = VARCHAR},
+		#{filePath,jdbcType = VARCHAR},
+		#{fileName,jdbcType = VARCHAR},
+		#{fileType,jdbcType = VARCHAR},
+		#{fileSize,jdbcType = INTEGER},
+		#{fsGuid,jdbcType = VARCHAR},
+		#{createTime,jdbcType = TIMESTAMP},
+		#{staffId,jdbcType = INTEGER},
+		#{staffName,jdbcType = VARCHAR},
+		#{state,jdbcType = VARCHAR},
+		#{description,jdbcType = VARCHAR}
+	)
+</insert>
+
+<update id="update" parameterType="Attachment">
+	update ATTACHMENT 
+	<set>
+		<if test="objectType!=null and objectType!=''">
+			object_type=#{objectType,jdbcType = VARCHAR},
+
+		</if>
+		<if test="objectId!=null ">
+			object_id=#{objectId,jdbcType = INTEGER},
+
+		</if>
+		<if test="businessScenario!=null and businessScenario!=''">
+			business_scenario=#{businessScenario,jdbcType = VARCHAR},
+
+		</if>
+		<if test="inputId!=null and inputId!=''">
+			input_id=#{inputId,jdbcType = VARCHAR},
+
+		</if>
+		<if test="filePath!=null and filePath!=''">
+			file_path=#{filePath,jdbcType = VARCHAR},
+
+		</if>
+		<if test="fileName!=null and fileName!=''">
+			file_name=#{fileName,jdbcType = VARCHAR},
+
+		</if>
+		<if test="fileType!=null and fileType!=''">
+			file_type=#{fileType,jdbcType = VARCHAR},
+
+		</if>
+		<if test="fileSize!=null ">
+			file_size=#{fileSize,jdbcType = INTEGER},
+
+		</if>
+		<if test="fsGuid!=null and fsGuid!=''">
+			fs_guid=#{fsGuid,jdbcType = VARCHAR},
+
+		</if>
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP},
+
+		</if>
+		<if test="staffId!=null ">
+			staff_id=#{staffId,jdbcType = INTEGER},
+
+		</if>
+		<if test="staffName!=null and staffName!=''">
+			staff_name=#{staffName,jdbcType = VARCHAR},
+
+		</if>
+		<if test="state!=null and state!=''">
+			state=#{state,jdbcType = VARCHAR},
+
+		</if>
+		<if test="description!=null and description!=''">
+			description=#{description,jdbcType = VARCHAR},
+
+		</if>
+	</set>
+	<where>
+		AND attach_id=#{attachId}
+	</where>
+</update>
+
+<delete id="delete">
+	delete from ATTACHMENT 
+	<where>
+		object_type=#{objectType,jdbcType = VARCHAR}
+		and
+		object_id=#{objectId,jdbcType = INTEGER}
+	</where>
+</delete>
+
+<select id="get" resultMap="Attachment">
+	select <include refid="AllColumnlist"/> from ATTACHMENT
+	<where>
+		attach_id=#{0}
+	</where>
+</select>
+
+<select id="getByIds" resultMap="Attachment">
+	select <include refid="AllColumnlist"/> from ATTACHMENT
+	<where>
+		attach_id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+<select id="count" parameterType="Query" resultType="Long">
+	select count(attach_id) from ATTACHMENT 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="queryAll" parameterType="Query" resultMap="Attachment">
+	select <include refid="CommonColumnlist"/> from ATTACHMENT 
+	<where>
+	<include refid="listCommonWhere"/>
+	</where>
+</select>
+
+<select id="pageList" parameterType="Query" resultMap="Attachment">
+	select <include refid="CommonColumnlist"/> from ATTACHMENT
+	<where>
+	 <include refid="listCommonWhere"/>
+	</where>
+	<![CDATA[LIMIT #{rowIndex},#{pageSize} ]]>
+</select>
+
+
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.attachId!=null ">
+			AND attach_id=#{q.attachId}
+		</if>
+		<if test="q.objectType!=null and q.objectType!=''">
+			AND object_type=#{q.objectType}
+		</if>
+		<if test="q.objectId!=null ">
+			AND object_id=#{q.objectId}
+		</if>
+		<if test="q.businessScenario!=null and q.businessScenario!=''">
+			AND business_scenario=#{q.businessScenario}
+		</if>
+		<if test="q.inputId!=null and q.inputId!=''">
+			AND input_id=#{q.inputId}
+		</if>
+		<if test="q.filePath!=null and q.filePath!=''">
+			AND file_path=#{q.filePath}
+		</if>
+		<if test="q.fileName!=null and q.fileName!=''">
+			AND file_name=#{q.fileName}
+		</if>
+		<if test="q.fileType!=null and q.fileType!=''">
+			AND file_type=#{q.fileType}
+		</if>
+		<if test="q.fileSize!=null ">
+			AND file_size=#{q.fileSize}
+		</if>
+		<if test="q.fsGuid!=null and q.fsGuid!=''">
+			AND fs_guid=#{q.fsGuid}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.createTimeStart!=null">
+		<![CDATA[	AND create_time>=#{q.createTimeStart}  ]]>
+		</if>
+		<if test="q.createTimeEnd!=null">
+		<![CDATA[	AND create_time<#{q.createTimeEnd}   ]]>
+		</if>
+		<if test="q.staffId!=null ">
+			AND staff_id=#{q.staffId}
+		</if>
+		<if test="q.staffName!=null and q.staffName!=''">
+			AND staff_name=#{q.staffName}
+		</if>
+		<if test="q.state!=null and q.state!=''">
+			AND state=#{q.state}
+		</if>
+		<if test="q.description!=null and q.description!=''">
+			AND description=#{q.description}
+		</if>
+	</if>
+</sql>
+
+</mapper>

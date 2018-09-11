@@ -1,9 +1,7 @@
 package com.yunxin.cb.rest.mall;
 
 import com.yunxin.cb.annotation.ApiVersion;
-import com.yunxin.cb.mall.entity.Brand;
 import com.yunxin.cb.mall.common.Query;
-import com.yunxin.cb.mall.service.BrandService;
 import com.yunxin.cb.mall.vo.BrandVO;
 import com.yunxin.cb.meta.Result;
 import com.yunxin.cb.rest.BaseResource;

@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/base")
-public class BaseDataController extends BaseController {
+public class CarBaseDataController extends BaseController {
 
     @Resource
     private CarBaseDataService carBaseDataService;
