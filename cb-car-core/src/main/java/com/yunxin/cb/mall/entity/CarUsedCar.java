@@ -24,7 +24,7 @@ public class CarUsedCar extends Entity<Integer> {
 	//申请人ID
 	private Integer applyId;
 	//用户手机号
-	private Integer applyMobile;
+	private String applyMobile;
 	//用户类型（1：后台；2：APP）
 	private Integer userType;
 	//车主名
@@ -131,11 +131,11 @@ public class CarUsedCar extends Entity<Integer> {
 		this.applyId = applyId;
 	}
 	
-	public Integer getApplyMobile(){
+	public String getApplyMobile(){
 		return applyMobile;
 	}
 	
-	public void setApplyMobile(Integer applyMobile){
+	public void setApplyMobile(String applyMobile){
 		this.applyMobile = applyMobile;
 	}
 	

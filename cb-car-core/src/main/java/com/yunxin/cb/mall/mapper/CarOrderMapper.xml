@@ -24,6 +24,7 @@
 			<result column="car_model_id" property="carModelId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 			<result column="naked_car_price" property="nakedCarPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
 			<result column="car_agency_lift_id" property="carAgencyLiftId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+			<result column="car_num" property="carNum" javaType="java.lang.String" jdbcType="VARCHAR"/>
 			<result column="used_car_actual_price" property="usedCarActualPrice" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
 			<result column="car_used_id" property="carUsedId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 			<result column="car_agency_assess_id" property="carAgencyAssessId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -42,9 +43,9 @@
 id,order_code,customer_id,customer_phone,buy_type,car_name,total_num,
 total_price,earnest,payment_type,payment_time,confirm_time,discount_total,
 tail_money,tail_payment_type,tail_payment_time,order_state,payment_state,car_model_id,
-naked_car_price,car_agency_lift_id,used_car_actual_price,car_used_id,car_agency_assess_id,buyer_message,
-payment_sequence,finish_time,remark,is_delete,create_time,update_time
-
+naked_car_price,car_agency_lift_id,car_num,used_car_actual_price,car_used_id,car_agency_assess_id,
+buyer_message,payment_sequence,finish_time,remark,is_delete,create_time,
+update_time
 </sql>
 
 <!-- 常见字段，一般用于列表查询，可能不包含备注之类的字段 -->
@@ -52,9 +53,9 @@ payment_sequence,finish_time,remark,is_delete,create_time,update_time
 id,order_code,customer_id,customer_phone,buy_type,car_name,total_num,
 total_price,earnest,payment_type,payment_time,confirm_time,discount_total,
 tail_money,tail_payment_type,tail_payment_time,order_state,payment_state,car_model_id,
-naked_car_price,car_agency_lift_id,used_car_actual_price,car_used_id,car_agency_assess_id,buyer_message,
-payment_sequence,finish_time,remark,is_delete,create_time,update_time
-
+naked_car_price,car_agency_lift_id,car_num,used_car_actual_price,car_used_id,car_agency_assess_id,
+buyer_message,payment_sequence,finish_time,remark,is_delete,create_time,
+update_time
 </sql>
 
 <insert id="add" parameterType="CarOrder" useGeneratedKeys="true" keyProperty="id">
@@ -82,6 +83,7 @@ payment_sequence,finish_time,remark,is_delete,create_time,update_time
 		car_model_id,
 		naked_car_price,
 		car_agency_lift_id,
+		car_num,
 		used_car_actual_price,
 		car_used_id,
 		car_agency_assess_id,
@@ -116,6 +118,7 @@ payment_sequence,finish_time,remark,is_delete,create_time,update_time
 		#{carModelId,jdbcType = INTEGER},
 		#{nakedCarPrice,jdbcType = DECIMAL},
 		#{carAgencyLiftId,jdbcType = INTEGER},
+		#{carNum,jdbcType = VARCHAR},
 		#{usedCarActualPrice,jdbcType = DECIMAL},
 		#{carUsedId,jdbcType = INTEGER},
 		#{carAgencyAssessId,jdbcType = INTEGER},
@@ -210,6 +213,10 @@ payment_sequence,finish_time,remark,is_delete,create_time,update_time
 		</if>
 		<if test="carAgencyLiftId!=null ">
 			car_agency_lift_id=#{carAgencyLiftId,jdbcType = INTEGER},
+
+		</if>
+		<if test="carNum!=null and carNum!=''">
+			car_num=#{carNum,jdbcType = VARCHAR},
 
 		</if>
 		<if test="usedCarActualPrice!=null ">
@@ -387,6 +394,9 @@ payment_sequence,finish_time,remark,is_delete,create_time,update_time
 		</if>
 		<if test="q.carAgencyLiftId!=null ">
 			AND car_agency_lift_id=#{q.carAgencyLiftId}
+		</if>
+		<if test="q.carNum!=null and q.carNum!=''">
+			AND car_num=#{q.carNum}
 		</if>
 		<if test="q.usedCarActualPrice!=null ">
 			AND used_car_actual_price=#{q.usedCarActualPrice}

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class IndexController extends BaseResource {
     private static Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @ApiOperation(value = "商城首页 V2")
+    @ApiOperation(value = "商城首页 V1")
     @GetMapping(value = "getIndex")
     @ApiVersion(1)
     @IgnoreAuthentication
