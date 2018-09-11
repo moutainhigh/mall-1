@@ -142,31 +142,28 @@
                                 <a href="javascript:void(0);" onclick="enabledItem(true)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
                                 <a href="javascript:void(0);" onclick="enabledItem(false)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
                             </div>
-                            <div class="btn-group">
-                                <a href="javascript:void(0);" onclick="viewSpecifiction()" class="btn btn-default">商品规格</a>
-                            </div>
                         </div>
                     </header>
                 </div>
                 <div class="table-wrapper">
                     <kendo:treeList name="treelist" height="450" selectable="true">
                         <kendo:treeList-columns>
-                            <kendo:treeList-column field="baseDataCode" hidden="true" title="分类编码"></kendo:treeList-column>
                             <kendo:treeList-column field="baseDataName" title="分类名称"></kendo:treeList-column>
+                            <kendo:treeList-column field="baseDataCode" title="分类编码"></kendo:treeList-column>
                             <kendo:treeList-column field="parentBaseDataId" title="上级分类"></kendo:treeList-column>
                             <kendo:treeList-column field="remark" title="分类描述"></kendo:treeList-column>
                             <kendo:treeList-column field="sortOrder" title="顺序"></kendo:treeList-column>
                             <kendo:treeList-column field="enabled" title="状态" template="#= enabled ? '启用' : '停用' #"></kendo:treeList-column>
                         </kendo:treeList-columns>
-                        <kendo:dataSource data="${baseDatas}">
+                        <kendo:dataSource data="${datas}">
                             <kendo:dataSource-schema>
                                 <kendo:dataSource-schema-model id="id">
                                     <kendo:dataSource-schema-model-fields>
-                                        <kendo:dataSource-schema-model-field name="id" type="number"/>
+                                        <kendo:dataSource-schema-model-field name="id" type="number" editable="false" nullable="false"/>
                                         <kendo:dataSource-schema-model-field name="parentId" from="parentBaseDataId" type="number" nullable="true"/>
                                         <kendo:dataSource-schema-model-field name="baseDataName" type="string"/>
                                         <kendo:dataSource-schema-model-field name="enabled" type="number"/>
-                                        <kendo:dataSource-schema-model-field name="remark" type="remark"/>
+                                        <kendo:dataSource-schema-model-field name="remark" type="string"/>
                                     </kendo:dataSource-schema-model-fields>
                                 </kendo:dataSource-schema-model>
                             </kendo:dataSource-schema>

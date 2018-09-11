@@ -1,7 +1,7 @@
 package com.yunxin.cb.mall.entity;
 
+import java.beans.Transient;
 import java.util.Date;
-
 import com.yunxin.cb.mall.common.Entity;
 
 /** 
@@ -21,6 +21,8 @@ public class CarBaseData extends Entity<Integer> {
 	private String baseDataCode;
 	//父基础数据
 	private Integer parentBaseDataId;
+	//父基础对象
+	private CarBaseData parentBaseData;
 	//状态(0否,1是)
 	private Integer enabled;
 	//排序
@@ -170,11 +172,24 @@ public class CarBaseData extends Entity<Integer> {
 	public void setOperateId(Integer operateId){
 		this.operateId = operateId;
 	}
-	
-	
+
+	public CarBaseData getParentBaseData() {
+		return parentBaseData;
+	}
+
+	public void setParentBaseData(CarBaseData parentBaseData) {
+		this.parentBaseData = parentBaseData;
+	}
+
 	/*Auto generated methods end*/
-	
-	
+
+	/*@Transient
+	public Integer getParentId() {
+		if (parentBaseData == null) {
+			return null;
+		}
+		return parentBaseData.getId();
+	}*/
 	
 	/*Customized methods start*/
 	

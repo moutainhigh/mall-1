@@ -13,6 +13,8 @@
 	<result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="update_time" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
 	<result column="operate_id" property="operateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+
+	<!--<association property="parentBaseData" column="parent_base_data_id" select="com.yunxin.cb.mall.dao.CarBaseDataDao.get"></association>-->
 </resultMap>
 
 

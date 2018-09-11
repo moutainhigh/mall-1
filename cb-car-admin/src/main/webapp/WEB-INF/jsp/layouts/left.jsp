@@ -12,3 +12,8 @@
         <jsp:include page="../layouts/menu.jsp"/>
     </div>
 </aside>
+<script>
+    $(document).ready(function(){
+        $(".window .actionbar .pull-right a").click();
+    });
+</script>

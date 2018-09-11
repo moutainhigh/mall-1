@@ -27,6 +27,11 @@ public class BaseDataController extends BaseController {
     @RequestMapping(value = "carBaseData",method = RequestMethod.GET)
     public String catalogs(ModelMap modelMap, HttpServletRequest request) {
         List<CarBaseData> datas = carBaseDataService.getCarBaseDataList(null);
+        datas.stream().forEach(p -> {
+            if (p.getId() == p.getParentBaseDataId()) {
+                p.setParentBaseDataId(null);
+            }
+        });
         modelMap.addAttribute("datas", datas);
         return "base/baseDatas";
     }

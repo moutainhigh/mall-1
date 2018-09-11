@@ -53,18 +53,13 @@
                     <a href="#" class="btn small-toggle-btn" data-toggle-sidebar="left"></a>
                 </div>
                 <div class="pull-right">
-                    <a href="#" class="btn small-toggle-btn" data-toggle-sidebar="right" id="rightShow"></a>
+                    <a href="#" class="btn small-toggle-btn" data-toggle-sidebar="right" ></a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <jsp:include page="../layouts/footer.jsp"/>
-<script>
-    $(document).ready(function(){
-        $("#rightShow").click();
-    });
-</script>
 </body>
 </html>
 

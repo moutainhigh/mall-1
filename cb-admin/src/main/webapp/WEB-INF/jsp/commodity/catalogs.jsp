@@ -217,7 +217,7 @@
                                 <kendo:dataSource-schema-model id="catalogId">
                                     <kendo:dataSource-schema-model-fields>
                                         <kendo:dataSource-schema-model-field name="catalogId" type="number"/>
-                                        <kendo:dataSource-schema-model-field name="parentId" from="parentCatalogId" type="number" nullable="true"/>
+                                        <kendo:dataSource-schema-model-field name="parentId" from="parentId" type="number" nullable="true"/>
                                         <kendo:dataSource-schema-model-field name="catalogName" type="string"/>
                                         <kendo:dataSource-schema-model-field name="enabled" type="boolean"/>
                                         <kendo:dataSource-schema-model-field name="remark" type="string"/>
