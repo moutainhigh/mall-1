@@ -9,6 +9,7 @@ import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.responsevo.CarOrderDetailVo;
 import com.yunxin.cb.vo.responsevo.CarOrderListVO;
+import com.yunxin.cb.vo.responsevo.CarPaySimpleOrderlVo;
 import com.yunxin.cb.vo.responsevo.CarPerpOrderDetailVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -184,5 +185,21 @@ public class CarOrderController extends BaseResource {
             return new ResponseResult(Result.FAILURE);
         }
         return new ResponseResult(Result.SUCCESS);
+    }
+
+    @ApiOperation(value = "去支付订单页 V1")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderCode",required = true, value = "订单编号", paramType = "form", dataType = "String")
+    })
+    @PostMapping(value = "order/toPayOrder")
+    @ApiVersion(1)
+    @IgnoreAuthentication   //TODO  联调时应该去掉
+    public ResponseResult<CarPaySimpleOrderlVo> toPayOrder(@NotNull String orderCode) {
+        CarPaySimpleOrderlVo c = new CarPaySimpleOrderlVo();
+        c.setEarnest(new BigDecimal(5000));
+        c.setOrderCode("45487987");
+        c.setRemainingTime(14212325152l);
+        c.setTransactionNum("3251148845412855");
+        return new ResponseResult(c);
     }
 }
