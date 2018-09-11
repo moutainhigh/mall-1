@@ -5,15 +5,12 @@ import com.yunxin.cb.rest.BaseResource;
 import com.yunxin.cb.security.annotation.IgnoreAuthentication;
 import com.yunxin.cb.vo.ResponseResult;
 import com.yunxin.cb.vo.responsevo.CarAgencyVO;
-import com.yunxin.cb.vo.responsevo.CarOpenCityVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +25,7 @@ public class CarAgencyController extends BaseResource {
             @ApiImplicitParam(name = "pageNo", value = "当前页数", required = true, paramType = "query", dataType = "Integer"),
             @ApiImplicitParam(name = "pageSize", value = "每页行数", required = true, paramType = "query", dataType = "Integer")
     })
-    @GetMapping(value = "agency/list")
+    @PostMapping(value = "agency/list")
     @ApiVersion(1)
     @IgnoreAuthentication
     public ResponseResult<List<CarAgencyVO>> getAgencyList(@RequestParam(value = "carId") int carId,
