@@ -1,7 +1,7 @@
 package com.yunxin.cb.mall.entity.meta;
 
 public enum AdvertisementType {
-    PTHOTO_AND_TEXT("图文"), TEXT("纯文字"), VIDEO("视频");
+    PHOTO_AND_TEXT("图文"), TEXT("纯文字"), VIDEO("视频");
 
 
     private String name;
