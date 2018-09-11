@@ -3,32 +3,20 @@ package com.yunxin.cb.mall.entity;
 import java.util.Date;
 
 public class OrderItem {
-    /** 订单明细id */
+    /** 明细id */
     private Integer itemId;
 
-    /** 买家留言 */
-    private String buyerMessage;
-
-    /** 创建时间 */
-    private Date createTime;
-
-    /** 是否做了评价 */
-    private Boolean evaluate;
-
-    /** 总价格 */
+    /** 货品总价格（销售价*数量） */
     private Float orderItemPrice;
 
     /** 货品图片 */
     private String productImg;
 
-    /** 货品购买数量 */
+    /** 货品数量 */
     private Integer productNum;
 
-    /** 销售价格 */
+    /** 销售价格(单价) */
     private Float salePrice;
-
-    /** 活动id */
-    private Integer activityId;
 
     /** 订单id */
     private Integer orderId;
@@ -39,20 +27,29 @@ public class OrderItem {
     /** 成本价 */
     private Float costPrice;
 
+    /** 货品名称 */
+    private String productName;
+
+    /** 货品编号 */
+    private String productNo;
+
     /** 市场价 */
     private Float marketPrice;
 
-    /** 货品编码 */
-    private String productNo;
-
-    /** 货品名称：由 商品名称+上规格值 组成  用&分隔 */
-    private String productName;
+    /** 是否评价 */
+    private Boolean evaluate;
 
     /** 体积 */
     private Float volume;
 
     /** 重量 */
     private Float weight;
+
+    /** 买家留言 */
+    private String buyerMessage;
+
+    /** 创建时间 */
+    private Date createTime;
 
     /** 货品 */
     private Product product;
@@ -63,30 +60,6 @@ public class OrderItem {
 
     public void setItemId(Integer itemId) {
         this.itemId = itemId;
-    }
-
-    public String getBuyerMessage() {
-        return buyerMessage;
-    }
-
-    public void setBuyerMessage(String buyerMessage) {
-        this.buyerMessage = buyerMessage == null ? null : buyerMessage.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Boolean getEvaluate() {
-        return evaluate;
-    }
-
-    public void setEvaluate(Boolean evaluate) {
-        this.evaluate = evaluate;
     }
 
     public Float getOrderItemPrice() {
@@ -121,14 +94,6 @@ public class OrderItem {
         this.salePrice = salePrice;
     }
 
-    public Integer getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
-    }
-
     public Integer getOrderId() {
         return orderId;
     }
@@ -145,20 +110,28 @@ public class OrderItem {
         this.productId = productId;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     public Float getCostPrice() {
         return costPrice;
     }
 
     public void setCostPrice(Float costPrice) {
         this.costPrice = costPrice;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName == null ? null : productName.trim();
+    }
+
+    public String getProductNo() {
+        return productNo;
+    }
+
+    public void setProductNo(String productNo) {
+        this.productNo = productNo == null ? null : productNo.trim();
     }
 
     public Float getMarketPrice() {
@@ -169,20 +142,12 @@ public class OrderItem {
         this.marketPrice = marketPrice;
     }
 
-    public String getProductNo() {
-        return productNo;
+    public Boolean getEvaluate() {
+        return evaluate;
     }
 
-    public void setProductNo(String productNo) {
-        this.productNo = productNo;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setEvaluate(Boolean evaluate) {
+        this.evaluate = evaluate;
     }
 
     public Float getVolume() {
@@ -199,5 +164,29 @@ public class OrderItem {
 
     public void setWeight(Float weight) {
         this.weight = weight;
+    }
+
+    public String getBuyerMessage() {
+        return buyerMessage;
+    }
+
+    public void setBuyerMessage(String buyerMessage) {
+        this.buyerMessage = buyerMessage == null ? null : buyerMessage.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
