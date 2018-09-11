@@ -62,7 +62,7 @@ public class ProductReturnServiceImpl implements ProductReturnService {
             }
         }
         //更新订单状态
-        order.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
+//        order.setReturnRefundState(ReturnRefundState.APPLY_REFUND);
         nReturn.setAuditState(AuditState.WAIT_AUDIT);
         orderMapper.updateByPrimaryKey(order);
         //添加退货申请

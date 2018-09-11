@@ -18,5 +18,14 @@ public interface CarBaseDataDao extends BaseDao<CarBaseData,Integer> {
      * @auther: eleven
      * @date: 2018/9/11 11:23
      */
-    int enableBaseDataById(@Param("baseDataId") int baseDataId,@Param("enabled") boolean enabled);
+    int enableBaseDataById(@Param("baseDataId") Integer baseDataId,@Param("enabled") Integer enabled);
+
+    /**
+     * @title: 根据编号查询对象，排除查询编号
+     * @param: [baseDataCode]
+     * @return: long
+     * @auther: eleven
+     * @date: 2018/9/11 17:12
+     */
+    long getObjByNotCode(@Param("baseDataCode")String baseDataCode,@Param("id")int id);
 }

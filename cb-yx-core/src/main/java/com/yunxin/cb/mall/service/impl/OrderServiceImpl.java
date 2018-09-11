@@ -6,20 +6,14 @@ import com.yunxin.cb.mall.exception.CommonException;
 import com.yunxin.cb.mall.mapper.*;
 import com.yunxin.cb.mall.service.CommodityService;
 import com.yunxin.cb.mall.service.OrderService;
-import com.yunxin.cb.mall.vo.CommodityVo;
-import com.yunxin.cb.mall.vo.DeliveryAddressVO;
-import com.yunxin.cb.mall.vo.TempOrderItemVO;
-import com.yunxin.cb.mall.vo.TempOrderVO;
 import com.yunxin.cb.util.UUIDGeneratorUtil;
 import com.yunxin.cb.util.page.PageFinder;
 import com.yunxin.cb.util.page.Query;
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -41,8 +35,6 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private OrderInvoiceMapper orderInvoiceMapper;
     @Resource
-    private OrderLoanApplyMapper orderLoanApplyMapper;
-    @Resource
     private OrderLogMapper orderLogMapper;
     @Resource
     private CustomerWalletMapper customerWalletMapper;
@@ -57,63 +49,63 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private SellerMapper sellerMapper;
 
-    /***
-     * 获取预下单数据（订单确认页数据）
-     * @param customerId
-     * @param productId
-     * @param buyNum
-     * @param paymentType
-     * @return
-     */
-    @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public TempOrderVO getTempOrder(int customerId, int productId, int buyNum, PaymentType paymentType) throws Exception {
-        //根据货品id查询货品（审核通过且上架货品）
-        Product product = productMapper.selectProductById(productId, ProductState.AUDITED.ordinal(), PublishState.UP_SHELVES.ordinal());
-        //判断货品是否存在，且库存足够
-        if (product == null) {
-            throw new CommonException("货品未上架或者不存在");
-        }
-        if (product.getStoreNum() <= 0) {
-            //库存不足
-            throw new CommonException("库存不足");
-        }
-        //获取商品信息
-        TempOrderVO tempOrderVO = new TempOrderVO();
-        CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
-        if (commodityVo == null) {
-            throw new CommonException("商品不存在");
-        }
-        //商品信息
-        BeanUtils.copyProperties(tempOrderVO, commodityVo);
-        //货品信息组装
-        TempOrderItemVO tempOrderItemVO = null;
-        if(!StringUtils.isEmpty(commodityVo.getProductVo())){
-            tempOrderItemVO = new TempOrderItemVO();
-            BeanUtils.copyProperties(tempOrderItemVO, commodityVo.getProductVo());
-            tempOrderItemVO.setBuyNum(buyNum);
-        }
-        //获取默认地址
-        DeliveryAddress deliveryAddress = deliveryAddressMapper.selectDefaultByCustomerId(customerId);
-        if(!StringUtils.isEmpty(deliveryAddress)){
-            DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
-            BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
-            tempOrderVO.setDeliveryAddressVO(deliveryAddressVO);
-        }
-        //商家信息
-        tempOrderVO.setSellerVo(commodityVo.getSellerVo());
-        //规格信息
-        tempOrderVO.setSpecs(commodityVo.getSpecs());
-        //货品信息
-        tempOrderVO.setTempOrderItemVO(tempOrderItemVO);
-        //选择的支付方式
-        for (PaymentType pay : PaymentType.values()){
-            if (pay.equals(paymentType)) {
-                tempOrderVO.setSelectPaymentType(pay);
-            }
-        }
-        return tempOrderVO;
-    }
+//    /***
+//     * 获取预下单数据（订单确认页数据）
+//     * @param customerId
+//     * @param productId
+//     * @param buyNum
+//     * @param paymentType
+//     * @return
+//     */
+//    @Override
+//    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+//    public TempOrderVO getTempOrder(int customerId, int productId, int buyNum, PaymentType paymentType) throws Exception {
+//        //根据货品id查询货品（审核通过且上架货品）
+//        Product product = productMapper.selectProductById(productId, ProductState.AUDITED.ordinal(), PublishState.UP_SHELVES.ordinal());
+//        //判断货品是否存在，且库存足够
+//        if (product == null) {
+//            throw new CommonException("货品未上架或者不存在");
+//        }
+//        if (product.getStoreNum() <= 0) {
+//            //库存不足
+//            throw new CommonException("库存不足");
+//        }
+//        //获取商品信息
+//        TempOrderVO tempOrderVO = new TempOrderVO();
+//        CommodityVo commodityVo = commodityService.getCommdityDetail(productId, customerId);
+//        if (commodityVo == null) {
+//            throw new CommonException("商品不存在");
+//        }
+//        //商品信息
+//        BeanUtils.copyProperties(tempOrderVO, commodityVo);
+//        //货品信息组装
+//        TempOrderItemVO tempOrderItemVO = null;
+//        if(!StringUtils.isEmpty(commodityVo.getProductVo())){
+//            tempOrderItemVO = new TempOrderItemVO();
+//            BeanUtils.copyProperties(tempOrderItemVO, commodityVo.getProductVo());
+//            tempOrderItemVO.setBuyNum(buyNum);
+//        }
+//        //获取默认地址
+//        DeliveryAddress deliveryAddress = deliveryAddressMapper.selectDefaultByCustomerId(customerId);
+//        if(!StringUtils.isEmpty(deliveryAddress)){
+//            DeliveryAddressVO deliveryAddressVO = new DeliveryAddressVO();
+//            BeanUtils.copyProperties(deliveryAddressVO, deliveryAddress);
+//            tempOrderVO.setDeliveryAddressVO(deliveryAddressVO);
+//        }
+//        //商家信息
+//        tempOrderVO.setSellerVo(commodityVo.getSellerVo());
+//        //规格信息
+//        tempOrderVO.setSpecs(commodityVo.getSpecs());
+//        //货品信息
+//        tempOrderVO.setTempOrderItemVO(tempOrderItemVO);
+//        //选择的支付方式
+//        for (PaymentType pay : PaymentType.values()){
+//            if (pay.equals(paymentType)) {
+//                tempOrderVO.setSelectPaymentType(pay);
+//            }
+//        }
+//        return tempOrderVO;
+//    }
 
     /***
      * 创建订单
@@ -217,11 +209,6 @@ public class OrderServiceImpl implements OrderService {
                 orderItemMapper.insert(orderItem);
             }
         }
-        //发票数据
-        if (order.getOrderInvoice() != null) {
-            order.getOrderInvoice().setOrderId(order.getOrderId());
-            orderInvoiceMapper.insert(order.getOrderInvoice());
-        }
         //添加订单日志
         orderLogMapper.insert(new OrderLog(String.valueOf(order.getCustomerId()),order.getOrderCode(),"订单确认"));
         return order;
@@ -319,22 +306,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void defaultValue(Order order) {
-        order.setCouponsFee(0d);
-        order.setDelivery(false);
         order.setDeliveryFeeTotal(0d);
         if (order.getDeliveryType() == null) {
             order.setDeliveryType(DeliveryType.ZT);
         }
         order.setPaymentState(PaymentState.TO_BE_PAID);
-        order.setScoreTotal(0);
         order.setEnabled(true);
-        order.setWeightTotal(0d);
-        order.setVolumeTotal(0d);
-        order.setUsedScore(0);
         order.setPostCode("");
-        order.setPayByIntegral(0d);
-        order.setDiscountTotal(0d);
-        order.setDiscountDeliveryFeeTotal(0d);
         order.setProvince("0");
         order.setCity("0");
         order.setDistrict("0");

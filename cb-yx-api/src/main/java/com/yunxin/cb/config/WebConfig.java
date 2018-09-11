@@ -81,11 +81,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("swagger-ui.html")//springfox-swagger-ui:2.9.2访问路径,上生产环境应该注释
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("doc.html")//swagger-bootstrap-ui:1.8.2访问路径,上生产环境应该注释
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("docs.html")//swagger-ui-layer:0.0.6访问路径,上生产环境应该注释
+        registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");

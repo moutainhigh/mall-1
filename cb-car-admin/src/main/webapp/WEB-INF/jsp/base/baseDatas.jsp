@@ -9,18 +9,19 @@
     <title>分类管理</title>
     <jsp:include page="../layouts/left.jsp"/>
     <script type="application/javascript">
-
-        var dataMsg='${dataMsg}';
-        if(dataMsg!=null&&dataMsg!=""){
-            var msgType='${msgType}';
-            commonNotify(dataMsg,msgType==null||msgType==''?"error":msgType);
-        }
+        $(document).ready(function () {
+            var dataMsg='${dataMsg}';
+            if(dataMsg!=null&&dataMsg!=""){
+                var msgType='${msgType}';
+                commonNotify(dataMsg,msgType==null||msgType==''?"error":msgType);
+            }
+        })
 
         //修改
         function editItem(){
             var dataItem=getSelectedTreeListItem("treelist");
             if(dataItem){
-                window.location.href = "toEditCatalog.do?catalogId=" + dataItem.catalogId;
+                window.location.href = "toEditBaseData.do?bastDataId=" + dataItem.id;
             }
         }
 
@@ -28,19 +29,20 @@
         function removeItem() {
             var dataItem=getSelectedTreeListItem("treelist");
             if(dataItem){
-                if(dataItem.catalogCode && dataItem.catalogCode.length <= 3*2){
-                    commonNotify("根分类和一级分类禁止删除!", "error");
+                if(dataItem.baseDataCode && dataItem.baseDataCode.length == 3){
+                    commonNotify("根分类禁止删除!", "error");
                     return;
                 }
                 bootbox.confirm("确定删除吗？", function(result) {
                     if(result){
-                        var catalogId=dataItem.catalogId;
                         $.post("removeById.do", {
-                            catalogId : catalogId
+                            baseDataId : dataItem.id
                         }, function(data) {
                             if (data) {
                                 commonNotify("操作成功！", "success");
-                                window.location.href ="catalogs.do";
+                                setTimeout(function(){
+                                    window.location.href ="carBaseData.do";
+                                },1000);
                             } else {
                                 commonNotify("操作失败!", "error");
                             }
@@ -54,18 +56,24 @@
         function enabledItem(enabled) {
             var dataItem = getSelectedTreeListItem("treelist");
             if (dataItem) {
-                if(dataItem.catalogCode && dataItem.catalogCode.length == 3){
+                if(dataItem.baseDataCode && dataItem.baseDataCode.length == 3){
                     commonNotify("根分类禁止进行停用/启用操作!", "error");
                     return;
                 }
+                if(dataItem.enabled==enabled){
+                    commonNotify("节点已是"+(enabled==0?"停用":"启用")+"状态!", "error");
+                    return;
+                }
                 $.get("enableBaseDataById.do", {
-                    catalogId: dataItem.catalogId,
+                    baseDataId: dataItem.id,
                     enabled: enabled,
                     rad: Math.random()
                 }, function (data) {
                     if (data) {
                         commonNotify("操作成功！", "success");
-                        window.location.href ="catalogs.do";
+                        setTimeout(function(){
+                            window.location.href ="carBaseData.do";
+                        },1000);
                     } else {
                         commonNotify("操作失败!", "error");
                     }
@@ -145,8 +153,8 @@
                                 <a href="javascript:void(0);" onclick="removeItem();" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 删除</a>
                             </div>
                             <div class="btn-group">
-                                <a href="javascript:void(0);" onclick="enabledItem(true)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
-                                <a href="javascript:void(0);" onclick="enabledItem(false)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
+                                <a href="javascript:void(0);" onclick="enabledItem(1)" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;启用</a>
+                                <a href="javascript:void(0);" onclick="enabledItem(0)" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp; 停用</a>
                             </div>
                         </div>
                     </header>
