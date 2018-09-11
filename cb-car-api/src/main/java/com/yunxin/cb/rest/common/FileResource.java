@@ -2,6 +2,7 @@ package com.yunxin.cb.rest.common;
 
 import com.yunxin.cb.mall.entity.meta.UploadType;
 import com.yunxin.cb.storage.IStorageService;
+import com.yunxin.cb.storage.ObjectType;
 import com.yunxin.cb.vo.ImageBase64;
 import com.yunxin.cb.vo.ResponseResult;
 import io.swagger.annotations.Api;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.yunxin.cb.meta.Result.FAILURE;
 
@@ -29,40 +33,65 @@ public class FileResource {
     @Resource
     private IStorageService qiniuStorageService;
 
-    @ApiOperation(value = "文件上传")
-    @PostMapping(value = "upload/{type}")
-    public ResponseResult upload(MultipartFile file, @PathVariable(value = "type") UploadType type) {
+
+    /**
+     * 获取七牛信息
+     * @return
+     */
+    @RequestMapping(value = "getQiniuInfo")
+    @ResponseBody
+    public Map getQiniuInfo(){
+        return qiniuStorageService.getQiniuInfo();
+    }
+
+
+
+    /**
+     * 上传文件
+     * @author      likang
+     * @param file
+    * @param type
+    * @param request
+     * @return      java.util.Map
+     * @exception
+     * @date        2018/7/24 14:04
+     */
+    @RequestMapping(value = "uploadFile/{type}")
+    @ResponseBody
+    public Map uploadFile(@RequestParam("file") MultipartFile file, @PathVariable(value = "type") ObjectType type, HttpServletRequest request) throws IOException {
+        Map<String, String> result = new HashMap<String, String>();
         if (!file.isEmpty()) {
             try {
-                String url = qiniuStorageService.put(file.getInputStream(), type);
-                return new ResponseResult(url);
+                result=qiniuStorageService.put(file.getInputStream(),type);
+                return result;
             } catch (IOException e) {
                 e.printStackTrace();
-                return new ResponseResult(FAILURE, "上传失败");
+                return result;
             }
         } else {
-            return new ResponseResult(FAILURE, "上传失败");
+            return result;
         }
-
     }
 
-    @ApiOperation(value = "base64图片上传")
-    @PostMapping(value = "uploadBase64/{type}")
-    public ResponseResult uploadBase64(@RequestBody ImageBase64 base64, @PathVariable(value = "type") UploadType type) {
-        if (StringUtils.isNotBlank(base64.getData())) {
-            try {
-                byte[] imgBytes = Base64.getDecoder().decode(base64.getData());//Base64转换成byte数组
-                String url = qiniuStorageService.put(imgBytes, type);
-                return new ResponseResult(url);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new ResponseResult(FAILURE, "上传失败");
-            }
-        } else {
-            return new ResponseResult(FAILURE, "上传失败");
-        }
+    /**
+     * 删除文件
+     * @author      likang
+     * @param type
+    * @param key
+    * @param request
+     * @return      java.util.Map
+     * @exception
+     * @date        2018/7/24 16:07
+     */
+    @RequestMapping(value = "delete/{type}")
+    @ResponseBody
+    public Map delete(@PathVariable(value = "type") ObjectType type, @RequestParam("key") String key, HttpServletRequest request) throws IOException {
+        Map<String, String> result = new HashMap<String, String>();
+        //获取保存文件的key
+        String fileName=type+"/"+key;
+        qiniuStorageService.deleteByfileName(fileName);
+        return result;
 
     }
-
 
 }
