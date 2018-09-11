@@ -8,7 +8,7 @@
         </li>
     </ul>
     <div class="tab-content">
-        <jsp:include page="../layouts/default.jsp"/>
+        <%--<jsp:include page="../layouts/default.jsp"/>--%>
         <jsp:include page="../layouts/menu.jsp"/>
     </div>
 </aside>
