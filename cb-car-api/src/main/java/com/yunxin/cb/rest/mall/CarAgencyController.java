@@ -28,7 +28,7 @@ public class CarAgencyController extends BaseResource {
     @PostMapping(value = "agency/list")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<CarAgencyVO>> getAgencyList(@RequestParam(value = "carId") int carId,
+    public ResponseResult<CarAgencyVO> getAgencyList(@RequestParam(value = "carId") int carId,
                                                          @RequestParam(value = "pageNo") int pageNo,@RequestParam(value = "pageSize") int pageSize) {
         List<CarAgencyVO> listVo = new ArrayList<>();
         CarAgencyVO carAgencyVO = new CarAgencyVO();

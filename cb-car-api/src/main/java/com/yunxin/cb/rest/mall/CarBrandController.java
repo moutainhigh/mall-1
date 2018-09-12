@@ -27,7 +27,7 @@ public class CarBrandController extends BaseResource {
     @GetMapping(value = "carbrand/list")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<CarBrandListVO>> getCarBrand() {
+    public ResponseResult<CarBrandListVO> getCarBrand() {
         CarBrandListVO listVO = new CarBrandListVO();
 
         List<CarBrandVO> brandVOList = new ArrayList<>();

@@ -28,11 +28,12 @@ public class CarBaseDataController extends BaseResource {
     @GetMapping(value = "spec/{carId}")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<CarBaseDataVO>> getSpec(@PathVariable(value = "carId") int carId) {
+    public ResponseResult<CarBaseDataVO> getSpec(@PathVariable(value = "carId") int carId) {
         List<CarBaseDataVO> listVo = new ArrayList<>();
         CarBaseDataVO c = new CarBaseDataVO();
         c.setBaseDataName("厂商");
         c.setBaseDataValue("宝马（进口）");
+        listVo.add(c);
         listVo.add(c);
         return new ResponseResult(listVo);
     }
