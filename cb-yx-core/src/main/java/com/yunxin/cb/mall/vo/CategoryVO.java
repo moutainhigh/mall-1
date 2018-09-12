@@ -11,6 +11,19 @@ import java.math.BigDecimal;
 public class CategoryVO implements java.io.Serializable{
     private static final long serialVersionUID = 7902398986602388206L;
 
+    public CategoryVO(Integer categoryId, String description, String categoryName, String shortName, String iconPath, BigDecimal lowestPrice, BigDecimal highestPrice) {
+        this.categoryId = categoryId;
+        this.description = description;
+        this.categoryName = categoryName;
+        this.shortName = shortName;
+        this.iconPath = iconPath;
+        this.lowestPrice = lowestPrice;
+        this.highestPrice = highestPrice;
+    }
+
+    public CategoryVO() {
+    }
+
     /**
      *
      */

@@ -1,5 +1,7 @@
 package com.yunxin.cb.util.page;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 翻页查询 参数
  * 
@@ -11,26 +13,31 @@ public class Query {
 	/**
 	 * 跳转
 	 */
+	@ApiModelProperty(value="当前第几页",name="pageNo",example="1")
 	private int pageNo = 1;
 
 	/**
 	 * 每页显示记录数
 	 */
+	@ApiModelProperty(value="每页的记录数",name="pageSize",example="10")
 	private int pageSize = 10;
 
 	/**
 	 * 是否可分页
 	 */
+	@ApiModelProperty(hidden = true)
 	private String pageable = "true";
 
 	/**
 	 * 起始行
 	 */
+	@ApiModelProperty(hidden = true)
 	private int rowIndex;
 
 	/**
 	 * 查询条件
 	 */
+	@ApiModelProperty(hidden = true)
 	private Object data;
 	
 	public Query() {

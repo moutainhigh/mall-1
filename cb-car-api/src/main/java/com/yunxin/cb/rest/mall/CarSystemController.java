@@ -12,10 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,10 +94,10 @@ public class CarSystemController extends BaseResource {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sysId", value = "车系ID", required = true, paramType = "query", dataType = "Integer")
     })
-    @GetMapping(value = "carsystem/get")
+    @GetMapping(value = "carsystem/get/{carId}")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<CarSystemVO> getCarSystem(@RequestParam(value = "sysId") int sysId) {
+    public ResponseResult<CarSystemVO> getCarSystem(@PathVariable(value = "sysId") int sysId) {
         CarSystemVO c = new CarSystemVO();
         c.setId(1);
         c.setSysName("宝马（进口）7系");

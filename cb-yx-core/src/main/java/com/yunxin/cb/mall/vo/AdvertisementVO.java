@@ -8,6 +8,20 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value="banner",description="bannerVO对象 AdvertisementVO")
 public class AdvertisementVO implements java.io.Serializable{
     private static final long serialVersionUID = -4757351429057292609L;
+
+    public AdvertisementVO() {
+    }
+
+    public AdvertisementVO(Integer advertId, String picPath, String advertTitle, String advertUrl, String videoPath, AdvertisementType advertisementType, AdvertisementPlace advertisementPlace) {
+        this.advertId = advertId;
+        this.picPath = picPath;
+        this.advertTitle = advertTitle;
+        this.advertUrl = advertUrl;
+        this.videoPath = videoPath;
+        this.advertisementType = advertisementType;
+        this.advertisementPlace = advertisementPlace;
+    }
+
     /**
      *
      */

@@ -32,6 +32,22 @@ function getSelectedTreeListItem(gridName) {
     return null;
 }
 
+/**
+ * 显示提示弹窗并刷新指定url 2018-09-11 18:32:15 eleven
+ * @param text 显示内容
+ * @param type 成功和失败 success/error
+ * @param timeFlag 是否需要定时器跳转url
+ * @param url 跳转url
+ */
+function showMsg(text,type,timeFlag,url){
+    commonNotify(text, type);
+    if(timeFlag!=null&&timeFlag){
+        setTimeout(function(){
+            window.location.href = url;
+        },1000);
+    }
+}
+
 function commonNotify(text, type) {
     $.e_notify.notification({
         text: text,

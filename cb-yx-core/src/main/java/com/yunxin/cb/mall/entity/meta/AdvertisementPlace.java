@@ -2,7 +2,7 @@ package com.yunxin.cb.mall.entity.meta;
 
 public enum AdvertisementPlace {
 
-    HOME("首页", "home"),MIDDLE("中部","middle");
+    HOME("首页", "home"),MIDDLE("消息","message");
 
 
     private String name;

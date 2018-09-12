@@ -1,9 +1,7 @@
 package com.yunxin.cb.vo.requestvo;
 
-import javax.validation.constraints.NotNull;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.hibernate.validator.constraints.NotBlank;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -24,10 +22,8 @@ public class CarUsedCarReqVO implements java.io.Serializable{
 	private Integer reModelId;
 	@ApiModelProperty(value="申请人",name="applyId",example="1")
 	private Integer applyId;
-	@NotBlank
 	@ApiModelProperty(value="用户手机号",name="applyMobile",example="13711112522")
 	private String applyMobile;
-	@NotBlank
 	@ApiModelProperty(value="车主名",name="uname",example="张三")
 	private String uname;
 	@ApiModelProperty(value="车牌号",name="carNum",example="粤B 888888")
@@ -42,7 +38,6 @@ public class CarUsedCarReqVO implements java.io.Serializable{
 	private BigDecimal referencePrice;
 	@ApiModelProperty(value="购买价格",name="buyPrice",example="300000")
 	private BigDecimal buyPrice;
-	@NotNull
 	@ApiModelProperty(value="是否大修（0：否；1：是）",name="overhaul",example="1")
 	private Integer overhaul;
 	@ApiModelProperty(value="图片路径",name="picPath",example="图片路径")

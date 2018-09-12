@@ -9,10 +9,10 @@ import com.yunxin.cb.vo.requestvo.CarUsedCarReqVO;
 import com.yunxin.cb.vo.responsevo.CarSystemVO;
 import com.yunxin.cb.vo.responsevo.CarUsedCarVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -46,14 +46,13 @@ public class CarUsedCarController extends BaseResource {
 
     @ApiOperation(value = "新增评估记录")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "applyMobile", value = "手机号", required = true, paramType = "post", dataType = "String"),
+            @ApiImplicitParam(name = "uname", value = "试驾人", required = true, paramType = "post", dataType = "String")
     })
     @PostMapping(value = "usercar/add")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult addUsedCar(@Validated @RequestBody CarUsedCarReqVO usedCarVO, BindingResult result) {
-        if(result.hasErrors()){
-            return new ResponseResult(Result.FAILURE);
-        }
+    public ResponseResult addUsedCar(@RequestBody CarUsedCarReqVO usedCarVO) {
         CarUsedCarVO c = new CarUsedCarVO();
         c.setId(1);
         c.setReModelName("迈腾 2016款 1.8TSI 智享领先型");
