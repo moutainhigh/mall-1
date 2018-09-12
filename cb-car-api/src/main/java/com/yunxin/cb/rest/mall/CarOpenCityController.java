@@ -31,7 +31,7 @@ public class CarOpenCityController extends BaseResource {
     @GetMapping(value = "opencity/list")
     @ApiVersion(1)
     @IgnoreAuthentication
-    public ResponseResult<List<CarOpenCityVO>> getOpenCity() {
+    public ResponseResult<CarOpenCityListVO> getOpenCity() {
         List<CarOpenCityVO> listVo = new ArrayList<>();
         CarOpenCityVO c = new CarOpenCityVO();
         c.setId(1);
